@@ -1,0 +1,47 @@
+{
+  "name": "project-login",
+  "author": "DeviasIO",
+  "licence": "MIT",
+  "version": "1.0.0",
+  "private": false,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts --max_old_space_size=4096 build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "jwt-decode": "^3.1.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-adal": "^0.5.0",
+    "react-dom": "^16.13.1",
+    "react-router": "^6.0.0-beta.0",
+    "react-router-dom": "^6.0.0-beta.0",
+    "react-scripts": "^4.0.0"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.16.0",
+    "@babel/plugin-proposal-decorators": "^7.16.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.26.1",
+    "prettier": "^2.4.1"
+  }
+}
