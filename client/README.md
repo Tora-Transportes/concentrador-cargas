@@ -15,7 +15,7 @@ cp .env.example .env
 
 ```bash
 npm install
-npx run start
+npm run start
 
 # OU
 
