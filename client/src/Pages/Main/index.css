@@ -1,0 +1,20 @@
+#navbar-tora {
+  background-color: #024c01 !important;
+  color: white !important;
+}
+#navbar-tora a {
+  color: #b8c5cb !important;
+}
+#navbar-tora .btn-toggle {
+  background-color: #024c01;
+  color: #b8c5cb;
+  border: 1px solid #b8c5cb;
+  margin-left: 4px;
+}
+
+#navbar-tora .btn-toggle:hover {
+  background-color: #b8c5cb;
+  color: #024c01;
+  border: 1px solid #024c01;
+  opacity: 0.4;
+}

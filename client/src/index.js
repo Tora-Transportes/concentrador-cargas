@@ -4,6 +4,7 @@ import App from "./App";
 import requireMicrosoftAuthentication, {
 	withAdalLoginApi,
 } from "./MicrosoftAuthentication";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const LoggedApp = withAdalLoginApi(() => <App />);
 

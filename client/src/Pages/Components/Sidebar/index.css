@@ -1,0 +1,17 @@
+.card-user {
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  vertical-align: middle;
+  color: white;
+  background-color: #024c01;
+  font-size: 50px;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.sidebar-links a,
+.sidebar-links button {
+  padding: 20px;
+  text-align: left;
+}
