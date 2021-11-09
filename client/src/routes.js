@@ -2,7 +2,9 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Main from "./Pages/Main";
-import LoadMenu from "./Pages/Load/Menu";
+import LoadMenu from "./Pages/Cargas/Menu";
+import CadastrarCargaLigacao from "./Pages/Cargas/Ligacao/Cadastrar";
+import EditarCargaLigacao from "./Pages/Cargas/Ligacao/Editar";
 
 export default function AllRoutes() {
 	return (
@@ -10,6 +12,13 @@ export default function AllRoutes() {
 			<Switch>
 				<Route path="/" exact component={Main} />
 				<Route path="/cargas/menu" exact component={LoadMenu} />
+
+				<Route path="/cargas/ligacao" exact component={CadastrarCargaLigacao} />
+				<Route
+					path="/cargas/ligacao/:id"
+					exact
+					component={EditarCargaLigacao}
+				/>
 			</Switch>
 		</BrowserRouter>
 	);
