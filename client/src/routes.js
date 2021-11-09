@@ -1,16 +1,16 @@
 import React from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+
 import Main from "./Pages/Main";
+import LoadMenu from "./Pages/Load/Menu";
 
-function Deslogado() {
-	return <h1>Deslogado</h1>;
+export default function AllRoutes() {
+	return (
+		<BrowserRouter>
+			<Switch>
+				<Route path="/" exact component={Main} />
+				<Route path="/cargas/menu" exact component={LoadMenu} />
+			</Switch>
+		</BrowserRouter>
+	);
 }
-
-const routes = () => [
-	{
-		path: "/",
-		element: <Main />,
-		children: [{ path: "logado", element: <Deslogado /> }],
-	},
-];
-
-export default routes;

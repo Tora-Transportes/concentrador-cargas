@@ -1,0 +1,70 @@
+import React from "react";
+import { Container, ListGroup, Navbar, Offcanvas } from "react-bootstrap";
+import { FaSignOutAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import logo from "../../../assets/tora.ico";
+import { getClaims, logout } from "../../../MicrosoftAuthentication";
+
+import "./index.css";
+
+function NavbarNavigator() {
+	const userData = getClaims();
+	const initialsName = `${userData.given_name.charAt(
+		0
+	)}${userData.given_name.charAt(1)}`.toUpperCase();
+	return (
+		<>
+			<Navbar variant="dark" id="navbar-tora" expand={false}>
+				<Container fluid>
+					<Link to="/">
+						<img
+							src={logo}
+							width="30"
+							height="30"
+							className="d-inline-block align-top"
+						/>
+					</Link>
+					<Navbar.Toggle aria-controls="offcanvasNavbar" />
+					<Navbar.Offcanvas
+						id="offcanvasNavbar"
+						aria-labelledby="offcanvasNavbarLabel"
+						placement="end"
+					>
+						<Offcanvas.Header closeButton className="text-center w-100">
+							<Offcanvas.Title className="text-center">
+								<div className="card-user rounded-circle mx-auto">
+									{initialsName}
+								</div>
+								<br />
+								<div>{userData.name}</div>
+							</Offcanvas.Title>
+						</Offcanvas.Header>
+						<Offcanvas.Body>
+							<ListGroup className="sidebar-links">
+								<Link to="/cargas/menu">
+									<ListGroup.Item action>Cadastro de cargas</ListGroup.Item>
+								</Link>
+								<Link to="/cargas/visualizar">
+									<ListGroup.Item action>Listagem de cargas</ListGroup.Item>
+								</Link>
+								<Link to="/">
+									<ListGroup.Item action>OP3</ListGroup.Item>
+								</Link>
+								<Link to="/">
+									<ListGroup.Item action>OP4</ListGroup.Item>
+								</Link>
+								<Link to="/">
+									<ListGroup.Item action onClick={logout}>
+										Sair <FaSignOutAlt />
+									</ListGroup.Item>
+								</Link>
+							</ListGroup>
+						</Offcanvas.Body>
+					</Navbar.Offcanvas>
+				</Container>
+			</Navbar>
+		</>
+	);
+}
+
+export default NavbarNavigator;
