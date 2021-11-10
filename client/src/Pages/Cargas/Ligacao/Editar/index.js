@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
 	Container,
 	Row,
@@ -7,14 +7,17 @@ import {
 	Form,
 	Button,
 } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import NavbarNavigator from "../../../Components/NavbarNavigator";
 import useLoadingScreen from "../../../Components/LoadingScreen";
+import swal from "sweetalert";
+import ServiceCargas from "../../../../services/ServiceCargas";
 
 function Ligacao() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const { id } = useParams();
+	const history = useHistory();
 	const formik = useFormik({
 		initialValues: {
 			solicitante: "",
@@ -29,13 +32,48 @@ function Ligacao() {
 			peso: "",
 			observacao: "",
 		},
-		onSubmit: (values) => {
+		onSubmit: async (values) => {
 			setLoading(true);
-			alert(JSON.stringify(values, null, 2));
+			try {
+				const { data } = await ServiceCargas.update(values);
+				swal(
+					"Sucesso",
+					`O registro de id ${data.data.id} foi atualizado`,
+					"success"
+				);
+			} catch (error) {
+				console.log(error);
+			}
 			setLoading(false);
-			formik.resetForm();
 		},
 	});
+
+	useEffect(() => {
+		let isMounted = true;
+		setLoading(true);
+		ServiceCargas.index({ id })
+			.then((response) => {
+				const carga = response.data.data;
+				for (const i in carga) {
+					if (i.indexOf("data") === -1) {
+						formik.setFieldValue(i, carga[i]);
+					} else {
+						formik.setFieldValue(i, carga[i].split("T")[0]);
+					}
+				}
+			})
+			.catch(() => {
+				history.push("/cargas/menu");
+			})
+			.finally(() => {
+				if (isMounted) {
+					setLoading(false);
+				}
+			});
+		return () => {
+			isMounted = false;
+		};
+	}, []);
 
 	return (
 		<>
@@ -173,9 +211,11 @@ function Ligacao() {
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="Quantidade (KG)" min={1} className="mb-3">
+							<FloatingLabel label="Quantidade (KG)" className="mb-3">
 								<Form.Control
 									type="number"
+									min={1}
+									step={0.000000000001}
 									placeholder=" "
 									name="peso"
 									value={formik.values.peso}

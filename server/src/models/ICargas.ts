@@ -11,6 +11,7 @@ export interface ICarga {
   solicitante: string;
   canal_comunicacao: string;
 
+  observacao?: string | null;
   data_cadastro?: Date | null;
   data_atualizacao?: Date | null;
   usuario?: string | null;

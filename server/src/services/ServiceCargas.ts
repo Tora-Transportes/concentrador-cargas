@@ -31,6 +31,8 @@ export class ServiceCargas {
       solicitante: "Acellor mital",
       canal_comunicacao: "ligacao",
       usuario: "my.jwt.token",
+      data_cadastro: new Date("2021-11-10"),
+      data_atualizacao: new Date("2021-11-10"),
     };
 
     return carga;

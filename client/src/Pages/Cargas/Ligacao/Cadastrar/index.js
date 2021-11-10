@@ -10,9 +10,16 @@ import {
 import { useFormik } from "formik";
 import NavbarNavigator from "../../../Components/NavbarNavigator";
 import useLoadingScreen from "../../../Components/LoadingScreen";
+import ServiceCargas from "../../../../services/ServiceCargas";
+import swal from "sweetalert";
 
 function Ligacao() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
+
+	function resetForm() {
+		formik.resetForm();
+		formik.setFieldValue("id", "L-" + new Date().getTime());
+	}
 
 	const formik = useFormik({
 		initialValues: {
@@ -28,11 +35,23 @@ function Ligacao() {
 			peso: "",
 			observacao: "",
 		},
-		onSubmit: (values) => {
+		onSubmit: async (values) => {
 			setLoading(true);
-			alert(JSON.stringify(values, null, 2));
+			try {
+				const { data } = await ServiceCargas.create({
+					...values,
+					canal_comunicacao: "ligacao",
+				});
+				swal(
+					"Sucesso",
+					`A carga foi cadastrada com o identificador ${data.data.id}`,
+					"success"
+				);
+			} catch (error) {
+				console.log(error);
+			}
 			setLoading(false);
-			formik.resetForm();
+			resetForm();
 		},
 	});
 
@@ -172,9 +191,11 @@ function Ligacao() {
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="Quantidade (KG)" min={1} className="mb-3">
+							<FloatingLabel label="Quantidade (KG)" className="mb-3">
 								<Form.Control
 									type="number"
+									min={1}
+									step={0.000000000001}
 									placeholder=" "
 									name="peso"
 									value={formik.values.peso}
