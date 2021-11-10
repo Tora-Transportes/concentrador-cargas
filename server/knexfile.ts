@@ -1,0 +1,30 @@
+import { Knex } from "knex";
+import dotenv from "dotenv";
+dotenv.config();
+import oracledb from "oracledb";
+
+oracledb.initOracleClient({
+  libDir: process.env.DB_ORACLE_LIB_DIR,
+});
+
+const config: Knex.Config = {
+  client: "oracledb",
+  connection: {
+    connectString: process.env.DB_ORACLE_HOST,
+    server: process.env.DB_ORACLE_HOST,
+    host: process.env.DB_ORACLE_HOST,
+    user: process.env.DB_ORACLE_USERNAME,
+    password: process.env.DB_ORACLE_PASSWORD,
+    requestTimeout: 100,
+    port: Number(process.env.DB_ORACLE_PORT),
+    charset: "utf8",
+  },
+  migrations: {
+    directory: __dirname + "/src/database/migrations",
+  },
+  seeds: {
+    directory: __dirname + "/src/database/seeds",
+  },
+};
+
+export default config;
