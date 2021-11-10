@@ -10,8 +10,16 @@
   vertical-align: middle;
 }
 
-.sidebar-links a,
 .sidebar-links button {
-  padding: 20px;
+  padding: 20px 0px 20px 20px;
   text-align: left;
+  text-decoration: none;
+}
+
+.sidebar-links a {
+  text-decoration: none;
+}
+
+#navbar-tora .navbar-toggler-icon {
+  fill: white;
 }
