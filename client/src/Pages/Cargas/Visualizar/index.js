@@ -6,13 +6,15 @@ import {
 	Table,
 	InputGroup,
 	FormControl,
+	Button,
 } from "react-bootstrap";
 import {
 	BsPencilSquare,
 	BsTrash,
-	BsPlusSquare,
+	BsBoxArrowInUpRight,
 	BsSearch,
 } from "react-icons/bs";
+import { GrPrevious, GrNext } from "react-icons/gr";
 import NavbarNavigator from "../../Components/NavbarNavigator";
 import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
@@ -21,38 +23,79 @@ import swal from "sweetalert";
 
 function useDebouncedFunction(handler, watchedValue, delay) {
 	useEffect(() => {
-		const timeoutHandler = setTimeout(() => {
+		if (watchedValue !== "") {
+			const timeoutHandler = setTimeout(() => {
+				handler();
+			}, delay);
+			return () => {
+				clearTimeout(timeoutHandler);
+			};
+		} else {
 			handler();
-		}, delay);
-		return () => {
-			clearTimeout(timeoutHandler);
-		};
+		}
 	}, [watchedValue, delay]);
 }
 
 function VisualizarCargas() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [search, setSearch] = useState("");
-	const [searchResult, setSearchResult] = useState({});
+	const [page, setPage] = useState(1);
+	const [searchResult, setSearchResult] = useState({
+		data: {
+			total_pages: 1,
+			results: [],
+		},
+	});
 
 	const handleSearch = (event) => {
 		setSearch(event.target.value);
 	};
 
+	const searchFunction = async ({ querySearch, pageSearch }) => {
+		setLoading(true);
+		const { data } = await ServiceCargas.search({
+			q: querySearch,
+			page: pageSearch,
+		});
+		setSearchResult(data);
+		setLoading(false);
+	};
+
+	function handlePreviousPage() {
+		let nextPage = 1;
+		if (page - 1 >= 1) {
+			nextPage = page - 1;
+			setPage(nextPage);
+			searchFunction({ pageSearch: nextPage, querySearch: search });
+		}
+	}
+
+	function handleNextPage() {
+		let nextPage = 1;
+
+		if (
+			!searchResult?.data?.total_pages ||
+			page + 1 <= searchResult.data.total_pages
+		) {
+			nextPage = page + 1;
+		} else {
+			nextPage = Number(searchResult.data.total_pages);
+		}
+
+		if (nextPage !== page) {
+			setPage(nextPage);
+			searchFunction({ pageSearch: nextPage, querySearch: search });
+		}
+	}
+
 	useDebouncedFunction(
-		async () => {
-			setLoading(true);
-			const { data } = await ServiceCargas.search({
-				q: search,
-			});
-			setSearchResult(data);
-			setLoading(false);
+		() => {
+			setPage(1);
+			searchFunction({ querySearch: search, pageSearch: 1 });
 		},
 		search,
 		800
 	);
-
-	useEffect(() => {}, []);
 
 	async function handleDelete(id) {
 		try {
@@ -65,14 +108,17 @@ function VisualizarCargas() {
 				}
 			);
 			if (shouldDelete) {
+				setLoading(true);
 				await ServiceCargas.delete({ id });
 				swal("Sucesso!", "O registro foi eliminado", "success");
+				await searchFunction();
 			} else {
 				swal("O registro está seguro");
 			}
 		} catch (error) {
 			console.log(error);
 		}
+		setLoading(false);
 	}
 
 	function formatDate(date) {
@@ -104,6 +150,22 @@ function VisualizarCargas() {
 				</Row>
 				<Row>
 					<Col sm={12}>
+						<Row className="text-end">
+							<Col>
+								Página <strong>{page}</strong> de{" "}
+								<strong>{searchResult?.data?.total_pages || 1}</strong>
+							</Col>
+						</Row>
+						<Row className="text-end mb-3">
+							<Col>
+								<Button variant="outline-info" onClick={handlePreviousPage}>
+									<GrPrevious />
+								</Button>
+								<Button variant="outline-info" onClick={handleNextPage}>
+									<GrNext />
+								</Button>
+							</Col>
+						</Row>
 						<Table responsive striped bordered hover>
 							<thead>
 								<tr>
@@ -122,7 +184,13 @@ function VisualizarCargas() {
 								{searchResult?.data?.results.map((i) => (
 									<tr key={i.id}>
 										<td>
-											<BsPlusSquare />
+											<Link
+												to={`/cargas/${i.canal_comunicacao}/${i.id}`}
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												<BsBoxArrowInUpRight />
+											</Link>
 										</td>
 										<td>{i.id}</td>
 										<td>{i.cliente}</td>

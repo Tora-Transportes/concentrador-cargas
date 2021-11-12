@@ -56,8 +56,8 @@ export class ServiceCargas {
   async delete(cargaId: string, usuario: string) {
     await database("con_cargas")
       .update({
-        ATIVO: 0,
-        USUARIO: usuario,
+        ativo: 0,
+        usuario: usuario,
       })
       .where("id", cargaId);
   }
