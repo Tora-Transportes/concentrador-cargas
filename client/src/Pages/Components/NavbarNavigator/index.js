@@ -54,7 +54,14 @@ function NavbarNavigator() {
 									<ListGroup.Item action>OP4</ListGroup.Item>
 								</Link>
 								<Link to="/">
-									<ListGroup.Item action onClick={logout}>
+									<ListGroup.Item
+										action
+										onClick={() => {
+											setTimeout(() => {
+												logout();
+											}, 200);
+										}}
+									>
 										Sair <FaSignOutAlt />
 									</ListGroup.Item>
 								</Link>

@@ -1,6 +1,6 @@
 export interface ICarga {
   id: string;
-  e_cotado: boolean;
+  e_lote: boolean;
   cliente: string;
   origem_carga: string;
   destino_carga: string;
@@ -8,11 +8,11 @@ export interface ICarga {
   data_coleta: Date;
   tipo_carga: string;
   peso: number;
-  solicitante: string;
+  responsavel_cadastro: string;
   canal_comunicacao: string;
 
   observacao?: string | null;
-  data_cadastro?: Date | null;
-  data_atualizacao?: Date | null;
+  data_cadastro?: Date | null | string;
+  data_atualizacao?: Date | null | string;
   usuario?: string | null;
 }

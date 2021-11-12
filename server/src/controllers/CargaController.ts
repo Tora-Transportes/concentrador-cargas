@@ -49,7 +49,7 @@ class CargaController {
     const { id } = req.params;
 
     const service = new ServiceCargas();
-    await service.delete(id);
+    await service.delete(id, String(req.headers.authorization));
 
     return res.send();
   }
@@ -58,10 +58,16 @@ class CargaController {
     const { id } = req.params;
     const service = new ServiceCargas();
     const carga: ICarga | undefined = await service.index(id);
-    if (carga === undefined) {
-      throw new AppError("Registro não encontrado", 404);
-    }
     return res.json({ data: carga });
+  }
+
+  async search(req: Request, res: Response) {
+    const { q, page } = req.query;
+
+    const service = new ServiceCargas();
+    const searchResult = await service.search(String(q), Number(page));
+
+    return res.json({ data: searchResult });
   }
 }
 

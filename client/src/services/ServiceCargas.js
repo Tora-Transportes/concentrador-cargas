@@ -2,7 +2,7 @@ import api from "./api";
 class ServiceCargas {
 	async create({
 		id,
-		e_cotado,
+		e_lote,
 		cliente,
 		origem_carga,
 		destino_carga,
@@ -10,13 +10,15 @@ class ServiceCargas {
 		data_coleta,
 		tipo_carga,
 		canal_comunicacao,
-		peso,
+		quantidade,
+		unidade_medida,
 		solicitante,
 		observacao,
+		responsavel_cadastro,
 	}) {
 		const carga = {
 			id,
-			e_cotado,
+			e_lote,
 			cliente,
 			origem_carga,
 			destino_carga,
@@ -24,9 +26,11 @@ class ServiceCargas {
 			data_coleta,
 			tipo_carga,
 			canal_comunicacao,
-			peso,
+			quantidade,
+			unidade_medida,
 			solicitante,
 			observacao,
+			responsavel_cadastro,
 		};
 
 		return api.post("/cargas", carga);
@@ -34,7 +38,7 @@ class ServiceCargas {
 
 	async update({
 		id,
-		e_cotado,
+		e_lote,
 		cliente,
 		origem_carga,
 		destino_carga,
@@ -42,12 +46,14 @@ class ServiceCargas {
 		data_coleta,
 		tipo_carga,
 		canal_comunicacao,
-		peso,
+		quantidade,
+		unidade_medida,
 		solicitante,
 		observacao,
+		responsavel_cadastro,
 	}) {
 		const carga = {
-			e_cotado,
+			e_lote,
 			cliente,
 			origem_carga,
 			destino_carga,
@@ -55,9 +61,11 @@ class ServiceCargas {
 			data_coleta,
 			tipo_carga,
 			canal_comunicacao,
-			peso,
+			quantidade,
+			unidade_medida,
 			solicitante,
 			observacao,
+			responsavel_cadastro,
 		};
 
 		return api.put(`/cargas/${id}`, carga);
@@ -69,6 +77,12 @@ class ServiceCargas {
 
 	async index({ id }) {
 		return api.get(`/cargas/${id}`);
+	}
+
+	async search({ q, page }) {
+		return api.get("/cargas", {
+			params: { q, page },
+		});
 	}
 }
 

@@ -22,7 +22,7 @@ api.interceptors.response.use(
 			error?.response?.data?.message ||
 			"Erro desconhecido verifique sua conexão com a rede";
 		await swal("Ops!", message, "error");
-		if (allErrors.length > 0) {
+		if (allErrors?.length > 0) {
 			swal("Detalhes", allErrors);
 		}
 		throw error;

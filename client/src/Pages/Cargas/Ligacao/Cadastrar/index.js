@@ -23,16 +23,17 @@ function Ligacao() {
 
 	const formik = useFormik({
 		initialValues: {
-			solicitante: "",
+			responsavel_cadastro: "",
 			id: "L-" + new Date().getTime(),
-			e_cotado: false,
+			e_lote: false,
 			cliente: "",
 			destino_carga: "",
 			origem_carga: "",
 			data_coleta: "",
 			data_entrega: "",
 			tipo_carga: "",
-			peso: "",
+			quantidade: "",
+			unidade_medida: "",
 			observacao: "",
 		},
 		onSubmit: async (values) => {
@@ -47,11 +48,11 @@ function Ligacao() {
 					`A carga foi cadastrada com o identificador ${data.data.id}`,
 					"success"
 				);
+				resetForm();
 			} catch (error) {
 				console.log(error);
 			}
 			setLoading(false);
-			resetForm();
 		},
 	});
 
@@ -64,12 +65,12 @@ function Ligacao() {
 					<h1 className="mb-5">Cadastro de carga via ligação</h1>
 					<Row>
 						<Col>
-							<FloatingLabel label="Solicitante" className="mb-3">
+							<FloatingLabel label="Responsável pelo cadastro" className="mb-3">
 								<Form.Control
 									type="text"
 									placeholder=" "
-									name="solicitante"
-									value={formik.values.solicitante}
+									name="responsavel_cadastro"
+									value={formik.values.responsavel_cadastro}
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
 									required
@@ -96,12 +97,16 @@ function Ligacao() {
 							<Form.Group className="mb-3">
 								<Form.Check
 									type="checkbox"
-									label="Cota ?"
+									label="Lote ?"
 									onChange={(e) =>
-										formik.setFieldValue("e_cotado", e.target.checked)
+										formik.setFieldValue("e_lote", e.target.checked)
 									}
-									checked={formik.values.e_cotado}
+									checked={formik.values.e_lote}
 								/>
+								<sub>
+									Deve ser cadastrada a quantidade <strong>total</strong> da
+									carga.
+								</sub>
 							</Form.Group>
 						</Col>
 					</Row>
@@ -191,19 +196,40 @@ function Ligacao() {
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="Quantidade (KG)" className="mb-3">
-								<Form.Control
-									type="number"
-									min={1}
-									step={0.000000000001}
-									placeholder=" "
-									name="peso"
-									value={formik.values.peso}
-									onChange={formik.handleChange}
-									onBlur={formik.handleBlur}
-									required
-								/>
-							</FloatingLabel>
+							<Row>
+								<Col>
+									<FloatingLabel label="Quantidade" className="mb-3">
+										<Form.Control
+											type="number"
+											min={1}
+											step={0.01}
+											placeholder=" "
+											name="quantidade"
+											value={formik.values.quantidade}
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+											required
+										/>
+									</FloatingLabel>
+								</Col>
+								<Col>
+									<FloatingLabel label="Unidade" className="mb-3">
+										<Form.Select
+											name="unidade_medida"
+											value={formik.values.unidade_medida}
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+											required
+										>
+											<option value=""></option>
+											<option value="UN">Unidade</option>
+											<option value="T">Tonelada</option>
+											<option value="KG">KG</option>
+											<option value="VG">Viagem</option>
+										</Form.Select>
+									</FloatingLabel>
+								</Col>
+							</Row>
 						</Col>
 					</Row>
 
