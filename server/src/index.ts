@@ -2,6 +2,9 @@ import "express-async-errors";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import https from "https";
+import fs from "fs";
+import path from "path";
 import routes from "./routes";
 import ErrorMiddleware from "./middlewares/Error";
 
@@ -14,4 +17,16 @@ app.use(cors());
 app.use(process.env.BASE_URL || "", routes);
 app.use(ErrorMiddleware);
 
-app.listen(process.env.PORT || 3333);
+https
+  .createServer(
+    {
+      key: fs.readFileSync(
+        path.resolve(__dirname, "..", "certificates", "server.key")
+      ),
+      cert: fs.readFileSync(
+        path.resolve(__dirname, "..", "certificates", "server.cert")
+      ),
+    },
+    app
+  )
+  .listen(process.env.PORT || 3333);
