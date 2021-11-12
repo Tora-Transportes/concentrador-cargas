@@ -241,11 +241,14 @@ function Ligacao() {
 											onBlur={formik.handleBlur}
 											required
 										>
-											<option value=""></option>
-											<option value="UN">Unidade</option>
-											<option value="T">Tonelada</option>
-											<option value="KG">KG</option>
-											<option value="VG">Viagem</option>
+											<option value="cx">Caixa</option>
+											<option value="l">Litros</option>
+											<option value="m3">Metros Cúbicos</option>
+											<option value="pal">Pallets</option>
+											<option value="peç">Peça</option>
+											<option value="kg">kg</option>
+											<option value="t">tonelada</option>
+											<option value="un">Unidade</option>
 										</Form.Select>
 									</FloatingLabel>
 								</Col>
