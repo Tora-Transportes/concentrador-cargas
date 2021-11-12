@@ -9,6 +9,7 @@ const adalConfig = {
 		api: endpoint,
 	},
 	cacheLocation: "localStorage",
+	redirectUri: process.env.REACT_APP_REDIRECT_URI,
 };
 
 const authContext = new AuthenticationContext(adalConfig);
