@@ -1,13 +1,5 @@
-import React, { useState } from "react";
-import {
-	Container,
-	Row,
-	Col,
-	Table,
-	InputGroup,
-	FormControl,
-	Button,
-} from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Container, Row, Col, Table, Button } from "react-bootstrap";
 import {
 	BsPencilSquare,
 	BsTrash,
@@ -20,11 +12,11 @@ import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
-import useDebouncedFunction from "../../Components/useDebounceFunction";
+import useFilterCargas, { CargaFilter } from "../../Components/useFilterCargas";
 
 function VisualizarCargas() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
-	const [search, setSearch] = useState("");
+
 	const [page, setPage] = useState(1);
 	const [searchResult, setSearchResult] = useState({
 		data: {
@@ -32,56 +24,21 @@ function VisualizarCargas() {
 			results: [],
 		},
 	});
+	const { formikFilter } = useFilterCargas();
 
-	const handleSearch = (event) => {
-		setSearch(event.target.value);
-	};
-
-	const searchFunction = async ({ querySearch, pageSearch }) => {
-		setLoading(true);
-		const { data } = await ServiceCargas.search({
-			q: querySearch,
-			page: pageSearch,
-		});
-		setSearchResult(data);
-		setLoading(false);
-	};
-
-	function handlePreviousPage() {
-		let nextPage = 1;
-		if (page - 1 >= 1) {
-			nextPage = page - 1;
-			setPage(nextPage);
-			searchFunction({ pageSearch: nextPage, querySearch: search });
-		}
+	async function search(values) {
+		setSearchResult((await ServiceCargas.search({ ...values, page })).data);
 	}
 
-	function handleNextPage() {
-		let nextPage = 1;
-
-		if (
-			!searchResult?.data?.total_pages ||
-			page + 1 <= searchResult.data.total_pages
-		) {
-			nextPage = page + 1;
-		} else {
-			nextPage = Number(searchResult.data.total_pages);
-		}
-
-		if (nextPage !== page) {
-			setPage(nextPage);
-			searchFunction({ pageSearch: nextPage, querySearch: search });
-		}
+	function nextPage() {
+		if (page + 1 <= searchResult.data.total_pages) setPage(page + 1);
 	}
 
-	useDebouncedFunction(
-		() => {
-			setPage(1);
-			searchFunction({ querySearch: search, pageSearch: 1 });
-		},
-		search,
-		800
-	);
+	function previousPage() {
+		if (page !== 1) {
+			setPage(page - 1);
+		}
+	}
 
 	async function handleDelete(id) {
 		try {
@@ -97,7 +54,7 @@ function VisualizarCargas() {
 				setLoading(true);
 				await ServiceCargas.delete({ id });
 				swal("Sucesso!", "O registro foi eliminado", "success");
-				await searchFunction();
+				search(formikFilter.values);
 			} else {
 				swal("O registro está seguro");
 			}
@@ -116,8 +73,13 @@ function VisualizarCargas() {
 		return strDate.split("T")[0].split("-").reverse().join("-");
 	}
 
+	useEffect(() => {
+		search(formikFilter.values);
+	}, [page]);
+
 	return (
 		<>
+			<CargaFilter formik={formikFilter} onFilter={search} />
 			<LoadingScreen />
 			<NavbarNavigator />
 			<Container fluid className="text-center mb-5">
@@ -127,12 +89,7 @@ function VisualizarCargas() {
 					</Col>
 				</Row>
 				<Row>
-					<InputGroup className="mb-2">
-						<InputGroup.Text>
-							<BsSearch />
-						</InputGroup.Text>
-						<FormControl onChange={handleSearch} placeholder="..." />
-					</InputGroup>
+					<Col></Col>
 				</Row>
 				<Row>
 					<Col sm={12}>
@@ -144,11 +101,17 @@ function VisualizarCargas() {
 						</Row>
 						<Row className="text-end mb-3">
 							<Col>
-								<Button variant="outline-info" onClick={handlePreviousPage}>
-									<GrPrevious />
+								<Button
+									variant="outline-info"
+									onClick={() => formikFilter.setFieldValue("show", true)}
+								>
+									<BsSearch />
 								</Button>
-								<Button variant="outline-info" onClick={handleNextPage}>
-									<GrNext />
+								<Button variant="outline-info">
+									<GrPrevious onClick={previousPage} />
+								</Button>
+								<Button variant="outline-info">
+									<GrNext onClick={nextPage} />
 								</Button>
 							</Col>
 						</Row>
@@ -182,8 +145,8 @@ function VisualizarCargas() {
 										<td>{i.cliente}</td>
 										<td>{i.origem_carga}</td>
 										<td>{i.destino_carga}</td>
-										<td>{formatDate(i.data_entrega)}</td>
 										<td>{formatDate(i.data_coleta)}</td>
+										<td>{formatDate(i.data_entrega)}</td>
 										<td>
 											<Link to={`/cargas/${i.canal_comunicacao}/${i.id}`}>
 												<BsPencilSquare />

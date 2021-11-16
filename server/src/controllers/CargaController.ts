@@ -62,10 +62,8 @@ class CargaController {
   }
 
   async search(req: Request, res: Response) {
-    const { q, page } = req.query;
-
     const service = new ServiceCargas();
-    const searchResult = await service.search(String(q), Number(page));
+    const searchResult = await service.search(req.query);
 
     return res.json({ data: searchResult });
   }

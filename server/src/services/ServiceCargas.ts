@@ -3,8 +3,17 @@ import database from "../database";
 import AppError from "../models/AppError";
 import TokenAd from "../models/TokenAd";
 
+export interface ISearchCarga {
+  page?: number;
+  id?: string;
+  cliente?: string;
+  data_coleta?: string;
+  data_cadastro?: string;
+  data_entrega?: string;
+  e_lote?: number;
+}
+
 export class ServiceCargas {
-  cargas: ICarga[] = [];
   async insert(carga: ICarga) {
     const firstLetter = carga.canal_comunicacao[0].toUpperCase();
     if (firstLetter !== carga.id[0]) {
@@ -87,29 +96,77 @@ export class ServiceCargas {
     return carga;
   }
 
-  async search(search: string, page: number) {
+  async search(query: ISearchCarga) {
     const PAGINATION_SIZE = 50;
-    const realPage = isNaN(page) || page < 1 ? 1 : page;
+    const realPage =
+      isNaN(Number(query?.page)) || Number(query?.page) < 1
+        ? 1
+        : Number(query?.page);
+
     const total = database("con_cargas")
       .count("id as total")
       .first()
       .where("ativo", 1);
+
     const results = database("con_cargas")
       .select("*")
       .limit(PAGINATION_SIZE)
       .offset((realPage - 1) * PAGINATION_SIZE)
       .where("ativo", 1);
 
+    const isValid = (value: string | null | undefined) =>
+      !["", null, undefined, "null", "undefined"].includes(value);
+
     total.andWhere((qb) => {
-      qb.orWhere("id", "like", `%${search}%`);
-      qb.orWhere("responsavel_cadastro", "like", `%${search}%`);
-      qb.orWhere("cliente", "like", `%${search}%`);
+      if (query?.data_cadastro) {
+        const date = query.data_cadastro.split("T")[0];
+        qb.andWhereBetween("data_cadastro", [
+          new Date(date + "T00:00:00"),
+          new Date(date + "T23:59:59"),
+        ]);
+      }
+      if (query?.data_coleta) {
+        qb.andWhere("data_coleta", "=", new Date(query.data_coleta));
+      }
+      if (query?.data_entrega) {
+        qb.andWhere("data_entrega", "=", new Date(query.data_entrega));
+      }
+
+      if (isValid(query?.cliente)) {
+        qb.andWhere("cliente", "like", `%${query.cliente}%`);
+      }
+      if (isValid(query?.id)) {
+        qb.andWhere("id", "like", `%${query.id}%`);
+      }
+      if (isValid(String(query?.e_lote))) {
+        qb.andWhere("e_lote", "=", `${query.e_lote}`);
+      }
     });
 
     results.andWhere((qb) => {
-      qb.orWhere("id", "like", `%${search}%`);
-      qb.orWhere("responsavel_cadastro", "like", `%${search}%`);
-      qb.orWhere("cliente", "like", `%${search}%`);
+      if (query?.data_cadastro) {
+        const date = query.data_cadastro.split("T")[0];
+        qb.andWhereBetween("data_cadastro", [
+          new Date(date + "T00:00:00"),
+          new Date(date + "T23:59:59"),
+        ]);
+      }
+      if (query?.data_coleta) {
+        qb.andWhere("data_coleta", "=", new Date(query.data_coleta));
+      }
+      if (query?.data_entrega) {
+        qb.andWhere("data_entrega", "=", new Date(query.data_entrega));
+      }
+
+      if (isValid(query?.cliente)) {
+        qb.andWhere("cliente", "like", `%${query.cliente}%`);
+      }
+      if (isValid(query?.id)) {
+        qb.andWhere("id", "like", `%${query.id}%`);
+      }
+      if (isValid(String(query?.e_lote))) {
+        qb.andWhere("e_lote", "=", `${query.e_lote}`);
+      }
     });
 
     return {

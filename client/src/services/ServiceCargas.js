@@ -79,9 +79,29 @@ class ServiceCargas {
 		return api.get(`/cargas/${id}`);
 	}
 
-	async search({ q, page }) {
+	async search({
+		page,
+		id,
+		cliente,
+		e_lote,
+		data_entrega,
+		data_coleta,
+		tipo_carga,
+		responsavel_cadastro,
+		data_cadastro,
+	}) {
 		return api.get("/cargas", {
-			params: { q, page },
+			params: {
+				page,
+				id,
+				cliente,
+				e_lote,
+				data_entrega,
+				data_coleta,
+				tipo_carga,
+				responsavel_cadastro,
+				data_cadastro,
+			},
 		});
 	}
 }
