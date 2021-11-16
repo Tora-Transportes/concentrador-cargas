@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
 	Container,
 	Row,
@@ -20,21 +20,7 @@ import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
-
-function useDebouncedFunction(handler, watchedValue, delay) {
-	useEffect(() => {
-		if (watchedValue !== "") {
-			const timeoutHandler = setTimeout(() => {
-				handler();
-			}, delay);
-			return () => {
-				clearTimeout(timeoutHandler);
-			};
-		} else {
-			handler();
-		}
-	}, [watchedValue, delay]);
-}
+import useDebouncedFunction from "../../Components/useDebounceFunction";
 
 function VisualizarCargas() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();

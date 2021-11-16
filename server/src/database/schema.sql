@@ -17,3 +17,19 @@ create table "con_cargas" (
     "ativo" integer default 1 not null,
     "usuario" varchar(4000) not null
 );
+
+
+create table "con_usuarios" (
+    "oid" varchar(100) not null primary key,
+    "nome" varchar(300) not null,
+    "email" varchar(300) not null
+);
+
+create table "con_usuarios_permissoes" (
+    "fk_usuario" varchar(100) not null,
+    "permissao" varchar(100) not null,
+
+    CONSTRAINT fk_usuarios_permissoes
+    FOREIGN KEY ("fk_usuario")
+    REFERENCES "con_usuarios"("oid")
+);

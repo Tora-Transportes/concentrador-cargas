@@ -1,6 +1,7 @@
 import { ICarga } from "../models/ICargas";
 import database from "../database";
 import AppError from "../models/AppError";
+import TokenAd from "../models/TokenAd";
 
 export class ServiceCargas {
   cargas: ICarga[] = [];
@@ -54,6 +55,18 @@ export class ServiceCargas {
   }
 
   async delete(cargaId: string, usuario: string) {
+    const { oid } = TokenAd.getClaims(usuario);
+    const hasPermission = await database("con_usuarios_permissoes")
+      .where("fk_usuario", oid)
+      .where("permissao", "DELETAR_CARGAS")
+      .select("*")
+      .first();
+    if (!hasPermission) {
+      throw new AppError(
+        "O usuário não possui permissão para deletar as cargas",
+        403
+      );
+    }
     await database("con_cargas")
       .update({
         ativo: 0,

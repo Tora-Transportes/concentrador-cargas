@@ -1,14 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ValidationError } from "yup";
 
-interface ErrorContent {
-  message: {
-    message: string;
-    status?: number;
-  };
-}
-
-interface ErrorApplication {
+interface ErrorApplication extends Error {
   status?: number;
   message: string;
   errors?: string[];
@@ -32,5 +25,6 @@ export default async function (
   return res.json({
     message,
     errors,
+    stack: error.stack,
   });
 }

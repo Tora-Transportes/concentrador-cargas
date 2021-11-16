@@ -6,6 +6,7 @@ import LoadMenu from "./Pages/Cargas/Menu";
 import CadastrarCargaLigacao from "./Pages/Cargas/Ligacao/Cadastrar";
 import EditarCargaLigacao from "./Pages/Cargas/Ligacao/Editar";
 import VisualizarCargas from "./Pages/Cargas/Visualizar";
+import PermissoesUsuarios from "./Pages/Usuarios/Permissoes";
 
 export default function AllRoutes() {
 	return (
@@ -20,6 +21,11 @@ export default function AllRoutes() {
 					path="/cargas/ligacao/:id"
 					exact
 					component={EditarCargaLigacao}
+				/>
+				<Route
+					path="/usuarios/permissoes"
+					exact
+					component={PermissoesUsuarios}
 				/>
 			</Switch>
 		</BrowserRouter>

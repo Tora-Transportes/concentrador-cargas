@@ -1,6 +1,7 @@
 import { Router } from "express";
-// import database from "./database";
+
 import CargaController from "./controllers/CargaController";
+import UsuarioController from "./controllers/UsuarioController";
 import TokenMiddleware from "./middlewares/Token";
 import ConvertFieldsToDate from "./middlewares/ConvertFieldsToDate";
 
@@ -13,5 +14,9 @@ routes.post("/cargas", CargaController.create);
 routes.get("/cargas/:id", CargaController.index);
 routes.put("/cargas/:id", CargaController.update);
 routes.delete("/cargas/:id", CargaController.delete);
+
+routes.get("/usuarios", UsuarioController.search);
+routes.get("/usuarios/:oid", UsuarioController.index);
+routes.put("/usuarios/:oid/permissoes", UsuarioController.changePermissions);
 
 export default routes;

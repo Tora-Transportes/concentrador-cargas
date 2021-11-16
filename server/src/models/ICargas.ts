@@ -7,7 +7,8 @@ export interface ICarga {
   data_entrega: Date;
   data_coleta: Date;
   tipo_carga: string;
-  peso: number;
+  quantidade: number;
+  unidade_medida: string;
   responsavel_cadastro: string;
   canal_comunicacao: string;
 
