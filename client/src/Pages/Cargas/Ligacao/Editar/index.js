@@ -13,6 +13,7 @@ import NavbarNavigator from "../../../Components/NavbarNavigator";
 import useLoadingScreen from "../../../Components/LoadingScreen";
 import swal from "sweetalert";
 import ServiceCargas from "../../../../services/ServiceCargas";
+import { getClaims } from "../../../../MicrosoftAuthentication";
 
 function Ligacao() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -36,7 +37,11 @@ function Ligacao() {
 		onSubmit: async (values) => {
 			setLoading(true);
 			try {
-				const { data } = await ServiceCargas.update(values);
+				const { data } = await ServiceCargas.update({
+					...values,
+					responsavel_cadastro: String(getClaims().name),
+				});
+				formik.setFieldValue("responsavel_cadastro", String(getClaims().name));
 				swal(
 					"Sucesso",
 					`O registro de id ${data.data.id} foi atualizado`,
@@ -94,6 +99,7 @@ function Ligacao() {
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
 									required
+									disabled
 								/>
 							</FloatingLabel>
 						</Col>

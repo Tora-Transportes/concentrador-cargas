@@ -14,11 +14,6 @@ cp .env.example .env
 - Iniciando o projeto
 
 ```bash
-npm install
-npm run start
-
-# OU
-
-yarn install
-yarn start
+# Define para o react usar ssl e aponta os certificados
+HTTPS=true SSL_CRT_FILE="../server/certificates/server.cert" SSL_KEY_FILE="../server/certificates/server.key" yarn start
 ```

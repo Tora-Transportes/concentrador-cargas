@@ -12,6 +12,7 @@ import NavbarNavigator from "../../../Components/NavbarNavigator";
 import useLoadingScreen from "../../../Components/LoadingScreen";
 import ServiceCargas from "../../../../services/ServiceCargas";
 import swal from "sweetalert";
+import { getClaims } from "../../../../MicrosoftAuthentication";
 
 function Ligacao() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -23,7 +24,7 @@ function Ligacao() {
 
 	const formik = useFormik({
 		initialValues: {
-			responsavel_cadastro: "",
+			responsavel_cadastro: String(getClaims().name),
 			id: "L-" + new Date().getTime(),
 			e_lote: false,
 			cliente: "",
@@ -74,6 +75,7 @@ function Ligacao() {
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
 									required
+									disabled
 								/>
 							</FloatingLabel>
 						</Col>
