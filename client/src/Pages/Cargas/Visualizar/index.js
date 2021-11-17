@@ -79,7 +79,13 @@ function VisualizarCargas() {
 
 	return (
 		<>
-			<CargaFilter formik={formikFilter} onFilter={search} />
+			<CargaFilter
+				formik={formikFilter}
+				onFilter={(values) => {
+					search(values);
+					setPage(1);
+				}}
+			/>
 			<LoadingScreen />
 			<NavbarNavigator />
 			<Container fluid className="text-center mb-5">
@@ -107,11 +113,11 @@ function VisualizarCargas() {
 								>
 									<BsSearch />
 								</Button>
-								<Button variant="outline-info">
-									<GrPrevious onClick={previousPage} />
+								<Button onClick={previousPage} variant="outline-info">
+									<GrPrevious />
 								</Button>
-								<Button variant="outline-info">
-									<GrNext onClick={nextPage} />
+								<Button onClick={nextPage} variant="outline-info">
+									<GrNext />
 								</Button>
 							</Col>
 						</Row>

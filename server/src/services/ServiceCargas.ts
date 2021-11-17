@@ -11,6 +11,8 @@ export interface ISearchCarga {
   data_cadastro?: string;
   data_entrega?: string;
   e_lote?: number;
+  tipo_carga?: string;
+  responsavel_cadastro?: string;
 }
 
 export class ServiceCargas {
@@ -141,6 +143,16 @@ export class ServiceCargas {
       if (isValid(String(query?.e_lote))) {
         qb.andWhere("e_lote", "=", `${query.e_lote}`);
       }
+      if (isValid(String(query?.tipo_carga))) {
+        qb.andWhere("tipo_carga", "like", `%${query.tipo_carga}%`);
+      }
+      if (isValid(String(query?.responsavel_cadastro))) {
+        qb.andWhere(
+          "responsavel_cadastro",
+          "like",
+          `%${query.responsavel_cadastro}%`
+        );
+      }
     });
 
     results.andWhere((qb) => {
@@ -166,6 +178,16 @@ export class ServiceCargas {
       }
       if (isValid(String(query?.e_lote))) {
         qb.andWhere("e_lote", "=", `${query.e_lote}`);
+      }
+      if (isValid(String(query?.tipo_carga))) {
+        qb.andWhere("tipo_carga", "like", `%${query.tipo_carga}%`);
+      }
+      if (isValid(String(query?.responsavel_cadastro))) {
+        qb.andWhere(
+          "responsavel_cadastro",
+          "like",
+          `%${query.responsavel_cadastro}%`
+        );
       }
     });
 
