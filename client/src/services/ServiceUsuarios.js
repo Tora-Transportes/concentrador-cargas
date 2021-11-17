@@ -11,6 +11,9 @@ class ServiceUsuarios {
 			permissoes,
 		});
 	}
+	async index({ oid }) {
+		return api.get(`/usuarios/${oid}`);
+	}
 }
 
 export default new ServiceUsuarios();
