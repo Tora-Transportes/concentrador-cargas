@@ -47,11 +47,11 @@ function NavbarNavigator() {
 								<Link to="/cargas/visualizar">
 									<ListGroup.Item action>Listagem de cargas</ListGroup.Item>
 								</Link>
+								<Link to="/produtos">
+									<ListGroup.Item action>Produtos</ListGroup.Item>
+								</Link>
 								<Link to="/usuarios/permissoes">
 									<ListGroup.Item action>Permissões</ListGroup.Item>
-								</Link>
-								<Link to="/">
-									<ListGroup.Item action>OP4</ListGroup.Item>
 								</Link>
 								<Link to="/">
 									<ListGroup.Item

@@ -7,6 +7,7 @@ import CadastrarCargaLigacao from "./Pages/Cargas/Ligacao/Cadastrar";
 import EditarCargaLigacao from "./Pages/Cargas/Ligacao/Editar";
 import VisualizarCargas from "./Pages/Cargas/Visualizar";
 import PermissoesUsuarios from "./Pages/Usuarios/Permissoes";
+import Produtos from "./Pages/Produtos";
 
 export default function AllRoutes() {
 	return (
@@ -27,6 +28,8 @@ export default function AllRoutes() {
 					exact
 					component={PermissoesUsuarios}
 				/>
+
+				<Route path="/produtos" exact component={Produtos} />
 			</Switch>
 		</BrowserRouter>
 	);

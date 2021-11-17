@@ -5,6 +5,7 @@ import UsuarioController from "./controllers/UsuarioController";
 import TokenMiddleware from "./middlewares/Token";
 import ConvertFieldsToDate from "./middlewares/ConvertFieldsToDate";
 import ExportController from "./controllers/ExportController";
+import ProdutoController from "./controllers/ProdutoController";
 
 const routes = Router();
 
@@ -24,4 +25,7 @@ routes.get(
   "/relatorio/cargas",
   ExportController.generateReportFromCargasInScreen
 );
+
+routes.post("/produtos", ProdutoController.create);
+routes.get("/produtos", ProdutoController.list);
 export default routes;
