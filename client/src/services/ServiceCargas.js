@@ -104,6 +104,31 @@ class ServiceCargas {
 			},
 		});
 	}
+
+	async exportToXlsx({
+		id,
+		cliente,
+		e_lote,
+		data_entrega,
+		data_coleta,
+		tipo_carga,
+		responsavel_cadastro,
+		data_cadastro,
+	}) {
+		return api.get("/relatorio/cargas", {
+			responseType: "arraybuffer",
+			params: {
+				id,
+				cliente,
+				e_lote,
+				data_entrega,
+				data_coleta,
+				tipo_carga,
+				responsavel_cadastro,
+				data_cadastro,
+			},
+		});
+	}
 }
 
 export default new ServiceCargas();

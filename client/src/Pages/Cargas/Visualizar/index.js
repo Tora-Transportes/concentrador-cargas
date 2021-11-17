@@ -5,6 +5,7 @@ import {
 	BsTrash,
 	BsBoxArrowInUpRight,
 	BsSearch,
+	BsDownload,
 } from "react-icons/bs";
 import { GrPrevious, GrNext } from "react-icons/gr";
 import NavbarNavigator from "../../Components/NavbarNavigator";
@@ -38,6 +39,21 @@ function VisualizarCargas() {
 		if (page !== 1) {
 			setPage(page - 1);
 		}
+	}
+
+	async function handleDownload() {
+		setLoading(true);
+		const response = await ServiceCargas.exportToXlsx(formikFilter.values);
+		const url = window.URL.createObjectURL(new Blob([response.data]));
+		const link = document.createElement("a");
+		link.href = url;
+		link.setAttribute(
+			"download",
+			`RELATORIO-CARGAS_${new Date().getTime()}.xlsx`
+		);
+		link.click();
+
+		setLoading(false);
 	}
 
 	async function handleDelete(id) {
@@ -107,6 +123,9 @@ function VisualizarCargas() {
 						</Row>
 						<Row className="text-end mb-3">
 							<Col>
+								<Button onClick={handleDownload} variant="outline-info">
+									<BsDownload />
+								</Button>
 								<Button
 									variant="outline-info"
 									onClick={() => formikFilter.setFieldValue("show", true)}

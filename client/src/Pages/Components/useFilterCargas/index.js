@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 function useFilterCargas() {
 	const formik = useFormik({
 		initialValues: {
-			show: true,
+			show: false,
 			id: "",
 			cliente: "",
 			e_lote: "",

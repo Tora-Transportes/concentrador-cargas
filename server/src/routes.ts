@@ -4,6 +4,7 @@ import CargaController from "./controllers/CargaController";
 import UsuarioController from "./controllers/UsuarioController";
 import TokenMiddleware from "./middlewares/Token";
 import ConvertFieldsToDate from "./middlewares/ConvertFieldsToDate";
+import ExportController from "./controllers/ExportController";
 
 const routes = Router();
 
@@ -19,4 +20,8 @@ routes.get("/usuarios", UsuarioController.search);
 routes.get("/usuarios/:oid", UsuarioController.index);
 routes.put("/usuarios/:oid/permissoes", UsuarioController.changePermissions);
 
+routes.get(
+  "/relatorio/cargas",
+  ExportController.generateReportFromCargasInScreen
+);
 export default routes;

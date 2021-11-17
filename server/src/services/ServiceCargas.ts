@@ -2,18 +2,8 @@ import { ICarga } from "../models/ICargas";
 import database from "../database";
 import AppError from "../models/AppError";
 import TokenAd from "../models/TokenAd";
-
-export interface ISearchCarga {
-  page?: number;
-  id?: string;
-  cliente?: string;
-  data_coleta?: string;
-  data_cadastro?: string;
-  data_entrega?: string;
-  e_lote?: number;
-  tipo_carga?: string;
-  responsavel_cadastro?: string;
-}
+import ISearchCarga from "../models/ISearchCarga";
+import { Knex } from "knex";
 
 export class ServiceCargas {
   async insert(carga: ICarga) {
@@ -98,8 +88,7 @@ export class ServiceCargas {
     return carga;
   }
 
-  async search(query: ISearchCarga) {
-    const PAGINATION_SIZE = 50;
+  async search(query: ISearchCarga, pageSize = 50) {
     const realPage =
       isNaN(Number(query?.page)) || Number(query?.page) < 1
         ? 1
@@ -112,14 +101,14 @@ export class ServiceCargas {
 
     const results = database("con_cargas")
       .select("*")
-      .limit(PAGINATION_SIZE)
-      .offset((realPage - 1) * PAGINATION_SIZE)
+      .limit(pageSize)
+      .offset((realPage - 1) * pageSize)
       .where("ativo", 1);
 
     const isValid = (value: string | null | undefined) =>
       !["", null, undefined, "null", "undefined"].includes(value);
 
-    total.andWhere((qb) => {
+    const filterDbFunction = (qb: Knex.QueryBuilder) => {
       if (query?.data_cadastro) {
         const date = query.data_cadastro.split("T")[0];
         qb.andWhereBetween("data_cadastro", [
@@ -153,48 +142,13 @@ export class ServiceCargas {
           `%${query.responsavel_cadastro}%`
         );
       }
-    });
+    };
 
-    results.andWhere((qb) => {
-      if (query?.data_cadastro) {
-        const date = query.data_cadastro.split("T")[0];
-        qb.andWhereBetween("data_cadastro", [
-          new Date(date + "T00:00:00"),
-          new Date(date + "T23:59:59"),
-        ]);
-      }
-      if (query?.data_coleta) {
-        qb.andWhere("data_coleta", "=", new Date(query.data_coleta));
-      }
-      if (query?.data_entrega) {
-        qb.andWhere("data_entrega", "=", new Date(query.data_entrega));
-      }
-
-      if (isValid(query?.cliente)) {
-        qb.andWhere("cliente", "like", `%${query.cliente}%`);
-      }
-      if (isValid(query?.id)) {
-        qb.andWhere("id", "like", `%${query.id}%`);
-      }
-      if (isValid(String(query?.e_lote))) {
-        qb.andWhere("e_lote", "=", `${query.e_lote}`);
-      }
-      if (isValid(String(query?.tipo_carga))) {
-        qb.andWhere("tipo_carga", "like", `%${query.tipo_carga}%`);
-      }
-      if (isValid(String(query?.responsavel_cadastro))) {
-        qb.andWhere(
-          "responsavel_cadastro",
-          "like",
-          `%${query.responsavel_cadastro}%`
-        );
-      }
-    });
+    total.andWhere(filterDbFunction);
+    results.andWhere(filterDbFunction);
 
     return {
-      total_pages: Math.ceil(
-        Number((await total)?.total || 0) / PAGINATION_SIZE
-      ),
+      total_pages: Math.ceil(Number((await total)?.total || 0) / pageSize),
       results: await results,
     };
   }
