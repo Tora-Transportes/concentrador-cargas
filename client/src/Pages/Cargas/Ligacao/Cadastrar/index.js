@@ -241,6 +241,7 @@ function Ligacao() {
 											onBlur={formik.handleBlur}
 											required
 										>
+											<option value=""></option>
 											<option value="cx">Caixa</option>
 											<option value="l">Litros</option>
 											<option value="m3">Metros Cúbicos</option>

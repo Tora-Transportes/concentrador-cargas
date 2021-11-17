@@ -266,6 +266,7 @@ function Ligacao() {
 											onBlur={formik.handleBlur}
 											required
 										>
+											<option value=""></option>
 											<option value="cx">Caixa</option>
 											<option value="l">Litros</option>
 											<option value="m3">Metros Cúbicos</option>
@@ -310,7 +311,7 @@ function Ligacao() {
 									as="textarea"
 									rows={3}
 									name="acessorios_requisitos"
-									value={formik.values.acessorios_requisitos}
+									value={formik.values.acessorios_requisitos || ""}
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
 								/>
