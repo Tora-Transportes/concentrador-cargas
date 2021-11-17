@@ -242,7 +242,12 @@ function Ligacao() {
 					<Row>
 						<Col>
 							<Form.Group className="mb-3">
-								<Form.Label>Observações</Form.Label>
+								<Form.Label>
+									Observações{" "}
+									<sub>
+										<strong> (Informações restritivas)</strong>
+									</sub>
+								</Form.Label>
 								<Form.Control
 									as="textarea"
 									rows={3}

@@ -28,7 +28,9 @@ function VisualizarCargas() {
 	const { formikFilter } = useFilterCargas();
 
 	async function search(values) {
+		setLoading(true);
 		setSearchResult((await ServiceCargas.search({ ...values, page })).data);
+		setLoading(false);
 	}
 
 	function nextPage() {
