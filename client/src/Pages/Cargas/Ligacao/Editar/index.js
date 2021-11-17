@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Container,
 	Row,
@@ -14,6 +14,8 @@ import useLoadingScreen from "../../../Components/LoadingScreen";
 import swal from "sweetalert";
 import ServiceCargas from "../../../../services/ServiceCargas";
 import { getClaims } from "../../../../MicrosoftAuthentication";
+import AutocompleteInput from "src/Pages/Components/AutocompleteInput";
+import ServiceProdutos from "src/services/ServiceProdutos";
 
 function Ligacao() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -80,6 +82,14 @@ function Ligacao() {
 		return () => {
 			isMounted = false;
 		};
+	}, []);
+
+	const [produtos, setProdutos] = useState([]);
+
+	useEffect(() => {
+		ServiceProdutos.list().then(({ data }) => {
+			setProdutos(data.data);
+		});
 	}, []);
 
 	return (
@@ -211,7 +221,15 @@ function Ligacao() {
 					<Row>
 						<Col sm={12} md={6}>
 							<FloatingLabel label="Tipo material" className="mb-3">
-								<Form.Control
+								<AutocompleteInput
+									keyDataList="tipo_carga"
+									options={produtos.map((i) => i.nome)}
+									onChange={formik.handleChange}
+									value={formik.values.tipo_carga}
+									name="tipo_carga"
+									required
+								/>
+								{/* <Form.Control
 									type="text"
 									placeholder=" "
 									name="tipo_carga"
@@ -219,7 +237,7 @@ function Ligacao() {
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
 									required
-								/>
+								/> */}
 							</FloatingLabel>
 						</Col>
 						<Col>
