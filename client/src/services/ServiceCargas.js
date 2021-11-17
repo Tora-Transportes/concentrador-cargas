@@ -15,6 +15,7 @@ class ServiceCargas {
 		solicitante,
 		observacao,
 		responsavel_cadastro,
+		acessorios_requisitos,
 	}) {
 		const carga = {
 			id,
@@ -31,6 +32,7 @@ class ServiceCargas {
 			solicitante,
 			observacao,
 			responsavel_cadastro,
+			acessorios_requisitos,
 		};
 
 		return api.post("/cargas", carga);
@@ -51,6 +53,7 @@ class ServiceCargas {
 		solicitante,
 		observacao,
 		responsavel_cadastro,
+		acessorios_requisitos,
 	}) {
 		const carga = {
 			e_lote,
@@ -66,6 +69,7 @@ class ServiceCargas {
 			solicitante,
 			observacao,
 			responsavel_cadastro,
+			acessorios_requisitos,
 		};
 
 		return api.put(`/cargas/${id}`, carga);

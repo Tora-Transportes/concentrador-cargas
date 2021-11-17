@@ -33,6 +33,7 @@ function Ligacao() {
 			quantidade: 0,
 			unidade_medida: "",
 			observacao: "",
+			acessorios_requisitos: "",
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -271,6 +272,22 @@ function Ligacao() {
 									rows={3}
 									name="observacao"
 									value={formik.values.observacao || ""}
+									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
+								/>
+							</Form.Group>
+						</Col>
+					</Row>
+
+					<Row>
+						<Col>
+							<Form.Group className="mb-3">
+								<Form.Label>Pre-Requisitos e Acessórios do veículo</Form.Label>
+								<Form.Control
+									as="textarea"
+									rows={3}
+									name="acessorios_requisitos"
+									value={formik.values.acessorios_requisitos}
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
 								/>

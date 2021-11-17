@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { factoryCargaValidator } from "../validations/CargaValidator";
 import AppError from "../models/AppError";
 import { ServiceCargas } from "../services/ServiceCargas";
+import TokenAd from "../models/TokenAd";
 
 class CargaController {
   async create(req: Request, res: Response) {
@@ -14,7 +15,7 @@ class CargaController {
     const carga: ICarga = await validator.validate(req.body, {
       abortEarly: false,
     });
-    carga.usuario = req.headers.authorization;
+    carga.usuario = TokenAd.getClaims(String(req.headers.authorization)).name;
 
     const service = new ServiceCargas();
     const id = await service.insert(carga);
@@ -37,7 +38,7 @@ class CargaController {
     const carga: ICarga = await validator.validate(input, {
       abortEarly: false,
     });
-    carga.usuario = req.headers.authorization;
+    carga.usuario = TokenAd.getClaims(String(req.headers.authorization)).name;
 
     const service = new ServiceCargas();
     const updateResult = await service.update(carga);

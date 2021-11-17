@@ -31,6 +31,7 @@ export function factoryCargaValidator(canal_comunicacao: string) {
       .string()
       .required("A unidade de medida da carga deve ser preenchido"),
     observacao: yup.string().nullable(),
+    acessorios_requisitos: yup.string().nullable(),
     canal_comunicacao: yup
       .string()
       .required("O local da criação da carga deve ser preenchida")

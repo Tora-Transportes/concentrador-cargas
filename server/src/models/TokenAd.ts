@@ -2,6 +2,7 @@ import decode from "jwt-decode";
 
 export interface ITokenAdClaims {
   oid: string;
+  name: string;
 }
 
 class TokenAd {

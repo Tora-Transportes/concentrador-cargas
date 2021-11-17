@@ -15,6 +15,7 @@ create table "con_cargas" (
     "data_cadastro" timestamp not null,
     "data_atualizacao" timestamp not null,
     "ativo" integer default 1 not null,
+    "acessorios_requisitos" varchar(4000),
     "usuario" varchar(4000) not null
 );
 

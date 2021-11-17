@@ -12,6 +12,7 @@ export interface ICarga {
   responsavel_cadastro: string;
   canal_comunicacao: string;
 
+  acessorios_requisitos?: string | null;
   observacao?: string | null;
   data_cadastro?: Date | null | string;
   data_atualizacao?: Date | null | string;

@@ -56,7 +56,7 @@ export class ServiceCargas {
   }
 
   async delete(cargaId: string, usuario: string) {
-    const { oid } = TokenAd.getClaims(usuario);
+    const { oid, name } = TokenAd.getClaims(usuario);
     const hasPermission = await database("con_usuarios_permissoes")
       .where("fk_usuario", oid)
       .where("permissao", "DELETAR_CARGAS")
@@ -71,7 +71,7 @@ export class ServiceCargas {
     await database("con_cargas")
       .update({
         ativo: 0,
-        usuario: usuario,
+        usuario: name,
       })
       .where("id", cargaId);
   }
