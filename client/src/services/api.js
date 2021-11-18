@@ -1,15 +1,32 @@
 import axios from "axios";
 import swal from "sweetalert";
-import { getToken } from "../MicrosoftAuthentication";
+import { authContext, adalConfig } from "../MicrosoftAuthentication";
 
 const api = axios.create({
 	baseURL: process.env.REACT_APP_API_URL,
 });
 
-api.interceptors.request.use((config) => {
-	config.headers.authorization = getToken();
-	return config;
-});
+api.interceptors.request.use(
+	(config) => {
+		// Check and acquire a token before the request is sent
+		return new Promise((resolve, reject) => {
+			authContext.acquireToken(adalConfig.endpoints.api, (message, token) => {
+				if (token) {
+					config.headers.Authorization = token;
+					resolve(config);
+				} else {
+					// Do something with error of acquiring the token
+					location.reload();
+					reject(config);
+				}
+			});
+		});
+	},
+	(error) => {
+		// Do something with error of the request
+		return Promise.reject(error);
+	}
+);
 
 api.interceptors.response.use(
 	(response) => {

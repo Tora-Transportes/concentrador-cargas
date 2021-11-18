@@ -16,6 +16,7 @@ import ServiceCargas from "../../../../services/ServiceCargas";
 import { getClaims } from "../../../../MicrosoftAuthentication";
 import AutocompleteInput from "src/Pages/Components/AutocompleteInput";
 import ServiceProdutos from "src/services/ServiceProdutos";
+import InputCliente from "src/Pages/Components/InputCliente";
 
 function Ligacao() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -149,17 +150,15 @@ function Ligacao() {
 					</Row>
 					<Row>
 						<Col>
-							<FloatingLabel label="Cliente" className="mb-3">
-								<Form.Control
-									type="text"
-									placeholder=" "
-									name="cliente"
-									value={formik.values.cliente}
-									onChange={formik.handleChange}
-									onBlur={formik.handleBlur}
-									required
-								/>
-							</FloatingLabel>
+							<InputCliente
+								type="text"
+								placeholder=" "
+								name="cliente"
+								value={formik.values.cliente}
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+								required
+							/>
 						</Col>
 					</Row>
 					<Row>

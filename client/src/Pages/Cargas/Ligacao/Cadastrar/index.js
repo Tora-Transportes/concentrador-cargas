@@ -15,6 +15,7 @@ import swal from "sweetalert";
 import { getClaims } from "../../../../MicrosoftAuthentication";
 import AutocompleteInput from "../../../Components/AutocompleteInput";
 import ServiceProdutos from "../../../../services/ServiceProdutos";
+import InputCliente from "../../../Components/InputCliente";
 
 function Ligacao() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -124,17 +125,15 @@ function Ligacao() {
 					</Row>
 					<Row>
 						<Col>
-							<FloatingLabel label="Cliente" className="mb-3">
-								<Form.Control
-									type="text"
-									placeholder=" "
-									name="cliente"
-									value={formik.values.cliente}
-									onChange={formik.handleChange}
-									onBlur={formik.handleBlur}
-									required
-								/>
-							</FloatingLabel>
+							<InputCliente
+								type="text"
+								placeholder=" "
+								name="cliente"
+								value={formik.values.cliente}
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+								required
+							/>
 						</Col>
 					</Row>
 					<Row>

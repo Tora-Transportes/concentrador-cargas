@@ -6,6 +6,7 @@ import TokenMiddleware from "./middlewares/Token";
 import ConvertFieldsToDate from "./middlewares/ConvertFieldsToDate";
 import ExportController from "./controllers/ExportController";
 import ProdutoController from "./controllers/ProdutoController";
+import RecomendacoesController from "./controllers/RecomendacoesController";
 
 const routes = Router();
 
@@ -28,4 +29,6 @@ routes.get(
 
 routes.post("/produtos", ProdutoController.create);
 routes.get("/produtos", ProdutoController.list);
+
+routes.get("/recomendacoes/organizacoes", RecomendacoesController.organizacoes);
 export default routes;

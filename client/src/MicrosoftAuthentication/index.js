@@ -1,5 +1,10 @@
 import { runWithAdal } from "react-adal";
-import { authContext, adalApiFetch, withAdalLoginApi } from "./adalConfig";
+import {
+	authContext,
+	adalApiFetch,
+	withAdalLoginApi,
+	adalConfig,
+} from "./adalConfig";
 import {
 	isInRole,
 	getRoles,
@@ -15,7 +20,7 @@ function requireMicrosoftAuthentication(reactRender) {
 	return runWithAdal(authContext, reactRender, true);
 }
 
-export { authContext, adalApiFetch, withAdalLoginApi };
+export { authContext, adalApiFetch, withAdalLoginApi, adalConfig };
 export {
 	isInRole,
 	getRoles,
