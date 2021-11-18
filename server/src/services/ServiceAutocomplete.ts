@@ -7,7 +7,7 @@ export interface IQueryOrganizacao {
 }
 
 class ServiceAutocomplete {
-  async recomendOrganizacao(search: IQueryOrganizacao) {
+  async recommendOrganizacao(search: IQueryOrganizacao) {
     const query = database("ORGANIZACAO as ORG")
       .join("PRACA as PRA", "PRA.ORG_COD", "ORG.ORG_COD")
       .join("CIDADE as CID", "CID.CID_COD", "PRA.CID_COD")

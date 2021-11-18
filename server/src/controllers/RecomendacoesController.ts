@@ -4,7 +4,7 @@ import ServiceAutocomplete from "../services/ServiceAutocomplete";
 class RecomendacoesController {
   async organizacoes(req: Request, res: Response) {
     const service = new ServiceAutocomplete();
-    const orgs = await service.recomendOrganizacao(req.query);
+    const orgs = await service.recommendOrganizacao(req.query);
     return res.json({ data: orgs });
   }
 }
