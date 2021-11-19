@@ -313,21 +313,6 @@ function Ligacao() {
 						<Col>
 							<Row>
 								<Col>
-									<FloatingLabel label="Quantidade" className="mb-3">
-										<Form.Control
-											type="number"
-											min={1}
-											step={0.01}
-											placeholder=" "
-											name="quantidade"
-											value={formik.values.quantidade}
-											onChange={formik.handleChange}
-											onBlur={formik.handleBlur}
-											required
-										/>
-									</FloatingLabel>
-								</Col>
-								<Col>
 									<FloatingLabel label="Unidade" className="mb-3">
 										<Form.Select
 											name="unidade_medida"
@@ -346,6 +331,21 @@ function Ligacao() {
 											<option value="t">tonelada</option>
 											<option value="un">Unidade</option>
 										</Form.Select>
+									</FloatingLabel>
+								</Col>
+								<Col>
+									<FloatingLabel label="Quantidade" className="mb-3">
+										<Form.Control
+											type="number"
+											min={1}
+											step={0.01}
+											placeholder=" "
+											name="quantidade"
+											value={formik.values.quantidade}
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+											required
+										/>
 									</FloatingLabel>
 								</Col>
 							</Row>
