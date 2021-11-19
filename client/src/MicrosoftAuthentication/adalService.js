@@ -20,7 +20,11 @@ const getUser = () => {
 };
 
 const getClaims = () => {
-	return decode(getToken());
+	try {
+		return decode(getToken());
+	} catch (error) {
+		throw new Error("erro ao chamar getClaims" + error.message);
+	}
 };
 
 const loggedIn = () => {

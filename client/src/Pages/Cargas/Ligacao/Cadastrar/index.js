@@ -6,6 +6,8 @@ import {
 	FloatingLabel,
 	Form,
 	Button,
+	OverlayTrigger,
+	Tooltip,
 } from "react-bootstrap";
 import { useFormik } from "formik";
 import NavbarNavigator from "../../../Components/NavbarNavigator";
@@ -18,6 +20,7 @@ import ServiceProdutos from "../../../../services/ServiceProdutos";
 import InputCliente from "../../../Components/InputCliente";
 import ServiceRecomendacoes from "src/services/ServiceRecomendacoes";
 import _ from "lodash";
+import { IoMdHelpCircle } from "react-icons/io";
 
 function Ligacao() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -135,20 +138,50 @@ function Ligacao() {
 					</Row>
 					<Row>
 						<Col>
+							<hr />
 							<Form.Group className="mb-3">
+								É Lote ?{" "}
 								<Form.Check
-									type="checkbox"
-									label="Lote ?"
-									onChange={(e) =>
-										formik.setFieldValue("e_lote", e.target.checked)
-									}
-									checked={formik.values.e_lote}
+									type="radio"
+									label="Sim"
+									name="e_lote"
+									id="e_lote_sim"
+									onChange={() => formik.setFieldValue("e_lote", true)}
+									checked={formik.values.e_lote === true}
+									inline
 								/>
+								<Form.Check
+									type="radio"
+									label="Não"
+									name="e_lote"
+									id="e_lote_nao"
+									onChange={() => formik.setFieldValue("e_lote", false)}
+									checked={formik.values.e_lote === false}
+									inline
+								/>
+								<OverlayTrigger
+									key="tooltip-overlay-lote"
+									placement="bottom"
+									overlay={
+										<Tooltip id={`tooltip-bottom`}>
+											O campo Lote é para sinalizar o tipo de carga. Quando o
+											lote é Sim (Representa uma quantidade expressiva de volume
+											de cargas que devem ser retiradas). Quando Lote é Não
+											(Representa uma carga com um volume único).
+										</Tooltip>
+									}
+								>
+									<span>
+										<IoMdHelpCircle size={20} />
+									</span>
+								</OverlayTrigger>
+								<br />
 								<sub>
 									Deve ser cadastrada a quantidade <strong>total</strong> da
 									carga.
 								</sub>
 							</Form.Group>
+							<hr />
 						</Col>
 					</Row>
 					<Row>
