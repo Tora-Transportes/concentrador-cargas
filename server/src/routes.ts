@@ -31,4 +31,5 @@ routes.post("/produtos", ProdutoController.create);
 routes.get("/produtos", ProdutoController.list);
 
 routes.get("/recomendacoes/organizacoes", RecomendacoesController.organizacoes);
+routes.get("/recomendacoes/locais", RecomendacoesController.cidadeEstados);
 export default routes;

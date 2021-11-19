@@ -14,6 +14,10 @@ class ServiceRecomendacoes {
 
 		return api.get("/recomendacoes/organizacoes", { params: filter });
 	}
+
+	async locais({ query }) {
+		return api.get("/recomendacoes/locais", { params: { query } });
+	}
 }
 
 export default new ServiceRecomendacoes();

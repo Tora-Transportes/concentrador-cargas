@@ -7,6 +7,12 @@ class RecomendacoesController {
     const orgs = await service.recommendOrganizacao(req.query);
     return res.json({ data: orgs });
   }
+
+  async cidadeEstados(req: Request, res: Response) {
+    const service = new ServiceAutocomplete();
+    const cidadeEstados = await service.recommendCidadeEstado(req.query);
+    return res.json({ data: cidadeEstados });
+  }
 }
 
 export default new RecomendacoesController();

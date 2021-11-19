@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
 	Container,
 	Row,
@@ -16,21 +16,14 @@ import { getClaims } from "../../../../MicrosoftAuthentication";
 import AutocompleteInput from "../../../Components/AutocompleteInput";
 import ServiceProdutos from "../../../../services/ServiceProdutos";
 import InputCliente from "../../../Components/InputCliente";
+import ServiceRecomendacoes from "src/services/ServiceRecomendacoes";
+import _ from "lodash";
 
 function Ligacao() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [produtos, setProdutos] = useState([]);
-
-	useEffect(() => {
-		ServiceProdutos.list().then(({ data }) => {
-			setProdutos(data.data);
-		});
-	}, []);
-
-	function resetForm() {
-		formik.resetForm();
-		formik.setFieldValue("id", "L-" + new Date().getTime());
-	}
+	const [locaisOrigemCarga, setLocaisOrigemCarga] = useState([]);
+	const [locaisDestinoCarga, setLocaisDestinoCarga] = useState([]);
 
 	const formik = useFormik({
 		initialValues: {
@@ -67,6 +60,41 @@ function Ligacao() {
 			setLoading(false);
 		},
 	});
+
+	const throttledAutocompleteLocais = useRef(
+		_.throttle((query, callback) => {
+			ServiceRecomendacoes.locais({ query }).then(({ data }) => {
+				callback(data.data);
+			});
+		}, 500)
+	);
+	useEffect(
+		() =>
+			throttledAutocompleteLocais.current(
+				formik.values.origem_carga,
+				setLocaisOrigemCarga
+			),
+		[formik.values.origem_carga]
+	);
+	useEffect(
+		() =>
+			throttledAutocompleteLocais.current(
+				formik.values.destino_carga,
+				setLocaisDestinoCarga
+			),
+		[formik.values.destino_carga]
+	);
+
+	useEffect(() => {
+		ServiceProdutos.list().then(({ data }) => {
+			setProdutos(data.data);
+		});
+	}, []);
+
+	function resetForm() {
+		formik.resetForm();
+		formik.setFieldValue("id", "L-" + new Date().getTime());
+	}
 
 	return (
 		<>
@@ -139,7 +167,11 @@ function Ligacao() {
 					<Row>
 						<Col sm={12} md={6}>
 							<FloatingLabel label="Origem carga" className="mb-3">
-								<Form.Control
+								<AutocompleteInput
+									keyDataList="origem_carga"
+									options={locaisOrigemCarga.map(
+										(i) => `${i.cidade}/${i.estado}`
+									)}
 									type="text"
 									placeholder=" "
 									name="origem_carga"
@@ -152,7 +184,11 @@ function Ligacao() {
 						</Col>
 						<Col>
 							<FloatingLabel label="Destino carga" className="mb-3">
-								<Form.Control
+								<AutocompleteInput
+									keyDataList="destino_carga"
+									options={locaisDestinoCarga.map(
+										(i) => `${i.cidade}/${i.estado}`
+									)}
 									type="text"
 									placeholder=" "
 									name="destino_carga"

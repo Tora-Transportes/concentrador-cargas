@@ -6,6 +6,10 @@ export interface IQueryOrganizacao {
   cidade?: string;
 }
 
+export interface IQueryCidadeEstado {
+  query?: string;
+}
+
 class ServiceAutocomplete {
   async recommendOrganizacao(search: IQueryOrganizacao) {
     const query = database("ORGANIZACAO as ORG")
@@ -36,6 +40,21 @@ class ServiceAutocomplete {
     if (search?.cidade) {
       query.andWhere("CID.CID_NOM", "like", `%${search.cidade.toUpperCase()}%`);
     }
+    return query;
+  }
+
+  async recommendCidadeEstado(search: IQueryCidadeEstado) {
+    const query = database("CIDADE as CID")
+      .join("ESTADO as EST", "EST.UF_COD", "CID.UF_COD")
+      .select(["CID.CID_NOM AS cidade", "EST.UF_SIGLA AS estado"])
+      .limit(20);
+
+    if (search?.query) {
+      query.andWhereRaw("CID.CID_NOM || '/' || EST.UF_SIGLA like ?", [
+        `%${search.query.trim().toUpperCase()}%`,
+      ]);
+    }
+
     return query;
   }
 }
