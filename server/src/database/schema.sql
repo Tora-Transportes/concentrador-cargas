@@ -42,6 +42,9 @@ create table "con_produtos" (
     "usuario" varchar(300) not null
 );
 
+alter table "con_cargas" modify "origem_carga" varchar(200);
+alter table "con_cargas" modify "destino_carga" varchar(200);
+
 
 -- CARGA DE DADOS NA TABELA DE PRODUTOS
 INSERT INTO "con_produtos" ("id", "nome", "usuario") values ("seq_con_produtos".NEXTVAL, 'ABRASIVOS', 'Andre Alves Leocadio');
