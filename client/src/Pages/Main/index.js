@@ -9,10 +9,14 @@ function Main() {
 	const [userData, setUserData] = useState({});
 
 	useEffect(() => {
-		const oid = getClaims().oid;
-		ServiceUsuarios.index({ oid }).then(({ data }) => {
-			setUserData(data.data);
-		});
+		try {
+			const oid = getClaims().oid;
+			ServiceUsuarios.index({ oid }).then(({ data }) => {
+				setUserData(data.data);
+			});
+		} catch (error) {
+			location.reload();
+		}
 	}, []);
 	return (
 		<>
