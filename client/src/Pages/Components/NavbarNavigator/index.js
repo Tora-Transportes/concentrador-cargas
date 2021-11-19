@@ -8,10 +8,20 @@ import { getClaims, logout } from "../../../MicrosoftAuthentication";
 import "./index.css";
 
 function NavbarNavigator() {
-	const userData = getClaims();
-	const initialsName = `${userData.given_name.charAt(
-		0
-	)}${userData.given_name.charAt(1)}`.toUpperCase();
+	let userData;
+	let initialsName;
+	try {
+		userData = getClaims();
+		initialsName = `${userData.given_name.charAt(
+			0
+		)}${userData.given_name.charAt(1)}`.toUpperCase();
+	} catch (error) {
+		userData = {
+			name: "  ",
+		};
+		initialsName = "  ";
+	}
+
 	return (
 		<>
 			<Navbar variant="dark" id="navbar-tora" expand={false}>
