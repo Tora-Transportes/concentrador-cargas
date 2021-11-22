@@ -266,7 +266,7 @@ function Ligacao() {
 							<FloatingLabel label="Tipo material" className="mb-3">
 								<AutocompleteInput
 									keyDataList="tipo_carga"
-									options={produtos.map((i) => i.nome)}
+									options={produtos.filter((i) => !!i.ativo).map((i) => i.nome)}
 									onChange={formik.handleChange}
 									value={formik.values.tipo_carga}
 									name="tipo_carga"

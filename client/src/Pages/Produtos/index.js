@@ -4,10 +4,11 @@ import {
 	Row,
 	Col,
 	ListGroup,
-	FormControl,
 	InputGroup,
 	Button,
 	Form,
+	Table,
+	FormControl,
 } from "react-bootstrap";
 import { useFormik } from "formik";
 import NavbarNavigator from "../Components/NavbarNavigator";
@@ -16,6 +17,8 @@ import { MdAddCircleOutline } from "react-icons/md";
 import swal from "sweetalert";
 import { getClaims } from "../../MicrosoftAuthentication";
 import useLoadingScreen from "../Components/LoadingScreen";
+
+import { BsPencilSquare, BsTrash, BsCheckLg } from "react-icons/bs";
 
 function Produtos() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -31,10 +34,10 @@ function Produtos() {
 				const username = getClaims().name;
 				const atualizacao = [
 					...produtos,
-					{ ...produto, usuario: username },
+					{ ...produto, usuario: username, ativo: 1 },
 				].sort((a, b) => (a.nome < b.nome ? -1 : 1));
 				setProdutos(atualizacao);
-				swal("Sucesso!", "O tipo de material foi cadastrado com sucesso");
+				swal("Sucesso!", "O tipo de material foi cadastrado", "success");
 				formik.resetForm();
 			} catch (error) {
 				console.log(error);
@@ -43,6 +46,74 @@ function Produtos() {
 			setLoading(false);
 		},
 	});
+
+	async function handleDelete(id) {
+		const ok = await swal(
+			"Ops?",
+			`Tem certeza que deseja desabilitar o produto ${id}`,
+			"warning",
+			{
+				buttons: ["Não", true],
+			}
+		);
+		if (ok) {
+			try {
+				await ServiceProdutos.delete({ id });
+				swal("Sucesso", "Produto desabilitado", "success");
+				setProdutos((p) =>
+					p.map((i) => {
+						if (i.id !== id) return i;
+						return { ...i, ativo: 0 };
+					})
+				);
+			} catch (error) {
+				console.log(error);
+			}
+		}
+	}
+
+	async function handleEnableProduto(id) {
+		try {
+			await ServiceProdutos.enable({ id });
+			swal("Sucesso", "Produto ativado", "success");
+			setProdutos((p) =>
+				p.map((i) => {
+					if (i.id !== id) return i;
+					return { ...i, ativo: 1 };
+				})
+			);
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	async function handleEditProduto(id) {
+		const produto = await swal(`Novo nome para o produto '${id}'`, {
+			content: "input",
+			buttons: ["Cancelar", true],
+		});
+		if (produto === null) {
+			return;
+		}
+		if (!produto) {
+			return swal("Nenhum dado foi atualizado");
+		}
+
+		try {
+			await ServiceProdutos.update({ nome: produto, id });
+			swal("Sucesso!", "Produto atualizado", "success");
+			setProdutos((p) =>
+				p
+					.map((i) => {
+						if (i.id !== id) return i;
+						return { ...i, nome: produto };
+					})
+					.sort((a, b) => (a.nome > b.nome ? 1 : -1))
+			);
+		} catch (error) {
+			console.log(error);
+		}
+	}
 
 	useEffect(() => {
 		ServiceProdutos.list().then(({ data }) => {
@@ -66,7 +137,13 @@ function Produtos() {
 								onChange={formik.handleChange}
 								value={formik.values.nome}
 								placeholder=". . ."
+								list="nome_produtos"
 							/>
+							<datalist id="nome_produtos">
+								{produtos.map((i) => (
+									<option key={i.nome}>{i.nome}</option>
+								))}
+							</datalist>
 						</InputGroup>
 					</Form>
 				</Row>
@@ -75,11 +152,55 @@ function Produtos() {
 					<Col>
 						<ListGroup as="ol">
 							<Row>
-								{produtos.map((i) => (
-									<Col md={3} sm={4} key={i.id}>
-										<ListGroup.Item as="li">{i.nome}</ListGroup.Item>
-									</Col>
-								))}
+								<Table>
+									<thead>
+										<tr>
+											<th>Nome</th>
+											<th>Atualizado Por:</th>
+											<th>Situação</th>
+											<th>Ações</th>
+										</tr>
+									</thead>
+									<tbody>
+										{produtos.map((i) => (
+											<tr key={i.id}>
+												<td>{i.nome}</td>
+												<td>{i.usuario}</td>
+												<td>{i.ativo ? "Ativo" : "Desativado"}</td>
+												<td>
+													<a href="">
+														<BsPencilSquare
+															onClick={(e) => {
+																e.preventDefault();
+																handleEditProduto(i.id);
+															}}
+														/>
+													</a>{" "}
+													{!!i.ativo && (
+														<a href="">
+															<BsTrash
+																onClick={(e) => {
+																	e.preventDefault();
+																	handleDelete(i.id);
+																}}
+															/>
+														</a>
+													)}{" "}
+													{!i.ativo && (
+														<a href="">
+															<BsCheckLg
+																onClick={(e) => {
+																	e.preventDefault();
+																	handleEnableProduto(i.id);
+																}}
+															/>
+														</a>
+													)}
+												</td>
+											</tr>
+										))}
+									</tbody>
+								</Table>
 							</Row>
 						</ListGroup>
 					</Col>

@@ -28,6 +28,9 @@ routes.get(
 );
 
 routes.post("/produtos", ProdutoController.create);
+routes.put("/produtos/:id", ProdutoController.update);
+routes.put("/produtos/:id/ativar", ProdutoController.enable);
+routes.delete("/produtos/:id", ProdutoController.delete);
 routes.get("/produtos", ProdutoController.list);
 
 routes.get("/recomendacoes/organizacoes", RecomendacoesController.organizacoes);

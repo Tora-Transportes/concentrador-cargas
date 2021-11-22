@@ -124,3 +124,6 @@ INSERT INTO "con_produtos" ("id", "nome", "usuario") values ("seq_con_produtos".
 INSERT INTO "con_produtos" ("id", "nome", "usuario") values ("seq_con_produtos".NEXTVAL, 'MINERIO DE FERRO', 'Andre Alves Leocadio');
 INSERT INTO "con_produtos" ("id", "nome", "usuario") values ("seq_con_produtos".NEXTVAL, 'LINGOTE DE ZINCO', 'Andre Alves Leocadio');
 INSERT INTO "con_produtos" ("id", "nome", "usuario") values ("seq_con_produtos".NEXTVAL, 'LIGOTE DE ALUMINIO', 'Andre Alves Leocadio');
+
+
+ALTER TABLE "con_produtos" ADD ( "ativo" INTEGER DEFAULT 1 NOT NULL);
