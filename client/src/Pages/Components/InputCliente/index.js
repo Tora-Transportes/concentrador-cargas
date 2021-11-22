@@ -52,7 +52,7 @@ function InputCliente({ onChange, ...props }) {
 						variant="outline-success"
 						onClick={() => formik.setFieldValue("show", true)}
 					>
-						Cliente
+						Informe um Cliente
 					</Button>
 				</InputGroup.Text>
 				<Form.Control {...props} disabled ref={input} />
