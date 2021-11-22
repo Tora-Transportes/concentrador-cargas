@@ -88,7 +88,7 @@ export class ServiceCargas {
     return carga;
   }
 
-  async search(query: ISearchCarga, pageSize = 50) {
+  async search(query: ISearchCarga, pageSize = 5) {
     const realPage =
       isNaN(Number(query?.page)) || Number(query?.page) < 1
         ? 1
@@ -146,6 +146,13 @@ export class ServiceCargas {
 
     total.andWhere(filterDbFunction);
     results.andWhere(filterDbFunction);
+
+    if (isValid(query?.order_column)) {
+      results.orderBy(
+        String(query.order_column),
+        String(query?.order_direction)
+      );
+    }
 
     return {
       total_pages: Math.ceil(Number((await total)?.total || 0) / pageSize),

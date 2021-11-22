@@ -85,6 +85,8 @@ class ServiceCargas {
 
 	async search({
 		page,
+		order_column,
+		order_direction,
 		id,
 		cliente,
 		e_lote,
@@ -105,6 +107,8 @@ class ServiceCargas {
 				tipo_carga,
 				responsavel_cadastro,
 				data_cadastro,
+				order_column,
+				order_direction,
 			},
 		});
 	}
