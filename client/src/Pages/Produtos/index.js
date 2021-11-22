@@ -29,7 +29,11 @@ function Produtos() {
 			try {
 				const produto = (await ServiceProdutos.create(values)).data.data;
 				const username = getClaims().name;
-				setProdutos([{ ...produto, usuario: username }, ...produtos]);
+				const atualizacao = [
+					...produtos,
+					{ ...produto, usuario: username },
+				].sort((a, b) => (a.nome < b.nome ? -1 : 1));
+				setProdutos(atualizacao);
 				swal("Sucesso!", "O tipo de material foi cadastrado com sucesso");
 				formik.resetForm();
 			} catch (error) {

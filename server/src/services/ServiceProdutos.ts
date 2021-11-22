@@ -52,6 +52,6 @@ export class ServiceProdutos {
   }
 
   async list() {
-    return database("con_produtos").select("*");
+    return database("con_produtos").select("*").orderBy("nome", "asc");
   }
 }
