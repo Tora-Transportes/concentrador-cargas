@@ -55,7 +55,12 @@ function InputCliente({ onChange, ...props }) {
 						Informe um Cliente
 					</Button>
 				</InputGroup.Text>
-				<Form.Control {...props} disabled ref={input} />
+				<Form.Control
+					{...props}
+					onFocus={() => formik.setFieldValue("show", true)}
+					onChange={() => formik.setFieldValue("show", true)}
+					ref={input}
+				/>
 			</InputGroup>
 
 			{formik.values.show && (
