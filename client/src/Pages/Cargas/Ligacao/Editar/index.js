@@ -67,6 +67,29 @@ function Ligacao() {
 		},
 	});
 
+	async function handleExcluirCarga() {
+		setLoading(true);
+		try {
+			const ok = await swal(
+				"OPS?",
+				"Tem certeza que deseja excluir a carga atual ?",
+				{
+					buttons: ["Não", true],
+					dangerMode: true,
+					icon: "warning",
+				}
+			);
+			if (ok) {
+				await ServiceCargas.delete({ id: formik.values.id });
+				swal("Sucesso!", "Carga removida", "success");
+				history.push("/cargas/visualizar");
+			}
+		} catch (error) {
+			console.log(error);
+		}
+		setLoading(false);
+	}
+
 	useEffect(() => {
 		let isMounted = true;
 		setLoading(true);
@@ -299,15 +322,6 @@ function Ligacao() {
 									name="tipo_carga"
 									required
 								/>
-								{/* <Form.Control
-									type="text"
-									placeholder=" "
-									name="tipo_carga"
-									value={formik.values.tipo_carga}
-									onChange={formik.handleChange}
-									onBlur={formik.handleBlur}
-									required
-								/> */}
 							</FloatingLabel>
 						</Col>
 						<Col>
@@ -391,8 +405,17 @@ function Ligacao() {
 
 					<Row>
 						<Col>
-							<Button variant="outline-warning" type="submit" className="p-3">
+							<Button variant="warning" type="submit" className="p-3 fw-bold">
 								Editar
+							</Button>
+						</Col>
+						<Col className="text-end">
+							<Button
+								variant="danger"
+								className="p-3 fw-bold"
+								onClick={handleExcluirCarga}
+							>
+								Excluir
 							</Button>
 						</Col>
 					</Row>
