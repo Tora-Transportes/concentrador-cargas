@@ -18,7 +18,12 @@ import swal from "sweetalert";
 import { getClaims } from "../../MicrosoftAuthentication";
 import useLoadingScreen from "../Components/LoadingScreen";
 
-import { BsPencilSquare, BsTrash, BsCheckLg } from "react-icons/bs";
+import {
+	BsPencilSquare,
+	BsTrash,
+	BsCheckLg,
+	BsInfoCircle,
+} from "react-icons/bs";
 
 function Produtos() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -48,22 +53,25 @@ function Produtos() {
 	});
 
 	async function handleDelete(id) {
-		const ok = await swal(
+		const observacao = await swal(
 			"Ops?",
-			`Tem certeza que deseja desabilitar o produto ${id}`,
+			`Tem certeza que deseja desabilitar o produto ${id}
+
+			Preencha a observação abaixo`,
 			"warning",
 			{
+				content: "input",
 				buttons: ["Não", true],
 			}
 		);
-		if (ok) {
+		if (observacao) {
 			try {
-				await ServiceProdutos.delete({ id });
+				await ServiceProdutos.delete({ id, observacao });
 				swal("Sucesso", "Produto desabilitado", "success");
 				setProdutos((p) =>
 					p.map((i) => {
 						if (i.id !== id) return i;
-						return { ...i, ativo: 0 };
+						return { ...i, ativo: 0, observacao };
 					})
 				);
 			} catch (error) {
@@ -147,8 +155,8 @@ function Produtos() {
 						</InputGroup>
 					</Form>
 				</Row>
-
-				<Row className="mt-1">
+				<hr className="mt-5 mb-5" />
+				<Row>
 					<Col>
 						<ListGroup as="ol">
 							<Row>
@@ -162,43 +170,64 @@ function Produtos() {
 										</tr>
 									</thead>
 									<tbody>
-										{produtos.map((i) => (
-											<tr key={i.id}>
-												<td>{i.nome}</td>
-												<td>{i.usuario}</td>
-												<td>{i.ativo ? "Ativo" : "Desativado"}</td>
-												<td>
-													<a href="">
-														<BsPencilSquare
-															onClick={(e) => {
-																e.preventDefault();
-																handleEditProduto(i.id);
-															}}
-														/>
-													</a>{" "}
-													{!!i.ativo && (
-														<a href="">
-															<BsTrash
-																onClick={(e) => {
-																	e.preventDefault();
-																	handleDelete(i.id);
-																}}
-															/>
-														</a>
-													)}{" "}
-													{!i.ativo && (
-														<a href="">
-															<BsCheckLg
-																onClick={(e) => {
-																	e.preventDefault();
-																	handleEnableProduto(i.id);
-																}}
-															/>
-														</a>
-													)}
-												</td>
-											</tr>
-										))}
+										{produtos
+											.filter(
+												(i) =>
+													JSON.stringify(i).indexOf(formik.values.nome) !== -1
+											)
+											.map((i) => (
+												<tr key={i.id} className={!i.ativo && "text-danger"}>
+													<td>{i.nome}</td>
+													<td>{i.usuario}</td>
+													<td>{i.ativo ? "Ativo" : "Desativado"}</td>
+													<td>
+														{!!i.ativo && (
+															<>
+																<a
+																	href=""
+																	onClick={(e) => {
+																		e.preventDefault();
+																		handleEditProduto(i.id);
+																	}}
+																>
+																	<BsPencilSquare />
+																</a>{" "}
+																<a
+																	href=""
+																	onClick={(e) => {
+																		e.preventDefault();
+																		handleDelete(i.id);
+																	}}
+																>
+																	<BsTrash />
+																</a>
+															</>
+														)}{" "}
+														{!i.ativo && (
+															<>
+																<a
+																	href=""
+																	onClick={(e) => {
+																		e.preventDefault();
+																		handleEnableProduto(i.id);
+																	}}
+																>
+																	<BsCheckLg />
+																</a>{" "}
+																<a
+																	href=" "
+																	onClick={(e) => {
+																		e.preventDefault();
+																		swal(i.observacao);
+																	}}
+																>
+																	<BsInfoCircle />
+																</a>
+															</>
+														)}
+													</td>
+												</tr>
+											))}
 									</tbody>
 								</Table>
 							</Row>

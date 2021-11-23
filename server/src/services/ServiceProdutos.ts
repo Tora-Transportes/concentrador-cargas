@@ -13,6 +13,7 @@ export interface IProduto {
 export interface IProdutoDeleteAction {
   id: number;
   usuario: string;
+  observacao?: string;
 }
 
 export class ServiceProdutos {
@@ -95,15 +96,19 @@ export class ServiceProdutos {
     return update;
   }
 
-  async delete({ id, usuario }: IProdutoDeleteAction) {
+  async delete({ id, usuario, observacao }: IProdutoDeleteAction) {
     const { name } = await this.checkProdutoPermissions(usuario);
+    if (!observacao) {
+      throw new AppError("Digite a observação", 400);
+    }
     await database("con_produtos")
       .update({
         ativo: 0,
         usuario: name,
+        observacao,
       })
       .where("id", id);
-    return { id, ativo: 0 };
+    return { id, ativo: 0, observacao, usuario: name };
   }
 
   async enable({ id, usuario }: IProdutoDeleteAction) {
@@ -112,6 +117,7 @@ export class ServiceProdutos {
       .update({
         ativo: 1,
         usuario: name,
+        observacao: null,
       })
       .where("id", id);
     return { id, ativo: 1 };

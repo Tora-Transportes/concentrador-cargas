@@ -6,6 +6,7 @@
   "private": false,
   "scripts": {
     "start": "react-scripts start",
+    "dev": "set HTTPS=true&&set SSL_CRT_FILE=../server/certificates/server.cert&&set SSL_KEY_FILE=../server/certificates/server.key&&yarn start", 
     "build": "react-scripts --max_old_space_size=4096 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

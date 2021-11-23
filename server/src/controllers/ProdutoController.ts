@@ -27,10 +27,12 @@ class ProdutoController {
 
   async delete(req: Request, res: Response) {
     const { id } = req.params;
+    const { observacao } = req.body;
     const service = new ServiceProdutos();
     await service.delete({
       id: Number(id),
       usuario: String(req.headers.authorization),
+      observacao: observacao,
     });
 
     return res.send();
