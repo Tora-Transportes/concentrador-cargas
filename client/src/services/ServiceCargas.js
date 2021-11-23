@@ -122,6 +122,8 @@ class ServiceCargas {
 		tipo_carga,
 		responsavel_cadastro,
 		data_cadastro,
+		order_column,
+		order_direction,
 	}) {
 		return api.get("/relatorio/cargas", {
 			responseType: "arraybuffer",
@@ -134,6 +136,8 @@ class ServiceCargas {
 				tipo_carga,
 				responsavel_cadastro,
 				data_cadastro,
+				order_column,
+				order_direction,
 			},
 		});
 	}

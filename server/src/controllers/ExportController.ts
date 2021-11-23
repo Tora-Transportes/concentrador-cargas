@@ -11,7 +11,7 @@ class ExportController {
     const workbook = new excel.Workbook();
     const ws = workbook.addWorksheet("Relatório");
     const columns = [
-      { name: "id", description: "ID", type: "string" },
+      { name: "id", description: "Código da carga", type: "string" },
       { name: "cliente", description: "Cliente", type: "string" },
       { name: "e_lote", description: "E Lote ?", type: "bool" },
       { name: "origem_carga", description: "Origem Carga", type: "string" },

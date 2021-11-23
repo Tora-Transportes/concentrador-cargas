@@ -1,6 +1,6 @@
-import React from "react";
-import { Container, Row, Col, Form } from "react-bootstrap";
-import { BsPencilSquare } from "react-icons/bs";
+import React, { useState } from "react";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { BsPencilSquare, BsDownload } from "react-icons/bs";
 import NavbarNavigator from "../../Components/NavbarNavigator";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import { Link } from "react-router-dom";
@@ -9,9 +9,30 @@ import ServiceCargas from "src/services/ServiceCargas";
 
 function VisualizarCargas() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
+	const [filtroAtual, setFiltroAtual] = useState({});
 
 	function formatDate(date) {
 		return date.split("T")[0].split("-").reverse().join("/");
+	}
+
+	async function handleExportExcel() {
+		setLoading(true);
+		const { filters, orderBy } = filtroAtual;
+		const options = {
+			...filters,
+			order_column: orderBy?.column,
+			order_direction: orderBy?.direction,
+		};
+		const response = await ServiceCargas.exportToXlsx(options);
+		const url = window.URL.createObjectURL(new Blob([response.data]));
+		const link = document.createElement("a");
+		link.href = url;
+		link.setAttribute(
+			"download",
+			`RELATORIO-CARGAS_${new Date().getTime()}.xlsx`
+		);
+		link.click();
+		setLoading(false);
 	}
 
 	return (
@@ -22,6 +43,13 @@ function VisualizarCargas() {
 				<Row>
 					<Col>
 						<h1 className="mb-5 mt-5">Visualize as cargas cadastradas aqui</h1>
+					</Col>
+				</Row>
+				<Row>
+					<Col className="text-start">
+						<Button variant="outline-info" onClick={handleExportExcel}>
+							Exportar <BsDownload />
+						</Button>
 					</Col>
 				</Row>
 				<Row>
@@ -127,7 +155,7 @@ function VisualizarCargas() {
 								setLoading(true);
 								try {
 									const { filters, orderBy, page } = options;
-									console.log({ filters, orderBy, page });
+									setFiltroAtual({ filters, orderBy, page });
 									const { data } = await ServiceCargas.search({
 										...filters,
 										page,
