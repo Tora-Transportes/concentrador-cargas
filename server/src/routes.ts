@@ -33,6 +33,11 @@ routes.put("/produtos/:id/ativar", ProdutoController.enable);
 routes.delete("/produtos/:id", ProdutoController.delete);
 routes.get("/produtos", ProdutoController.list);
 
+routes.post(
+  "/distancia/:cidade_origem/:estado_origem/:cidade_destino/:estado_destino",
+  CargaController.distanceBetweenLocations
+);
+
 routes.get("/recomendacoes/organizacoes", RecomendacoesController.organizacoes);
 routes.get("/recomendacoes/locais", RecomendacoesController.cidadeEstados);
 export default routes;

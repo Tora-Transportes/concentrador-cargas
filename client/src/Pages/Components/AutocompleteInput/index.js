@@ -1,7 +1,13 @@
 import React from "react";
 import { FormControl } from "react-bootstrap";
 
-function AutocompleteInput({ options, onChange, keyDataList, ...props }) {
+function AutocompleteInput({
+	options,
+	onChange,
+	onBlur,
+	keyDataList,
+	...props
+}) {
 	let input;
 	function handleBlur() {
 		if (input) {
@@ -12,6 +18,9 @@ function AutocompleteInput({ options, onChange, keyDataList, ...props }) {
 			if (typeof onChange === "function") {
 				onChange({ target: input });
 			}
+		}
+		if (typeof onBlur === "function") {
+			onBlur({ target: input });
 		}
 	}
 

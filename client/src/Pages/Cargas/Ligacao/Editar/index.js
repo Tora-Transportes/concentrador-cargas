@@ -30,6 +30,7 @@ function Ligacao() {
 	const [produtos, setProdutos] = useState([]);
 	const [locaisOrigemCarga, setLocaisOrigemCarga] = useState([]);
 	const [locaisDestinoCarga, setLocaisDestinoCarga] = useState([]);
+	const [distancia, setDistancia] = useState(null);
 
 	const formik = useFormik({
 		initialValues: {
@@ -91,6 +92,27 @@ function Ligacao() {
 		setLoading(false);
 	}
 
+	async function handleSearchDistance({ destino_carga, origem_carga }) {
+		if (destino_carga && origem_carga) {
+			const [cidade_origem, estado_origem] = origem_carga.split("/");
+			const [cidade_destino, estado_destino] = destino_carga.split("/");
+			try {
+				const { data } = await ServiceCargas.getDistance({
+					cidade_origem,
+					cidade_destino,
+					estado_origem,
+					estado_destino,
+				});
+				const distance = data.data;
+				setDistancia(`${distance} KM`);
+				return distance;
+			} catch (error) {
+				setDistancia(null);
+				return 1;
+			}
+		}
+	}
+
 	useEffect(() => {
 		let isMounted = true;
 		setLoading(true);
@@ -106,6 +128,7 @@ function Ligacao() {
 						formik.setFieldValue(i, carga[i]);
 					}
 				}
+				handleSearchDistance(carga);
 			})
 			.catch(() => {
 				history.push("/cargas/menu");
@@ -156,7 +179,7 @@ function Ligacao() {
 			<NavbarNavigator className="fixed-top" />
 			<h1
 				className="fixed-top mb-5 mt-5 pt-2 pb-2 bg-white text-center border-bottom"
-				style={{ zIndex: "1" }}
+				style={{ zIndex: "20" }}
 			>
 				Edição de carga aberta via ligação
 			</h1>
@@ -267,7 +290,7 @@ function Ligacao() {
 									name="origem_carga"
 									value={formik.values.origem_carga}
 									onChange={formik.handleChange}
-									onBlur={formik.handleBlur}
+									onBlur={() => handleSearchDistance(formik.values)}
 									required
 								/>
 							</FloatingLabel>
@@ -284,12 +307,29 @@ function Ligacao() {
 									name="destino_carga"
 									value={formik.values.destino_carga}
 									onChange={formik.handleChange}
-									onBlur={formik.handleBlur}
+									onBlur={() => handleSearchDistance(formik.values)}
 									required
 								/>
 							</FloatingLabel>
 						</Col>
 					</Row>
+					{distancia && (
+						<Row>
+							<Col>
+								<FloatingLabel
+									label="Distancia entre a origem e o destino"
+									className="mb-3"
+								>
+									<Form.Control
+										type="text"
+										placeholder=" "
+										value={distancia}
+										readOnly
+									/>
+								</FloatingLabel>
+							</Col>
+						</Row>
+					)}
 					<Row>
 						<Col>
 							<FloatingLabel label="*Coleta" className="mb-3">

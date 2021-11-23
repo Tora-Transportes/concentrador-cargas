@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
 	Form,
-	InputGroup,
 	Modal,
 	Button,
 	ListGroup,
@@ -46,22 +45,14 @@ function InputCliente({ onChange, ...props }) {
 
 	return (
 		<>
-			<InputGroup className="mb-2">
-				<InputGroup.Text>
-					<Button
-						variant="outline-success"
-						onClick={() => formik.setFieldValue("show", true)}
-					>
-						*Informe um Cliente
-					</Button>
-				</InputGroup.Text>
+			<FloatingLabel label="*Informe um Cliente" className="mb-3">
 				<Form.Control
 					{...props}
 					onFocus={() => formik.setFieldValue("show", true)}
 					onChange={() => formik.setFieldValue("show", true)}
 					ref={input}
 				/>
-			</InputGroup>
+			</FloatingLabel>
 
 			{formik.values.show && (
 				<Modal

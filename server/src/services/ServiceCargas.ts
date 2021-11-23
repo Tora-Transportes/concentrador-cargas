@@ -1,9 +1,16 @@
 import { ICarga } from "../models/ICargas";
-import database from "../database";
+import database, { mssql } from "../database";
 import AppError from "../models/AppError";
 import TokenAd from "../models/TokenAd";
 import ISearchCarga from "../models/ISearchCarga";
 import { Knex } from "knex";
+
+export interface IQueryDistance {
+  cidade_origem: string;
+  cidade_destino: string;
+  estado_destino: string;
+  estado_origem: string;
+}
 
 export class ServiceCargas {
   async insert(carga: ICarga) {
@@ -158,5 +165,31 @@ export class ServiceCargas {
       total_pages: Math.ceil(Number((await total)?.total || 0) / pageSize),
       results: await results,
     };
+  }
+
+  async distanceBetweenLocations(query: IQueryDistance) {
+    const { cidade_origem, cidade_destino, estado_origem, estado_destino } =
+      query;
+
+    const rota = await mssql("ROTAS_OPERACAO_NEW")
+      .first()
+      .where(
+        "ORIGEM",
+        `${cidade_origem.toUpperCase()}, ${estado_origem.toUpperCase()}`
+      )
+      .where(
+        "DESTINO",
+        `${cidade_destino.toUpperCase()}, ${estado_destino.toUpperCase()}`
+      )
+      .select(["DISTANCIA as distancia"]);
+
+    if (!rota) {
+      throw new AppError(
+        "Não existe nenhuma rota cadastrada entre esses dois pontos",
+        404
+      );
+    }
+
+    return rota.distancia;
   }
 }

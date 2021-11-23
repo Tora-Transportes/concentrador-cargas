@@ -7,7 +7,7 @@ oracledb.initOracleClient({
   libDir: process.env.DB_ORACLE_LIB_DIR,
 });
 
-const config: Knex.Config = {
+const configOracle: Knex.Config = {
   client: "oracledb",
   connection: {
     connectString: process.env.DB_ORACLE_HOST,
@@ -19,12 +19,24 @@ const config: Knex.Config = {
     port: Number(process.env.DB_ORACLE_PORT),
     charset: "utf8",
   },
-  migrations: {
-    directory: __dirname + "/src/database/migrations",
-  },
-  seeds: {
-    directory: __dirname + "/src/database/seeds",
+};
+
+const configMssql: Knex.Config = {
+  client: "mssql",
+  connection: {
+    user: process.env.DB_MSSQL_USERNAME,
+    password: process.env.DB_MSSQL_PASSWORD,
+    server: process.env.DB_MSSQL_HOST,
+    database: process.env.DB_MSSQL_DATABASE,
+    debug: true,
+    connectTimeout: 90000,
+    ssl: { rejectUnauthorized: false },
+    options: {
+      encrypt: true,
+      enableArithAbort: true,
+      trustServerCertificate: true,
+    },
   },
 };
 
-export default config;
+export default { configMssql, configOracle };

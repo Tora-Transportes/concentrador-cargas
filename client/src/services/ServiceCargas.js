@@ -145,6 +145,17 @@ class ServiceCargas {
 			},
 		});
 	}
+
+	async getDistance({
+		cidade_origem,
+		cidade_destino,
+		estado_origem,
+		estado_destino,
+	}) {
+		return api.post(
+			`/distancia/${cidade_origem}/${estado_origem}/${cidade_destino}/${estado_destino}`
+		);
+	}
 }
 
 export default new ServiceCargas();

@@ -68,6 +68,20 @@ class CargaController {
 
     return res.json({ data: searchResult });
   }
+
+  async distanceBetweenLocations(req: Request, res: Response) {
+    const { cidade_origem, cidade_destino, estado_origem, estado_destino } =
+      req.params;
+    const service = new ServiceCargas();
+    const distance = await service.distanceBetweenLocations({
+      cidade_origem,
+      cidade_destino,
+      estado_origem,
+      estado_destino,
+    });
+
+    return res.json({ data: distance });
+  }
 }
 
 export default new CargaController();
