@@ -5,6 +5,8 @@ export function factoryCargaValidator(canal_comunicacao: string) {
   const regexId = new RegExp(`^${letter}-[0-9]+$`, "g");
 
   const cargaValidator = yup.object({
+    janela_entrega: yup.string().nullable(),
+    janela_coleta: yup.string().nullable(),
     informacoes_restritivas: yup.string().nullable(),
     responsavel_cadastro: yup
       .string()

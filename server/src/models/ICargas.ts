@@ -12,6 +12,8 @@ export interface ICarga {
   responsavel_cadastro: string;
   canal_comunicacao: string;
 
+  janela_entrega?: string | null;
+  janela_coleta?: string | null;
   informacoes_restritivas?: string | null;
   acessorios_requisitos?: string | null;
   observacao?: string | null;

@@ -45,6 +45,9 @@ function Ligacao() {
 			observacao: "",
 			acessorios_requisitos: "",
 			informacoes_restritivas: "",
+
+			janela_coleta: "",
+			janela_entrega: "",
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -310,6 +313,34 @@ function Ligacao() {
 							</FloatingLabel>
 						</Col>
 					</Row>
+					{formik.values.e_lote && (
+						<Row>
+							<Col>
+								<FloatingLabel label="Janela Coleta" className="mb-3">
+									<Form.Control
+										type="time"
+										placeholder=" "
+										name="janela_coleta"
+										value={formik.values.janela_coleta}
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+									/>
+								</FloatingLabel>
+							</Col>
+							<Col>
+								<FloatingLabel label="Janela Entrega" className="mb-3">
+									<Form.Control
+										type="time"
+										placeholder=" "
+										name="janela_entrega"
+										value={formik.values.janela_entrega}
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+									/>
+								</FloatingLabel>
+							</Col>
+						</Row>
+					)}
 					<Row>
 						<Col sm={12} md={6}>
 							<FloatingLabel label="*Tipo material" className="mb-3">

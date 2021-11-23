@@ -28,11 +28,15 @@ export class ServiceCargas {
       throw new AppError("Já existe uma carga registrada com esse id", 409);
     }
 
+    const { janela_entrega, janela_coleta, e_lote } = carga;
+
     const currentDate = new Date();
     await database("con_cargas").insert({
       ...carga,
       data_atualizacao: currentDate,
       data_cadastro: currentDate,
+      janela_entrega: e_lote ? janela_entrega : null,
+      janela_coleta: e_lote ? janela_coleta : null,
     });
     return carga.id;
   }
@@ -52,11 +56,14 @@ export class ServiceCargas {
       throw new AppError("A carga com o id requisitado foi excluida", 404);
     }
 
+    const { janela_entrega, janela_coleta, e_lote } = carga;
     const currentDate = new Date();
     await database("con_cargas")
       .update({
         ...carga,
         data_atualizacao: currentDate,
+        janela_entrega: e_lote ? janela_entrega : null,
+        janela_coleta: e_lote ? janela_coleta : null,
       })
       .where("id", carga.id);
     return carga;

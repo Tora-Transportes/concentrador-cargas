@@ -20,10 +20,14 @@ const getUser = () => {
 };
 
 const getClaims = () => {
+	let t;
 	try {
-		return decode(getToken());
+		t = getToken();
+		return decode(t);
 	} catch (error) {
-		throw new Error("erro ao chamar getClaims" + error.message);
+		throw new Error(
+			"erro ao chamar getClaims" + error.message + JSON.stringify(t)
+		);
 	}
 };
 

@@ -17,6 +17,8 @@ class ServiceCargas {
 		responsavel_cadastro,
 		acessorios_requisitos,
 		informacoes_restritivas,
+		janela_entrega,
+		janela_coleta,
 	}) {
 		const carga = {
 			id,
@@ -35,6 +37,8 @@ class ServiceCargas {
 			responsavel_cadastro,
 			acessorios_requisitos,
 			informacoes_restritivas,
+			janela_entrega,
+			janela_coleta,
 		};
 
 		return api.post("/cargas", carga);
@@ -57,6 +61,8 @@ class ServiceCargas {
 		responsavel_cadastro,
 		acessorios_requisitos,
 		informacoes_restritivas,
+		janela_entrega,
+		janela_coleta,
 	}) {
 		const carga = {
 			e_lote,
@@ -74,6 +80,8 @@ class ServiceCargas {
 			responsavel_cadastro,
 			acessorios_requisitos,
 			informacoes_restritivas,
+			janela_entrega,
+			janela_coleta,
 		};
 
 		return api.put(`/cargas/${id}`, carga);
