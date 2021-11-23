@@ -153,10 +153,16 @@ function Ligacao() {
 	return (
 		<>
 			<LoadingScreen />
-			<NavbarNavigator />
+			<NavbarNavigator className="fixed-top" />
+			<h1
+				className="fixed-top mb-5 mt-5 pt-2 pb-2 bg-white text-center border-bottom"
+				style={{ zIndex: "1" }}
+			>
+				Edição de carga aberta via ligação
+			</h1>
+			<div className="mt-5 mb-5 pt-5 pb-5" />
 			<Container className="mb-5 mt-5">
 				<Form onSubmit={formik.handleSubmit}>
-					<h1 className="mb-5">Edição de carga aberta via ligação</h1>
 					<Row>
 						<Col>
 							<FloatingLabel label="*Responsável cadastro" className="mb-3">

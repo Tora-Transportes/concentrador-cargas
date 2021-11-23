@@ -7,7 +7,7 @@ import { getClaims, logout } from "../../../MicrosoftAuthentication";
 
 import "./index.css";
 
-function NavbarNavigator() {
+function NavbarNavigator(props) {
 	let userData;
 	let initialsName;
 	try {
@@ -24,7 +24,7 @@ function NavbarNavigator() {
 
 	return (
 		<>
-			<Navbar variant="dark" id="navbar-tora" expand={false}>
+			<Navbar variant="dark" id="navbar-tora" expand={false} {...props}>
 				<Container fluid>
 					<Link to="/">
 						<img
