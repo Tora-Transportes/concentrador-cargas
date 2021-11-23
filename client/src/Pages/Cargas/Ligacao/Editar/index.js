@@ -159,7 +159,7 @@ function Ligacao() {
 					<h1 className="mb-5">Edição de carga aberta via ligação</h1>
 					<Row>
 						<Col>
-							<FloatingLabel label="Responsável cadastro" className="mb-3">
+							<FloatingLabel label="*Responsável cadastro" className="mb-3">
 								<Form.Control
 									type="text"
 									placeholder=" "
@@ -173,7 +173,7 @@ function Ligacao() {
 							</FloatingLabel>
 						</Col>
 						<Col md={4} sm={12}>
-							<FloatingLabel label="Código da carga" className="mb-3">
+							<FloatingLabel label="*Código da carga" className="mb-3">
 								<Form.Control
 									type="text"
 									placeholder=" "
@@ -191,7 +191,7 @@ function Ligacao() {
 						<Col>
 							<hr />
 							<Form.Group className="mb-3">
-								É Lote ?{" "}
+								*É Lote ?{" "}
 								<Form.Check
 									type="radio"
 									label="Sim"
@@ -250,7 +250,7 @@ function Ligacao() {
 					</Row>
 					<Row>
 						<Col sm={12} md={6}>
-							<FloatingLabel label="Origem carga" className="mb-3">
+							<FloatingLabel label="*Origem carga" className="mb-3">
 								<AutocompleteInput
 									keyDataList="origem_carga"
 									options={locaisOrigemCarga.map(
@@ -267,7 +267,7 @@ function Ligacao() {
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="Destino carga" className="mb-3">
+							<FloatingLabel label="*Destino carga" className="mb-3">
 								<AutocompleteInput
 									keyDataList="destino_carga"
 									options={locaisDestinoCarga.map(
@@ -286,7 +286,7 @@ function Ligacao() {
 					</Row>
 					<Row>
 						<Col>
-							<FloatingLabel label="Coleta" className="mb-3">
+							<FloatingLabel label="*Coleta" className="mb-3">
 								<Form.Control
 									type="date"
 									placeholder=" "
@@ -299,7 +299,7 @@ function Ligacao() {
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="Entrega" className="mb-3">
+							<FloatingLabel label="*Entrega" className="mb-3">
 								<Form.Control
 									type="date"
 									placeholder=" "
@@ -314,7 +314,7 @@ function Ligacao() {
 					</Row>
 					<Row>
 						<Col sm={12} md={6}>
-							<FloatingLabel label="Tipo material" className="mb-3">
+							<FloatingLabel label="*Tipo material" className="mb-3">
 								<AutocompleteInput
 									keyDataList="tipo_carga"
 									options={produtos.filter((i) => !!i.ativo).map((i) => i.nome)}
@@ -328,7 +328,7 @@ function Ligacao() {
 						<Col>
 							<Row>
 								<Col>
-									<FloatingLabel label="Unidade" className="mb-3">
+									<FloatingLabel label="*Unidade" className="mb-3">
 										<Form.Select
 											name="unidade_medida"
 											value={formik.values.unidade_medida}
@@ -349,7 +349,7 @@ function Ligacao() {
 									</FloatingLabel>
 								</Col>
 								<Col>
-									<FloatingLabel label="Quantidade" className="mb-3">
+									<FloatingLabel label="*Quantidade" className="mb-3">
 										<Form.Control
 											type="number"
 											min={1}
