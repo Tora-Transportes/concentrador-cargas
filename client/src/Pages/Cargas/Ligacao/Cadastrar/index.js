@@ -295,14 +295,14 @@ function Ligacao() {
 											required
 										>
 											<option value=""></option>
-											<option value="cx">Caixa</option>
-											<option value="l">Litros</option>
-											<option value="m3">Metros Cúbicos</option>
-											<option value="pal">Pallets</option>
-											<option value="peç">Peça</option>
-											<option value="kg">kg</option>
-											<option value="t">tonelada</option>
-											<option value="un">Unidade</option>
+											<option value="CX">CAIXA</option>
+											<option value="KG">KG</option>
+											<option value="L">LITROS</option>
+											<option value="M3">METROS CÚBICOS</option>
+											<option value="PAL">PALLET</option>
+											<option value="PEÇ">PEÇA</option>
+											<option value="TON">TONELADA</option>
+											<option value="UN">UNIDADE</option>
 										</Form.Select>
 									</FloatingLabel>
 								</Col>
