@@ -128,3 +128,5 @@ INSERT INTO "con_produtos" ("id", "nome", "usuario") values ("seq_con_produtos".
 
 ALTER TABLE "con_produtos" ADD ( "ativo" INTEGER DEFAULT 1 NOT NULL);
 ALTER TABLE "con_produtos" ADD ( "observacao" VARCHAR(4000));
+
+ALTER TABLE "con_cargas" ADD ("informacoes_restritivas" VARCHAR(4000));

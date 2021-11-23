@@ -46,6 +46,7 @@ function Ligacao() {
 			unidade_medida: "",
 			observacao: "",
 			acessorios_requisitos: "",
+			informacoes_restritivas: "",
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -231,9 +232,9 @@ function Ligacao() {
 									carga.
 								</sub>
 							</Form.Group>
-							<hr />
 						</Col>
 					</Row>
+					<hr className="mb-5" />
 					<Row>
 						<Col>
 							<InputCliente
@@ -366,20 +367,18 @@ function Ligacao() {
 						</Col>
 					</Row>
 
+					<hr className="mb-5 mt-5" />
+
 					<Row>
 						<Col>
 							<Form.Group className="mb-3">
-								<Form.Label>
-									Observações{" "}
-									<sub>
-										<strong> (Informações restritivas)</strong>
-									</sub>
-								</Form.Label>
+								<Form.Label>Pre-Requisitos e Acessórios do veículo</Form.Label>
 								<Form.Control
+									placeholder="Neste campo é adicionado informações: Carga necessita de curso atualizado ao cliente, cinta e luvas"
 									as="textarea"
 									rows={3}
-									name="observacao"
-									value={formik.values.observacao || ""}
+									name="acessorios_requisitos"
+									value={formik.values.acessorios_requisitos || ""}
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
 								/>
@@ -390,12 +389,30 @@ function Ligacao() {
 					<Row>
 						<Col>
 							<Form.Group className="mb-3">
-								<Form.Label>Pre-Requisitos e Acessórios do veículo</Form.Label>
+								<Form.Label>Informações Restritivas do Véiculo</Form.Label>
 								<Form.Control
+									placeholder="Neste campo é adicionado informações: Carga necessita de um Truck (6x2)"
 									as="textarea"
 									rows={3}
-									name="acessorios_requisitos"
-									value={formik.values.acessorios_requisitos || ""}
+									name="informacoes_restritivas"
+									value={formik.values.informacoes_restritivas || ""}
+									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
+								/>
+							</Form.Group>
+						</Col>
+					</Row>
+
+					<Row>
+						<Col>
+							<Form.Group className="mb-3">
+								<Form.Label>Observações Complementares</Form.Label>
+								<Form.Control
+									placeholder="Neste campo é adicionado informações: Frete será pago por peso"
+									as="textarea"
+									rows={3}
+									name="observacao"
+									value={formik.values.observacao || ""}
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
 								/>
