@@ -3,6 +3,7 @@ import { Router } from "express";
 import CargaController from "./controllers/CargaController";
 import UsuarioController from "./controllers/UsuarioController";
 import TokenMiddleware from "./middlewares/Token";
+import LogMiddleware from "./middlewares/Log";
 import ConvertFieldsToDate from "./middlewares/ConvertFieldsToDate";
 import ExportController from "./controllers/ExportController";
 import ProdutoController from "./controllers/ProdutoController";
@@ -10,6 +11,7 @@ import RecomendacoesController from "./controllers/RecomendacoesController";
 
 const routes = Router();
 
+routes.use(LogMiddleware);
 routes.use(TokenMiddleware);
 routes.use(ConvertFieldsToDate);
 routes.get("/cargas", CargaController.search);

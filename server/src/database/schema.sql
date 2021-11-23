@@ -132,3 +132,12 @@ ALTER TABLE "con_produtos" ADD ( "observacao" VARCHAR(4000));
 ALTER TABLE "con_cargas" ADD ("informacoes_restritivas" VARCHAR(4000));
 
 ALTER TABLE "con_cargas" ADD ("janela_coleta" VARCHAR(5), "janela_entrega" VARCHAR(5));
+
+CREATE TABLE "con_logs" (
+    "timestamp" varchar(20) not null,
+    "token" VARCHAR(4000) not null,
+    "oid" VARCHAR(64) not null,
+    "url" VARCHAR(4000) not null,
+    "corpo" VARCHAR(4000) not null,
+    "metodo" VARCHAR(10) not null
+);

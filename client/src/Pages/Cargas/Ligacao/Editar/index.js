@@ -9,7 +9,7 @@ import {
 	Tooltip,
 	OverlayTrigger,
 } from "react-bootstrap";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { useFormik } from "formik";
 import NavbarNavigator from "../../../Components/NavbarNavigator";
 import useLoadingScreen from "../../../Components/LoadingScreen";
@@ -499,9 +499,16 @@ function Ligacao() {
 
 					<Row>
 						<Col>
-							<Button variant="warning" type="submit" className="p-3 fw-bold">
-								Editar
+							<Button variant="success" type="submit" className="p-3 fw-bold">
+								Gravar
 							</Button>
+						</Col>
+						<Col className="text-center">
+							<Link to="/cargas/visualizar">
+								<Button variant="warning" className="p-3 fw-bold">
+									Cancelar
+								</Button>
+							</Link>
 						</Col>
 						<Col className="text-end">
 							<Button
