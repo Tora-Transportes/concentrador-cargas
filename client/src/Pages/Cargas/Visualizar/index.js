@@ -6,6 +6,8 @@ import useLoadingScreen from "../../Components/LoadingScreen";
 import { Link } from "react-router-dom";
 import TableExternal from "../../Components/TableExternal";
 import ServiceCargas from "src/services/ServiceCargas";
+import InputCliente from "src/Pages/Components/InputCliente";
+import ResponsavelCadastroSelect from "src/Pages/Components/ResponsavelCadastroSelect";
 
 function VisualizarCargas() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -64,7 +66,8 @@ function VisualizarCargas() {
 								{
 									name: "cliente",
 									description: "Cliente",
-									selector: (row) => row.cliente,
+									selector: (row) => row.cliente.split(" -")[0],
+									Filter: (props) => <InputCliente label="" {...props} />,
 								},
 								{
 									name: "origem_carga",
@@ -135,6 +138,7 @@ function VisualizarCargas() {
 									name: "responsavel_cadastro",
 									description: "Responsável Cadastro",
 									selector: (row) => row.responsavel_cadastro,
+									Filter: (props) => <ResponsavelCadastroSelect {...props} />,
 								},
 								{
 									name: "editar",

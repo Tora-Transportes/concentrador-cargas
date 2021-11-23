@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
 import useDebouncedFunction from "../useDebounceFunction";
 import ServiceCargas from "../../../services/ServiceCargas";
+import "./index.css";
 
 function TableExternal({ columns, get_data }) {
 	const [data, setData] = useState([]);

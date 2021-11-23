@@ -1,0 +1,13 @@
+td,
+th {
+  white-space: nowrap;
+}
+
+th {
+  min-width: 200px;
+}
+
+thead th {
+  text-align: center;
+  vertical-align: middle;
+}

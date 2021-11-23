@@ -11,7 +11,7 @@ import {
 import { useFormik } from "formik";
 import ServiceRecomendacoes from "../../../services/ServiceRecomendacoes";
 
-function InputCliente({ onChange, ...props }) {
+function InputCliente({ onChange, label, ...props }) {
 	const [recomendacoes, setRecomendacoes] = useState([]);
 	const input = useRef(null);
 	const formik = useFormik({
@@ -26,7 +26,11 @@ function InputCliente({ onChange, ...props }) {
 	function selectValue(value) {
 		const event = { target: input.current };
 		if (typeof onChange === "function") {
-			input.current.value = `${value.organizacao} - ${value.documento_federal} - ${value.cidade}/${value.uf}`;
+			if (value === null) {
+				input.current.value = "";
+			} else {
+				input.current.value = `${value.organizacao} - ${value.documento_federal} - ${value.cidade}/${value.uf}`;
+			}
 			onChange(event);
 			formik.setFieldValue("show", false);
 		}
@@ -45,7 +49,10 @@ function InputCliente({ onChange, ...props }) {
 
 	return (
 		<>
-			<FloatingLabel label="*Informe um Cliente" className="mb-3">
+			<FloatingLabel
+				label={label !== undefined || "*Informe um Cliente"}
+				className="mb-3"
+			>
 				<Form.Control
 					{...props}
 					onFocus={() => formik.setFieldValue("show", true)}
@@ -58,8 +65,6 @@ function InputCliente({ onChange, ...props }) {
 				<Modal
 					show={formik.values.show}
 					onHide={() => formik.setFieldValue("show", false)}
-					backdrop="static"
-					keyboard={false}
 					size="lg"
 				>
 					<Modal.Header closeButton>
@@ -123,6 +128,13 @@ function InputCliente({ onChange, ...props }) {
 										onChange={formik.handleChange}
 									/>
 								</FloatingLabel>
+							</Col>
+						</Row>
+						<Row>
+							<Col>
+								<Button onClick={() => selectValue(null)}>
+									Limpar Seleção
+								</Button>
 							</Col>
 						</Row>
 					</Modal.Body>
