@@ -3,10 +3,10 @@ import {
 	Container,
 	Row,
 	Col,
-	ListGroup,
 	Form,
 	FormControl,
 	InputGroup,
+	Table,
 } from "react-bootstrap";
 import { useFormik } from "formik";
 import NavbarNavigator from "../../Components/NavbarNavigator";
@@ -64,6 +64,14 @@ function Permissoes() {
 			)
 		) {
 			await ServiceUsuarios.changePermissions({ oid, permissoes });
+			setUsers((old) =>
+				old.map((i) => {
+					if (i.oid === oid) {
+						return { ...i, permissoes: permissoes };
+					}
+					return i;
+				})
+			);
 			swal("Sucesso", "Permissões alteradas", "success");
 		}
 	}
@@ -118,14 +126,35 @@ function Permissoes() {
 				</Row>
 				<Row className="mt-1">
 					<Col>
-						<ListGroup as="ol">
-							{users.map((i) => (
-								<ListGroup.Item as="li" key={i.oid}>
-									{i.nome} - <strong>{i.email}</strong> -{" "}
-									<FaRegSave onClick={() => handleSavePermissions(i.oid)} />
-								</ListGroup.Item>
-							))}
-						</ListGroup>
+						<Table striped bordered hover>
+							<thead>
+								<tr>
+									<th>Nome</th>
+									<th>Email</th>
+									<th>Permissões</th>
+									<th>Aplicar permissão</th>
+								</tr>
+							</thead>
+							<tbody>
+								{users.map((i) => (
+									<tr key={i.oid}>
+										<td>{i.nome}</td>
+										<td>{i.email}</td>
+										<td>
+											{i.permissoes.map((j) => (
+												<span key={i.oid + j} className="fw-bold">
+													{j}
+													<br />
+												</span>
+											))}
+										</td>
+										<td>
+											<FaRegSave onClick={() => handleSavePermissions(i.oid)} />
+										</td>
+									</tr>
+								))}
+							</tbody>
+						</Table>
 					</Col>
 				</Row>
 			</Container>

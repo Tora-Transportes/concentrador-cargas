@@ -48,11 +48,41 @@ export class ServiceUsuarios {
       qb.orWhere("email", "like", `%${search}%`);
     });
 
+    const usersAndPermissions = await database
+      .from(results.as("usuarios"))
+      .leftJoin(
+        "con_usuarios_permissoes",
+        "usuarios.oid",
+        "con_usuarios_permissoes.fk_usuario"
+      )
+      .select("*");
+    const formattedUsersAndPermissions: Record<string, any> = {};
+    for (const i of usersAndPermissions) {
+      const { oid, nome, email, permissao } = i;
+      if (formattedUsersAndPermissions[oid]) {
+        if (permissao) {
+          formattedUsersAndPermissions[oid].permissoes.push(permissao);
+        }
+      } else {
+        formattedUsersAndPermissions[oid] = {
+          oid,
+          nome,
+          email,
+          permissoes: [],
+        };
+        if (permissao) {
+          formattedUsersAndPermissions[oid].permissoes.push(permissao);
+        }
+      }
+    }
+
     return {
       total_pages: Math.ceil(
         Number((await total)?.total || 0) / PAGINATION_SIZE
       ),
-      results: await results,
+      results: Object.keys(formattedUsersAndPermissions)
+        .map((i) => formattedUsersAndPermissions[i])
+        .sort((a, b) => (a.nome > b.nome ? 1 : -1)),
     };
   }
 
@@ -80,12 +110,14 @@ export class ServiceUsuarios {
     await database("con_usuarios_permissoes")
       .where("fk_usuario", targetOid)
       .delete();
-    await database("con_usuarios_permissoes").insert(
-      permissions.map((i) => ({
-        fk_usuario: targetOid,
-        permissao: i,
-      }))
-    );
+    if (permissions.length > 0) {
+      await database("con_usuarios_permissoes").insert(
+        permissions.map((i) => ({
+          fk_usuario: targetOid,
+          permissao: i,
+        }))
+      );
+    }
 
     return { ...user, permissions };
   }

@@ -1,13 +1,13 @@
-td,
-th {
+.table-external td,
+.table-external th {
   white-space: nowrap;
 }
 
-th {
+.table-external th {
   min-width: 200px;
 }
 
-thead th {
+.table-external thead th {
   text-align: center;
   vertical-align: middle;
 }

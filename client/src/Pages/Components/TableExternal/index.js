@@ -95,7 +95,7 @@ function TableExternal({ columns, get_data }) {
 	);
 
 	return (
-		<Table striped bordered hover responsive>
+		<Table striped bordered hover responsive className="table-external">
 			<thead>
 				<tr>
 					{columns.map((i) => (
