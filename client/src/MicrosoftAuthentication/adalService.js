@@ -26,7 +26,7 @@ const getUser = () => {
 const getClaims = () => {
 	let t;
 	try {
-		t = getToken();
+		t = getToken() ?? localStorage.getItem("adal.idtoken");
 		return decode(t);
 	} catch (error) {
 		throw new Error(
