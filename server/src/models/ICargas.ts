@@ -4,9 +4,9 @@ export interface ICarga {
   cliente: string;
   origem_carga: string;
   destino_carga: string;
-  data_entrega: Date;
-  data_coleta: Date;
-  tipo_carga: string;
+  data_entrega?: Date | null;
+  data_coleta?: Date | null;
+  tipo_carga?: string | null;
   quantidade: number;
   unidade_medida: string;
   responsavel_cadastro: string;
