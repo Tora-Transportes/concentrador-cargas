@@ -134,6 +134,54 @@ function Visualizar() {
 			Filter: (props) => <ResponsavelCadastroSelect {...props} />,
 		},
 		{
+			name: "local_coleta",
+			description: "Local de coleta",
+			selector: (row) => row.local_coleta || "",
+			Filter: () => null,
+		},
+		{
+			name: "local_entrega",
+			description: "Local de entrega",
+			selector: (row) => row.local_entrega || "",
+			Filter: () => null,
+		},
+		{
+			name: "janela_coleta",
+			description: "Janela de coleta",
+			selector: (row) => row.janela_coleta || "",
+			Filter: () => null,
+		},
+		{
+			name: "janela_entrega",
+			description: "Janela de entrega",
+			selector: (row) => row.janela_entrega || "",
+			Filter: () => null,
+		},
+		{
+			name: "acessorios_requisitos",
+			description: "Acessórios e requisitos",
+			selector: (row) => row.acessorios_requisitos || "",
+			Filter: () => null,
+		},
+		{
+			name: "informacoes_restritivas",
+			description: "Informações restritivas",
+			selector: (row) => row.informacoes_restritivas || "",
+			Filter: () => null,
+		},
+		{
+			name: "observacao",
+			description: "Observações",
+			selector: (row) => row.observacao || "",
+			Filter: () => null,
+		},
+		{
+			name: "data_atualizacao",
+			description: "Data última atualização",
+			selector: (row) => formatDateAndHour(row.data_atualizacao),
+			Filter: () => null,
+		},
+		{
 			name: "editar",
 			description: "Editar",
 			static_column: true,
@@ -172,6 +220,13 @@ function Visualizar() {
 	);
 	function formatDate(date) {
 		return date?.split("T")[0].split("-").reverse().join("/");
+	}
+	function formatDateAndHour(date) {
+		if (!date) return "";
+		const [day, time] = date?.split("T");
+		const daysFormatted = day.split("-").reverse().join("/");
+		const timeFormatted = time.split(".")[0];
+		return `${daysFormatted} ${timeFormatted}`;
 	}
 
 	async function handleExportExcel() {
