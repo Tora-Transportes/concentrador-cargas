@@ -35,8 +35,8 @@ export class ServiceCargas {
       ...carga,
       data_atualizacao: currentDate,
       data_cadastro: currentDate,
-      janela_entrega: e_lote ? janela_entrega : null,
-      janela_coleta: e_lote ? janela_coleta : null,
+      janela_entrega: e_lote ? null : janela_entrega,
+      janela_coleta: e_lote ? null : janela_coleta,
     });
     return carga.id;
   }
@@ -62,8 +62,8 @@ export class ServiceCargas {
       .update({
         ...carga,
         data_atualizacao: currentDate,
-        janela_entrega: e_lote ? janela_entrega : null,
-        janela_coleta: e_lote ? janela_coleta : null,
+        janela_entrega: e_lote ? null : janela_entrega,
+        janela_coleta: e_lote ? null : janela_coleta,
       })
       .where("id", carga.id);
     return carga;

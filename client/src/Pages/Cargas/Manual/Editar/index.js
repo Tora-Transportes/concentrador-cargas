@@ -366,7 +366,7 @@ function Manual() {
 							</FloatingLabel>
 						</Col>
 					</Row>
-					{formik.values.e_lote && (
+					{!formik.values.e_lote && (
 						<Row>
 							<Col>
 								<FloatingLabel label="Janela Coleta" className="mb-3">
