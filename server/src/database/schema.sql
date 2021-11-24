@@ -144,3 +144,5 @@ CREATE TABLE "con_logs" (
 
 alter table "con_cargas" modify "data_coleta" date NULL;
 alter table "con_cargas" modify "data_entrega" date NULL;
+
+alter table "con_cargas" modify "tipo_carga" varchar(20) NULL;

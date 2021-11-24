@@ -396,14 +396,13 @@ function Manual() {
 					)}
 					<Row>
 						<Col sm={12} md={6}>
-							<FloatingLabel label="*Tipo material" className="mb-3">
+							<FloatingLabel label="Tipo material" className="mb-3">
 								<AutocompleteInput
 									keyDataList="tipo_carga"
 									options={produtos.filter((i) => !!i.ativo).map((i) => i.nome)}
 									onChange={formik.handleChange}
 									value={formik.values.tipo_carga}
 									name="tipo_carga"
-									required
 								/>
 							</FloatingLabel>
 						</Col>
