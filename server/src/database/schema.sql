@@ -146,3 +146,8 @@ alter table "con_cargas" modify "data_coleta" date NULL;
 alter table "con_cargas" modify "data_entrega" date NULL;
 
 alter table "con_cargas" modify "tipo_carga" varchar(20) NULL;
+
+ALTER TABLE "con_cargas" ADD (
+    "local_coleta" VARCHAR(4000) NULL,
+    "local_entrega" VARCHAR(4000) NULL
+);

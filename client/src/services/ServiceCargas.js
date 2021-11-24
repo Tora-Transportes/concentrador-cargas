@@ -19,6 +19,8 @@ class ServiceCargas {
 		informacoes_restritivas,
 		janela_entrega,
 		janela_coleta,
+		local_coleta,
+		local_entrega,
 	}) {
 		const carga = {
 			id,
@@ -39,6 +41,8 @@ class ServiceCargas {
 			informacoes_restritivas,
 			janela_entrega,
 			janela_coleta,
+			local_coleta,
+			local_entrega,
 		};
 
 		return api.post("/cargas", carga);
@@ -63,6 +67,8 @@ class ServiceCargas {
 		informacoes_restritivas,
 		janela_entrega,
 		janela_coleta,
+		local_coleta,
+		local_entrega,
 	}) {
 		const carga = {
 			e_lote,
@@ -82,6 +88,8 @@ class ServiceCargas {
 			informacoes_restritivas,
 			janela_entrega,
 			janela_coleta,
+			local_coleta,
+			local_entrega,
 		};
 
 		return api.put(`/cargas/${id}`, carga);

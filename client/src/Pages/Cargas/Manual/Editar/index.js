@@ -51,6 +51,9 @@ function Manual() {
 
 			janela_entrega: "",
 			janela_coleta: "",
+
+			local_coleta: "",
+			local_entrega: "",
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -318,6 +321,32 @@ function Manual() {
 									value={formik.values.destino_carga}
 									onChange={formik.handleChange}
 									onBlur={() => handleSearchDistance(formik.values)}
+									required
+								/>
+							</FloatingLabel>
+						</Col>
+					</Row>
+					<Row>
+						<Col sm={12} md={6}>
+							<FloatingLabel label="*Local coleta" className="mb-3">
+								<Form.Control
+									type="text"
+									placeholder=" "
+									name="local_coleta"
+									value={formik.values.local_coleta}
+									onChange={formik.handleChange}
+									required
+								/>
+							</FloatingLabel>
+						</Col>
+						<Col>
+							<FloatingLabel label="*Local entrega" className="mb-3">
+								<Form.Control
+									type="text"
+									placeholder=" "
+									name="local_entrega"
+									value={formik.values.local_entrega}
+									onChange={formik.handleChange}
 									required
 								/>
 							</FloatingLabel>
