@@ -7,7 +7,11 @@ const login = () => {
 };
 
 const logout = () => {
-	localStorage.clear();
+	for (const key in localStorage) {
+		if (key.indexOf("adal") !== -1) {
+			localStorage.removeItem(key);
+		}
+	}
 	return authContext.logOut();
 };
 
