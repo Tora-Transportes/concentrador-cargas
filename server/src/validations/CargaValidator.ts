@@ -22,8 +22,8 @@ export function factoryCargaValidator() {
     origem_carga: yup
       .string()
       .required("A origem da carga deve ser preenchida"),
-    data_coleta: yup.date().required("A data de coleta deve ser preenchido"),
-    data_entrega: yup.date().required("A data de entrega deve ser preenchido"),
+    data_coleta: yup.date().nullable(),
+    data_entrega: yup.date().nullable(),
     tipo_carga: yup.string().required("O tipo da carga deve ser preenchido"),
     quantidade: yup
       .number()

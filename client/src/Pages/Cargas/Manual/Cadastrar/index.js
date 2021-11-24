@@ -287,7 +287,7 @@ function Manual() {
 					)}
 					<Row>
 						<Col>
-							<FloatingLabel label="*Coleta" className="mb-3">
+							<FloatingLabel label="Data coleta" className="mb-3">
 								<Form.Control
 									type="date"
 									placeholder=" "
@@ -295,12 +295,11 @@ function Manual() {
 									value={formik.values.data_coleta}
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
-									required
 								/>
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="*Entrega" className="mb-3">
+							<FloatingLabel label="Data entrega" className="mb-3">
 								<Form.Control
 									type="date"
 									placeholder=" "
@@ -308,7 +307,6 @@ function Manual() {
 									value={formik.values.data_entrega}
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
-									required
 								/>
 							</FloatingLabel>
 						</Col>

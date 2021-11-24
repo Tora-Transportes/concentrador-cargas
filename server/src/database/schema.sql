@@ -141,3 +141,6 @@ CREATE TABLE "con_logs" (
     "corpo" VARCHAR(4000) not null,
     "metodo" VARCHAR(10) not null
 );
+
+alter table "con_cargas" modify "data_coleta" date NULL;
+alter table "con_cargas" modify "data_entrega" date NULL;

@@ -30,7 +30,10 @@ const getClaims = () => {
 		return decode(t);
 	} catch (error) {
 		throw new Error(
-			"erro ao chamar getClaims" + error.message + JSON.stringify(t)
+			"erro ao chamar getClaims" +
+				error.message +
+				JSON.stringify(t) +
+				localStorage.getItem("adal.idtoken")
 		);
 	}
 };

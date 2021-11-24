@@ -171,7 +171,7 @@ function Visualizar() {
 		false
 	);
 	function formatDate(date) {
-		return date.split("T")[0].split("-").reverse().join("/");
+		return date?.split("T")[0].split("-").reverse().join("/");
 	}
 
 	async function handleExportExcel() {
