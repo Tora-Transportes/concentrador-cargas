@@ -139,7 +139,9 @@ function Visualizar() {
 			static_column: true,
 			selector: (row) => (
 				<Link
-					to={`/cargas/${row.canal_comunicacao}/${row.id}`}
+					to={`/cargas/${
+						row.canal_comunicacao === "portal" ? "portal" : "manual"
+					}/${row.id}`}
 					target="_blank"
 					rel="noopener"
 				>

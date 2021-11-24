@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
 	Container,
 	Row,
@@ -6,27 +6,24 @@ import {
 	FloatingLabel,
 	Form,
 	Button,
-	Tooltip,
 	OverlayTrigger,
+	Tooltip,
 } from "react-bootstrap";
-import { useParams, useHistory, Link } from "react-router-dom";
 import { useFormik } from "formik";
 import NavbarNavigator from "../../../Components/NavbarNavigator";
 import useLoadingScreen from "../../../Components/LoadingScreen";
-import swal from "sweetalert";
 import ServiceCargas from "../../../../services/ServiceCargas";
+import swal from "sweetalert";
 import { getClaims } from "../../../../MicrosoftAuthentication";
-import AutocompleteInput from "src/Pages/Components/AutocompleteInput";
-import ServiceProdutos from "src/services/ServiceProdutos";
-import InputCliente from "src/Pages/Components/InputCliente";
+import AutocompleteInput from "../../../Components/AutocompleteInput";
+import ServiceProdutos from "../../../../services/ServiceProdutos";
+import InputCliente from "../../../Components/InputCliente";
 import ServiceRecomendacoes from "src/services/ServiceRecomendacoes";
 import _ from "lodash";
 import { IoMdHelpCircle } from "react-icons/io";
 
-function Ligacao() {
+function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
-	const { id } = useParams();
-	const history = useHistory();
 	const [produtos, setProdutos] = useState([]);
 	const [locaisOrigemCarga, setLocaisOrigemCarga] = useState([]);
 	const [locaisDestinoCarga, setLocaisDestinoCarga] = useState([]);
@@ -34,8 +31,8 @@ function Ligacao() {
 
 	const formik = useFormik({
 		initialValues: {
-			responsavel_cadastro: "",
-			id: id,
+			responsavel_cadastro: String(getClaims().name),
+			id: "M-" + new Date().getTime(),
 			e_lote: false,
 			cliente: "",
 			destino_carga: "",
@@ -43,108 +40,34 @@ function Ligacao() {
 			data_coleta: "",
 			data_entrega: "",
 			tipo_carga: "",
-			quantidade: 0,
+			quantidade: "",
 			unidade_medida: "",
 			observacao: "",
 			acessorios_requisitos: "",
 			informacoes_restritivas: "",
 
-			janela_entrega: "",
 			janela_coleta: "",
+			janela_entrega: "",
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
 			try {
-				const { data } = await ServiceCargas.update({
+				const { data } = await ServiceCargas.create({
 					...values,
-					responsavel_cadastro: String(getClaims().name),
+					canal_comunicacao: "manual",
 				});
-				formik.setFieldValue("responsavel_cadastro", String(getClaims().name));
 				swal(
 					"Sucesso",
-					`O registro de id ${data.data.id} foi atualizado`,
+					`A carga foi cadastrada com o identificador ${data.data.id}`,
 					"success"
 				);
+				resetForm();
 			} catch (error) {
 				console.log(error);
 			}
 			setLoading(false);
 		},
 	});
-
-	async function handleExcluirCarga() {
-		setLoading(true);
-		try {
-			const ok = await swal(
-				"OPS?",
-				"Tem certeza que deseja excluir a carga atual ?",
-				{
-					buttons: ["Não", true],
-					dangerMode: true,
-					icon: "warning",
-				}
-			);
-			if (ok) {
-				await ServiceCargas.delete({ id: formik.values.id });
-				swal("Sucesso!", "Carga removida", "success");
-				history.push("/cargas/visualizar");
-			}
-		} catch (error) {
-			console.log(error);
-		}
-		setLoading(false);
-	}
-
-	async function handleSearchDistance({ destino_carga, origem_carga }) {
-		if (destino_carga && origem_carga) {
-			const [cidade_origem, estado_origem] = origem_carga.split("/");
-			const [cidade_destino, estado_destino] = destino_carga.split("/");
-			try {
-				const { data } = await ServiceCargas.getDistance({
-					cidade_origem,
-					cidade_destino,
-					estado_origem,
-					estado_destino,
-				});
-				const distance = data.data;
-				setDistancia(`${distance} KM`);
-				return distance;
-			} catch (error) {
-				setDistancia(null);
-				return 1;
-			}
-		}
-	}
-
-	useEffect(() => {
-		let isMounted = true;
-		setLoading(true);
-		ServiceCargas.index({ id })
-			.then((response) => {
-				const carga = response.data.data;
-				for (const i in carga) {
-					if (i.indexOf("data") !== -1) {
-						formik.setFieldValue(i, carga[i].split("T")[0]);
-					} else if (i === "e_lote") {
-						formik.setFieldValue("e_lote", !!carga[i]);
-					} else {
-						formik.setFieldValue(i, carga[i]);
-					}
-				}
-				handleSearchDistance(carga);
-			})
-			.catch(() => {
-				history.push("/cargas/menu");
-			})
-			.finally(() => {
-				if (isMounted) {
-					setLoading(false);
-				}
-			});
-		return () => {
-			isMounted = false;
-		};
-	}, []);
 
 	const throttledAutocompleteLocais = useRef(
 		_.throttle((query, callback) => {
@@ -170,11 +93,37 @@ function Ligacao() {
 		[formik.values.destino_carga]
 	);
 
+	async function handleSearchDistance({ destino_carga, origem_carga }) {
+		if (destino_carga && origem_carga) {
+			const [cidade_origem, estado_origem] = origem_carga.split("/");
+			const [cidade_destino, estado_destino] = destino_carga.split("/");
+			try {
+				const { data } = await ServiceCargas.getDistance({
+					cidade_origem,
+					cidade_destino,
+					estado_origem,
+					estado_destino,
+				});
+				const distance = data.data;
+				setDistancia(`${distance} KM`);
+				return distance;
+			} catch (error) {
+				setDistancia(null);
+				return 1;
+			}
+		}
+	}
+
 	useEffect(() => {
 		ServiceProdutos.list().then(({ data }) => {
 			setProdutos(data.data);
 		});
 	}, []);
+
+	function resetForm() {
+		formik.resetForm();
+		formik.setFieldValue("id", "M-" + new Date().getTime());
+	}
 
 	return (
 		<>
@@ -184,14 +133,17 @@ function Ligacao() {
 				className="fixed-top mb-5 mt-5 pt-2 pb-2 bg-white text-center border-bottom"
 				style={{ zIndex: "20" }}
 			>
-				Edição de carga aberta via ligação
+				Cadastro de carga manual
 			</h1>
 			<div className="mt-5 mb-5 pt-5 pb-5" />
 			<Container className="mb-5 mt-5">
 				<Form onSubmit={formik.handleSubmit}>
 					<Row>
 						<Col>
-							<FloatingLabel label="*Responsável cadastro" className="mb-3">
+							<FloatingLabel
+								label="*Responsável pelo cadastro"
+								className="mb-3"
+							>
 								<Form.Control
 									type="text"
 									placeholder=" "
@@ -500,23 +452,7 @@ function Ligacao() {
 					<Row>
 						<Col>
 							<Button variant="success" type="submit" className="p-3 fw-bold">
-								Gravar
-							</Button>
-						</Col>
-						<Col className="text-center">
-							<Link to="/cargas/visualizar">
-								<Button variant="warning" className="p-3 fw-bold">
-									Cancelar
-								</Button>
-							</Link>
-						</Col>
-						<Col className="text-end">
-							<Button
-								variant="danger"
-								className="p-3 fw-bold"
-								onClick={handleExcluirCarga}
-							>
-								Excluir
+								Cadastrar
 							</Button>
 						</Col>
 					</Row>
@@ -526,4 +462,4 @@ function Ligacao() {
 	);
 }
 
-export default Ligacao;
+export default Manual;

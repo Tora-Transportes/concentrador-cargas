@@ -1,8 +1,7 @@
 import * as yup from "yup";
 
-export function factoryCargaValidator(canal_comunicacao: string) {
-  const letter = canal_comunicacao.toUpperCase()[0];
-  const regexId = new RegExp(`^${letter}-[0-9]+$`, "g");
+export function factoryCargaValidator() {
+  const regexId = new RegExp(`^[A-Z]-[0-9]+$`, "g");
 
   const cargaValidator = yup.object({
     janela_entrega: yup.string().nullable(),
@@ -14,7 +13,7 @@ export function factoryCargaValidator(canal_comunicacao: string) {
     id: yup
       .string()
       .required("O id deve ser informado")
-      .matches(regexId, `O id deve seguir o formato ${letter}-{NUMERO}`),
+      .matches(regexId, `O id deve seguir o formato [LETRA]-{NUMERO}`),
     e_lote: yup
       .bool()
       .required("Deve ser informado se a carga é um lote ou não"),
@@ -39,8 +38,8 @@ export function factoryCargaValidator(canal_comunicacao: string) {
       .string()
       .required("O local da criação da carga deve ser preenchida")
       .matches(
-        new RegExp("^(ligacao|email|whatsapp|portal)$", "g"),
-        "O local de criação da carga informado é inválido, deve ser algum desses [ligacao,email,whatsapp,portal]"
+        new RegExp("^(manual|portal)$", "g"),
+        "O local de criação da carga informado é inválido, deve ser algum desses [manual ou portal]"
       ),
   });
 

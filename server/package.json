@@ -33,11 +33,13 @@
     "ts-node-dev": "^1.1.8"
   },
   "scripts": {
+    "prestart": "set NODE_ENV=production&& npm install --production",
+    "start": "node src/index.js",
+
     "dev": "ts-node-dev src/index.ts --respawn --transpile-only",
+    
+    "prebuild": "if exist build rmdir build /S /Q",
     "build": "tsc",
-    "db:do": "knex migrate:latest",
-    "db:undo": "knex migrate:rollback",
-    "db:nm": "knex migrate:make",
-    "db:ns": "knex seed:make"
+    "postbuild": "copy .env.example build\\.env&&xcopy certificates\\* build\\certificates\\* /E/H"
   }
 }

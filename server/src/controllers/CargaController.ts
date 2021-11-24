@@ -1,17 +1,12 @@
 import { ICarga } from "../models/ICargas";
 import { Request, Response } from "express";
 import { factoryCargaValidator } from "../validations/CargaValidator";
-import AppError from "../models/AppError";
 import { ServiceCargas } from "../services/ServiceCargas";
 import TokenAd from "../models/TokenAd";
 
 class CargaController {
   async create(req: Request, res: Response) {
-    const { canal_comunicacao } = req.body;
-    if (!canal_comunicacao) {
-      throw new AppError("O canal de comunicação não foi informado", 400);
-    }
-    const validator = factoryCargaValidator(canal_comunicacao);
+    const validator = factoryCargaValidator();
     const carga: ICarga = await validator.validate(req.body, {
       abortEarly: false,
     });
@@ -26,15 +21,11 @@ class CargaController {
   }
 
   async update(req: Request, res: Response) {
-    const { canal_comunicacao } = req.body;
     const { id } = req.params;
-    if (!canal_comunicacao) {
-      throw new AppError("O canal de comunicação não foi informado", 400);
-    }
     const input = { ...req.body };
     input.id = id;
 
-    const validator = factoryCargaValidator(canal_comunicacao);
+    const validator = factoryCargaValidator();
     const carga: ICarga = await validator.validate(input, {
       abortEarly: false,
     });
