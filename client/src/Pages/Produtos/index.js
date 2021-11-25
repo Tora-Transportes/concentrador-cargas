@@ -176,7 +176,10 @@ function Produtos() {
 													JSON.stringify(i).indexOf(formik.values.nome) !== -1
 											)
 											.map((i) => (
-												<tr key={i.id} className={!i.ativo && "text-danger"}>
+												<tr
+													key={i.id}
+													className={!i.ativo ? "text-danger" : ""}
+												>
 													<td>{i.nome}</td>
 													<td>{i.usuario}</td>
 													<td>{i.ativo ? "Ativo" : "Desativado"}</td>
