@@ -8,6 +8,13 @@ export interface IPermissions {
   permissions: string[];
 }
 
+interface IUsersResponse {
+  oid: string;
+  nome: string;
+  email: string;
+  permissoes: string[];
+}
+
 export class ServiceUsuarios {
   async _getUser(oid: string) {
     const user = await database("con_usuarios").where("oid", oid).first();
@@ -55,24 +62,27 @@ export class ServiceUsuarios {
         "usuarios.oid",
         "con_usuarios_permissoes.fk_usuario"
       )
-      .select("*");
-    const formattedUsersAndPermissions: Record<string, any> = {};
+      .select("*")
+      .orderBy("nome");
+
+    const outputUsers: IUsersResponse[] = [];
+    const formattedUsersAndPermissions: Record<string, number> = {};
+
     for (const i of usersAndPermissions) {
       const { oid, nome, email, permissao } = i;
-      if (formattedUsersAndPermissions[oid]) {
-        if (permissao) {
-          formattedUsersAndPermissions[oid].permissoes.push(permissao);
-        }
-      } else {
-        formattedUsersAndPermissions[oid] = {
+      if (formattedUsersAndPermissions[oid] === undefined) {
+        outputUsers.push({
           oid,
           nome,
           email,
           permissoes: [],
-        };
-        if (permissao) {
-          formattedUsersAndPermissions[oid].permissoes.push(permissao);
-        }
+        });
+        formattedUsersAndPermissions[oid] = outputUsers.length - 1;
+      }
+      if (permissao) {
+        outputUsers[formattedUsersAndPermissions[oid]].permissoes.push(
+          permissao
+        );
       }
     }
 
@@ -80,9 +90,7 @@ export class ServiceUsuarios {
       total_pages: Math.ceil(
         Number((await total)?.total || 0) / PAGINATION_SIZE
       ),
-      results: Object.keys(formattedUsersAndPermissions)
-        .map((i) => formattedUsersAndPermissions[i])
-        .sort((a, b) => (a.nome > b.nome ? 1 : -1)),
+      results: outputUsers,
     };
   }
 
