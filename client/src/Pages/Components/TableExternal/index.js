@@ -162,7 +162,7 @@ function TableExternal({ columns, get_data }) {
 				))}
 			</tbody>
 			<tfoot>
-				<tr>
+				<tr className="text-start">
 					<td colSpan={columns.length}>
 						<span className="ml-1 mr-1">
 							Página {page} de {totalPages}

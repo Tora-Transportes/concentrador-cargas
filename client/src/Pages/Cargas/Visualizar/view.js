@@ -40,7 +40,7 @@ function VisualizarCargas({
 							Exportar <BsDownload />
 						</Button>
 						<Button variant="outline-info" onClick={handleToggleModal}>
-							<BsGear />
+							<BsGear /> Configurar visão
 						</Button>
 					</Col>
 				</Row>

@@ -75,11 +75,22 @@ function Manual() {
 		},
 	});
 
-	function handleCloseWindow(e) {
+	async function handleCloseWindow(e) {
 		if (e) {
 			e.preventDefault();
 		}
-		window.open("", "_self").close();
+		const ok = await swal(
+			"Ops !",
+			"Tem certeza que deseja fechar esta página ?",
+			"warning",
+			{
+				buttons: ["Cancelar", { text: "Sim", value: true }],
+				dangerMode: true,
+			}
+		);
+		if (ok) {
+			window.open("", "_self").close();
+		}
 	}
 
 	async function handleExcluirCarga() {
@@ -482,9 +493,9 @@ function Manual() {
 					<Row>
 						<Col>
 							<Form.Group className="mb-3">
-								<Form.Label>Pre-Requisitos e Acessórios do veículo</Form.Label>
+								<Form.Label>Pré-Requisitos e Acessórios do veículo</Form.Label>
 								<Form.Control
-									placeholder="Neste campo é adicionado informações: Carga necessita de curso atualizado ao cliente, cinta e luvas"
+									placeholder="Neste campo é adicionado informações: Motorista necessita de treinamento atualizado no cliente, cinta e luvas"
 									as="textarea"
 									rows={3}
 									name="acessorios_requisitos"
@@ -499,9 +510,9 @@ function Manual() {
 					<Row>
 						<Col>
 							<Form.Group className="mb-3">
-								<Form.Label>Informações Restritivas do Véiculo</Form.Label>
+								<Form.Label>Informações Restritivas do Veículo</Form.Label>
 								<Form.Control
-									placeholder="Neste campo é adicionado informações: Carga necessita de um Truck (6x2)"
+									placeholder="Neste campo é adicionado informações: Proibido entrada de rodotrem"
 									as="textarea"
 									rows={3}
 									name="informacoes_restritivas"
@@ -542,7 +553,7 @@ function Manual() {
 								className="p-3 fw-bold"
 								onClick={handleCloseWindow}
 							>
-								Cancelar
+								Fechar edição
 							</Button>
 						</Col>
 						<Col className="text-end">
