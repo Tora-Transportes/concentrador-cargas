@@ -1,22 +1,24 @@
-import { ICarga } from "../models/ICargas";
 import { Request, Response } from "express";
-import { factoryCargaValidator } from "../validations/CargaValidator";
-import { ServiceCargas } from "../services/ServiceCargas";
+import { ServiceDistanceLocations } from "../services/ServiceDistanceLocations";
 import TokenAd from "../models/TokenAd";
+
+import {
+  UseCaseAddCarga,
+  UseCaseDeleteCarga,
+  UseCaseUpdateCarga,
+  UseCaseViewCargas,
+} from "../domain/UseCaseCarga";
 
 class CargaController {
   async create(req: Request, res: Response) {
-    const validator = factoryCargaValidator();
-    const carga: ICarga = await validator.validate(req.body, {
-      abortEarly: false,
-    });
-    carga.usuario = TokenAd.getClaims(String(req.headers.authorization)).name;
+    const cargaDTO = { ...req.body };
+    cargaDTO.usuario = TokenAd.getClaims(
+      String(req.headers.authorization)
+    ).name;
 
-    const service = new ServiceCargas();
-    const id = await service.insert(carga);
-
+    const carga = await new UseCaseAddCarga().run(cargaDTO);
     return res.json({
-      data: { id },
+      data: carga,
     });
   }
 
@@ -24,47 +26,39 @@ class CargaController {
     const { id } = req.params;
     const input = { ...req.body };
     input.id = id;
+    input.usuario = TokenAd.getClaims(String(req.headers.authorization)).name;
 
-    const validator = factoryCargaValidator();
-    const carga: ICarga = await validator.validate(input, {
-      abortEarly: false,
-    });
-    carga.usuario = TokenAd.getClaims(String(req.headers.authorization)).name;
-
-    const service = new ServiceCargas();
-    const updateResult = await service.update(carga);
+    const updateResult = await new UseCaseUpdateCarga().run(input);
 
     return res.json({ data: updateResult });
   }
 
   async delete(req: Request, res: Response) {
     const { id } = req.params;
-
-    const service = new ServiceCargas();
-    await service.delete(id, String(req.headers.authorization));
+    await new UseCaseDeleteCarga().run(
+      id,
+      TokenAd.getClaims(String(req.headers.authorization)).name
+    );
 
     return res.send();
   }
 
   async index(req: Request, res: Response) {
     const { id } = req.params;
-    const service = new ServiceCargas();
-    const carga: ICarga | undefined = await service.index(id);
-    return res.json({ data: carga });
+    const result = await new UseCaseViewCargas().index(id);
+    return res.json({ data: result });
   }
 
   async search(req: Request, res: Response) {
-    const service = new ServiceCargas();
-    const searchResult = await service.search(req.query);
-
-    return res.json({ data: searchResult });
+    const result = await new UseCaseViewCargas().run(req.query);
+    return res.json({ data: result });
   }
 
   async distanceBetweenLocations(req: Request, res: Response) {
     const { cidade_origem, cidade_destino, estado_origem, estado_destino } =
       req.params;
-    const service = new ServiceCargas();
-    const distance = await service.distanceBetweenLocations({
+    const service = new ServiceDistanceLocations();
+    const distance = await service.find({
       cidade_origem,
       cidade_destino,
       estado_origem,

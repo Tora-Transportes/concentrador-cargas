@@ -1,13 +1,16 @@
 import { Request, Response } from "express";
-import { ServiceCargas } from "../services/ServiceCargas";
 // @ts-ignore: There's no type for this module
 import excel from "excel4node";
+import { ViewCargaRepository } from "../repositories/CargaRepository";
 
 class ExportController {
   async generateReportFromCargasInScreen(req: Request, res: Response) {
     const filename = `RELATORIO_CARGAS-${new Date().getTime()}.xlsx`;
-    const service = new ServiceCargas();
-    const searchResult = await service.search(req.query, 120000);
+    const searchResult = await new ViewCargaRepository().run(
+      req.query,
+      1,
+      1200000
+    );
     const workbook = new excel.Workbook();
     const ws = workbook.addWorksheet("Relatório");
     const columns = [
