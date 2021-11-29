@@ -1,8 +1,4 @@
-import {
-  AddCargaRepository,
-  UpdateCargaRepository,
-  ViewCargaRepository,
-} from "../repositories/CargaRepository";
+import { CargaRepository } from "../repositories/CargaRepository";
 import { ICarga } from "../models/ICargas";
 import { factoryCargaValidator } from "../validations/CargaValidator";
 import AppError from "../models/AppError";
@@ -18,16 +14,14 @@ export class UseCaseAddCarga {
     carga.data_atualizacao = currentDate;
     carga.data_cadastro = currentDate;
 
-    const cargasCadastradas = (
-      await new ViewCargaRepository().run({
-        id: carga.id,
-      })
-    ).results;
-    if (cargasCadastradas.length > 0) {
+    const cargaRepository = new CargaRepository();
+
+    const cargasCadastrada = await cargaRepository.index(carga.id);
+    if (cargasCadastrada) {
       throw new AppError("Uma carga com esse Código já foi cadastrada", 400);
     }
 
-    await new AddCargaRepository().save(carga);
+    await cargaRepository.create(carga);
     return carga;
   }
 }
@@ -42,19 +36,16 @@ export class UseCaseUpdateCarga {
     const currentDate = new Date();
     carga.data_atualizacao = currentDate;
 
-    const cargasCadastradas = (
-      await new ViewCargaRepository().run({
-        id: carga.id,
-      })
-    ).results;
-    if (cargasCadastradas.length === 0) {
+    const cargaRepository = new CargaRepository();
+    const cargaCadastrada = await cargaRepository.index(carga.id);
+    if (!cargaCadastrada) {
       throw new AppError(
         `Nenhuma carga foi encontrada com o código ${carga.id}`,
         404
       );
-    } else if (cargasCadastradas[0].ativo === 0) {
+    } else if (cargaCadastrada.ativo === 0) {
       throw new AppError(
-        `A carga foi desativada pelo usuario ${cargasCadastradas[0].usuario}`,
+        `A carga foi desativada pelo usuario ${cargaCadastrada.usuario}`,
         403
       );
     }
@@ -67,48 +58,51 @@ export class UseCaseUpdateCarga {
       janela_coleta: e_lote ? null : janela_coleta,
     };
 
-    await new UpdateCargaRepository().save(cargaOficial.id, cargaOficial);
-    return carga;
+    await cargaRepository.update(cargaOficial.id, cargaOficial);
+    return cargaOficial;
   }
 }
 
 export class UseCaseViewCargas {
   async run(filter: Record<string, any>) {
-    return new ViewCargaRepository().run({ ...filter, ativo: 1 }, filter.page);
+    const cargaRepository = new CargaRepository();
+    return cargaRepository.search({ ...filter, ativo: 1 }, filter.page);
   }
 
   async index(id: string) {
-    const cargas = (await new ViewCargaRepository().run({ id })).results;
-    if (cargas.length === 0) {
+    const cargaRepository = new CargaRepository();
+    const carga = await cargaRepository.index(id);
+    if (!carga) {
       throw new AppError("A carga solicitada não existe", 404);
     }
 
-    if (cargas[0].ativo === 0) {
+    if (carga.ativo === 0) {
       throw new AppError(
-        `A carga solicitada foi excluída pelo usuário ${cargas[0].usuario}`,
+        `A carga solicitada foi excluída pelo usuário ${carga.usuario}`,
         403
       );
     }
 
-    return cargas[0];
+    return carga;
   }
 }
 
 export class UseCaseDeleteCarga {
   async run(id: string, usuario: string) {
-    const viewRepository = new ViewCargaRepository();
+    const cargaRepository = new CargaRepository();
     if (!id) {
       throw new AppError("Id inválido", 400);
     }
-    const carga = (await viewRepository.run({ id })).results;
-    if (carga.length === 0) {
+    const carga = await cargaRepository.index(id);
+    if (!carga) {
       throw new AppError("Carga não encontrada", 404);
     }
 
-    return new UpdateCargaRepository().save(carga[0].id, {
-      ...carga[0],
+    return cargaRepository.update(carga.id, {
+      ...carga,
       ativo: 0,
       usuario,
+      data_atualizacao: new Date(),
     });
   }
 }

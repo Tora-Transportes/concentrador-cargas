@@ -22,4 +22,6 @@ export interface ICarga {
   data_cadastro?: Date | null | string;
   data_atualizacao?: Date | null | string;
   usuario?: string | null;
+
+  ativo?: number;
 }
