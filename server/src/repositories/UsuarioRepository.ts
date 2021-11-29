@@ -2,8 +2,8 @@ import database from "../database";
 import { Knex } from "knex";
 import IUsuario from "../models/IUsuario";
 
-export class ViewUsuarioRepository {
-  async run(filter: Record<string, any>, page = 1, pageSize = 50) {
+export class UsuarioRepository {
+  async search(filter: Record<string, any>, page = 1, pageSize = 50) {
     const realPage = isNaN(page) || page < 1 ? 1 : page;
     const total = database("con_usuarios").count("oid as total").first();
     const results = database("con_usuarios")
@@ -62,10 +62,8 @@ export class ViewUsuarioRepository {
       results: outputUsers,
     };
   }
-}
 
-export class UpdateUsuarioRepository {
-  async save(oid: string, usuario: IUsuario) {
+  async update(oid: string, usuario: IUsuario) {
     const { nome, email, permissoes } = usuario;
     await database("con_usuarios")
       .update({
@@ -85,5 +83,33 @@ export class UpdateUsuarioRepository {
       );
     }
     return { oid, nome, email, permissoes };
+  }
+
+  async index(oid: string) {
+    const userData = await database("con_usuarios")
+      .where("oid", oid)
+      .select("*")
+      .leftJoin(
+        "con_usuarios_permissoes",
+        "con_usuarios_permissoes.fk_usuario",
+        "con_usuarios.oid"
+      );
+    if (userData.length === 0) {
+      return undefined;
+    }
+
+    const usuario: IUsuario = {
+      oid: userData[0].oid,
+      nome: userData[0].nome,
+      email: userData[0].email,
+      permissoes: [],
+    };
+    for (const i of userData) {
+      if (i.permissao) {
+        usuario.permissoes.push(String(i.permissao));
+      }
+    }
+
+    return usuario;
   }
 }

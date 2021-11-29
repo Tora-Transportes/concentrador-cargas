@@ -19,7 +19,11 @@ routes.get("/cargas", CargaController.search);
 routes.post("/cargas", CargaController.create);
 routes.get("/cargas/:id", CargaController.index);
 routes.put("/cargas/:id", CargaController.update);
-routes.delete("/cargas/:id", CargaController.delete);
+routes.delete(
+  "/cargas/:id",
+  HasPermission("DELETAR_CARGAS"),
+  CargaController.delete
+);
 
 routes.get("/usuarios", UsuarioController.search);
 routes.get("/usuarios/:oid", UsuarioController.index);
