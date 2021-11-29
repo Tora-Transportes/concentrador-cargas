@@ -48,6 +48,20 @@ export class CargaRepository {
           new Date(date + "T23:59:59"),
         ]);
       }
+      if (query?.destino_carga) {
+        qb.andWhere(
+          "destino_carga",
+          "like",
+          `%${query.destino_carga.toUpperCase()}%`
+        );
+      }
+      if (query?.origem_carga) {
+        qb.andWhere(
+          "origem_carga",
+          "like",
+          `%${query.origem_carga.toUpperCase()}%`
+        );
+      }
       if (query?.data_coleta) {
         qb.andWhere("data_coleta", "=", new Date(query.data_coleta));
       }

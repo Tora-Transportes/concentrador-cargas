@@ -66,13 +66,11 @@ function Visualizar() {
 			name: "origem_carga",
 			description: "Origem",
 			selector: (row) => row.origem_carga,
-			Filter: () => null,
 		},
 		{
 			name: "destino_carga",
 			description: "Destino",
 			selector: (row) => row.destino_carga,
-			Filter: () => null,
 		},
 		{
 			name: "data_coleta",
