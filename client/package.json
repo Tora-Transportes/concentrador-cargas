@@ -6,7 +6,7 @@
   "private": false,
   "scripts": {
     "start": "react-scripts start",
-    "dev": "set HTTPS=true&&set SSL_CRT_FILE=../server/certificates/server.cert&&set SSL_KEY_FILE=../server/certificates/server.key&&yarn start", 
+    "dev": "set HTTPS=true&&set SSL_CRT_FILE=../server/certificates/server.cert&&set SSL_KEY_FILE=../server/certificates/server.key&&yarn start",
     "build": "react-scripts --max_old_space_size=4096 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -30,6 +30,7 @@
     "axios": "^0.21.1",
     "bootstrap": "5.1.3",
     "formik": "^2.2.9",
+    "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
