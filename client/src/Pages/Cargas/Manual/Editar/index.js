@@ -375,7 +375,12 @@ function Manual() {
 										value={distancia}
 										readOnly
 									/>
+									<Form.Text id="passwordHelpBlock" muted>
+										O valor apresentado representa a distancia de centro a
+										centro.
+									</Form.Text>
 								</FloatingLabel>
+								<hr />
 							</Col>
 						</Row>
 					)}
