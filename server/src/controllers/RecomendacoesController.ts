@@ -10,7 +10,7 @@ class RecomendacoesController {
 
   async cidadeEstados(req: Request, res: Response) {
     const service = new ServiceAutocomplete();
-    const cidadeEstados = await service.recommendCidadeEstado(req.query);
+    const cidadeEstados = await service.recomendarLocalizacao(req.query);
     return res.json({ data: cidadeEstados });
   }
 }

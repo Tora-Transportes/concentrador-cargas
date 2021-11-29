@@ -1,4 +1,5 @@
 import database from "../database";
+import { LocaisRepository } from "../repositories/LocaisRepository";
 
 export interface IQueryOrganizacao {
   nome?: string;
@@ -43,19 +44,65 @@ class ServiceAutocomplete {
     return query;
   }
 
-  async recommendCidadeEstado(search: IQueryCidadeEstado) {
-    const query = database("CIDADE as CID")
-      .join("ESTADO as EST", "EST.UF_COD", "CID.UF_COD")
-      .select(["CID.CID_NOM AS cidade", "EST.UF_SIGLA AS estado"])
-      .limit(20);
+  async recomendarLocalizacao(search: IQueryCidadeEstado) {
+    // pais/estado/cidade
 
-    if (search?.query) {
-      query.andWhereRaw("CID.CID_NOM || '/' || EST.UF_SIGLA like ?", [
-        `%${search.query.trim().toUpperCase()}%`,
-      ]);
+    const localRepository = new LocaisRepository();
+    const [pais, estado, cidade] = String(search.query)
+      .toUpperCase()
+      .split("/");
+
+    const todosPaisesEstados = await localRepository.getPaisesEstados();
+
+    if (estado === undefined) {
+      // filtra apenas por pais
+      return todosPaisesEstados
+        .filter(
+          (p: Record<string, any>) =>
+            p?.name?.toUpperCase().indexOf(pais) !== -1
+        )
+        .slice(0, 10)
+        .map((i: Record<string, any>) => i.name.toUpperCase() + "/");
     }
 
-    return query;
+    if (cidade === undefined) {
+      // filtra pais + estado
+      const country = todosPaisesEstados.find(
+        (i: Record<string, any>) => i.name.toUpperCase() === pais
+      );
+
+      if (!country) {
+        return [];
+      }
+
+      return country.states
+        .filter((i: Record<string, any>) =>
+          i.state_code.toUpperCase().startsWith(estado)
+        )
+        .slice(0, 10)
+        .map(
+          (i: Record<string, any>) =>
+            `${country.name.toUpperCase()}/${i.state_code.toUpperCase()}/`
+        );
+    }
+
+    const nomeEstado = todosPaisesEstados
+      ?.find((i: Record<string, any>) => i.name.toUpperCase() === pais)
+      ?.states?.find((i: Record<string, any>) => i.state_code === estado)?.name;
+
+    if (!nomeEstado) {
+      return [];
+    }
+
+    // filtra por todos
+    const todasCidades = await localRepository.getCidades(pais, nomeEstado);
+
+    const retorno = todasCidades
+      .filter((i: Record<string, any>) => i.toUpperCase().startsWith(cidade))
+      .slice(0, 10)
+      .map((i: Record<string, any>) => `${pais}/${estado}/${i.toUpperCase()}`);
+
+    return retorno;
   }
 }
 

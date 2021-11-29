@@ -118,8 +118,8 @@ function Manual() {
 
 	async function handleSearchDistance({ destino_carga, origem_carga }) {
 		if (destino_carga && origem_carga) {
-			const [cidade_origem, estado_origem] = origem_carga.split("/");
-			const [cidade_destino, estado_destino] = destino_carga.split("/");
+			const [, estado_origem, cidade_origem] = origem_carga.split("/");
+			const [, estado_destino, cidade_destino] = destino_carga.split("/");
 			try {
 				const { data } = await ServiceCargas.getDistance({
 					cidade_origem,
@@ -172,7 +172,7 @@ function Manual() {
 			ServiceRecomendacoes.locais({ query }).then(({ data }) => {
 				callback(data.data);
 			});
-		}, 500)
+		}, 1000)
 	);
 	useEffect(
 		() =>
@@ -306,9 +306,7 @@ function Manual() {
 							<FloatingLabel label="*Origem carga" className="mb-3">
 								<AutocompleteInput
 									keyDataList="origem_carga"
-									options={locaisOrigemCarga.map(
-										(i) => `${i.cidade}/${i.estado}`
-									)}
+									options={locaisOrigemCarga}
 									type="text"
 									placeholder=" "
 									name="origem_carga"
@@ -323,9 +321,7 @@ function Manual() {
 							<FloatingLabel label="*Destino carga" className="mb-3">
 								<AutocompleteInput
 									keyDataList="destino_carga"
-									options={locaisDestinoCarga.map(
-										(i) => `${i.cidade}/${i.estado}`
-									)}
+									options={locaisDestinoCarga}
 									type="text"
 									placeholder=" "
 									name="destino_carga"

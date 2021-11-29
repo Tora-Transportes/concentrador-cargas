@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import ServiceLogsSingleton from "../services/ServiceLogsSingleton";
 
 export default async (req: Request, res: Response, next: NextFunction) => {
+  if (req.method === "GET") return next();
   const token = req.headers.authorization;
   const log = {
     corpo: JSON.stringify(req.body),
