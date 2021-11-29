@@ -11,7 +11,11 @@ export interface IQueryDistance {
 export class ServiceDistanceLocations {
   async find(query: IQueryDistance) {
     const { cidade_origem, cidade_destino, estado_origem, estado_destino } =
-      query;
+      JSON.parse(
+        JSON.stringify(query)
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+      );
 
     const rota = await mssql("ROTAS_OPERACAO_NEW")
       .first()
