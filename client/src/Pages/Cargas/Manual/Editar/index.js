@@ -75,19 +75,22 @@ function Manual() {
 		},
 	});
 
-	async function handleCloseWindow(e) {
+	async function handleCloseWindow(e, askPermission = true) {
 		if (e) {
 			e.preventDefault();
 		}
-		const ok = await swal(
-			"Ops !",
-			"Tem certeza que deseja fechar esta página ?",
-			"warning",
-			{
-				buttons: ["Cancelar", { text: "Sim", value: true }],
-				dangerMode: true,
-			}
-		);
+		let ok = true;
+		if (askPermission) {
+			ok = await swal(
+				"Ops !",
+				"Tem certeza que deseja fechar esta página ?",
+				"warning",
+				{
+					buttons: ["Cancelar", { text: "Sim", value: true }],
+					dangerMode: true,
+				}
+			);
+		}
 		if (ok) {
 			window.open("", "_self").close();
 		}
@@ -108,7 +111,7 @@ function Manual() {
 			if (ok) {
 				await ServiceCargas.delete({ id: formik.values.id });
 				swal("Sucesso!", "Carga removida", "success");
-				handleCloseWindow();
+				handleCloseWindow(null, false);
 			}
 		} catch (error) {
 			console.log(error);
