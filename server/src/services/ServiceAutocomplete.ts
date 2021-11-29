@@ -4,6 +4,7 @@ import { LocaisRepository } from "../repositories/LocaisRepository";
 export interface IQueryOrganizacao {
   nome?: string;
   uf?: string;
+  cnpj?: string;
   cidade?: string;
 }
 
@@ -41,6 +42,11 @@ class ServiceAutocomplete {
     if (search?.cidade) {
       query.andWhere("CID.CID_NOM", "like", `%${search.cidade.toUpperCase()}%`);
     }
+    if (search?.cnpj) {
+      query.andWhere("PRA.PCA_DOC_FEDERAL", "like", `%${search.cnpj}%`);
+    }
+
+    query.orderBy("ORG.ORG_RAZAO_SOCIAL");
     return query;
   }
 

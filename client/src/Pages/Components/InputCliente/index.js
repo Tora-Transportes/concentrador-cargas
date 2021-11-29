@@ -17,6 +17,7 @@ function InputCliente({ onChange, label, ...props }) {
 	const formik = useFormik({
 		initialValues: {
 			show: false,
+			cnpj: "",
 			cidade: "",
 			uf: "",
 			nome: "",
@@ -71,14 +72,28 @@ function InputCliente({ onChange, label, ...props }) {
 						<Modal.Title>Filtro Cliente</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<FloatingLabel label="Nome cliente" className="mb-3">
-							<Form.Control
-								type="text"
-								name="nome"
-								value={formik.values.nome}
-								onChange={formik.handleChange}
-							/>
-						</FloatingLabel>
+						<Row>
+							<Col sm={12} md={6}>
+								<FloatingLabel label="Nome cliente" className="mb-3">
+									<Form.Control
+										type="text"
+										name="nome"
+										value={formik.values.nome}
+										onChange={formik.handleChange}
+									/>
+								</FloatingLabel>
+							</Col>
+							<Col>
+								<FloatingLabel label="CNPJ" className="mb-3">
+									<Form.Control
+										type="text"
+										name="cnpj"
+										value={formik.values.cnpj}
+										onChange={formik.handleChange}
+									/>
+								</FloatingLabel>
+							</Col>
+						</Row>
 						<Row>
 							<Col>
 								<FloatingLabel label="UF" className="mb-3">

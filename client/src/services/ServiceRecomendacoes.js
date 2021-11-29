@@ -1,6 +1,6 @@
 import api from "./api";
 class ServiceRecomendacoes {
-	async organizacoes({ nome, cidade, uf }) {
+	async organizacoes({ nome, cidade, uf, cnpj }) {
 		const filter = {};
 		if (nome) {
 			filter.nome = nome;
@@ -10,6 +10,9 @@ class ServiceRecomendacoes {
 		}
 		if (uf) {
 			filter.uf = uf;
+		}
+		if (cnpj) {
+			filter.cnpj = cnpj;
 		}
 
 		return api.get("/recomendacoes/organizacoes", { params: filter });
