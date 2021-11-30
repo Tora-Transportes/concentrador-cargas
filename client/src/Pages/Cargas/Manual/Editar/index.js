@@ -22,6 +22,7 @@ import InputCliente from "src/Pages/Components/InputCliente";
 import ServiceRecomendacoes from "src/services/ServiceRecomendacoes";
 import _ from "lodash";
 import { IoMdHelpCircle } from "react-icons/io";
+import UnidadesMedida from "../../../Components/UnidadesMedida";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -462,14 +463,7 @@ function Manual() {
 											required
 										>
 											<option value=""></option>
-											<option value="CX">CAIXA</option>
-											<option value="KG">KG</option>
-											<option value="L">LITROS</option>
-											<option value="M3">METROS CÚBICOS</option>
-											<option value="PAL">PALLET</option>
-											<option value="PEÇ">PEÇA</option>
-											<option value="TON">TONELADA</option>
-											<option value="UN">UNIDADE</option>
+											<UnidadesMedida />
 										</Form.Select>
 									</FloatingLabel>
 								</Col>
