@@ -132,7 +132,7 @@ function Manual() {
 					estado_destino,
 				});
 				const distance = data.data;
-				setDistancia(`${distance} KM`);
+				setDistancia(distance);
 				return distance;
 			} catch (error) {
 				setDistancia(null);
@@ -194,6 +194,10 @@ function Manual() {
 			),
 		[formik.values.destino_carga]
 	);
+
+	useEffect(() => {
+		setDistancia(null);
+	}, [formik.values.destino_carga, formik.values.origem_carga]);
 
 	useEffect(() => {
 		ServiceProdutos.list().then(({ data }) => {
@@ -373,7 +377,7 @@ function Manual() {
 									<Form.Control
 										type="text"
 										placeholder=" "
-										value={distancia}
+										value={`A distancia entre ${formik.values.origem_carga} e ${formik.values.destino_carga} é de ${distancia} KM.`}
 										readOnly
 									/>
 									<Form.Text id="passwordHelpBlock" muted>
