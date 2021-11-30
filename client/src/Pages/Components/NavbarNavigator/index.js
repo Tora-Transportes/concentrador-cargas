@@ -60,6 +60,9 @@ function NavbarNavigator(props) {
 								<Link to="/produtos">
 									<ListGroup.Item action>Produtos</ListGroup.Item>
 								</Link>
+								<Link to="/rotas/pendentes">
+									<ListGroup.Item action>Rotas pendentes</ListGroup.Item>
+								</Link>
 								<Link to="/usuarios/permissoes">
 									<ListGroup.Item action>Permissões</ListGroup.Item>
 								</Link>

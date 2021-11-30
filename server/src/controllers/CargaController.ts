@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { ServiceDistanceLocations } from "../services/ServiceDistanceLocations";
 import TokenAd from "../models/TokenAd";
 
 import {
@@ -7,7 +6,9 @@ import {
   UseCaseDeleteCarga,
   UseCaseUpdateCarga,
   UseCaseViewCargas,
+  UseCaseGetDistanceBetween,
 } from "../domain/UseCaseCarga";
+import AppError from "../models/AppError";
 
 class CargaController {
   async create(req: Request, res: Response) {
@@ -52,20 +53,6 @@ class CargaController {
   async search(req: Request, res: Response) {
     const result = await new UseCaseViewCargas().run(req.query);
     return res.json({ data: result });
-  }
-
-  async distanceBetweenLocations(req: Request, res: Response) {
-    const { cidade_origem, cidade_destino, estado_origem, estado_destino } =
-      req.params;
-    const service = new ServiceDistanceLocations();
-    const distance = await service.find({
-      cidade_origem,
-      cidade_destino,
-      estado_origem,
-      estado_destino,
-    });
-
-    return res.json({ data: distance });
   }
 }
 

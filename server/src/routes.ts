@@ -9,6 +9,7 @@ import ConvertFieldsToDate from "./middlewares/ConvertFieldsToDate";
 import ExportController from "./controllers/ExportController";
 import ProdutoController from "./controllers/ProdutoController";
 import RecomendacoesController from "./controllers/RecomendacoesController";
+import RotasController from "./controllers/RotasController";
 
 const routes = Router();
 
@@ -62,9 +63,12 @@ routes.get("/produtos", ProdutoController.list);
 
 routes.post(
   "/distancia/:cidade_origem/:estado_origem/:cidade_destino/:estado_destino",
-  CargaController.distanceBetweenLocations
+  RotasController.distanceBetweenLocations
 );
+
+routes.get("/distancia", RotasController.listPendentRoutes);
 
 routes.get("/recomendacoes/organizacoes", RecomendacoesController.organizacoes);
 routes.get("/recomendacoes/locais", RecomendacoesController.cidadeEstados);
+
 export default routes;

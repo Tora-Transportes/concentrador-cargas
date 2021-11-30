@@ -8,6 +8,7 @@ import EditarCargaManual from "./Pages/Cargas/Manual/Editar";
 import VisualizarCargas from "./Pages/Cargas/Visualizar";
 import PermissoesUsuarios from "./Pages/Usuarios/Permissoes";
 import Produtos from "./Pages/Produtos";
+import RotasPendentes from "./Pages/Rotas/Pendentes";
 
 export default function AllRoutes() {
 	return (
@@ -26,6 +27,7 @@ export default function AllRoutes() {
 				/>
 
 				<Route path="/produtos" exact component={Produtos} />
+				<Route path="/rotas/pendentes" exact component={RotasPendentes} />
 			</Switch>
 		</BrowserRouter>
 	);

@@ -151,3 +151,13 @@ ALTER TABLE "con_cargas" ADD (
     "local_coleta" VARCHAR(4000) NULL,
     "local_entrega" VARCHAR(4000) NULL
 );
+
+
+create sequence "seq_con_rotas_pendentes";
+CREATE TABLE "con_rotas_pendentes" (
+    "id" INTEGER NOT NULL PRIMARY KEY,
+    "cidade_origem" VARCHAR(300) NOT NULL,
+    "estado_origem" VARCHAR(300) NOT NULL,
+    "cidade_destino" VARCHAR(300) NOT NULL,
+    "estado_destino" VARCHAR(300) NOT NULL
+);

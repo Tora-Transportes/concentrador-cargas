@@ -1,5 +1,4 @@
 import { mssql } from "../database";
-import AppError from "../models/AppError";
 
 export interface IQueryDistance {
   cidade_origem: string;
@@ -30,10 +29,7 @@ export class ServiceDistanceLocations {
       .select(["DISTANCIA as distancia"]);
 
     if (!rota) {
-      throw new AppError(
-        "Não existe nenhuma rota cadastrada entre esses dois pontos",
-        404
-      );
+      return null;
     }
 
     return rota.distancia;
