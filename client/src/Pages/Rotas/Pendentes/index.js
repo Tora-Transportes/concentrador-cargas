@@ -5,7 +5,7 @@ import ViewRotasPendentes from "./view";
 import ServiceRotas from "../../../services/ServiceRotas";
 
 function RotasPendentes() {
-	const [LoadingScreen] = useLoadingScreen();
+	const [LoadingScreen, setLoading] = useLoadingScreen();
 
 	const columns = [
 		{
@@ -36,19 +36,24 @@ function RotasPendentes() {
 		},
 	];
 
-	const tableFetchData = useCallback(async function (options) {
-		const { column, direction } = options.orderBy ?? {};
-		const { data } = await ServiceRotas.search({
-			...options.filters,
-			order_column: column,
-			order_direction: direction,
-		});
-		return {
-			data: data.data.results,
-			total_pages: data.data.total_pages,
-			current_page: data.data.page,
-		};
-	}, []);
+	const tableFetchData = useCallback(
+		async function (options) {
+			setLoading(true);
+			const { column, direction } = options.orderBy ?? {};
+			const { data } = await ServiceRotas.search({
+				...options.filters,
+				order_column: column,
+				order_direction: direction,
+			});
+			setLoading(false);
+			return {
+				data: data.data.results,
+				total_pages: data.data.total_pages,
+				current_page: data.data.page,
+			};
+		},
+		[setLoading]
+	);
 
 	return (
 		<>
