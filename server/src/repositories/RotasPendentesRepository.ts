@@ -57,4 +57,8 @@ export class RotasPendentesRepository {
       results: await query,
     };
   }
+
+  async delete(id: number): Promise<void> {
+    await database("con_rotas_pendentes").delete().where("id", id);
+  }
 }

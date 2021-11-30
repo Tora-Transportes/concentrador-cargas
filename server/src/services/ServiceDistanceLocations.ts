@@ -8,7 +8,7 @@ export interface IQueryDistance {
 }
 
 export class ServiceDistanceLocations {
-  async find(query: IQueryDistance) {
+  async find(query: IQueryDistance): Promise<null | number> {
     const { cidade_origem, cidade_destino, estado_origem, estado_destino } =
       JSON.parse(
         JSON.stringify(query)

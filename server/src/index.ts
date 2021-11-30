@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import https from "https";
 import fs from "fs";
 import path from "path";
+import "./jobs";
 import routes from "./routes";
 import ErrorMiddleware from "./middlewares/Error";
 
