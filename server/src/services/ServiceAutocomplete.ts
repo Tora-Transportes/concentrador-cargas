@@ -43,7 +43,11 @@ class ServiceAutocomplete {
       query.andWhere("CID.CID_NOM", "like", `%${search.cidade.toUpperCase()}%`);
     }
     if (search?.cnpj) {
-      query.andWhere("PRA.PCA_DOC_FEDERAL", "like", `%${search.cnpj}%`);
+      query.andWhere(
+        "PRA.PCA_DOC_FEDERAL",
+        "like",
+        `%${search.cnpj.replace(/\D/g, "")}%`
+      );
     }
 
     query.orderBy("ORG.ORG_RAZAO_SOCIAL");
