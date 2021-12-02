@@ -24,6 +24,10 @@ function AutocompleteInput({
 		}
 	}
 
+	if (!keyDataList) {
+		throw new Error("keyDataList should be defined on AutocompleteInput");
+	}
+
 	return (
 		<>
 			<FormControl

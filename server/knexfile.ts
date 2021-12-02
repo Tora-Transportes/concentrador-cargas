@@ -39,4 +39,12 @@ const configMssql: Knex.Config = {
   },
 };
 
-export default { configMssql, configOracle };
+const configLocalizacoes: Knex.Config = {
+  client: "sqlite",
+  useNullAsDefault: true,
+  connection: {
+    filename: "./localizacoes.db",
+  },
+};
+
+export default { configMssql, configOracle, configLocalizacoes };
