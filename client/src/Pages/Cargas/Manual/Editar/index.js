@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Container,
 	Row,
@@ -19,8 +19,7 @@ import { getClaims } from "../../../../MicrosoftAuthentication";
 import AutocompleteInput from "src/Pages/Components/AutocompleteInput";
 import ServiceProdutos from "src/services/ServiceProdutos";
 import InputCliente from "src/Pages/Components/InputCliente";
-import ServiceRecomendacoes from "src/services/ServiceRecomendacoes";
-import _ from "lodash";
+import InputLocalizacao from "src/Pages/Components/InputLocalizacao";
 import { IoMdHelpCircle } from "react-icons/io";
 import UnidadesMedida from "../../../Components/UnidadesMedida";
 
@@ -29,8 +28,6 @@ function Manual() {
 	const { id } = useParams();
 	const history = useHistory();
 	const [produtos, setProdutos] = useState([]);
-	const [locaisOrigemCarga, setLocaisOrigemCarga] = useState([]);
-	const [locaisDestinoCarga, setLocaisDestinoCarga] = useState([]);
 	const [distancia, setDistancia] = useState(null);
 
 	const formik = useFormik({
@@ -171,30 +168,6 @@ function Manual() {
 		};
 	}, []);
 
-	const throttledAutocompleteLocais = useRef(
-		_.throttle((query, callback) => {
-			ServiceRecomendacoes.locais({ query }).then(({ data }) => {
-				callback(data.data);
-			});
-		}, 1000)
-	);
-	useEffect(
-		() =>
-			throttledAutocompleteLocais.current(
-				formik.values.origem_carga,
-				setLocaisOrigemCarga
-			),
-		[formik.values.origem_carga]
-	);
-	useEffect(
-		() =>
-			throttledAutocompleteLocais.current(
-				formik.values.destino_carga,
-				setLocaisDestinoCarga
-			),
-		[formik.values.destino_carga]
-	);
-
 	useEffect(() => {
 		setDistancia(null);
 	}, [formik.values.destino_carga, formik.values.origem_carga]);
@@ -312,9 +285,8 @@ function Manual() {
 					<Row>
 						<Col sm={12} md={6}>
 							<FloatingLabel label="*Origem carga" className="mb-3">
-								<AutocompleteInput
+								<InputLocalizacao
 									keyDataList="origem_carga"
-									options={locaisOrigemCarga}
 									type="text"
 									placeholder=" "
 									name="origem_carga"
@@ -327,9 +299,8 @@ function Manual() {
 						</Col>
 						<Col>
 							<FloatingLabel label="*Destino carga" className="mb-3">
-								<AutocompleteInput
+								<InputLocalizacao
 									keyDataList="destino_carga"
-									options={locaisDestinoCarga}
 									type="text"
 									placeholder=" "
 									name="destino_carga"
