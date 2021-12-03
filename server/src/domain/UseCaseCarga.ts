@@ -4,6 +4,10 @@ import { ICarga } from "../models/ICargas";
 import { factoryCargaValidator } from "../validations/CargaValidator";
 import AppError from "../models/AppError";
 import { ServiceDistanceLocations } from "../services/ServiceDistanceLocations";
+import TokenAd from "../models/TokenAd";
+import TextUtils from "../Utils/text";
+
+import xlsx from "xlsx";
 
 export class UseCaseAddCarga {
   async run(cargaDTO: Record<string, any>) {
@@ -176,5 +180,55 @@ export class UseCaseListPendentRoutes {
       currentPage
     );
     return rotas;
+  }
+}
+
+export class UseCaseImportCarga {
+  async run(file: Buffer | undefined, usuario: string | undefined) {
+    if (!file || !file?.buffer) {
+      throw new AppError("O arquivo não foi enviado", 400);
+    }
+    const nomeUsuario = TokenAd.getClaims(String(usuario)).name;
+    const workbook = xlsx.read(file.buffer);
+    const worksheet = workbook.Sheets["Planilha1"];
+    const jsonSheet = <Record<string, any>[]>(
+      xlsx.utils.sheet_to_json(worksheet)
+    );
+
+    const validator = factoryCargaValidator();
+    const timestamp = new Date();
+    let idCounter = 1;
+    const cargas = jsonSheet.map((row: Record<string, any>): ICarga => {
+      const clone: ICarga = {
+        e_lote: false,
+        cliente: TextUtils.normalize(row["Destinatário"]),
+        observacao: row["OBSERVAÇÃO"],
+        quantidade: Number(row["Quantidade"]),
+        origem_carga:
+          "BRASIL/" +
+          TextUtils.normalize(row["Origem"]).split(", ").reverse().join("/"),
+        destino_carga:
+          "BRASIL/" +
+          TextUtils.normalize(row["Destino"]).split(", ").reverse().join("/"),
+        unidade_medida: TextUtils.normalize(row["Unidade"]),
+        canal_comunicacao: "manual",
+        usuario: nomeUsuario,
+        responsavel_cadastro: nomeUsuario,
+        id: `M-${timestamp.getTime()}-${idCounter++}`,
+        data_cadastro: timestamp,
+        data_atualizacao: timestamp,
+        ativo: 1,
+      };
+
+      validator.validateSync(clone, { abortEarly: false });
+
+      return clone;
+    });
+
+    if (cargas.length > 0) {
+      const cargaRepository = new CargaRepository();
+      await cargaRepository.bulkCreate(cargas);
+    }
+    return cargas;
   }
 }

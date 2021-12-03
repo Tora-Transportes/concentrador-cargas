@@ -18,6 +18,11 @@ export class CargaRepository {
     return carga;
   }
 
+  async bulkCreate(cargas: ICarga[]): Promise<ICarga[]> {
+    await database("con_cargas").insert(cargas);
+    return cargas;
+  }
+
   async update(id: string, carga: ICarga): Promise<ICarga> {
     await database("con_cargas").update(carga).where("id", id);
     return carga;

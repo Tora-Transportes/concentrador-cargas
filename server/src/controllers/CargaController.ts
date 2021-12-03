@@ -7,6 +7,7 @@ import {
   UseCaseUpdateCarga,
   UseCaseViewCargas,
   UseCaseGetDistanceBetween,
+  UseCaseImportCarga,
 } from "../domain/UseCaseCarga";
 import AppError from "../models/AppError";
 
@@ -53,6 +54,13 @@ class CargaController {
   async search(req: Request, res: Response) {
     const result = await new UseCaseViewCargas().run(req.query);
     return res.json({ data: result });
+  }
+
+  async importSheet(req: Request, res: Response) {
+    const { file } = req;
+    const usuario = req.headers.authorization;
+    const response = await new UseCaseImportCarga().run(file?.buffer, usuario);
+    return res.json({ data: response });
   }
 }
 
