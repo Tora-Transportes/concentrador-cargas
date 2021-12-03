@@ -1,10 +1,11 @@
 import { mssql } from "../database";
+import AppError from "../models/AppError";
 
 export interface IQueryDistance {
-  cidade_origem: string;
-  cidade_destino: string;
-  estado_destino: string;
-  estado_origem: string;
+  cidade_origem: string | undefined | null;
+  cidade_destino: string | undefined | null;
+  estado_destino: string | undefined | null;
+  estado_origem: string | undefined | null;
 }
 
 export class ServiceDistanceLocations {
@@ -15,6 +16,17 @@ export class ServiceDistanceLocations {
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "")
       );
+
+    if (
+      [cidade_origem, cidade_destino, estado_origem, estado_destino].includes(
+        "UNDEFINED"
+      )
+    ) {
+      throw new AppError(
+        "As duas localizações devem ser informadas para proseguir com o cálculo",
+        400
+      );
+    }
 
     const rota = await mssql("ROTAS_OPERACAO_NEW")
       .first()
