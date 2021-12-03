@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export function factoryCargaValidator() {
-  const regexId = new RegExp(`^[A-Z]-[0-9]+$`, "g");
+  const regexId = new RegExp(`^[A-Z]-[0-9]+(-[0-9]+)?$`, "g");
 
   const cargaValidator = yup.object({
     local_entrega: yup.string().nullable(),

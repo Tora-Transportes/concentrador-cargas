@@ -195,6 +195,7 @@ export class UseCaseImportCarga {
       xlsx.utils.sheet_to_json(worksheet)
     );
 
+    const validator = factoryCargaValidator();
     const timestamp = new Date();
     let idCounter = 1;
     const cargas = jsonSheet.map((row: Record<string, any>): ICarga => {
@@ -218,6 +219,9 @@ export class UseCaseImportCarga {
         data_atualizacao: timestamp,
         ativo: 1,
       };
+
+      validator.validateSync(clone, { abortEarly: false });
+
       return clone;
     });
 
