@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Main from "./Pages/Main";
 import LoadMenu from "./Pages/Cargas/Menu";
+import ImportarCargas from "./Pages/Cargas/Importar";
 import CadastrarCargaManual from "./Pages/Cargas/Manual/Cadastrar";
 import EditarCargaManual from "./Pages/Cargas/Manual/Editar";
 import VisualizarCargas from "./Pages/Cargas/Visualizar";
@@ -17,6 +18,7 @@ export default function AllRoutes() {
 				<Route path="/" exact component={Main} />
 				<Route path="/cargas/visualizar" exact component={VisualizarCargas} />
 				<Route path="/cargas/menu" exact component={LoadMenu} />
+				<Route path="/cargas/importar" exact component={ImportarCargas} />
 
 				<Route path="/cargas/manual" exact component={CadastrarCargaManual} />
 				<Route path="/cargas/manual/:id" exact component={EditarCargaManual} />

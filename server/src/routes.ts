@@ -1,4 +1,6 @@
-import { Router } from "express";
+import express, { Router } from "express";
+import path from "path";
+import multer from "multer";
 
 import CargaController from "./controllers/CargaController";
 import UsuarioController from "./controllers/UsuarioController";
@@ -13,11 +15,17 @@ import RotasController from "./controllers/RotasController";
 
 const routes = Router();
 
+routes.use("/static/", express.static(path.resolve(__dirname, "..", "static")));
 routes.use(LogMiddleware);
 routes.use(TokenMiddleware);
 routes.use(ConvertFieldsToDate);
 routes.get("/cargas", CargaController.search);
 routes.post("/cargas", CargaController.create);
+routes.post(
+  "/cargas/importacao",
+  multer().single("file"),
+  CargaController.importSheet
+);
 routes.get("/cargas/:id", CargaController.index);
 routes.put("/cargas/:id", CargaController.update);
 routes.delete(

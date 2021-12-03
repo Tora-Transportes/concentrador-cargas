@@ -176,6 +176,13 @@ class ServiceCargas {
 			`/distancia/${cidade_origem}/${estado_origem}/${cidade_destino}/${estado_destino}`
 		);
 	}
+
+	async importSheet({ file }) {
+		const data = new FormData();
+		data.set("file", file);
+
+		return api.post("/cargas/importacao", data);
+	}
 }
 
 export default new ServiceCargas();
