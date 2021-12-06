@@ -3,3 +3,4 @@ htmls/
 package-lock.json
 yarn.lock
 test.js
+.env

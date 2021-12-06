@@ -1,5 +1,6 @@
 const cheerio = require('cheerio');
 const fs = require('fs');
+const path = require('path');
 
 function splitIntoChunks(array = [], chunkSize = 3) {
     return array.reduce((resultArray, item, index) => { 
@@ -67,19 +68,22 @@ function converterLinhasRelatorioEmObjeto(linhas) {
     
 }
 
-
-for(const filename of fs.readdirSync("htmls")) {
-    const cnpj = filename.split(".")[0];
-    const linhasRelatorio = extrairLinhasRelatorio(fs.readFileSync(`htmls/${cnpj}.html`));
-    const cargas = converterLinhasRelatorioEmObjeto(linhasRelatorio).map(i=> {
-        const clone = {...i};
-        clone.cnpj_fornecedor = cnpj;
-        for(const j in clone) {
-            if(clone[j] === undefined || clone[j] === '') {
-                clone[j] = null;
+for(const empresa of fs.readdirSync("htmls")) {
+    for(const filename of fs.readdirSync(path.resolve("htmls", empresa))) {
+        const cnpj = filename.split(".")[0];
+        const linhasRelatorio = extrairLinhasRelatorio(fs.readFileSync(path.resolve("htmls", empresa, `${cnpj}.html`)));
+        const cargas = converterLinhasRelatorioEmObjeto(linhasRelatorio).map(i=> {
+            const clone = {...i};
+            clone.empresa = empresa;
+            clone.cnpj_fornecedor = cnpj;
+            for(const j in clone) {
+                if(clone[j] === undefined || clone[j] === '') {
+                    clone[j] = null;
+                }
             }
-        }
-        return clone;
-    });
-    console.log(cargas);
+            return clone;
+        });
+        console.log(cargas);
+    }
+
 }

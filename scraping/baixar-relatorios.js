@@ -1,25 +1,31 @@
+require("dotenv").config();
 const Nightmare = require('nightmare')
 const fs = require('fs');
 const path = require('path');
 
 const nightmare = Nightmare({ show: false, waitTimeout: 15000, 
     switches: {
-        'proxy-server': '127.0.0.1:8080',
-        'ignore-certificate-errors': true
+        // 'proxy-server': '127.0.0.1:8080',
+        // 'ignore-certificate-errors': true
     }
 });
 
 
 async function login() {
-    return await nightmare.goto("https://portal.e-fornecedores.ind.br/")
-        .insert("#ctlLoadedControl_txtLogin", "US204683")
-        .insert("#ctlLoadedControl_txtSenha", "Tora2019")
-        
-        .click("#ctlLoadedControl_btnOK")
-        .wait("#mnuPrincipal_lstEmpresas");
+    try {
+        return await nightmare.goto("https://portal.e-fornecedores.ind.br/")
+            .insert("#ctlLoadedControl_txtLogin", process.env.PORTAL_USUARIO)
+            .insert("#ctlLoadedControl_txtSenha", process.env.PORTAL_SENHA)
+            
+            .click("#ctlLoadedControl_btnOK")
+            .wait("#mnuPrincipal_lstEmpresas");
+    } catch (error) {
+        throw new Error("Erro ao realizar login no sistema - "+JSON.stringify(error));
+    }
 }
 
 async function requirirEmpresa(empresa=78) {
+    await nightmare.wait("form");
     return await nightmare.evaluate(async (empresa) =>{
         const data = new FormData(document.getElementsByTagName("form")[0]);
         data.set("txtScriptEnabled", "true");
@@ -40,6 +46,7 @@ async function requirirEmpresa(empresa=78) {
 }
 
 async function requirirFornecedor(empresa=78, fornecedor) {
+    await nightmare.wait("form");
     return await nightmare.evaluate(async (empresa, fornecedor) => {
         const data = new FormData(document.getElementsByTagName("form")[0]);
         data.set("txtScriptEnabled", "true");
@@ -74,33 +81,56 @@ async function requirirRelatorio() {
     });
 }
 
-
+async function listarEmpresas() {
+    return await nightmare.evaluate(() => {
+        return Array.from(document.getElementsByName("mnuPrincipal:lstEmpresas")[0].getElementsByTagName("option")).map(i=> ({
+            id: Number(i.value),
+            descricao: i.innerText,
+        })).filter(i=> !isNaN(i.id));
+    })
+}
 
 
 async function main() {
+    console.time("Scraping");
     try {
         await login();
-        const htmlEmpresaRequirida = await requirirEmpresa(78);
-        await nightmare.evaluate(htmlEmpresaRequirida=>{
-            document.write(htmlEmpresaRequirida);
-        }, htmlEmpresaRequirida);
+        for(const empresa of await listarEmpresas()) {
+            console.time(`Minerando empresa ${empresa.descricao}`);
 
-        const fornecedores = await nightmare.evaluate(() => {
-            return Array.from(document.getElementById("mnuPrincipal_lstFornecedor").getElementsByTagName("option")).map(i=>i.value).slice(1);
-        });
-        for(const f of fornecedores) {
-           
-            const htmlFornecedorRequirido = await requirirFornecedor(78, f);
-            await nightmare.evaluate(htmlFornecedorRequirido=>{
-                document.write(htmlFornecedorRequirido);
-            }, htmlFornecedorRequirido);
-            
-            if(!fs.existsSync("req")) {
-                fs.mkdirSync("req");
+            console.log(`requerir empresa ${empresa.descricao}`);
+            const htmlEmpresaRequirida = await requirirEmpresa(78);
+            await nightmare.evaluate(htmlEmpresaRequirida=>{
+                document.write(htmlEmpresaRequirida);
+            }, htmlEmpresaRequirida);
+            // console.log(`apos requerir empresa ${empresa.descricao}`);
+    
+            console.log(`pegando fornecedores ${empresa.descricao}`);
+            const fornecedores = await nightmare.evaluate(() => {
+                return Array.from(document.getElementById("mnuPrincipal_lstFornecedor").getElementsByTagName("option")).map(i=>i.value).slice(1);
+            });
+            // console.log(`apos pegando fornecedores ${empresa.descricao}`);
+
+            for(const f of fornecedores) {
+               
+                const htmlFornecedorRequirido = await requirirFornecedor(78, f);
+                await nightmare.evaluate(htmlFornecedorRequirido=>{
+                    document.write(htmlFornecedorRequirido);
+                }, htmlFornecedorRequirido);
+                
+                if(!fs.existsSync("htmls")) {
+                    fs.mkdirSync("htmls");
+                }
+
+                if(!fs.existsSync(path.resolve("htmls", String(empresa.id)))) {
+                    fs.mkdirSync(path.resolve("htmls", String(empresa.id)));
+                }
+    
+                const nomeArquivo = path.resolve("htmls", String(empresa.id), f.replace(/\D/g, "") + ".html");
+                fs.writeFileSync(nomeArquivo, await requirirRelatorio());
             }
 
-            const nomeArquivo = path.resolve("htmls", f.replace(/\D/g, "") + ".html");
-            fs.writeFileSync(nomeArquivo, await requirirRelatorio());
+            console.timeEnd(`Minerando empresa ${empresa.descricao}`);
         }
         
     } catch (error) {
@@ -108,8 +138,8 @@ async function main() {
         console.error(error, error.message);
     }
 
-    console.log("Scrapping finalizado");
     await nightmare.end()
+    console.timeEnd("Scraping");
 }
 
 main();
