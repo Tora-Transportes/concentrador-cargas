@@ -78,8 +78,13 @@ function TableExternal({ columns, get_data }) {
 		}
 	}
 
+	let firstRun = true;
 	useEffect(() => {
-		notify();
+		if (firstRun) {
+			firstRun = false;
+		} else {
+			notify();
+		}
 	}, [page, orderby.values]);
 
 	useDebouncedFunction(
