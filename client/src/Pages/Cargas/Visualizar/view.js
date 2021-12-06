@@ -23,6 +23,8 @@ function VisualizarCargas({
 	displayColumns = [],
 	dispatchColumns,
 	activeModal = true,
+	itensPerPage = 5,
+	setItensPerPage,
 }) {
 	return (
 		<>
@@ -42,6 +44,18 @@ function VisualizarCargas({
 						<Button variant="outline-info" onClick={handleToggleModal}>
 							<BsGear /> Configurar visão
 						</Button>
+						<select
+							className="btn"
+							value={itensPerPage}
+							onChange={(e) => setItensPerPage(e.target.value)}
+						>
+							<option value="5">👀 5</option>
+							<option value="10">👀 10</option>
+							<option value="20">👀 20</option>
+							<option value="50">👀 50</option>
+							<option value="100">👀 100</option>
+							<option value="500">👀 500</option>
+						</select>
 					</Col>
 				</Row>
 				<Row>

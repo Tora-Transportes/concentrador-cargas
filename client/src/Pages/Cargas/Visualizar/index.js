@@ -1,4 +1,4 @@
-import React, { useReducer, useState, useEffect } from "react";
+import React, { useReducer, useState, useEffect, useCallback } from "react";
 import View from "./view";
 
 import { Form } from "react-bootstrap";
@@ -216,6 +216,7 @@ function Visualizar() {
 		reducerToggleModal,
 		false
 	);
+	const [itensPerPage, setItensPerPage] = useState(5);
 	function formatDate(date) {
 		return date?.split("T")[0].split("-").reverse().join("/");
 	}
@@ -247,30 +248,34 @@ function Visualizar() {
 		setLoading(false);
 	}
 
-	async function get_data(options) {
-		setLoading(true);
+	const get_data = useCallback(
+		async function (options) {
+			setLoading(true);
 
-		try {
-			const { filters, orderBy, page } = options;
-			setFiltroAtual({ filters, orderBy, page });
-			const { data } = await ServiceCargas.search({
-				...filters,
-				page,
-				order_column: orderBy?.column,
-				order_direction: orderBy?.direction,
-			});
+			try {
+				const { filters, orderBy, page } = options;
+				setFiltroAtual({ filters, orderBy, page });
+				const { data } = await ServiceCargas.search({
+					...filters,
+					page,
+					order_column: orderBy?.column,
+					order_direction: orderBy?.direction,
+					limit: itensPerPage,
+				});
+				setLoading(false);
+
+				return {
+					total_pages: data.data.total_pages,
+					current_page: page || 1,
+					data: data.data.results,
+				};
+			} catch (error) {
+				console.log(error);
+			}
 			setLoading(false);
-
-			return {
-				total_pages: data.data.total_pages,
-				current_page: page || 1,
-				data: data.data.results,
-			};
-		} catch (error) {
-			console.log(error);
-		}
-		setLoading(false);
-	}
+		},
+		[itensPerPage]
+	);
 
 	const columnsToDisplay = displayColumns
 		.filter((i) => i.active)
@@ -286,6 +291,7 @@ function Visualizar() {
 
 	return (
 		<View
+			key={itensPerPage}
 			handleExportExcel={handleExportExcel}
 			get_data={get_data}
 			columns={orderedColumns.filter((c) => columnsToDisplay.includes(c.name))}
@@ -294,6 +300,8 @@ function Visualizar() {
 			dispatchColumns={reducerColumns}
 			activeModal={activeModal}
 			handleToggleModal={handleToggleModal}
+			itensPerPage={itensPerPage}
+			setItensPerPage={setItensPerPage}
 		/>
 	);
 }

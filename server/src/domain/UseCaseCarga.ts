@@ -72,7 +72,11 @@ export class UseCaseUpdateCarga {
 export class UseCaseViewCargas {
   async run(filter: Record<string, any>) {
     const cargaRepository = new CargaRepository();
-    return cargaRepository.search({ ...filter, ativo: 1 }, filter.page);
+    return cargaRepository.search(
+      { ...filter, ativo: 1 },
+      filter.page,
+      filter.limit || 5
+    );
   }
 
   async index(id: string) {

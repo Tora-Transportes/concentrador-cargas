@@ -117,6 +117,7 @@ class ServiceCargas {
 		data_cadastro,
 		destino_carga,
 		origem_carga,
+		limit,
 	}) {
 		return api.get("/cargas", {
 			params: {
@@ -133,6 +134,7 @@ class ServiceCargas {
 				origem_carga,
 				order_column,
 				order_direction,
+				limit,
 			},
 		});
 	}
