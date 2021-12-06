@@ -9,7 +9,7 @@ class ServiceRotas {
 		cidade_origem,
 		cidade_destino,
 	}) {
-		return api.get("/distancia", {
+		return api.get("/rotas/pendentes", {
 			params: {
 				page,
 				order_column,

@@ -74,7 +74,7 @@ routes.post(
   RotasController.distanceBetweenLocations
 );
 
-routes.get("/distancia", RotasController.listPendentRoutes);
+routes.get("/rotas/pendentes", RotasController.listPendentRoutes);
 
 routes.get("/recomendacoes/organizacoes", RecomendacoesController.organizacoes);
 routes.get("/recomendacoes/locais", RecomendacoesController.cidadeEstados);
