@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Table, Row, Col, Container, Pagination, Form } from "react-bootstrap";
 import { useFormik } from "formik";
 import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
@@ -78,14 +78,14 @@ function TableExternal({ columns, get_data }) {
 		}
 	}
 
-	let firstRun = true;
+	const firstRun = useRef(true);
 	useEffect(() => {
-		if (firstRun) {
-			firstRun = false;
+		if (firstRun.current) {
+			firstRun.current = false;
 		} else {
 			notify();
 		}
-	}, [page, orderby.values]);
+	}, [page, orderby.values, get_data]);
 
 	useDebouncedFunction(
 		() => {

@@ -291,7 +291,6 @@ function Visualizar() {
 
 	return (
 		<View
-			key={itensPerPage}
 			handleExportExcel={handleExportExcel}
 			get_data={get_data}
 			columns={orderedColumns.filter((c) => columnsToDisplay.includes(c.name))}
