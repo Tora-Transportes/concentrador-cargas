@@ -60,7 +60,11 @@ function Visualizar() {
 			name: "cliente",
 			description: "Cliente",
 			selector: (row) => row.cliente.split(" -")[0],
-			Filter: (props) => <InputCliente label="" {...props} />,
+			Filter: (props) => (
+				<div className="mt-3">
+					<InputCliente label="" {...props} style={{ height: "24px" }} />
+				</div>
+			),
 		},
 		{
 			name: "origem_carga",
