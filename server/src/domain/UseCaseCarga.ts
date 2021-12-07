@@ -204,7 +204,7 @@ export class UseCaseImportCarga {
     let idCounter = 1;
     const cargas = jsonSheet.map((row: Record<string, any>): ICarga => {
       const clone: ICarga = {
-        e_lote: false,
+        e_lote: true,
         cliente: TextUtils.normalize(row["Destinatário"]),
         observacao: row["OBSERVAÇÃO"],
         quantidade: Number(row["Quantidade"]),
