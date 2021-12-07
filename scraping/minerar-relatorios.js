@@ -68,22 +68,26 @@ function converterLinhasRelatorioEmObjeto(linhas) {
     
 }
 
-for(const empresa of fs.readdirSync("htmls")) {
-    for(const filename of fs.readdirSync(path.resolve("htmls", empresa))) {
-        const cnpj = filename.split(".")[0];
-        const linhasRelatorio = extrairLinhasRelatorio(fs.readFileSync(path.resolve("htmls", empresa, `${cnpj}.html`)));
-        const cargas = converterLinhasRelatorioEmObjeto(linhasRelatorio).map(i=> {
-            const clone = {...i};
-            clone.empresa = empresa;
-            clone.cnpj_fornecedor = cnpj;
-            for(const j in clone) {
-                if(clone[j] === undefined || clone[j] === '') {
-                    clone[j] = null;
+module.exports = function minerarNotas () {
+    let todasCargas = [];
+    for(const empresa of fs.readdirSync("htmls")) {
+        for(const filename of fs.readdirSync(path.resolve("htmls", empresa))) {
+            const cnpj = filename.split(".")[0];
+            const linhasRelatorio = extrairLinhasRelatorio(fs.readFileSync(path.resolve("htmls", empresa, `${cnpj}.html`)));
+            const cargas = converterLinhasRelatorioEmObjeto(linhasRelatorio).map(i=> {
+                const clone = {...i};
+                clone.empresa = empresa;
+                clone.cnpj_fornecedor = cnpj;
+                for(const j in clone) {
+                    if(clone[j] === undefined || clone[j] === '') {
+                        clone[j] = null;
+                    }
                 }
-            }
-            return clone;
-        });
-        console.log(cargas);
-    }
+                return clone;
+            });
 
+            todasCargas = [...todasCargas, ...cargas];
+        }
+    }
+    return todasCargas;
 }

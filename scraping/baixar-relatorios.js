@@ -90,7 +90,6 @@ async function listarEmpresas() {
     })
 }
 
-
 async function main() {
     console.time("Scraping");
     try {
@@ -142,4 +141,4 @@ async function main() {
     console.timeEnd("Scraping");
 }
 
-main();
+module.exports = main;
