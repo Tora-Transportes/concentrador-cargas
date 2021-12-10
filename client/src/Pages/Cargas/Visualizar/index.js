@@ -267,6 +267,7 @@ function Visualizar() {
 			...filters,
 			order_column: orderBy?.column,
 			order_direction: orderBy?.direction,
+			e_lote: 0,
 		};
 		const response = await ServiceCargas.exportToXlsx(options);
 		const url = window.URL.createObjectURL(new Blob([response.data]));
