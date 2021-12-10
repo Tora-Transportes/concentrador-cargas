@@ -184,6 +184,12 @@ function Visualizar() {
 			Filter: () => null,
 		},
 		{
+			name: "fk_lote_pai",
+			description: "Lote origem",
+			selector: (row) => row.fk_lote_pai,
+			Filter: () => null,
+		},
+		{
 			name: "editar",
 			description: "Editar",
 			static_column: true,
@@ -252,6 +258,11 @@ function Visualizar() {
 		setLoading(false);
 	}
 
+	function resetView() {
+		localStorage.removeItem("table-columns");
+		location.reload();
+	}
+
 	const get_data = useCallback(
 		async function (options) {
 			setLoading(true);
@@ -306,6 +317,7 @@ function Visualizar() {
 			handleToggleModal={handleToggleModal}
 			itensPerPage={itensPerPage}
 			setItensPerPage={setItensPerPage}
+			resetView={resetView}
 		/>
 	);
 }
