@@ -1,0 +1,8 @@
+DROP table "con_cargas";
+DROP table "con_usuarios";
+DROP table "con_usuarios_permissoes";
+DROP sequence "seq_con_produtos";
+DROP table "con_produtos";
+DROP TABLE "con_logs";
+DROP sequence "seq_con_rotas_pendentes";
+DROP TABLE "con_rotas_pendentes";

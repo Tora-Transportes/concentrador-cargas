@@ -48,6 +48,56 @@ class ServiceCargas {
 		return api.post("/cargas", carga);
 	}
 
+	async createDerivada({
+		id,
+		e_lote,
+		cliente,
+		origem_carga,
+		destino_carga,
+		data_entrega,
+		data_coleta,
+		tipo_carga,
+		canal_comunicacao,
+		quantidade,
+		unidade_medida,
+		solicitante,
+		observacao,
+		responsavel_cadastro,
+		acessorios_requisitos,
+		informacoes_restritivas,
+		janela_entrega,
+		janela_coleta,
+		local_coleta,
+		local_entrega,
+		fk_lote_pai,
+	}) {
+		const carga = {
+			id,
+			e_lote,
+			cliente,
+			origem_carga,
+			destino_carga,
+			data_entrega,
+			data_coleta,
+			tipo_carga,
+			canal_comunicacao,
+			quantidade,
+			unidade_medida,
+			solicitante,
+			observacao,
+			responsavel_cadastro,
+			acessorios_requisitos,
+			informacoes_restritivas,
+			janela_entrega,
+			janela_coleta,
+			local_coleta,
+			local_entrega,
+			fk_lote_pai,
+		};
+
+		return api.post(`/cargas/derivada/${carga.fk_lote_pai}`, carga);
+	}
+
 	async update({
 		id,
 		e_lote,

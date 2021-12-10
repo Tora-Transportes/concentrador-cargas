@@ -161,3 +161,20 @@ CREATE TABLE "con_rotas_pendentes" (
     "cidade_destino" VARCHAR(300) NOT NULL,
     "estado_destino" VARCHAR(300) NOT NULL
 );
+
+
+-- Não  vai ser um relacionamento pois depois a carga pai vai poder ser excluida
+ALTER TABLE "con_cargas" ADD (
+    "fk_lote_pai" varchar(20)
+);
+
+INSERT INTO "con_usuarios" ("oid", "nome", "email") VALUES ('5d55d306-13d6-45dd-9bc7-4e67b9b705d5', 'A', 'a@a.a');
+INSERT INTO "con_usuarios_permissoes" ("fk_usuario", "permissao") VALUES ('5d55d306-13d6-45dd-9bc7-4e67b9b705d5', 'ALTERAR_PERMISSOES');
+
+
+-- Adiciona a coluna quantidade atual que vai ser usada para tratar o decrescimento dos lotes
+ALTER TABLE "con_cargas" ADD (
+    "quantidade_atual" decimal(10,2)
+);
+update "con_cargas" set "quantidade_atual" = "quantidade";
+ALTER TABLE "con_cargas" modify "quantidade_atual" decimal(10,2) not null;

@@ -21,6 +21,7 @@ routes.use(TokenMiddleware);
 routes.use(ConvertFieldsToDate);
 routes.get("/cargas", CargaController.search);
 routes.post("/cargas", CargaController.create);
+routes.post("/cargas/derivada/:fk_lote_pai", CargaController.createDerivada);
 routes.post(
   "/cargas/importacao",
   multer().single("file"),

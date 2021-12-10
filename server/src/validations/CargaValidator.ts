@@ -31,6 +31,7 @@ export function factoryCargaValidator() {
       .number()
       .min(0)
       .required("A quantidade da carga deve ser preenchido"),
+    quantidade_atual: yup.number().min(0),
     unidade_medida: yup
       .string()
       .required("A unidade de medida da carga deve ser preenchido"),
@@ -43,6 +44,7 @@ export function factoryCargaValidator() {
         new RegExp("^(manual|portal)$", "g"),
         "O local de criação da carga informado é inválido, deve ser algum desses [manual ou portal]"
       ),
+    fk_lote_pai: yup.string(),
   });
 
   return cargaValidator;

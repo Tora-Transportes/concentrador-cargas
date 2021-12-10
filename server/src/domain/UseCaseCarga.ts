@@ -19,6 +19,7 @@ export class UseCaseAddCarga {
     const currentDate = new Date();
     carga.data_atualizacao = currentDate;
     carga.data_cadastro = currentDate;
+    carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
 
     const cargaRepository = new CargaRepository();
 
@@ -32,6 +33,49 @@ export class UseCaseAddCarga {
   }
 }
 
+export class UseCaseAddCargaDerivada {
+  async run(cargaDTO: Record<string, any>) {
+    const validator = factoryCargaValidator();
+    const carga: ICarga = await validator.validate(cargaDTO, {
+      abortEarly: false,
+    });
+
+    const currentDate = new Date();
+    carga.data_atualizacao = currentDate;
+    carga.data_cadastro = currentDate;
+    carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
+    carga.e_lote = false;
+
+    const cargaRepository = new CargaRepository();
+    const lotePai = await cargaRepository.index(cargaDTO.fk_lote_pai);
+    if (!lotePai) {
+      throw new AppError("O lote pai informado não existe", 400);
+    }
+
+    const cargasCadastrada = await cargaRepository.index(carga.id);
+    if (cargasCadastrada) {
+      throw new AppError("Uma carga com esse Código já foi cadastrada", 400);
+    }
+
+    const quantidadeRestante =
+      Number(lotePai.quantidade_atual) - Number(carga.quantidade);
+    if (quantidadeRestante < 0) {
+      throw new AppError(
+        "A quantidade informada para a carga ultrapassa os limites do lote",
+        400
+      );
+    }
+
+    await cargaRepository.create(carga);
+    await cargaRepository.update(lotePai.id, {
+      ...lotePai,
+      quantidade_atual: quantidadeRestante,
+    });
+
+    return carga;
+  }
+}
+
 export class UseCaseUpdateCarga {
   async run(cargaDTO: Record<string, any>) {
     const validator = factoryCargaValidator();
@@ -41,6 +85,7 @@ export class UseCaseUpdateCarga {
 
     const currentDate = new Date();
     carga.data_atualizacao = currentDate;
+    carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
 
     const cargaRepository = new CargaRepository();
     const cargaCadastrada = await cargaRepository.index(carga.id);
@@ -208,6 +253,7 @@ export class UseCaseImportCarga {
         cliente: TextUtils.normalize(row["Destinatário"]),
         observacao: row["OBSERVAÇÃO"],
         quantidade: Number(row["Quantidade"]),
+        quantidade_atual: Number(row["Quantidade"]),
         origem_carga:
           "BRASIL/" +
           TextUtils.normalize(row["Origem"]).split(", ").reverse().join("/"),

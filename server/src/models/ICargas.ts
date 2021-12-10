@@ -8,6 +8,7 @@ export interface ICarga {
   data_coleta?: Date | null;
   tipo_carga?: string | null;
   quantidade: number;
+  quantidade_atual?: number;
   unidade_medida: string;
   responsavel_cadastro: string;
   canal_comunicacao: string;
@@ -24,4 +25,6 @@ export interface ICarga {
   usuario?: string | null;
 
   ativo?: number;
+
+  fk_lote_pai?: string;
 }

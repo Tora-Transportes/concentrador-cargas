@@ -8,6 +8,7 @@ import {
   UseCaseViewCargas,
   UseCaseGetDistanceBetween,
   UseCaseImportCarga,
+  UseCaseAddCargaDerivada,
 } from "../domain/UseCaseCarga";
 import AppError from "../models/AppError";
 
@@ -19,6 +20,19 @@ class CargaController {
     ).name;
 
     const carga = await new UseCaseAddCarga().run(cargaDTO);
+    return res.json({
+      data: carga,
+    });
+  }
+
+  async createDerivada(req: Request, res: Response) {
+    const fk_lote_pai = req.params.fk_lote_pai;
+    const cargaDTO = { ...req.body, fk_lote_pai };
+    cargaDTO.usuario = TokenAd.getClaims(
+      String(req.headers.authorization)
+    ).name;
+
+    const carga = await new UseCaseAddCargaDerivada().run(cargaDTO);
     return res.json({
       data: carga,
     });

@@ -99,18 +99,18 @@ function Visualizar() {
 			description: "Tipo Carga",
 			selector: (row) => row.tipo_carga,
 		},
-		{
-			name: "e_lote",
-			description: "Lote ?",
-			selector: (row) => (row.e_lote ? "Sim" : "Não"),
-			Filter: (props) => (
-				<Form.Select {...props}>
-					<option></option>
-					<option value="1">Sim</option>
-					<option value="0">Não</option>
-				</Form.Select>
-			),
-		},
+		// {
+		// 	name: "e_lote",
+		// 	description: "Lote ?",
+		// 	selector: (row) => (row.e_lote ? "Sim" : "Não"),
+		// 	Filter: (props) => (
+		// 		<Form.Select {...props}>
+		// 			<option></option>
+		// 			<option value="1">Sim</option>
+		// 			<option value="0">Não</option>
+		// 		</Form.Select>
+		// 	),
+		// },
 		{
 			name: "canal_comunicacao",
 			description: "Canal comunicação",
@@ -265,6 +265,7 @@ function Visualizar() {
 					order_column: orderBy?.column,
 					order_direction: orderBy?.direction,
 					limit: itensPerPage,
+					e_lote: 0,
 				});
 				setLoading(false);
 
