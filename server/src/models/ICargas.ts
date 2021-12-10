@@ -26,5 +26,5 @@ export interface ICarga {
 
   ativo?: number;
 
-  fk_lote_pai?: string;
+  fk_lote_pai?: string | null;
 }

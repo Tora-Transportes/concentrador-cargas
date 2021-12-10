@@ -44,7 +44,8 @@ export function factoryCargaValidator() {
         new RegExp("^(manual|portal)$", "g"),
         "O local de criação da carga informado é inválido, deve ser algum desses [manual ou portal]"
       ),
-    fk_lote_pai: yup.string(),
+    fk_lote_pai: yup.string().nullable(),
+    fk_situacao: yup.number(),
   });
 
   return cargaValidator;

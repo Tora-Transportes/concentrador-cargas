@@ -178,3 +178,25 @@ ALTER TABLE "con_cargas" ADD (
 );
 update "con_cargas" set "quantidade_atual" = "quantidade";
 ALTER TABLE "con_cargas" modify "quantidade_atual" decimal(10,2) not null;
+
+
+CREATE TABLE "con_situacoes_cargas" (
+    "id" integer primary key,
+    "cor" varchar(10) not null,
+    "descricao" varchar(100) not null
+);
+
+INSERT INTO "con_situacoes_cargas" ("id", "cor", "descricao") VALUES (1, '#f6ff00', 'Aguardando Alocação (Veículo)');
+INSERT INTO "con_situacoes_cargas" ("id", "cor", "descricao") VALUES (2, '#002aff', 'Veículo Alocado');
+INSERT INTO "con_situacoes_cargas" ("id", "cor", "descricao") VALUES (3, '#00ff11', 'Validado pelo GR');
+
+ALTER TABLE "con_cargas" ADD (
+    "fk_situacao" integer default 1 NOT NULL
+);
+
+ALTER TABLE "con_cargas" ADD CONSTRAINT fk_situacoes_cargas
+    FOREIGN KEY ("fk_situacao")
+    REFERENCES "con_situacoes_cargas"("id");
+
+
+ALTER TABLE "con_situacoes_cargas" DROP COLUMN "cor";

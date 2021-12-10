@@ -10,6 +10,10 @@ import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import useLocalstorage from "../../Components/useLocalstorage";
 
+import imgBolaVerde from "../../../assets/ponto-verde.png";
+import imgBolaAmarela from "../../../assets/ponto-amarelo.png";
+import imgBolaVermelha from "../../../assets/ponto-vermelho.png";
+
 function reducerActiveColumns(state, action) {
 	const index = state.findIndex((i) => i.name === action.name);
 	let before;
@@ -51,6 +55,24 @@ function reducerToggleModal(state) {
 
 function Visualizar() {
 	const columns = [
+		{
+			name: "fk_situacao",
+			description: "Situação",
+			selector: (row) => (
+				<img
+					style={{ height: "20px" }}
+					src={
+						row["fk_situacao"] == 1
+							? imgBolaAmarela
+							: row["fk_situacao"] == 2
+							? imgBolaVermelha
+							: imgBolaVerde
+					}
+					alt="semaforo"
+				/>
+			),
+			Filter: () => null,
+		},
 		{
 			name: "id",
 			description: "Código da Carga",

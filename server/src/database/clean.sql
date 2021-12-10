@@ -6,3 +6,4 @@ DROP table "con_produtos";
 DROP TABLE "con_logs";
 DROP sequence "seq_con_rotas_pendentes";
 DROP TABLE "con_rotas_pendentes";
+DROP TABLE "con_situacoes_cargas";

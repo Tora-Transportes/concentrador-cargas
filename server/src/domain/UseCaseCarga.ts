@@ -66,9 +66,10 @@ export class UseCaseAddCargaDerivada {
       );
     }
 
+    const novoPai = validator.cast(lotePai, { stripUnknown: true }) as ICarga;
     await cargaRepository.create(carga);
     await cargaRepository.update(lotePai.id, {
-      ...lotePai,
+      ...novoPai,
       quantidade_atual: quantidadeRestante,
     });
 
@@ -102,12 +103,15 @@ export class UseCaseUpdateCarga {
     }
 
     const { janela_entrega, janela_coleta, e_lote } = carga;
-    const cargaOficial = {
-      ...carga,
-      data_atualizacao: currentDate,
-      janela_entrega: e_lote ? null : janela_entrega,
-      janela_coleta: e_lote ? null : janela_coleta,
-    };
+    const cargaOficial = validator.cast(
+      {
+        ...carga,
+        data_atualizacao: currentDate,
+        janela_entrega: e_lote ? null : janela_entrega,
+        janela_coleta: e_lote ? null : janela_coleta,
+      },
+      { stripUnknown: true }
+    ) as ICarga;
 
     await cargaRepository.update(cargaOficial.id, cargaOficial);
     return cargaOficial;
