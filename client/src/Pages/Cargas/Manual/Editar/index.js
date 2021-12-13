@@ -96,7 +96,7 @@ function Manual() {
 	}
 
 	async function handleSearchVehicle() {
-		const placa = formik.values.placa_veiculo.toUpperCase().trim();
+		const placa = (formik.values.placa_veiculo || "").toUpperCase().trim();
 		if (!placa || !formik.values.placa_veiculo) {
 			setVeiculo(null);
 		} else {
@@ -187,6 +187,11 @@ function Manual() {
 	}, [formik.values.destino_carga, formik.values.origem_carga]);
 
 	useEffect(() => {
+		formik.setFieldValue("placa_veiculo", "");
+		setVeiculo(null);
+	}, [formik.values.e_lote]);
+
+	useEffect(() => {
 		ServiceProdutos.list().then(({ data }) => {
 			setProdutos(data.data);
 		});
@@ -216,6 +221,7 @@ function Manual() {
 						<Col>
 							<FloatingLabel label="Placa veículo" className="mb-3">
 								<Form.Control
+									disabled={formik.values.e_lote}
 									type="text"
 									placeholder=" "
 									name="placa_veiculo"
