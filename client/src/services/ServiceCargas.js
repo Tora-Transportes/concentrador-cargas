@@ -119,6 +119,7 @@ class ServiceCargas {
 		janela_coleta,
 		local_coleta,
 		local_entrega,
+		placa_veiculo,
 	}) {
 		const carga = {
 			e_lote,
@@ -140,6 +141,7 @@ class ServiceCargas {
 			janela_coleta,
 			local_coleta,
 			local_entrega,
+			placa_veiculo,
 		};
 
 		return api.put(`/cargas/${id}`, carga);

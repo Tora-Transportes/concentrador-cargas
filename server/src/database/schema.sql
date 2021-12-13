@@ -200,3 +200,7 @@ ALTER TABLE "con_cargas" ADD CONSTRAINT fk_situacoes_cargas
 
 
 ALTER TABLE "con_situacoes_cargas" DROP COLUMN "cor";
+
+ALTER TABLE "con_cargas" ADD (
+    "placa_veiculo" VARCHAR(10)
+);

@@ -4,6 +4,8 @@ import {
   UseCaseGetDistanceBetween,
   UseCaseListPendentRoutes,
 } from "../domain/UseCaseCarga";
+import AppError from "../models/AppError";
+import ServiceAutocomplete from "../services/ServiceAutocomplete";
 
 class RotasController {
   async distanceBetweenLocations(req: Request, res: Response) {
@@ -14,6 +16,16 @@ class RotasController {
   async listPendentRoutes(req: Request, res: Response) {
     const routes = await new UseCaseListPendentRoutes().run(req.query);
     return res.json({ data: routes });
+  }
+
+  async listVehicles(req: Request, res: Response) {
+    const { placa } = req.params;
+    const vehicle = await new ServiceAutocomplete().buscarVeiculo(
+      String(placa || "")
+        .toUpperCase()
+        .trim()
+    );
+    return res.json({ data: vehicle || null });
   }
 }
 

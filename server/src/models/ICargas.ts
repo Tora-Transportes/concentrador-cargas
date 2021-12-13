@@ -27,4 +27,6 @@ export interface ICarga {
   ativo?: number;
 
   fk_lote_pai?: string | null;
+  placa_veiculo?: string | null;
+  fk_situacao?: number | null;
 }

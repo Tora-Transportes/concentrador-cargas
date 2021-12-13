@@ -105,6 +105,15 @@ export class UseCaseUpdateCarga {
       );
     }
 
+    // O status passa a ser "Veículo atribuido" caso a placa seja definida e a situação seja 1
+    if (Number(cargaCadastrada.fk_situacao) === 1 && carga.placa_veiculo) {
+      carga.fk_situacao = 2;
+    }
+
+    carga.placa_veiculo = carga.placa_veiculo
+      ? carga.placa_veiculo.trim().toUpperCase()
+      : carga.placa_veiculo;
+
     const { janela_entrega, janela_coleta, e_lote } = carga;
     const cargaOficial = validator.cast(
       {

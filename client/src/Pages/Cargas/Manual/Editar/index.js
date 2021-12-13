@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import {
+	Container,
+	Row,
+	Col,
+	Form,
+	Button,
+	FloatingLabel,
+	Card,
+	ListGroup,
+	ListGroupItem,
+} from "react-bootstrap";
 import { useParams, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import NavbarNavigator from "../../../Components/NavbarNavigator";
@@ -8,6 +18,7 @@ import swal from "sweetalert";
 import ServiceCargas from "../../../../services/ServiceCargas";
 import { getClaims } from "../../../../MicrosoftAuthentication";
 import ServiceProdutos from "src/services/ServiceProdutos";
+import ServiceVeiculos from "src/services/ServiceVeiculos";
 import FormularioCadastroManual from "src/Pages/Components/FormularioCadastroManual";
 
 function Manual() {
@@ -16,6 +27,7 @@ function Manual() {
 	const history = useHistory();
 	const [produtos, setProdutos] = useState([]);
 	const [distancia, setDistancia] = useState(null);
+	const [veiculo, setVeiculo] = useState(null);
 
 	const formik = useFormik({
 		initialValues: {
@@ -39,6 +51,8 @@ function Manual() {
 
 			local_coleta: "",
 			local_entrega: "",
+
+			placa_veiculo: "",
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -78,6 +92,16 @@ function Manual() {
 		}
 		if (ok) {
 			window.open("", "_self").close();
+		}
+	}
+
+	async function handleSearchVehicle() {
+		const placa = formik.values.placa_veiculo.toUpperCase().trim();
+		if (!placa || !formik.values.placa_veiculo) {
+			setVeiculo(null);
+		} else {
+			const v = (await ServiceVeiculos.get(placa)).data.data;
+			setVeiculo(v);
 		}
 	}
 
@@ -140,6 +164,9 @@ function Manual() {
 						formik.setFieldValue(i, carga[i]);
 					}
 				}
+				if (carga.placa_veiculo) {
+					handleSearchVehicle();
+				}
 				handleSearchDistance(carga);
 			} catch (error) {
 				history.push("/cargas/menu");
@@ -184,6 +211,50 @@ function Manual() {
 						distancia={distancia}
 						formik={formik}
 					/>
+
+					<Row className="mb-5">
+						<Col>
+							<FloatingLabel label="Placa veículo" className="mb-3">
+								<Form.Control
+									type="text"
+									placeholder=" "
+									name="placa_veiculo"
+									value={formik.values.placa_veiculo}
+									onChange={formik.handleChange}
+									onBlur={(e) => {
+										formik.handleBlur(e);
+										handleSearchVehicle();
+									}}
+									required
+								/>
+							</FloatingLabel>
+							{veiculo && (
+								<Card>
+									<Card.Body>
+										<Card.Title>Dados do veículo</Card.Title>
+									</Card.Body>
+									<ListGroup className="list-group-flush">
+										<ListGroupItem>
+											<b>ID</b>: {veiculo.id_veiculo}
+										</ListGroupItem>
+										<ListGroupItem>
+											<b>Placa</b>: {veiculo.placa}
+										</ListGroupItem>
+										<ListGroupItem>
+											<b>Descrição</b>: {veiculo.descricao}
+										</ListGroupItem>
+										<ListGroupItem>
+											<b>Ano</b>: {veiculo.ano}
+										</ListGroupItem>
+										<ListGroupItem>
+											<b>Chassis</b>: {veiculo.chassis}
+										</ListGroupItem>
+									</ListGroup>
+								</Card>
+							)}
+						</Col>
+					</Row>
+
 					<Row>
 						<Col>
 							<Button variant="success" type="submit" className="p-3 fw-bold">
