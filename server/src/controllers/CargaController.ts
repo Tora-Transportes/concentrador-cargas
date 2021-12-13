@@ -6,11 +6,9 @@ import {
   UseCaseDeleteCarga,
   UseCaseUpdateCarga,
   UseCaseViewCargas,
-  UseCaseGetDistanceBetween,
   UseCaseImportCarga,
   UseCaseAddCargaDerivada,
 } from "../domain/UseCaseCarga";
-import AppError from "../models/AppError";
 
 class CargaController {
   async create(req: Request, res: Response) {

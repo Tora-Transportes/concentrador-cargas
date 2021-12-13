@@ -14,6 +14,7 @@ export class UseCaseAddCarga {
     const validator = factoryCargaValidator();
     const carga: ICarga = await validator.validate(cargaDTO, {
       abortEarly: false,
+      stripUnknown: true,
     });
 
     const currentDate = new Date();
@@ -38,6 +39,7 @@ export class UseCaseAddCargaDerivada {
     const validator = factoryCargaValidator();
     const carga: ICarga = await validator.validate(cargaDTO, {
       abortEarly: false,
+      stripUnknown: true,
     });
 
     const currentDate = new Date();
@@ -82,6 +84,7 @@ export class UseCaseUpdateCarga {
     const validator = factoryCargaValidator();
     const carga: ICarga = await validator.validate(cargaDTO, {
       abortEarly: false,
+      stripUnknown: true,
     });
 
     const currentDate = new Date();
