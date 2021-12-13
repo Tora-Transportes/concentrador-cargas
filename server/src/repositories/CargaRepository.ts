@@ -52,6 +52,7 @@ export class CargaRepository {
       .select([
         "con_cargas.*",
         "con_situacoes_cargas.descricao as situacao.descricao",
+        "con_situacoes_cargas.cor as situacao.cor",
       ])
       .join(
         "con_situacoes_cargas",

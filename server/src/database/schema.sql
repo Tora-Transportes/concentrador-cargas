@@ -204,3 +204,12 @@ ALTER TABLE "con_situacoes_cargas" DROP COLUMN "cor";
 ALTER TABLE "con_cargas" ADD (
     "placa_veiculo" VARCHAR(10)
 );
+
+
+ALTER TABLE "con_situacoes_cargas" ADD (
+    "cor" varchar(10) DEFAULT '#ffffff' not null
+);
+
+update "con_situacoes_cargas" set "cor" = 'yellow' where "id" = 1;
+update "con_situacoes_cargas" set "cor" = 'red' where "id" = 2;
+update "con_situacoes_cargas" set "cor" = 'green' where "id" = 3;

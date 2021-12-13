@@ -10,9 +10,7 @@ import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import useLocalstorage from "../../Components/useLocalstorage";
 
-import imgBolaVerde from "../../../assets/ponto-verde.png";
-import imgBolaAmarela from "../../../assets/ponto-amarelo.png";
-import imgBolaVermelha from "../../../assets/ponto-vermelho.png";
+import StatusTooltip from "src/Pages/Components/StatusTooltip";
 
 function reducerActiveColumns(state, action) {
 	const index = state.findIndex((i) => i.name === action.name);
@@ -59,16 +57,9 @@ function Visualizar() {
 			name: "fk_situacao",
 			description: "Situação",
 			selector: (row) => (
-				<img
-					style={{ height: "20px" }}
-					src={
-						row["fk_situacao"] == 1
-							? imgBolaAmarela
-							: row["fk_situacao"] == 2
-							? imgBolaVermelha
-							: imgBolaVerde
-					}
-					alt="semaforo"
+				<StatusTooltip
+					color={row["situacao.cor"]}
+					hint={row["situacao.descricao"]}
 				/>
 			),
 			Filter: (props) => (
