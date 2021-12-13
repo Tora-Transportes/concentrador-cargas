@@ -23,6 +23,7 @@ function Manual() {
 	const [produtos, setProdutos] = useState([]);
 	const [distancia, setDistancia] = useState(null);
 	const params = useParams();
+	const [cargaAtual, setCargaAtual] = useState(null);
 
 	const formik = useFormik({
 		initialValues: {
@@ -73,6 +74,12 @@ function Manual() {
 		setDistancia(null);
 	}, [formik.values.destino_carga, formik.values.origem_carga]);
 
+	useEffect(() => {
+		if (cargaAtual) {
+			formik.setFieldValue("unidade_medida", cargaAtual.unidade_medida);
+		}
+	}, [formik.values.unidade_medida]);
+
 	async function handleSearchDistance({ destino_carga, origem_carga }) {
 		if (destino_carga && origem_carga) {
 			const [, estado_origem, cidade_origem] = origem_carga.split("/");
@@ -107,6 +114,7 @@ function Manual() {
 		});
 
 		ServiceCargas.index({ id: params.id }).then(({ data }) => {
+			setCargaAtual(data.data);
 			if (data.data.quantidade_atual === 0) {
 				swal(
 					"O lote informado não possui mais nenhuma quantidade disponível"
