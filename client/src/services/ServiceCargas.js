@@ -167,6 +167,7 @@ class ServiceCargas {
 		data_cadastro,
 		destino_carga,
 		origem_carga,
+		fk_situacao,
 		limit,
 	}) {
 		return api.get("/cargas", {
@@ -184,6 +185,7 @@ class ServiceCargas {
 				origem_carga,
 				order_column,
 				order_direction,
+				fk_situacao,
 				limit,
 			},
 		});
