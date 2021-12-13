@@ -14,11 +14,13 @@ export class UseCaseAddCarga {
     const validator = factoryCargaValidator();
     const carga: ICarga = await validator.validate(cargaDTO, {
       abortEarly: false,
+      stripUnknown: true,
     });
 
     const currentDate = new Date();
     carga.data_atualizacao = currentDate;
     carga.data_cadastro = currentDate;
+    carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
 
     const cargaRepository = new CargaRepository();
 
@@ -32,15 +34,62 @@ export class UseCaseAddCarga {
   }
 }
 
+export class UseCaseAddCargaDerivada {
+  async run(cargaDTO: Record<string, any>) {
+    const validator = factoryCargaValidator();
+    const carga: ICarga = await validator.validate(cargaDTO, {
+      abortEarly: false,
+      stripUnknown: true,
+    });
+
+    const currentDate = new Date();
+    carga.data_atualizacao = currentDate;
+    carga.data_cadastro = currentDate;
+    carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
+    carga.e_lote = false;
+
+    const cargaRepository = new CargaRepository();
+    const lotePai = await cargaRepository.index(cargaDTO.fk_lote_pai);
+    if (!lotePai) {
+      throw new AppError("O lote pai informado não existe", 400);
+    }
+
+    const cargasCadastrada = await cargaRepository.index(carga.id);
+    if (cargasCadastrada) {
+      throw new AppError("Uma carga com esse Código já foi cadastrada", 400);
+    }
+
+    const quantidadeRestante =
+      Number(lotePai.quantidade_atual) - Number(carga.quantidade);
+    if (quantidadeRestante < 0) {
+      throw new AppError(
+        "A quantidade informada para a carga ultrapassa os limites do lote",
+        400
+      );
+    }
+
+    const novoPai = validator.cast(lotePai, { stripUnknown: true }) as ICarga;
+    await cargaRepository.create(carga);
+    await cargaRepository.update(lotePai.id, {
+      ...novoPai,
+      quantidade_atual: quantidadeRestante,
+    });
+
+    return carga;
+  }
+}
+
 export class UseCaseUpdateCarga {
   async run(cargaDTO: Record<string, any>) {
     const validator = factoryCargaValidator();
     const carga: ICarga = await validator.validate(cargaDTO, {
       abortEarly: false,
+      stripUnknown: true,
     });
 
     const currentDate = new Date();
     carga.data_atualizacao = currentDate;
+    carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
 
     const cargaRepository = new CargaRepository();
     const cargaCadastrada = await cargaRepository.index(carga.id);
@@ -56,13 +105,25 @@ export class UseCaseUpdateCarga {
       );
     }
 
+    // O status passa a ser "Veículo atribuido" caso a placa seja definida e a situação seja 1
+    if (Number(cargaCadastrada.fk_situacao) === 1 && carga.placa_veiculo) {
+      carga.fk_situacao = 2;
+    }
+
+    carga.placa_veiculo = carga.placa_veiculo
+      ? carga.placa_veiculo.trim().toUpperCase()
+      : carga.placa_veiculo;
+
     const { janela_entrega, janela_coleta, e_lote } = carga;
-    const cargaOficial = {
-      ...carga,
-      data_atualizacao: currentDate,
-      janela_entrega: e_lote ? null : janela_entrega,
-      janela_coleta: e_lote ? null : janela_coleta,
-    };
+    const cargaOficial = validator.cast(
+      {
+        ...carga,
+        data_atualizacao: currentDate,
+        janela_entrega: e_lote ? null : janela_entrega,
+        janela_coleta: e_lote ? null : janela_coleta,
+      },
+      { stripUnknown: true }
+    ) as ICarga;
 
     await cargaRepository.update(cargaOficial.id, cargaOficial);
     return cargaOficial;
@@ -204,10 +265,11 @@ export class UseCaseImportCarga {
     let idCounter = 1;
     const cargas = jsonSheet.map((row: Record<string, any>): ICarga => {
       const clone: ICarga = {
-        e_lote: false,
+        e_lote: true,
         cliente: TextUtils.normalize(row["Destinatário"]),
         observacao: row["OBSERVAÇÃO"],
         quantidade: Number(row["Quantidade"]),
+        quantidade_atual: Number(row["Quantidade"]),
         origem_carga:
           "BRASIL/" +
           TextUtils.normalize(row["Origem"]).split(", ").reverse().join("/"),

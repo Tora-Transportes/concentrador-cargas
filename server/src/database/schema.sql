@@ -161,3 +161,46 @@ CREATE TABLE "con_rotas_pendentes" (
     "cidade_destino" VARCHAR(300) NOT NULL,
     "estado_destino" VARCHAR(300) NOT NULL
 );
+
+
+-- Não  vai ser um relacionamento pois depois a carga pai vai poder ser excluida
+ALTER TABLE "con_cargas" ADD (
+    "fk_lote_pai" varchar(20)
+);
+
+INSERT INTO "con_usuarios" ("oid", "nome", "email") VALUES ('5d55d306-13d6-45dd-9bc7-4e67b9b705d5', 'A', 'a@a.a');
+INSERT INTO "con_usuarios_permissoes" ("fk_usuario", "permissao") VALUES ('5d55d306-13d6-45dd-9bc7-4e67b9b705d5', 'ALTERAR_PERMISSOES');
+
+
+-- Adiciona a coluna quantidade atual que vai ser usada para tratar o decrescimento dos lotes
+ALTER TABLE "con_cargas" ADD (
+    "quantidade_atual" decimal(10,2)
+);
+update "con_cargas" set "quantidade_atual" = "quantidade";
+ALTER TABLE "con_cargas" modify "quantidade_atual" decimal(10,2) not null;
+
+
+CREATE TABLE "con_situacoes_cargas" (
+    "id" integer primary key,
+    "cor" varchar(10) not null,
+    "descricao" varchar(100) not null
+);
+
+INSERT INTO "con_situacoes_cargas" ("id", "cor", "descricao") VALUES (1, '#f6ff00', 'Aguardando Alocação (Veículo)');
+INSERT INTO "con_situacoes_cargas" ("id", "cor", "descricao") VALUES (2, '#002aff', 'Veículo Alocado');
+INSERT INTO "con_situacoes_cargas" ("id", "cor", "descricao") VALUES (3, '#00ff11', 'Validado pelo GR');
+
+ALTER TABLE "con_cargas" ADD (
+    "fk_situacao" integer default 1 NOT NULL
+);
+
+ALTER TABLE "con_cargas" ADD CONSTRAINT fk_situacoes_cargas
+    FOREIGN KEY ("fk_situacao")
+    REFERENCES "con_situacoes_cargas"("id");
+
+
+ALTER TABLE "con_situacoes_cargas" DROP COLUMN "cor";
+
+ALTER TABLE "con_cargas" ADD (
+    "placa_veiculo" VARCHAR(10)
+);

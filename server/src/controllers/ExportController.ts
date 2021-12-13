@@ -33,6 +33,21 @@ class ExportController {
       { name: "data_coleta", description: "Data Coleta", type: "date" },
       { name: "tipo_carga", description: "Tipo Material", type: "string" },
       { name: "quantidade", description: "Quantidade", type: "number" },
+      {
+        name: "quantidade_atual",
+        description: "Quantidade Atual",
+        type: "number",
+      },
+      {
+        name: "fk_lote_pai",
+        description: "Lote Pai",
+        type: "string",
+      },
+      {
+        name: "situacao.descricao",
+        description: "Situação",
+        type: "string",
+      },
       { name: "unidade_medida", description: "UN", type: "string" },
       {
         name: "responsavel_cadastro",

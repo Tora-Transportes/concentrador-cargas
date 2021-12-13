@@ -21,6 +21,7 @@ routes.use(TokenMiddleware);
 routes.use(ConvertFieldsToDate);
 routes.get("/cargas", CargaController.search);
 routes.post("/cargas", CargaController.create);
+routes.post("/cargas/derivada/:fk_lote_pai", CargaController.createDerivada);
 routes.post(
   "/cargas/importacao",
   multer().single("file"),
@@ -75,6 +76,8 @@ routes.post(
 );
 
 routes.get("/rotas/pendentes", RotasController.listPendentRoutes);
+
+routes.get("/veiculos/:placa", RotasController.listVehicles);
 
 routes.get("/recomendacoes/organizacoes", RecomendacoesController.organizacoes);
 routes.get("/recomendacoes/locais", RecomendacoesController.cidadeEstados);

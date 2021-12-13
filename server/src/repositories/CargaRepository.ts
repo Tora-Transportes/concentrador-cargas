@@ -10,7 +10,18 @@ export interface IPaginationResult<T> {
 
 export class CargaRepository {
   async index(id: string): Promise<ICarga | undefined> {
-    return await database("con_cargas").first().where("id", id);
+    return await database("con_cargas")
+      .select([
+        "con_cargas.*",
+        "con_situacoes_cargas.descricao as situacao.descricao",
+      ])
+      .first()
+      .where("con_cargas.id", id)
+      .join(
+        "con_situacoes_cargas",
+        "con_situacoes_cargas.id",
+        "con_cargas.fk_situacao"
+      );
   }
 
   async create(carga: ICarga): Promise<ICarga> {
@@ -38,7 +49,15 @@ export class CargaRepository {
     const total = database("con_cargas").count("id as total").first();
 
     const results = database("con_cargas")
-      .select("*")
+      .select([
+        "con_cargas.*",
+        "con_situacoes_cargas.descricao as situacao.descricao",
+      ])
+      .join(
+        "con_situacoes_cargas",
+        "con_situacoes_cargas.id",
+        "con_cargas.fk_situacao"
+      )
       .limit(pageSize)
       .offset((realPage - 1) * pageSize);
 
@@ -67,6 +86,9 @@ export class CargaRepository {
           `%${query.origem_carga.toUpperCase()}%`
         );
       }
+      if (query?.fk_situacao && !isNaN(Number(query.fk_situacao))) {
+        qb.andWhere("fk_situacao", Number(query.fk_situacao));
+      }
       if (query?.data_coleta) {
         qb.andWhere("data_coleta", "=", new Date(query.data_coleta));
       }
@@ -78,7 +100,7 @@ export class CargaRepository {
         qb.andWhere("cliente", "like", `%${query.cliente}%`);
       }
       if (isValid(query?.id)) {
-        qb.andWhere("id", "like", `%${query.id}%`);
+        qb.andWhere("con_cargas.id", "like", `%${query.id}%`);
       }
       if (isValid(String(query?.e_lote))) {
         qb.andWhere("e_lote", "=", `${query.e_lote}`);
@@ -103,7 +125,7 @@ export class CargaRepository {
 
     if (isValid(query?.order_column)) {
       results.orderBy(
-        String(query.order_column),
+        "con_cargas." + String(query.order_column),
         String(query?.order_direction)
       );
     }

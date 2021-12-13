@@ -10,6 +10,10 @@ import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import useLocalstorage from "../../Components/useLocalstorage";
 
+import imgBolaVerde from "../../../assets/ponto-verde.png";
+import imgBolaAmarela from "../../../assets/ponto-amarelo.png";
+import imgBolaVermelha from "../../../assets/ponto-vermelho.png";
+
 function reducerActiveColumns(state, action) {
 	const index = state.findIndex((i) => i.name === action.name);
 	let before;
@@ -52,6 +56,31 @@ function reducerToggleModal(state) {
 function Visualizar() {
 	const columns = [
 		{
+			name: "fk_situacao",
+			description: "Situação",
+			selector: (row) => (
+				<img
+					style={{ height: "20px" }}
+					src={
+						row["fk_situacao"] == 1
+							? imgBolaAmarela
+							: row["fk_situacao"] == 2
+							? imgBolaVermelha
+							: imgBolaVerde
+					}
+					alt="semaforo"
+				/>
+			),
+			Filter: (props) => (
+				<Form.Select {...props}>
+					<option></option>
+					<option value="1">Aguardando Alocação (Veículo)</option>
+					<option value="2">Veículo Alocado</option>
+					<option value="3">Validado pelo GR</option>
+				</Form.Select>
+			),
+		},
+		{
 			name: "id",
 			description: "Código da Carga",
 			selector: (row) => row.id,
@@ -60,7 +89,11 @@ function Visualizar() {
 			name: "cliente",
 			description: "Cliente",
 			selector: (row) => row.cliente.split(" -")[0],
-			Filter: (props) => <InputCliente label="" {...props} />,
+			Filter: (props) => (
+				<div className="mt-3">
+					<InputCliente label="" {...props} style={{ height: "24px" }} />
+				</div>
+			),
 		},
 		{
 			name: "origem_carga",
@@ -95,18 +128,18 @@ function Visualizar() {
 			description: "Tipo Carga",
 			selector: (row) => row.tipo_carga,
 		},
-		{
-			name: "e_lote",
-			description: "Lote ?",
-			selector: (row) => (row.e_lote ? "Sim" : "Não"),
-			Filter: (props) => (
-				<Form.Select {...props}>
-					<option></option>
-					<option value="1">Sim</option>
-					<option value="0">Não</option>
-				</Form.Select>
-			),
-		},
+		// {
+		// 	name: "e_lote",
+		// 	description: "Lote ?",
+		// 	selector: (row) => (row.e_lote ? "Sim" : "Não"),
+		// 	Filter: (props) => (
+		// 		<Form.Select {...props}>
+		// 			<option></option>
+		// 			<option value="1">Sim</option>
+		// 			<option value="0">Não</option>
+		// 		</Form.Select>
+		// 	),
+		// },
 		{
 			name: "canal_comunicacao",
 			description: "Canal comunicação",
@@ -180,6 +213,12 @@ function Visualizar() {
 			Filter: () => null,
 		},
 		{
+			name: "fk_lote_pai",
+			description: "Lote origem",
+			selector: (row) => row.fk_lote_pai,
+			Filter: () => null,
+		},
+		{
 			name: "editar",
 			description: "Editar",
 			static_column: true,
@@ -235,6 +274,7 @@ function Visualizar() {
 			...filters,
 			order_column: orderBy?.column,
 			order_direction: orderBy?.direction,
+			e_lote: 0,
 		};
 		const response = await ServiceCargas.exportToXlsx(options);
 		const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -246,6 +286,11 @@ function Visualizar() {
 		);
 		link.click();
 		setLoading(false);
+	}
+
+	function resetView() {
+		localStorage.removeItem("table-columns");
+		location.reload();
 	}
 
 	const get_data = useCallback(
@@ -261,6 +306,7 @@ function Visualizar() {
 					order_column: orderBy?.column,
 					order_direction: orderBy?.direction,
 					limit: itensPerPage,
+					e_lote: 0,
 				});
 				setLoading(false);
 
@@ -301,6 +347,7 @@ function Visualizar() {
 			handleToggleModal={handleToggleModal}
 			itensPerPage={itensPerPage}
 			setItensPerPage={setItensPerPage}
+			resetView={resetView}
 		/>
 	);
 }

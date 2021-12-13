@@ -54,9 +54,14 @@ function NavbarNavigator(props) {
 								<Link to="/cargas/menu">
 									<ListGroup.Item action>Cadastro de cargas</ListGroup.Item>
 								</Link>
+								<hr />
 								<Link to="/cargas/visualizar">
 									<ListGroup.Item action>Listagem de cargas</ListGroup.Item>
 								</Link>
+								<Link to="/lotes/visualizar">
+									<ListGroup.Item action>Listagem de lotes</ListGroup.Item>
+								</Link>
+								<hr />
 								<Link to="/produtos">
 									<ListGroup.Item action>Produtos</ListGroup.Item>
 								</Link>

@@ -300,7 +300,7 @@ function FormularioCadastroManual({
 					<Form.Group className="mb-3">
 						<Form.Label>Pré-Requisitos e Acessórios do veículo</Form.Label>
 						<Form.Control
-							placeholder="Neste campo é adicionado informações: Motorista necessita de treinamento atualizado no cliente, cinta e luvas"
+							placeholder="Neste campo é adicionado informações, Exemplo: Motorista necessita de treinamento atualizado no cliente, cinta e luvas"
 							as="textarea"
 							rows={3}
 							name="acessorios_requisitos"
@@ -317,7 +317,7 @@ function FormularioCadastroManual({
 					<Form.Group className="mb-3">
 						<Form.Label>Informações Restritivas do Veículo</Form.Label>
 						<Form.Control
-							placeholder="Neste campo é adicionado informações: Proibido entrada de rodotrem"
+							placeholder="Neste campo é adicionado informações, Exemplo: Proibido entrada de rodotrem"
 							as="textarea"
 							rows={3}
 							name="informacoes_restritivas"
@@ -334,7 +334,7 @@ function FormularioCadastroManual({
 					<Form.Group className="mb-3">
 						<Form.Label>Observações Complementares</Form.Label>
 						<Form.Control
-							placeholder="Neste campo é adicionado informações: Frete será pago por peso"
+							placeholder="Neste campo é adicionado informações, Exemplo: Frete será pago por peso"
 							as="textarea"
 							rows={3}
 							name="observacao"

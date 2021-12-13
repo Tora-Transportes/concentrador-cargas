@@ -1,5 +1,6 @@
 import database from "../database";
 import { LocaisRepository } from "../repositories/LocaisRepository";
+import { VeiculoRepository } from "../repositories/VeiculoRepository";
 
 export interface IQueryOrganizacao {
   nome?: string;
@@ -59,6 +60,11 @@ class ServiceAutocomplete {
     const query = String(search.query);
 
     return localRepository.search(query);
+  }
+
+  async buscarVeiculo(placa: string) {
+    const veiculoRepository = new VeiculoRepository();
+    return veiculoRepository.search(placa);
   }
 }
 

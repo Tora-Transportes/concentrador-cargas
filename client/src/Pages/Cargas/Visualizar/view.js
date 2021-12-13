@@ -25,6 +25,7 @@ function VisualizarCargas({
 	activeModal = true,
 	itensPerPage = 5,
 	setItensPerPage,
+	resetView,
 }) {
 	return (
 		<>
@@ -43,6 +44,9 @@ function VisualizarCargas({
 						</Button>
 						<Button variant="outline-info" onClick={handleToggleModal}>
 							<BsGear /> Configurar visão
+						</Button>
+						<Button variant="outline-info" onClick={resetView}>
+							Buscar novos campos
 						</Button>
 						<select
 							className="btn"

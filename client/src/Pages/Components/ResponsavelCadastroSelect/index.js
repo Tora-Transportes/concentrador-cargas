@@ -2,13 +2,22 @@ import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import ServiceUsuarios from "../../../services/ServiceUsuarios";
 
+let cache = null;
+
 function ResponsavelCadastroSelect(props) {
 	const [responsaveis, setResponsaveis] = useState([]);
 	useEffect(() => {
 		let isMounted = true;
-		ServiceUsuarios.search({ q: "", page: 1 }).then((response) => {
-			if (isMounted) setResponsaveis(response.data.data.results);
-		});
+		if (!cache) {
+			ServiceUsuarios.search({ q: "", page: 1 }).then((response) => {
+				if (isMounted) {
+					setResponsaveis(response.data.data.results);
+					cache = response.data.data.results;
+				}
+			});
+		} else {
+			setResponsaveis(cache);
+		}
 		return () => {
 			isMounted = false;
 		};
@@ -16,7 +25,7 @@ function ResponsavelCadastroSelect(props) {
 	return (
 		<Form.Select {...props}>
 			<option></option>
-			{responsaveis.map((i) => (
+			{responsaveis?.map((i) => (
 				<option key={i.oid}>{i.nome}</option>
 			))}
 		</Form.Select>
