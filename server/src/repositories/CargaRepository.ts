@@ -130,10 +130,13 @@ export class CargaRepository {
       );
     }
 
+    results.orderBy("con_cargas.id", "asc");
+    const rows = await results;
+
     return {
       page: realPage,
       total_pages: Math.ceil(Number((await total)?.total || 0) / pageSize),
-      results: await results,
+      results: rows,
     };
   }
 }
