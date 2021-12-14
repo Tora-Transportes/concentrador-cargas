@@ -1,27 +1,15 @@
 import React, { useEffect, useState } from "react";
-import {
-	Container,
-	Row,
-	Col,
-	Form,
-	FormControl,
-	Button,
-	Card,
-	ListGroup,
-	ListGroupItem,
-	InputGroup,
-	Modal,
-} from "react-bootstrap";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useParams, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
-import NavbarNavigator from "../../../Components/NavbarNavigator";
 import useLoadingScreen from "../../../Components/LoadingScreen";
+import InputPlaca from "../../../Components/InputPlaca";
 import swal from "sweetalert";
 import ServiceCargas from "../../../../services/ServiceCargas";
 import { getClaims } from "../../../../MicrosoftAuthentication";
 import ServiceProdutos from "src/services/ServiceProdutos";
-import ServiceVeiculos from "src/services/ServiceVeiculos";
 import FormularioCadastroManual from "src/Pages/Components/FormularioCadastroManual";
+import CabecalhoFixado from "src/Pages/Components/CabecalhoFixado";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -29,7 +17,6 @@ function Manual() {
 	const history = useHistory();
 	const [produtos, setProdutos] = useState([]);
 	const [distancia, setDistancia] = useState(null);
-	const [veiculo, setVeiculo] = useState(null);
 
 	const formik = useFormik({
 		initialValues: {
@@ -94,16 +81,6 @@ function Manual() {
 		}
 		if (ok) {
 			window.open("", "_self").close();
-		}
-	}
-
-	async function handleSearchVehicle() {
-		const placa = (formik.values.placa_veiculo || "").toUpperCase().trim();
-		if (!placa || !formik.values.placa_veiculo) {
-			setVeiculo(null);
-		} else {
-			const v = (await ServiceVeiculos.get(placa)).data.data;
-			setVeiculo(v);
 		}
 	}
 
@@ -187,7 +164,6 @@ function Manual() {
 
 	useEffect(() => {
 		formik.setFieldValue("placa_veiculo", "");
-		setVeiculo(null);
 	}, [formik.values.e_lote]);
 
 	useEffect(() => {
@@ -199,14 +175,7 @@ function Manual() {
 	return (
 		<>
 			<LoadingScreen />
-			<NavbarNavigator className="fixed-top" />
-			<h1
-				className="fixed-top mb-5 mt-5 pt-2 pb-2 bg-white text-center border-bottom"
-				style={{ zIndex: "20" }}
-			>
-				Edição de carga aberta manualmente
-			</h1>
-			<div className="mt-5 mb-5 pt-5 pb-5" />
+			<CabecalhoFixado>Edição de carga aberta manualmente</CabecalhoFixado>
 			<Container className="mb-5 mt-5">
 				<Form onSubmit={formik.handleSubmit}>
 					<FormularioCadastroManual
@@ -218,53 +187,14 @@ function Manual() {
 
 					<Row className="mb-5">
 						<Col>
-							<InputGroup className="mb-2">
-								<InputGroup.Text>
-									<Button variant="" onClick={handleSearchVehicle}>
-										Placa 🔎
-									</Button>
-								</InputGroup.Text>
-								<FormControl
-									placeholder="Placa veículo"
-									disabled={formik.values.e_lote}
-									type="text"
-									name="placa_veiculo"
-									value={formik.values.placa_veiculo}
-									onChange={formik.handleChange}
-								/>
-							</InputGroup>
-							<Modal show={veiculo !== null} onHide={() => setVeiculo(null)}>
-								<Modal.Header closeButton>
-									<Modal.Title>Dados do veículo</Modal.Title>
-								</Modal.Header>
-								{veiculo && (
-									<Card>
-										<ListGroup className="list-group-flush">
-											<ListGroupItem>
-												<b>ID</b>: {veiculo.id_veiculo}
-											</ListGroupItem>
-											<ListGroupItem>
-												<b>Descrição</b>: {veiculo.descricao}
-											</ListGroupItem>
-											<ListGroupItem>
-												<b>Ano</b>: {veiculo.ano}
-											</ListGroupItem>
-											<ListGroupItem>
-												<b>Chassis</b>: {veiculo.chassis}
-											</ListGroupItem>
-											<ListGroupItem>
-												<b>Placa</b>: {veiculo.placa}
-											</ListGroupItem>
-											<ListGroupItem>
-												<b>Placa Carreta</b>: {veiculo.placa_carreta}
-											</ListGroupItem>
-											<ListGroupItem>
-												<b>Placa BITREM</b>: {veiculo.placa_bitrem}
-											</ListGroupItem>
-										</ListGroup>
-									</Card>
-								)}
-							</Modal>
+							<InputPlaca
+								placeholder="Placa veículo"
+								disabled={formik.values.e_lote}
+								type="text"
+								name="placa_veiculo"
+								value={formik.values.placa_veiculo}
+								onChange={formik.handleChange}
+							/>
 						</Col>
 					</Row>
 

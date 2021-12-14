@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useFormik } from "formik";
-import NavbarNavigator from "../../../Components/NavbarNavigator";
 import useLoadingScreen from "../../../Components/LoadingScreen";
 import ServiceCargas from "../../../../services/ServiceCargas";
 import swal from "sweetalert";
 import { getClaims } from "../../../../MicrosoftAuthentication";
 import ServiceProdutos from "../../../../services/ServiceProdutos";
 import FormularioCadastroManual from "../../../Components/FormularioCadastroManual";
+import CabecalhoFixado from "../../../Components/CabecalhoFixado";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -96,14 +96,7 @@ function Manual() {
 	return (
 		<>
 			<LoadingScreen />
-			<NavbarNavigator className="fixed-top" />
-			<h1
-				className="fixed-top mb-5 mt-5 pt-2 pb-2 bg-white text-center border-bottom"
-				style={{ zIndex: "20" }}
-			>
-				Cadastro de carga manual
-			</h1>
-			<div className="mt-5 mb-5 pt-5 pb-5" />
+			<CabecalhoFixado>Cadastro de carga aberta manualmente</CabecalhoFixado>
 			<Container className="mb-5 mt-5">
 				<Form onSubmit={formik.handleSubmit}>
 					<FormularioCadastroManual
