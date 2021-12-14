@@ -51,6 +51,7 @@ export class RotasPendentesRepository {
     }
 
     query.limit(pageSize).offset((page - 1) * pageSize);
+    query.orderBy("id", "asc");
     return {
       total_pages: Math.ceil(Number((await total).total) / pageSize),
       page,
