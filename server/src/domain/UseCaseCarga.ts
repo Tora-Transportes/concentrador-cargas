@@ -110,6 +110,11 @@ export class UseCaseUpdateCarga {
       carga.fk_situacao = 2;
     }
 
+    // Caso o veículo não possua uma placa cadastrada sua situação vai voltar para "aguardando alocação"
+    if (!carga.placa_veiculo) {
+      carga.fk_situacao = 1;
+    }
+
     carga.placa_veiculo = carga.placa_veiculo
       ? carga.placa_veiculo.trim().toUpperCase()
       : carga.placa_veiculo;

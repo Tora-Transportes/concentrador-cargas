@@ -11,12 +11,18 @@ export class VeiculoRepository {
         "VEICULO.VEI_ANO as ano",
         "VEICULO.VEI_CHASSIS as chassis",
         "CARRETA.VEI_PLACA as placa_carreta",
+        "BITREM.VEI_PLACA as placa_bitrem",
       ])
       .join("VEICULO", "VEICULO.TV_COD", "TIPO_VEICULO.TV_COD")
       .leftJoin(
         database("VEICULO").as("CARRETA"),
         "CARRETA.VEI_COD",
         "VEICULO.COD_CARRETA"
+      )
+      .leftJoin(
+        database("VEICULO").as("BITREM"),
+        "BITREM.VEI_COD",
+        "VEICULO.COD_BITREM"
       )
       .where("VEICULO.VEI_PLACA", placa)
       .first();

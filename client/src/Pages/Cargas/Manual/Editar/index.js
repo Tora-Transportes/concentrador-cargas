@@ -166,9 +166,6 @@ function Manual() {
 						formik.setFieldValue(i, carga[i]);
 					}
 				}
-				if (carga.placa_veiculo) {
-					handleSearchVehicle();
-				}
 				handleSearchDistance(carga);
 			} catch (error) {
 				history.push("/cargas/menu");
@@ -234,7 +231,6 @@ function Manual() {
 									name="placa_veiculo"
 									value={formik.values.placa_veiculo}
 									onChange={formik.handleChange}
-									required
 								/>
 							</InputGroup>
 							<Modal show={veiculo !== null} onHide={() => setVeiculo(null)}>
@@ -248,9 +244,6 @@ function Manual() {
 												<b>ID</b>: {veiculo.id_veiculo}
 											</ListGroupItem>
 											<ListGroupItem>
-												<b>Placa</b>: {veiculo.placa}
-											</ListGroupItem>
-											<ListGroupItem>
 												<b>Descrição</b>: {veiculo.descricao}
 											</ListGroupItem>
 											<ListGroupItem>
@@ -260,7 +253,13 @@ function Manual() {
 												<b>Chassis</b>: {veiculo.chassis}
 											</ListGroupItem>
 											<ListGroupItem>
+												<b>Placa</b>: {veiculo.placa}
+											</ListGroupItem>
+											<ListGroupItem>
 												<b>Placa Carreta</b>: {veiculo.placa_carreta}
+											</ListGroupItem>
+											<ListGroupItem>
+												<b>Placa BITREM</b>: {veiculo.placa_bitrem}
 											</ListGroupItem>
 										</ListGroup>
 									</Card>
