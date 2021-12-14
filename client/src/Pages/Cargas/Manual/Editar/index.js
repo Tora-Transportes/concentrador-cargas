@@ -4,11 +4,13 @@ import {
 	Row,
 	Col,
 	Form,
+	FormControl,
 	Button,
-	FloatingLabel,
 	Card,
 	ListGroup,
 	ListGroupItem,
+	InputGroup,
+	Modal,
 } from "react-bootstrap";
 import { useParams, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
@@ -219,45 +221,51 @@ function Manual() {
 
 					<Row className="mb-5">
 						<Col>
-							<FloatingLabel label="Placa veículo" className="mb-3">
-								<Form.Control
+							<InputGroup className="mb-2">
+								<InputGroup.Text>
+									<Button variant="" onClick={handleSearchVehicle}>
+										Placa 🔎
+									</Button>
+								</InputGroup.Text>
+								<FormControl
+									placeholder="Placa veículo"
 									disabled={formik.values.e_lote}
 									type="text"
-									placeholder=" "
 									name="placa_veiculo"
 									value={formik.values.placa_veiculo}
 									onChange={formik.handleChange}
-									onBlur={(e) => {
-										formik.handleBlur(e);
-										handleSearchVehicle();
-									}}
 									required
 								/>
-							</FloatingLabel>
-							{veiculo && (
-								<Card>
-									<Card.Body>
-										<Card.Title>Dados do veículo</Card.Title>
-									</Card.Body>
-									<ListGroup className="list-group-flush">
-										<ListGroupItem>
-											<b>ID</b>: {veiculo.id_veiculo}
-										</ListGroupItem>
-										<ListGroupItem>
-											<b>Placa</b>: {veiculo.placa}
-										</ListGroupItem>
-										<ListGroupItem>
-											<b>Descrição</b>: {veiculo.descricao}
-										</ListGroupItem>
-										<ListGroupItem>
-											<b>Ano</b>: {veiculo.ano}
-										</ListGroupItem>
-										<ListGroupItem>
-											<b>Chassis</b>: {veiculo.chassis}
-										</ListGroupItem>
-									</ListGroup>
-								</Card>
-							)}
+							</InputGroup>
+							<Modal show={veiculo !== null} onHide={() => setVeiculo(null)}>
+								<Modal.Header closeButton>
+									<Modal.Title>Dados do veículo</Modal.Title>
+								</Modal.Header>
+								{veiculo && (
+									<Card>
+										<ListGroup className="list-group-flush">
+											<ListGroupItem>
+												<b>ID</b>: {veiculo.id_veiculo}
+											</ListGroupItem>
+											<ListGroupItem>
+												<b>Placa</b>: {veiculo.placa}
+											</ListGroupItem>
+											<ListGroupItem>
+												<b>Descrição</b>: {veiculo.descricao}
+											</ListGroupItem>
+											<ListGroupItem>
+												<b>Ano</b>: {veiculo.ano}
+											</ListGroupItem>
+											<ListGroupItem>
+												<b>Chassis</b>: {veiculo.chassis}
+											</ListGroupItem>
+											<ListGroupItem>
+												<b>Placa Carreta</b>: {veiculo.placa_carreta}
+											</ListGroupItem>
+										</ListGroup>
+									</Card>
+								)}
+							</Modal>
 						</Col>
 					</Row>
 

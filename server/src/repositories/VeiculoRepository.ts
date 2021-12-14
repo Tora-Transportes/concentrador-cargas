@@ -7,12 +7,18 @@ export class VeiculoRepository {
         "VEICULO.VEI_COD as id_veiculo",
         "TIPO_VEICULO.TV_COD as id_tipo_veiculo",
         "TIPO_VEICULO.TV_DSC as descricao",
-        "VEI_PLACA as placa",
-        "VEI_ANO as ano",
-        "VEI_CHASSIS as chassis",
+        "VEICULO.VEI_PLACA as placa",
+        "VEICULO.VEI_ANO as ano",
+        "VEICULO.VEI_CHASSIS as chassis",
+        "CARRETA.VEI_PLACA as placa_carreta",
       ])
       .join("VEICULO", "VEICULO.TV_COD", "TIPO_VEICULO.TV_COD")
-      .where("VEI_PLACA", placa)
+      .leftJoin(
+        database("VEICULO").as("CARRETA"),
+        "CARRETA.VEI_COD",
+        "VEICULO.COD_CARRETA"
+      )
+      .where("VEICULO.VEI_PLACA", placa)
       .first();
     return query;
   }
