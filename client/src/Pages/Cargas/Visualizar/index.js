@@ -91,7 +91,7 @@ function Visualizar() {
 				<Form.Select {...props}>
 					<option></option>
 					<option value="1">Aguardando Alocação (Veículo)</option>
-					<option value="2">Veículo Alocado</option>
+					<option value="2">Aguardando GR</option>
 					<option value="3">Validado pelo GR</option>
 				</Form.Select>
 			),
