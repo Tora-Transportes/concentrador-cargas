@@ -17,6 +17,7 @@ function Manual() {
 	const history = useHistory();
 	const [produtos, setProdutos] = useState([]);
 	const [distancia, setDistancia] = useState(null);
+	const [loteInicial, setLoteInicial] = useState(0);
 
 	const formik = useFormik({
 		initialValues: {
@@ -134,6 +135,7 @@ function Manual() {
 		async function run() {
 			try {
 				const carga = (await ServiceCargas.index({ id })).data.data;
+				setLoteInicial(carga.e_lote);
 				for (const i in carga) {
 					const nonNullValue = carga[i] === null ? "" : carga[i];
 					if (i.indexOf("data") !== -1) {
@@ -184,6 +186,9 @@ function Manual() {
 						produtos={produtos}
 						distancia={distancia}
 						formik={formik}
+						disabledFields={
+							loteInicial ? ["e_lote", "unidade_medida", "quantidade"] : []
+						}
 					/>
 
 					<Row className="mb-5">

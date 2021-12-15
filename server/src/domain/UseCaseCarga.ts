@@ -126,6 +126,19 @@ export class UseCaseUpdateCarga {
       carga.fk_situacao = 1;
     }
 
+    // lotes nao podem virar cargas, porem cargas podem virar lotes
+    if (carga.e_lote === false && cargaCadastrada.e_lote === true) {
+      carga.e_lote = true;
+    }
+
+    // Os lotes nao podem ter sua unidade de medida e quantidade alterados
+    if (carga.unidade_medida && cargaCadastrada.e_lote) {
+      carga.unidade_medida = cargaCadastrada.unidade_medida;
+    }
+    if (carga.quantidade && cargaCadastrada.e_lote) {
+      carga.quantidade = cargaCadastrada.quantidade;
+    }
+
     carga.placa_veiculo = carga.placa_veiculo
       ? carga.placa_veiculo.trim().toUpperCase()
       : carga.placa_veiculo;

@@ -18,6 +18,7 @@ function FormularioCadastroManual({
 	produtos,
 	distancia,
 	handleSearchDistance,
+	disabledFields = [],
 }) {
 	return (
 		<>
@@ -64,6 +65,7 @@ function FormularioCadastroManual({
 							onChange={() => formik.setFieldValue("e_lote", true)}
 							checked={formik.values.e_lote === true}
 							inline
+							disabled={disabledFields.includes("e_lote")}
 						/>
 						<Form.Check
 							type="radio"
@@ -73,6 +75,7 @@ function FormularioCadastroManual({
 							onChange={() => formik.setFieldValue("e_lote", false)}
 							checked={formik.values.e_lote === false}
 							inline
+							disabled={disabledFields.includes("e_lote")}
 						/>
 						<OverlayTrigger
 							key="tooltip-overlay-lote"
@@ -268,6 +271,7 @@ function FormularioCadastroManual({
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
 									required
+									disabled={disabledFields.includes("unidade_medida")}
 								>
 									<option value=""></option>
 									<UnidadesMedida />
@@ -285,6 +289,7 @@ function FormularioCadastroManual({
 									value={formik.values.quantidade}
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
+									disabled={disabledFields.includes("quantidade")}
 									required
 								/>
 							</FloatingLabel>
