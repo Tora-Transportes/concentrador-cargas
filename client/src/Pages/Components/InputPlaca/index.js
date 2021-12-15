@@ -125,6 +125,9 @@ function InputPlaca(props) {
 								<b>ID</b>: {veiculo.id_veiculo}
 							</ListGroupItem>
 							<ListGroupItem>
+								<b>Motorista</b>: {veiculo.nome_motorista}
+							</ListGroupItem>
+							<ListGroupItem>
 								<b>Descrição</b>: {veiculo.descricao}
 							</ListGroupItem>
 							<ListGroupItem>
