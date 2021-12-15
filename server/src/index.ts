@@ -8,6 +8,8 @@ import path from "path";
 import "./jobs";
 import routes from "./routes";
 import ErrorMiddleware from "./middlewares/Error";
+import Socket from "./socket";
+import socketsRoutes from "./socketsRoutes";
 
 dotenv.config();
 
@@ -18,16 +20,19 @@ app.use(cors());
 app.use(process.env.BASE_URL || "", routes);
 app.use(ErrorMiddleware);
 
-https
-  .createServer(
-    {
-      key: fs.readFileSync(
-        path.resolve(__dirname, "..", "certificates", "server.key")
-      ),
-      cert: fs.readFileSync(
-        path.resolve(__dirname, "..", "certificates", "server.cert")
-      ),
-    },
-    app
-  )
-  .listen(process.env.PORT || 3333);
+const server = https.createServer(
+  {
+    key: fs.readFileSync(
+      path.resolve(__dirname, "..", "certificates", "server.key")
+    ),
+    cert: fs.readFileSync(
+      path.resolve(__dirname, "..", "certificates", "server.cert")
+    ),
+  },
+  app
+);
+
+Socket.createServer(server);
+Socket.handleUsersConnected(socketsRoutes);
+
+server.listen(process.env.PORT || 3333);

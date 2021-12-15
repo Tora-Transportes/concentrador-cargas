@@ -1,7 +1,12 @@
 import AllRoutes from "./routes";
+import StorageCargaProvider from "./hooks/storageCargas";
 
 const App = () => {
-	return <AllRoutes />;
+	return (
+		<StorageCargaProvider>
+			<AllRoutes />;
+		</StorageCargaProvider>
+	);
 };
 
 export default App;

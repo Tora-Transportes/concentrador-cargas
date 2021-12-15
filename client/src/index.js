@@ -6,6 +6,12 @@ import requireMicrosoftAuthentication, {
 } from "./MicrosoftAuthentication";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+// import io from "./services/socket";
+
+// io.on("@carga-create", console.table);
+// io.on("@carga-update", console.table);
+// io.on("@carga-delete", console.table);
+
 const LoggedApp = withAdalLoginApi(() => <App />);
 
 requireMicrosoftAuthentication(() => {

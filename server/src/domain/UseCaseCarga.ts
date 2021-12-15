@@ -9,6 +9,8 @@ import TextUtils from "../Utils/text";
 
 import xlsx from "xlsx";
 
+import { notifyAll } from "../socketsRoutes";
+
 export class UseCaseAddCarga {
   async run(cargaDTO: Record<string, any>) {
     const validator = factoryCargaValidator();
@@ -29,7 +31,12 @@ export class UseCaseAddCarga {
       throw new AppError("Uma carga com esse Código já foi cadastrada", 400);
     }
 
+    carga.fk_situacao = 1;
     await cargaRepository.create(carga);
+    notifyAll({
+      name: "@carga-create",
+      details: await cargaRepository.index(carga.id),
+    });
     return carga;
   }
 }
@@ -69,12 +76,16 @@ export class UseCaseAddCargaDerivada {
     }
 
     const novoPai = validator.cast(lotePai, { stripUnknown: true }) as ICarga;
+    carga.fk_situacao = 1;
     await cargaRepository.create(carga);
     await cargaRepository.update(lotePai.id, {
       ...novoPai,
       quantidade_atual: quantidadeRestante,
     });
-
+    notifyAll({
+      name: "@carga-create",
+      details: await cargaRepository.index(carga.id),
+    });
     return carga;
   }
 }
@@ -129,8 +140,11 @@ export class UseCaseUpdateCarga {
       },
       { stripUnknown: true }
     ) as ICarga;
-
     await cargaRepository.update(cargaOficial.id, cargaOficial);
+    notifyAll({
+      name: "@carga-update",
+      details: await cargaRepository.index(carga.id),
+    });
     return cargaOficial;
   }
 }
@@ -173,13 +187,23 @@ export class UseCaseDeleteCarga {
     if (!carga) {
       throw new AppError("Carga não encontrada", 404);
     }
-
-    return cargaRepository.update(carga.id, {
+    const cargaAtualizada = {
       ...carga,
       ativo: 0,
       usuario,
       data_atualizacao: new Date(),
+    };
+    const validator = factoryCargaValidator();
+
+    await cargaRepository.update(
+      carga.id,
+      validator.cast(cargaAtualizada, { stripUnknown: true }) as ICarga
+    );
+    notifyAll({
+      name: "@carga-delete",
+      details: { id },
     });
+    return cargaAtualizada;
   }
 }
 

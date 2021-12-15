@@ -11,6 +11,8 @@ import useLoadingScreen from "../../Components/LoadingScreen";
 import useLocalstorage from "../../Components/useLocalstorage";
 
 import StatusTooltip from "src/Pages/Components/StatusTooltip";
+import { useCargaStore } from "../../../hooks/storageCargas";
+import io from "../../../services/socket";
 
 function reducerActiveColumns(state, action) {
 	const index = state.findIndex((i) => i.name === action.name);
@@ -52,6 +54,29 @@ function reducerToggleModal(state) {
 }
 
 function Visualizar() {
+	const [cargasStore, dispatchCargas] = useCargaStore();
+
+	useEffect(() => {
+		const actionCargasCreate = (payload) => {
+			dispatchCargas({ type: "ADD_CARGA", payload });
+		};
+		const actionCargasUpdate = (payload) => {
+			dispatchCargas({ type: "UPDATE_CARGA", payload });
+		};
+		const actionCargasDelete = (payload) => {
+			dispatchCargas({ type: "DELETE_CARGA", payload });
+		};
+		io.on("@carga-create", actionCargasCreate);
+		io.on("@carga-update", actionCargasUpdate);
+		io.on("@carga-delete", actionCargasDelete);
+
+		return () => {
+			io.off("@carga-create", actionCargasCreate);
+			io.off("@carga-update", actionCargasUpdate);
+			io.off("@carga-delete", actionCargasDelete);
+		};
+	}, [io]);
+
 	const columns = [
 		{
 			name: "fk_situacao",
@@ -301,11 +326,14 @@ function Visualizar() {
 				});
 				setLoading(false);
 
-				return {
-					total_pages: data.data.total_pages,
-					current_page: page || 1,
-					data: data.data.results,
-				};
+				dispatchCargas({
+					type: "SET",
+					payload: {
+						results: data.data.results,
+						total_pages: data.data.total_pages,
+						current_page: data.data.page,
+					},
+				});
 			} catch (error) {
 				console.log(error);
 			}
@@ -330,6 +358,7 @@ function Visualizar() {
 		<View
 			handleExportExcel={handleExportExcel}
 			get_data={get_data}
+			values={cargasStore}
 			columns={orderedColumns.filter((c) => columnsToDisplay.includes(c.name))}
 			LoadingComponent={LoadingComponent}
 			displayColumns={displayColumns}
