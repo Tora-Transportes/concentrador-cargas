@@ -7,15 +7,18 @@ import {
 	Card,
 	ListGroup,
 	ListGroupItem,
+	Row,
+	Col,
 } from "react-bootstrap";
 import ServiceVeiculos from "src/services/ServiceVeiculos";
 
 function InputPlaca(props) {
 	const [veiculo, setVeiculo] = useState(null);
+	const [placas, setPlacas] = useState(null);
 	const placaInput = useRef(null);
 
-	async function handleSearchVehicle() {
-		const placa = (placaInput.current?.value || "").toUpperCase().trim();
+	async function handleSearchVehicle(placaPesquisa = "") {
+		const placa = (placaPesquisa || "").toUpperCase().trim();
 		if (!placa) {
 			setVeiculo(null);
 		} else {
@@ -24,12 +27,41 @@ function InputPlaca(props) {
 		}
 	}
 
+	async function fillAnotherFields() {
+		const placa = (placaInput.current?.value || "").toUpperCase().trim();
+		if (placa) {
+			placaInput.current.value = placa;
+			const v = (await ServiceVeiculos.get(placa)).data.data;
+			if (v) {
+				setPlacas({
+					carreta: v.placa_carreta,
+					bitrem: v.placa_bitrem,
+				});
+			} else {
+				setPlacas(null);
+				placaInput.current.value = "";
+				if (typeof props.onChange === "function") {
+					props.onChange({ target: placaInput.current });
+				}
+			}
+		} else {
+			setPlacas(null);
+		}
+	}
+
 	return (
 		<>
+			{/* {error && <span className="text-danger">{error}</span>} */}
 			<InputGroup className="mb-2">
 				<InputGroup.Text>
-					<Button variant="" onClick={handleSearchVehicle}>
-						Placa 🔎
+					<Button
+						variant=""
+						onClick={() => handleSearchVehicle(placaInput.current.value)}
+					>
+						Placa Cavalo 🐴
+					</Button>
+					<Button variant="" onClick={fillAnotherFields}>
+						🔎
 					</Button>
 				</InputGroup.Text>
 				<FormControl
@@ -38,8 +70,50 @@ function InputPlaca(props) {
 					type="text"
 					name="placa_veiculo"
 					{...props}
+					onBlur={fillAnotherFields}
 				/>
 			</InputGroup>
+
+			{placas && (
+				<Row>
+					<Col sm={12} md={6}>
+						<InputGroup className="mb-2">
+							<InputGroup.Text>
+								<Button
+									variant=""
+									onClick={() => handleSearchVehicle(placas?.carreta)}
+								>
+									Carreta 🚛
+								</Button>
+							</InputGroup.Text>
+							<FormControl
+								readOnly
+								placeholder="Placa Carreta"
+								type="text"
+								value={placas?.carreta || ""}
+							/>
+						</InputGroup>
+					</Col>
+					<Col>
+						<InputGroup className="mb-2">
+							<InputGroup.Text>
+								<Button
+									variant=""
+									onClick={() => handleSearchVehicle(placas?.bitrem)}
+								>
+									Bitrem 🚛
+								</Button>
+							</InputGroup.Text>
+							<FormControl
+								readOnly
+								placeholder="Placa Bitrem"
+								type="text"
+								value={placas?.bitrem || ""}
+							/>
+						</InputGroup>
+					</Col>
+				</Row>
+			)}
 			<Modal show={veiculo !== null} onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
 					<Modal.Title>Dados do veículo</Modal.Title>

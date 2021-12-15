@@ -135,12 +135,13 @@ function Manual() {
 			try {
 				const carga = (await ServiceCargas.index({ id })).data.data;
 				for (const i in carga) {
+					const nonNullValue = carga[i] === null ? "" : carga[i];
 					if (i.indexOf("data") !== -1) {
-						formik.setFieldValue(i, carga[i]?.split("T")[0]);
+						formik.setFieldValue(i, nonNullValue?.split("T")[0]);
 					} else if (i === "e_lote") {
-						formik.setFieldValue("e_lote", !!carga[i]);
+						formik.setFieldValue("e_lote", !!nonNullValue);
 					} else {
-						formik.setFieldValue(i, carga[i]);
+						formik.setFieldValue(i, nonNullValue);
 					}
 				}
 				handleSearchDistance(carga);
