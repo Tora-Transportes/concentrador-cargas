@@ -213,3 +213,4 @@ ALTER TABLE "con_situacoes_cargas" ADD (
 update "con_situacoes_cargas" set "cor" = 'yellow' where "id" = 1;
 update "con_situacoes_cargas" set "cor" = 'red' where "id" = 2;
 update "con_situacoes_cargas" set "cor" = 'green' where "id" = 3;
+update "con_situacoes_cargas" set "descricao" = 'Aguardando GR', "cor" = 'orange' where "id" = 2;
