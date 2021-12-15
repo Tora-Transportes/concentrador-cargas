@@ -113,6 +113,9 @@ export class CargaRepository {
       if (!isNaN(Number(query?.ativo))) {
         qb.andWhere("ativo", "=", Number(query?.ativo));
       }
+      if (!isNaN(Number(query?.fk_situacao))) {
+        qb.andWhere("fk_situacao", "=", Number(query?.fk_situacao));
+      }
       if (isValid(String(query?.responsavel_cadastro))) {
         qb.andWhere(
           "responsavel_cadastro",

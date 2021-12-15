@@ -12,6 +12,7 @@ import VisualizarLotes from "./Pages/Cargas/VisualizarLotes";
 import PermissoesUsuarios from "./Pages/Usuarios/Permissoes";
 import Produtos from "./Pages/Produtos";
 import RotasPendentes from "./Pages/Rotas/Pendentes";
+import SituacaoVeiculos from "./Pages/Veiculos/Pendentes";
 
 export default function AllRoutes() {
 	return (
@@ -38,6 +39,7 @@ export default function AllRoutes() {
 
 				<Route path="/produtos" exact component={Produtos} />
 				<Route path="/rotas/pendentes" exact component={RotasPendentes} />
+				<Route path="/veiculos/aprovacao" exact component={SituacaoVeiculos} />
 			</Switch>
 		</BrowserRouter>
 	);
