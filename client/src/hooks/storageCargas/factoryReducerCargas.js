@@ -1,5 +1,6 @@
 export default function (defaultValues) {
 	return (state = defaultValues, { type, payload }) => {
+		const cargaExists = state.results.find((i) => i.id === payload.id);
 		switch (type) {
 			case "SET":
 				return payload;
@@ -17,6 +18,18 @@ export default function (defaultValues) {
 						return payload.id === i.id ? payload : i;
 					}),
 				};
+			case "UPDATE_OR_ADD_CARGA":
+				return cargaExists
+					? {
+							...state,
+							results: state.results.map((i) => {
+								return payload.id === i.id ? payload : i;
+							}),
+					  }
+					: {
+							...state,
+							results: [...state.results, payload],
+					  };
 			default:
 				throw new Error("Invalid dispatch action " + type);
 		}

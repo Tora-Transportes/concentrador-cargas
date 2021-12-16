@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useState } from "react";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import NavbarNavigator from "../../Components/NavbarNavigator";
 import ViewMonitoramento from "./view";
@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import { Button } from "react-bootstrap";
 import factoryReducerCargas from "../../../hooks/storageCargas/factoryReducerCargas";
+
+import io from "../../../services/socket";
 
 function RotasPendentes() {
 	const defaultCargas = {
@@ -91,6 +93,26 @@ function RotasPendentes() {
 			),
 		},
 	];
+
+	useEffect(() => {
+		const actionCargasUpdate = (payload) => {
+			if (payload.fk_situacao !== 2) {
+				dispatchCargas({ type: "DELETE_CARGA", payload });
+			} else {
+				dispatchCargas({ type: "UPDATE_OR_ADD_CARGA", payload });
+			}
+		};
+		const actionCargasDelete = (payload) => {
+			dispatchCargas({ type: "DELETE_CARGA", payload });
+		};
+		io.on("@carga-update", actionCargasUpdate);
+		io.on("@carga-delete", actionCargasDelete);
+
+		return () => {
+			io.off("@carga-update", actionCargasUpdate);
+			io.off("@carga-delete", actionCargasDelete);
+		};
+	}, [io]);
 
 	const tableFetchData = useCallback(
 		async function (options) {
