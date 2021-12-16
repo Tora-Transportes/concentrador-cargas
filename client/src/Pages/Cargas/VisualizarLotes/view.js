@@ -12,7 +12,7 @@ import { BsDownload, BsGear } from "react-icons/bs";
 import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
 import NavbarNavigator from "../../Components/NavbarNavigator";
 
-import TableExternal from "../../Components/TableExternal";
+import TabelaCargas from "../../Components/TabelaCargas";
 
 function VisualizarCargas({
 	handleExportExcel,
@@ -26,6 +26,7 @@ function VisualizarCargas({
 	itensPerPage = 5,
 	setItensPerPage,
 	resetView,
+	cargas,
 }) {
 	return (
 		<>
@@ -64,11 +65,12 @@ function VisualizarCargas({
 				</Row>
 				<Row>
 					<Col sm={12}>
-						<TableExternal
+						<TabelaCargas
 							columns={columns.filter((i) =>
 								displayColumns.find((c) => c.name === i.name)
 							)}
 							get_data={get_data}
+							values={cargas}
 						/>
 					</Col>
 				</Row>

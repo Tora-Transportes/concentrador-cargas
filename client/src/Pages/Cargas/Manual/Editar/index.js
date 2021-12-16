@@ -99,7 +99,7 @@ function Manual() {
 			);
 			if (ok) {
 				await ServiceCargas.delete({ id: formik.values.id });
-				swal("Sucesso!", "Carga removida", "success");
+				await swal("Sucesso!", "Carga removida", "success");
 				handleCloseWindow(null, false);
 			}
 		} catch (error) {

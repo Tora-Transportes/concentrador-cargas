@@ -10,6 +10,9 @@ import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import useLocalstorage from "../../Components/useLocalstorage";
 
+import factoryReducerCargas from "../../../hooks/storageCargas/factoryReducerCargas";
+import io from "../../../services/socket";
+
 function reducerActiveColumns(state, action) {
 	const index = state.findIndex((i) => i.name === action.name);
 	let before;
@@ -50,6 +53,35 @@ function reducerToggleModal(state) {
 }
 
 function Visualizar() {
+	const defaultCargas = {
+		page: 1,
+		total_pages: 1,
+		results: [],
+	};
+	const reducerCargas = useCallback(factoryReducerCargas(defaultCargas), []);
+	const [cargas, dispatchCargas] = useReducer(reducerCargas, defaultCargas);
+
+	useEffect(() => {
+		const actionCargasCreate = (payload) => {
+			dispatchCargas({ type: "ADD_CARGA", payload });
+		};
+		const actionCargasUpdate = (payload) => {
+			dispatchCargas({ type: "UPDATE_CARGA", payload });
+		};
+		const actionCargasDelete = (payload) => {
+			dispatchCargas({ type: "DELETE_CARGA", payload });
+		};
+		io.on("@carga-create", actionCargasCreate);
+		io.on("@carga-update", actionCargasUpdate);
+		io.on("@carga-delete", actionCargasDelete);
+
+		return () => {
+			io.off("@carga-create", actionCargasCreate);
+			io.off("@carga-update", actionCargasUpdate);
+			io.off("@carga-delete", actionCargasDelete);
+		};
+	}, [io]);
+
 	const columns = [
 		{
 			name: "id",
@@ -288,18 +320,16 @@ function Visualizar() {
 					e_lote: 1,
 				});
 				setLoading(false);
-
-				return {
-					total_pages: data.data.total_pages,
-					current_page: page || 1,
-					data: data.data.results,
-				};
+				dispatchCargas({
+					type: "SET",
+					payload: { ...data.data, current_page: data.data.page },
+				});
 			} catch (error) {
 				console.log(error);
 			}
 			setLoading(false);
 		},
-		[itensPerPage]
+		[itensPerPage, dispatchCargas]
 	);
 
 	const columnsToDisplay = displayColumns
@@ -327,6 +357,7 @@ function Visualizar() {
 			itensPerPage={itensPerPage}
 			setItensPerPage={setItensPerPage}
 			resetView={resetView}
+			cargas={cargas}
 		/>
 	);
 }
