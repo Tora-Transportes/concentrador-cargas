@@ -220,18 +220,16 @@ export class UseCaseDeleteCarga {
     if (!carga) {
       throw new AppError("Carga não encontrada", 404);
     }
+    const validator = factoryCargaValidator();
     const cargaAtualizada = {
-      ...carga,
+      ...validator.cast(carga, { stripUnknown: true }),
       ativo: 0,
       usuario,
       data_atualizacao: new Date(),
     };
-    const validator = factoryCargaValidator();
 
-    await cargaRepository.update(
-      carga.id,
-      validator.cast(cargaAtualizada, { stripUnknown: true }) as ICarga
-    );
+    await cargaRepository.update(carga.id, cargaAtualizada as ICarga);
+    console.log(validator.cast(cargaAtualizada, { stripUnknown: true }));
     notifyAll({
       name: "@carga-delete",
       details: { id },
