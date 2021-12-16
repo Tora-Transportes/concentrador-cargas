@@ -159,7 +159,7 @@ function Visualizar() {
 		},
 		{
 			name: "quantidade",
-			description: "Quantidade",
+			description: "Quantidade Original",
 			selector: (row) => row.quantidade,
 			Filter: () => null,
 		},
