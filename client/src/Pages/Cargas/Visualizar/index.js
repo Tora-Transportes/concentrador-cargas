@@ -11,8 +11,8 @@ import useLoadingScreen from "../../Components/LoadingScreen";
 import useLocalstorage from "../../Components/useLocalstorage";
 
 import StatusTooltip from "src/Pages/Components/StatusTooltip";
-import { useCargaStore } from "../../../hooks/storageCargas";
 import io from "../../../services/socket";
+import factoryReducerCargas from "src/hooks/storageCargas/factoryReducerCargas";
 
 function reducerActiveColumns(state, action) {
 	const index = state.findIndex((i) => i.name === action.name);
@@ -54,7 +54,13 @@ function reducerToggleModal(state) {
 }
 
 function Visualizar() {
-	const [cargasStore, dispatchCargas] = useCargaStore();
+	const defaultCargas = {
+		page: 1,
+		total_pages: 1,
+		results: [],
+	};
+	const cargasReducer = useCallback(factoryReducerCargas(defaultCargas), []);
+	const [cargas, dispatchCargas] = useReducer(cargasReducer, defaultCargas);
 
 	useEffect(() => {
 		const actionCargasCreate = (payload) => {
@@ -360,7 +366,7 @@ function Visualizar() {
 		<View
 			handleExportExcel={handleExportExcel}
 			get_data={get_data}
-			values={cargasStore}
+			values={cargas}
 			columns={orderedColumns.filter((c) => columnsToDisplay.includes(c.name))}
 			LoadingComponent={LoadingComponent}
 			displayColumns={displayColumns}
