@@ -24,6 +24,7 @@ function Permissoes() {
 			permissao_deletar_cargas: false,
 			permissao_alterar_permissoes: false,
 			permissao_cadastrar_produtos: false,
+			permissao_aprovar_veiculos: false,
 		},
 	});
 
@@ -52,6 +53,9 @@ function Permissoes() {
 		}
 		if (formik.values.permissao_cadastrar_produtos) {
 			permissoes.push("CADASTRAR_PRODUTOS");
+		}
+		if (formik.values.permissao_aprovar_veiculos) {
+			permissoes.push("APROVAR_VEICULOS");
 		}
 		if (
 			await swal(
@@ -107,6 +111,15 @@ function Permissoes() {
 							onChange={handleChangeCheckbox}
 							label={`Cadastrar produtos`}
 							id="permissao_cadastrar_produtos"
+							inline
+						/>
+						<Form.Check
+							type="checkbox"
+							name="permissao_aprovar_veiculos"
+							checked={formik.values.permissao_aprovar_veiculos}
+							onChange={handleChangeCheckbox}
+							label={`Aprovar veículos`}
+							id="permissao_aprovar_veiculos"
 							inline
 						/>
 					</Col>

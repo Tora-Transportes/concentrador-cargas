@@ -39,10 +39,11 @@ class CargaController {
   async update(req: Request, res: Response) {
     const { id } = req.params;
     const input = { ...req.body };
+    const claims = TokenAd.getClaims(String(req.headers.authorization));
     input.id = id;
-    input.usuario = TokenAd.getClaims(String(req.headers.authorization)).name;
+    input.usuario = claims.name;
 
-    const updateResult = await new UseCaseUpdateCarga().run(input);
+    const updateResult = await new UseCaseUpdateCarga().run(input, claims.oid);
 
     return res.json({ data: updateResult });
   }

@@ -1,5 +1,6 @@
 import { RotasPendentesRepository } from "../repositories/RotasPendentesRepository";
 import { CargaRepository } from "../repositories/CargaRepository";
+import { UsuarioRepository } from "../repositories/UsuarioRepository";
 import { ICarga } from "../models/ICargas";
 import { factoryCargaValidator } from "../validations/CargaValidator";
 import AppError from "../models/AppError";
@@ -91,7 +92,7 @@ export class UseCaseAddCargaDerivada {
 }
 
 export class UseCaseUpdateCarga {
-  async run(cargaDTO: Record<string, any>) {
+  async run(cargaDTO: Record<string, any>, oid: string) {
     const validator = factoryCargaValidator();
     const carga: ICarga = await validator.validate(cargaDTO, {
       abortEarly: false,
@@ -114,6 +115,21 @@ export class UseCaseUpdateCarga {
         `A carga foi desativada pelo usuario ${cargaCadastrada.usuario}`,
         403
       );
+    }
+
+    // O usuario deve ter permissao para aprovar o status da carga para 3 - Aprovado pelo GR
+    const userRepository = new UsuarioRepository();
+    const user = await userRepository.index(oid);
+    if (
+      Number(carga.fk_situacao) === 3 &&
+      Number(cargaCadastrada.fk_situacao) === 2
+    ) {
+      if (!user?.permissoes.includes("APROVAR_VEICULOS")) {
+        throw new AppError(
+          "O usuário informado não possui a permissão 'APROVAR_VEICULOS'",
+          403
+        );
+      }
     }
 
     // O status passa a ser "Veículo atribuido" caso a placa seja definida e a situação seja 1
