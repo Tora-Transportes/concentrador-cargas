@@ -18,7 +18,7 @@ function Manual() {
 		initialValues: {
 			responsavel_cadastro: String(getClaims().name),
 			id: "M-" + new Date().getTime(),
-			e_lote: false,
+			e_lote: true,
 			cliente: "",
 			destino_carga: "",
 			origem_carga: "",
