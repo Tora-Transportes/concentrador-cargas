@@ -110,6 +110,9 @@ export class CargaRepository {
       if (isValid(String(query?.tipo_carga))) {
         qb.andWhere("tipo_carga", "like", `%${query.tipo_carga}%`);
       }
+      if (isValid(String(query?.placa_veiculo))) {
+        qb.andWhere("placa_veiculo", "like", `%${query.placa_veiculo}%`);
+      }
       if (!isNaN(Number(query?.ativo))) {
         qb.andWhere("ativo", "=", Number(query?.ativo));
       }

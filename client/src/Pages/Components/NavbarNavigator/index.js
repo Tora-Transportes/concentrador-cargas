@@ -72,7 +72,7 @@ function NavbarNavigator(props) {
 									<ListGroup.Item action>Permissões</ListGroup.Item>
 								</Link>
 								<Link to="/veiculos/aprovacao">
-									<ListGroup.Item action>Aprovação de veículos</ListGroup.Item>
+									<ListGroup.Item action>Monitoramento</ListGroup.Item>
 								</Link>
 								<Link to="/">
 									<ListGroup.Item

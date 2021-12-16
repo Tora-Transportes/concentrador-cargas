@@ -1,16 +1,16 @@
 import React from "react";
 import { Container, Row } from "react-bootstrap";
-import TableExternal from "../../Components/TableExternal";
+import TabelaCargas from "../../Components/TabelaCargas";
 
-function ViewRotasPendentes({ columns = [], get_data }) {
+function ViewRotasPendentes({ columns = [], get_data, data }) {
 	return (
 		<>
 			<Container className="text-center mb-5 mt-4">
 				<Row className="mb-2">
-					<h1>Rotas pendentes de cadastro</h1>
+					<h1>Monitoramento - Veículos pendentes</h1>
 				</Row>
 				<Row>
-					<TableExternal columns={columns} get_data={get_data} />
+					<TabelaCargas columns={columns} get_data={get_data} values={data} />
 				</Row>
 			</Container>
 		</>
