@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
 	Form,
 	Row,
@@ -12,6 +12,7 @@ import InputLocalizacao from "../InputLocalizacao";
 import AutocompleteInput from "../AutocompleteInput";
 import InputCliente from "../InputCliente";
 import UnidadesMedida from "../UnidadesMedida";
+import InputPlaca from "../InputPlaca";
 
 function FormularioCadastroManual({
 	formik,
@@ -20,6 +21,12 @@ function FormularioCadastroManual({
 	handleSearchDistance,
 	disabledFields = [],
 }) {
+	useEffect(() => {
+		if (formik.values.e_lote) {
+			formik.setFieldValue("placa_veiculo", "");
+		}
+	}, [formik.values.e_lote]);
+
 	return (
 		<>
 			<Row>
@@ -101,6 +108,24 @@ function FormularioCadastroManual({
 				</Col>
 			</Row>
 			<hr className="mb-5" />
+			{!formik.values.e_lote && (
+				<Row className="mb-5">
+					<Col sm={12}>
+						<h3>Dados do veículo</h3>
+					</Col>
+					<Col>
+						<InputPlaca
+							placeholder="Placa veículo"
+							disabled={formik.values.e_lote}
+							type="text"
+							name="placa_veiculo"
+							value={formik.values.placa_veiculo}
+							onChange={formik.handleChange}
+						/>
+					</Col>
+					<hr className="mt-5" />
+				</Row>
+			)}
 			<Row>
 				<Col>
 					<InputCliente

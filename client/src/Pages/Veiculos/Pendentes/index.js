@@ -95,6 +95,11 @@ function RotasPendentes() {
 	];
 
 	useEffect(() => {
+		const actionCargasCreate = (payload) => {
+			if (payload.fk_situacao === 2) {
+				dispatchCargas({ type: "UPDATE_OR_ADD_CARGA", payload });
+			}
+		};
 		const actionCargasUpdate = (payload) => {
 			if (payload.fk_situacao !== 2) {
 				dispatchCargas({ type: "DELETE_CARGA", payload });
@@ -105,10 +110,12 @@ function RotasPendentes() {
 		const actionCargasDelete = (payload) => {
 			dispatchCargas({ type: "DELETE_CARGA", payload });
 		};
+		io.on("@carga-create", actionCargasCreate);
 		io.on("@carga-update", actionCargasUpdate);
 		io.on("@carga-delete", actionCargasDelete);
 
 		return () => {
+			io.off("@carga-create", actionCargasCreate);
 			io.off("@carga-update", actionCargasUpdate);
 			io.off("@carga-delete", actionCargasDelete);
 		};

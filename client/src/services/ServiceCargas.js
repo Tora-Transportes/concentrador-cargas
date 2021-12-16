@@ -21,6 +21,7 @@ class ServiceCargas {
 		janela_coleta,
 		local_coleta,
 		local_entrega,
+		placa_veiculo,
 	}) {
 		const carga = {
 			id,
@@ -43,6 +44,7 @@ class ServiceCargas {
 			janela_coleta,
 			local_coleta,
 			local_entrega,
+			placa_veiculo,
 		};
 
 		return api.post("/cargas", carga);
@@ -70,6 +72,7 @@ class ServiceCargas {
 		local_coleta,
 		local_entrega,
 		fk_lote_pai,
+		placa_veiculo,
 	}) {
 		const carga = {
 			id,
@@ -93,6 +96,7 @@ class ServiceCargas {
 			local_coleta,
 			local_entrega,
 			fk_lote_pai,
+			placa_veiculo,
 		};
 
 		return api.post(`/cargas/derivada/${carga.fk_lote_pai}`, carga);

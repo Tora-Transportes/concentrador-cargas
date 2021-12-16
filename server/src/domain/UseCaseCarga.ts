@@ -33,6 +33,9 @@ export class UseCaseAddCarga {
     }
 
     carga.fk_situacao = 1;
+    if (Number(carga.placa_veiculo?.length) > 5) {
+      carga.fk_situacao = 2;
+    }
     await cargaRepository.create(carga);
     notifyAll({
       name: "@carga-create",
@@ -78,6 +81,9 @@ export class UseCaseAddCargaDerivada {
 
     const novoPai = validator.cast(lotePai, { stripUnknown: true }) as ICarga;
     carga.fk_situacao = 1;
+    if (Number(carga.placa_veiculo?.length) > 5) {
+      carga.fk_situacao = 2;
+    }
     await cargaRepository.create(carga);
     await cargaRepository.update(lotePai.id, {
       ...novoPai,

@@ -3,7 +3,6 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useParams, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import useLoadingScreen from "../../../Components/LoadingScreen";
-import InputPlaca from "../../../Components/InputPlaca";
 import swal from "sweetalert";
 import ServiceCargas from "../../../../services/ServiceCargas";
 import { getClaims } from "../../../../MicrosoftAuthentication";
@@ -190,20 +189,6 @@ function Manual() {
 							loteInicial ? ["e_lote", "unidade_medida", "quantidade"] : []
 						}
 					/>
-
-					<Row className="mb-5">
-						<Col>
-							<InputPlaca
-								placeholder="Placa veículo"
-								disabled={formik.values.e_lote}
-								type="text"
-								name="placa_veiculo"
-								value={formik.values.placa_veiculo}
-								onChange={formik.handleChange}
-							/>
-						</Col>
-					</Row>
-
 					<Row>
 						<Col>
 							<Button variant="success" type="submit" className="p-3 fw-bold">

@@ -49,6 +49,8 @@ function Manual() {
 			local_entrega: "",
 
 			fk_lote_pai: "",
+
+			placa_veiculo: "",
 		},
 		onSubmit: async (values) => {
 			setLoading(true);

@@ -36,6 +36,8 @@ function Manual() {
 
 			local_coleta: "",
 			local_entrega: "",
+
+			placa_veiculo: "",
 		},
 		onSubmit: async (values) => {
 			setLoading(true);

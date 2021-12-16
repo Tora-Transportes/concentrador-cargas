@@ -63,7 +63,9 @@ function Visualizar() {
 
 	useEffect(() => {
 		const actionCargasCreate = (payload) => {
-			dispatchCargas({ type: "ADD_CARGA", payload });
+			if (payload.e_lote) {
+				dispatchCargas({ type: "ADD_CARGA", payload });
+			}
 		};
 		const actionCargasUpdate = (payload) => {
 			dispatchCargas({ type: "UPDATE_CARGA", payload });
