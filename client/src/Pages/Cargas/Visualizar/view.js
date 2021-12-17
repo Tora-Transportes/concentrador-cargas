@@ -11,18 +11,23 @@ import {
 import { BsDownload, BsGear } from "react-icons/bs";
 import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
 import NavbarNavigator from "../../Components/NavbarNavigator";
+import CaptionStatusCarga from "../../Components/CaptionStatusCarga";
 
-import TableExternal from "../../Components/TableExternal";
+import TabelaCargas from "../../Components/TabelaCargas";
 
 function VisualizarCargas({
 	handleExportExcel,
 	get_data,
+	values,
 	columns,
 	LoadingComponent,
 	handleToggleModal,
 	displayColumns = [],
 	dispatchColumns,
 	activeModal = true,
+	itensPerPage = 5,
+	setItensPerPage,
+	resetView,
 }) {
 	return (
 		<>
@@ -42,15 +47,36 @@ function VisualizarCargas({
 						<Button variant="outline-info" onClick={handleToggleModal}>
 							<BsGear /> Configurar visão
 						</Button>
+						<Button variant="outline-info" onClick={resetView}>
+							Buscar novos campos
+						</Button>
+						<select
+							className="btn"
+							value={itensPerPage}
+							onChange={(e) => setItensPerPage(e.target.value)}
+						>
+							<option value="5">👀 5</option>
+							<option value="10">👀 10</option>
+							<option value="20">👀 20</option>
+							<option value="50">👀 50</option>
+							<option value="100">👀 100</option>
+							<option value="500">👀 500</option>
+						</select>
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						<CaptionStatusCarga />
 					</Col>
 				</Row>
 				<Row>
 					<Col sm={12}>
-						<TableExternal
+						<TabelaCargas
 							columns={columns.filter((i) =>
 								displayColumns.find((c) => c.name === i.name)
 							)}
 							get_data={get_data}
+							values={values}
 						/>
 					</Col>
 				</Row>

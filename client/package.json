@@ -6,7 +6,7 @@
   "private": false,
   "scripts": {
     "start": "react-scripts start",
-    "dev": "set HTTPS=true&&set SSL_CRT_FILE=../server/certificates/server.cert&&set SSL_KEY_FILE=../server/certificates/server.key&&yarn start", 
+    "dev": "set HTTPS=true&&set SSL_CRT_FILE=../server/certificates/server.cert&&set SSL_KEY_FILE=../server/certificates/server.key&&yarn start",
     "build": "react-scripts --max_old_space_size=4096 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -41,8 +41,10 @@
     "react-router": "^6.0.0-beta.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "^4.0.0",
+    "socket.io-client": "^4.4.0",
     "styled-components": "^5.3.3",
-    "sweetalert": "^2.1.2"
+    "sweetalert": "^2.1.2",
+    "xlsx": "^0.17.4"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",

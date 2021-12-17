@@ -1,0 +1,13 @@
+.table-external td,
+.table-external th {
+  white-space: nowrap;
+}
+
+.table-external th {
+  min-width: 200px;
+}
+
+.table-external thead th {
+  text-align: center;
+  vertical-align: middle;
+}

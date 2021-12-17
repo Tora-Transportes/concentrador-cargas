@@ -1,20 +1,29 @@
 import { RotasPendentesRepository } from "../repositories/RotasPendentesRepository";
 import { CargaRepository } from "../repositories/CargaRepository";
+import { UsuarioRepository } from "../repositories/UsuarioRepository";
 import { ICarga } from "../models/ICargas";
 import { factoryCargaValidator } from "../validations/CargaValidator";
 import AppError from "../models/AppError";
 import { ServiceDistanceLocations } from "../services/ServiceDistanceLocations";
+import TokenAd from "../models/TokenAd";
+import TextUtils from "../Utils/text";
+
+import xlsx from "xlsx";
+
+import { notifyAll } from "../socketsRoutes";
 
 export class UseCaseAddCarga {
   async run(cargaDTO: Record<string, any>) {
     const validator = factoryCargaValidator();
     const carga: ICarga = await validator.validate(cargaDTO, {
       abortEarly: false,
+      stripUnknown: true,
     });
 
     const currentDate = new Date();
     carga.data_atualizacao = currentDate;
     carga.data_cadastro = currentDate;
+    carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
 
     const cargaRepository = new CargaRepository();
 
@@ -23,20 +32,86 @@ export class UseCaseAddCarga {
       throw new AppError("Uma carga com esse Código já foi cadastrada", 400);
     }
 
+    carga.fk_situacao = 1;
+    if (Number(carga.placa_veiculo?.length) > 5) {
+      carga.fk_situacao = 2;
+    }
     await cargaRepository.create(carga);
+    notifyAll({
+      name: "@carga-create",
+      details: await cargaRepository.index(carga.id),
+    });
+    return carga;
+  }
+}
+
+export class UseCaseAddCargaDerivada {
+  async run(cargaDTO: Record<string, any>) {
+    const validator = factoryCargaValidator();
+    const carga: ICarga = await validator.validate(cargaDTO, {
+      abortEarly: false,
+      stripUnknown: true,
+    });
+
+    const currentDate = new Date();
+    carga.data_atualizacao = currentDate;
+    carga.data_cadastro = currentDate;
+    carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
+    carga.e_lote = false;
+
+    const cargaRepository = new CargaRepository();
+    const lotePai = await cargaRepository.index(cargaDTO.fk_lote_pai);
+    if (!lotePai) {
+      throw new AppError("O lote pai informado não existe", 400);
+    }
+
+    const cargasCadastrada = await cargaRepository.index(carga.id);
+    if (cargasCadastrada) {
+      throw new AppError("Uma carga com esse Código já foi cadastrada", 400);
+    }
+
+    const quantidadeRestante =
+      Number(lotePai.quantidade_atual) - Number(carga.quantidade);
+    if (quantidadeRestante < 0) {
+      throw new AppError(
+        "A quantidade informada para a carga ultrapassa os limites do lote",
+        400
+      );
+    }
+
+    const novoPai = validator.cast(lotePai, { stripUnknown: true }) as ICarga;
+    carga.fk_situacao = 1;
+    if (Number(carga.placa_veiculo?.length) > 5) {
+      carga.fk_situacao = 2;
+    }
+    await cargaRepository.create(carga);
+    await cargaRepository.update(lotePai.id, {
+      ...novoPai,
+      quantidade_atual: quantidadeRestante,
+    });
+    notifyAll({
+      name: "@carga-create",
+      details: await cargaRepository.index(carga.id),
+    });
+    notifyAll({
+      name: "@carga-update",
+      details: await cargaRepository.index(lotePai.id),
+    });
     return carga;
   }
 }
 
 export class UseCaseUpdateCarga {
-  async run(cargaDTO: Record<string, any>) {
+  async run(cargaDTO: Record<string, any>, oid: string) {
     const validator = factoryCargaValidator();
     const carga: ICarga = await validator.validate(cargaDTO, {
       abortEarly: false,
+      stripUnknown: true,
     });
 
     const currentDate = new Date();
     carga.data_atualizacao = currentDate;
+    carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
 
     const cargaRepository = new CargaRepository();
     const cargaCadastrada = await cargaRepository.index(carga.id);
@@ -52,15 +127,77 @@ export class UseCaseUpdateCarga {
       );
     }
 
-    const { janela_entrega, janela_coleta, e_lote } = carga;
-    const cargaOficial = {
-      ...carga,
-      data_atualizacao: currentDate,
-      janela_entrega: e_lote ? null : janela_entrega,
-      janela_coleta: e_lote ? null : janela_coleta,
-    };
+    // O usuario deve ter permissao para aprovar o status da carga para 3 - Aprovado pelo GR ou 4 - veiculo reprovado
+    const userRepository = new UsuarioRepository();
+    const user = await userRepository.index(oid);
+    if (
+      [3, 4].includes(Number(carga.fk_situacao)) &&
+      Number(cargaCadastrada.fk_situacao) === 2
+    ) {
+      if (!user?.permissoes.includes("APROVAR_VEICULOS")) {
+        throw new AppError(
+          "O usuário informado não possui a permissão 'APROVAR_VEICULOS'",
+          403
+        );
+      }
+    }
 
+    // O status passa a ser "Veículo atribuido" caso a placa seja definida e a situação seja 1 ou 4
+    if (
+      [1, 4].includes(Number(cargaCadastrada.fk_situacao)) &&
+      carga.placa_veiculo
+    ) {
+      carga.fk_situacao = 2;
+    }
+
+    if (Number(carga.fk_situacao) === 4 && !carga.observacao_gr) {
+      throw new AppError(
+        "Observação deve ser especificada ao aprovar ou reprovar veículos",
+        400
+      );
+    }
+
+    // Caso o veículo não possua uma placa cadastrada sua situação vai voltar para "aguardando alocação" ou "veiculo reprovado"
+    if (!carga.placa_veiculo) {
+      carga.fk_situacao = 1;
+    }
+
+    // lotes nao podem virar cargas, porem cargas podem virar lotes
+    if (carga.e_lote === false && cargaCadastrada.e_lote === true) {
+      carga.e_lote = true;
+    }
+
+    // Os lotes nao podem ter sua unidade de medida e quantidade alterados
+    if (carga.unidade_medida && cargaCadastrada.e_lote) {
+      carga.unidade_medida = cargaCadastrada.unidade_medida;
+    }
+    if (carga.quantidade && cargaCadastrada.e_lote) {
+      carga.quantidade = cargaCadastrada.quantidade;
+    }
+    // ao atualizar o lote nao se deve resetar a contagem da quantidade_atual
+    if (cargaCadastrada.e_lote) {
+      carga.quantidade_atual = cargaCadastrada.quantidade_atual;
+    }
+
+    carga.placa_veiculo = carga.placa_veiculo
+      ? carga.placa_veiculo.trim().toUpperCase()
+      : carga.placa_veiculo;
+
+    const { janela_entrega, janela_coleta, e_lote } = carga;
+    const cargaOficial = validator.cast(
+      {
+        ...carga,
+        data_atualizacao: currentDate,
+        janela_entrega: e_lote ? null : janela_entrega,
+        janela_coleta: e_lote ? null : janela_coleta,
+      },
+      { stripUnknown: true }
+    ) as ICarga;
     await cargaRepository.update(cargaOficial.id, cargaOficial);
+    notifyAll({
+      name: "@carga-update",
+      details: await cargaRepository.index(carga.id),
+    });
     return cargaOficial;
   }
 }
@@ -68,7 +205,11 @@ export class UseCaseUpdateCarga {
 export class UseCaseViewCargas {
   async run(filter: Record<string, any>) {
     const cargaRepository = new CargaRepository();
-    return cargaRepository.search({ ...filter, ativo: 1 }, filter.page);
+    return cargaRepository.search(
+      { ...filter, ativo: 1 },
+      filter.page,
+      filter.limit || 5
+    );
   }
 
   async index(id: string) {
@@ -99,13 +240,21 @@ export class UseCaseDeleteCarga {
     if (!carga) {
       throw new AppError("Carga não encontrada", 404);
     }
-
-    return cargaRepository.update(carga.id, {
-      ...carga,
+    const validator = factoryCargaValidator();
+    const cargaAtualizada = {
+      ...validator.cast(carga, { stripUnknown: true }),
       ativo: 0,
       usuario,
       data_atualizacao: new Date(),
+    };
+
+    await cargaRepository.update(carga.id, cargaAtualizada as ICarga);
+    console.log(validator.cast(cargaAtualizada, { stripUnknown: true }));
+    notifyAll({
+      name: "@carga-delete",
+      details: { id },
     });
+    return cargaAtualizada;
   }
 }
 
@@ -176,5 +325,56 @@ export class UseCaseListPendentRoutes {
       currentPage
     );
     return rotas;
+  }
+}
+
+export class UseCaseImportCarga {
+  async run(file: Buffer | undefined, usuario: string | undefined) {
+    if (!file || !file?.buffer) {
+      throw new AppError("O arquivo não foi enviado", 400);
+    }
+    const nomeUsuario = TokenAd.getClaims(String(usuario)).name;
+    const workbook = xlsx.read(file.buffer);
+    const worksheet = workbook.Sheets["Planilha1"];
+    const jsonSheet = <Record<string, any>[]>(
+      xlsx.utils.sheet_to_json(worksheet)
+    );
+
+    const validator = factoryCargaValidator();
+    const timestamp = new Date();
+    let idCounter = 1;
+    const cargas = jsonSheet.map((row: Record<string, any>): ICarga => {
+      const clone: ICarga = {
+        e_lote: true,
+        cliente: TextUtils.normalize(row["Destinatário"]),
+        observacao: row["OBSERVAÇÃO"],
+        quantidade: Number(row["Quantidade"]),
+        quantidade_atual: Number(row["Quantidade"]),
+        origem_carga:
+          "BRASIL/" +
+          TextUtils.normalize(row["Origem"]).split(", ").reverse().join("/"),
+        destino_carga:
+          "BRASIL/" +
+          TextUtils.normalize(row["Destino"]).split(", ").reverse().join("/"),
+        unidade_medida: TextUtils.normalize(row["Unidade"]),
+        canal_comunicacao: "manual",
+        usuario: nomeUsuario,
+        responsavel_cadastro: nomeUsuario,
+        id: `M-${timestamp.getTime()}-${idCounter++}`,
+        data_cadastro: timestamp,
+        data_atualizacao: timestamp,
+        ativo: 1,
+      };
+
+      validator.validateSync(clone, { abortEarly: false });
+
+      return clone;
+    });
+
+    if (cargas.length > 0) {
+      const cargaRepository = new CargaRepository();
+      await cargaRepository.bulkCreate(cargas);
+    }
+    return cargas;
   }
 }

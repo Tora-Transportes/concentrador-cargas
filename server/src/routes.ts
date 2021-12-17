@@ -1,4 +1,6 @@
-import { Router } from "express";
+import express, { Router } from "express";
+import path from "path";
+import multer from "multer";
 
 import CargaController from "./controllers/CargaController";
 import UsuarioController from "./controllers/UsuarioController";
@@ -10,14 +12,22 @@ import ExportController from "./controllers/ExportController";
 import ProdutoController from "./controllers/ProdutoController";
 import RecomendacoesController from "./controllers/RecomendacoesController";
 import RotasController from "./controllers/RotasController";
+import SituacoesCargasController from "./controllers/SituacoesCargasController";
 
 const routes = Router();
 
+routes.use("/static/", express.static(path.resolve(__dirname, "..", "static")));
 routes.use(LogMiddleware);
 routes.use(TokenMiddleware);
 routes.use(ConvertFieldsToDate);
 routes.get("/cargas", CargaController.search);
 routes.post("/cargas", CargaController.create);
+routes.post("/cargas/derivada/:fk_lote_pai", CargaController.createDerivada);
+routes.post(
+  "/cargas/importacao",
+  multer().single("file"),
+  CargaController.importSheet
+);
 routes.get("/cargas/:id", CargaController.index);
 routes.put("/cargas/:id", CargaController.update);
 routes.delete(
@@ -66,9 +76,13 @@ routes.post(
   RotasController.distanceBetweenLocations
 );
 
-routes.get("/distancia", RotasController.listPendentRoutes);
+routes.get("/rotas/pendentes", RotasController.listPendentRoutes);
+
+routes.get("/veiculos/:placa", RotasController.listVehicles);
 
 routes.get("/recomendacoes/organizacoes", RecomendacoesController.organizacoes);
 routes.get("/recomendacoes/locais", RecomendacoesController.cidadeEstados);
+
+routes.get("/situacoes/cargas", SituacoesCargasController.search);
 
 export default routes;

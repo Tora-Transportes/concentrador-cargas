@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import { MdOutlineWavingHand } from "react-icons/md";
+import { SiGooglesheets } from "react-icons/si";
 import { BsPeople } from "react-icons/bs";
 import NavbarNavigator from "../../Components/NavbarNavigator";
 import "./index.css";
@@ -27,6 +28,14 @@ function Main() {
 						</Link>
 					</Col>
 					<hr />
+				</Row>
+				<Row>
+					<Col sm={12} className="puts">
+						<Link className="text-decoration-none" to="/cargas/importar">
+							<SiGooglesheets size={80} />
+							<h2 className="fs-3">Importação em lote</h2>
+						</Link>
+					</Col>
 				</Row>
 			</Container>
 		</>

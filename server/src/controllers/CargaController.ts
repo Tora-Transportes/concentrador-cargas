@@ -6,9 +6,9 @@ import {
   UseCaseDeleteCarga,
   UseCaseUpdateCarga,
   UseCaseViewCargas,
-  UseCaseGetDistanceBetween,
+  UseCaseImportCarga,
+  UseCaseAddCargaDerivada,
 } from "../domain/UseCaseCarga";
-import AppError from "../models/AppError";
 
 class CargaController {
   async create(req: Request, res: Response) {
@@ -23,13 +23,27 @@ class CargaController {
     });
   }
 
+  async createDerivada(req: Request, res: Response) {
+    const fk_lote_pai = req.params.fk_lote_pai;
+    const cargaDTO = { ...req.body, fk_lote_pai };
+    cargaDTO.usuario = TokenAd.getClaims(
+      String(req.headers.authorization)
+    ).name;
+
+    const carga = await new UseCaseAddCargaDerivada().run(cargaDTO);
+    return res.json({
+      data: carga,
+    });
+  }
+
   async update(req: Request, res: Response) {
     const { id } = req.params;
     const input = { ...req.body };
+    const claims = TokenAd.getClaims(String(req.headers.authorization));
     input.id = id;
-    input.usuario = TokenAd.getClaims(String(req.headers.authorization)).name;
+    input.usuario = claims.name;
 
-    const updateResult = await new UseCaseUpdateCarga().run(input);
+    const updateResult = await new UseCaseUpdateCarga().run(input, claims.oid);
 
     return res.json({ data: updateResult });
   }
@@ -53,6 +67,13 @@ class CargaController {
   async search(req: Request, res: Response) {
     const result = await new UseCaseViewCargas().run(req.query);
     return res.json({ data: result });
+  }
+
+  async importSheet(req: Request, res: Response) {
+    const { file } = req;
+    const usuario = req.headers.authorization;
+    const response = await new UseCaseImportCarga().run(file?.buffer, usuario);
+    return res.json({ data: response });
   }
 }
 

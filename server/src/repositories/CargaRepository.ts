@@ -10,12 +10,29 @@ export interface IPaginationResult<T> {
 
 export class CargaRepository {
   async index(id: string): Promise<ICarga | undefined> {
-    return await database("con_cargas").first().where("id", id);
+    return await database("con_cargas")
+      .select([
+        "con_cargas.*",
+        "con_situacoes_cargas.descricao as situacao.descricao",
+        "con_situacoes_cargas.cor as situacao.cor",
+      ])
+      .first()
+      .where("con_cargas.id", id)
+      .join(
+        "con_situacoes_cargas",
+        "con_situacoes_cargas.id",
+        "con_cargas.fk_situacao"
+      );
   }
 
   async create(carga: ICarga): Promise<ICarga> {
     await database("con_cargas").insert(carga);
     return carga;
+  }
+
+  async bulkCreate(cargas: ICarga[]): Promise<ICarga[]> {
+    await database("con_cargas").insert(cargas);
+    return cargas;
   }
 
   async update(id: string, carga: ICarga): Promise<ICarga> {
@@ -33,7 +50,16 @@ export class CargaRepository {
     const total = database("con_cargas").count("id as total").first();
 
     const results = database("con_cargas")
-      .select("*")
+      .select([
+        "con_cargas.*",
+        "con_situacoes_cargas.descricao as situacao.descricao",
+        "con_situacoes_cargas.cor as situacao.cor",
+      ])
+      .join(
+        "con_situacoes_cargas",
+        "con_situacoes_cargas.id",
+        "con_cargas.fk_situacao"
+      )
       .limit(pageSize)
       .offset((realPage - 1) * pageSize);
 
@@ -62,6 +88,9 @@ export class CargaRepository {
           `%${query.origem_carga.toUpperCase()}%`
         );
       }
+      if (query?.fk_situacao && !isNaN(Number(query.fk_situacao))) {
+        qb.andWhere("fk_situacao", Number(query.fk_situacao));
+      }
       if (query?.data_coleta) {
         qb.andWhere("data_coleta", "=", new Date(query.data_coleta));
       }
@@ -73,7 +102,7 @@ export class CargaRepository {
         qb.andWhere("cliente", "like", `%${query.cliente}%`);
       }
       if (isValid(query?.id)) {
-        qb.andWhere("id", "like", `%${query.id}%`);
+        qb.andWhere("con_cargas.id", "like", `%${query.id}%`);
       }
       if (isValid(String(query?.e_lote))) {
         qb.andWhere("e_lote", "=", `${query.e_lote}`);
@@ -81,8 +110,14 @@ export class CargaRepository {
       if (isValid(String(query?.tipo_carga))) {
         qb.andWhere("tipo_carga", "like", `%${query.tipo_carga}%`);
       }
+      if (isValid(String(query?.placa_veiculo))) {
+        qb.andWhere("placa_veiculo", "like", `%${query.placa_veiculo}%`);
+      }
       if (!isNaN(Number(query?.ativo))) {
         qb.andWhere("ativo", "=", Number(query?.ativo));
+      }
+      if (!isNaN(Number(query?.fk_situacao))) {
+        qb.andWhere("fk_situacao", "=", Number(query?.fk_situacao));
       }
       if (isValid(String(query?.responsavel_cadastro))) {
         qb.andWhere(
@@ -98,15 +133,18 @@ export class CargaRepository {
 
     if (isValid(query?.order_column)) {
       results.orderBy(
-        String(query.order_column),
+        "con_cargas." + String(query.order_column),
         String(query?.order_direction)
       );
     }
 
+    results.orderBy("con_cargas.id", "asc");
+    const rows = await results;
+
     return {
       page: realPage,
       total_pages: Math.ceil(Number((await total)?.total || 0) / pageSize),
-      results: await results,
+      results: rows,
     };
   }
 }

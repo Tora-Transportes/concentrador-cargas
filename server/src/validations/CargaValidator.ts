@@ -1,9 +1,12 @@
 import * as yup from "yup";
 
 export function factoryCargaValidator() {
-  const regexId = new RegExp(`^[A-Z]-[0-9]+$`, "g");
+  const regexId = new RegExp(`^[A-Z]-[0-9]+(-[0-9]+)?$`, "g");
 
   const cargaValidator = yup.object({
+    observacao_gr: yup.string().notRequired().nullable(),
+    placa_veiculo: yup.string().nullable().notRequired(),
+    usuario: yup.string().notRequired(),
     local_entrega: yup.string().nullable(),
     local_coleta: yup.string().nullable(),
     janela_entrega: yup.string().nullable(),
@@ -31,6 +34,7 @@ export function factoryCargaValidator() {
       .number()
       .min(0)
       .required("A quantidade da carga deve ser preenchido"),
+    quantidade_atual: yup.number().min(0),
     unidade_medida: yup
       .string()
       .required("A unidade de medida da carga deve ser preenchido"),
@@ -43,6 +47,8 @@ export function factoryCargaValidator() {
         new RegExp("^(manual|portal)$", "g"),
         "O local de criação da carga informado é inválido, deve ser algum desses [manual ou portal]"
       ),
+    fk_lote_pai: yup.string().nullable(),
+    fk_situacao: yup.number(),
   });
 
   return cargaValidator;

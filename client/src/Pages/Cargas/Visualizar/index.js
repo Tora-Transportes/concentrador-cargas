@@ -1,4 +1,4 @@
-import React, { useReducer, useState, useEffect } from "react";
+import React, { useReducer, useState, useEffect, useCallback } from "react";
 import View from "./view";
 
 import { Form } from "react-bootstrap";
@@ -9,6 +9,11 @@ import { Link } from "react-router-dom";
 import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import useLocalstorage from "../../Components/useLocalstorage";
+import SelectStatusCarga from "../../Components/SelectStatusCargas";
+
+import StatusTooltip from "src/Pages/Components/StatusTooltip";
+import io from "../../../services/socket";
+import factoryReducerCargas from "src/hooks/storageCargas/factoryReducerCargas";
 
 function reducerActiveColumns(state, action) {
 	const index = state.findIndex((i) => i.name === action.name);
@@ -50,7 +55,53 @@ function reducerToggleModal(state) {
 }
 
 function Visualizar() {
+	const defaultCargas = {
+		page: 1,
+		total_pages: 1,
+		results: [],
+	};
+	const cargasReducer = useCallback(factoryReducerCargas(defaultCargas), []);
+	const [cargas, dispatchCargas] = useReducer(cargasReducer, defaultCargas);
+
+	useEffect(() => {
+		const actionCargasCreate = (payload) => {
+			if (!payload.e_lote) {
+				dispatchCargas({ type: "ADD_CARGA", payload });
+			}
+		};
+		const actionCargasUpdate = (payload) => {
+			dispatchCargas({ type: "UPDATE_CARGA", payload });
+		};
+		const actionCargasDelete = (payload) => {
+			dispatchCargas({ type: "DELETE_CARGA", payload });
+		};
+		io.on("@carga-create", actionCargasCreate);
+		io.on("@carga-update", actionCargasUpdate);
+		io.on("@carga-delete", actionCargasDelete);
+
+		return () => {
+			io.off("@carga-create", actionCargasCreate);
+			io.off("@carga-update", actionCargasUpdate);
+			io.off("@carga-delete", actionCargasDelete);
+		};
+	}, [io]);
+
 	const columns = [
+		{
+			name: "fk_situacao",
+			description: "Situação",
+			selector: (row) => (
+				<StatusTooltip
+					color={row["situacao.cor"]}
+					hint={row["situacao.descricao"]}
+				/>
+			),
+			Filter: (props) => (
+				<SelectStatusCarga {...props}>
+					<option></option>
+				</SelectStatusCarga>
+			),
+		},
 		{
 			name: "id",
 			description: "Código da Carga",
@@ -60,7 +111,11 @@ function Visualizar() {
 			name: "cliente",
 			description: "Cliente",
 			selector: (row) => row.cliente.split(" -")[0],
-			Filter: (props) => <InputCliente label="" {...props} />,
+			Filter: (props) => (
+				<div className="mt-3">
+					<InputCliente label="" {...props} style={{ height: "24px" }} />
+				</div>
+			),
 		},
 		{
 			name: "origem_carga",
@@ -95,18 +150,18 @@ function Visualizar() {
 			description: "Tipo Carga",
 			selector: (row) => row.tipo_carga,
 		},
-		{
-			name: "e_lote",
-			description: "Lote ?",
-			selector: (row) => (row.e_lote ? "Sim" : "Não"),
-			Filter: (props) => (
-				<Form.Select {...props}>
-					<option></option>
-					<option value="1">Sim</option>
-					<option value="0">Não</option>
-				</Form.Select>
-			),
-		},
+		// {
+		// 	name: "e_lote",
+		// 	description: "Lote ?",
+		// 	selector: (row) => (row.e_lote ? "Sim" : "Não"),
+		// 	Filter: (props) => (
+		// 		<Form.Select {...props}>
+		// 			<option></option>
+		// 			<option value="1">Sim</option>
+		// 			<option value="0">Não</option>
+		// 		</Form.Select>
+		// 	),
+		// },
 		{
 			name: "canal_comunicacao",
 			description: "Canal comunicação",
@@ -180,6 +235,12 @@ function Visualizar() {
 			Filter: () => null,
 		},
 		{
+			name: "fk_lote_pai",
+			description: "Lote origem",
+			selector: (row) => row.fk_lote_pai,
+			Filter: () => null,
+		},
+		{
 			name: "editar",
 			description: "Editar",
 			static_column: true,
@@ -216,6 +277,7 @@ function Visualizar() {
 		reducerToggleModal,
 		false
 	);
+	const [itensPerPage, setItensPerPage] = useState(5);
 	function formatDate(date) {
 		return date?.split("T")[0].split("-").reverse().join("/");
 	}
@@ -234,6 +296,7 @@ function Visualizar() {
 			...filters,
 			order_column: orderBy?.column,
 			order_direction: orderBy?.direction,
+			e_lote: 0,
 		};
 		const response = await ServiceCargas.exportToXlsx(options);
 		const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -247,30 +310,43 @@ function Visualizar() {
 		setLoading(false);
 	}
 
-	async function get_data(options) {
-		setLoading(true);
-
-		try {
-			const { filters, orderBy, page } = options;
-			setFiltroAtual({ filters, orderBy, page });
-			const { data } = await ServiceCargas.search({
-				...filters,
-				page,
-				order_column: orderBy?.column,
-				order_direction: orderBy?.direction,
-			});
-			setLoading(false);
-
-			return {
-				total_pages: data.data.total_pages,
-				current_page: page || 1,
-				data: data.data.results,
-			};
-		} catch (error) {
-			console.log(error);
-		}
-		setLoading(false);
+	function resetView() {
+		localStorage.removeItem("table-columns");
+		location.reload();
 	}
+
+	const get_data = useCallback(
+		async function (options) {
+			setLoading(true);
+
+			try {
+				const { filters, orderBy, page } = options;
+				setFiltroAtual({ filters, orderBy, page });
+				const { data } = await ServiceCargas.search({
+					...filters,
+					page,
+					order_column: orderBy?.column,
+					order_direction: orderBy?.direction,
+					limit: itensPerPage,
+					e_lote: 0,
+				});
+				setLoading(false);
+
+				dispatchCargas({
+					type: "SET",
+					payload: {
+						results: data.data.results,
+						total_pages: data.data.total_pages,
+						current_page: data.data.page,
+					},
+				});
+			} catch (error) {
+				console.log(error);
+			}
+			setLoading(false);
+		},
+		[itensPerPage]
+	);
 
 	const columnsToDisplay = displayColumns
 		.filter((i) => i.active)
@@ -288,12 +364,16 @@ function Visualizar() {
 		<View
 			handleExportExcel={handleExportExcel}
 			get_data={get_data}
+			values={cargas}
 			columns={orderedColumns.filter((c) => columnsToDisplay.includes(c.name))}
 			LoadingComponent={LoadingComponent}
 			displayColumns={displayColumns}
 			dispatchColumns={reducerColumns}
 			activeModal={activeModal}
 			handleToggleModal={handleToggleModal}
+			itensPerPage={itensPerPage}
+			setItensPerPage={setItensPerPage}
+			resetView={resetView}
 		/>
 	);
 }
