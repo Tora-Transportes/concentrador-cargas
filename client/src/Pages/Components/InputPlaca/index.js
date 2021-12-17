@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
 	InputGroup,
 	Button,
@@ -48,6 +48,18 @@ function InputPlaca(props) {
 			setPlacas(null);
 		}
 	}
+
+	useEffect(() => {
+		const handleUpperCase = (e) => {
+			e.target.value = e.target.value.toUpperCase();
+		};
+
+		console.log(placaInput.current);
+		placaInput.current.addEventListener("keyup", handleUpperCase);
+		return () => {
+			placaInput.current.removeEventListener("keyup", handleUpperCase);
+		};
+	}, []);
 
 	return (
 		<>
