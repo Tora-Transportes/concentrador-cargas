@@ -93,6 +93,10 @@ export class UseCaseAddCargaDerivada {
       name: "@carga-create",
       details: await cargaRepository.index(carga.id),
     });
+    notifyAll({
+      name: "@carga-update",
+      details: await cargaRepository.index(lotePai.id),
+    });
     return carga;
   }
 }
