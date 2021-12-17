@@ -214,3 +214,8 @@ update "con_situacoes_cargas" set "cor" = 'yellow' where "id" = 1;
 update "con_situacoes_cargas" set "cor" = 'red' where "id" = 2;
 update "con_situacoes_cargas" set "cor" = 'green' where "id" = 3;
 update "con_situacoes_cargas" set "descricao" = 'Aguardando GR', "cor" = 'orange' where "id" = 2;
+INSERT INTO "con_situacoes_cargas" ("id", "cor", "descricao") VALUES (4, 'red', 'Veículo Reprovado');
+
+ALTER TABLE "con_cargas" ADD (
+    "observacao_gr" VARCHAR(255)
+);

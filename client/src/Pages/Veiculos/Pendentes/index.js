@@ -28,17 +28,41 @@ function RotasPendentes() {
 	}
 
 	async function aprovarVeiculo(carga) {
-		await ServiceCargas.update({ ...carga, fk_situacao: 3 });
-		await swal("Aprovado");
-		repopularVisao();
-		dispatchCargas({ type: "DELETE_CARGA", payload: carga });
+		const observacaoGr = await swal(`Observação`, {
+			content: "input",
+			buttons: ["Cancelar", true],
+		});
+		if (!observacaoGr) {
+			await swal("Nenhuma alteração aplicada");
+		} else {
+			await ServiceCargas.update({
+				...carga,
+				fk_situacao: 3,
+				observacao_gr: observacaoGr,
+			});
+			await swal("Aprovado");
+			repopularVisao();
+			dispatchCargas({ type: "DELETE_CARGA", payload: carga });
+		}
 	}
 
 	async function reprovarVeiculo(carga) {
-		await ServiceCargas.update({ ...carga, fk_situacao: 1, placa_veiculo: "" });
-		await swal("Reprovado");
-		repopularVisao();
-		dispatchCargas({ type: "DELETE_CARGA", payload: carga });
+		const observacaoGr = await swal(`Observação`, {
+			content: "input",
+			buttons: ["Cancelar", true],
+		});
+		if (!observacaoGr) {
+			await swal("Nenhuma alteração aplicada");
+		} else {
+			await ServiceCargas.update({
+				...carga,
+				fk_situacao: 4,
+				observacao_gr: observacaoGr,
+			});
+			await swal("Reprovado");
+			repopularVisao();
+			dispatchCargas({ type: "DELETE_CARGA", payload: carga });
+		}
 	}
 
 	const columns = [

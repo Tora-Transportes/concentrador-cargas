@@ -127,11 +127,11 @@ export class UseCaseUpdateCarga {
       );
     }
 
-    // O usuario deve ter permissao para aprovar o status da carga para 3 - Aprovado pelo GR
+    // O usuario deve ter permissao para aprovar o status da carga para 3 - Aprovado pelo GR ou 4 - veiculo reprovado
     const userRepository = new UsuarioRepository();
     const user = await userRepository.index(oid);
     if (
-      Number(carga.fk_situacao) === 3 &&
+      [3, 4].includes(Number(carga.fk_situacao)) &&
       Number(cargaCadastrada.fk_situacao) === 2
     ) {
       if (!user?.permissoes.includes("APROVAR_VEICULOS")) {
@@ -142,12 +142,22 @@ export class UseCaseUpdateCarga {
       }
     }
 
-    // O status passa a ser "Veículo atribuido" caso a placa seja definida e a situação seja 1
-    if (Number(cargaCadastrada.fk_situacao) === 1 && carga.placa_veiculo) {
+    // O status passa a ser "Veículo atribuido" caso a placa seja definida e a situação seja 1 ou 4
+    if (
+      [1, 4].includes(Number(cargaCadastrada.fk_situacao)) &&
+      carga.placa_veiculo
+    ) {
       carga.fk_situacao = 2;
     }
 
-    // Caso o veículo não possua uma placa cadastrada sua situação vai voltar para "aguardando alocação"
+    if (Number(carga.fk_situacao) === 4 && !carga.observacao_gr) {
+      throw new AppError(
+        "Observação deve ser especificada ao aprovar ou reprovar veículos",
+        400
+      );
+    }
+
+    // Caso o veículo não possua uma placa cadastrada sua situação vai voltar para "aguardando alocação" ou "veiculo reprovado"
     if (!carga.placa_veiculo) {
       carga.fk_situacao = 1;
     }

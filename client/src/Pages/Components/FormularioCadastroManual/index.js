@@ -113,7 +113,7 @@ function FormularioCadastroManual({
 					<Col sm={12}>
 						<h3>Dados do veículo</h3>
 					</Col>
-					<Col>
+					<Col sm={12}>
 						<InputPlaca
 							placeholder="Placa veículo"
 							disabled={formik.values.e_lote}
@@ -122,6 +122,18 @@ function FormularioCadastroManual({
 							value={formik.values.placa_veiculo}
 							onChange={formik.handleChange}
 						/>
+					</Col>
+					<Col>
+						{formik.values.observacao_gr && (
+							<FloatingLabel label="Observacao GR" className="mb-3">
+								<Form.Control
+									as="textarea"
+									type="text"
+									value={formik.values.observacao_gr}
+									readOnly
+								/>
+							</FloatingLabel>
+						)}
 					</Col>
 					<hr className="mt-5" />
 				</Row>
