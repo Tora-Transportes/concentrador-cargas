@@ -12,6 +12,7 @@ import ExportController from "./controllers/ExportController";
 import ProdutoController from "./controllers/ProdutoController";
 import RecomendacoesController from "./controllers/RecomendacoesController";
 import RotasController from "./controllers/RotasController";
+import SituacoesCargasController from "./controllers/SituacoesCargasController";
 
 const routes = Router();
 
@@ -81,5 +82,7 @@ routes.get("/veiculos/:placa", RotasController.listVehicles);
 
 routes.get("/recomendacoes/organizacoes", RecomendacoesController.organizacoes);
 routes.get("/recomendacoes/locais", RecomendacoesController.cidadeEstados);
+
+routes.get("/situacoes/cargas", SituacoesCargasController.search);
 
 export default routes;

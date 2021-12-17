@@ -8,7 +8,10 @@ function StatusTooltip({
 	...props
 }) {
 	return (
-		<OverlayTrigger placement={placement} overlay={<Tooltip>{hint}</Tooltip>}>
+		<OverlayTrigger
+			placement={placement}
+			overlay={hint ? <Tooltip>{hint}</Tooltip> : <span />}
+		>
 			<div
 				{...props}
 				className="circle"

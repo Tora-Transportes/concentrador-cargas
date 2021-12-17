@@ -11,6 +11,7 @@ import {
 import { BsDownload, BsGear } from "react-icons/bs";
 import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
 import NavbarNavigator from "../../Components/NavbarNavigator";
+import CaptionStatusCarga from "../../Components/CaptionStatusCarga";
 
 import TabelaCargas from "../../Components/TabelaCargas";
 
@@ -61,6 +62,11 @@ function VisualizarCargas({
 							<option value="100">👀 100</option>
 							<option value="500">👀 500</option>
 						</select>
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						<CaptionStatusCarga />
 					</Col>
 				</Row>
 				<Row>
