@@ -27,8 +27,10 @@ function InputPlaca(props) {
 		}
 	}
 
-	async function fillAnotherFields() {
-		const placa = (placaInput.current?.value || "").toUpperCase().trim();
+	async function fillAnotherFields(placaPesquisa = "") {
+		const placa = String(placaPesquisa || placaInput.current?.value)
+			.toUpperCase()
+			.trim();
 		if (placa) {
 			placaInput.current.value = placa;
 			const v = (await ServiceVeiculos.get(placa)).data.data;
@@ -50,11 +52,17 @@ function InputPlaca(props) {
 	}
 
 	useEffect(() => {
+		if (props.value && props.value.length > 6) {
+			fillAnotherFields(props.value);
+		} else {
+			setPlacas(null);
+		}
+	}, [props.value]);
+
+	useEffect(() => {
 		const handleUpperCase = (e) => {
 			e.target.value = e.target.value.toUpperCase();
 		};
-
-		console.log(placaInput.current);
 		placaInput.current.addEventListener("keyup", handleUpperCase);
 		return () => {
 			placaInput.current.removeEventListener("keyup", handleUpperCase);
@@ -72,7 +80,7 @@ function InputPlaca(props) {
 					>
 						Placa Cavalo 🐴
 					</Button>
-					<Button variant="" onClick={fillAnotherFields}>
+					<Button variant="" onClick={() => fillAnotherFields()}>
 						🔎
 					</Button>
 				</InputGroup.Text>
@@ -82,7 +90,7 @@ function InputPlaca(props) {
 					type="text"
 					name="placa_veiculo"
 					{...props}
-					onBlur={fillAnotherFields}
+					onBlur={() => fillAnotherFields()}
 				/>
 			</InputGroup>
 
