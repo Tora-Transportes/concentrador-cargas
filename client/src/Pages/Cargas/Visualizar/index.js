@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import useLocalstorage from "../../Components/useLocalstorage";
+import SelectStatusCarga from "../../Components/SelectStatusCargas";
 
 import StatusTooltip from "src/Pages/Components/StatusTooltip";
 import io from "../../../services/socket";
@@ -96,12 +97,9 @@ function Visualizar() {
 				/>
 			),
 			Filter: (props) => (
-				<Form.Select {...props}>
+				<SelectStatusCarga {...props}>
 					<option></option>
-					<option value="1">Aguardando Alocação (Veículo)</option>
-					<option value="2">Aguardando GR</option>
-					<option value="3">Validado pelo GR</option>
-				</Form.Select>
+				</SelectStatusCarga>
 			),
 		},
 		{
