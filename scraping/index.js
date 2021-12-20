@@ -85,7 +85,7 @@ async function factoryCarga(row, id, cnpjResolver) {
 
 async function main() {
     try {
-        await baixarNotas();
+        // await baixarNotas();
     } catch (error) {
         process.exit(1);
     }
@@ -119,6 +119,7 @@ async function main() {
             return `${query.organizacao} - ${query.documento_federal} - ${query.cidade}/${query.uf}`;
         }
     })));
+    console.log("Enviando", cargasFormatadas.length, "cargas");
     const agent = new https.Agent({  
         rejectUnauthorized: false
     });

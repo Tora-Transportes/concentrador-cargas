@@ -223,3 +223,8 @@ ALTER TABLE "con_cargas" ADD (
 ALTER TABLE "con_cargas" ADD (
     "documento_transporte" VARCHAR(255)
 );
+
+ALTER TABLE "con_cargas" modify (
+    "origem_carga" VARCHAR(200) NULL,
+    "destino_carga" VARCHAR(200) NULL
+);
