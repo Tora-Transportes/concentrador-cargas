@@ -70,7 +70,15 @@ function RotasPendentes() {
 		{
 			name: "id",
 			description: "Codigo da carga",
-			selector: (row) => row.id,
+			selector: (row) => (
+				<Link
+					target="_blank"
+					className="text-decoration-none"
+					to={`/cargas/manual/${row.id}`}
+				>
+					{row.id}
+				</Link>
+			),
 		},
 		{
 			name: "placa_veiculo",
@@ -88,22 +96,12 @@ function RotasPendentes() {
 			selector: (row) => row.destino_carga,
 		},
 		{
-			name: "Detalhes carga",
-			description: "Detalhes carga",
-			static_column: true,
-			selector: (row) => (
-				<Link target="_blank" to={`/cargas/manual/${row.id}`}>
-					↗
-				</Link>
-			),
-		},
-		{
 			name: "Aprovar",
 			description: "Aprovar",
 			static_column: true,
 			selector: (row) => (
 				<Button variant="" onClick={() => aprovarVeiculo(row)}>
-					<BsHandThumbsUpFill />
+					<BsHandThumbsUpFill style={{ color: "green" }} />
 				</Button>
 			),
 		},
@@ -113,7 +111,7 @@ function RotasPendentes() {
 			static_column: true,
 			selector: (row) => (
 				<Button variant="" onClick={() => reprovarVeiculo(row)}>
-					<BsHandThumbsDownFill />
+					<BsHandThumbsDownFill style={{ color: "red" }} />
 				</Button>
 			),
 		},
