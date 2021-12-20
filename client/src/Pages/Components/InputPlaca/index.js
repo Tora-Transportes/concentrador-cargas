@@ -64,8 +64,10 @@ function InputPlaca(props) {
 			e.target.value = e.target.value.toUpperCase();
 		};
 		placaInput.current.addEventListener("keyup", handleUpperCase);
+		placaInput.current.addEventListener("blur", handleUpperCase);
 		return () => {
 			placaInput.current.removeEventListener("keyup", handleUpperCase);
+			placaInput.current.removeEventListener("blur", handleUpperCase);
 		};
 	}, []);
 
@@ -142,7 +144,7 @@ function InputPlaca(props) {
 					<Card>
 						<ListGroup className="list-group-flush">
 							<ListGroupItem>
-								<b>ID</b>: {veiculo.id_veiculo}
+								<b>Código do veículo</b>: {veiculo.id_veiculo}
 							</ListGroupItem>
 							<ListGroupItem>
 								<b>Motorista</b>: {veiculo.nome_motorista}
