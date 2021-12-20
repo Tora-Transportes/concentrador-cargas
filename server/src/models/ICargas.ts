@@ -31,4 +31,6 @@ export interface ICarga {
   fk_situacao?: number | null;
 
   observacao_gr?: string | null;
+
+  documento_transporte?: string | null;
 }

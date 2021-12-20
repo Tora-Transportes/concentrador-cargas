@@ -16,6 +16,8 @@ import SituacoesCargasController from "./controllers/SituacoesCargasController";
 
 const routes = Router();
 
+routes.post("/portal/cargas", CargaController.createByImport);
+
 routes.use("/static/", express.static(path.resolve(__dirname, "..", "static")));
 routes.use(LogMiddleware);
 routes.use(TokenMiddleware);

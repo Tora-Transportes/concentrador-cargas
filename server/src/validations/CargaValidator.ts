@@ -4,6 +4,7 @@ export function factoryCargaValidator() {
   const regexId = new RegExp(`^[A-Z]-[0-9]+(-[0-9]+)?$`, "g");
 
   const cargaValidator = yup.object({
+    documento_transporte: yup.string().notRequired().nullable(),
     observacao_gr: yup.string().notRequired().nullable(),
     placa_veiculo: yup.string().nullable().notRequired(),
     usuario: yup.string().notRequired(),

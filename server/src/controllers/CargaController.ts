@@ -23,6 +23,27 @@ class CargaController {
     });
   }
 
+  async createByImport(req: Request, res: Response) {
+    const { cargas } = req.body;
+
+    const useCase = new UseCaseAddCarga();
+    const cargasToInsert = await Promise.all(
+      cargas.map(async (i: any) => {
+        try {
+          return await useCase.run({
+            usuario: "BOT IMPORTACAO",
+            ...i,
+          });
+        } catch (error) {
+          return null;
+        }
+      })
+    );
+    return res.json({
+      data: cargasToInsert.filter((i) => !!i),
+    });
+  }
+
   async createDerivada(req: Request, res: Response) {
     const fk_lote_pai = req.params.fk_lote_pai;
     const cargaDTO = { ...req.body, fk_lote_pai };

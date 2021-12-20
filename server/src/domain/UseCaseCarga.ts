@@ -32,6 +32,23 @@ export class UseCaseAddCarga {
       throw new AppError("Uma carga com esse Código já foi cadastrada", 400);
     }
 
+    // Esse bloco funciona para a importacao de cargas
+    if (carga.documento_transporte) {
+      const cargaImportada = await cargaRepository.search({
+        documento_transporte: carga.documento_transporte,
+        tipo_carga: carga.tipo_carga,
+      });
+
+      if (cargaImportada.results.length > 0) {
+        console.log(cargaImportada, "duplicada com ", carga);
+        throw new AppError(
+          "A carga já foi cadastrada com o conjunto documento de transporte + tipo de carga",
+          409
+        );
+      }
+    }
+    //////////////////////////////////////////////////
+
     carga.fk_situacao = 1;
     if (Number(carga.placa_veiculo?.length) > 5) {
       carga.fk_situacao = 2;

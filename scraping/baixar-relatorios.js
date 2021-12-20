@@ -91,6 +91,7 @@ async function listarEmpresas() {
 }
 
 async function main() {
+    const documentosBaixados = [];
     console.time("Scraping");
     try {
         await login();
@@ -106,13 +107,16 @@ async function main() {
     
             console.log(`pegando fornecedores ${empresa.descricao}`);
             const fornecedores = await nightmare.evaluate(() => {
-                return Array.from(document.getElementById("mnuPrincipal_lstFornecedor").getElementsByTagName("option")).map(i=>i.value).slice(1);
+                return Array.from(document.getElementById("mnuPrincipal_lstFornecedor").getElementsByTagName("option")).map(i=>({
+                    value: i.value,
+                    descricao: i.innerText.trim()
+                })).slice(1);
             });
             // console.log(`apos pegando fornecedores ${empresa.descricao}`);
 
             for(const f of fornecedores) {
                
-                const htmlFornecedorRequirido = await requirirFornecedor(78, f);
+                const htmlFornecedorRequirido = await requirirFornecedor(78, f.value);
                 await nightmare.evaluate(htmlFornecedorRequirido=>{
                     document.write(htmlFornecedorRequirido);
                 }, htmlFornecedorRequirido);
@@ -125,8 +129,9 @@ async function main() {
                     fs.mkdirSync(path.resolve("htmls", String(empresa.id)));
                 }
     
-                const nomeArquivo = path.resolve("htmls", String(empresa.id), f.replace(/\D/g, "") + ".html");
+                const nomeArquivo = path.resolve("htmls", String(empresa.id), f.descricao.split(" - ")[0].replace(/\D/g, "") + ".html");
                 fs.writeFileSync(nomeArquivo, await requirirRelatorio());
+                documentosBaixados.push(nomeArquivo);
             }
 
             console.timeEnd(`Minerando empresa ${empresa.descricao}`);
@@ -139,6 +144,7 @@ async function main() {
 
     await nightmare.end()
     console.timeEnd("Scraping");
+    return documentosBaixados;
 }
 
 module.exports = main;

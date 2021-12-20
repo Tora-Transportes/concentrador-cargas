@@ -219,3 +219,7 @@ INSERT INTO "con_situacoes_cargas" ("id", "cor", "descricao") VALUES (4, 'red', 
 ALTER TABLE "con_cargas" ADD (
     "observacao_gr" VARCHAR(255)
 );
+
+ALTER TABLE "con_cargas" ADD (
+    "documento_transporte" VARCHAR(255)
+);

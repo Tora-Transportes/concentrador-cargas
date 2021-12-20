@@ -241,13 +241,18 @@ function Visualizar() {
 			Filter: () => null,
 		},
 		{
+			name: "documento_transporte",
+			description: "Documento de transporte",
+			selector: (row) => row.documento_transporte,
+		},
+		{
 			name: "editar",
 			description: "Editar",
 			static_column: true,
 			selector: (row) => (
 				<Link
 					to={`/cargas/${
-						row.canal_comunicacao === "portal" ? "portal" : "manual"
+						row.canal_comunicacao === "portal" ? "manual" : "manual"
 					}/${row.id}`}
 					target="_blank"
 					rel="noopener"
