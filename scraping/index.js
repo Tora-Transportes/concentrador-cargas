@@ -84,7 +84,11 @@ async function factoryCarga(row, id, cnpjResolver) {
 }
 
 async function main() {
-    await baixarNotas();
+    try {
+        await baixarNotas();
+    } catch (error) {
+        process.exit(1);
+    }
 
     const cargas = minerarNotas();
     fs.writeFileSync("output.json", JSON.stringify(cargas));

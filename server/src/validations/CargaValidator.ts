@@ -24,10 +24,8 @@ export function factoryCargaValidator() {
       .bool()
       .required("Deve ser informado se a carga é um lote ou não"),
     cliente: yup.string().required("O cliente deve ser informado"),
-    destino_carga: yup.string().required("O destino deve ser preenchido"),
-    origem_carga: yup
-      .string()
-      .required("A origem da carga deve ser preenchida"),
+    destino_carga: yup.string().nullable(),
+    origem_carga: yup.string().nullable(),
     data_coleta: yup.date().nullable(),
     data_entrega: yup.date().nullable(),
     tipo_carga: yup.string().nullable(),
