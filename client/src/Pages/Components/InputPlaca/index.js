@@ -64,10 +64,8 @@ function InputPlaca(props) {
 			e.target.value = e.target.value.toUpperCase();
 		};
 		placaInput.current.addEventListener("keyup", handleUpperCase);
-		placaInput.current.addEventListener("blur", handleUpperCase);
 		return () => {
 			placaInput.current.removeEventListener("keyup", handleUpperCase);
-			placaInput.current.removeEventListener("blur", handleUpperCase);
 		};
 	}, []);
 
