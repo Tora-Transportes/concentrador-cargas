@@ -60,6 +60,13 @@ class ExportController {
         type: "string",
       },
       { name: "observacao", description: "Observação", type: "string" },
+      { name: "situacao.descricao", description: "Status", type: "string" },
+      { name: "placa_veiculo", description: "Placa", type: "string" },
+      {
+        name: "observacao_gr",
+        description: "Observação do GR",
+        type: "string",
+      },
       { name: "data_cadastro", description: "Data Cadastro", type: "date" },
       {
         name: "data_atualizacao",

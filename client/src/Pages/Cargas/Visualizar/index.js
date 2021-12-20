@@ -261,6 +261,12 @@ function Visualizar() {
 				</Link>
 			),
 		},
+		{
+			name: "observacao_gr",
+			description: "Observação do GR",
+			selector: (row) => row.observacao_gr,
+			Filter: () => null,
+		},
 	];
 	const defaultStorageColumns = columns.map((i) => ({
 		name: i.name,
