@@ -5,7 +5,7 @@ export default function (defaultValues) {
 			case "SET":
 				return payload;
 			case "ADD_CARGA":
-				return { ...state, results: [...state.results, payload] };
+				return { ...state, results: [payload, ...state.results] };
 			case "DELETE_CARGA":
 				return {
 					...state,
@@ -28,7 +28,7 @@ export default function (defaultValues) {
 					  }
 					: {
 							...state,
-							results: [...state.results, payload],
+							results: [payload, ...state.results],
 					  };
 			default:
 				throw new Error("Invalid dispatch action " + type);
