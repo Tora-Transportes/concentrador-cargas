@@ -49,6 +49,7 @@ function Manual() {
 				const { data } = await ServiceCargas.update({
 					...values,
 					responsavel_cadastro: String(getClaims().name),
+					fk_situacao: undefined,
 				});
 				formik.setFieldValue("responsavel_cadastro", String(getClaims().name));
 				swal(

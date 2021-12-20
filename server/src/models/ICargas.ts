@@ -2,8 +2,8 @@ export interface ICarga {
   id: string;
   e_lote: boolean;
   cliente: string;
-  origem_carga: string;
-  destino_carga: string;
+  origem_carga?: string | null;
+  destino_carga?: string | null;
   data_entrega?: Date | null;
   data_coleta?: Date | null;
   tipo_carga?: string | null;

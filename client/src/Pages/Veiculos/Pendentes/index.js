@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import { Button } from "react-bootstrap";
 import factoryReducerCargas from "../../../hooks/storageCargas/factoryReducerCargas";
+import { BsHandThumbsUpFill, BsHandThumbsDownFill } from "react-icons/bs";
 
 import io from "../../../services/socket";
 
@@ -102,7 +103,7 @@ function RotasPendentes() {
 			static_column: true,
 			selector: (row) => (
 				<Button variant="" onClick={() => aprovarVeiculo(row)}>
-					👍
+					<BsHandThumbsUpFill />
 				</Button>
 			),
 		},
@@ -112,7 +113,7 @@ function RotasPendentes() {
 			static_column: true,
 			selector: (row) => (
 				<Button variant="" onClick={() => reprovarVeiculo(row)}>
-					👎
+					<BsHandThumbsDownFill />
 				</Button>
 			),
 		},
