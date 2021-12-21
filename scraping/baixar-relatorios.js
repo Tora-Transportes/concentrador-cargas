@@ -82,6 +82,9 @@ async function requirirRelatorio() {
 }
 
 async function listarEmpresas() {
+    return [
+        {id: 98, descricao: "USIMINAS"}
+    ];
     return await nightmare.evaluate(() => {
         return Array.from(document.getElementsByName("mnuPrincipal:lstEmpresas")[0].getElementsByTagName("option")).map(i=> ({
             id: Number(i.value),

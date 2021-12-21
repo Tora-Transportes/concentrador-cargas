@@ -3,6 +3,7 @@ require("oracledb").initOracleClient({
   libDir: process.env.DB_ORACLE_LIB_DIR,
 });
 
+const path = require("path");
 const https = require("https");
 const axios = require("axios").default;
 const baixarNotas = require('./baixar-relatorios');
@@ -83,14 +84,35 @@ async function factoryCarga(row, id, cnpjResolver) {
     }
 }
 
+const deleteFolderRecursive = function (directoryPath) {
+    if (fs.existsSync(directoryPath)) {
+        fs.readdirSync(directoryPath).forEach((file, index) => {
+          const curPath = path.join(directoryPath, file);
+          if (fs.lstatSync(curPath).isDirectory()) {
+           // recurse
+            deleteFolderRecursive(curPath);
+          } else {
+            // delete file
+            fs.unlinkSync(curPath);
+          }
+        });
+        fs.rmdirSync(directoryPath);
+      }
+    };
+
 async function main() {
+    deleteFolderRecursive("htmls");
     try {
-        // await baixarNotas();
+        await baixarNotas();
     } catch (error) {
         process.exit(1);
+        throw error;
     }
 
-    const cargas = minerarNotas();
+    const cargas = minerarNotas().filter(i => {
+        const match = "20468310009603";
+        return String(i.cnpj_fornecedor) === match;
+    });
     fs.writeFileSync("output.json", JSON.stringify(cargas));
     
     const generator = new Generator();
