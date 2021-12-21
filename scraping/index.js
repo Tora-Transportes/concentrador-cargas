@@ -141,14 +141,28 @@ async function main() {
             return `${query.organizacao} - ${query.documento_federal} - ${query.cidade}/${query.uf}`;
         }
     })));
-    console.log("Enviando", cargasFormatadas.length, "cargas");
+
+    const hashCargas = new Map();
+
+    for(const i of cargasFormatadas) {
+        if(hashCargas.has(i.documento_transporte)) {
+            hashCargas.get(i.documento_transporte).observacao = "Carga: "+i.tipo_carga+",\nQuantidade: "+i.quantidade+",\nUnidade medida: "+i.unidade_medida+"\n\n";
+        } else {
+            hashCargas.set(i.documento_transporte, i);
+        }
+    }
+    const cargasParaInserir = [];
+    for(const i of hashCargas) {
+        cargasParaInserir.push(i[1]);
+    }
+    console.log("Enviando", cargasParaInserir.length, "cargas");
     const agent = new https.Agent({  
         rejectUnauthorized: false
     });
 
     try {
         await axios.post(`${process.env.URL_API}/portal/cargas`, {
-            cargas: cargasFormatadas
+            cargas: cargasParaInserir
         }, {
             httpsAgent: agent
         });

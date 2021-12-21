@@ -110,10 +110,18 @@ async function main() {
     
             console.log(`pegando fornecedores ${empresa.descricao}`);
             const fornecedores = await nightmare.evaluate(() => {
-                return Array.from(document.getElementById("mnuPrincipal_lstFornecedor").getElementsByTagName("option")).map(i=>({
-                    value: i.value,
-                    descricao: i.innerText.trim()
-                })).slice(1);
+                return new Promise((resolve, reject) => {
+                    const interval = setInterval(() => {
+                        if(document.getElementById("mnuPrincipal_lstFornecedor")) {
+                            clearInterval(interval);
+                            resolve(Array.from(document.getElementById("mnuPrincipal_lstFornecedor").getElementsByTagName("option")).map(i=>({
+                                value: i.value,
+                                descricao: i.innerText.trim()
+                            })).slice(1));
+                        }
+                    }, 100);
+
+                })
             });
             // console.log(`apos pegando fornecedores ${empresa.descricao}`);
 
