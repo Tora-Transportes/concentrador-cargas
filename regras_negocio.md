@@ -20,8 +20,8 @@
 |3|VEICULO APROVADO|
 |4|VEICULO REPROVADO|
 
-- Não é possível atualizar o fk_situacao da carga para 3 sem uma placa
-- Ao modificar o campo placa do veiculo fk_situacao deve ser movido para 1
+- Não é possível atualizar o fk_situacao da carga para 3 ou 2 sem uma placa
+- Ao modificar o campo placa do veiculo fk_situacao deve ser movido para 2 caso tenha placa e 1 caso esteja sem a placa
 - Não é possível atualizar fk_situacao para 3 ou 4 sem permissao de APROVAR_VEICULOS
 - Não é possível atualizar fk_situacao para 3 ou 4 sem preencher observacao_gr
 - Não é possível atualizar fk_situacao para 1 com uma placa de veículo cadastrado
