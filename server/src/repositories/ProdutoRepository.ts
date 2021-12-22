@@ -1,7 +1,18 @@
 import database from "../database";
+import {
+  IRepositoryAddProduto,
+  IRepositoryUpdadeProduto,
+  IRepositoryViewProduto,
+} from "../domain/UseCaseProduto/entities";
+
 import IProduto from "../models/IProduto";
 
-export class ProdutoRepository {
+export class ProdutoRepository
+  implements
+    IRepositoryAddProduto,
+    IRepositoryUpdadeProduto,
+    IRepositoryViewProduto
+{
   async getNextId(): Promise<number> {
     return Number(
       (await database("DUAL").select("seq_con_produtos.NEXTVAL as id"))[0].id

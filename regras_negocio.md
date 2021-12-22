@@ -38,6 +38,8 @@
 - Não é possível cadastrar produtos em minusculo
 - Não é possivel cadastrar produtos com nome repetido
 - Não é possível cadastrar/atualizar/desativar produtos sem a permissao CADASTRAR_PRODUTOS
+- Não é possível atualizar produto para um nome em minusculo
+- Não é possível atualizar produto para um nome que ja existe
 
 ## USUARIOS
 - Não é possivel alterar as permissoes do usuario sem a permissao ALTERAR_PERMISSOES
