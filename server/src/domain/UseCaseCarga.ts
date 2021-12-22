@@ -6,6 +6,7 @@ import { ICarga } from "../models/ICargas";
 import { factoryCargaValidator } from "../validations/CargaValidator";
 import AppError from "../models/AppError";
 import { ServiceDistanceLocations } from "../services/ServiceDistanceLocations";
+import ServiceMigrarSit from "../services/ServiceMigrarSIT";
 import TokenAd from "../models/TokenAd";
 import TextUtils from "../Utils/text";
 
@@ -242,7 +243,12 @@ export class UseCaseUpdateCarga {
       },
       { stripUnknown: true }
     ) as ICarga;
+
+    if (cargaOficial.fk_situacao === 3) {
+      await ServiceMigrarSit.migrar([cargaOficial]);
+    }
     await cargaRepository.update(cargaOficial.id, cargaOficial);
+
     notifyAll({
       name: "@carga-update",
       details: await cargaRepository.index(carga.id),
