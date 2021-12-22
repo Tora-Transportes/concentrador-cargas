@@ -1,6 +1,7 @@
 import { RotasPendentesRepository } from "../repositories/RotasPendentesRepository";
 import { CargaRepository } from "../repositories/CargaRepository";
 import { UsuarioRepository } from "../repositories/UsuarioRepository";
+import { VeiculoRepository } from "../repositories/VeiculoRepository";
 import { ICarga } from "../models/ICargas";
 import { factoryCargaValidator } from "../validations/CargaValidator";
 import AppError from "../models/AppError";
@@ -26,6 +27,16 @@ export class UseCaseAddCarga {
     carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
 
     const cargaRepository = new CargaRepository();
+    const veiculoRepository = new VeiculoRepository();
+
+    if (carga.placa_veiculo) {
+      if (!(await veiculoRepository.hasDriver(carga.placa_veiculo))) {
+        throw new AppError(
+          "A placa informada não possui nenhum motorista cadastrado",
+          400
+        );
+      }
+    }
 
     const cargasCadastrada = await cargaRepository.index(carga.id);
     if (cargasCadastrada) {
@@ -87,6 +98,16 @@ export class UseCaseAddCargaDerivada {
       throw new AppError("Uma carga com esse Código já foi cadastrada", 400);
     }
 
+    const veiculoRepository = new VeiculoRepository();
+    if (carga.placa_veiculo) {
+      if (!(await veiculoRepository.hasDriver(carga.placa_veiculo))) {
+        throw new AppError(
+          "A placa informada não possui nenhum motorista cadastrado",
+          400
+        );
+      }
+    }
+
     const quantidadeRestante =
       Number(lotePai.quantidade_atual) - Number(carga.quantidade);
     if (quantidadeRestante < 0) {
@@ -142,6 +163,17 @@ export class UseCaseUpdateCarga {
         `A carga foi desativada pelo usuario ${cargaCadastrada.usuario}`,
         403
       );
+    }
+
+    const veiculoRepository = new VeiculoRepository();
+
+    if (carga.placa_veiculo) {
+      if (!(await veiculoRepository.hasDriver(carga.placa_veiculo))) {
+        throw new AppError(
+          "A placa informada não possui nenhum motorista cadastrado",
+          400
+        );
+      }
     }
 
     // O usuario deve ter permissao para aprovar o status da carga para 3 - Aprovado pelo GR ou 4 - veiculo reprovado

@@ -11,6 +11,7 @@
     - unidade_medida
 - Não é possível cadastrar carga com id repetido
 - Não é possível excluir carga sem a permissao CADASTRAR_PRODUTOS
+- Não é possivel registrar uma placa sem motorista vinculado
 
 ### SITUACAO VEICULO
 |ID|DESCRICAO|

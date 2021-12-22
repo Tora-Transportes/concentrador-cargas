@@ -30,4 +30,16 @@ export class VeiculoRepository {
       .first();
     return query;
   }
+
+  async hasDriver(placa: string) {
+    return !!(
+      (
+        await database("VEICULO")
+          .count("VEI_PLACA as total")
+          .where("VEI_PLACA", placa)
+          .join("CADASTRO_GERAL", "VEICULO.CG_MOT", "CADASTRO_GERAL.CG_COD")
+          .first()
+      )?.total || 0
+    );
+  }
 }
