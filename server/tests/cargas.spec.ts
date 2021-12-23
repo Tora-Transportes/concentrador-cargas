@@ -5,6 +5,7 @@ import {
   IRepositoryUpdateCarga,
   UseCaseUpdateCarga,
   IUserRepository,
+  UseCaseAddCargaDerivada,
   // UseCaseAddCargaDerivada,
   // UseCaseUpdateCarga,
   // UseCaseViewCargas,
@@ -437,5 +438,37 @@ describe("Update carga", () => {
       "OID"
     );
     expect(cargaAtualizadaSemQuantidade.quantidade_atual).toBe(11);
+  });
+
+  it("Não é possível atualizar a unidade de medida de uma carga derivada", async () => {
+    await new UseCaseAddCarga(cargaRepository, mockNotifyAll).run({
+      id: "M-1",
+      e_lote: true,
+      cliente: "ARCELLOR MITTAL",
+      origem_carga: "ops-inicio",
+      destino_carga: "ops-final",
+      unidade_medida: "UN",
+      quantidade: 12,
+      canal_comunicacao: "manual",
+      responsavel_cadastro: "Andre Alves Leocadio",
+    });
+
+    const cargaDerivada = await new UseCaseAddCargaDerivada(
+      cargaRepository,
+      mockNotifyAll
+    ).run({
+      id: "M-2",
+      e_lote: false,
+      cliente: "ARCELLOR MITTAL",
+      origem_carga: "ops-inicio",
+      destino_carga: "ops-final",
+      unidade_medida: "RN",
+      quantidade: 12,
+      canal_comunicacao: "manual",
+      responsavel_cadastro: "Andre Alves Leocadio",
+      fk_lote_pai: "M-1",
+    });
+
+    expect(cargaDerivada.unidade_medida).toMatch("UN");
   });
 });
