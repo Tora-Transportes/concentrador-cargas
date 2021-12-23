@@ -1,18 +1,30 @@
-import { RotasPendentesRepository } from "../repositories/RotasPendentesRepository";
-import { CargaRepository } from "../repositories/CargaRepository";
-import { UsuarioRepository } from "../repositories/UsuarioRepository";
-import { ICarga } from "../models/ICargas";
-import { factoryCargaValidator } from "../validations/CargaValidator";
-import AppError from "../models/AppError";
-import { ServiceDistanceLocations } from "../services/ServiceDistanceLocations";
-import TokenAd from "../models/TokenAd";
-import TextUtils from "../Utils/text";
+import { RotasPendentesRepository } from "../../repositories/RotasPendentesRepository";
+import { IPaginationResult } from "../../repositories/CargaRepository";
+import { IEventSocket } from "../../socketsRoutes";
+import { ICarga } from "../../models/ICargas";
+import { factoryCargaValidator } from "../../validations/CargaValidator";
+import AppError from "../../models/AppError";
+import { ServiceDistanceLocations } from "../../services/ServiceDistanceLocations";
+import TokenAd from "../../models/TokenAd";
+import TextUtils from "../../Utils/text";
 
 import xlsx from "xlsx";
 
-import { notifyAll } from "../socketsRoutes";
-
+export interface IRepositoryAddCarga {
+  create(carga: ICarga): Promise<ICarga>;
+  index(id: string): Promise<ICarga | undefined>;
+  search(
+    query: Record<string, any>,
+    page?: number,
+    pageSize?: number
+  ): Promise<IPaginationResult<ICarga>>;
+  bulkCreate(cargas: ICarga[]): Promise<any>;
+}
 export class UseCaseAddCarga {
+  constructor(
+    private cargaRepository: IRepositoryAddCarga,
+    private notifyAll: (event: IEventSocket) => void
+  ) {}
   async run(cargaDTO: Record<string, any>) {
     const validator = factoryCargaValidator();
     const carga: ICarga = await validator.validate(cargaDTO, {
@@ -25,16 +37,14 @@ export class UseCaseAddCarga {
     carga.data_cadastro = currentDate;
     carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
 
-    const cargaRepository = new CargaRepository();
-
-    const cargasCadastrada = await cargaRepository.index(carga.id);
+    const cargasCadastrada = await this.cargaRepository.index(carga.id);
     if (cargasCadastrada) {
       throw new AppError("Uma carga com esse Código já foi cadastrada", 400);
     }
 
     // Esse bloco funciona para a importacao de cargas
     if (carga.documento_transporte) {
-      const cargaImportada = await cargaRepository.search({
+      const cargaImportada = await this.cargaRepository.search({
         documento_transporte: carga.documento_transporte,
         tipo_carga: carga.tipo_carga,
       });
@@ -53,16 +63,23 @@ export class UseCaseAddCarga {
     if (Number(carga.placa_veiculo?.length) > 5) {
       carga.fk_situacao = 2;
     }
-    await cargaRepository.create(carga);
-    notifyAll({
+    await this.cargaRepository.create(carga);
+    this.notifyAll({
       name: "@carga-create",
-      details: await cargaRepository.index(carga.id),
+      details: await this.cargaRepository.index(carga.id),
     });
     return carga;
   }
 }
 
+export interface IRepositoryUpdateCarga extends IRepositoryAddCarga {
+  update(id: string, carga: ICarga): Promise<ICarga>;
+}
 export class UseCaseAddCargaDerivada {
+  constructor(
+    private cargaRepository: IRepositoryUpdateCarga,
+    private notifyAll: (event: IEventSocket) => void
+  ) {}
   async run(cargaDTO: Record<string, any>) {
     const validator = factoryCargaValidator();
     const carga: ICarga = await validator.validate(cargaDTO, {
@@ -76,13 +93,12 @@ export class UseCaseAddCargaDerivada {
     carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
     carga.e_lote = false;
 
-    const cargaRepository = new CargaRepository();
-    const lotePai = await cargaRepository.index(cargaDTO.fk_lote_pai);
+    const lotePai = await this.cargaRepository.index(cargaDTO.fk_lote_pai);
     if (!lotePai) {
       throw new AppError("O lote pai informado não existe", 400);
     }
 
-    const cargasCadastrada = await cargaRepository.index(carga.id);
+    const cargasCadastrada = await this.cargaRepository.index(carga.id);
     if (cargasCadastrada) {
       throw new AppError("Uma carga com esse Código já foi cadastrada", 400);
     }
@@ -101,24 +117,32 @@ export class UseCaseAddCargaDerivada {
     if (Number(carga.placa_veiculo?.length) > 5) {
       carga.fk_situacao = 2;
     }
-    await cargaRepository.create(carga);
-    await cargaRepository.update(lotePai.id, {
+    await this.cargaRepository.create(carga);
+    await this.cargaRepository.update(lotePai.id, {
       ...novoPai,
       quantidade_atual: quantidadeRestante,
     });
-    notifyAll({
+    this.notifyAll({
       name: "@carga-create",
-      details: await cargaRepository.index(carga.id),
+      details: await this.cargaRepository.index(carga.id),
     });
-    notifyAll({
+    this.notifyAll({
       name: "@carga-update",
-      details: await cargaRepository.index(lotePai.id),
+      details: await this.cargaRepository.index(lotePai.id),
     });
     return carga;
   }
 }
 
+export interface IUserRepository {
+  index(oid: string): Promise<any>;
+}
 export class UseCaseUpdateCarga {
+  constructor(
+    private cargaRepository: IRepositoryUpdateCarga,
+    private userRepository: IUserRepository,
+    private notifyAll: (event: IEventSocket) => void
+  ) {}
   async run(cargaDTO: Record<string, any>, oid: string) {
     const validator = factoryCargaValidator();
     const carga: ICarga = await validator.validate(cargaDTO, {
@@ -130,8 +154,7 @@ export class UseCaseUpdateCarga {
     carga.data_atualizacao = currentDate;
     carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
 
-    const cargaRepository = new CargaRepository();
-    const cargaCadastrada = await cargaRepository.index(carga.id);
+    const cargaCadastrada = await this.cargaRepository.index(carga.id);
     if (!cargaCadastrada) {
       throw new AppError(
         `Nenhuma carga foi encontrada com o código ${carga.id}`,
@@ -145,8 +168,7 @@ export class UseCaseUpdateCarga {
     }
 
     // O usuario deve ter permissao para aprovar o status da carga para 3 - Aprovado pelo GR ou 4 - veiculo reprovado
-    const userRepository = new UsuarioRepository();
-    const user = await userRepository.index(oid);
+    const user = await this.userRepository.index(oid);
     if (
       [3, 4].includes(Number(carga.fk_situacao)) &&
       Number(cargaCadastrada.fk_situacao) === 2
@@ -167,11 +189,15 @@ export class UseCaseUpdateCarga {
       carga.fk_situacao = 2;
     }
 
-    if (Number(carga.fk_situacao) === 4 && !carga.observacao_gr) {
+    if ([3, 4].includes(Number(carga.fk_situacao)) && !carga.observacao_gr) {
       throw new AppError(
         "Observação deve ser especificada ao aprovar ou reprovar veículos",
         400
       );
+    }
+
+    if (carga.fk_situacao === 1 && carga.placa_veiculo) {
+      carga.fk_situacao = cargaCadastrada.fk_situacao;
     }
 
     // Caso o veículo não possua uma placa cadastrada sua situação vai voltar para "aguardando alocação" ou "veiculo reprovado"
@@ -210,19 +236,19 @@ export class UseCaseUpdateCarga {
       },
       { stripUnknown: true }
     ) as ICarga;
-    await cargaRepository.update(cargaOficial.id, cargaOficial);
-    notifyAll({
+    await this.cargaRepository.update(cargaOficial.id, cargaOficial);
+    this.notifyAll({
       name: "@carga-update",
-      details: await cargaRepository.index(carga.id),
+      details: await this.cargaRepository.index(carga.id),
     });
     return cargaOficial;
   }
 }
 
 export class UseCaseViewCargas {
+  constructor(private cargaRepository: IRepositoryUpdateCarga) {}
   async run(filter: Record<string, any>) {
-    const cargaRepository = new CargaRepository();
-    return cargaRepository.search(
+    return this.cargaRepository.search(
       { ...filter, ativo: 1 },
       filter.page,
       filter.limit || 5
@@ -230,8 +256,7 @@ export class UseCaseViewCargas {
   }
 
   async index(id: string) {
-    const cargaRepository = new CargaRepository();
-    const carga = await cargaRepository.index(id);
+    const carga = await this.cargaRepository.index(id);
     if (!carga) {
       throw new AppError("A carga solicitada não existe", 404);
     }
@@ -248,12 +273,15 @@ export class UseCaseViewCargas {
 }
 
 export class UseCaseDeleteCarga {
+  constructor(
+    private cargaRepository: IRepositoryUpdateCarga,
+    private notifyAll: (event: IEventSocket) => void
+  ) {}
   async run(id: string, usuario: string) {
-    const cargaRepository = new CargaRepository();
     if (!id) {
       throw new AppError("Id inválido", 400);
     }
-    const carga = await cargaRepository.index(id);
+    const carga = await this.cargaRepository.index(id);
     if (!carga) {
       throw new AppError("Carga não encontrada", 404);
     }
@@ -265,9 +293,8 @@ export class UseCaseDeleteCarga {
       data_atualizacao: new Date(),
     };
 
-    await cargaRepository.update(carga.id, cargaAtualizada as ICarga);
-    console.log(validator.cast(cargaAtualizada, { stripUnknown: true }));
-    notifyAll({
+    await this.cargaRepository.update(carga.id, cargaAtualizada as ICarga);
+    this.notifyAll({
       name: "@carga-delete",
       details: { id },
     });
@@ -346,6 +373,7 @@ export class UseCaseListPendentRoutes {
 }
 
 export class UseCaseImportCarga {
+  constructor(private cargaRepository: IRepositoryAddCarga) {}
   async run(file: Buffer | undefined, usuario: string | undefined) {
     if (!file || !file?.buffer) {
       throw new AppError("O arquivo não foi enviado", 400);
@@ -389,8 +417,7 @@ export class UseCaseImportCarga {
     });
 
     if (cargas.length > 0) {
-      const cargaRepository = new CargaRepository();
-      await cargaRepository.bulkCreate(cargas);
+      await this.cargaRepository.bulkCreate(cargas);
     }
     return cargas;
   }

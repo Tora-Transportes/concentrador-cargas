@@ -120,6 +120,6 @@ describe("Update produto", () => {
         nome: "teste2",
         id: 1,
       });
-    }).rejects.toThrowError("TESTE");
+    }).rejects.toThrowError();
   });
 });

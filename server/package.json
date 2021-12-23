@@ -49,6 +49,6 @@
     "prebuild": "if exist build rmdir build /S /Q",
     "build": "tsc",
     "postbuild": "copy .env.example build\\.env&&xcopy certificates\\* build\\certificates\\* /E/H",
-    "test": "jest --forceExit --detectOpenHandles"
+    "test": "jest --forceExit --detectOpenHandles --no-cache"
   }
 }

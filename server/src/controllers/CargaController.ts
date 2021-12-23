@@ -1,14 +1,7 @@
 import { Request, Response } from "express";
 import TokenAd from "../models/TokenAd";
 
-import {
-  UseCaseAddCarga,
-  UseCaseDeleteCarga,
-  UseCaseUpdateCarga,
-  UseCaseViewCargas,
-  UseCaseImportCarga,
-  UseCaseAddCargaDerivada,
-} from "../domain/UseCaseCarga";
+import useCasesCarga from "../domain/UseCaseCarga";
 
 class CargaController {
   async create(req: Request, res: Response) {
@@ -17,7 +10,7 @@ class CargaController {
       String(req.headers.authorization)
     ).name;
 
-    const carga = await new UseCaseAddCarga().run(cargaDTO);
+    const carga = await useCasesCarga.UseCaseAddCarga.run(cargaDTO);
     return res.json({
       data: carga,
     });
@@ -26,7 +19,7 @@ class CargaController {
   async createByImport(req: Request, res: Response) {
     const { cargas } = req.body;
 
-    const useCase = new UseCaseAddCarga();
+    const useCase = useCasesCarga.UseCaseAddCarga;
     const cargasToInsert = await Promise.all(
       cargas.map(async (i: any) => {
         try {
@@ -52,7 +45,7 @@ class CargaController {
       String(req.headers.authorization)
     ).name;
 
-    const carga = await new UseCaseAddCargaDerivada().run(cargaDTO);
+    const carga = await useCasesCarga.UseCaseAddCargaDerivada.run(cargaDTO);
     return res.json({
       data: carga,
     });
@@ -65,14 +58,17 @@ class CargaController {
     input.id = id;
     input.usuario = claims.name;
 
-    const updateResult = await new UseCaseUpdateCarga().run(input, claims.oid);
+    const updateResult = await useCasesCarga.UseCaseUpdateCarga.run(
+      input,
+      claims.oid
+    );
 
     return res.json({ data: updateResult });
   }
 
   async delete(req: Request, res: Response) {
     const { id } = req.params;
-    await new UseCaseDeleteCarga().run(
+    await useCasesCarga.UseCaseDeleteCarga.run(
       id,
       TokenAd.getClaims(String(req.headers.authorization)).name
     );
@@ -82,19 +78,22 @@ class CargaController {
 
   async index(req: Request, res: Response) {
     const { id } = req.params;
-    const result = await new UseCaseViewCargas().index(id);
+    const result = await useCasesCarga.UseCaseViewCargas.index(id);
     return res.json({ data: result });
   }
 
   async search(req: Request, res: Response) {
-    const result = await new UseCaseViewCargas().run(req.query);
+    const result = await useCasesCarga.UseCaseViewCargas.run(req.query);
     return res.json({ data: result });
   }
 
   async importSheet(req: Request, res: Response) {
     const { file } = req;
     const usuario = req.headers.authorization;
-    const response = await new UseCaseImportCarga().run(file?.buffer, usuario);
+    const response = await useCasesCarga.UseCaseImportCarga.run(
+      file?.buffer,
+      usuario
+    );
     return res.json({ data: response });
   }
 }

@@ -8,7 +8,9 @@
     - e_lote
     - cliente
     - quantidade
-    - unidade_medida
+    - unidade_medida 
+    - canal_comunicacao
+    - responsavel_cadastro
 - Não é possível cadastrar carga com id repetido
 - Não é possível excluir carga sem a permissao CADASTRAR_PRODUTOS
 
