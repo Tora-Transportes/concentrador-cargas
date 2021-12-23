@@ -471,4 +471,34 @@ describe("Update carga", () => {
 
     expect(cargaDerivada.unidade_medida).toMatch("UN");
   });
+
+  it("Não é possível cadastrar uma carga derivada com mais quantidade que a quantidade atual do lote", async () => {
+    await new UseCaseAddCarga(cargaRepository, mockNotifyAll).run({
+      id: "M-1",
+      e_lote: true,
+      cliente: "ARCELLOR MITTAL",
+      origem_carga: "ops-inicio",
+      destino_carga: "ops-final",
+      unidade_medida: "UN",
+      quantidade: 12,
+      canal_comunicacao: "manual",
+      responsavel_cadastro: "Andre Alves Leocadio",
+    });
+
+    await expect(
+      async () =>
+        await new UseCaseAddCargaDerivada(cargaRepository, mockNotifyAll).run({
+          id: "M-2",
+          e_lote: false,
+          cliente: "ARCELLOR MITTAL",
+          origem_carga: "ops-inicio",
+          destino_carga: "ops-final",
+          unidade_medida: "RN",
+          quantidade: 13,
+          canal_comunicacao: "manual",
+          responsavel_cadastro: "Andre Alves Leocadio",
+          fk_lote_pai: "M-1",
+        })
+    ).rejects.toThrow();
+  });
 });
