@@ -354,4 +354,39 @@ describe("Update carga", () => {
     );
     expect(cargaComPlaca.fk_situacao).toBe(2);
   });
+
+  it("Não é possível atualizar um lote para virar uma carga", async () => {
+    const useCase = new UseCaseUpdateCarga(
+      cargaRepository,
+      userRepository,
+      mockNotifyAll
+    );
+
+    const loteInicial = await new UseCaseAddCarga(
+      cargaRepository,
+      mockNotifyAll
+    ).run({
+      id: "M-12",
+      e_lote: true,
+      cliente: "ARCELLOR MITTAL",
+      origem_carga: "ops-inicio",
+      destino_carga: "ops-final",
+      unidade_medida: "UN",
+      quantidade: 12,
+      canal_comunicacao: "manual",
+      responsavel_cadastro: "Andre Alves Leocadio",
+      placa_veiculo: "ASD1231",
+    });
+
+    await expect(
+      async () =>
+        await useCase.run(
+          {
+            ...loteInicial,
+            e_lote: false,
+          },
+          "OID"
+        )
+    ).rejects.toThrow();
+  });
 });

@@ -167,6 +167,13 @@ export class UseCaseUpdateCarga {
       );
     }
 
+    if (carga.e_lote === false && cargaCadastrada.e_lote === true) {
+      throw new AppError(
+        "Não é possível transformar um lote em uma carga",
+        400
+      );
+    }
+
     // O usuario deve ter permissao para aprovar o status da carga para 3 - Aprovado pelo GR ou 4 - veiculo reprovado
     const user = await this.userRepository.index(oid);
     if (
