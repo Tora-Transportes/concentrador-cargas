@@ -105,6 +105,7 @@ async function main() {
     try {
         await baixarNotas();
     } catch (error) {
+        console.error(error);
         process.exit(1);
         throw error;
     }
@@ -171,6 +172,7 @@ async function main() {
     }
 }
 
-main().then(()=> {
-    process.exit(0);
-});
+module.exports = main;
+// main().then(()=> {
+//     process.exit(0);
+// });

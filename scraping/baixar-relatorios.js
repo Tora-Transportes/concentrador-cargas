@@ -3,15 +3,8 @@ const Nightmare = require('nightmare')
 const fs = require('fs');
 const path = require('path');
 
-const nightmare = Nightmare({ show: false, waitTimeout: 15000, 
-    switches: {
-        // 'proxy-server': '127.0.0.1:8080',
-        // 'ignore-certificate-errors': true
-    }
-});
 
-
-async function login() {
+async function login(nightmare) {
     try {
         return await nightmare.goto("https://portal.e-fornecedores.ind.br/")
             .insert("#ctlLoadedControl_txtLogin", process.env.PORTAL_USUARIO)
@@ -24,7 +17,7 @@ async function login() {
     }
 }
 
-async function requirirEmpresa(empresa=78) {
+async function requirirEmpresa(nightmare, empresa=78) {
     await nightmare.wait("form");
     return await nightmare.evaluate(async (empresa) =>{
         const data = new FormData(document.getElementsByTagName("form")[0]);
@@ -45,7 +38,7 @@ async function requirirEmpresa(empresa=78) {
     }, empresa);
 }
 
-async function requirirFornecedor(empresa=78, fornecedor) {
+async function requirirFornecedor(nightmare, empresa=78, fornecedor) {
     await nightmare.wait("form");
     return await nightmare.evaluate(async (empresa, fornecedor) => {
         const data = new FormData(document.getElementsByTagName("form")[0]);
@@ -67,7 +60,7 @@ async function requirirFornecedor(empresa=78, fornecedor) {
     }, empresa, fornecedor);
 }
 
-async function requirirRelatorio() {
+async function requirirRelatorio(nightmare) {
     return await nightmare.evaluate(async () => {
         
         const response = await fetch('https://portal.e-fornecedores.ind.br/Printer.aspx?cmp=RelCargaProgramada.ascx&cliente=&regiao=&tipo=1&dir=A&org=', {
@@ -81,7 +74,7 @@ async function requirirRelatorio() {
     });
 }
 
-async function listarEmpresas() {
+async function listarEmpresas(nightmare) {
     return [
         {id: 98, descricao: "USIMINAS"}
     ];
@@ -94,15 +87,16 @@ async function listarEmpresas() {
 }
 
 async function main() {
+    const nightmare = Nightmare({ show: false, waitTimeout: 15000});
     const documentosBaixados = [];
     console.time("Scraping");
     try {
-        await login();
-        for(const empresa of await listarEmpresas()) {
+        await login(nightmare);
+        for(const empresa of await listarEmpresas(nightmare)) {
             console.time(`Minerando empresa ${empresa.descricao}`);
 
             console.log(`requerir empresa ${empresa.descricao}`);
-            const htmlEmpresaRequirida = await requirirEmpresa(78);
+            const htmlEmpresaRequirida = await requirirEmpresa(nightmare, 78);
             await nightmare.evaluate(htmlEmpresaRequirida=>{
                 document.write(htmlEmpresaRequirida);
             }, htmlEmpresaRequirida);
@@ -127,7 +121,7 @@ async function main() {
 
             for(const f of fornecedores) {
                
-                const htmlFornecedorRequirido = await requirirFornecedor(78, f.value);
+                const htmlFornecedorRequirido = await requirirFornecedor(nightmare, 78, f.value);
                 await nightmare.evaluate(htmlFornecedorRequirido=>{
                     document.write(htmlFornecedorRequirido);
                 }, htmlFornecedorRequirido);
@@ -141,7 +135,7 @@ async function main() {
                 }
     
                 const nomeArquivo = path.resolve("htmls", String(empresa.id), f.descricao.split(" - ")[0].replace(/\D/g, "") + ".html");
-                fs.writeFileSync(nomeArquivo, await requirirRelatorio());
+                fs.writeFileSync(nomeArquivo, await requirirRelatorio(nightmare));
                 documentosBaixados.push(nomeArquivo);
             }
 
@@ -153,7 +147,7 @@ async function main() {
         console.error(error, error.message);
     }
 
-    await nightmare.end()
+    await nightmare.end();
     console.timeEnd("Scraping");
     return documentosBaixados;
 }
