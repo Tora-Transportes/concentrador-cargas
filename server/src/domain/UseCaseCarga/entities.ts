@@ -226,7 +226,10 @@ export class UseCaseUpdateCarga {
     }
     // ao atualizar o lote nao se deve resetar a contagem da quantidade_atual
     if (cargaCadastrada.e_lote) {
-      carga.quantidade_atual = cargaCadastrada.quantidade_atual;
+      carga.quantidade_atual =
+        carga.quantidade_atual === undefined
+          ? cargaCadastrada.quantidade_atual
+          : carga.quantidade_atual;
     }
 
     carga.placa_veiculo = carga.placa_veiculo

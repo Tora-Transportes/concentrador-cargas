@@ -389,4 +389,53 @@ describe("Update carga", () => {
         )
     ).rejects.toThrow();
   });
+
+  it("Não é possível atualizar quantidade e unidade de medida de um lote", async () => {
+    const useCase = new UseCaseUpdateCarga(
+      cargaRepository,
+      userRepository,
+      mockNotifyAll
+    );
+
+    const loteInicial = await new UseCaseAddCarga(
+      cargaRepository,
+      mockNotifyAll
+    ).run({
+      id: "M-12",
+      e_lote: true,
+      cliente: "ARCELLOR MITTAL",
+      origem_carga: "ops-inicio",
+      destino_carga: "ops-final",
+      unidade_medida: "UN",
+      quantidade: 12,
+      canal_comunicacao: "manual",
+      responsavel_cadastro: "Andre Alves Leocadio",
+      placa_veiculo: "ASD1231",
+    });
+
+    const cargaAtualizada = await useCase.run(
+      {
+        ...loteInicial,
+        quantidade: 11,
+        unidade_medida: "RN",
+        quantidade_atual: 11,
+      },
+      "OID"
+    );
+
+    expect(cargaAtualizada.quantidade).toBe(12);
+    expect(cargaAtualizada.quantidade_atual).toBe(11);
+    expect(cargaAtualizada.unidade_medida).toMatch("UN");
+
+    const cargaAtualizadaSemQuantidade = await useCase.run(
+      {
+        ...cargaAtualizada,
+        quantidade: 11,
+        unidade_medida: "RN",
+        quantidade_atual: undefined,
+      },
+      "OID"
+    );
+    expect(cargaAtualizadaSemQuantidade.quantidade_atual).toBe(11);
+  });
 });
