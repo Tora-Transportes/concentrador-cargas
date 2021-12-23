@@ -3,8 +3,7 @@ import { Request, Response } from "express";
 import {
   UseCaseGetDistanceBetween,
   UseCaseListPendentRoutes,
-} from "../domain/UseCaseCarga";
-import AppError from "../models/AppError";
+} from "../domain/UseCaseCarga/entities";
 import ServiceAutocomplete from "../services/ServiceAutocomplete";
 
 class RotasController {

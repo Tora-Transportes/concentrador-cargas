@@ -1,23 +1,28 @@
-import { ProdutoRepository } from "../repositories/ProdutoRepository";
-import AppError from "../models/AppError";
-import IProduto from "../models/IProduto";
-import TokenAd from "../models/TokenAd";
+import { ProdutoRepository } from "../../repositories/ProdutoRepository";
+import AppError from "../../models/AppError";
+import IProduto from "../../models/IProduto";
+import TokenAd from "../../models/TokenAd";
 
+export interface IRepositoryAddProduto {
+  getNextId(): Promise<number>;
+  findByName(nome: string): Promise<IProduto | undefined>;
+  create(produto: IProduto): Promise<any>;
+}
 export class UseCaseAddProduto {
+  constructor(private produtoRepository: IRepositoryAddProduto) {}
+
   async run(produto: Record<string, unknown>) {
     if (!produto || !produto?.nome) {
       throw new AppError("O produto deve ter um nome", 400);
     }
 
-    const produtoRepository = new ProdutoRepository();
-
     const nome = String(produto.nome).trim().toUpperCase();
-    const nomeEmUso = await produtoRepository.findByName(nome);
+    const nomeEmUso = await this.produtoRepository.findByName(nome);
     if (nomeEmUso) {
       throw new AppError("Esse nome já se encontra em uso", 400);
     }
 
-    const id = await produtoRepository.getNextId();
+    const id = await this.produtoRepository.getNextId();
     const produtoCompleto: IProduto = {
       ativo: 1,
       nome,
@@ -25,12 +30,18 @@ export class UseCaseAddProduto {
       observacao: null,
       usuario: TokenAd.getClaims(String(produto.usuario)).name,
     };
-    await produtoRepository.create(produtoCompleto);
+    await this.produtoRepository.create(produtoCompleto);
     return produtoCompleto;
   }
 }
 
+export interface IRepositoryUpdadeProduto {
+  findByName(nome: string): Promise<IProduto | undefined>;
+  update(id: number, produto: IProduto): Promise<any>;
+  index(id: string): Promise<IProduto | undefined>;
+}
 export class UseCaseUpdateProduto {
+  constructor(private produtoRepository: IRepositoryUpdadeProduto) {}
   async run(produto: Record<string, unknown>) {
     const { ativo, id } = produto;
     const observacao =
@@ -48,16 +59,15 @@ export class UseCaseUpdateProduto {
         400
       );
     }
-    const produtoRepository = new ProdutoRepository();
 
     const nome = String(produto.nome).trim().toUpperCase();
-    const nomeEmUso = await produtoRepository.findByName(nome);
+    const nomeEmUso = await this.produtoRepository.findByName(nome);
 
     if (nomeEmUso && nomeEmUso.id !== Number(id)) {
       throw new AppError("Esse nome já se encontra em uso", 400);
     }
 
-    const produtoCompleto = await produtoRepository.index(String(id));
+    const produtoCompleto = await this.produtoRepository.index(String(id));
     if (!produtoCompleto) {
       throw new AppError(`Produto com id '${id}' não existe`, 404);
     }
@@ -68,12 +78,13 @@ export class UseCaseUpdateProduto {
     produtoCompleto.observacao = Number(ativo) === 1 ? null : observacao;
     produtoCompleto.usuario = TokenAd.getClaims(String(produto.usuario)).name;
 
-    await produtoRepository.update(Number(id), produtoCompleto);
+    await this.produtoRepository.update(Number(id), produtoCompleto);
     return produtoCompleto;
   }
 }
 
 export class UseCaseDisableProduto {
+  constructor(private produtoRepository: IRepositoryUpdadeProduto) {}
   async run(produto: Record<string, unknown>) {
     const id = Number(produto?.id);
     const observacao =
@@ -89,9 +100,8 @@ export class UseCaseDisableProduto {
     if (isNaN(id)) {
       throw new AppError("O Id informado é inválido", 400);
     }
-    const produtoRepository = new ProdutoRepository();
 
-    const produtoCadastrado = await produtoRepository.index(String(id));
+    const produtoCadastrado = await this.produtoRepository.index(String(id));
 
     if (!produtoCadastrado) {
       throw new AppError("O produto informado não existe", 400);
@@ -102,12 +112,13 @@ export class UseCaseDisableProduto {
     produtoCompleto.observacao = observacao;
     produtoCompleto.usuario = TokenAd.getClaims(String(produto.usuario)).name;
 
-    await produtoRepository.update(id, produtoCompleto);
+    await this.produtoRepository.update(id, produtoCompleto);
     return produtoCompleto;
   }
 }
 
 export class UseCaseEnableProduto {
+  constructor(private produtoRepository: IRepositoryUpdadeProduto) {}
   async run(produto: Record<string, unknown>) {
     const id = Number(produto?.id);
 
@@ -115,8 +126,7 @@ export class UseCaseEnableProduto {
       throw new AppError("O Id informado é inválido", 400);
     }
 
-    const produtoRepository = new ProdutoRepository();
-    const produtoCadastrado = await produtoRepository.index(String(id));
+    const produtoCadastrado = await this.produtoRepository.index(String(id));
 
     if (!produtoCadastrado) {
       throw new AppError("O produto informado não existe", 400);
@@ -127,14 +137,17 @@ export class UseCaseEnableProduto {
     produtoCompleto.observacao = null;
     produtoCompleto.usuario = TokenAd.getClaims(String(produto.usuario)).name;
 
-    await produtoRepository.update(id, produtoCompleto);
+    await this.produtoRepository.update(id, produtoCompleto);
     return produtoCompleto;
   }
 }
 
+export interface IRepositoryViewProduto {
+  search(filter: Record<string, any>): Promise<any[]>;
+}
 export class UseCaseViewProduto {
+  constructor(private produtoRepository: IRepositoryViewProduto) {}
   async run(filter: Record<string, any>) {
-    const produtoRepository = new ProdutoRepository();
-    return produtoRepository.search(filter);
+    return this.produtoRepository.search(filter);
   }
 }

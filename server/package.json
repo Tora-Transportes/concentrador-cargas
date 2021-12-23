@@ -26,6 +26,7 @@
     "@types/cors": "^2.8.12",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.13",
+    "@types/jest": "^27.0.3",
     "@types/multer": "^1.4.7",
     "@types/node": "^16.11.10",
     "@types/oracledb": "^5.2.1",
@@ -36,7 +37,9 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.27.0",
+    "jest": "^27.4.5",
     "prettier": "^2.4.1",
+    "ts-jest": "^27.1.2",
     "ts-node-dev": "^1.1.8"
   },
   "scripts": {
@@ -45,6 +48,7 @@
     "dev": "ts-node-dev src/index.ts --respawn --transpile-only",
     "prebuild": "if exist build rmdir build /S /Q",
     "build": "tsc",
-    "postbuild": "copy .env.example build\\.env&&xcopy certificates\\* build\\certificates\\* /E/H"
+    "postbuild": "copy .env.example build\\.env&&xcopy certificates\\* build\\certificates\\* /E/H",
+    "test": "jest --forceExit --detectOpenHandles --no-cache"
   }
 }

@@ -9,7 +9,7 @@ export default function (socket: Socket) {
   registerLogin(socket);
 }
 
-interface IEventSocket {
+export interface IEventSocket {
   name: string;
   details: any;
 }

@@ -1,7 +1,8 @@
 import { ICarga } from "../models/ICargas";
 import database from "../database";
+import { IServiceSit } from "../domain/UseCaseCarga/entities";
 
-class ServiceMigrarSit {
+class ServiceMigrarSit implements IServiceSit {
   async consultaVeiculo(placa: string) {
     return await database.raw(
       `

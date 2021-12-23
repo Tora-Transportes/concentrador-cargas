@@ -8,7 +8,9 @@
     - e_lote
     - cliente
     - quantidade
-    - unidade_medida
+    - unidade_medida 
+    - canal_comunicacao
+    - responsavel_cadastro
 - Não é possível cadastrar carga com id repetido
 - Não é possível excluir carga sem a permissao CADASTRAR_PRODUTOS
 - Não é possivel registrar uma placa sem motorista vinculado
@@ -39,6 +41,8 @@
 - Não é possível cadastrar produtos em minusculo
 - Não é possivel cadastrar produtos com nome repetido
 - Não é possível cadastrar/atualizar/desativar produtos sem a permissao CADASTRAR_PRODUTOS
+- Não é possível atualizar produto para um nome em minusculo
+- Não é possível atualizar produto para um nome que ja existe
 
 ## USUARIOS
 - Não é possivel alterar as permissoes do usuario sem a permissao ALTERAR_PERMISSOES

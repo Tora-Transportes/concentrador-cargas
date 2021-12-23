@@ -1,11 +1,6 @@
 import { Request, Response } from "express";
-import {
-  UseCaseAddProduto,
-  UseCaseDisableProduto,
-  UseCaseEnableProduto,
-  UseCaseUpdateProduto,
-  UseCaseViewProduto,
-} from "../domain/UseCaseProduto";
+
+import useCasesProduto from "../domain/UseCaseProduto";
 
 class ProdutoController {
   async create(req: Request, res: Response) {
@@ -13,7 +8,9 @@ class ProdutoController {
       nome: req.body.nome,
       usuario: String(req.headers.authorization),
     };
-    const produtoCadastrado = await new UseCaseAddProduto().run(produto);
+    const produtoCadastrado = await useCasesProduto.UseCaseAddProduto.run(
+      produto
+    );
     return res.json({ data: produtoCadastrado });
   }
 
@@ -26,7 +23,9 @@ class ProdutoController {
       usuario: String(req.headers.authorization),
       ativo,
     };
-    const produtoCadastrado = await new UseCaseUpdateProduto().run(produto);
+    const produtoCadastrado = await useCasesProduto.UseCaseUpdateProduto.run(
+      produto
+    );
     return res.json({ data: produtoCadastrado });
   }
 
@@ -38,7 +37,9 @@ class ProdutoController {
       usuario: String(req.headers.authorization),
       observacao,
     };
-    const produtoCadastrado = await new UseCaseDisableProduto().run(produto);
+    const produtoCadastrado = await useCasesProduto.UseCaseDisableProduto.run(
+      produto
+    );
     return res.json({ data: produtoCadastrado });
   }
 
@@ -48,12 +49,16 @@ class ProdutoController {
       id: Number(id),
       usuario: String(req.headers.authorization),
     };
-    const produtoCadastrado = await new UseCaseEnableProduto().run(produto);
+    const produtoCadastrado = await useCasesProduto.UseCaseEnableProduto.run(
+      produto
+    );
     return res.json({ data: produtoCadastrado });
   }
 
   async list(req: Request, res: Response) {
-    return res.json({ data: await new UseCaseViewProduto().run(req.query) });
+    return res.json({
+      data: await useCasesProduto.UseCaseViewProduto.run(req.query),
+    });
   }
 }
 
