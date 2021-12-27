@@ -228,3 +228,5 @@ ALTER TABLE "con_cargas" modify (
     "origem_carga" VARCHAR(200) NULL,
     "destino_carga" VARCHAR(200) NULL
 );
+
+INSERT INTO "con_situacoes_cargas" ("id", "cor", "descricao") VALUES (5, 'purple', 'Carga cancelada');

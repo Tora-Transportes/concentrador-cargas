@@ -42,6 +42,8 @@ function Manual() {
 			local_entrega: "",
 
 			placa_veiculo: "",
+
+			fk_situacao: null,
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -101,6 +103,29 @@ function Manual() {
 				await ServiceCargas.delete({ id: formik.values.id });
 				await swal("Sucesso!", "Carga removida", "success");
 				handleCloseWindow(null, false);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+		setLoading(false);
+	}
+
+	async function handleCancelarCarga() {
+		setLoading(true);
+		try {
+			const ok = await swal(
+				"OPS?",
+				"Tem certeza que deseja cancelar a carga atual ?",
+				{
+					buttons: ["Não", true],
+					dangerMode: true,
+					icon: "warning",
+				}
+			);
+			if (ok) {
+				await ServiceCargas.update({ ...formik.values, fk_situacao: 5 });
+				await swal("Sucesso!", "Carga cancelada", "success");
+				// handleCloseWindow(null, false);
 			}
 		} catch (error) {
 			console.log(error);
@@ -206,13 +231,24 @@ function Manual() {
 							</Button>
 						</Col>
 						<Col className="text-end">
-							<Button
-								variant="danger"
-								className="p-3 fw-bold"
-								onClick={handleExcluirCarga}
-							>
-								Excluir
-							</Button>
+							{formik.values.fk_situacao !== 3 && (
+								<Button
+									variant="danger"
+									className="p-3 fw-bold"
+									onClick={handleExcluirCarga}
+								>
+									Excluir
+								</Button>
+							)}
+							{formik.values.fk_situacao === 3 && (
+								<Button
+									variant="danger"
+									className="p-3 fw-bold"
+									onClick={handleCancelarCarga}
+								>
+									Cancelar carga
+								</Button>
+							)}
 						</Col>
 					</Row>
 				</Form>

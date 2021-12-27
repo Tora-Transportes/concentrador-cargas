@@ -163,6 +163,7 @@ export interface IUserRepository {
 }
 export interface IServiceSit {
   migrar(cargas: ICarga[]): Promise<any>;
+  cancelar(cargas: ICarga[]): Promise<any>;
 }
 export class UseCaseUpdateCarga {
   constructor(
@@ -223,14 +224,14 @@ export class UseCaseUpdateCarga {
       }
       Object.assign(carga, cargaCadastrada);
       carga.fk_situacao = ECargaStatus.CARGA_CANCELADA;
-    }
-
-    if (carga.placa_veiculo) {
-      if (!(await this.veiculoRepository.hasDriver(carga.placa_veiculo))) {
-        throw new AppError(
-          "A placa informada não possui nenhum motorista cadastrado",
-          400
-        );
+    } else {
+      if (carga.placa_veiculo) {
+        if (!(await this.veiculoRepository.hasDriver(carga.placa_veiculo))) {
+          throw new AppError(
+            "A placa informada não possui nenhum motorista cadastrado",
+            400
+          );
+        }
       }
     }
 
@@ -325,6 +326,9 @@ export class UseCaseUpdateCarga {
 
     if (cargaOficial.fk_situacao === ECargaStatus.APROVADO_PELO_GR) {
       await this.serviceSit.migrar([cargaOficial]);
+    }
+    if (cargaOficial.fk_situacao === ECargaStatus.CARGA_CANCELADA) {
+      await this.serviceSit.cancelar([cargaOficial]);
     }
     await this.cargaRepository.update(cargaOficial.id, cargaOficial);
 

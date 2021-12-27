@@ -207,6 +207,9 @@ class MockUserRepository implements IUserRepository {
   }
 }
 class MockServiceSit implements IServiceSit {
+  async cancelar(cargas: ICarga[]): Promise<any> {
+    return;
+  }
   async migrar(cargas: ICarga[]): Promise<any> {
     return;
   }

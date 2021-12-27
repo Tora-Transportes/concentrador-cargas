@@ -118,6 +118,15 @@ class ServiceMigrarSit implements IServiceSit {
     }
     await database("PRE_VIAGEM_ATS").insert(await Promise.all(insercoes));
   }
+
+  async cancelar(cargas: ICarga[]) {
+    const ids = cargas.map((i) => i.id.replace(/\D/g, ""));
+    await database("PRE_VIAGEM_ATS")
+      .whereIn("COD_AGENDAMENTO_ATS", ids)
+      .update({
+        STF_COD: 5,
+      });
+  }
 }
 
 export default new ServiceMigrarSit();
