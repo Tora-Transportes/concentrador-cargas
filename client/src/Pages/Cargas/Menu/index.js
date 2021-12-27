@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import { MdOutlineWavingHand } from "react-icons/md";
 import { SiGooglesheets } from "react-icons/si";
-import { BsPeople } from "react-icons/bs";
+// import { BsPeople } from "react-icons/bs";
 import NavbarNavigator from "../../Components/NavbarNavigator";
 import "./index.css";
 
@@ -21,22 +21,21 @@ function Main() {
 							<h2 className="fs-3">Manual</h2>
 						</Link>
 					</Col>
-					<Col md={6} className="p-5 puts" sm={12}>
+					{/* <Col md={6} className="p-5 puts" sm={12}>
 						<Link className="text-decoration-none" to="/cargas/portal">
 							<BsPeople size={80} />
 							<h2 className="fs-3">Portal do cliente</h2>
 						</Link>
-					</Col>
-					<hr />
-				</Row>
-				<Row>
-					<Col sm={12} className="puts">
+					</Col> */}
+					<Col sm={12} md={6} className="p-5 puts">
 						<Link className="text-decoration-none" to="/cargas/importar">
 							<SiGooglesheets size={80} />
 							<h2 className="fs-3">Importação em lote</h2>
 						</Link>
 					</Col>
+					<hr />
 				</Row>
+				<Row></Row>
 			</Container>
 		</>
 	);
