@@ -16,12 +16,35 @@ import {
 
 import { ICarga } from "../src/models/ICargas";
 import { IPaginationResult } from "../src/repositories/CargaRepository";
+import {
+  IVeiculo,
+  IVeiculoRepository,
+} from "../src/repositories/VeiculoRepository";
 import { IEventSocket } from "../src/socketsRoutes";
 const jwtToken =
   "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Imwzc1EtNTBjQ0g0eEJWWkxIVEd3blNSNzY4MCIsImtpZCI6Imwzc1EtNTBjQ0g0eEJWWkxIVEd3blNSNzY4MCJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjM2NzI2NzY2LCJuYmYiOjE2MzY3MjY3NjYsImV4cCI6MTYzNjczMDY2NiwiYWlvIjoiRTJaZ1lQQ3ZGeE5tTzdXbGgyM3F0YkxKOTlsTmR5MnBEbG5FRy9nK1k1MEUzK3c1TGFjQiIsImFtciI6WyJwd2QiXSwiZmFtaWx5X25hbWUiOiJBbHZlcyBMZW9jYWRpbyIsImdpdmVuX25hbWUiOiJBbmRyZSIsImlwYWRkciI6IjE3Ny4xMDcuMTI4Ljk4IiwibmFtZSI6IkFuZHJlIEFsdmVzIExlb2NhZGlvIiwibm9uY2UiOiIzY2M4YjYxMC02MDUyLTQ4NGItYjBiMi0yODUwY2YwZjlmYjEiLCJvaWQiOiI1ZDU1ZDMwNi0xM2Q2LTQ1ZGQtOWJjNy00ZTY3YjliNzA1ZDUiLCJvbnByZW1fc2lkIjoiUy0xLTUtMjEtMjAwNzY0NzM4Ny0xODczMzYzOTg5LTM3NjM5MzQyNDMtMjcyOTIiLCJyaCI6IjAuQVE4QVNhZnRWbDY1ZEVxVDN2QWYxckZoek51ZnJNU24ycmxGdW95YzBidjA3RGdQQU4wLiIsInN1YiI6IlU5VWVZVWQ1QkhqZVM5OEJzZElGZkE4SF9KUEZnY1lyTGVyYXk4UF9CZUkiLCJ0aWQiOiI1NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MiLCJ1bmlxdWVfbmFtZSI6ImFuZHJlLmxlb2NhZGlvQHRvcmEuY29tLmJyIiwidXBuIjoiYW5kcmUubGVvY2FkaW9AdG9yYS5jb20uYnIiLCJ1dGkiOiJjNzNNWjNZaDEwaTJKMHZyaFpVbEFBIiwidmVyIjoiMS4wIn0.SEI5b_yM10presTFsEkP2LBi9K8CB50K52ojX76xsZOzlr29hV4SNGgkEZoWekYVKxwk9qduUx-fThQsqBP7Jv2r_Q6pD_p0v8f9NOaF94ai59X_HxqlTd1PA1H5uTdS0Sdc6lR9Ecb_r7Q2JIaoAemuyc7GhR93rQ_1GieLWuBzkYhldaE9vQP--iHEBElEmQaYdhBdcDae5HyWImfVhxtvDyxxwmlC-a14QOHv4tgwr53HvJtU_0xDa4KiChyCKDUVvCWVY-3QW18SKXTSnlSy2nbq1vMpetEBuRKr7ZNKzL8_5ICNc5sjhoeyoljEbRvct6mYKTfqlBpM-lLrAA";
 
 function mockNotifyAll(event: IEventSocket) {
   return;
+}
+
+class MockVeiculoRepository implements IVeiculoRepository {
+  async search(placa: string): Promise<IVeiculo | undefined> {
+    return {
+      id_veiculo: 1287001,
+      id_tipo_veiculo: 4,
+      descricao: "CARRETA CARGA SECA (03 EIXOS)",
+      placa: placa,
+      ano: 2006,
+      chassis: "9ADG124367M240546",
+      placa_carreta: "BWC8809",
+      placa_bitrem: null,
+      nome_motorista: "Nome do motorista de teste",
+    };
+  }
+  async hasDriver(placa: string): Promise<boolean> {
+    return true;
+  }
 }
 
 class MockRepositoryCarga
@@ -71,7 +94,11 @@ describe("Add carga", () => {
         - canal_comunicacao
         - responsavel_cadastro
     */
-    const useCase = new UseCaseAddCarga(cargaRepository, mockNotifyAll);
+    const useCase = new UseCaseAddCarga(
+      cargaRepository,
+      mockNotifyAll,
+      new MockVeiculoRepository()
+    );
     try {
       await useCase.run({
         id: "M-12",
@@ -91,7 +118,11 @@ describe("Add carga", () => {
   });
 
   it("Não é possível cadastrar carga com id repetido", async () => {
-    const useCase = new UseCaseAddCarga(cargaRepository, mockNotifyAll);
+    const useCase = new UseCaseAddCarga(
+      cargaRepository,
+      mockNotifyAll,
+      new MockVeiculoRepository()
+    );
     try {
       await useCase.run({
         id: "M-12",
@@ -123,7 +154,11 @@ describe("Add carga", () => {
   });
 
   it("Não é possível cadastrar carga com id repetido", async () => {
-    const useCase = new UseCaseAddCarga(cargaRepository, mockNotifyAll);
+    const useCase = new UseCaseAddCarga(
+      cargaRepository,
+      mockNotifyAll,
+      new MockVeiculoRepository()
+    );
     try {
       await useCase.run({
         id: "M-12",
@@ -183,10 +218,15 @@ describe("Update carga", () => {
       cargaRepository,
       userRepository,
       mockNotifyAll,
-      new MockServiceSit()
+      new MockServiceSit(),
+      new MockVeiculoRepository()
     );
 
-    await new UseCaseAddCarga(cargaRepository, mockNotifyAll).run({
+    await new UseCaseAddCarga(
+      cargaRepository,
+      mockNotifyAll,
+      new MockVeiculoRepository()
+    ).run({
       id: "M-12",
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
@@ -222,10 +262,15 @@ describe("Update carga", () => {
       cargaRepository,
       userRepository,
       mockNotifyAll,
-      new MockServiceSit()
+      new MockServiceSit(),
+      new MockVeiculoRepository()
     );
 
-    await new UseCaseAddCarga(cargaRepository, mockNotifyAll).run({
+    await new UseCaseAddCarga(
+      cargaRepository,
+      mockNotifyAll,
+      new MockVeiculoRepository()
+    ).run({
       id: "M-12",
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
@@ -277,10 +322,15 @@ describe("Update carga", () => {
       cargaRepository,
       userRepository,
       mockNotifyAll,
-      new MockServiceSit()
+      new MockServiceSit(),
+      new MockVeiculoRepository()
     );
 
-    await new UseCaseAddCarga(cargaRepository, mockNotifyAll).run({
+    await new UseCaseAddCarga(
+      cargaRepository,
+      mockNotifyAll,
+      new MockVeiculoRepository()
+    ).run({
       id: "M-12",
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
@@ -336,12 +386,14 @@ describe("Update carga", () => {
       cargaRepository,
       userRepository,
       mockNotifyAll,
-      new MockServiceSit()
+      new MockServiceSit(),
+      new MockVeiculoRepository()
     );
 
     const cargaInicial = await new UseCaseAddCarga(
       cargaRepository,
-      mockNotifyAll
+      mockNotifyAll,
+      new MockVeiculoRepository()
     ).run({
       id: "M-12",
       e_lote: true,
@@ -371,12 +423,14 @@ describe("Update carga", () => {
       cargaRepository,
       userRepository,
       mockNotifyAll,
-      new MockServiceSit()
+      new MockServiceSit(),
+      new MockVeiculoRepository()
     );
 
     const loteInicial = await new UseCaseAddCarga(
       cargaRepository,
-      mockNotifyAll
+      mockNotifyAll,
+      new MockVeiculoRepository()
     ).run({
       id: "M-12",
       e_lote: true,
@@ -407,12 +461,14 @@ describe("Update carga", () => {
       cargaRepository,
       userRepository,
       mockNotifyAll,
-      new MockServiceSit()
+      new MockServiceSit(),
+      new MockVeiculoRepository()
     );
 
     const loteInicial = await new UseCaseAddCarga(
       cargaRepository,
-      mockNotifyAll
+      mockNotifyAll,
+      new MockVeiculoRepository()
     ).run({
       id: "M-12",
       e_lote: true,
@@ -453,7 +509,11 @@ describe("Update carga", () => {
   });
 
   it("Não é possível atualizar a unidade de medida de uma carga derivada", async () => {
-    await new UseCaseAddCarga(cargaRepository, mockNotifyAll).run({
+    await new UseCaseAddCarga(
+      cargaRepository,
+      mockNotifyAll,
+      new MockVeiculoRepository()
+    ).run({
       id: "M-1",
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
@@ -467,7 +527,8 @@ describe("Update carga", () => {
 
     const cargaDerivada = await new UseCaseAddCargaDerivada(
       cargaRepository,
-      mockNotifyAll
+      mockNotifyAll,
+      new MockVeiculoRepository()
     ).run({
       id: "M-2",
       e_lote: false,
@@ -485,7 +546,11 @@ describe("Update carga", () => {
   });
 
   it("Não é possível cadastrar uma carga derivada com mais quantidade que a quantidade atual do lote", async () => {
-    await new UseCaseAddCarga(cargaRepository, mockNotifyAll).run({
+    await new UseCaseAddCarga(
+      cargaRepository,
+      mockNotifyAll,
+      new MockVeiculoRepository()
+    ).run({
       id: "M-1",
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
@@ -499,7 +564,11 @@ describe("Update carga", () => {
 
     await expect(
       async () =>
-        await new UseCaseAddCargaDerivada(cargaRepository, mockNotifyAll).run({
+        await new UseCaseAddCargaDerivada(
+          cargaRepository,
+          mockNotifyAll,
+          new MockVeiculoRepository()
+        ).run({
           id: "M-2",
           e_lote: false,
           cliente: "ARCELLOR MITTAL",

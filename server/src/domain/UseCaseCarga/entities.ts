@@ -9,7 +9,7 @@ import TokenAd from "../../models/TokenAd";
 import TextUtils from "../../Utils/text";
 
 import xlsx from "xlsx";
-import { VeiculoRepository } from "../../repositories/VeiculoRepository";
+import { IVeiculoRepository } from "../../repositories/VeiculoRepository";
 
 export interface IRepositoryAddCarga {
   create(carga: ICarga): Promise<ICarga>;
@@ -24,7 +24,8 @@ export interface IRepositoryAddCarga {
 export class UseCaseAddCarga {
   constructor(
     private cargaRepository: IRepositoryAddCarga,
-    private notifyAll: (event: IEventSocket) => void
+    private notifyAll: (event: IEventSocket) => void,
+    private veiculoRepository: IVeiculoRepository
   ) {}
   async run(cargaDTO: Record<string, any>) {
     const validator = factoryCargaValidator();
@@ -38,10 +39,8 @@ export class UseCaseAddCarga {
     carga.data_cadastro = currentDate;
     carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
 
-    const veiculoRepository = new VeiculoRepository();
-
     if (carga.placa_veiculo) {
-      if (!(await veiculoRepository.hasDriver(carga.placa_veiculo))) {
+      if (!(await this.veiculoRepository.hasDriver(carga.placa_veiculo))) {
         throw new AppError(
           "A placa informada não possui nenhum motorista cadastrado",
           400
@@ -91,7 +90,8 @@ export interface IRepositoryUpdateCarga extends IRepositoryAddCarga {
 export class UseCaseAddCargaDerivada {
   constructor(
     private cargaRepository: IRepositoryUpdateCarga,
-    private notifyAll: (event: IEventSocket) => void
+    private notifyAll: (event: IEventSocket) => void,
+    private veiculoRepository: IVeiculoRepository
   ) {}
   async run(cargaDTO: Record<string, any>) {
     const validator = factoryCargaValidator();
@@ -117,9 +117,8 @@ export class UseCaseAddCargaDerivada {
       throw new AppError("Uma carga com esse Código já foi cadastrada", 400);
     }
 
-    const veiculoRepository = new VeiculoRepository();
     if (carga.placa_veiculo) {
-      if (!(await veiculoRepository.hasDriver(carga.placa_veiculo))) {
+      if (!(await this.veiculoRepository.hasDriver(carga.placa_veiculo))) {
         throw new AppError(
           "A placa informada não possui nenhum motorista cadastrado",
           400
@@ -169,7 +168,8 @@ export class UseCaseUpdateCarga {
     private cargaRepository: IRepositoryUpdateCarga,
     private userRepository: IUserRepository,
     private notifyAll: (event: IEventSocket) => void,
-    private serviceSit: IServiceSit
+    private serviceSit: IServiceSit,
+    private veiculoRepository: IVeiculoRepository
   ) {}
   async run(cargaDTO: Record<string, any>, oid: string) {
     const validator = factoryCargaValidator();
@@ -195,10 +195,8 @@ export class UseCaseUpdateCarga {
       );
     }
 
-    const veiculoRepository = new VeiculoRepository();
-
     if (carga.placa_veiculo) {
-      if (!(await veiculoRepository.hasDriver(carga.placa_veiculo))) {
+      if (!(await this.veiculoRepository.hasDriver(carga.placa_veiculo))) {
         throw new AppError(
           "A placa informada não possui nenhum motorista cadastrado",
           400

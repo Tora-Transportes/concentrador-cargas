@@ -1,6 +1,23 @@
 import database from "../database";
 
-export class VeiculoRepository {
+export interface IVeiculoRepository {
+  search(placa: string): Promise<IVeiculo | undefined>;
+  hasDriver(placa: string): Promise<boolean>;
+}
+
+export interface IVeiculo {
+  id_veiculo: string | number;
+  id_tipo_veiculo: string | number;
+  descricao: string;
+  placa: string;
+  ano: string | number;
+  chassis: string | null;
+  placa_carreta: string | null;
+  placa_bitrem: string | null;
+  nome_motorista: string | null;
+}
+
+export class VeiculoRepository implements IVeiculoRepository {
   async search(placa: string) {
     const query = database("TIPO_VEICULO")
       .select([

@@ -4,6 +4,8 @@ import { notifyAll } from "../../socketsRoutes";
 import { CargaRepository } from "../../repositories/CargaRepository";
 import ServiceMigrarSIT from "../../services/ServiceMigrarSIT";
 
+import { VeiculoRepository } from "../../repositories/VeiculoRepository";
+
 import {
   UseCaseAddCarga,
   UseCaseAddCargaDerivada,
@@ -15,18 +17,25 @@ import {
 
 const userRepository = new UsuarioRepository();
 const cargaRepository = new CargaRepository();
+const veiculoRepository = new VeiculoRepository();
 
 const modules = {
-  UseCaseAddCarga: new UseCaseAddCarga(cargaRepository, notifyAll),
+  UseCaseAddCarga: new UseCaseAddCarga(
+    cargaRepository,
+    notifyAll,
+    veiculoRepository
+  ),
   UseCaseAddCargaDerivada: new UseCaseAddCargaDerivada(
     cargaRepository,
-    notifyAll
+    notifyAll,
+    veiculoRepository
   ),
   UseCaseUpdateCarga: new UseCaseUpdateCarga(
     cargaRepository,
     userRepository,
     notifyAll,
-    ServiceMigrarSIT
+    ServiceMigrarSIT,
+    veiculoRepository
   ),
   UseCaseViewCargas: new UseCaseViewCargas(cargaRepository),
   UseCaseDeleteCarga: new UseCaseDeleteCarga(cargaRepository, notifyAll),
