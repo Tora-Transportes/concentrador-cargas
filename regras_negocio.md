@@ -14,6 +14,9 @@
 - Não é possível cadastrar carga com id repetido
 - Não é possível excluir carga sem a permissao CADASTRAR_PRODUTOS
 - Não é possivel registrar uma placa sem motorista vinculado
+- Carga nao pode ser movimentada apos ser cancelada
+- O unico movimento que a carga pode fazer apos ser aprovada pelo gr é ser cancelada
+- O usuário deve possuir a permissao DELETAR_CARGAS para realizar o cancelamento da carga
 
 ### SITUACAO VEICULO
 |ID|DESCRICAO|

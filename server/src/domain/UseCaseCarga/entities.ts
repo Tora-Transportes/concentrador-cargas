@@ -195,6 +195,35 @@ export class UseCaseUpdateCarga {
         403
       );
     }
+    if (cargaCadastrada.fk_situacao === ECargaStatus.CARGA_CANCELADA) {
+      throw new AppError(
+        "A carga não pode ser movimentada após ser cancelada",
+        400
+      );
+    }
+
+    if (
+      cargaCadastrada.fk_situacao === ECargaStatus.APROVADO_PELO_GR &&
+      carga.fk_situacao !== ECargaStatus.CARGA_CANCELADA
+    ) {
+      throw new AppError(
+        "Após a carga ser aprovada pelo gr ela só pode ser cancelada e não editada",
+        400
+      );
+    }
+
+    const user = await this.userRepository.index(oid);
+
+    if (carga.fk_situacao === ECargaStatus.CARGA_CANCELADA) {
+      if (!user?.permissoes.includes("DELETAR_CARGAS")) {
+        throw new AppError(
+          "O usuário informado não possui a permissão 'DELETAR_CARGAS'",
+          403
+        );
+      }
+      Object.assign(carga, cargaCadastrada);
+      carga.fk_situacao = ECargaStatus.CARGA_CANCELADA;
+    }
 
     if (carga.placa_veiculo) {
       if (!(await this.veiculoRepository.hasDriver(carga.placa_veiculo))) {
@@ -213,7 +242,6 @@ export class UseCaseUpdateCarga {
     }
 
     // O usuario deve ter permissao para aprovar o status da carga para 3 - Aprovado pelo GR ou 4 - veiculo reprovado
-    const user = await this.userRepository.index(oid);
     if (
       [ECargaStatus.APROVADO_PELO_GR, ECargaStatus.VEICULO_REPROVADO].includes(
         Number(carga.fk_situacao)
@@ -240,7 +268,7 @@ export class UseCaseUpdateCarga {
     }
 
     if (
-      [ECargaStatus.APROVADO_PELO_GR, ECargaStatus.CARGA_CANCELADA].includes(
+      [ECargaStatus.APROVADO_PELO_GR, ECargaStatus.VEICULO_REPROVADO].includes(
         Number(carga.fk_situacao)
       ) &&
       !carga.observacao_gr
@@ -259,7 +287,10 @@ export class UseCaseUpdateCarga {
     }
 
     // Caso o veículo não possua uma placa cadastrada sua situação vai voltar para "aguardando alocação" ou "veiculo reprovado"
-    if (!carga.placa_veiculo) {
+    if (
+      !carga.placa_veiculo &&
+      carga.fk_situacao !== ECargaStatus.CARGA_CANCELADA
+    ) {
       carga.fk_situacao = ECargaStatus.AGUARDANDO_ALOCACAO;
     }
 

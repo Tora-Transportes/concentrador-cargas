@@ -80,8 +80,10 @@ class MockRepositoryCarga
 
 describe("Add carga", () => {
   let cargaRepository: MockRepositoryCarga;
+  let veiculoRepository: MockVeiculoRepository;
   beforeEach(() => {
     cargaRepository = new MockRepositoryCarga();
+    veiculoRepository = new MockVeiculoRepository();
   });
   it("Não é possível gerar carga sem campos obrigatorios", async () => {
     /**
@@ -97,7 +99,7 @@ describe("Add carga", () => {
     const useCase = new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      new MockVeiculoRepository()
+      veiculoRepository
     );
     try {
       await useCase.run({
@@ -121,7 +123,7 @@ describe("Add carga", () => {
     const useCase = new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      new MockVeiculoRepository()
+      veiculoRepository
     );
     try {
       await useCase.run({
@@ -157,7 +159,7 @@ describe("Add carga", () => {
     const useCase = new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      new MockVeiculoRepository()
+      veiculoRepository
     );
     try {
       await useCase.run({
@@ -191,12 +193,16 @@ describe("Add carga", () => {
 });
 
 class MockUserRepository implements IUserRepository {
+  private permissions: string[] = ["APROVAR_VEICULOS"];
+  async setPermissions(permissions: string[]) {
+    this.permissions = permissions;
+  }
   async index(oid: string): Promise<any> {
     return {
       oid: oid,
       nome: "Andre Alves Leocadio",
       email: "andre.leocadio@tora.com.br",
-      permissoes: ["APROVAR_VEICULOS"],
+      permissoes: [...this.permissions],
     };
   }
 }
@@ -208,9 +214,13 @@ class MockServiceSit implements IServiceSit {
 describe("Update carga", () => {
   let cargaRepository: MockRepositoryCarga;
   let userRepository: MockUserRepository;
+  let serviceSit: MockServiceSit;
+  let veiculoRepository: MockVeiculoRepository;
   beforeEach(() => {
     cargaRepository = new MockRepositoryCarga();
     userRepository = new MockUserRepository();
+    serviceSit = new MockServiceSit();
+    veiculoRepository = new MockVeiculoRepository();
   });
 
   it("Não é possível atualizar o fk_situacao da carga para 3 ou 2 sem uma placa", async () => {
@@ -218,14 +228,14 @@ describe("Update carga", () => {
       cargaRepository,
       userRepository,
       mockNotifyAll,
-      new MockServiceSit(),
-      new MockVeiculoRepository()
+      serviceSit,
+      veiculoRepository
     );
 
     await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      new MockVeiculoRepository()
+      veiculoRepository
     ).run({
       id: "M-12",
       e_lote: true,
@@ -262,14 +272,14 @@ describe("Update carga", () => {
       cargaRepository,
       userRepository,
       mockNotifyAll,
-      new MockServiceSit(),
-      new MockVeiculoRepository()
+      serviceSit,
+      veiculoRepository
     );
 
     await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      new MockVeiculoRepository()
+      veiculoRepository
     ).run({
       id: "M-12",
       e_lote: true,
@@ -322,14 +332,14 @@ describe("Update carga", () => {
       cargaRepository,
       userRepository,
       mockNotifyAll,
-      new MockServiceSit(),
-      new MockVeiculoRepository()
+      serviceSit,
+      veiculoRepository
     );
 
     await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      new MockVeiculoRepository()
+      veiculoRepository
     ).run({
       id: "M-12",
       e_lote: true,
@@ -386,14 +396,14 @@ describe("Update carga", () => {
       cargaRepository,
       userRepository,
       mockNotifyAll,
-      new MockServiceSit(),
-      new MockVeiculoRepository()
+      serviceSit,
+      veiculoRepository
     );
 
     const cargaInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      new MockVeiculoRepository()
+      veiculoRepository
     ).run({
       id: "M-12",
       e_lote: true,
@@ -423,14 +433,14 @@ describe("Update carga", () => {
       cargaRepository,
       userRepository,
       mockNotifyAll,
-      new MockServiceSit(),
-      new MockVeiculoRepository()
+      serviceSit,
+      veiculoRepository
     );
 
     const loteInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      new MockVeiculoRepository()
+      veiculoRepository
     ).run({
       id: "M-12",
       e_lote: true,
@@ -461,14 +471,14 @@ describe("Update carga", () => {
       cargaRepository,
       userRepository,
       mockNotifyAll,
-      new MockServiceSit(),
-      new MockVeiculoRepository()
+      serviceSit,
+      veiculoRepository
     );
 
     const loteInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      new MockVeiculoRepository()
+      veiculoRepository
     ).run({
       id: "M-12",
       e_lote: true,
@@ -512,7 +522,7 @@ describe("Update carga", () => {
     await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      new MockVeiculoRepository()
+      veiculoRepository
     ).run({
       id: "M-1",
       e_lote: true,
@@ -528,7 +538,7 @@ describe("Update carga", () => {
     const cargaDerivada = await new UseCaseAddCargaDerivada(
       cargaRepository,
       mockNotifyAll,
-      new MockVeiculoRepository()
+      veiculoRepository
     ).run({
       id: "M-2",
       e_lote: false,
@@ -549,7 +559,7 @@ describe("Update carga", () => {
     await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      new MockVeiculoRepository()
+      veiculoRepository
     ).run({
       id: "M-1",
       e_lote: true,
@@ -567,7 +577,7 @@ describe("Update carga", () => {
         await new UseCaseAddCargaDerivada(
           cargaRepository,
           mockNotifyAll,
-          new MockVeiculoRepository()
+          veiculoRepository
         ).run({
           id: "M-2",
           e_lote: false,
@@ -581,5 +591,207 @@ describe("Update carga", () => {
           fk_lote_pai: "M-1",
         })
     ).rejects.toThrow();
+  });
+
+  it("O unico movimento que a carga pode fazer apos ser aprovada pelo gr é ser cancelada", async () => {
+    const useCase = new UseCaseUpdateCarga(
+      cargaRepository,
+      userRepository,
+      mockNotifyAll,
+      serviceSit,
+      veiculoRepository
+    );
+
+    userRepository.setPermissions(["DELETAR_CARGAS", "APROVAR_VEICULOS"]);
+
+    await new UseCaseAddCarga(
+      cargaRepository,
+      mockNotifyAll,
+      veiculoRepository
+    ).run({
+      id: "M-12",
+      e_lote: true,
+      cliente: "ARCELLOR MITTAL",
+      origem_carga: "ops-inicio",
+      destino_carga: "ops-final",
+      unidade_medida: "UN",
+      quantidade: 12,
+      canal_comunicacao: "manual",
+      responsavel_cadastro: "Andre Alves Leocadio",
+      placa_veiculo: "BWC8809",
+    });
+
+    await useCase.run(
+      {
+        id: "M-12",
+        e_lote: true,
+        cliente: "ARCELLOR MITTAL",
+        origem_carga: "ops-inicio",
+        destino_carga: "ops-final",
+        unidade_medida: "UN",
+        quantidade: 12,
+        canal_comunicacao: "manual",
+        responsavel_cadastro: "Andre Alves Leocadio",
+        placa_veiculo: "BWC8809",
+        fk_situacao: 3,
+        observacao_gr: "TESTE",
+      },
+      "OID"
+    );
+
+    expect((await cargaRepository.index("M-12"))?.fk_situacao).toBe(3);
+
+    await expect(async () => {
+      await useCase.run(
+        {
+          id: "M-12",
+          e_lote: true,
+          cliente: "ARCELLOR MITTAL",
+          origem_carga: "ops-inicio",
+          destino_carga: "ops-final",
+          unidade_medida: "UN",
+          quantidade: 12,
+          canal_comunicacao: "manual",
+          responsavel_cadastro: "Andre Alves Leocadio",
+          placa_veiculo: "ASD1234", // MUDANCA DE PLACA
+          observacao_gr: "TESTE",
+        },
+        "OID"
+      );
+    }).rejects.toThrow();
+
+    await useCase.run(
+      {
+        id: "M-12",
+        e_lote: true,
+        cliente: "ARCELLOR MITTAL",
+        origem_carga: "ops-inicio",
+        destino_carga: "ops-final",
+        unidade_medida: "UN",
+        quantidade: 12,
+        canal_comunicacao: "manual",
+        responsavel_cadastro: "Andre Alves Leocadio",
+        placa_veiculo: "BWC8809",
+        fk_situacao: 5,
+      },
+      "OID"
+    );
+
+    expect((await cargaRepository.index("M-12"))?.fk_situacao).toBe(5);
+  });
+
+  it("Após a carga ser cancelada não deve ser possível movimentar nenhum de seus status", async () => {
+    const useCase = new UseCaseUpdateCarga(
+      cargaRepository,
+      userRepository,
+      mockNotifyAll,
+      serviceSit,
+      veiculoRepository
+    );
+
+    userRepository.setPermissions(["DELETAR_CARGAS"]);
+
+    await new UseCaseAddCarga(
+      cargaRepository,
+      mockNotifyAll,
+      veiculoRepository
+    ).run({
+      id: "M-12",
+      e_lote: true,
+      cliente: "ARCELLOR MITTAL",
+      origem_carga: "ops-inicio",
+      destino_carga: "ops-final",
+      unidade_medida: "UN",
+      quantidade: 12,
+      canal_comunicacao: "manual",
+      responsavel_cadastro: "Andre Alves Leocadio",
+    });
+
+    expect((await cargaRepository.index("M-12"))?.fk_situacao).toBe(1);
+
+    await useCase.run(
+      {
+        id: "M-12",
+        e_lote: true,
+        cliente: "ARCELLOR MITTAL",
+        origem_carga: "ops-inicio",
+        destino_carga: "ops-final",
+        unidade_medida: "UN",
+        quantidade: 12,
+        canal_comunicacao: "manual",
+        responsavel_cadastro: "Andre Alves Leocadio",
+        fk_situacao: 5,
+      },
+      "OID"
+    );
+
+    expect((await cargaRepository.index("M-12"))?.fk_situacao).toBe(5);
+
+    await expect(async () => {
+      await useCase.run(
+        {
+          id: "M-12",
+          e_lote: true,
+          cliente: "ARCELLOR MITTAL",
+          origem_carga: "ops-inicio",
+          destino_carga: "ops-final",
+          unidade_medida: "UN",
+          quantidade: 12,
+          canal_comunicacao: "manual",
+          responsavel_cadastro: "Andre Alves Leocadio",
+          placa_veiculo: "ASD1234", // MUDANCA DE PLACA
+          observacao_gr: "TESTE",
+        },
+        "OID"
+      );
+    }).rejects.toThrow();
+
+    expect((await cargaRepository.index("M-12"))?.placa_veiculo).toBeFalsy();
+  });
+
+  it("Para a carga ser cancelada o usuario deve possuir a permissão de DELETAR_CARGAS", async () => {
+    const useCase = new UseCaseUpdateCarga(
+      cargaRepository,
+      userRepository,
+      mockNotifyAll,
+      serviceSit,
+      veiculoRepository
+    );
+
+    await new UseCaseAddCarga(
+      cargaRepository,
+      mockNotifyAll,
+      veiculoRepository
+    ).run({
+      id: "M-12",
+      e_lote: true,
+      cliente: "ARCELLOR MITTAL",
+      origem_carga: "ops-inicio",
+      destino_carga: "ops-final",
+      unidade_medida: "UN",
+      quantidade: 12,
+      canal_comunicacao: "manual",
+      responsavel_cadastro: "Andre Alves Leocadio",
+    });
+
+    expect((await cargaRepository.index("M-12"))?.fk_situacao).toBe(1);
+
+    await expect(async () => {
+      await useCase.run(
+        {
+          id: "M-12",
+          e_lote: true,
+          cliente: "ARCELLOR MITTAL",
+          origem_carga: "ops-inicio",
+          destino_carga: "ops-final",
+          unidade_medida: "UN",
+          quantidade: 12,
+          canal_comunicacao: "manual",
+          responsavel_cadastro: "Andre Alves Leocadio",
+          fk_situacao: 5,
+        },
+        "OID"
+      );
+    }).rejects.toThrow();
   });
 });
