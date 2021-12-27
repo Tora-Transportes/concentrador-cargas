@@ -2,6 +2,7 @@ import { RotasPendentesRepository } from "../../repositories/RotasPendentesRepos
 import { IPaginationResult } from "../../repositories/CargaRepository";
 import { IEventSocket } from "../../socketsRoutes";
 import { ICarga } from "../../models/ICargas";
+import ECargaStatus from "../../models/ECargaStatus";
 import { factoryCargaValidator } from "../../validations/CargaValidator";
 import AppError from "../../models/AppError";
 import { ServiceDistanceLocations } from "../../services/ServiceDistanceLocations";
@@ -71,9 +72,9 @@ export class UseCaseAddCarga {
     }
     //////////////////////////////////////////////////
 
-    carga.fk_situacao = 1;
+    carga.fk_situacao = ECargaStatus.AGUARDANDO_ALOCACAO;
     if (Number(carga.placa_veiculo?.length) > 5) {
-      carga.fk_situacao = 2;
+      carga.fk_situacao = ECargaStatus.AGUARDANDO_GR;
     }
     await this.cargaRepository.create(carga);
     this.notifyAll({
@@ -136,9 +137,9 @@ export class UseCaseAddCargaDerivada {
     }
 
     const novoPai = validator.cast(lotePai, { stripUnknown: true }) as ICarga;
-    carga.fk_situacao = 1;
+    carga.fk_situacao = ECargaStatus.AGUARDANDO_ALOCACAO;
     if (Number(carga.placa_veiculo?.length) > 5) {
-      carga.fk_situacao = 2;
+      carga.fk_situacao = ECargaStatus.AGUARDANDO_GR;
     }
     await this.cargaRepository.create(carga);
     await this.cargaRepository.update(lotePai.id, {
@@ -214,8 +215,10 @@ export class UseCaseUpdateCarga {
     // O usuario deve ter permissao para aprovar o status da carga para 3 - Aprovado pelo GR ou 4 - veiculo reprovado
     const user = await this.userRepository.index(oid);
     if (
-      [3, 4].includes(Number(carga.fk_situacao)) &&
-      Number(cargaCadastrada.fk_situacao) === 2
+      [ECargaStatus.APROVADO_PELO_GR, ECargaStatus.VEICULO_REPROVADO].includes(
+        Number(carga.fk_situacao)
+      ) &&
+      Number(cargaCadastrada.fk_situacao) === ECargaStatus.AGUARDANDO_GR
     ) {
       if (!user?.permissoes.includes("APROVAR_VEICULOS")) {
         throw new AppError(
@@ -227,38 +230,42 @@ export class UseCaseUpdateCarga {
 
     // O status passa a ser "Veículo atribuido" caso a placa seja definida e a situação seja 1 ou 4
     if (
-      [1, 4].includes(Number(cargaCadastrada.fk_situacao)) &&
+      [
+        ECargaStatus.AGUARDANDO_ALOCACAO,
+        ECargaStatus.VEICULO_REPROVADO,
+      ].includes(Number(cargaCadastrada.fk_situacao)) &&
       carga.placa_veiculo
     ) {
-      carga.fk_situacao = 2;
+      carga.fk_situacao = ECargaStatus.AGUARDANDO_GR;
     }
 
-    if ([3, 4].includes(Number(carga.fk_situacao)) && !carga.observacao_gr) {
+    if (
+      [ECargaStatus.APROVADO_PELO_GR, ECargaStatus.CARGA_CANCELADA].includes(
+        Number(carga.fk_situacao)
+      ) &&
+      !carga.observacao_gr
+    ) {
       throw new AppError(
         "Observação deve ser especificada ao aprovar ou reprovar veículos",
         400
       );
     }
 
-    if (carga.fk_situacao === 1 && carga.placa_veiculo) {
+    if (
+      carga.fk_situacao === ECargaStatus.AGUARDANDO_ALOCACAO &&
+      carga.placa_veiculo
+    ) {
       carga.fk_situacao = cargaCadastrada.fk_situacao;
     }
 
     // Caso o veículo não possua uma placa cadastrada sua situação vai voltar para "aguardando alocação" ou "veiculo reprovado"
     if (!carga.placa_veiculo) {
-      carga.fk_situacao = 1;
-    }
-
-    // lotes nao podem virar cargas, porem cargas podem virar lotes
-    if (carga.e_lote === false && cargaCadastrada.e_lote === true) {
-      carga.e_lote = true;
+      carga.fk_situacao = ECargaStatus.AGUARDANDO_ALOCACAO;
     }
 
     // Os lotes nao podem ter sua unidade de medida e quantidade alterados
-    if (carga.unidade_medida && cargaCadastrada.e_lote) {
+    if (cargaCadastrada.e_lote) {
       carga.unidade_medida = cargaCadastrada.unidade_medida;
-    }
-    if (carga.quantidade && cargaCadastrada.e_lote) {
       carga.quantidade = cargaCadastrada.quantidade;
     }
 
@@ -285,7 +292,7 @@ export class UseCaseUpdateCarga {
       { stripUnknown: true }
     ) as ICarga;
 
-    if (cargaOficial.fk_situacao === 3) {
+    if (cargaOficial.fk_situacao === ECargaStatus.APROVADO_PELO_GR) {
       await this.serviceSit.migrar([cargaOficial]);
     }
     await this.cargaRepository.update(cargaOficial.id, cargaOficial);
