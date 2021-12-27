@@ -1,10 +1,11 @@
 import { RotasPendentesRepository } from "../../repositories/RotasPendentesRepository";
 import { ServiceDistanceLocations } from "../../services/ServiceDistanceLocations";
+import cron from "node-cron";
 
-// RODA A CADA 10 MINUTOS
+// RODA A CADA 5 MINUTOS
 export default function run() {
-  const TIME_TO_RUN = 1000 * 60 * 5;
-  setInterval(async () => {
+  cron.schedule("*/5 * * * *", async () => {
+    console.log("--------------JOB ROTAS--------------");
     const rotasRepository = new RotasPendentesRepository();
     const serviceLocation = new ServiceDistanceLocations();
     let totalPages = 1;
@@ -18,5 +19,6 @@ export default function run() {
         }
       }
     }
-  }, TIME_TO_RUN);
+    console.log("-----------FIM JOB ROTAS-------------");
+  });
 }
