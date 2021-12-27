@@ -39,7 +39,7 @@ const modules = {
   ),
   UseCaseViewCargas: new UseCaseViewCargas(cargaRepository),
   UseCaseDeleteCarga: new UseCaseDeleteCarga(cargaRepository, notifyAll),
-  UseCaseImportCarga: new UseCaseImportCarga(cargaRepository),
+  UseCaseImportCarga: new UseCaseImportCarga(cargaRepository, notifyAll),
 };
 
 export default modules;

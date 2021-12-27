@@ -469,7 +469,10 @@ export class UseCaseListPendentRoutes {
 }
 
 export class UseCaseImportCarga {
-  constructor(private cargaRepository: IRepositoryAddCarga) {}
+  constructor(
+    private cargaRepository: IRepositoryAddCarga,
+    private notifyAll: (event: IEventSocket) => void
+  ) {}
   async run(file: Buffer | undefined, usuario: string | undefined) {
     if (!file || !file?.buffer) {
       throw new AppError("O arquivo não foi enviado", 400);
@@ -514,6 +517,12 @@ export class UseCaseImportCarga {
 
     if (cargas.length > 0) {
       await this.cargaRepository.bulkCreate(cargas);
+      for (const carga of cargas) {
+        this.notifyAll({
+          name: "@carga-create",
+          details: carga,
+        });
+      }
     }
     return cargas;
   }
