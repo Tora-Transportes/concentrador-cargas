@@ -180,6 +180,7 @@ class ServiceCargas {
 		fk_situacao,
 		limit,
 		placa_veiculo,
+		documento_transporte,
 	}) {
 		return api.get("/cargas", {
 			params: {
@@ -199,6 +200,7 @@ class ServiceCargas {
 				fk_situacao,
 				limit,
 				placa_veiculo,
+				documento_transporte,
 			},
 		});
 	}
