@@ -87,7 +87,9 @@ async function listarEmpresas(nightmare) {
 }
 
 async function main() {
-    const nightmare = Nightmare({ show: false, waitTimeout: 15000});
+    const nightmare = Nightmare({ show: false, waitTimeout: 15000, openDevTools: {
+        mode: 'detach'
+      }});
     const documentosBaixados = [];
     console.time("Scraping");
     try {

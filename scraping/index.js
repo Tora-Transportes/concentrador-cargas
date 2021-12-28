@@ -21,6 +21,10 @@ const database = require('knex')({
       requestTimeout: 100,
       port: Number(process.env.DB_ORACLE_PORT),
       charset: "utf8",
+      pool: {
+        min: 2,
+        max: 10,
+      },
     },
 });
   
@@ -147,7 +151,8 @@ async function main() {
 
     for(const i of cargasFormatadas) {
         if(hashCargas.has(i.documento_transporte)) {
-            hashCargas.get(i.documento_transporte).observacao = "Carga: "+i.tipo_carga+",\nQuantidade: "+i.quantidade+",\nUnidade medida: "+i.unidade_medida+"\n\n";
+            hashCargas.get(i.documento_transporte).observacao = hashCargas.get(i.documento_transporte).observacao || "";
+            hashCargas.get(i.documento_transporte).observacao += "Carga: "+i.tipo_carga+",\nQuantidade: "+i.quantidade+",\nUnidade medida: "+i.unidade_medida+"\n\n";
         } else {
             hashCargas.set(i.documento_transporte, i);
         }

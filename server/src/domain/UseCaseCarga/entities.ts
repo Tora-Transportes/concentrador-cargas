@@ -59,7 +59,6 @@ export class UseCaseAddCarga {
     if (carga.documento_transporte) {
       const cargaImportada = await this.cargaRepository.search({
         documento_transporte: carga.documento_transporte,
-        tipo_carga: carga.tipo_carga,
       });
 
       if (cargaImportada.results.length > 0) {
