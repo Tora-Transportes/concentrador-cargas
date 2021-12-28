@@ -27,39 +27,53 @@ const database = require('knex')({
       },
     },
 });
+
+
+
+// ORIGEM
+const origemDePara = new Map();
+// origemDePara.set('LU16', '60894730004011');
+// origemDePara.set('LU10', '60894730002906');
+// origemDePara.set('LU15', '60894730005093');
+// origemDePara.set('LC01', '60894730006308');
+// origemDePara.set('LC02', '60894730002663');
+// origemDePara.set('LU08', '60894730002582');
+// origemDePara.set('LU11', '60894730003120');
+// origemDePara.set('LU20', '60894730007703');
+origemDePara.set('LU16', 'SP/SAO PAULO');
+origemDePara.set('LU08', 'MG/IPATINGA');
+origemDePara.set('LC02', 'SP/SANTO ANDRE');
+origemDePara.set('LU10', 'MG/SANTA LUZIA');
+origemDePara.set('LU11', 'MG/BETIM');
+origemDePara.set('LU15', 'MG/CONTAGEM');
+origemDePara.set('LC01', 'SP/CUBATAO');
+origemDePara.set('LU20', 'SP/ITAQUAQUECETUBA');
+
+// CLIENTE
+const clienteDePara = new Map();
+clienteDePara.set('LU16', '60894730004011');
+clienteDePara.set('LU10', '60894730002582');
+clienteDePara.set('LU15', '60894730002582');
+clienteDePara.set('LC01', '60894730006308');
+clienteDePara.set('LC02', '60894730006308');
+clienteDePara.set('LU08', '60894730002582');
+clienteDePara.set('LU11', '60894730002582');
+clienteDePara.set('LU20', '60894730004011');
   
 
-
-class Generator {
-    constructor() {
-        this.counter = 0;
-        this.currentDate = new Date().getTime();
-    }
-
-    nextId() {
-        const current = new Date().getTime();
-        if(current === this.currentDate) {
-            this.counter++;
-        } else {
-            this.counter = 0;
-            this.currentDate = current;
-        }
-
-        return `P-${this.currentDate}-${this.counter}`;
-    }
-    
-}
-
-async function factoryCarga(row, id, cnpjResolver) {
+async function factoryCarga(row, cnpjResolver) {
     const normalizeText = text => text.toUpperCase()
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "");
+    
+    const codigoDePara = row.origem.split(" - ")[0];
+    const cliente = clienteDePara.get(codigoDePara);
+    const origem = origemDePara.get(codigoDePara);
 
     return {
-        id: id,
-        cliente: await cnpjResolver(row.cnpj_fornecedor),
+        cliente: await cnpjResolver(cliente),
         e_lote: false,
-        origem_carga: row.uf_origem && row.municipio_origem ? normalizeText(`BRASIL/${row.uf_origem}/${row.municipio_origem}`) : null,
+        origem_carga: row.origem ? normalizeText(`BRASIL/${origem}`) : null,
         destino_carga: row.uf_destino && row.municipio_destino ? normalizeText(`BRASIL/${row.uf_destino}/${row.municipio_destino}`): null,
         data_entrega: null,
         data_coleta: null,
@@ -115,15 +129,14 @@ async function main() {
     }
 
     const cargas = minerarNotas().filter(i => {
-        const match = "20468310009603";
+        const match = "20468310005020";
         return String(i.cnpj_fornecedor) === match;
     });
     fs.writeFileSync("output.json", JSON.stringify(cargas));
-    
-    const generator = new Generator();
+
     const fornecedoresCache = new Map();
     
-    const cargasFormatadas = await Promise.all(cargas.map(i => factoryCarga(i, generator.nextId(), async (cnpj) => {
+    const cargasFormatadas = await Promise.all(cargas.map(i => factoryCarga(i, async (cnpj) => {
         const cached = fornecedoresCache.get(cnpj);
         if(cached) {
             return `${cached.organizacao} - ${cached.documento_federal} - ${cached.cidade}/${cached.uf}`;
