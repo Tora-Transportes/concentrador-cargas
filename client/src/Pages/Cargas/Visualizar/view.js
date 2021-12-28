@@ -36,7 +36,7 @@ function VisualizarCargas({
 			<Container fluid className="text-center mb-5">
 				<Row>
 					<Col>
-						<h1 className="mb-5 mt-5">Visualize as cargas cadastradas aqui</h1>
+						<h1 className="mb-5 mt-5">Grid de Cargas</h1>
 					</Col>
 				</Row>
 				<Row>
