@@ -1,10 +1,10 @@
-import { localizacoes } from "../database";
+import database from "../database";
 export class LocaisRepository {
   async search(query: string) {
-    return localizacoes("con_localizacoes")
+    return database("con_localizacoes")
       .select(["sigla_estado", "sigla_pais", "cidade", "estado", "pais"])
       .limit(20)
-      .whereRaw("(pais || '/' || sigla_estado || '/' || cidade) like ?", [
+      .whereRaw(`("pais" || '/' || "sigla_estado" || '/' || "cidade") like ?`, [
         `%${query.toUpperCase()}%`,
       ]);
   }
