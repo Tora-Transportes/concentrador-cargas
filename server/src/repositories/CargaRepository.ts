@@ -9,7 +9,13 @@ export interface IPaginationResult<T> {
 }
 
 export class CargaRepository {
-  async index(id: string): Promise<ICarga | undefined> {
+  async nextId(): Promise<number> {
+    return Number(
+      (await database("DUAL").select("seq_con_produtos.NEXTVAL as id"))[0].id
+    );
+  }
+
+  async index(id: number): Promise<ICarga | undefined> {
     return await database("con_cargas")
       .select([
         "con_cargas.*",
@@ -35,7 +41,7 @@ export class CargaRepository {
     return cargas;
   }
 
-  async update(id: string, carga: ICarga): Promise<ICarga> {
+  async update(id: number, carga: ICarga): Promise<ICarga> {
     await database("con_cargas").update(carga).where("id", id);
     return carga;
   }

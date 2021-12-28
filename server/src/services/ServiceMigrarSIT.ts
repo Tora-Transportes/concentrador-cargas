@@ -81,7 +81,7 @@ class ServiceMigrarSit implements IServiceSit {
       FIL_COD: 26,
       STF_COD: 19,
       COD_EMPRESA_SAP: "2000",
-      COD_AGENDAMENTO_ATS: carga.id.replace(/\D/g, ""),
+      COD_AGENDAMENTO_ATS: carga.id,
       CGI_NUM_MOT: dadosVeiculo[0].cpf_motorista,
       CGI_NUM_PROP: dadosVeiculo[0].documento_proprietario,
       VEI_PLACA_CAV: dadosVeiculo[0].placa,
@@ -120,7 +120,7 @@ class ServiceMigrarSit implements IServiceSit {
   }
 
   async cancelar(cargas: ICarga[]) {
-    const ids = cargas.map((i) => i.id.replace(/\D/g, ""));
+    const ids = cargas.map((i) => i.id);
     await database("PRE_VIAGEM_ATS")
       .whereIn("COD_AGENDAMENTO_ATS", ids)
       .update({

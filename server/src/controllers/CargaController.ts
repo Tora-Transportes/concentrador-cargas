@@ -69,7 +69,7 @@ class CargaController {
   async delete(req: Request, res: Response) {
     const { id } = req.params;
     await useCasesCarga.UseCaseDeleteCarga.run(
-      id,
+      Number(id),
       TokenAd.getClaims(String(req.headers.authorization)).name
     );
 
@@ -78,7 +78,7 @@ class CargaController {
 
   async index(req: Request, res: Response) {
     const { id } = req.params;
-    const result = await useCasesCarga.UseCaseViewCargas.index(id);
+    const result = await useCasesCarga.UseCaseViewCargas.index(Number(id));
     return res.json({ data: result });
   }
 

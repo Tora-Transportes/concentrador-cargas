@@ -230,3 +230,5 @@ ALTER TABLE "con_cargas" modify (
 );
 
 INSERT INTO "con_situacoes_cargas" ("id", "cor", "descricao") VALUES (5, 'purple', 'Carga cancelada');
+
+create sequence "seq_con_cargas" START WITH 9999999;

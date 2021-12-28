@@ -1,5 +1,5 @@
 export interface ICarga {
-  id: string;
+  id: number;
   e_lote: boolean;
   cliente: string;
   origem_carga?: string | null;

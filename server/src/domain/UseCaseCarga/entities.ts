@@ -14,13 +14,14 @@ import { IVeiculoRepository } from "../../repositories/VeiculoRepository";
 
 export interface IRepositoryAddCarga {
   create(carga: ICarga): Promise<ICarga>;
-  index(id: string): Promise<ICarga | undefined>;
+  index(id: number): Promise<ICarga | undefined>;
   search(
     query: Record<string, any>,
     page?: number,
     pageSize?: number
   ): Promise<IPaginationResult<ICarga>>;
   bulkCreate(cargas: ICarga[]): Promise<any>;
+  nextId(): Promise<number>;
 }
 export class UseCaseAddCarga {
   constructor(
@@ -29,6 +30,8 @@ export class UseCaseAddCarga {
     private veiculoRepository: IVeiculoRepository
   ) {}
   async run(cargaDTO: Record<string, any>) {
+    cargaDTO.id = await this.cargaRepository.nextId();
+
     const validator = factoryCargaValidator();
     const carga: ICarga = await validator.validate(cargaDTO, {
       abortEarly: false,
@@ -85,7 +88,7 @@ export class UseCaseAddCarga {
 }
 
 export interface IRepositoryUpdateCarga extends IRepositoryAddCarga {
-  update(id: string, carga: ICarga): Promise<ICarga>;
+  update(id: number, carga: ICarga): Promise<ICarga>;
 }
 export class UseCaseAddCargaDerivada {
   constructor(
@@ -94,6 +97,7 @@ export class UseCaseAddCargaDerivada {
     private veiculoRepository: IVeiculoRepository
   ) {}
   async run(cargaDTO: Record<string, any>) {
+    cargaDTO.id = await this.cargaRepository.nextId();
     const validator = factoryCargaValidator();
     const carga: ICarga = await validator.validate(cargaDTO, {
       abortEarly: false,
@@ -350,7 +354,7 @@ export class UseCaseViewCargas {
     );
   }
 
-  async index(id: string) {
+  async index(id: number) {
     const carga = await this.cargaRepository.index(id);
     if (!carga) {
       throw new AppError("A carga solicitada não existe", 404);
@@ -372,7 +376,7 @@ export class UseCaseDeleteCarga {
     private cargaRepository: IRepositoryUpdateCarga,
     private notifyAll: (event: IEventSocket) => void
   ) {}
-  async run(id: string, usuario: string) {
+  async run(id: number, usuario: string) {
     if (!id) {
       throw new AppError("Id inválido", 400);
     }
@@ -485,34 +489,35 @@ export class UseCaseImportCarga {
 
     const validator = factoryCargaValidator();
     const timestamp = new Date();
-    let idCounter = 1;
-    const cargas = jsonSheet.map((row: Record<string, any>): ICarga => {
-      const clone: ICarga = {
-        e_lote: true,
-        cliente: TextUtils.normalize(row["Destinatário"]),
-        observacao: row["OBSERVAÇÃO"],
-        quantidade: Number(row["Quantidade"]),
-        quantidade_atual: Number(row["Quantidade"]),
-        origem_carga:
-          "BRASIL/" +
-          TextUtils.normalize(row["Origem"]).split(", ").reverse().join("/"),
-        destino_carga:
-          "BRASIL/" +
-          TextUtils.normalize(row["Destino"]).split(", ").reverse().join("/"),
-        unidade_medida: TextUtils.normalize(row["Unidade"]),
-        canal_comunicacao: "manual",
-        usuario: nomeUsuario,
-        responsavel_cadastro: nomeUsuario,
-        id: `M-${timestamp.getTime()}-${idCounter++}`,
-        data_cadastro: timestamp,
-        data_atualizacao: timestamp,
-        ativo: 1,
-      };
+    const cargas = await Promise.all(
+      jsonSheet.map(async (row: Record<string, any>): Promise<ICarga> => {
+        const clone: ICarga = {
+          e_lote: true,
+          cliente: TextUtils.normalize(row["Destinatário"]),
+          observacao: row["OBSERVAÇÃO"],
+          quantidade: Number(row["Quantidade"]),
+          quantidade_atual: Number(row["Quantidade"]),
+          origem_carga:
+            "BRASIL/" +
+            TextUtils.normalize(row["Origem"]).split(", ").reverse().join("/"),
+          destino_carga:
+            "BRASIL/" +
+            TextUtils.normalize(row["Destino"]).split(", ").reverse().join("/"),
+          unidade_medida: TextUtils.normalize(row["Unidade"]),
+          canal_comunicacao: "manual",
+          usuario: nomeUsuario,
+          responsavel_cadastro: nomeUsuario,
+          id: await this.cargaRepository.nextId(),
+          data_cadastro: timestamp,
+          data_atualizacao: timestamp,
+          ativo: 1,
+        };
 
-      validator.validateSync(clone, { abortEarly: false });
+        await validator.validate(clone, { abortEarly: false });
 
-      return clone;
-    });
+        return clone;
+      })
+    );
 
     if (cargas.length > 0) {
       await this.cargaRepository.bulkCreate(cargas);

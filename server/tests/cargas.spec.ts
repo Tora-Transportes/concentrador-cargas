@@ -50,7 +50,11 @@ class MockVeiculoRepository implements IVeiculoRepository {
 class MockRepositoryCarga
   implements IRepositoryAddCarga, IRepositoryUpdateCarga
 {
-  async update(id: string, carga: ICarga): Promise<ICarga> {
+  private id = 1;
+  async nextId(): Promise<number> {
+    return this.id++;
+  }
+  async update(id: number, carga: ICarga): Promise<ICarga> {
     this.cargas = this.cargas.map((i) => {
       return i.id === id ? carga : i;
     });
@@ -61,8 +65,8 @@ class MockRepositoryCarga
     this.cargas.push(carga);
     return carga;
   }
-  async index(id: string): Promise<ICarga | undefined> {
-    return this.cargas.find((i) => String(i.id) === id);
+  async index(id: number): Promise<ICarga | undefined> {
+    return this.cargas.find((i) => i.id === id);
   }
   async search(
     query: Record<string, any>,
@@ -88,7 +92,6 @@ describe("Add carga", () => {
   it("Não é possível gerar carga sem campos obrigatorios", async () => {
     /**
      - Não é possível cadastrar carga sem:
-        - id
         - e_lote
         - cliente
         - quantidade
@@ -103,7 +106,6 @@ describe("Add carga", () => {
     );
     try {
       await useCase.run({
-        id: "M-12",
         // e_lote: true,
         // cliente: "ARCELLOR MITTAL",
         origem_carga: "ops-inicio",
@@ -235,12 +237,11 @@ describe("Update carga", () => {
       veiculoRepository
     );
 
-    await new UseCaseAddCarga(
+    const cargaInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
       veiculoRepository
     ).run({
-      id: "M-12",
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
       origem_carga: "ops-inicio",
@@ -254,7 +255,7 @@ describe("Update carga", () => {
 
     const carga = await useCase.run(
       {
-        id: "M-12",
+        id: cargaInicial.id,
         e_lote: true,
         cliente: "ARCELLOR MITTAL",
         origem_carga: "ops-inicio",
@@ -279,12 +280,11 @@ describe("Update carga", () => {
       veiculoRepository
     );
 
-    await new UseCaseAddCarga(
+    const cargaInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
       veiculoRepository
     ).run({
-      id: "M-12",
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
       origem_carga: "ops-inicio",
@@ -297,7 +297,7 @@ describe("Update carga", () => {
 
     const cargaComPlaca = await useCase.run(
       {
-        id: "M-12",
+        id: cargaInicial.id,
         e_lote: true,
         cliente: "ARCELLOR MITTAL",
         origem_carga: "ops-inicio",
@@ -314,7 +314,7 @@ describe("Update carga", () => {
 
     const cargaSemPlaca = await useCase.run(
       {
-        id: "M-12",
+        id: cargaInicial.id,
         e_lote: true,
         cliente: "ARCELLOR MITTAL",
         origem_carga: "ops-inicio",
@@ -339,12 +339,11 @@ describe("Update carga", () => {
       veiculoRepository
     );
 
-    await new UseCaseAddCarga(
+    const cargaInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
       veiculoRepository
     ).run({
-      id: "M-12",
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
       origem_carga: "ops-inicio",
@@ -357,7 +356,7 @@ describe("Update carga", () => {
 
     const cargaComPlaca = await useCase.run(
       {
-        id: "M-12",
+        id: cargaInicial.id,
         e_lote: true,
         cliente: "ARCELLOR MITTAL",
         origem_carga: "ops-inicio",
@@ -376,7 +375,7 @@ describe("Update carga", () => {
     const cargaAprovada = async () => {
       await useCase.run(
         {
-          id: "M-12",
+          id: cargaInicial.id,
           e_lote: true,
           cliente: "ARCELLOR MITTAL",
           origem_carga: "ops-inicio",
@@ -408,7 +407,6 @@ describe("Update carga", () => {
       mockNotifyAll,
       veiculoRepository
     ).run({
-      id: "M-12",
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
       origem_carga: "ops-inicio",
@@ -445,7 +443,6 @@ describe("Update carga", () => {
       mockNotifyAll,
       veiculoRepository
     ).run({
-      id: "M-12",
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
       origem_carga: "ops-inicio",
@@ -483,7 +480,6 @@ describe("Update carga", () => {
       mockNotifyAll,
       veiculoRepository
     ).run({
-      id: "M-12",
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
       origem_carga: "ops-inicio",
@@ -522,12 +518,11 @@ describe("Update carga", () => {
   });
 
   it("Não é possível atualizar a unidade de medida de uma carga derivada", async () => {
-    await new UseCaseAddCarga(
+    const cargaInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
       veiculoRepository
     ).run({
-      id: "M-1",
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
       origem_carga: "ops-inicio",
@@ -543,7 +538,6 @@ describe("Update carga", () => {
       mockNotifyAll,
       veiculoRepository
     ).run({
-      id: "M-2",
       e_lote: false,
       cliente: "ARCELLOR MITTAL",
       origem_carga: "ops-inicio",
@@ -552,19 +546,18 @@ describe("Update carga", () => {
       quantidade: 12,
       canal_comunicacao: "manual",
       responsavel_cadastro: "Andre Alves Leocadio",
-      fk_lote_pai: "M-1",
+      fk_lote_pai: cargaInicial.id,
     });
 
     expect(cargaDerivada.unidade_medida).toMatch("UN");
   });
 
   it("Não é possível cadastrar uma carga derivada com mais quantidade que a quantidade atual do lote", async () => {
-    await new UseCaseAddCarga(
+    const cargaInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
       veiculoRepository
     ).run({
-      id: "M-1",
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
       origem_carga: "ops-inicio",
@@ -582,7 +575,6 @@ describe("Update carga", () => {
           mockNotifyAll,
           veiculoRepository
         ).run({
-          id: "M-2",
           e_lote: false,
           cliente: "ARCELLOR MITTAL",
           origem_carga: "ops-inicio",
@@ -591,7 +583,7 @@ describe("Update carga", () => {
           quantidade: 13,
           canal_comunicacao: "manual",
           responsavel_cadastro: "Andre Alves Leocadio",
-          fk_lote_pai: "M-1",
+          fk_lote_pai: cargaInicial.id,
         })
     ).rejects.toThrow();
   });
@@ -607,12 +599,11 @@ describe("Update carga", () => {
 
     userRepository.setPermissions(["DELETAR_CARGAS", "APROVAR_VEICULOS"]);
 
-    await new UseCaseAddCarga(
+    const cargaInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
       veiculoRepository
     ).run({
-      id: "M-12",
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
       origem_carga: "ops-inicio",
@@ -626,7 +617,7 @@ describe("Update carga", () => {
 
     await useCase.run(
       {
-        id: "M-12",
+        id: cargaInicial.id,
         e_lote: true,
         cliente: "ARCELLOR MITTAL",
         origem_carga: "ops-inicio",
@@ -642,12 +633,12 @@ describe("Update carga", () => {
       "OID"
     );
 
-    expect((await cargaRepository.index("M-12"))?.fk_situacao).toBe(3);
+    expect((await cargaRepository.index(cargaInicial.id))?.fk_situacao).toBe(3);
 
     await expect(async () => {
       await useCase.run(
         {
-          id: "M-12",
+          id: cargaInicial.id,
           e_lote: true,
           cliente: "ARCELLOR MITTAL",
           origem_carga: "ops-inicio",
@@ -665,7 +656,7 @@ describe("Update carga", () => {
 
     await useCase.run(
       {
-        id: "M-12",
+        id: cargaInicial.id,
         e_lote: true,
         cliente: "ARCELLOR MITTAL",
         origem_carga: "ops-inicio",
@@ -680,7 +671,7 @@ describe("Update carga", () => {
       "OID"
     );
 
-    expect((await cargaRepository.index("M-12"))?.fk_situacao).toBe(5);
+    expect((await cargaRepository.index(cargaInicial.id))?.fk_situacao).toBe(5);
   });
 
   it("Após a carga ser cancelada não deve ser possível movimentar nenhum de seus status", async () => {
@@ -694,12 +685,11 @@ describe("Update carga", () => {
 
     userRepository.setPermissions(["DELETAR_CARGAS"]);
 
-    await new UseCaseAddCarga(
+    const cargaInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
       veiculoRepository
     ).run({
-      id: "M-12",
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
       origem_carga: "ops-inicio",
@@ -710,11 +700,11 @@ describe("Update carga", () => {
       responsavel_cadastro: "Andre Alves Leocadio",
     });
 
-    expect((await cargaRepository.index("M-12"))?.fk_situacao).toBe(1);
+    expect((await cargaRepository.index(cargaInicial.id))?.fk_situacao).toBe(1);
 
     await useCase.run(
       {
-        id: "M-12",
+        id: cargaInicial.id,
         e_lote: true,
         cliente: "ARCELLOR MITTAL",
         origem_carga: "ops-inicio",
@@ -728,12 +718,12 @@ describe("Update carga", () => {
       "OID"
     );
 
-    expect((await cargaRepository.index("M-12"))?.fk_situacao).toBe(5);
+    expect((await cargaRepository.index(cargaInicial.id))?.fk_situacao).toBe(5);
 
     await expect(async () => {
       await useCase.run(
         {
-          id: "M-12",
+          id: cargaInicial.id,
           e_lote: true,
           cliente: "ARCELLOR MITTAL",
           origem_carga: "ops-inicio",
@@ -749,7 +739,9 @@ describe("Update carga", () => {
       );
     }).rejects.toThrow();
 
-    expect((await cargaRepository.index("M-12"))?.placa_veiculo).toBeFalsy();
+    expect(
+      (await cargaRepository.index(cargaInicial.id))?.placa_veiculo
+    ).toBeFalsy();
   });
 
   it("Para a carga ser cancelada o usuario deve possuir a permissão de DELETAR_CARGAS", async () => {
@@ -761,12 +753,11 @@ describe("Update carga", () => {
       veiculoRepository
     );
 
-    await new UseCaseAddCarga(
+    const cargaInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
       veiculoRepository
     ).run({
-      id: "M-12",
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
       origem_carga: "ops-inicio",
@@ -777,12 +768,12 @@ describe("Update carga", () => {
       responsavel_cadastro: "Andre Alves Leocadio",
     });
 
-    expect((await cargaRepository.index("M-12"))?.fk_situacao).toBe(1);
+    expect((await cargaRepository.index(cargaInicial.id))?.fk_situacao).toBe(1);
 
     await expect(async () => {
       await useCase.run(
         {
-          id: "M-12",
+          id: cargaInicial.id,
           e_lote: true,
           cliente: "ARCELLOR MITTAL",
           origem_carga: "ops-inicio",

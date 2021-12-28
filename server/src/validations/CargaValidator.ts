@@ -1,8 +1,6 @@
 import * as yup from "yup";
 
 export function factoryCargaValidator() {
-  const regexId = new RegExp(`^[A-Z]-[0-9]+(-[0-9]+)?$`, "g");
-
   const cargaValidator = yup.object({
     documento_transporte: yup.string().notRequired().nullable(),
     observacao_gr: yup.string().notRequired().nullable(),
@@ -16,10 +14,7 @@ export function factoryCargaValidator() {
     responsavel_cadastro: yup
       .string()
       .required("O responsavel pelo cadastro deve ser preenchido"),
-    id: yup
-      .string()
-      .required("O id deve ser informado")
-      .matches(regexId, `O id deve seguir o formato [LETRA]-{NUMERO}`),
+    id: yup.number().required("O id deve ser informado"),
     e_lote: yup
       .bool()
       .required("Deve ser informado se a carga é um lote ou não"),
