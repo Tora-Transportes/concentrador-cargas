@@ -235,7 +235,7 @@ function Visualizar() {
 		},
 		{
 			name: "editar",
-			description: "Editar",
+			description: "Editar/Vincular",
 			static_column: true,
 			selector: (row) => (
 				<Link
