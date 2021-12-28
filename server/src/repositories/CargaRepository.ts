@@ -11,7 +11,7 @@ export interface IPaginationResult<T> {
 export class CargaRepository {
   async nextId(): Promise<number> {
     return Number(
-      (await database("DUAL").select("seq_con_produtos.NEXTVAL as id"))[0].id
+      (await database("DUAL").select("seq_con_cargas.NEXTVAL as id"))[0].id
     );
   }
 

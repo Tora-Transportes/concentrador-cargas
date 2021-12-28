@@ -1,5 +1,5 @@
 create table "con_cargas" (
-    "id" varchar(20) not null primary key,
+    "id" integer not null primary key,
     "cliente" varchar(300) not null,
     "e_lote" integer not null,
     "origem_carga" varchar(20) not null,

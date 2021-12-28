@@ -1,13 +1,13 @@
-CREATE TABLE IF NOT EXISTS "con_localizacoes" (
+CREATE TABLE "con_localizacoes" (
 	"id"	INTEGER,
 	"cidade"	VARCHAR(60) NOT NULL,
-	"estado"	VARCHAR(60) NOT NULL,
+	"estado"	VARCHAR(60),
 	"pais"	VARCHAR(60) NOT NULL,
-	"lat"	NUMERIC NOT NULL,
-	"lng"	NUMERIC NOT NULL,
+	"lat"	NUMERIC,
+	"lng"	NUMERIC,
 	"sigla_pais"	CHAR(2) NOT NULL,
 	"sigla_pais_extendida"	CHAR(3) NOT NULL,
-	"capital"	VARCHAR(300) NOT NULL,
+	"capital"	VARCHAR(300),
 	"sigla_estado"	VARCHAR(300),
 	PRIMARY KEY("id")
 );

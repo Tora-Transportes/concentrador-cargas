@@ -1,7 +1,6 @@
 import api from "./api";
 class ServiceCargas {
 	async create({
-		id,
 		e_lote,
 		cliente,
 		origem_carga,
@@ -24,7 +23,6 @@ class ServiceCargas {
 		placa_veiculo,
 	}) {
 		const carga = {
-			id,
 			e_lote,
 			cliente,
 			origem_carga,

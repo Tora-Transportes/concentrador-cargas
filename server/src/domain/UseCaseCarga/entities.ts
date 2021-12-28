@@ -52,6 +52,7 @@ export class UseCaseAddCarga {
       }
     }
 
+    console.log(carga.id);
     const cargasCadastrada = await this.cargaRepository.index(carga.id);
 
     if (cargasCadastrada) {
