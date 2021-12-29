@@ -55,6 +55,7 @@ function reducerToggleModal(state) {
 }
 
 function Visualizar() {
+	const [totalRegisters, setTotalRegisters] = useState(0);
 	const defaultCargas = {
 		page: 1,
 		total_pages: 1,
@@ -320,12 +321,13 @@ function Visualizar() {
 					type: "SET",
 					payload: { ...data.data, current_page: data.data.page },
 				});
+				setTotalRegisters(Number(data.data.total_registers));
 			} catch (error) {
 				console.log(error);
 			}
 			setLoading(false);
 		},
-		[itensPerPage, dispatchCargas]
+		[itensPerPage, dispatchCargas, setTotalRegisters]
 	);
 
 	const columnsToDisplay = displayColumns
@@ -354,6 +356,7 @@ function Visualizar() {
 			setItensPerPage={setItensPerPage}
 			resetView={resetView}
 			cargas={cargas}
+			totalRegisters={totalRegisters}
 		/>
 	);
 }

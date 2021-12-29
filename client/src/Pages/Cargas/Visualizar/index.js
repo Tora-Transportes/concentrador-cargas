@@ -57,6 +57,7 @@ function reducerToggleModal(state) {
 }
 
 function Visualizar() {
+	const [totalRegisters, setTotalRegisters] = useState(0);
 	const defaultCargas = {
 		page: 1,
 		total_pages: 1,
@@ -68,6 +69,7 @@ function Visualizar() {
 	useEffect(() => {
 		const actionCargasCreate = (payload) => {
 			if (!payload.e_lote) {
+				setTotalRegisters((old) => old + 1);
 				dispatchCargas({ type: "ADD_CARGA", payload });
 			}
 		};
@@ -75,6 +77,7 @@ function Visualizar() {
 			dispatchCargas({ type: "UPDATE_CARGA", payload });
 		};
 		const actionCargasDelete = (payload) => {
+			setTotalRegisters((old) => old - 1);
 			dispatchCargas({ type: "DELETE_CARGA", payload });
 		};
 		io.on("@carga-create", actionCargasCreate);
@@ -345,12 +348,13 @@ function Visualizar() {
 						current_page: data.data.page,
 					},
 				});
+				setTotalRegisters(Number(data.data.total_registers));
 			} catch (error) {
 				console.log(error);
 			}
 			setLoading(false);
 		},
-		[itensPerPage]
+		[itensPerPage, setTotalRegisters]
 	);
 
 	const columnsToDisplay = displayColumns
@@ -379,6 +383,7 @@ function Visualizar() {
 			itensPerPage={itensPerPage}
 			setItensPerPage={setItensPerPage}
 			resetView={resetView}
+			totalRegisters={totalRegisters}
 		/>
 	);
 }

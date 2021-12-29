@@ -5,6 +5,7 @@ import { Knex } from "knex";
 export interface IPaginationResult<T> {
   page: number;
   total_pages: number;
+  total_registers: number;
   results: T[];
 }
 
@@ -154,9 +155,11 @@ export class CargaRepository {
     results.orderBy("con_cargas.id", "asc");
     const rows = await results;
 
+    const totalRegisters = Number((await total)?.total) || 0;
     return {
       page: realPage,
-      total_pages: Math.ceil(Number((await total)?.total || 0) / pageSize),
+      total_pages: Math.ceil(totalRegisters / pageSize),
+      total_registers: totalRegisters,
       results: rows,
     };
   }

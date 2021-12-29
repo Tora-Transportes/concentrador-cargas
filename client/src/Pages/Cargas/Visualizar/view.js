@@ -28,6 +28,7 @@ function VisualizarCargas({
 	itensPerPage = 5,
 	setItensPerPage,
 	resetView,
+	totalRegisters = null,
 }) {
 	return (
 		<>
@@ -67,6 +68,17 @@ function VisualizarCargas({
 				<Row>
 					<Col>
 						<CaptionStatusCarga />
+					</Col>
+				</Row>
+				<Row className="mt-5">
+					<Col>
+						{totalRegisters ? (
+							<>
+								Total de <b>{totalRegisters}</b> registros
+							</>
+						) : (
+							""
+						)}
 					</Col>
 				</Row>
 				<Row>

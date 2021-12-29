@@ -27,6 +27,7 @@ function VisualizarCargas({
 	setItensPerPage,
 	resetView,
 	cargas,
+	totalRegisters = null,
 }) {
 	return (
 		<>
@@ -61,6 +62,17 @@ function VisualizarCargas({
 							<option value="100">👀 100</option>
 							<option value="500">👀 500</option>
 						</select>
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						{totalRegisters ? (
+							<>
+								Total de <b>{totalRegisters}</b> registros
+							</>
+						) : (
+							""
+						)}
 					</Col>
 				</Row>
 				<Row>
