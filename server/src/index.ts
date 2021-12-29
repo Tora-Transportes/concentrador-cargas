@@ -23,10 +23,10 @@ app.use(ErrorMiddleware);
 const server = https.createServer(
   {
     key: fs.readFileSync(
-      path.resolve(__dirname, "..", "certificates", "server.key")
+      path.resolve(__dirname, "..", "certificates", "tora.key")
     ),
     cert: fs.readFileSync(
-      path.resolve(__dirname, "..", "certificates", "server.cert")
+      path.resolve(__dirname, "..", "certificates", "tora.crt")
     ),
   },
   app
