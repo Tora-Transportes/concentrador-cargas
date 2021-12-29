@@ -13,6 +13,8 @@ import useLocalstorage from "../../Components/useLocalstorage";
 import factoryReducerCargas from "../../../hooks/storageCargas/factoryReducerCargas";
 import io from "../../../services/socket";
 
+import CollapseHint from "../../Components/CollapseHint";
+
 function reducerActiveColumns(state, action) {
 	const index = state.findIndex((i) => i.name === action.name);
 	let before;
@@ -133,18 +135,6 @@ function Visualizar() {
 			description: "Tipo Carga",
 			selector: (row) => row.tipo_carga,
 		},
-		// {
-		// 	name: "e_lote",
-		// 	description: "Lote ?",
-		// 	selector: (row) => (row.e_lote ? "Sim" : "Não"),
-		// 	Filter: (props) => (
-		// 		<Form.Select {...props}>
-		// 			<option></option>
-		// 			<option value="1">Sim</option>
-		// 			<option value="0">Não</option>
-		// 		</Form.Select>
-		// 	),
-		// },
 		{
 			name: "canal_comunicacao",
 			description: "Canal comunicação",
@@ -202,19 +192,23 @@ function Visualizar() {
 		{
 			name: "acessorios_requisitos",
 			description: "Acessórios e requisitos",
-			selector: (row) => row.acessorios_requisitos || "",
+			selector: (row) => (
+				<CollapseHint text={row.acessorios_requisitos || ""} />
+			),
 			Filter: () => null,
 		},
 		{
 			name: "informacoes_restritivas",
 			description: "Informações restritivas",
-			selector: (row) => row.informacoes_restritivas || "",
+			selector: (row) => (
+				<CollapseHint text={row.informacoes_restritivas || ""} />
+			),
 			Filter: () => null,
 		},
 		{
 			name: "observacao",
 			description: "Observações",
-			selector: (row) => row.observacao || "",
+			selector: (row) => <CollapseHint text={row.observacao || ""} />,
 			Filter: () => null,
 		},
 		{
