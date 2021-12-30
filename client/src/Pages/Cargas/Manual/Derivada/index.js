@@ -28,7 +28,7 @@ function Manual() {
 	const formik = useFormik({
 		initialValues: {
 			responsavel_cadastro: String(getClaims().name),
-			id: "M-" + new Date().getTime(),
+			id: "(Vai ser auto gerado)",
 			e_lote: false,
 			cliente: "",
 			destino_carga: "",

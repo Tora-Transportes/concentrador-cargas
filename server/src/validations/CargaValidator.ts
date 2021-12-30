@@ -43,6 +43,7 @@ export function factoryCargaValidator() {
       ),
     fk_lote_pai: yup.string().nullable(),
     fk_situacao: yup.number(),
+    data_atualizacao: yup.date().notRequired(),
   });
 
   return cargaValidator;

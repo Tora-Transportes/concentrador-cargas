@@ -8,6 +8,7 @@ import AppError from "../../models/AppError";
 import { ServiceDistanceLocations } from "../../services/ServiceDistanceLocations";
 import TokenAd from "../../models/TokenAd";
 import TextUtils from "../../Utils/text";
+import DateUtils from "../../Utils/date";
 
 import xlsx from "xlsx";
 import { IVeiculoRepository } from "../../repositories/VeiculoRepository";
@@ -38,7 +39,7 @@ export class UseCaseAddCarga {
       stripUnknown: true,
     });
 
-    const currentDate = new Date();
+    const currentDate = DateUtils.getCurrentDate();
     carga.data_atualizacao = currentDate;
     carga.data_cadastro = currentDate;
     carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
@@ -52,7 +53,6 @@ export class UseCaseAddCarga {
       }
     }
 
-    console.log(carga.id);
     const cargasCadastrada = await this.cargaRepository.index(carga.id);
 
     if (cargasCadastrada) {
@@ -105,7 +105,7 @@ export class UseCaseAddCargaDerivada {
       stripUnknown: true,
     });
 
-    const currentDate = new Date();
+    const currentDate = DateUtils.getCurrentDate();
     carga.data_atualizacao = currentDate;
     carga.data_cadastro = currentDate;
     carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
@@ -149,6 +149,7 @@ export class UseCaseAddCargaDerivada {
     await this.cargaRepository.update(lotePai.id, {
       ...novoPai,
       quantidade_atual: quantidadeRestante,
+      data_atualizacao: DateUtils.getCurrentDate(),
     });
     this.notifyAll({
       name: "@carga-create",
@@ -184,7 +185,7 @@ export class UseCaseUpdateCarga {
       stripUnknown: true,
     });
 
-    const currentDate = new Date();
+    const currentDate = DateUtils.getCurrentDate();
     carga.data_atualizacao = currentDate;
     carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
 
@@ -321,7 +322,6 @@ export class UseCaseUpdateCarga {
     const cargaOficial = validator.cast(
       {
         ...carga,
-        data_atualizacao: currentDate,
         janela_entrega: e_lote ? null : janela_entrega,
         janela_coleta: e_lote ? null : janela_coleta,
       },
@@ -334,9 +334,11 @@ export class UseCaseUpdateCarga {
     if (cargaOficial.fk_situacao === ECargaStatus.CARGA_CANCELADA) {
       await this.serviceSit.cancelar([cargaOficial]);
     }
-    await this.cargaRepository.update(cargaOficial.id, cargaOficial);
 
-    await this.cargaRepository.update(cargaOficial.id, cargaOficial);
+    await this.cargaRepository.update(cargaOficial.id, {
+      ...cargaOficial,
+      data_atualizacao: currentDate,
+    });
     this.notifyAll({
       name: "@carga-update",
       details: await this.cargaRepository.index(carga.id),
@@ -390,7 +392,7 @@ export class UseCaseDeleteCarga {
       ...validator.cast(carga, { stripUnknown: true }),
       ativo: 0,
       usuario,
-      data_atualizacao: new Date(),
+      data_atualizacao: DateUtils.getCurrentDate(),
     };
 
     await this.cargaRepository.update(carga.id, cargaAtualizada as ICarga);
@@ -489,7 +491,7 @@ export class UseCaseImportCarga {
     );
 
     const validator = factoryCargaValidator();
-    const timestamp = new Date();
+    const timestamp = DateUtils.getCurrentDate();
     const cargas = await Promise.all(
       jsonSheet.map(async (row: Record<string, any>): Promise<ICarga> => {
         const clone: ICarga = {

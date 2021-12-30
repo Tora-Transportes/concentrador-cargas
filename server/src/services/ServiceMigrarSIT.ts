@@ -1,6 +1,7 @@
 import { ICarga } from "../models/ICargas";
 import database from "../database";
 import { IServiceSit } from "../domain/UseCaseCarga/entities";
+import DateUtils from "../Utils/date";
 
 class ServiceMigrarSit implements IServiceSit {
   async consultaVeiculo(placa: string) {
@@ -74,7 +75,7 @@ class ServiceMigrarSit implements IServiceSit {
 
     let dataAtualizacao = new Date(carga.data_atualizacao || "");
     if (isNaN(Number(dataAtualizacao))) {
-      dataAtualizacao = new Date();
+      dataAtualizacao = DateUtils.getCurrentDate();
     }
 
     return {
@@ -104,7 +105,7 @@ class ServiceMigrarSit implements IServiceSit {
       HORA_PROGRAMACAO: dataAtualizacao,
       DATA_PROGRAMACAO: dataAtualizacao,
       DATA_HORA_PROGR: dataAtualizacao,
-      DATA_HORAINSERCAOSIT: new Date(),
+      DATA_HORAINSERCAOSIT: DateUtils.getCurrentDate(),
 
       COD_IBGE_ORI: ibgeOrigem?.codigo_ibge,
       COD_IBGE_DES: ibgeDestino?.codigo_ibge,

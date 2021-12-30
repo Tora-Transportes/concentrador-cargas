@@ -1,5 +1,6 @@
 import database from "../database";
 import jwt_decode from "jwt-decode";
+import DateUtils from "../Utils/date";
 
 export interface IMessageLog {
   token: string;
@@ -20,7 +21,7 @@ class ServiceLogsSingleton {
     } catch (error) {
       oid = null;
     }
-    const timestamp = new Date().getTime();
+    const timestamp = DateUtils.getCurrentDate().getTime();
     await database("con_logs").insert({ ...message, timestamp, oid });
   }
 }
