@@ -77,8 +77,10 @@ function Visualizar() {
 			dispatchCargas({ type: "UPDATE_CARGA", payload });
 		};
 		const actionCargasDelete = (payload) => {
-			setTotalRegisters((old) => old - 1);
-			dispatchCargas({ type: "DELETE_CARGA", payload });
+			if (!payload.e_lote) {
+				setTotalRegisters((old) => old - 1);
+				dispatchCargas({ type: "DELETE_CARGA", payload });
+			}
 		};
 		io.on("@carga-create", actionCargasCreate);
 		io.on("@carga-update", actionCargasUpdate);
