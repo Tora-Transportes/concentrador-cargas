@@ -1,6 +1,6 @@
 DROP table "con_cargas";
-DROP table "con_usuarios";
 DROP table "con_usuarios_permissoes";
+DROP table "con_usuarios";
 DROP sequence "seq_con_produtos";
 DROP table "con_produtos";
 DROP TABLE "con_logs";
