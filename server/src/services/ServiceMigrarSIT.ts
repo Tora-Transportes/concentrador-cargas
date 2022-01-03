@@ -79,7 +79,7 @@ class ServiceMigrarSit implements IServiceSit {
     }
 
     return {
-      FIL_COD: 26,
+      FIL_COD: 157,
       STF_COD: 19,
       COD_EMPRESA_SAP: "2000",
       COD_AGENDAMENTO_ATS: carga.id,
