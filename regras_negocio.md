@@ -4,14 +4,12 @@
 
 ### GERAL
 - Não é possível cadastrar carga sem:
-    - id
     - e_lote
     - cliente
     - quantidade
     - unidade_medida 
     - canal_comunicacao
     - responsavel_cadastro
-- Não é possível cadastrar carga com id repetido
 - Não é possível excluir carga sem a permissao CADASTRAR_PRODUTOS
 - Não é possivel registrar uma placa sem motorista vinculado
 - Carga nao pode ser movimentada apos ser cancelada
@@ -25,6 +23,7 @@
 |2|AGUARDANDO APROVACAO DO GR|
 |3|VEICULO APROVADO|
 |4|VEICULO REPROVADO|
+|5|CARGA CANCELADA|
 
 - Não é possível atualizar o fk_situacao da carga para 3 ou 2 sem uma placa
 - Ao modificar o campo placa do veiculo fk_situacao deve ser movido para 2 caso tenha placa e 1 caso esteja sem a placa
