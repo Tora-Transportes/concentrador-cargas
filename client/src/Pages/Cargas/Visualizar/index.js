@@ -149,7 +149,7 @@ function Visualizar() {
 		{
 			name: "data_cadastro",
 			description: "Data Cadastro",
-			selector: (row) => formatDate(row.data_cadastro),
+			selector: (row) => formatDateAndHour(row.data_cadastro),
 			Filter: (props) => <Form.Control type="date" {...props} />,
 		},
 		{
