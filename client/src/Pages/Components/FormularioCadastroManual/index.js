@@ -61,6 +61,18 @@ function FormularioCadastroManual({
 			</Row>
 			<Row>
 				<Col>
+					{formik.values.documento_transporte && (
+						<FloatingLabel label="Documento de transporte" className="mb-3">
+							<Form.Control
+								value={formik.values.documento_transporte}
+								readOnly
+							/>
+						</FloatingLabel>
+					)}
+				</Col>
+			</Row>
+			<Row>
+				<Col>
 					<hr />
 					<Form.Group className="mb-3">
 						*É Lote ?{" "}
