@@ -50,6 +50,6 @@
     "prebuild": "if exist build rmdir build /S /Q",
     "build": "tsc",
     "postbuild": "copy .env.example build\\.env&&xcopy certificates\\* build\\certificates\\* /E/H&&copy pm2.config.js build\\pm2.config.js",
-    "test": "jest --forceExit --detectOpenHandles --no-cache"
+    "test": "jest --forceExit --detectOpenHandles --no-cache --testPathIgnorePatterns=build"
   }
 }
