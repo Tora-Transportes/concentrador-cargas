@@ -73,7 +73,7 @@ async function factoryCarga(row, cnpjResolver) {
     return {
         cliente: await cnpjResolver(cliente),
         e_lote: false,
-        origem_carga: row.origem ? normalizeText(`BRASIL/${origem}`) : null,
+        origem_carga: "BRASIL/MG/SANTA LUZIA", // row.origem ? normalizeText(`BRASIL/${origem}`) : null,
         destino_carga: row.uf_destino && row.municipio_destino ? normalizeText(`BRASIL/${row.uf_destino}/${row.municipio_destino}`): null,
         data_entrega: null,
         data_coleta: null,
