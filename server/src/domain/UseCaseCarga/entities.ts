@@ -322,6 +322,7 @@ export class UseCaseUpdateCarga {
     const cargaOficial = validator.cast(
       {
         ...carga,
+        documento_transporte: cargaCadastrada.documento_transporte,
         janela_entrega: e_lote ? null : janela_entrega,
         janela_coleta: e_lote ? null : janela_coleta,
       },
