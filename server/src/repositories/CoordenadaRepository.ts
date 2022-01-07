@@ -10,6 +10,8 @@ export class CoordenadaRepository {
       cidade_atual,
       ultima_viagem_origem,
       ultima_viagem_destino,
+      documento,
+      tipo_documento,
     } = filter;
     const currentPage = Number(page ?? 1) < 1 ? 1 : Number(page ?? 1);
     const query = database("con_coordenadas_veiculos").select("*");
@@ -23,6 +25,8 @@ export class CoordenadaRepository {
       cidade_atual,
       ultima_viagem_origem,
       ultima_viagem_destino,
+      documento,
+      tipo_documento,
     })) {
       if (value !== undefined && key) {
         query.where(key, value);

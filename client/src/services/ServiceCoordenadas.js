@@ -10,6 +10,8 @@ class ServiceCoordenadas {
 		codigo_veiculo,
 		ultima_viagem_origem,
 		ultima_viagem_destino,
+		documento,
+		tipo_documento,
 	}) {
 		return api.get("/coordenadas", {
 			params: {
@@ -22,6 +24,8 @@ class ServiceCoordenadas {
 				codigo_veiculo,
 				ultima_viagem_origem,
 				ultima_viagem_destino,
+				documento,
+				tipo_documento,
 			},
 		});
 	}
@@ -35,6 +39,8 @@ class ServiceCoordenadas {
 		codigo_veiculo,
 		ultima_viagem_origem,
 		ultima_viagem_destino,
+		documento,
+		tipo_documento,
 	}) {
 		return api.get("/relatorio/coordenadas", {
 			responseType: "arraybuffer",
@@ -47,6 +53,8 @@ class ServiceCoordenadas {
 				codigo_veiculo,
 				ultima_viagem_origem,
 				ultima_viagem_destino,
+				documento,
+				tipo_documento,
 			},
 		});
 	}

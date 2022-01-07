@@ -8,3 +8,8 @@ create table "con_coordenadas_veiculos" (
     "ultima_viagem_origem" VARCHAR(100),
     "ultima_viagem_destino" VARCHAR(100)
 );
+
+alter table "con_coordenadas_veiculos" add (
+    "documento" varchar(30),
+    "tipo_documento" varchar(5)
+);

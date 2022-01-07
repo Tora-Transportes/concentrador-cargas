@@ -5,6 +5,9 @@ import ViewMonitoramento from "./view";
 import ServiceCoordenadas from "src/services/ServiceCoordenadas";
 import factoryReducerCargas from "../../hooks/storageCargas/factoryReducerCargas";
 
+import { Form } from "react-bootstrap";
+import { SiGooglemaps } from "react-icons/si";
+
 function RotasPendentes() {
 	const defaultCargas = {
 		page: 1,
@@ -17,11 +20,6 @@ function RotasPendentes() {
 	const [cargas, dispatchCargas] = useReducer(cargasReducer, defaultCargas);
 
 	const columns = [
-		{
-			name: "mct",
-			description: "MCT",
-			selector: (row) => row.mct,
-		},
 		{
 			name: "placa",
 			description: "Placa",
@@ -40,7 +38,8 @@ function RotasPendentes() {
 					rel="noopener noreferrer"
 					className="text-decoration-none"
 				>
-					{row.cidade_atual}
+					{row.cidade_atual + " "}
+					<SiGooglemaps />
 				</a>
 			),
 		},
@@ -53,6 +52,28 @@ function RotasPendentes() {
 			name: "ultima_viagem_destino",
 			description: "Destino ultima viagem",
 			selector: (row) => row.ultima_viagem_destino,
+		},
+		{
+			name: "documento",
+			description: "Documento",
+			selector: (row) => row.documento,
+		},
+		{
+			name: "tipo_documento",
+			description: "Tipo Documento",
+			selector: (row) => row.tipo_documento,
+			Filter: (parameters) => (
+				<Form.Select {...parameters}>
+					<option></option>
+					<option value="DVF">DVF</option>
+					<option value="RPA">RPA</option>
+				</Form.Select>
+			),
+		},
+		{
+			name: "mct",
+			description: "MCT",
+			selector: (row) => row.mct,
 		},
 	];
 

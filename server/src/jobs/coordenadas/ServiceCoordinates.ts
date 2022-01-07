@@ -25,9 +25,10 @@ class ServiceCoordinates {
       SELECT CID_ORI,
       CID_DES,
       COD_CAVALO AS VEI_COD,
+      T1.NUM_DVF AS NUM_DOC,
       (CORI.CID_NOM || ' - ' || EORI.UF_SIGLA) AS ORIGEM,
       (CDES.CID_NOM || ' - ' || EDES.UF_SIGLA) AS DESTINO
-      FROM (SELECT ROW_NUMBER() OVER (PARTITION BY COD_CAVALO ORDER BY NUM_DVF) as POS, DVF.CID_ORI, DVF.CID_DES, DVF.COD_CAVALO FROM DVF) T1 
+      FROM (SELECT ROW_NUMBER() OVER (PARTITION BY COD_CAVALO ORDER BY NUM_DVF) as POS, DVF.CID_ORI, DVF.CID_DES, DVF.COD_CAVALO, DVF.NUM_DVF FROM DVF) T1 
       JOIN CIDADE CORI ON CORI.CID_COD = T1.CID_ORI
       JOIN ESTADO EORI ON CORI.UF_COD = EORI.UF_COD
       JOIN CIDADE CDES ON CDES.CID_COD = T1.CID_DES
@@ -45,9 +46,10 @@ class ServiceCoordinates {
       SELECT T1.CID_COD AS CID_ORI,
       CID_CID_COD AS CID_DES,
       T1.VEI_COD,
+      T1.RPA_NUM AS NUM_DOC,
       (CORI.CID_NOM || ' - ' || EORI.UF_SIGLA) AS ORIGEM,
       (CDES.CID_NOM || ' - ' || EDES.UF_SIGLA) AS DESTINO
-      FROM (SELECT ROW_NUMBER() OVER (PARTITION BY VEI_COD ORDER BY RPA_NUM) as POS, RPA.CID_COD, RPA.CID_CID_COD, RPA.VEI_COD FROM RPA) T1
+      FROM (SELECT ROW_NUMBER() OVER (PARTITION BY VEI_COD ORDER BY RPA_NUM) as POS, RPA.CID_COD, RPA.CID_CID_COD, RPA.VEI_COD, RPA.RPA_NUM FROM RPA) T1
       JOIN CIDADE CORI ON CORI.CID_COD = T1.CID_COD
       JOIN ESTADO EORI ON CORI.UF_COD = EORI.UF_COD
       JOIN CIDADE CDES ON CDES.CID_COD = T1.CID_CID_COD
@@ -88,25 +90,6 @@ class ServiceCoordinates {
     console.time("Popular tabela");
     const data = await this.list();
     const cidadesVazias = data.filter((i) => !i.cidade_atual);
-    console.log("tenho que buscar ", cidadesVazias.length, " cidades");
-
-    // for (const i of cidadesVazias) {
-    //   const local = await this.searchInApi(i.lat, i.lon);
-    //   i.cidade_atual = TextUtils.normalize(local.trim().toUpperCase());
-    //   if (i.cidade_atual.startsWith(" - ")) {
-    //     console.log(
-    //       `Erro ao baixar informacoes do ${local} e saiu ${i.cidade_atual}`,
-    //       i
-    //     );
-    //   }
-
-    // await mssqlCoordenadas("MAXPOSITION")
-    //   .where("PLACA", i.placa)
-    //   .where("MCT", i.mct)
-    //   .update({
-    //     CIDADE_UF: i.cidade_atual,
-    //   });
-    // }
 
     console.log("Atualizando cache local");
     await database("con_coordenadas_veiculos").delete();
@@ -169,11 +152,15 @@ class ServiceCoordinates {
     }
 
     const veiculos = coordenadas.map((veiculo: Record<string, any>) => {
-      const arrayViagem = ["A", "C"].includes(
+      const tipoDocumento = ["A", "C"].includes(
         tradutorCategoriaVeiculo.get(veiculo.placa)
       )
-        ? lastTripsAutonomous
-        : lastTripsFleet;
+        ? "RPA"
+        : tradutorCategoriaVeiculo.get(veiculo.placa)
+        ? "DVF"
+        : null;
+      const arrayViagem =
+        tipoDocumento === "RPA" ? lastTripsAutonomous : lastTripsFleet;
       const codigoVeiculo = tradutorCodigosPlacas.get(veiculo.placa);
       const ultimaViagem = arrayViagem.find(
         (i: Record<string, any>) => i.VEI_COD === codigoVeiculo
@@ -183,10 +170,18 @@ class ServiceCoordinates {
         placa: veiculo.placa,
         lat: veiculo.lat ?? null,
         lon: veiculo.lon ?? null,
-        cidade_atual: veiculo.cidade_uf?.trim() ?? null,
+        documento: ultimaViagem?.NUM_DOC ?? null,
+        tipo_documento: tipoDocumento,
+        cidade_atual: veiculo.cidade_uf
+          ? TextUtils.normalize(veiculo.cidade_uf).trim()
+          : null,
         codigo_veiculo: codigoVeiculo ?? null,
-        ultima_viagem_origem: ultimaViagem?.ORIGEM ?? null,
-        ultima_viagem_destino: ultimaViagem?.DESTINO ?? null,
+        ultima_viagem_origem: ultimaViagem?.ORIGEM
+          ? TextUtils.normalize(ultimaViagem.ORIGEM)
+          : null,
+        ultima_viagem_destino: ultimaViagem?.DESTINO
+          ? TextUtils.normalize(ultimaViagem.DESTINO)
+          : null,
       };
     });
     return veiculos;
@@ -194,12 +189,12 @@ class ServiceCoordinates {
 }
 
 export default async function () {
-  cron.schedule("*/10 * * * *", async () => {
+  async function job() {
     console.log("--------------JOB COORDENADAS--------------");
     console.time("JOB COORDENADAS");
     const service = new ServiceCoordinates();
     const cidadesVazias = await service.populateLocalTable();
-
+    console.log("tenho que buscar ", cidadesVazias.length, " cidades");
     console.log(
       "Buscando cidades na api e salvando na base de dados de tecnologia"
     );
@@ -248,5 +243,8 @@ export default async function () {
     console.timeEnd("AUTOCOMPLETE - Cidades destino");
     console.timeEnd("JOB COORDENADAS");
     console.log("------------FIM JOB COORDENADAS------------");
-  });
+  }
+
+  // job();
+  cron.schedule("*/10 * * * *", job);
 }
