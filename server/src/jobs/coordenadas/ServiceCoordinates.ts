@@ -1,0 +1,252 @@
+import database, { mssqlCoordenadas } from "../../database";
+import axios from "axios";
+import cron from "node-cron";
+import TextUtils from "../../Utils/text";
+
+class ServiceCoordinates {
+  async getVehiclesCoodinates() {
+    return mssqlCoordenadas("MAXPOSITION")
+      .select([
+        "MCT as mct",
+        "PLACA as placa",
+        "LAT as lat",
+        "LON as lon",
+        "CIDADE_UF as  cidade_uf",
+      ])
+      .whereNotNull("PLACA")
+      .andWhereRaw("YEAR(DT_ALTERACAO) >= '2022'")
+      .orderBy(["PLACA", "MCT"]);
+  }
+
+  async loadLastTripFleet(vehicles: number[]) {
+    const parameters = vehicles.map(() => "?").join(", ");
+    return database.raw(
+      `
+      SELECT CID_ORI,
+      CID_DES,
+      COD_CAVALO AS VEI_COD,
+      (CORI.CID_NOM || ' - ' || EORI.UF_SIGLA) AS ORIGEM,
+      (CDES.CID_NOM || ' - ' || EDES.UF_SIGLA) AS DESTINO
+      FROM (SELECT ROW_NUMBER() OVER (PARTITION BY COD_CAVALO ORDER BY NUM_DVF) as POS, DVF.CID_ORI, DVF.CID_DES, DVF.COD_CAVALO FROM DVF) T1 
+      JOIN CIDADE CORI ON CORI.CID_COD = T1.CID_ORI
+      JOIN ESTADO EORI ON CORI.UF_COD = EORI.UF_COD
+      JOIN CIDADE CDES ON CDES.CID_COD = T1.CID_DES
+      JOIN ESTADO EDES ON CDES.UF_COD = EDES.UF_COD
+      WHERE T1.POS = 1 AND COD_CAVALO IN (${parameters})
+      `,
+      vehicles
+    );
+  }
+
+  async loadLastTripAutonomous(vehicles: number[]) {
+    const parameters = vehicles.map(() => "?").join(", ");
+    return database.raw(
+      `
+      SELECT T1.CID_COD AS CID_ORI,
+      CID_CID_COD AS CID_DES,
+      T1.VEI_COD,
+      (CORI.CID_NOM || ' - ' || EORI.UF_SIGLA) AS ORIGEM,
+      (CDES.CID_NOM || ' - ' || EDES.UF_SIGLA) AS DESTINO
+      FROM (SELECT ROW_NUMBER() OVER (PARTITION BY VEI_COD ORDER BY RPA_NUM) as POS, RPA.CID_COD, RPA.CID_CID_COD, RPA.VEI_COD FROM RPA) T1
+      JOIN CIDADE CORI ON CORI.CID_COD = T1.CID_COD
+      JOIN ESTADO EORI ON CORI.UF_COD = EORI.UF_COD
+      JOIN CIDADE CDES ON CDES.CID_COD = T1.CID_CID_COD
+      JOIN ESTADO EDES ON CDES.UF_COD = EDES.UF_COD
+      WHERE T1.POS = 1 AND VEI_COD IN (${parameters})
+      `,
+      vehicles
+    );
+  }
+
+  async searchInApi(latitude: number, longitude: number) {
+    const data = (
+      await axios.get("https://nominatim.openstreetmap.org/reverse", {
+        params: {
+          format: "json",
+          lat: latitude,
+          lon: longitude,
+        },
+      })
+    ).data;
+
+    const city = TextUtils.normalize(
+      data.address.town ? data.address.town : data.address.state
+    ).trim();
+    const state = TextUtils.normalize(data.address.state).trim();
+
+    const tuple = await database("con_localizacoes")
+      .first()
+      .where("estado", state)
+      .select("sigla_estado");
+
+    const siglaEstado = tuple ? tuple.sigla_estado : "NC";
+
+    return `${city} - ${siglaEstado}`;
+  }
+
+  async populateLocalTable() {
+    console.time("Popular tabela");
+    const data = await this.list();
+    const cidadesVazias = data.filter((i) => !i.cidade_atual);
+    console.log("tenho que buscar ", cidadesVazias.length, " cidades");
+
+    // for (const i of cidadesVazias) {
+    //   const local = await this.searchInApi(i.lat, i.lon);
+    //   i.cidade_atual = TextUtils.normalize(local.trim().toUpperCase());
+    //   if (i.cidade_atual.startsWith(" - ")) {
+    //     console.log(
+    //       `Erro ao baixar informacoes do ${local} e saiu ${i.cidade_atual}`,
+    //       i
+    //     );
+    //   }
+
+    // await mssqlCoordenadas("MAXPOSITION")
+    //   .where("PLACA", i.placa)
+    //   .where("MCT", i.mct)
+    //   .update({
+    //     CIDADE_UF: i.cidade_atual,
+    //   });
+    // }
+
+    console.log("Atualizando cache local");
+    await database("con_coordenadas_veiculos").delete();
+    await database("con_coordenadas_veiculos").insert(data);
+    console.timeEnd("Popular tabela");
+
+    return cidadesVazias;
+  }
+
+  async list() {
+    const coordenadas = await this.getVehiclesCoodinates();
+    const totalPages = Math.ceil(coordenadas.length / 1000) || 1;
+
+    const accumulatorPromise = [];
+    for (let page = 1; page <= totalPages; page++) {
+      const start = (page - 1) * 1000;
+      const end = start + 999;
+
+      const queryTipoVeiculo = await database("VEICULO")
+        .select([
+          "VEI_PLACA as placa",
+          "VEI_CATEGORIA as categoria",
+          "VEI_COD as codigo_veiculo",
+        ])
+        .whereIn(
+          "VEI_PLACA",
+          coordenadas.slice(start, end).map((i) => i.placa)
+        );
+      accumulatorPromise.push(queryTipoVeiculo);
+    }
+
+    const categorias = [];
+    for (const i of await Promise.all(accumulatorPromise)) {
+      categorias.push(...i);
+    }
+
+    const veiculosAutonomos = [];
+    const veiculosFrotas = [];
+    for (const i of categorias) {
+      if (i.categoria === "A" || i.categoria === "C") {
+        veiculosAutonomos.push(i.codigo_veiculo);
+      } else if (i.categoria === "F") {
+        veiculosFrotas.push(i.codigo_veiculo);
+      } else {
+        console.log("CATEGORIA DE VEICULO QUE NAO DEVERIA APARECER", i);
+      }
+    }
+    const [lastTripsFleet, lastTripsAutonomous] = await Promise.all([
+      this.loadLastTripFleet(veiculosFrotas),
+      this.loadLastTripAutonomous(veiculosAutonomos),
+    ]);
+
+    const tradutorCodigosPlacas = new Map();
+    const tradutorCategoriaVeiculo = new Map();
+    for (const i of categorias) {
+      tradutorCategoriaVeiculo.set(i.placa, i.categoria);
+      tradutorCategoriaVeiculo.set(i.codigo_veiculo, i.categoria);
+      tradutorCodigosPlacas.set(i.placa, i.codigo_veiculo);
+      tradutorCodigosPlacas.set(i.codigo_veiculo, i.placa);
+    }
+
+    const veiculos = coordenadas.map((veiculo: Record<string, any>) => {
+      const arrayViagem = ["A", "C"].includes(
+        tradutorCategoriaVeiculo.get(veiculo.placa)
+      )
+        ? lastTripsAutonomous
+        : lastTripsFleet;
+      const codigoVeiculo = tradutorCodigosPlacas.get(veiculo.placa);
+      const ultimaViagem = arrayViagem.find(
+        (i: Record<string, any>) => i.VEI_COD === codigoVeiculo
+      );
+      return {
+        mct: veiculo.mct,
+        placa: veiculo.placa,
+        lat: veiculo.lat ?? null,
+        lon: veiculo.lon ?? null,
+        cidade_atual: veiculo.cidade_uf?.trim() ?? null,
+        codigo_veiculo: codigoVeiculo ?? null,
+        ultima_viagem_origem: ultimaViagem?.ORIGEM ?? null,
+        ultima_viagem_destino: ultimaViagem?.DESTINO ?? null,
+      };
+    });
+    return veiculos;
+  }
+}
+
+export default async function () {
+  cron.schedule("*/10 * * * *", async () => {
+    console.log("--------------JOB COORDENADAS--------------");
+    console.time("JOB COORDENADAS");
+    const service = new ServiceCoordinates();
+    const cidadesVazias = await service.populateLocalTable();
+
+    console.log(
+      "Buscando cidades na api e salvando na base de dados de tecnologia"
+    );
+    console.time("AUTOCOMPLETE - Cidades destino");
+    await new Promise((resolve, reject) => {
+      let requestInProgress = false;
+      const interval = setInterval(async () => {
+        if (requestInProgress) return;
+        if (cidadesVazias.length === 0) {
+          clearInterval(interval);
+          return resolve(true);
+        }
+        const cidade = cidadesVazias.pop();
+        if (!cidade) {
+          throw new Error("Impossivel");
+        }
+
+        try {
+          requestInProgress = true;
+          cidade.cidade_atual = await service.searchInApi(
+            cidade.lat,
+            cidade.lon
+          );
+          await Promise.all([
+            mssqlCoordenadas("MAXPOSITION")
+              .where("PLACA", cidade.placa)
+              .where("MCT", cidade.mct)
+              .update({
+                CIDADE_UF: cidade.cidade_atual,
+              }),
+            database("con_coordenadas_veiculos")
+              .where("placa", cidade.placa)
+              .where("mct", cidade.mct)
+              .update({
+                cidade_atual: cidade.cidade_atual,
+              }),
+          ]);
+          console.log(`Busquei e retornei ${cidade.cidade_atual}`);
+          requestInProgress = false;
+        } catch (error) {
+          requestInProgress = false;
+          console.error("Erro no job", error, cidade);
+        }
+      }, 1000);
+    });
+    console.timeEnd("AUTOCOMPLETE - Cidades destino");
+    console.timeEnd("JOB COORDENADAS");
+    console.log("------------FIM JOB COORDENADAS------------");
+  });
+}

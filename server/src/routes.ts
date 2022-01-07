@@ -13,6 +13,7 @@ import ProdutoController from "./controllers/ProdutoController";
 import RecomendacoesController from "./controllers/RecomendacoesController";
 import RotasController from "./controllers/RotasController";
 import SituacoesCargasController from "./controllers/SituacoesCargasController";
+import CoordenadasController from "./controllers/CoordenadaController";
 
 const routes = Router();
 
@@ -86,5 +87,8 @@ routes.get("/recomendacoes/organizacoes", RecomendacoesController.organizacoes);
 routes.get("/recomendacoes/locais", RecomendacoesController.cidadeEstados);
 
 routes.get("/situacoes/cargas", SituacoesCargasController.search);
+
+routes.get("/coordenadas", CoordenadasController.search);
+routes.get("/relatorio/coordenadas", CoordenadasController.export);
 
 export default routes;

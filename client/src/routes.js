@@ -13,6 +13,7 @@ import PermissoesUsuarios from "./Pages/Usuarios/Permissoes";
 import Produtos from "./Pages/Produtos";
 import RotasPendentes from "./Pages/Rotas/Pendentes";
 import SituacaoVeiculos from "./Pages/Veiculos/Pendentes";
+import CoordenadasVeiculos from "./Pages/Coordenadas";
 
 export default function AllRoutes() {
 	return (
@@ -40,6 +41,12 @@ export default function AllRoutes() {
 				<Route path="/produtos" exact component={Produtos} />
 				<Route path="/rotas/pendentes" exact component={RotasPendentes} />
 				<Route path="/veiculos/aprovacao" exact component={SituacaoVeiculos} />
+
+				<Route
+					path="/veiculos/coordenadas"
+					exact
+					component={CoordenadasVeiculos}
+				/>
 			</Switch>
 		</BrowserRouter>
 	);
