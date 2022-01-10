@@ -15,6 +15,7 @@ function RotasPendentes() {
 		results: [],
 	};
 	const cargasReducer = useCallback(factoryReducerCargas(defaultCargas), []);
+	const [totalRegisters, setTotalRegisters] = useState(0);
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [lastOptions, setLastOptions] = useState({});
 	const [cargas, dispatchCargas] = useReducer(cargasReducer, defaultCargas);
@@ -113,6 +114,7 @@ function RotasPendentes() {
 			});
 
 			setLoading(false);
+			setTotalRegisters(data.data.total_registers);
 			dispatchCargas({
 				type: "SET",
 				payload: { ...data.data, current_page: data.data.page },
@@ -130,6 +132,7 @@ function RotasPendentes() {
 				columns={columns}
 				data={cargas}
 				handleExportExcel={handleExportExcel}
+				totalRegisters={totalRegisters}
 			/>
 		</>
 	);

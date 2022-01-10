@@ -3,7 +3,13 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import { BsDownload } from "react-icons/bs";
 import TabelaCargas from "../Components/TabelaCargas";
 
-function ViewCoordenadas({ columns = [], get_data, data, handleExportExcel }) {
+function ViewCoordenadas({
+	columns = [],
+	get_data,
+	data,
+	handleExportExcel,
+	totalRegisters = 0,
+}) {
 	return (
 		<>
 			<Container className="text-center mb-5 mt-4">
@@ -16,6 +22,9 @@ function ViewCoordenadas({ columns = [], get_data, data, handleExportExcel }) {
 							Exportar <BsDownload />
 						</Button>
 					</Col>
+				</Row>
+				<Row>
+					<Col>Total de {totalRegisters} registros.</Col>
 				</Row>
 				<Row>
 					<TabelaCargas columns={columns} get_data={get_data} values={data} />

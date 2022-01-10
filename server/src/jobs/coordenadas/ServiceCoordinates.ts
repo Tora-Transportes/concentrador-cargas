@@ -2,6 +2,9 @@ import database, { mssqlCoordenadas } from "../../database";
 import axios from "axios";
 import cron from "node-cron";
 import TextUtils from "../../Utils/text";
+import ArrayUtils from "../../Utils/array";
+import fs from "fs";
+import path from "path";
 
 class ServiceCoordinates {
   async getVehiclesCoodinates() {
@@ -19,30 +22,39 @@ class ServiceCoordinates {
   }
 
   async loadLastTripFleet(vehicles: number[]) {
-    const parameters = vehicles.map(() => "?").join(", ");
-    return database.raw(
-      `
-      SELECT CID_ORI,
-      CID_DES,
-      COD_CAVALO AS VEI_COD,
-      T1.NUM_DVF AS NUM_DOC,
-      (CORI.CID_NOM || ' - ' || EORI.UF_SIGLA) AS ORIGEM,
-      (CDES.CID_NOM || ' - ' || EDES.UF_SIGLA) AS DESTINO
-      FROM (SELECT ROW_NUMBER() OVER (PARTITION BY COD_CAVALO ORDER BY NUM_DVF) as POS, DVF.CID_ORI, DVF.CID_DES, DVF.COD_CAVALO, DVF.NUM_DVF FROM DVF) T1 
-      JOIN CIDADE CORI ON CORI.CID_COD = T1.CID_ORI
-      JOIN ESTADO EORI ON CORI.UF_COD = EORI.UF_COD
-      JOIN CIDADE CDES ON CDES.CID_COD = T1.CID_DES
-      JOIN ESTADO EDES ON CDES.UF_COD = EDES.UF_COD
-      WHERE T1.POS = 1 AND COD_CAVALO IN (${parameters})
-      `,
-      vehicles
-    );
+    const outputVehicles: Array<any> = [];
+    for (const currentVehicles of ArrayUtils.splitIntoChunks(vehicles, 999)) {
+      const parameters = currentVehicles.map(() => "?").join(", ");
+      outputVehicles.push(
+        ...(await database.raw(
+          `
+        SELECT CID_ORI,
+        CID_DES,
+        COD_CAVALO AS VEI_COD,
+        T1.NUM_DVF AS NUM_DOC,
+        (CORI.CID_NOM || ' - ' || EORI.UF_SIGLA) AS ORIGEM,
+        (CDES.CID_NOM || ' - ' || EDES.UF_SIGLA) AS DESTINO
+        FROM (SELECT ROW_NUMBER() OVER (PARTITION BY COD_CAVALO ORDER BY NUM_DVF) as POS, DVF.CID_ORI, DVF.CID_DES, DVF.COD_CAVALO, DVF.NUM_DVF FROM DVF) T1 
+        JOIN CIDADE CORI ON CORI.CID_COD = T1.CID_ORI
+        JOIN ESTADO EORI ON CORI.UF_COD = EORI.UF_COD
+        JOIN CIDADE CDES ON CDES.CID_COD = T1.CID_DES
+        JOIN ESTADO EDES ON CDES.UF_COD = EDES.UF_COD
+        WHERE T1.POS = 1 AND COD_CAVALO IN (${parameters})
+        `,
+          currentVehicles
+        ))
+      );
+    }
+    return outputVehicles;
   }
 
   async loadLastTripAutonomous(vehicles: number[]) {
-    const parameters = vehicles.map(() => "?").join(", ");
-    return database.raw(
-      `
+    const outputVehicles: Array<any> = [];
+    for (const currentVehicles of ArrayUtils.splitIntoChunks(vehicles, 999)) {
+      const parameters = currentVehicles.map(() => "?").join(", ");
+      outputVehicles.push(
+        ...(await database.raw(
+          `
       SELECT T1.CID_COD AS CID_ORI,
       CID_CID_COD AS CID_DES,
       T1.VEI_COD,
@@ -56,11 +68,14 @@ class ServiceCoordinates {
       JOIN ESTADO EDES ON CDES.UF_COD = EDES.UF_COD
       WHERE T1.POS = 1 AND VEI_COD IN (${parameters})
       `,
-      vehicles
-    );
+          currentVehicles
+        ))
+      );
+    }
+    return outputVehicles;
   }
 
-  async searchInApi(latitude: number, longitude: number) {
+  async searchInApi(latitude: number, longitude: number, placa: string) {
     const data = (
       await axios.get("https://nominatim.openstreetmap.org/reverse", {
         params: {
@@ -199,7 +214,7 @@ export default async function () {
       "Buscando cidades na api e salvando na base de dados de tecnologia"
     );
     console.time("AUTOCOMPLETE - Cidades destino");
-    await new Promise((resolve, reject) => {
+    await new Promise((resolve) => {
       let requestInProgress = false;
       const interval = setInterval(async () => {
         if (requestInProgress) return;
@@ -216,7 +231,8 @@ export default async function () {
           requestInProgress = true;
           cidade.cidade_atual = await service.searchInApi(
             cidade.lat,
-            cidade.lon
+            cidade.lon,
+            cidade.placa
           );
           await Promise.all([
             mssqlCoordenadas("MAXPOSITION")
@@ -245,6 +261,5 @@ export default async function () {
     console.log("------------FIM JOB COORDENADAS------------");
   }
 
-  // job();
   cron.schedule("*/10 * * * *", job);
 }
