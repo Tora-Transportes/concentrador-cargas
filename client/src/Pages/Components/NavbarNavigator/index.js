@@ -77,6 +77,9 @@ function NavbarNavigator(props) {
 								<Link to="/veiculos/coordenadas">
 									<ListGroup.Item action>Coordenadas</ListGroup.Item>
 								</Link>
+								<Link to="/relatorios">
+									<ListGroup.Item action>Relatórios</ListGroup.Item>
+								</Link>
 								<Link to="/">
 									<ListGroup.Item
 										action

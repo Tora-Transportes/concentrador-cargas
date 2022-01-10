@@ -14,6 +14,7 @@ import RecomendacoesController from "./controllers/RecomendacoesController";
 import RotasController from "./controllers/RotasController";
 import SituacoesCargasController from "./controllers/SituacoesCargasController";
 import CoordenadasController from "./controllers/CoordenadaController";
+import RelatorioController from "./controllers/RelatorioController";
 
 const routes = Router();
 
@@ -90,5 +91,7 @@ routes.get("/situacoes/cargas", SituacoesCargasController.search);
 
 routes.get("/coordenadas", CoordenadasController.search);
 routes.get("/relatorio/coordenadas", CoordenadasController.export);
+
+routes.get("/relatorio/totalizadores", RelatorioController.gerarTotalizadores);
 
 export default routes;

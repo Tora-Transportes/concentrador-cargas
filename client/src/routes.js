@@ -14,6 +14,7 @@ import Produtos from "./Pages/Produtos";
 import RotasPendentes from "./Pages/Rotas/Pendentes";
 import SituacaoVeiculos from "./Pages/Veiculos/Pendentes";
 import CoordenadasVeiculos from "./Pages/Coordenadas";
+import RelatoriosMain from "./Pages/Relatorios/Totalizadores";
 
 export default function AllRoutes() {
 	return (
@@ -47,6 +48,7 @@ export default function AllRoutes() {
 					exact
 					component={CoordenadasVeiculos}
 				/>
+				<Route path="/relatorios" exact component={RelatoriosMain} />
 			</Switch>
 		</BrowserRouter>
 	);
