@@ -98,7 +98,8 @@ async function factoryCarga(row, cnpjResolver) {
         fk_situacao: 1,
         placa_veiculo: null,
         observacao_gr: null,
-        documento_transporte: row.documento_transporte
+        documento_transporte: row.documento_transporte,
+        fk_filial: 157
     }
 }
 

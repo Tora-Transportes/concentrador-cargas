@@ -13,3 +13,9 @@ alter table "con_coordenadas_veiculos" add (
     "documento" varchar(30),
     "tipo_documento" varchar(5)
 );
+
+alter table "con_cargas" add (
+    "fk_filial" INTEGER
+);
+
+update "con_cargas" set "fk_filial" = 157;

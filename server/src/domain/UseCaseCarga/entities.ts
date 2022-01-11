@@ -116,6 +116,7 @@ export class UseCaseAddCargaDerivada {
       throw new AppError("O lote pai informado não existe", 400);
     }
     carga.unidade_medida = lotePai.unidade_medida;
+    carga.fk_filial = lotePai.fk_filial;
 
     const cargasCadastrada = await this.cargaRepository.index(carga.id);
     if (cargasCadastrada) {

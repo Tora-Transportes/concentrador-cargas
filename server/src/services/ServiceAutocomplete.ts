@@ -66,6 +66,10 @@ class ServiceAutocomplete {
     const veiculoRepository = new VeiculoRepository();
     return veiculoRepository.search(placa);
   }
+
+  async buscarFiliais() {
+    return database("FILIAL").select(["FIL_COD", "FIL_DSC"]).orderBy("FIL_DSC");
+  }
 }
 
 export default ServiceAutocomplete;

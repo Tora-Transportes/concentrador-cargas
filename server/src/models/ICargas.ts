@@ -33,4 +33,6 @@ export interface ICarga {
   observacao_gr?: string | null;
 
   documento_transporte?: string | null;
+
+  fk_filial?: number;
 }

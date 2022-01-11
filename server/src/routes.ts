@@ -86,6 +86,7 @@ routes.get("/veiculos/:placa", RotasController.listVehicles);
 
 routes.get("/recomendacoes/organizacoes", RecomendacoesController.organizacoes);
 routes.get("/recomendacoes/locais", RecomendacoesController.cidadeEstados);
+routes.get("/recomendacoes/filiais", RecomendacoesController.filiais);
 
 routes.get("/situacoes/cargas", SituacoesCargasController.search);
 

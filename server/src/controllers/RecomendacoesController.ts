@@ -13,6 +13,12 @@ class RecomendacoesController {
     const cidadeEstados = await service.recomendarLocalizacao(req.query);
     return res.json({ data: cidadeEstados });
   }
+
+  async filiais(req: Request, res: Response) {
+    const service = new ServiceAutocomplete();
+    const filiais = await service.buscarFiliais();
+    return res.json({ data: filiais });
+  }
 }
 
 export default new RecomendacoesController();

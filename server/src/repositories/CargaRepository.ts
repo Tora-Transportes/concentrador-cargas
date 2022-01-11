@@ -22,6 +22,7 @@ export class CargaRepository {
         "con_cargas.*",
         "con_situacoes_cargas.descricao as situacao.descricao",
         "con_situacoes_cargas.cor as situacao.cor",
+        "FILIAL.FIL_DSC as filial.descricao",
       ])
       .first()
       .where("con_cargas.id", id)
@@ -29,7 +30,8 @@ export class CargaRepository {
         "con_situacoes_cargas",
         "con_situacoes_cargas.id",
         "con_cargas.fk_situacao"
-      );
+      )
+      .leftJoin("FILIAL", "FILIAL.FIL_COD", "con_cargas.fk_filial");
   }
 
   async create(carga: ICarga): Promise<ICarga> {
@@ -61,12 +63,14 @@ export class CargaRepository {
         "con_cargas.*",
         "con_situacoes_cargas.descricao as situacao.descricao",
         "con_situacoes_cargas.cor as situacao.cor",
+        "FILIAL.FIL_DSC as filial.descricao",
       ])
       .join(
         "con_situacoes_cargas",
         "con_situacoes_cargas.id",
         "con_cargas.fk_situacao"
       )
+      .leftJoin("FILIAL", "FILIAL.FIL_COD", "con_cargas.fk_filial")
       .limit(pageSize)
       .offset((realPage - 1) * pageSize);
 
@@ -80,6 +84,9 @@ export class CargaRepository {
           new Date(date + "T00:00:00"),
           new Date(date + "T23:59:59"),
         ]);
+      }
+      if (query?.fk_filial) {
+        qb.andWhere("fk_filial", query.fk_filial);
       }
       if (query?.destino_carga) {
         qb.andWhere(

@@ -13,6 +13,7 @@ import AutocompleteInput from "../AutocompleteInput";
 import InputCliente from "../InputCliente";
 import UnidadesMedida from "../UnidadesMedida";
 import InputPlaca from "../InputPlaca";
+import FilialSelect from "../FilialSelect";
 
 function FormularioCadastroManual({
 	formik,
@@ -52,6 +53,20 @@ function FormularioCadastroManual({
 							disabled
 							name="id"
 							value={formik.values.id}
+							onChange={formik.handleChange}
+							onBlur={formik.handleBlur}
+							required
+						/>
+					</FloatingLabel>
+				</Col>
+			</Row>
+			<Row>
+				<Col>
+					<FloatingLabel label="*Código da filial" className="mb-3">
+						<FilialSelect
+							placeholder=" "
+							name="fk_filial"
+							value={formik.values.fk_filial || ""}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							required

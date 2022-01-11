@@ -78,8 +78,12 @@ class ServiceMigrarSit implements IServiceSit {
       dataAtualizacao = DateUtils.getCurrentDate();
     }
 
+    if (!carga.fk_filial || isNaN(Number(carga.fk_filial))) {
+      throw new Error("A carga não possui filial vinculada");
+    }
+
     return {
-      FIL_COD: 157,
+      FIL_COD: Number(carga.fk_filial),
       STF_COD: 19,
       COD_EMPRESA_SAP: "2000",
       COD_AGENDAMENTO_ATS: carga.id,
