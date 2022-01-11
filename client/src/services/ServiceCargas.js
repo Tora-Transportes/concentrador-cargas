@@ -218,9 +218,15 @@ class ServiceCargas {
 		tipo_carga,
 		responsavel_cadastro,
 		data_cadastro,
+		destino_carga,
+		origem_carga,
+		fk_situacao,
+		limit,
+		placa_veiculo,
+		documento_transporte,
+		fk_filial,
 		order_column,
 		order_direction,
-		fk_filial,
 	}) {
 		return api.get("/relatorio/cargas", {
 			responseType: "arraybuffer",
@@ -236,6 +242,12 @@ class ServiceCargas {
 				order_column,
 				order_direction,
 				fk_filial,
+				origem_carga,
+				destino_carga,
+				fk_situacao,
+				limit,
+				placa_veiculo,
+				documento_transporte,
 			},
 		});
 	}
