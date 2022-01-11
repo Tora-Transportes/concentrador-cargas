@@ -76,6 +76,8 @@ class ServiceCoordinates {
   }
 
   async searchInApi(latitude: number, longitude: number, placa: string) {
+    console.log("--------------------API NOMINATIN----------------------");
+    console.log("Placa: ", placa);
     const data = (
       await axios.get("https://nominatim.openstreetmap.org/reverse", {
         params: {
@@ -85,9 +87,14 @@ class ServiceCoordinates {
         },
       })
     ).data;
+    console.log(data);
 
     const city = TextUtils.normalize(
-      data.address.town ? data.address.town : data.address.state
+      data.address.town ||
+        data.address.city ||
+        data.address.city_district ||
+        data.address.village ||
+        data.address.road
     ).trim();
     const state = TextUtils.normalize(data.address.state).trim();
 
@@ -98,10 +105,11 @@ class ServiceCoordinates {
 
     const siglaEstado = tuple ? tuple.sigla_estado : "NC";
 
-    console.log("--------------------API NOMINATIN----------------------");
-    console.log(JSON.stringify(data));
     console.log("Com tratamento", `${city} - ${siglaEstado}`);
-    console.log("Sem tratamento", `${data.address.town} - ${siglaEstado}`);
+    console.log(
+      "Sem tratamento",
+      `${data.address.town} || ${data.address.city} || ${data.address.city_district} || ${data.address.village} || ${data.address.road} - ${siglaEstado}`
+    );
     console.log("-------------------------------------------------------");
 
     return `${city} - ${siglaEstado}`;
