@@ -98,12 +98,20 @@ class ServiceCoordinates {
 
     const siglaEstado = tuple ? tuple.sigla_estado : "NC";
 
+    console.log("--------------------API NOMINATIN----------------------");
+    console.log(JSON.stringify(data));
+    console.log("Com tratamento", `${city} - ${siglaEstado}`);
+    console.log("Sem tratamento", `${data.address.town} - ${siglaEstado}`);
+    console.log("-------------------------------------------------------");
+
     return `${city} - ${siglaEstado}`;
   }
 
   async populateLocalTable() {
     console.time("Popular tabela");
+    console.log("Carregando lista de coordenadas");
     const data = await this.list();
+    console.log("Separando cidades vazias");
     const cidadesVazias = data.filter((i) => !i.cidade_atual);
 
     console.log("Atualizando cache local");
@@ -115,6 +123,7 @@ class ServiceCoordinates {
   }
 
   async list() {
+    console.log("Carregando coordenadas dos veiculos da integracao");
     const coordenadas = await this.getVehiclesCoodinates();
     const totalPages = Math.ceil(coordenadas.length / 1000) || 1;
 
@@ -122,7 +131,7 @@ class ServiceCoordinates {
     for (let page = 1; page <= totalPages; page++) {
       const start = (page - 1) * 1000;
       const end = start + 999;
-
+      console.log(`Carregando Chunk de dados ${page} dos veiculos`);
       const queryTipoVeiculo = await database("VEICULO")
         .select([
           "VEI_PLACA as placa",
@@ -152,11 +161,13 @@ class ServiceCoordinates {
         console.log("CATEGORIA DE VEICULO QUE NAO DEVERIA APARECER", i);
       }
     }
+    console.log("Carregando ultima viagem dos veiculos");
     const [lastTripsFleet, lastTripsAutonomous] = await Promise.all([
       this.loadLastTripFleet(veiculosFrotas),
       this.loadLastTripAutonomous(veiculosAutonomos),
     ]);
 
+    console.log("Traduzindo a saida para o formato desejado");
     const tradutorCodigosPlacas = new Map();
     const tradutorCategoriaVeiculo = new Map();
     for (const i of categorias) {
