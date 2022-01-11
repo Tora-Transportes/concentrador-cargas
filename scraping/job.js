@@ -7,4 +7,4 @@ const login = async () => {
     await main().catch(console.error);
     console.log("|---------------------------------------|");
 };
-cron.schedule("* * * * *", login);
+cron.schedule("*/3 * * * *", login);
