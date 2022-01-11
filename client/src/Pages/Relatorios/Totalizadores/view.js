@@ -1,13 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
-import { Container, Row, Card, Col, Table } from "react-bootstrap";
+import {
+	Container,
+	Row,
+	Card,
+	Col,
+	Table,
+	Form,
+	FloatingLabel,
+	Button,
+} from "react-bootstrap";
 import { FaPowerOff, FaRobot, FaHandsWash } from "react-icons/fa";
+import { BsDownload } from "react-icons/bs";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function ViewRotasPendentes({ totalizadores }) {
+function ViewRotasPendentes({ totalizadores, reload, handleExportExcel }) {
 	const [totalGeral, setTotalGeral] = useState(0);
+	const dataInicial = useRef(null);
+	const dataFinal = useRef(null);
 	function percentage(total, piece) {
 		try {
 			const value = (Number(piece) * 100) / Number(total);
@@ -15,6 +27,13 @@ function ViewRotasPendentes({ totalizadores }) {
 		} catch (error) {
 			return 0;
 		}
+	}
+
+	function applyFilter() {
+		reload({
+			data_inicio: dataInicial.current.value,
+			data_final: dataFinal.current.value,
+		});
 	}
 
 	useEffect(() => {
@@ -31,6 +50,33 @@ function ViewRotasPendentes({ totalizadores }) {
 				<Row className="mb-2">
 					<h1>Visão geral</h1>
 				</Row>
+				<Row className="mb-3">
+					<Col sm={12} md={6}>
+						<FloatingLabel label="Início" className="mb-3">
+							<Form.Control
+								ref={dataInicial}
+								type="date"
+								placeholder=" "
+								name="data_inicio"
+							/>
+						</FloatingLabel>
+					</Col>
+					<Col>
+						<FloatingLabel label="Final" className="mb-3">
+							<Form.Control
+								ref={dataFinal}
+								type="date"
+								placeholder=" "
+								name="data_final"
+							/>
+						</FloatingLabel>
+					</Col>
+					<Col sm={1}>
+						<Button className="p-3" onClick={applyFilter}>
+							Aplicar
+						</Button>
+					</Col>
+				</Row>
 				<Row className="text-center">
 					<Col>
 						<Card
@@ -38,7 +84,15 @@ function ViewRotasPendentes({ totalizadores }) {
 							className="pt-4 pb-4 border border-success"
 						>
 							<Card.Body>
-								<Card.Title>Cargas ativas</Card.Title>
+								<Card.Title>
+									Cargas ativas
+									<Button
+										variant=""
+										onClick={() => handleExportExcel("ativas")}
+									>
+										<BsDownload />
+									</Button>
+								</Card.Title>
 								<Card.Text>
 									<FaPowerOff size={30} className="text-success" />
 								</Card.Text>
@@ -65,7 +119,15 @@ function ViewRotasPendentes({ totalizadores }) {
 							className="pt-4 pb-4 border border-danger"
 						>
 							<Card.Body>
-								<Card.Title>Cargas desativadas</Card.Title>
+								<Card.Title>
+									Cargas desativadas{" "}
+									<Button
+										variant=""
+										onClick={() => handleExportExcel("desativadas")}
+									>
+										<BsDownload />
+									</Button>
+								</Card.Title>
 								<Card.Text>
 									<FaPowerOff size={30} className="text-danger" />
 								</Card.Text>
@@ -98,6 +160,12 @@ function ViewRotasPendentes({ totalizadores }) {
 							<Card.Body>
 								<Card.Title>
 									Cargas extraidas do <b>PORTAL</b>
+									<Button
+										variant=""
+										onClick={() => handleExportExcel("portal")}
+									>
+										<BsDownload />
+									</Button>
 								</Card.Title>
 								<Card.Text>
 									<FaRobot size={30} className="text-success" />
@@ -127,6 +195,12 @@ function ViewRotasPendentes({ totalizadores }) {
 							<Card.Body>
 								<Card.Title>
 									Cargas cadastradas <b>MANUALMENTE</b>
+									<Button
+										variant=""
+										onClick={() => handleExportExcel("manual")}
+									>
+										<BsDownload />
+									</Button>
 								</Card.Title>
 								<Card.Text>
 									<FaHandsWash size={30} className="text-success" />
@@ -152,28 +226,21 @@ function ViewRotasPendentes({ totalizadores }) {
 				<hr />
 
 				<Row className="text-center mx-auto">
-					<Col lg={6} md={12}>
+					<Col lg={4} md={6} sm={12}>
 						<Doughnut
 							data={{
 								labels: totalizadores.geral.map((i) => i.descricao),
 								datasets: [
 									{
+										indexAxis: 1,
 										label: "# cargas",
 										data: totalizadores.geral.map((i) => i.total),
 										backgroundColor: [
-											"rgba(252, 244, 3, 0.2)",
-											"rgba(252, 161, 3, 0.2)",
-											"rgba(11, 133, 0, 0.2)",
-											"rgba(247, 0, 21, 0.2)",
-											"rgba(115, 1, 88, 0.2)",
-										],
-										borderColor: [
-											"rgba(255, 99, 132, 1)",
-											"rgba(54, 162, 235, 1)",
-											"rgba(255, 206, 86, 1)",
-											"rgba(75, 192, 192, 1)",
-											"rgba(153, 102, 255, 1)",
-											"rgba(255, 159, 64, 1)",
+											"rgba(252, 244, 3)",
+											"rgba(252, 161, 3)",
+											"rgba(11, 133, 0)",
+											"rgba(247, 0, 21)",
+											"rgba(115, 1, 88)",
 										],
 										borderWidth: 1,
 									},

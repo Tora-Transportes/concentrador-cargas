@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import NavbarNavigator from "../../Components/NavbarNavigator";
 import RelatoriosMainView from "./view";
@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import io from "../../../services/socket";
 
 function RelatoriosMain() {
-	const [LoadingScreen] = useLoadingScreen();
+	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [totalizadores, setTotalizadores] = useState({
 		cargas_ativas: 0,
 		cargas_desativadas: 0,
@@ -41,15 +41,43 @@ function RelatoriosMain() {
 			},
 		],
 	});
+	const [filters, setFilters] = useState({
+		data_inicio: "",
+		data_final: "",
+	});
+
+	const interval = useRef(null);
+	useEffect(() => {
+		reload();
+	}, [filters]);
+
+	const reload = () => {
+		clearInterval(interval.current);
+		interval.current = setTimeout(async () => {
+			setLoading(true);
+			setTotalizadores(
+				(await ServiceRelatorios.totalizadores(filters)).data.data
+			);
+			setLoading(false);
+		}, 300);
+	};
+
+	async function handleExportExcel(key = "") {
+		setLoading(true);
+
+		const response = await ServiceRelatorios.exportToXlsx({ key, ...filters });
+		const url = window.URL.createObjectURL(new Blob([response.data]));
+		const link = document.createElement("a");
+		link.href = url;
+		link.setAttribute(
+			"download",
+			`RELATORIO_DETALHES-${new Date().getTime()}.xlsx`
+		);
+		link.click();
+		setLoading(false);
+	}
 
 	useEffect(() => {
-		let interval;
-		const reload = () => {
-			clearInterval(interval);
-			interval = setTimeout(async () => {
-				setTotalizadores((await ServiceRelatorios.totalizadores()).data.data);
-			}, 1000);
-		};
 		io.onAny(reload);
 		return () => {
 			io.offAny(reload);
@@ -61,7 +89,6 @@ function RelatoriosMain() {
 		(async function () {
 			if (isMounted) {
 				const total = (await ServiceRelatorios.totalizadores()).data.data;
-				console.log(total);
 				setTotalizadores(total);
 			}
 		})();
@@ -74,7 +101,11 @@ function RelatoriosMain() {
 		<>
 			<LoadingScreen />
 			<NavbarNavigator />
-			<RelatoriosMainView totalizadores={totalizadores} />
+			<RelatoriosMainView
+				totalizadores={totalizadores}
+				reload={setFilters}
+				handleExportExcel={handleExportExcel}
+			/>
 		</>
 	);
 }

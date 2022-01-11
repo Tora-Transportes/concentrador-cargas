@@ -1,5 +1,7 @@
-import { Request, response, Response } from "express";
+import { Request, Response } from "express";
 import { ReportTotalizadores } from "../reports/totalizadores";
+import { ReportDetalhesTotalizadores } from "../reports/dadosTotalizadores";
+import fs from "fs";
 class RelatorioController {
   /*
     {
@@ -15,8 +17,21 @@ class RelatorioController {
     */
   async gerarTotalizadores(req: Request, res: Response) {
     const report = new ReportTotalizadores();
+    return res.json({
+      data: await report.generate(req.query),
+    });
+  }
 
-    return res.json({ data: await report.generate() });
+  async detalhesTotalizadores(req: Request, res: Response) {
+    const filename = `DETALHES_TOTALIZADORES-${Math.ceil(
+      Math.random() * 100
+    )}.xlsx`;
+    const report = new ReportDetalhesTotalizadores();
+    await report.generate(req.params.key, req.query, filename);
+    const stream = fs.createReadStream(filename);
+    stream.pipe(res);
+    fs.unlinkSync(filename);
+    return res;
   }
 }
 

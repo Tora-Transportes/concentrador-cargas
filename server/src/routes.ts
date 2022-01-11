@@ -94,5 +94,9 @@ routes.get("/coordenadas", CoordenadasController.search);
 routes.get("/relatorio/coordenadas", CoordenadasController.export);
 
 routes.get("/relatorio/totalizadores", RelatorioController.gerarTotalizadores);
+routes.get(
+  "/relatorio/totalizadores/:key",
+  RelatorioController.detalhesTotalizadores
+);
 
 export default routes;

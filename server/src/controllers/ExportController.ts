@@ -48,6 +48,17 @@ class ExportController {
         description: "Situação",
         type: "string",
       },
+      {
+        name: "filial.descricao",
+        description: "Descrição Filial",
+        type: "string",
+      },
+      { name: "fk_filial", description: "Código Filial", type: "number" },
+      {
+        name: "documento_transporte",
+        description: "Documento de transporte",
+        type: "string",
+      },
       { name: "unidade_medida", description: "UN", type: "string" },
       {
         name: "responsavel_cadastro",
