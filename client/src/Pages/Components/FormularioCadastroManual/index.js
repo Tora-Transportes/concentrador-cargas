@@ -61,7 +61,7 @@ function FormularioCadastroManual({
 				</Col>
 			</Row>
 			<Row>
-				<Col>
+				<Col sm={12} md={6}>
 					<FloatingLabel label="*Código da filial" className="mb-3">
 						<FilialSelect
 							placeholder=" "
@@ -69,21 +69,18 @@ function FormularioCadastroManual({
 							value={formik.values.fk_filial || ""}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
-							required
 						/>
 					</FloatingLabel>
 				</Col>
-			</Row>
-			<Row>
 				<Col>
-					{formik.values.documento_transporte && (
-						<FloatingLabel label="Documento de transporte" className="mb-3">
-							<Form.Control
-								value={formik.values.documento_transporte}
-								readOnly
-							/>
-						</FloatingLabel>
-					)}
+					<FloatingLabel label="Documento de transporte" className="mb-3">
+						<Form.Control
+							name="documento_transporte"
+							value={formik.values.documento_transporte}
+							onChange={formik.handleChange}
+							onBlur={formik.handleBlur}
+						/>
+					</FloatingLabel>
 				</Col>
 			</Row>
 			<Row>

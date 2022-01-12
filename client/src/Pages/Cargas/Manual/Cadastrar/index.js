@@ -38,6 +38,8 @@ function Manual() {
 			local_entrega: "",
 
 			placa_veiculo: "",
+
+			documento_transporte: "",
 		},
 		onSubmit: async (values) => {
 			setLoading(true);

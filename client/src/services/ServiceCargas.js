@@ -22,6 +22,7 @@ class ServiceCargas {
 		local_entrega,
 		placa_veiculo,
 		fk_filial,
+		documento_transporte,
 	}) {
 		const carga = {
 			e_lote,
@@ -45,6 +46,7 @@ class ServiceCargas {
 			local_entrega,
 			placa_veiculo,
 			fk_filial,
+			documento_transporte,
 		};
 
 		return api.post("/cargas", carga);
@@ -73,6 +75,7 @@ class ServiceCargas {
 		local_entrega,
 		fk_lote_pai,
 		placa_veiculo,
+		documento_transporte,
 	}) {
 		const carga = {
 			id,
@@ -97,6 +100,7 @@ class ServiceCargas {
 			local_entrega,
 			fk_lote_pai,
 			placa_veiculo,
+			documento_transporte,
 		};
 
 		return api.post(`/cargas/derivada/${carga.fk_lote_pai}`, carga);
@@ -127,6 +131,7 @@ class ServiceCargas {
 		fk_situacao,
 		observacao_gr,
 		fk_filial,
+		documento_transporte,
 	}) {
 		const carga = {
 			e_lote,
@@ -152,6 +157,7 @@ class ServiceCargas {
 			fk_situacao,
 			observacao_gr,
 			fk_filial,
+			documento_transporte,
 		};
 
 		return api.put(`/cargas/${id}`, carga);
