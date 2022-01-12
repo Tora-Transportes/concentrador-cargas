@@ -75,6 +75,7 @@ class ServiceCargas {
 		local_entrega,
 		fk_lote_pai,
 		placa_veiculo,
+		fk_filial,
 		documento_transporte,
 	}) {
 		const carga = {
@@ -100,6 +101,7 @@ class ServiceCargas {
 			local_entrega,
 			fk_lote_pai,
 			placa_veiculo,
+			fk_filial,
 			documento_transporte,
 		};
 

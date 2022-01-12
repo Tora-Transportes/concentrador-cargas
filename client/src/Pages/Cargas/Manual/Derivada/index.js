@@ -82,12 +82,6 @@ function Manual() {
 		}
 	}, [formik.values.unidade_medida]);
 
-	useEffect(() => {
-		if (cargaAtual) {
-			formik.setFieldValue("fk_filial", cargaAtual.fk_filial);
-		}
-	}, [formik.values.fk_filial]);
-
 	async function handleSearchDistance({ destino_carga, origem_carga }) {
 		if (destino_carga && origem_carga) {
 			const [, estado_origem, cidade_origem] = origem_carga.split("/");
