@@ -283,6 +283,12 @@ function Visualizar() {
 			),
 			Filter: () => null,
 		},
+		{
+			name: "usuario",
+			description: "Responsável última alteração",
+			selector: (row) => <CollapseHint text={row.usuario || ""} />,
+			Filter: () => null,
+		},
 	];
 	const defaultStorageColumns = columns.map((i) => ({
 		name: i.name,

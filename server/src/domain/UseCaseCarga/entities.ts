@@ -139,8 +139,9 @@ export class UseCaseAddCargaDerivada {
         400
       );
     }
-
-    const novoPai = validator.cast(lotePai, { stripUnknown: true }) as ICarga;
+    const novoPai = (await validator.validate(lotePai, {
+      stripUnknown: true,
+    })) as ICarga;
     carga.fk_situacao = ECargaStatus.AGUARDANDO_ALOCACAO;
     if (Number(carga.placa_veiculo?.length) > 5) {
       carga.fk_situacao = ECargaStatus.AGUARDANDO_GR;

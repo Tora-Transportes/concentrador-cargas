@@ -69,6 +69,7 @@ function FormularioCadastroManual({
 							value={formik.values.fk_filial || ""}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
+							required
 						/>
 					</FloatingLabel>
 				</Col>
