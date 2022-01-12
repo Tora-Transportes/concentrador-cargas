@@ -7,7 +7,10 @@ function CollapseHint({ text, length = 30 }) {
 			placement="left"
 			overlay={text ? <Tooltip>{text}</Tooltip> : <span />}
 		>
-			<div>{text?.substr(0, length)}</div>
+			<div>
+				{text?.substr(0, length)}
+				{text?.length > length ? "..." : ""}
+			</div>
 		</OverlayTrigger>
 	);
 }

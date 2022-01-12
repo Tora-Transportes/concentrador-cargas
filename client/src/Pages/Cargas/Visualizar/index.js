@@ -275,6 +275,14 @@ function Visualizar() {
 			selector: (row) => <CollapseHint text={row.observacao_gr || ""} />,
 			Filter: () => null,
 		},
+		{
+			name: "observacao_cancelamento",
+			description: "Observação cancelamento",
+			selector: (row) => (
+				<CollapseHint text={row.observacao_cancelamento || ""} />
+			),
+			Filter: () => null,
+		},
 	];
 	const defaultStorageColumns = columns.map((i) => ({
 		name: i.name,

@@ -113,19 +113,24 @@ function Manual() {
 	async function handleCancelarCarga() {
 		setLoading(true);
 		try {
-			const ok = await swal(
-				"OPS?",
-				"Tem certeza que deseja cancelar a carga atual ?",
+			const observacaoCancelamento = await swal(
+				`Digite o motivo do cancelamento`,
 				{
-					buttons: ["Não", true],
+					content: "input",
 					dangerMode: true,
+					buttons: ["Cancelar", true],
 					icon: "warning",
 				}
 			);
-			if (ok) {
-				await ServiceCargas.update({ ...formik.values, fk_situacao: 5 });
+			if (observacaoCancelamento) {
+				await ServiceCargas.update({
+					...formik.values,
+					fk_situacao: 5,
+					observacao_cancelamento: observacaoCancelamento,
+				});
 				await swal("Sucesso!", "Carga cancelada", "success");
-				// handleCloseWindow(null, false);
+			} else {
+				await swal("Nenhuma alteração realizada");
 			}
 		} catch (error) {
 			console.log(error);

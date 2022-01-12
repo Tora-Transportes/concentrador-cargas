@@ -35,4 +35,6 @@ export interface ICarga {
   documento_transporte?: string | null;
 
   fk_filial?: number;
+
+  observacao_cancelamento?: string | null;
 }

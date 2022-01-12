@@ -227,8 +227,16 @@ export class UseCaseUpdateCarga {
           403
         );
       }
+      const observacaoCancelamento = carga.observacao_cancelamento;
       Object.assign(carga, cargaCadastrada);
+      carga.observacao_cancelamento = observacaoCancelamento;
       carga.fk_situacao = ECargaStatus.CARGA_CANCELADA;
+      if (!carga.observacao_cancelamento) {
+        throw new AppError(
+          "Ao cancelar uma carga a observação deve ser preenchida",
+          400
+        );
+      }
     } else {
       if (carga.placa_veiculo) {
         if (!(await this.veiculoRepository.hasDriver(carga.placa_veiculo))) {

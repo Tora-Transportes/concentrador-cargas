@@ -45,6 +45,7 @@ export function factoryCargaValidator() {
     fk_situacao: yup.number(),
     fk_filial: yup.number(),
     data_atualizacao: yup.date().notRequired(),
+    observacao_cancelamento: yup.string().nullable().notRequired(),
   });
 
   return cargaValidator;

@@ -134,6 +134,7 @@ class ServiceCargas {
 		observacao_gr,
 		fk_filial,
 		documento_transporte,
+		observacao_cancelamento,
 	}) {
 		const carga = {
 			e_lote,
@@ -160,6 +161,7 @@ class ServiceCargas {
 			observacao_gr,
 			fk_filial,
 			documento_transporte,
+			observacao_cancelamento,
 		};
 
 		return api.put(`/cargas/${id}`, carga);
