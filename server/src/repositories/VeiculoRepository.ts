@@ -30,6 +30,7 @@ export class VeiculoRepository implements IVeiculoRepository {
         "CARRETA.VEI_PLACA as placa_carreta",
         "BITREM.VEI_PLACA as placa_bitrem",
         "CADASTRO_GERAL.CG_NOME as nome_motorista",
+        "CADASTRO_GERAL.CG_COD as codigo_motorista",
       ])
       .join("VEICULO", "VEICULO.TV_COD", "TIPO_VEICULO.TV_COD")
       .leftJoin(

@@ -1,63 +1,28 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import {
 	InputGroup,
-	Button,
+	// Button,
 	FormControl,
-	Modal,
-	Card,
-	ListGroup,
-	ListGroupItem,
-	Row,
-	Col,
+	// Modal,
+	// Card,
+	// ListGroup,
+	// ListGroupItem,
 } from "react-bootstrap";
-import ServiceVeiculos from "src/services/ServiceVeiculos";
+// import ServiceVeiculos from "src/services/ServiceVeiculos";
 
 function InputPlaca(props) {
-	const [veiculo, setVeiculo] = useState(null);
-	const [placas, setPlacas] = useState(null);
+	// const [veiculo, setVeiculo] = useState(null);
 	const placaInput = useRef(null);
 
-	async function handleSearchVehicle(placaPesquisa = "") {
-		const placa = (placaPesquisa || "").toUpperCase().trim();
-		if (!placa) {
-			setVeiculo(null);
-		} else {
-			const v = (await ServiceVeiculos.get(placa)).data.data;
-			setVeiculo(v);
-		}
-	}
-
-	async function fillAnotherFields(placaPesquisa = "") {
-		const placa = String(placaPesquisa || placaInput.current?.value)
-			.toUpperCase()
-			.trim();
-		if (placa) {
-			placaInput.current.value = placa;
-			const v = (await ServiceVeiculos.get(placa)).data.data;
-			if (v) {
-				setPlacas({
-					carreta: v.placa_carreta,
-					bitrem: v.placa_bitrem,
-				});
-			} else {
-				setPlacas(null);
-				placaInput.current.value = "";
-				if (typeof props.onChange === "function") {
-					props.onChange({ target: placaInput.current });
-				}
-			}
-		} else {
-			setPlacas(null);
-		}
-	}
-
-	useEffect(() => {
-		if (props.value && props.value.length > 6) {
-			fillAnotherFields(props.value);
-		} else {
-			setPlacas(null);
-		}
-	}, [props.value]);
+	// async function handleSearchVehicle(placaPesquisa = "") {
+	// 	const placa = (placaPesquisa || "").toUpperCase().trim();
+	// 	if (!placa) {
+	// 		setVeiculo(null);
+	// 	} else {
+	// 		const v = (await ServiceVeiculos.get(placa)).data.data;
+	// 		setVeiculo(v);
+	// 	}
+	// }
 
 	useEffect(() => {
 		const handleUpperCase = (e) => {
@@ -71,30 +36,18 @@ function InputPlaca(props) {
 
 	return (
 		<>
-			{/* {error && <span className="text-danger">{error}</span>} */}
 			<InputGroup className="mb-2">
-				<InputGroup.Text>
-					<Button
-						variant=""
-						onClick={() => handleSearchVehicle(placaInput.current.value)}
-					>
-						Placa Cavalo 🐴
-					</Button>
-					<Button variant="" onClick={() => fillAnotherFields()}>
-						🔎
-					</Button>
-				</InputGroup.Text>
+				<InputGroup.Text className="p-3">Placa Cavalo 🐴</InputGroup.Text>
 				<FormControl
 					ref={placaInput}
 					placeholder="Placa veículo"
 					type="text"
 					name="placa_veiculo"
 					{...props}
-					onBlur={() => fillAnotherFields()}
 				/>
 			</InputGroup>
 
-			{placas && (
+			{/* {placas && (
 				<Row>
 					<Col sm={12} md={6}>
 						<InputGroup className="mb-2">
@@ -133,8 +86,8 @@ function InputPlaca(props) {
 						</InputGroup>
 					</Col>
 				</Row>
-			)}
-			<Modal show={veiculo !== null} onHide={() => setVeiculo(null)}>
+			)} */}
+			{/* <Modal show={veiculo !== null} onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
 					<Modal.Title>Dados do veículo</Modal.Title>
 				</Modal.Header>
@@ -168,7 +121,7 @@ function InputPlaca(props) {
 						</ListGroup>
 					</Card>
 				)}
-			</Modal>
+			</Modal> */}
 		</>
 	);
 }

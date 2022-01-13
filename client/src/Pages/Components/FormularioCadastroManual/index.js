@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Form,
 	Row,
@@ -6,6 +6,12 @@ import {
 	FloatingLabel,
 	OverlayTrigger,
 	Tooltip,
+	InputGroup,
+	Button,
+	ListGroupItem,
+	ListGroup,
+	Card,
+	Modal,
 } from "react-bootstrap";
 import { IoMdHelpCircle } from "react-icons/io";
 import InputLocalizacao from "../InputLocalizacao";
@@ -14,6 +20,7 @@ import InputCliente from "../InputCliente";
 import UnidadesMedida from "../UnidadesMedida";
 import InputPlaca from "../InputPlaca";
 import FilialSelect from "../FilialSelect";
+import ServiceVeiculos from "src/services/ServiceVeiculos";
 
 function FormularioCadastroManual({
 	formik,
@@ -22,11 +29,34 @@ function FormularioCadastroManual({
 	handleSearchDistance,
 	disabledFields = [],
 }) {
+	const [veiculo, setVeiculo] = useState(null);
+	async function handleShowDetailsAboutVehicle(plate) {
+		setVeiculo((await ServiceVeiculos.detalhesImpedimentos(plate)).data.data);
+	}
 	useEffect(() => {
 		if (formik.values.e_lote) {
 			formik.setFieldValue("placa_veiculo", "");
+			formik.setFieldValue("placa_carreta", "");
+			formik.setFieldValue("placa_bitrem", "");
+			formik.setFieldValue("codigo_motorista", "");
+			formik.setFieldValue("nome_motorista", "");
 		}
 	}, [formik.values.e_lote]);
+
+	async function handleSearchVehicle(plate) {
+		if (plate) {
+			const vehicleDetails = (await ServiceVeiculos.get(plate)).data.data;
+			formik.setFieldValue("placa_carreta", vehicleDetails.placa_carreta);
+			formik.setFieldValue("placa_bitrem", vehicleDetails.placa_bitrem);
+			formik.setFieldValue("nome_motorista", vehicleDetails.nome_motorista);
+			formik.setFieldValue("codigo_motorista", vehicleDetails.codigo_motorista);
+		} else {
+			formik.setFieldValue("placa_carreta", "");
+			formik.setFieldValue("placa_bitrem", "");
+			formik.setFieldValue("codigo_motorista", "");
+			formik.setFieldValue("nome_motorista", "");
+		}
+	}
 
 	return (
 		<>
@@ -134,34 +164,103 @@ function FormularioCadastroManual({
 			</Row>
 			<hr className="mb-5" />
 			{!formik.values.e_lote && (
-				<Row className="mb-5">
-					<Col sm={12}>
-						<h3>Dados do veículo</h3>
-					</Col>
-					<Col sm={12}>
-						<InputPlaca
-							placeholder="Placa veículo"
-							disabled={formik.values.e_lote}
-							type="text"
-							name="placa_veiculo"
-							value={formik.values.placa_veiculo}
-							onChange={formik.handleChange}
-						/>
-					</Col>
-					<Col>
-						{formik.values.observacao_gr && (
-							<FloatingLabel label="Observacao GR" className="mb-3">
+				<>
+					<Row className="mb-5">
+						<Col sm={12}>
+							<h3>Dados do veículo</h3>
+						</Col>
+					</Row>
+					<Row>
+						<Col sm={12}>
+							<InputPlaca
+								readOnly={
+									formik.values.fk_situacao &&
+									![1, 2, 4].includes(Number(formik.values.fk_situacao))
+								}
+								placeholder="Placa veículo"
+								disabled={formik.values.e_lote}
+								type="text"
+								name="placa_veiculo"
+								value={formik.values.placa_veiculo}
+								onChange={formik.handleChange}
+								onBlur={() => {
+									if (
+										!formik.values.fk_situacao ||
+										[1, 2, 4].includes(Number(formik.values.fk_situacao))
+									) {
+										handleSearchVehicle(formik.values.placa_veiculo);
+									}
+								}}
+							/>
+						</Col>
+					</Row>
+					<Row>
+						<Col sm={12} md={6}>
+							<InputGroup className="mb-2">
+								<InputGroup.Text>Carreta 🚛</InputGroup.Text>
 								<Form.Control
-									as="textarea"
-									type="text"
-									value={formik.values.observacao_gr}
 									readOnly
+									placeholder="Placa Carreta"
+									type="text"
+									value={formik.values.placa_carreta || ""}
 								/>
-							</FloatingLabel>
-						)}
-					</Col>
-					<hr className="mt-5" />
-				</Row>
+							</InputGroup>
+						</Col>
+						<Col>
+							<InputGroup className="mb-2">
+								<InputGroup.Text>Bitrem 🚛</InputGroup.Text>
+								<Form.Control
+									readOnly
+									placeholder="Placa Bitrem"
+									type="text"
+									value={formik.values.placa_bitrem || ""}
+								/>
+							</InputGroup>
+						</Col>
+					</Row>
+					<Row>
+						<Col>
+							<InputGroup className="mb-2">
+								<InputGroup.Text className="p-3">Motorista 👨‍🚒</InputGroup.Text>
+								<Form.Control
+									readOnly
+									placeholder="Motorista"
+									type="text"
+									value={
+										formik.values.codigo_motorista &&
+										formik.values.nome_motorista
+											? `${formik.values.codigo_motorista} - ${formik.values.nome_motorista}`
+											: ""
+									}
+								/>
+							</InputGroup>
+						</Col>
+						<Col lg={1}>
+							<Button
+								onClick={() =>
+									handleShowDetailsAboutVehicle(formik.values.placa_veiculo)
+								}
+							>
+								Detalhes veículo
+							</Button>
+						</Col>
+					</Row>
+					<Row>
+						<Col>
+							{formik.values.observacao_gr && (
+								<FloatingLabel label="Observacao GR" className="mb-3">
+									<Form.Control
+										as="textarea"
+										type="text"
+										value={formik.values.observacao_gr}
+										readOnly
+									/>
+								</FloatingLabel>
+							)}
+						</Col>
+						<hr className="mt-5" />
+					</Row>
+				</>
 			)}
 			<Row>
 				<Col>
@@ -412,6 +511,26 @@ function FormularioCadastroManual({
 					</Form.Group>
 				</Col>
 			</Row>
+
+			<Modal show={veiculo !== null} onHide={() => setVeiculo(null)}>
+				<Modal.Header closeButton>
+					<Modal.Title>Dados do veículo</Modal.Title>
+				</Modal.Header>
+				{veiculo && (
+					<Card>
+						<ListGroup className="list-group-flush">
+							{Object.keys(veiculo).map((i) => (
+								<ListGroupItem key={i}>
+									<b>{i.replace(/_/g, " ")}</b>:
+									{i.startsWith("DATA_")
+										? veiculo[i]?.split("T")[0].split("-").reverse().join("/")
+										: veiculo[i]}
+								</ListGroupItem>
+							))}
+						</ListGroup>
+					</Card>
+				)}
+			</Modal>
 		</>
 	);
 }

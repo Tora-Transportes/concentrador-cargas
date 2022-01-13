@@ -83,6 +83,7 @@ routes.post(
 routes.get("/rotas/pendentes", RotasController.listPendentRoutes);
 
 routes.get("/veiculos/:placa", RotasController.listVehicles);
+routes.get("/veiculos/:placa/detalhes", RotasController.detailsVehicle);
 
 routes.get("/recomendacoes/organizacoes", RecomendacoesController.organizacoes);
 routes.get("/recomendacoes/locais", RecomendacoesController.cidadeEstados);

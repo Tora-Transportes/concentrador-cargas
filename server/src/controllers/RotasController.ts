@@ -5,6 +5,7 @@ import {
   UseCaseListPendentRoutes,
 } from "../domain/UseCaseCarga/entities";
 import ServiceAutocomplete from "../services/ServiceAutocomplete";
+import ServiceDetailsVehicle from "../services/ServiceDetailsVehicle";
 
 class RotasController {
   async distanceBetweenLocations(req: Request, res: Response) {
@@ -25,6 +26,13 @@ class RotasController {
         .trim()
     );
     return res.json({ data: vehicle || null });
+  }
+
+  async detailsVehicle(req: Request, res: Response) {
+    const service = new ServiceDetailsVehicle();
+    return res.json({
+      data: await service.index(req.params.placa.toUpperCase().trim()),
+    });
   }
 }
 

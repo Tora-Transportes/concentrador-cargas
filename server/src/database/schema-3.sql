@@ -35,3 +35,9 @@ alter table "con_coordenadas_veiculos" add (
 alter table "con_coordenadas_veiculos" add (
     "data_emissao_documento" DATE
 );
+
+alter table "con_cargas" add (
+    "placa_carreta" VARCHAR(10),
+    "placa_bitrem" VARCHAR(10),
+    "codigo_motorista" VARCHAR(1000)
+);

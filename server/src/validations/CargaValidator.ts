@@ -46,6 +46,9 @@ export function factoryCargaValidator() {
     fk_filial: yup.number().notRequired().nullable(),
     data_atualizacao: yup.date().notRequired(),
     observacao_cancelamento: yup.string().nullable().notRequired(),
+    placa_carreta: yup.string().nullable().notRequired(),
+    placa_bitrem: yup.string().nullable().notRequired(),
+    codigo_motorista: yup.number().nullable().notRequired(),
   });
 
   return cargaValidator;

@@ -23,6 +23,7 @@ export class CargaRepository {
         "con_situacoes_cargas.descricao as situacao.descricao",
         "con_situacoes_cargas.cor as situacao.cor",
         "FILIAL.FIL_DSC as filial.descricao",
+        "CADASTRO_GERAL.CG_NOME as nome_motorista",
       ])
       .first()
       .where("con_cargas.id", id)
@@ -30,6 +31,11 @@ export class CargaRepository {
         "con_situacoes_cargas",
         "con_situacoes_cargas.id",
         "con_cargas.fk_situacao"
+      )
+      .leftJoin(
+        "CADASTRO_GERAL",
+        "CADASTRO_GERAL.CG_COD",
+        "con_cargas.codigo_motorista"
       )
       .leftJoin("FILIAL", "FILIAL.FIL_COD", "con_cargas.fk_filial");
   }
@@ -64,6 +70,7 @@ export class CargaRepository {
         "con_situacoes_cargas.descricao as situacao.descricao",
         "con_situacoes_cargas.cor as situacao.cor",
         "FILIAL.FIL_DSC as filial.descricao",
+        "CADASTRO_GERAL.CG_NOME as nome_motorista",
       ])
       .join(
         "con_situacoes_cargas",
@@ -71,6 +78,11 @@ export class CargaRepository {
         "con_cargas.fk_situacao"
       )
       .leftJoin("FILIAL", "FILIAL.FIL_COD", "con_cargas.fk_filial")
+      .leftJoin(
+        "CADASTRO_GERAL",
+        "CADASTRO_GERAL.CG_COD",
+        "con_cargas.codigo_motorista"
+      )
       .limit(pageSize)
       .offset((realPage - 1) * pageSize);
 
