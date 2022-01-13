@@ -135,7 +135,7 @@ function Importar() {
 									<td>{i["Destino"]}</td>
 									<td>{i["Destinatário"]}</td>
 									<td>SIM</td>
-									<td></td>
+									<td>{i["OBSERVAÇÃO"]}</td>
 								</tr>
 							))}
 
