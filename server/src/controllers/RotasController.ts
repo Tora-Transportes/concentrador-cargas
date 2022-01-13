@@ -34,6 +34,13 @@ class RotasController {
       data: await service.index(req.params.placa.toUpperCase().trim()),
     });
   }
+
+  async debitsVehicle(req: Request, res: Response) {
+    const service = new ServiceDetailsVehicle();
+    return res.json({
+      data: await service.debits(req.params.placa.toUpperCase().trim()),
+    });
+  }
 }
 
 export default new RotasController();

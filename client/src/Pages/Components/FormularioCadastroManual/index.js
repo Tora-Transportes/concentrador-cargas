@@ -21,6 +21,7 @@ import UnidadesMedida from "../UnidadesMedida";
 import InputPlaca from "../InputPlaca";
 import FilialSelect from "../FilialSelect";
 import ServiceVeiculos from "src/services/ServiceVeiculos";
+import swal from "sweetalert";
 
 function FormularioCadastroManual({
 	formik,
@@ -30,6 +31,7 @@ function FormularioCadastroManual({
 	disabledFields = [],
 }) {
 	const [veiculo, setVeiculo] = useState(null);
+	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
 	async function handleShowDetailsAboutVehicle(plate) {
 		setVeiculo((await ServiceVeiculos.detalhesImpedimentos(plate)).data.data);
 	}
@@ -55,6 +57,14 @@ function FormularioCadastroManual({
 			formik.setFieldValue("placa_bitrem", "");
 			formik.setFieldValue("codigo_motorista", "");
 			formik.setFieldValue("nome_motorista", "");
+		}
+	}
+
+	async function handleShowDebitAboutVehicle(plate) {
+		const debitos = (await ServiceVeiculos.debitos(plate)).data.data;
+		setDebitosVeiculo(debitos);
+		if (debitos.length === 0) {
+			swal("Nenhum débito encontrado");
 		}
 	}
 
@@ -242,6 +252,15 @@ function FormularioCadastroManual({
 								}
 							>
 								Detalhes veículo
+							</Button>
+						</Col>
+						<Col lg={1}>
+							<Button
+								onClick={() =>
+									handleShowDebitAboutVehicle(formik.values.placa_veiculo)
+								}
+							>
+								Débitos veículo
 							</Button>
 						</Col>
 					</Row>
@@ -512,7 +531,7 @@ function FormularioCadastroManual({
 				</Col>
 			</Row>
 
-			<Modal show={veiculo !== null} onHide={() => setVeiculo(null)}>
+			<Modal show={veiculo !== null} size="lg" onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
 					<Modal.Title>Dados do veículo</Modal.Title>
 				</Modal.Header>
@@ -528,6 +547,45 @@ function FormularioCadastroManual({
 								</ListGroupItem>
 							))}
 						</ListGroup>
+					</Card>
+				)}
+			</Modal>
+
+			<Modal
+				size="xl"
+				show={debitosVeiculo !== null && debitosVeiculo?.length > 0}
+				onHide={() => setDebitosVeiculo(null)}
+			>
+				<Modal.Header closeButton>
+					<Modal.Title>Débitos do veículo</Modal.Title>
+				</Modal.Header>
+				{debitosVeiculo && (
+					<Card>
+						{debitosVeiculo?.map((i) => (
+							<ListGroup key={i.DEC_SEQ} className="list-group-flush">
+								<hr />
+								<ListGroupItem>
+									<b>PLACA</b>: {i.VEI_PLACA}
+								</ListGroupItem>
+								<ListGroupItem>
+									<b>DESCRIÇÃO</b>: {i.DEC_DSC}
+								</ListGroupItem>
+								<ListGroupItem>
+									<b>VALOR</b>: {i.DEC_VALOR}
+								</ListGroupItem>
+								<ListGroupItem>
+									<b>VENCIMENTO</b>:
+									{i.DEC_VENC?.split("T")[0].split("-").reverse().join("/")}
+								</ListGroupItem>
+								<ListGroupItem>
+									<b>EMISSÃO</b>:
+									{i.DEC_DTHR_EMISSAO?.split("T")[0]
+										.split("-")
+										.reverse()
+										.join("/")}
+								</ListGroupItem>
+							</ListGroup>
+						))}
 					</Card>
 				)}
 			</Modal>

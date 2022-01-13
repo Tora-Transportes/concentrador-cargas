@@ -7,6 +7,10 @@ class ServiceVeiculos {
 	async detalhesImpedimentos(placa) {
 		return api.get(`/veiculos/${placa}/detalhes`);
 	}
+
+	async debitos(placa) {
+		return api.get(`/veiculos/${placa}/debitos`);
+	}
 }
 
 export default new ServiceVeiculos();

@@ -182,6 +182,20 @@ export default class ServiceDetailsVehicle {
 
     return details[0];
   }
+
+  async debits(placa: string) {
+    return database.raw(
+      `
+    select veiculo.vei_placa, desp_carreteiro.* from desp_carreteiro
+    join veiculo on veiculo.vei_cod = desp_carreteiro.vei_cod
+    where rpa_num is null
+    and desp_carreteiro.stf_cod = 0
+    and veiculo.vei_placa = ?
+    order by DEC_DIA desc
+    `,
+      [placa]
+    );
+  }
 }
 
 // const service = new ServiceDetailsVehicle();
