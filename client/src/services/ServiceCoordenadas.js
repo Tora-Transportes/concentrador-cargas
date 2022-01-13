@@ -13,6 +13,7 @@ class ServiceCoordenadas {
 		documento,
 		tipo_documento,
 		categoria_veiculo,
+		limit,
 	}) {
 		return api.get("/coordenadas", {
 			params: {
@@ -28,6 +29,7 @@ class ServiceCoordenadas {
 				documento,
 				tipo_documento,
 				categoria_veiculo,
+				limit,
 			},
 		});
 	}

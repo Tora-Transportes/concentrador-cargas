@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useState } from "react";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
 import useLoadingScreen from "../Components/LoadingScreen";
 import NavbarNavigator from "../Components/NavbarNavigator";
 import ViewMonitoramento from "./view";
@@ -7,7 +7,45 @@ import factoryReducerCargas from "../../hooks/storageCargas/factoryReducerCargas
 
 import { Form } from "react-bootstrap";
 import { SiGooglemaps } from "react-icons/si";
+import useLocalStorage from "../Components/useLocalstorage";
 
+function reducerActiveColumns(state, action) {
+	const index = state.findIndex((i) => i.name === action.name);
+	let before;
+	switch (action.type) {
+		case "ENABLE_FIELD":
+			return state.map((i) =>
+				i.name === action.name ? { ...i, active: true } : i
+			);
+		case "DISABLE_FIELD":
+			return state.map((i) =>
+				i.name === action.name ? { ...i, active: false } : i
+			);
+		case "UP_FIELD":
+			if (index > 0) {
+				before = state[index - 1];
+				state[index - 1] = state[index];
+				state[index] = before;
+			}
+			return [...state];
+		case "DOWN_FIELD":
+			if (index < state.length - 1) {
+				before = state[index];
+				state[index] = state[index + 1];
+				state[index + 1] = before;
+			}
+			return [...state];
+		case "ENABLE_ALL":
+			return state.map((i) => ({ ...i, active: true }));
+		case "DISABLE_ALL":
+			return state.map((i) => ({ ...i, active: false }));
+		default:
+			throw new Error("Invalid action");
+	}
+}
+function reducerToggleModal(state) {
+	return !state;
+}
 function RotasPendentes() {
 	const defaultCargas = {
 		page: 1,
@@ -19,6 +57,8 @@ function RotasPendentes() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [lastOptions, setLastOptions] = useState({});
 	const [cargas, dispatchCargas] = useReducer(cargasReducer, defaultCargas);
+
+	const [itensPerPage, setItensPerPage] = useState(10);
 
 	const columns = [
 		{
@@ -102,6 +142,32 @@ function RotasPendentes() {
 			selector: (row) => row.mct,
 		},
 	];
+	const defaultStorageColumns = columns.map((i) => ({
+		name: i.name,
+		active: true,
+		description: i.description,
+	}));
+
+	const [storage, setStorage] = useLocalStorage(
+		"coordenadas-table",
+		defaultStorageColumns
+	);
+	const [displayColumns, reducerColumns] = useReducer(
+		reducerActiveColumns,
+		storage === null ? defaultStorageColumns : storage
+	);
+	const [activeModal, handleToggleModal] = useReducer(
+		reducerToggleModal,
+		false
+	);
+	useEffect(() => {
+		setStorage(displayColumns);
+	}, [displayColumns]);
+
+	function resetView() {
+		localStorage.removeItem("coordenadas-table");
+		location.reload();
+	}
 
 	async function handleExportExcel() {
 		setLoading(true);
@@ -136,6 +202,7 @@ function RotasPendentes() {
 				page: options?.page || 1,
 				order_column: column,
 				order_direction: direction,
+				limit: itensPerPage,
 			});
 
 			setLoading(false);
@@ -145,7 +212,15 @@ function RotasPendentes() {
 				payload: { ...data.data, current_page: data.data.page },
 			});
 		},
-		[setLoading, dispatchCargas]
+		[setLoading, dispatchCargas, itensPerPage]
+	);
+
+	const columnsToDisplay = displayColumns
+		.filter((i) => i.active)
+		.map((i) => i.name);
+
+	const orderedColumns = columnsToDisplay.map((i) =>
+		columns.find((j) => j.name === i)
 	);
 
 	return (
@@ -154,10 +229,19 @@ function RotasPendentes() {
 			<NavbarNavigator />
 			<ViewMonitoramento
 				get_data={tableFetchData}
-				columns={columns}
+				columns={orderedColumns.filter((c) =>
+					columnsToDisplay.includes(c.name)
+				)}
 				data={cargas}
 				handleExportExcel={handleExportExcel}
 				totalRegisters={totalRegisters}
+				displayColumns={displayColumns}
+				dispatchColumns={reducerColumns}
+				activeModal={activeModal}
+				handleToggleModal={handleToggleModal}
+				resetView={resetView}
+				itensPerPage={itensPerPage}
+				setItensPerPage={setItensPerPage}
 			/>
 		</>
 	);

@@ -1,6 +1,15 @@
 import React from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
-import { BsDownload } from "react-icons/bs";
+import {
+	Container,
+	Row,
+	Col,
+	Button,
+	Modal,
+	InputGroup,
+	FormControl,
+} from "react-bootstrap";
+import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
+import { BsDownload, BsGear } from "react-icons/bs";
 import TabelaCargas from "../Components/TabelaCargas";
 
 function ViewCoordenadas({
@@ -9,6 +18,13 @@ function ViewCoordenadas({
 	data,
 	handleExportExcel,
 	totalRegisters = 0,
+	displayColumns,
+	dispatchColumns,
+	activeModal,
+	handleToggleModal,
+	resetView,
+	itensPerPage,
+	setItensPerPage,
 }) {
 	return (
 		<>
@@ -16,19 +32,125 @@ function ViewCoordenadas({
 				<Row className="mb-2">
 					<h1>Coordenadas - Veículos</h1>
 				</Row>
-				<Row className="text-start">
-					<Col>
+				<Row>
+					<Col className="text-start">
 						<Button variant="outline-info" onClick={handleExportExcel}>
 							Exportar <BsDownload />
 						</Button>
+						<Button variant="outline-info" onClick={handleToggleModal}>
+							<BsGear /> Configurar visão
+						</Button>
+						<Button variant="outline-info" onClick={resetView}>
+							Buscar novos campos
+						</Button>
+						<select
+							className="btn"
+							value={itensPerPage}
+							onChange={(e) => setItensPerPage(e.target.value)}
+						>
+							<option value="5">👀 5</option>
+							<option value="10">👀 10</option>
+							<option value="20">👀 20</option>
+							<option value="50">👀 50</option>
+							<option value="100">👀 100</option>
+							<option value="500">👀 500</option>
+						</select>
 					</Col>
 				</Row>
 				<Row>
 					<Col>Total de {totalRegisters} registros.</Col>
 				</Row>
 				<Row>
-					<TabelaCargas columns={columns} get_data={get_data} values={data} />
+					<TabelaCargas
+						columns={columns.filter((i) =>
+							displayColumns.find((c) => c.name === i.name)
+						)}
+						get_data={get_data}
+						values={data}
+					/>
 				</Row>
+				<Modal
+					show={activeModal}
+					onHide={handleToggleModal}
+					backdrop="static"
+					keyboard={false}
+					size="lg"
+				>
+					<Modal.Header>
+						<Modal.Title>
+							Gerenciamento da Tabela <br />
+							<Button
+								variant=""
+								className="ml-3"
+								onClick={() => dispatchColumns({ type: "ENABLE_ALL" })}
+							>
+								Marcar todos
+							</Button>
+							<Button
+								variant=""
+								className="ml-3"
+								onClick={() => dispatchColumns({ type: "DISABLE_ALL" })}
+							>
+								Desmarcar todos
+							</Button>
+						</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						{displayColumns.map((column) => (
+							<InputGroup key={column.name}>
+								<InputGroup.Checkbox
+									name={column.name}
+									checked={column.active}
+									onChange={(e) => {
+										if (e.target.checked) {
+											dispatchColumns({
+												type: "ENABLE_FIELD",
+												name: column.name,
+											});
+										} else {
+											dispatchColumns({
+												type: "DISABLE_FIELD",
+												name: column.name,
+											});
+										}
+									}}
+								/>
+								<InputGroup.Text>
+									<Button
+										variant=""
+										onClick={() =>
+											dispatchColumns({
+												type: "UP_FIELD",
+												name: column.name,
+											})
+										}
+									>
+										<AiOutlineArrowUp />
+									</Button>
+								</InputGroup.Text>
+								<InputGroup.Text>
+									<Button
+										variant=""
+										onClick={() =>
+											dispatchColumns({
+												type: "DOWN_FIELD",
+												name: column.name,
+											})
+										}
+									>
+										<AiOutlineArrowDown />
+									</Button>
+								</InputGroup.Text>
+								<FormControl readOnly value={column.description} />
+							</InputGroup>
+						))}
+					</Modal.Body>
+					<Modal.Footer>
+						<Button variant="primary" onClick={handleToggleModal}>
+							Fechar
+						</Button>
+					</Modal.Footer>
+				</Modal>
 			</Container>
 		</>
 	);

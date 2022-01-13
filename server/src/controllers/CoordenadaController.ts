@@ -7,8 +7,11 @@ import fs from "fs";
 
 class CoordenadasController {
   async search(req: Request, res: Response) {
+    const pageSize = isNaN(Number(req.query.limit))
+      ? 5
+      : Number(req.query.limit);
     return res.json({
-      data: await useCases.UseCaseViewCoordenada.run(req.query),
+      data: await useCases.UseCaseViewCoordenada.run(req.query, pageSize),
     });
   }
 
