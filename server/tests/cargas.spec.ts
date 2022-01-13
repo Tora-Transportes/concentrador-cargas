@@ -10,7 +10,7 @@ import {
   // UseCaseAddCargaDerivada,
   // UseCaseUpdateCarga,
   // UseCaseViewCargas,
-  // UseCaseDeleteCarga,
+  UseCaseDeleteCarga,
   // UseCaseImportCarga,
 } from "../src/domain/UseCaseCarga/entities";
 
@@ -667,6 +667,7 @@ describe("Update carga", () => {
         responsavel_cadastro: "Andre Alves Leocadio",
         placa_veiculo: "BWC8809",
         fk_situacao: 5,
+        observacao_cancelamento: "meu teste",
       },
       "OID"
     );
@@ -714,6 +715,7 @@ describe("Update carga", () => {
         canal_comunicacao: "manual",
         responsavel_cadastro: "Andre Alves Leocadio",
         fk_situacao: 5,
+        observacao_cancelamento: "meu teste",
       },
       "OID"
     );
@@ -787,5 +789,42 @@ describe("Update carga", () => {
         "OID"
       );
     }).rejects.toThrow();
+  });
+
+  it("Para deletar uma carga é necessário preencher uma observacao", async () => {
+    const useCaseAdd = new UseCaseAddCarga(
+      cargaRepository,
+      mockNotifyAll,
+      veiculoRepository
+    );
+    const cargaCadastrada = await useCaseAdd.run({
+      e_lote: false,
+      cliente: "ARCELLOR MITTAL",
+      origem_carga: "ops-inicio",
+      destino_carga: "ops-final",
+      unidade_medida: "UN",
+      quantidade: 12,
+      canal_comunicacao: "manual",
+      responsavel_cadastro: "Andre Alves Leocadio",
+      fk_situacao: 2,
+    });
+    const useCaseDelete = new UseCaseDeleteCarga(
+      cargaRepository,
+      mockNotifyAll
+    );
+    await expect(async () => {
+      await useCaseDelete.run(cargaCadastrada.id, "Andre Alves Leocadio");
+    }).rejects.toThrow();
+
+    const observacaoExclusao = "Minha observação";
+    await useCaseDelete.run(
+      cargaCadastrada.id,
+      "Andre Alves Leocadio",
+      observacaoExclusao
+    );
+
+    expect(
+      (await cargaRepository.index(cargaCadastrada.id))?.observacao_exclusao
+    ).toMatch(observacaoExclusao);
   });
 });

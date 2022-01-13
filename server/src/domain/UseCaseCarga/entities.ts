@@ -389,9 +389,19 @@ export class UseCaseDeleteCarga {
     private cargaRepository: IRepositoryUpdateCarga,
     private notifyAll: (event: IEventSocket) => void
   ) {}
-  async run(id: number, usuario: string) {
+  async run(
+    id: number,
+    usuario: string,
+    observacaoExclusao: string | null | undefined = ""
+  ) {
     if (!id) {
       throw new AppError("Id inválido", 400);
+    }
+    if (!observacaoExclusao) {
+      throw new AppError(
+        "Ao excluir uma carga a observação da exclusão deve ser preenchida",
+        400
+      );
     }
     const carga = await this.cargaRepository.index(id);
     if (!carga) {
@@ -403,6 +413,7 @@ export class UseCaseDeleteCarga {
       ativo: 0,
       usuario,
       data_atualizacao: DateUtils.getCurrentDate(),
+      observacao_exclusao: observacaoExclusao,
     };
 
     await this.cargaRepository.update(carga.id, cargaAtualizada as ICarga);

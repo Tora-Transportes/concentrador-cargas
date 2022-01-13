@@ -23,3 +23,7 @@ update "con_cargas" set "fk_filial" = 157;
 alter table "con_cargas" add (
     "observacao_cancelamento" VARCHAR(1000)
 );
+
+alter table "con_cargas" add (
+    "observacao_exclusao" VARCHAR(1000)
+);

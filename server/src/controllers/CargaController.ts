@@ -68,9 +68,11 @@ class CargaController {
 
   async delete(req: Request, res: Response) {
     const { id } = req.params;
+    const { observacao_exclusao } = req.body;
     await useCasesCarga.UseCaseDeleteCarga.run(
       Number(id),
-      TokenAd.getClaims(String(req.headers.authorization)).name
+      TokenAd.getClaims(String(req.headers.authorization)).name,
+      observacao_exclusao
     );
 
     return res.send();

@@ -90,19 +90,21 @@ function Manual() {
 	async function handleExcluirCarga() {
 		setLoading(true);
 		try {
-			const ok = await swal(
-				"OPS?",
-				"Tem certeza que deseja excluir a carga atual ?",
-				{
-					buttons: ["Não", true],
-					dangerMode: true,
-					icon: "warning",
-				}
-			);
-			if (ok) {
-				await ServiceCargas.delete({ id: formik.values.id });
+			const observacaoExclusao = await swal(`Digite o motivo da exclusão`, {
+				content: "input",
+				dangerMode: true,
+				buttons: ["Cancelar", true],
+				icon: "warning",
+			});
+			if (observacaoExclusao) {
+				await ServiceCargas.delete({
+					id: formik.values.id,
+					observacao_exclusao: observacaoExclusao,
+				});
 				await swal("Sucesso!", "Carga removida", "success");
 				handleCloseWindow(null, false);
+			} else {
+				swal("Nenhuma alteração realizada");
 			}
 		} catch (error) {
 			console.log(error);

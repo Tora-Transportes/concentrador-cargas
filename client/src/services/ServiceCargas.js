@@ -167,8 +167,8 @@ class ServiceCargas {
 		return api.put(`/cargas/${id}`, carga);
 	}
 
-	async delete({ id }) {
-		return api.delete(`/cargas/${id}`);
+	async delete({ id, observacao_exclusao }) {
+		return api.delete(`/cargas/${id}`, { data: { observacao_exclusao } });
 	}
 
 	async index({ id }) {

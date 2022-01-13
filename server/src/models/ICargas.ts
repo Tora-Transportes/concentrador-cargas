@@ -37,4 +37,5 @@ export interface ICarga {
   fk_filial?: number | null;
 
   observacao_cancelamento?: string | null;
+  observacao_exclusao?: string | null;
 }
