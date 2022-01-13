@@ -12,6 +12,7 @@ class ServiceCoordenadas {
 		ultima_viagem_destino,
 		documento,
 		tipo_documento,
+		categoria_veiculo,
 	}) {
 		return api.get("/coordenadas", {
 			params: {
@@ -26,6 +27,7 @@ class ServiceCoordenadas {
 				ultima_viagem_destino,
 				documento,
 				tipo_documento,
+				categoria_veiculo,
 			},
 		});
 	}
@@ -41,6 +43,7 @@ class ServiceCoordenadas {
 		ultima_viagem_destino,
 		documento,
 		tipo_documento,
+		categoria_veiculo,
 	}) {
 		return api.get("/relatorio/coordenadas", {
 			responseType: "arraybuffer",
@@ -55,6 +58,7 @@ class ServiceCoordenadas {
 				ultima_viagem_destino,
 				documento,
 				tipo_documento,
+				categoria_veiculo,
 			},
 		});
 	}

@@ -27,3 +27,7 @@ alter table "con_cargas" add (
 alter table "con_cargas" add (
     "observacao_exclusao" VARCHAR(1000)
 );
+
+alter table "con_coordenadas_veiculos" add (
+    "categoria_veiculo" CHAR(1)
+);

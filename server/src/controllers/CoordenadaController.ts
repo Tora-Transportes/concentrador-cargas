@@ -24,6 +24,20 @@ class CoordenadasController {
     );
 
     const workbook = xlsx.utils.book_new();
+    for (const i of data.results) {
+      if (!i.categoria_veiculo) continue;
+      switch (i.categoria_veiculo) {
+        case "A":
+          i.categoria_veiculo = "Agregado";
+          break;
+        case "C":
+          i.categoria_veiculo = "Carreteiro";
+          break;
+        case "F":
+          i.categoria_veiculo = "Frota";
+          break;
+      }
+    }
     const sheet = xlsx.utils.json_to_sheet(data.results);
     xlsx.utils.book_append_sheet(workbook, sheet);
 

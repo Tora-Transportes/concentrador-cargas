@@ -55,6 +55,31 @@ function RotasPendentes() {
 			selector: (row) => row.ultima_viagem_destino,
 		},
 		{
+			name: "categoria_veiculo",
+			description: "Categoria",
+			selector: (row) => {
+				if (!row.categoria_veiculo) return "";
+				switch (row.categoria_veiculo) {
+					case "A":
+						return "Agregado";
+					case "F":
+						return "Frota";
+					case "C":
+						return "Carreteiro";
+					default:
+						return "Não reconhecido";
+				}
+			},
+			Filter: (props) => (
+				<Form.Select {...props}>
+					<option></option>
+					<option value="A">Agregado</option>
+					<option value="C">Carreteiro</option>
+					<option value="F">Frota</option>
+				</Form.Select>
+			),
+		},
+		{
 			name: "documento",
 			description: "Documento",
 			selector: (row) => row.documento,

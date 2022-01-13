@@ -94,7 +94,8 @@ class ServiceCoordinates {
         data.address.city ||
         data.address.city_district ||
         data.address.village ||
-        data.address.road
+        data.address.road ||
+        data.address.industrial
     ).trim();
     const state = TextUtils.normalize(data.address.state).trim();
 
@@ -108,7 +109,7 @@ class ServiceCoordinates {
     console.log("Com tratamento", `${city} - ${siglaEstado}`);
     console.log(
       "Sem tratamento",
-      `${data.address.town} || ${data.address.city} || ${data.address.city_district} || ${data.address.village} || ${data.address.road} - ${siglaEstado}`
+      `${data.address.town} || ${data.address.city} || ${data.address.city_district} || ${data.address.village} || ${data.address.road} || ${data.address.industrial} - ${siglaEstado}`
     );
     console.log("-------------------------------------------------------");
 
@@ -216,6 +217,7 @@ class ServiceCoordinates {
         ultima_viagem_destino: ultimaViagem?.DESTINO
           ? TextUtils.normalize(ultimaViagem.DESTINO)
           : null,
+        categoria_veiculo: tradutorCategoriaVeiculo.get(veiculo.placa),
       };
     });
     return veiculos;
