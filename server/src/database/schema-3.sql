@@ -31,3 +31,7 @@ alter table "con_cargas" add (
 alter table "con_coordenadas_veiculos" add (
     "categoria_veiculo" CHAR(1)
 );
+
+alter table "con_coordenadas_veiculos" add (
+    "data_emissao_documento" DATE
+);

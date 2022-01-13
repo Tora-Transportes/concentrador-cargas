@@ -95,6 +95,17 @@ function RotasPendentes() {
 			selector: (row) => row.ultima_viagem_destino,
 		},
 		{
+			name: "data_emissao_documento",
+			description: "Emissão Doc. ultima viagem",
+			selector: (row) =>
+				row.data_emissao_documento
+					?.split("T")[0]
+					.split("-")
+					.reverse()
+					.join("-"),
+			Filter: () => null,
+		},
+		{
 			name: "categoria_veiculo",
 			description: "Categoria",
 			selector: (row) => {
