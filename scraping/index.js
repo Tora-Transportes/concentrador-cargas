@@ -166,6 +166,8 @@ async function main() {
     for(const i of cargasFormatadas) {
         if(hashCargas.has(i.documento_transporte)) {
             hashCargas.get(i.documento_transporte).observacao = hashCargas.get(i.documento_transporte).observacao || "";
+            hashCargas.get(i.documento_transporte).quantidade = Number(hashCargas.get(i.documento_transporte).quantidade) + Number(i.quantidade);
+            hashCargas.get(i.documento_transporte).quantidade_atual = hashCargas.get(i.documento_transporte).quantidade;
             hashCargas.get(i.documento_transporte).observacao += "Carga: "+i.tipo_carga+",\nQuantidade: "+i.quantidade+",\nUnidade medida: "+i.unidade_medida+"\n\n";
         } else {
             hashCargas.set(i.documento_transporte, i);
