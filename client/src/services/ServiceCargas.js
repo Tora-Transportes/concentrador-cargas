@@ -50,7 +50,9 @@ class ServiceCargas {
 			placa_veiculo,
 			fk_filial,
 			documento_transporte,
-			codigo_motorista,
+			codigo_motorista:
+				codigo_motorista === undefined ? undefined : codigo_motorista || null,
+
 			placa_carreta,
 			placa_bitrem,
 		};
@@ -112,7 +114,8 @@ class ServiceCargas {
 			placa_veiculo,
 			fk_filial,
 			documento_transporte,
-			codigo_motorista,
+			codigo_motorista:
+				codigo_motorista === undefined ? undefined : codigo_motorista || null,
 			placa_carreta,
 			placa_bitrem,
 		};
@@ -177,7 +180,9 @@ class ServiceCargas {
 			fk_filial,
 			documento_transporte,
 			observacao_cancelamento,
-			codigo_motorista,
+			codigo_motorista:
+				codigo_motorista === undefined ? undefined : codigo_motorista || null,
+
 			placa_carreta,
 			placa_bitrem,
 		};
