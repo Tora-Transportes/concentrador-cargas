@@ -14,12 +14,14 @@ import { FaPowerOff, FaRobot, FaHandsWash } from "react-icons/fa";
 import { BsDownload } from "react-icons/bs";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import FilialSelect from "src/Pages/Components/FilialSelect";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function ViewRotasPendentes({ totalizadores, reload, handleExportExcel }) {
 	const [totalGeral, setTotalGeral] = useState(0);
 	const dataInicial = useRef(null);
 	const dataFinal = useRef(null);
+	const [codigoFilial, setCodigoFilial] = useState(null);
 	function percentage(total, piece) {
 		try {
 			const value = (Number(piece) * 100) / Number(total);
@@ -33,6 +35,7 @@ function ViewRotasPendentes({ totalizadores, reload, handleExportExcel }) {
 		reload({
 			data_inicio: dataInicial.current.value,
 			data_final: dataFinal.current.value,
+			fk_filial: codigoFilial,
 		});
 	}
 
@@ -50,7 +53,7 @@ function ViewRotasPendentes({ totalizadores, reload, handleExportExcel }) {
 				<Row className="mb-2">
 					<h1>Visão geral</h1>
 				</Row>
-				<Row className="mb-3">
+				<Row>
 					<Col sm={12} md={6}>
 						<FloatingLabel label="Início" className="mb-3">
 							<Form.Control
@@ -68,6 +71,18 @@ function ViewRotasPendentes({ totalizadores, reload, handleExportExcel }) {
 								type="date"
 								placeholder=" "
 								name="data_final"
+							/>
+						</FloatingLabel>
+					</Col>
+				</Row>
+				<Row className="mb-3">
+					<Col>
+						<FloatingLabel label="*Código da filial" className="mb-3">
+							<FilialSelect
+								placeholder=" "
+								name="fk_filial"
+								value={codigoFilial || ""}
+								onChange={(event) => setCodigoFilial(event.target.value)}
 							/>
 						</FloatingLabel>
 					</Col>

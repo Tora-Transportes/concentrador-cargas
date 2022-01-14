@@ -3,10 +3,15 @@ import database from "../database";
 export interface IFilter {
   data_inicio?: string;
   data_final?: string;
+  fk_filial?: number | null;
 }
 
 export class ReportTotalizadores {
-  private async generateByAtivos({ data_inicio, data_final }: IFilter) {
+  private async generateByAtivos({
+    data_inicio,
+    data_final,
+    fk_filial,
+  }: IFilter) {
     const query = database(
       database.raw(
         `(select 1 "ativo" from dual union select 0 "ativo" from dual) "con_vw_ativo"`
@@ -27,6 +32,9 @@ export class ReportTotalizadores {
         data_final,
       ]);
     }
+    if (fk_filial) {
+      query.where("fk_filial", fk_filial);
+    }
     return await query;
     // return await database.raw(`select count("con_cargas"."id") as "total", "con_vw_ativo"."ativo"
     // from (select 1 "ativo" from dual union select 0 "ativo" from dual) "con_vw_ativo"
@@ -35,7 +43,11 @@ export class ReportTotalizadores {
     // group by "con_vw_ativo"."ativo"`);
   }
 
-  private async generateByCanal({ data_inicio, data_final }: IFilter) {
+  private async generateByCanal({
+    data_inicio,
+    data_final,
+    fk_filial,
+  }: IFilter) {
     const query = database(
       database.raw(
         `(select 'portal' "canal_comunicacao" from dual union select 'manual' from dual) "con_vw_canal"`
@@ -62,6 +74,9 @@ export class ReportTotalizadores {
         data_final,
       ]);
     }
+    if (fk_filial) {
+      query.where("fk_filial", fk_filial);
+    }
     return await query;
     // return await database.raw(`select count("con_cargas_1"."id") as "total", "con_vw_canal"."canal_comunicacao"
     //   from (select 'portal' "canal_comunicacao" from dual union select 'manual' from dual) "con_vw_canal"
@@ -69,7 +84,11 @@ export class ReportTotalizadores {
     //   group by "con_vw_canal"."canal_comunicacao"`);
   }
 
-  private async generateBySituacao({ data_inicio, data_final }: IFilter) {
+  private async generateBySituacao({
+    data_inicio,
+    data_final,
+    fk_filial,
+  }: IFilter) {
     const subquery = database("con_cargas")
       .where("con_cargas.ativo", 1)
       .where("con_cargas.e_lote", 0)
@@ -83,6 +102,9 @@ export class ReportTotalizadores {
       subquery.whereRaw(`to_char("data_cadastro", 'yyyy-mm-dd') <= ?`, [
         data_final,
       ]);
+    }
+    if (fk_filial) {
+      subquery.where("fk_filial", fk_filial);
     }
     const query = database(subquery)
       .count("con_cargas_1.id as total")

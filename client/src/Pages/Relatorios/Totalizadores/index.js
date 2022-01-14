@@ -44,6 +44,7 @@ function RelatoriosMain() {
 	const [filters, setFilters] = useState({
 		data_inicio: "",
 		data_final: "",
+		fk_filial: "",
 	});
 
 	const interval = useRef(null);

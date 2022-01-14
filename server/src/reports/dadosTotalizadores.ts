@@ -4,6 +4,7 @@ import xlsx from "xlsx";
 export interface IFilter {
   data_inicio?: string;
   data_final?: string;
+  fk_filial?: string | null;
 }
 
 export class ReportDetalhesTotalizadores {
@@ -30,7 +31,7 @@ export class ReportDetalhesTotalizadores {
 
   async generate(
     key: string,
-    { data_inicio, data_final }: IFilter,
+    { data_inicio, data_final, fk_filial }: IFilter,
     filename: string
   ) {
     const query = this.factory(key)
@@ -56,6 +57,9 @@ export class ReportDetalhesTotalizadores {
       query.whereRaw(`to_char("data_cadastro", 'yyyy-mm-dd') <= ?`, [
         data_final,
       ]);
+    }
+    if (fk_filial) {
+      query.where("fk_filial", fk_filial);
     }
 
     const columns = [
