@@ -33,34 +33,54 @@ function FormularioCadastroManual({
 	const [veiculo, setVeiculo] = useState(null);
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
 	async function handleShowDetailsAboutVehicle(plate) {
-		setVeiculo((await ServiceVeiculos.detalhesImpedimentos(plate)).data.data);
+		if (!plate) {
+			swal("Placa inválida");
+			return;
+		}
+		const vehicleData = (await ServiceVeiculos.detalhesImpedimentos(plate)).data
+			.data;
+		setVeiculo(vehicleData);
+		if (!vehicleData) {
+			swal("Não foi encontrado nenhum veículo com esta placa");
+		}
 	}
 	useEffect(() => {
 		if (formik.values.e_lote) {
-			formik.setFieldValue("placa_veiculo", "");
-			formik.setFieldValue("placa_carreta", "");
-			formik.setFieldValue("placa_bitrem", "");
-			formik.setFieldValue("codigo_motorista", "");
-			formik.setFieldValue("nome_motorista", "");
+			formik.setFieldValue("placa_veiculo", null);
+			formik.setFieldValue("placa_carreta", null);
+			formik.setFieldValue("placa_bitrem", null);
+			formik.setFieldValue("codigo_motorista", null);
+			formik.setFieldValue("nome_motorista", null);
 		}
 	}, [formik.values.e_lote]);
 
 	async function handleSearchVehicle(plate) {
 		if (plate) {
 			const vehicleDetails = (await ServiceVeiculos.get(plate)).data.data;
-			formik.setFieldValue("placa_carreta", vehicleDetails.placa_carreta);
-			formik.setFieldValue("placa_bitrem", vehicleDetails.placa_bitrem);
-			formik.setFieldValue("nome_motorista", vehicleDetails.nome_motorista);
-			formik.setFieldValue("codigo_motorista", vehicleDetails.codigo_motorista);
-		} else {
-			formik.setFieldValue("placa_carreta", "");
-			formik.setFieldValue("placa_bitrem", "");
-			formik.setFieldValue("codigo_motorista", "");
-			formik.setFieldValue("nome_motorista", "");
+			if (vehicleDetails) {
+				formik.setFieldValue("placa_carreta", vehicleDetails.placa_carreta);
+				formik.setFieldValue("placa_bitrem", vehicleDetails.placa_bitrem);
+				formik.setFieldValue("nome_motorista", vehicleDetails.nome_motorista);
+				formik.setFieldValue(
+					"codigo_motorista",
+					vehicleDetails.codigo_motorista
+				);
+				return;
+			} else {
+				swal("Não foi encontrado nenhum veículo com esta placa");
+			}
 		}
+		formik.setFieldValue("placa_carreta", null);
+		formik.setFieldValue("placa_bitrem", null);
+		formik.setFieldValue("codigo_motorista", null);
+		formik.setFieldValue("nome_motorista", null);
 	}
 
 	async function handleShowDebitAboutVehicle(plate) {
+		if (!plate) {
+			swal("Placa inválida");
+			return;
+		}
 		const debitos = (await ServiceVeiculos.debitos(plate)).data.data;
 		setDebitosVeiculo(debitos);
 		if (debitos.length === 0) {
@@ -181,6 +201,13 @@ function FormularioCadastroManual({
 						</Col>
 					</Row>
 					<Row>
+						<Form.Text muted className="fw-bold">
+							Caso os dados vinculados à placa não estejam corretos realize a
+							alteração no SIT, depois volte a essa página clique dentro do
+							campo {`"Placa Cavalo"`} e clique fora para a pesquisa ser
+							realizada novamente. Lembrando que a atualização dos dados ficará
+							indisponível uma vez que o veículo for {`"Aprovado pelo GR"`}.
+						</Form.Text>
 						<Col sm={12}>
 							<InputPlaca
 								readOnly={
@@ -571,7 +598,11 @@ function FormularioCadastroManual({
 									<b>DESCRIÇÃO</b>: {i.DEC_DSC}
 								</ListGroupItem>
 								<ListGroupItem>
-									<b>VALOR</b>: {i.DEC_VALOR}
+									<b>VALOR</b>:{" "}
+									{new Intl.NumberFormat([], {
+										style: "currency",
+										currency: "BRL",
+									}).format(i.DEC_VALOR)}
 								</ListGroupItem>
 								<ListGroupItem>
 									<b>VENCIMENTO</b>:
