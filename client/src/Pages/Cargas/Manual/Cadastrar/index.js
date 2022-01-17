@@ -18,7 +18,7 @@ function Manual() {
 		initialValues: {
 			responsavel_cadastro: String(getClaims().name),
 			id: "(Vai ser auto gerado)",
-			e_lote: true,
+			e_lote: false,
 			cliente: "",
 			destino_carga: "",
 			origem_carga: "",
