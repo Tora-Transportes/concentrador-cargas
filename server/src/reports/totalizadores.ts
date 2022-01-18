@@ -126,15 +126,59 @@ export class ReportTotalizadores {
     //     group by "fk_situacao", "descricao", "con_situacoes_cargas"."id", "ativo" order by "con_situacoes_cargas"."id"`);
   }
 
+  private async generateLoteByActive({
+    data_final,
+    data_inicio,
+    fk_filial,
+  }: IFilter) {
+    const status = database.raw(
+      `(select 1 "ativo" from DUAL union select 0 "ativo" from "DUAL") "con_vw_status"`
+    );
+    const subquery = database("con_cargas").where("e_lote", 1);
+    if (data_inicio) {
+      subquery.whereRaw(`to_char("data_cadastro", 'yyyy-mm-dd') >= ?`, [
+        data_inicio,
+      ]);
+    }
+    if (data_final) {
+      subquery.whereRaw(`to_char("data_cadastro", 'yyyy-mm-dd') <= ?`, [
+        data_final,
+      ]);
+    }
+    if (fk_filial) {
+      subquery.where("fk_filial", fk_filial);
+    }
+    return database(status)
+      .count("con_cargas.id as total")
+      .select("con_vw_status.ativo")
+      .leftJoin(
+        subquery.as("con_cargas"),
+        "con_cargas.ativo",
+        "con_vw_status.ativo"
+      )
+      .groupBy("con_vw_status.ativo");
+  }
+
   async generate(filter: IFilter) {
     const output = {
       cargas_ativas: 0,
       cargas_desativadas: 0,
       cadastro_portal: 0,
       cadastro_manual: 0,
+      lotes_ativos: 0,
+      lotes_desativados: 0,
       geral: [],
     };
 
+    const lotes = await this.generateLoteByActive(filter);
+    for (const i of lotes) {
+      if (i.ativo === 0) {
+        output.lotes_desativados = Number(i.total);
+      }
+      if (i.ativo === 1) {
+        output.lotes_ativos = Number(i.total);
+      }
+    }
     const ativos = await this.generateByAtivos(filter);
     for (const i of ativos) {
       if (i.ativo === 0) {

@@ -12,18 +12,27 @@ export class ReportDetalhesTotalizadores {
     if (key === "portal") {
       return database("con_cargas")
         .where("canal_comunicacao", "portal")
+        .where("e_lote", 0)
         .where("ativo", 1);
     }
     if (key === "manual") {
       return database("con_cargas")
         .where("canal_comunicacao", "manual")
+        .where("e_lote", 0)
         .where("ativo", 1);
     }
     if (key === "ativas") {
-      return database("con_cargas").where("ativo", 1);
+      return database("con_cargas").where("e_lote", 0).where("ativo", 1);
     }
     if (key === "desativadas") {
-      return database("con_cargas").where("ativo", 0);
+      return database("con_cargas").where("e_lote", 0).where("ativo", 0);
+    }
+
+    if (key === "lotes_ativos") {
+      return database("con_cargas").where("e_lote", 1).where("ativo", 1);
+    }
+    if (key === "lotes_desativados") {
+      return database("con_cargas").where("e_lote", 1).where("ativo", 0);
     }
 
     throw new Error("Invalid key");
@@ -46,8 +55,7 @@ export class ReportDetalhesTotalizadores {
         "con_situacoes_cargas.id",
         "con_cargas.fk_situacao"
       )
-      .leftJoin("FILIAL", "FILIAL.FIL_COD", "con_cargas.fk_filial")
-      .where("e_lote", 0);
+      .leftJoin("FILIAL", "FILIAL.FIL_COD", "con_cargas.fk_filial");
     if (data_inicio) {
       query.whereRaw(`to_char("data_cadastro", 'yyyy-mm-dd') >= ?`, [
         data_inicio,
@@ -123,6 +131,7 @@ export class ReportDetalhesTotalizadores {
         description: "Data Atualização",
         type: "date",
       },
+      { name: "ativo", description: "Ativo", type: "string" },
     ];
 
     const searchResult = await query;
@@ -137,6 +146,9 @@ export class ReportDetalhesTotalizadores {
             tmp[titulo] = carga[i];
             if (i === "e_lote") {
               tmp[titulo] = carga[i] ? "SIM" : "NÃO";
+            }
+            if (i === "ativo") {
+              tmp[titulo] = +carga[i] === 1 ? "ATIVO" : "DESATIVADO";
             }
             if (["data_coleta", "data_entrega"].includes(i)) {
               tmp[titulo] = carga[i]

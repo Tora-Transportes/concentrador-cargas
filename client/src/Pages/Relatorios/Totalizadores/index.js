@@ -13,6 +13,8 @@ function RelatoriosMain() {
 		cargas_desativadas: 0,
 		cadastro_portal: 0,
 		cadastro_manual: 0,
+		lotes_ativos: 0,
+		lotes_desativados: 0,
 		geral: [
 			{
 				total: 0,

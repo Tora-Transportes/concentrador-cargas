@@ -240,6 +240,80 @@ function ViewRotasPendentes({ totalizadores, reload, handleExportExcel }) {
 				</Row>
 				<hr />
 
+				<Row className="text-center">
+					<Col>
+						<Card
+							style={{ minWidth: "18rem" }}
+							className="pt-4 pb-4 border border-success"
+						>
+							<Card.Body>
+								<Card.Title>
+									Lotes ativos
+									<Button
+										variant=""
+										onClick={() => handleExportExcel("lotes_ativos")}
+									>
+										<BsDownload />
+									</Button>
+								</Card.Title>
+								<Card.Text>
+									<FaPowerOff size={30} className="text-success" />
+								</Card.Text>
+								<h1>
+									<b>{totalizadores.lotes_ativos}</b>
+								</h1>
+								<Card.Text>
+									<span className="text-danger">
+										{percentage(
+											totalizadores.lotes_ativos +
+												totalizadores.lotes_desativados,
+											totalizadores.lotes_ativos
+										)}
+										%
+									</span>{" "}
+									do total de lotes
+								</Card.Text>
+							</Card.Body>
+						</Card>
+					</Col>
+					<Col>
+						<Card
+							style={{ minWidth: "18rem" }}
+							className="pt-4 pb-4 border border-danger"
+						>
+							<Card.Body>
+								<Card.Title>
+									Lotes desativados{" "}
+									<Button
+										variant=""
+										onClick={() => handleExportExcel("lotes_desativados")}
+									>
+										<BsDownload />
+									</Button>
+								</Card.Title>
+								<Card.Text>
+									<FaPowerOff size={30} className="text-danger" />
+								</Card.Text>
+								<h1>
+									<b>{totalizadores.lotes_desativados}</b>
+								</h1>
+								<Card.Text>
+									<span className="text-danger">
+										{percentage(
+											totalizadores.lotes_ativos +
+												totalizadores.lotes_desativados,
+											totalizadores.lotes_desativados
+										)}
+										%
+									</span>{" "}
+									do total de lotes
+								</Card.Text>
+							</Card.Body>
+						</Card>
+					</Col>
+				</Row>
+				<hr />
+
 				<Row className="text-center mx-auto">
 					<Col lg={4} md={6} sm={12}>
 						<Doughnut
