@@ -4,7 +4,7 @@ import { IServiceSit } from "../domain/UseCaseCarga/entities";
 import DateUtils from "../Utils/date";
 
 class ServiceMigrarSit implements IServiceSit {
-  async consultaVeiculo(placa: string) {
+  async consultarProprietarioVeiculo(placa: string) {
     return await database.raw(
       `
     select VEICULO.VEI_COD as "id_veiculo",
@@ -34,6 +34,14 @@ class ServiceMigrarSit implements IServiceSit {
     );
   }
 
+  async consultarCPFMotorista(codigoMotorista: number) {
+    return database("CG_IDENTIFICACAO")
+      .where("CG_COD", codigoMotorista)
+      .where("TI_COD", 2)
+      .first()
+      .select("CGI_NUM as cpf");
+  }
+
   async consultaIBGE(uf: string, cidade: string) {
     return database("CIDADE")
       .select([
@@ -58,7 +66,9 @@ class ServiceMigrarSit implements IServiceSit {
       );
     }
 
-    const dadosVeiculo = await this.consultaVeiculo(carga.placa_veiculo);
+    const dadosVeiculo = await this.consultarProprietarioVeiculo(
+      carga.placa_veiculo
+    );
     if (dadosVeiculo.length === 0) {
       throw new Error("Dados do veículo não encontrados por meio da consulta");
     }
@@ -82,16 +92,28 @@ class ServiceMigrarSit implements IServiceSit {
       throw new Error("A carga não possui filial vinculada");
     }
 
+    if (!carga.codigo_motorista) {
+      throw new Error("A carga não possui nenhum motorista vinculado");
+    }
+
+    const dadosMotorista = await this.consultarCPFMotorista(
+      carga.codigo_motorista
+    );
+
+    if (!dadosMotorista) {
+      throw new Error("O motorista não possui CPF vinculado");
+    }
+
     return {
       FIL_COD: Number(carga.fk_filial),
       STF_COD: 19,
       COD_EMPRESA_SAP: "2000",
       COD_AGENDAMENTO_ATS: carga.id,
-      CGI_NUM_MOT: dadosVeiculo[0].cpf_motorista,
+      CGI_NUM_MOT: dadosMotorista.cpf,
       CGI_NUM_PROP: dadosVeiculo[0].documento_proprietario,
-      VEI_PLACA_CAV: dadosVeiculo[0].placa,
-      VEI_PLACA_CAR: dadosVeiculo[0].placa_carreta,
-      VEI_PLACA_BIT: dadosVeiculo[0].placa_bitrem,
+      VEI_PLACA_CAV: carga.placa_veiculo,
+      VEI_PLACA_CAR: carga.placa_carreta,
+      VEI_PLACA_BIT: carga.placa_bitrem,
       VEI_PLACA_TRI: null,
       PCA_DOC_FEDERAL_CLIE: carga.cliente.split(" - ")[1],
       CGI_NUM_PROGR: carga.usuario,
