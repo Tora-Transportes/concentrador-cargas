@@ -59,6 +59,7 @@ function Manual() {
 					`O registro de id ${data.data.id} foi atualizado`,
 					"success"
 				);
+				await carregarCarga();
 			} catch (error) {
 				console.log(error);
 			}
@@ -131,6 +132,31 @@ function Manual() {
 					observacao_cancelamento: observacaoCancelamento,
 				});
 				await swal("Sucesso!", "Carga cancelada", "success");
+				await carregarCarga();
+			} else {
+				await swal("Nenhuma alteração realizada");
+			}
+		} catch (error) {
+			console.log(error);
+		}
+		setLoading(false);
+	}
+
+	async function handleColocarEmViagem() {
+		setLoading(true);
+		try {
+			const ok = await swal(`Certeza que deseja colocar a carga em viagem ?`, {
+				dangerMode: true,
+				buttons: ["Cancelar", true],
+				icon: "warning",
+			});
+			if (ok) {
+				await ServiceCargas.update({
+					...formik.values,
+					fk_situacao: 6,
+				});
+				await swal("Sucesso!", "Carga colocada em viagem", "success");
+				await carregarCarga();
 			} else {
 				await swal("Nenhuma alteração realizada");
 			}
@@ -161,33 +187,34 @@ function Manual() {
 		}
 	}
 
+	async function carregarCarga() {
+		try {
+			const carga = (await ServiceCargas.index({ id })).data.data;
+			setLoteInicial(carga.e_lote);
+			for (const i in carga) {
+				const nonNullValue = carga[i] === null ? "" : carga[i];
+				if (i.indexOf("data") !== -1) {
+					formik.setFieldValue(i, nonNullValue?.split("T")[0]);
+				} else if (i === "e_lote") {
+					formik.setFieldValue("e_lote", !!nonNullValue);
+				} else {
+					formik.setFieldValue(i, nonNullValue);
+				}
+			}
+			handleSearchDistance(carga);
+		} catch (error) {
+			history.push("/cargas/menu");
+		}
+	}
+
 	useEffect(() => {
 		let isMounted = true;
 		setLoading(true);
-		async function run() {
-			try {
-				const carga = (await ServiceCargas.index({ id })).data.data;
-				setLoteInicial(carga.e_lote);
-				for (const i in carga) {
-					const nonNullValue = carga[i] === null ? "" : carga[i];
-					if (i.indexOf("data") !== -1) {
-						formik.setFieldValue(i, nonNullValue?.split("T")[0]);
-					} else if (i === "e_lote") {
-						formik.setFieldValue("e_lote", !!nonNullValue);
-					} else {
-						formik.setFieldValue(i, nonNullValue);
-					}
-				}
-				handleSearchDistance(carga);
-			} catch (error) {
-				history.push("/cargas/menu");
-			}
-			if (isMounted) {
-				setLoading(false);
-			}
-		}
-		run();
 
+		carregarCarga();
+		if (isMounted) {
+			setLoading(false);
+		}
 		return () => {
 			isMounted = false;
 		};
@@ -224,7 +251,12 @@ function Manual() {
 					/>
 					<Row>
 						<Col>
-							<Button variant="success" type="submit" className="p-3 fw-bold">
+							<Button
+								variant="success"
+								type="submit"
+								className="p-3 fw-bold"
+								disabled={[3, 5, 6].includes(formik.values.fk_situacao)}
+							>
 								Gravar
 							</Button>
 						</Col>
@@ -238,15 +270,16 @@ function Manual() {
 							</Button>
 						</Col>
 						<Col className="text-end">
-							{formik.values.fk_situacao !== 3 && (
-								<Button
-									variant="danger"
-									className="p-3 fw-bold"
-									onClick={handleExcluirCarga}
-								>
-									Excluir
-								</Button>
-							)}
+							{formik.values.fk_situacao !== 3 &&
+								formik.values.fk_situacao !== 6 && (
+									<Button
+										variant="danger"
+										className="p-3 fw-bold"
+										onClick={handleExcluirCarga}
+									>
+										Excluir
+									</Button>
+								)}
 							{formik.values.fk_situacao === 3 && (
 								<Button
 									variant="danger"
@@ -257,6 +290,17 @@ function Manual() {
 								</Button>
 							)}
 						</Col>
+						{formik.values.fk_situacao === 3 && (
+							<Col className="text-end">
+								<Button
+									variant="info"
+									className="p-3 fw-bold"
+									onClick={handleColocarEmViagem}
+								>
+									Colocar em viagem
+								</Button>
+							</Col>
+						)}
 					</Row>
 				</Form>
 			</Container>

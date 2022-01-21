@@ -209,24 +209,38 @@ export class UseCaseUpdateCarga {
       );
     }
 
-    if (cargaCadastrada.fk_situacao === ECargaStatus.CARGA_ATENDIDA) {
+    if (cargaCadastrada.fk_situacao === ECargaStatus.CARGA_EM_VIAGEM) {
       throw new AppError(
-        "A carga não pode ser movimentada após ser atendida",
+        "A carga não pode ser movimentada após estar em viagem",
         400
       );
     }
 
     if (
       cargaCadastrada.fk_situacao === ECargaStatus.APROVADO_PELO_GR &&
-      carga.fk_situacao !== ECargaStatus.CARGA_CANCELADA
+      ![ECargaStatus.CARGA_CANCELADA, ECargaStatus.CARGA_EM_VIAGEM].includes(
+        Number(carga.fk_situacao)
+      )
     ) {
       throw new AppError(
-        "Após a carga ser aprovada pelo gr ela só pode ser cancelada e não editada",
+        "Após a carga ser aprovada pelo gr ela só pode ser cancelada ou colocada em viagem e não editada",
         400
       );
     }
 
     const user = await this.userRepository.index(oid);
+
+    if (carga.fk_situacao === ECargaStatus.CARGA_EM_VIAGEM) {
+      if (user?.permissoes.includes("APROVAR_VIAGEM")) {
+        Object.assign(carga, cargaCadastrada);
+        carga.fk_situacao = ECargaStatus.CARGA_EM_VIAGEM;
+      } else {
+        throw new AppError(
+          "O usuário não possui a permissão 'APROVAR_VIAGEM'",
+          403
+        );
+      }
+    }
 
     if (carga.fk_situacao === ECargaStatus.CARGA_CANCELADA) {
       if (!user?.permissoes.includes("DELETAR_CARGAS")) {

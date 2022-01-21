@@ -25,6 +25,7 @@ function Permissoes() {
 			permissao_alterar_permissoes: false,
 			permissao_cadastrar_produtos: false,
 			permissao_aprovar_veiculos: false,
+			permissao_aprovar_viagem: false,
 		},
 	});
 
@@ -56,6 +57,9 @@ function Permissoes() {
 		}
 		if (formik.values.permissao_aprovar_veiculos) {
 			permissoes.push("APROVAR_VEICULOS");
+		}
+		if (formik.values.permissao_aprovar_viagem) {
+			permissoes.push("APROVAR_VIAGEM");
 		}
 		if (
 			await swal(
@@ -120,6 +124,15 @@ function Permissoes() {
 							onChange={handleChangeCheckbox}
 							label={`Aprovar veículos`}
 							id="permissao_aprovar_veiculos"
+							inline
+						/>
+						<Form.Check
+							type="checkbox"
+							name="permissao_aprovar_viagem"
+							checked={formik.values.permissao_aprovar_viagem}
+							onChange={handleChangeCheckbox}
+							label={`Aprovar viagem`}
+							id="permissao_aprovar_viagem"
 							inline
 						/>
 					</Col>

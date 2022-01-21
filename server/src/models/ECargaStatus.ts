@@ -4,7 +4,7 @@ enum ECargaStatus {
   APROVADO_PELO_GR = 3,
   VEICULO_REPROVADO = 4,
   CARGA_CANCELADA = 5,
-  CARGA_ATENDIDA = 6,
+  CARGA_EM_VIAGEM = 6,
 }
 
 export default ECargaStatus;
