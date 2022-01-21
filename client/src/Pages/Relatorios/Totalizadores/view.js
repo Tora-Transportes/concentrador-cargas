@@ -330,6 +330,7 @@ function ViewRotasPendentes({ totalizadores, reload, handleExportExcel }) {
 											"rgba(11, 133, 0)",
 											"rgba(247, 0, 21)",
 											"rgba(115, 1, 88)",
+											"rgba(66, 135, 245)",
 										],
 										borderWidth: 1,
 									},

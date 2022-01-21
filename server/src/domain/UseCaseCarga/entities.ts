@@ -209,6 +209,13 @@ export class UseCaseUpdateCarga {
       );
     }
 
+    if (cargaCadastrada.fk_situacao === ECargaStatus.CARGA_ATENDIDA) {
+      throw new AppError(
+        "A carga não pode ser movimentada após ser atendida",
+        400
+      );
+    }
+
     if (
       cargaCadastrada.fk_situacao === ECargaStatus.APROVADO_PELO_GR &&
       carga.fk_situacao !== ECargaStatus.CARGA_CANCELADA

@@ -41,3 +41,5 @@ alter table "con_cargas" add (
     "placa_bitrem" VARCHAR(10),
     "codigo_motorista" VARCHAR(1000)
 );
+
+insert into "con_situacoes_cargas" ("id", "descricao", "cor") values (6, 'Em viagem', '#4287f5');
