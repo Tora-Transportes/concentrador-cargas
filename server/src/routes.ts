@@ -100,5 +100,6 @@ routes.get(
   "/relatorio/totalizadores/:key",
   RelatorioController.detalhesTotalizadores
 );
+routes.get("/relatorio/resumo_diario", RelatorioController.gerarResumoDiario);
 
 export default routes;

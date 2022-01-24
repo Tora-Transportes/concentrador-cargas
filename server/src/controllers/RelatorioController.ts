@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
 import { ReportTotalizadores } from "../reports/totalizadores";
 import { ReportDetalhesTotalizadores } from "../reports/dadosTotalizadores";
+import { ReportResumoPorDia } from "../reports/resumoPorDia";
 import fs from "fs";
+import AppError from "../models/AppError";
 class RelatorioController {
   /*
     {
@@ -32,6 +34,22 @@ class RelatorioController {
     stream.pipe(res);
     fs.unlinkSync(filename);
     return res;
+  }
+
+  async gerarResumoDiario(req: Request, res: Response) {
+    const report = new ReportResumoPorDia();
+    const { fk_filial, data_inicio, data_final } = req.query;
+    if (!fk_filial || !data_inicio || !data_final) {
+      throw new AppError("Parametros inválidos para gerar o relatório", 400);
+    }
+
+    return res.json({
+      data: await report.generate({
+        fk_filial: String(fk_filial),
+        data_inicio: String(data_inicio),
+        data_final: String(data_final),
+      }),
+    });
   }
 }
 

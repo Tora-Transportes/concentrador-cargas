@@ -43,6 +43,7 @@ function RelatoriosMain() {
 			},
 		],
 	});
+	const [resumosDiarios, setResumosDiarios] = useState([]);
 	const [filters, setFilters] = useState({
 		data_inicio: "",
 		data_final: "",
@@ -61,6 +62,14 @@ function RelatoriosMain() {
 			setTotalizadores(
 				(await ServiceRelatorios.totalizadores(filters)).data.data
 			);
+
+			if (!filters.fk_filial || !filters.data_final || !filters.data_inicio) {
+				setResumosDiarios([]);
+			} else {
+				const a = (await ServiceRelatorios.resumosDiarios(filters)).data.data;
+				setResumosDiarios(a);
+				console.log(a);
+			}
 			setLoading(false);
 		}, 300);
 	};
@@ -108,6 +117,7 @@ function RelatoriosMain() {
 				totalizadores={totalizadores}
 				reload={setFilters}
 				handleExportExcel={handleExportExcel}
+				resumosDiarios={resumosDiarios}
 			/>
 		</>
 	);

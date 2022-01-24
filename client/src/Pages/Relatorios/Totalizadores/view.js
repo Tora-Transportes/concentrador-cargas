@@ -17,7 +17,12 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import FilialSelect from "src/Pages/Components/FilialSelect";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function ViewRotasPendentes({ totalizadores, reload, handleExportExcel }) {
+function ViewRotasPendentes({
+	totalizadores,
+	reload,
+	handleExportExcel,
+	resumosDiarios,
+}) {
 	const [totalGeral, setTotalGeral] = useState(0);
 	const dataInicial = useRef(null);
 	const dataFinal = useRef(null);
@@ -339,26 +344,6 @@ function ViewRotasPendentes({ totalizadores, reload, handleExportExcel }) {
 						/>
 					</Col>
 					<Col>
-						{/* {totalizadores?.geral?.map((situacao) => {
-							return (
-								<Col key={situacao.fk_situacao} sm={12}>
-									<Card className="border border-success">
-										<Card.Body>
-											<Card.Title>{situacao.descricao}</Card.Title>
-											<h1>
-												<b>{situacao.total}</b>
-											</h1>
-											<Card.Text>
-												<span className="text-danger">
-													{percentage(totalGeral, situacao.total)}%
-												</span>{" "}
-												do total de cargas
-											</Card.Text>
-										</Card.Body>
-									</Card>
-								</Col>
-							);
-						})} */}
 						<Table striped bordered hover>
 							<thead>
 								<tr>
@@ -380,6 +365,40 @@ function ViewRotasPendentes({ totalizadores, reload, handleExportExcel }) {
 													{percentage(totalGeral, situacao.total)}%
 												</span>
 											</td>
+										</tr>
+									);
+								})}
+							</tbody>
+						</Table>
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						<Table striped bordered hover>
+							<thead>
+								<tr>
+									<th>Total peso cadastrado</th>
+									<th>Total peso transportado</th>
+									<th>Viagens realizadas</th>
+									<th>Data cadastro</th>
+									<th>Filial</th>
+									<th>Unidade Medida</th>
+								</tr>
+							</thead>
+							<tbody>
+								{resumosDiarios?.map((resumo) => {
+									return (
+										<tr key={resumo.data_cadastro} sm={12}>
+											<td>{resumo.total_peso_cadastrado}</td>
+											<td>{resumo.total_peso_transportado}</td>
+											<td>{resumo.viagens_realizadas}</td>
+											<td>
+												{resumo.data_cadastro.split("-").reverse().join("/")}
+											</td>
+											<td>
+												{resumo.fk_filial} - {resumo.nome_filial}
+											</td>
+											<td>{resumo.unidade_medida}</td>
 										</tr>
 									);
 								})}
