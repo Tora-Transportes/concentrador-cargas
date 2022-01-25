@@ -167,18 +167,18 @@ export class ReportDetalhesTotalizadores {
     const sheet = xlsx.utils.json_to_sheet(
       searchResult.map((carga: Record<string, any>) => {
         const tmp: Record<string, any> = {};
-        for (const i in carga) {
-          const titulo = columns.find((j) => j.name === i)?.description;
+        for (const i of columns) {
+          const titulo = i.description;
           if (titulo) {
-            tmp[titulo] = carga[i];
-            if (i === "e_lote") {
-              tmp[titulo] = carga[i] ? "SIM" : "NÃO";
+            tmp[titulo] = carga[i.name];
+            if (i.name === "e_lote") {
+              tmp[titulo] = carga[i.name] ? "SIM" : "NÃO";
             }
-            if (i === "ativo") {
-              tmp[titulo] = +carga[i] === 1 ? "ATIVO" : "DESATIVADO";
+            if (i.name === "ativo") {
+              tmp[titulo] = +carga[i.name] === 1 ? "ATIVO" : "DESATIVADO";
             }
-            if (["data_coleta", "data_entrega"].includes(i)) {
-              tmp[titulo] = carga[i]
+            if (["data_coleta", "data_entrega"].includes(i.name)) {
+              tmp[titulo] = carga[i.name]
                 ?.toISOString()
                 ?.split("T")[0]
                 ?.split("-")
