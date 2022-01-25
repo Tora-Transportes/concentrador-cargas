@@ -376,43 +376,56 @@ function ViewRotasPendentes({
 				{dataInicial?.current?.value &&
 					dataFinal?.current?.value &&
 					codigoFilial && (
-						<Row>
-							<Col>
-								<Table striped bordered hover>
-									<thead>
-										<tr>
-											<th>Total peso cadastrado</th>
-											<th>Total peso transportado</th>
-											<th>Viagens realizadas</th>
-											<th>Data cadastro</th>
-											<th>Filial</th>
-											<th>Unidade Medida</th>
-										</tr>
-									</thead>
-									<tbody>
-										{resumosDiarios?.map((resumo) => {
-											return (
-												<tr key={resumo.data_cadastro} sm={12}>
-													<td>{resumo.total_peso_cadastrado}</td>
-													<td>{resumo.total_peso_transportado}</td>
-													<td>{resumo.viagens_realizadas}</td>
-													<td>
-														{resumo.data_cadastro
-															.split("-")
-															.reverse()
-															.join("/")}
-													</td>
-													<td>
-														{resumo.fk_filial} - {resumo.nome_filial}
-													</td>
-													<td>{resumo.unidade_medida}</td>
-												</tr>
-											);
-										})}
-									</tbody>
-								</Table>
-							</Col>
-						</Row>
+						<>
+							<Row>
+								<Col>
+									<Button
+										className="w-100"
+										onClick={() => handleExportExcel("completo")}
+									>
+										Baixar todas cargas do filtro <BsDownload />
+									</Button>
+								</Col>
+							</Row>
+							<hr />
+							<Row>
+								<Col>
+									<Table striped bordered hover>
+										<thead>
+											<tr>
+												<th>Total peso cadastrado</th>
+												<th>Total peso transportado</th>
+												<th>Viagens realizadas</th>
+												<th>Data cadastro</th>
+												<th>Filial</th>
+												<th>Unidade Medida</th>
+											</tr>
+										</thead>
+										<tbody>
+											{resumosDiarios?.map((resumo) => {
+												return (
+													<tr key={resumo.data_cadastro} sm={12}>
+														<td>{resumo.total_peso_cadastrado}</td>
+														<td>{resumo.total_peso_transportado}</td>
+														<td>{resumo.viagens_realizadas}</td>
+														<td>
+															{resumo.data_cadastro
+																.split("-")
+																.reverse()
+																.join("/")}
+														</td>
+														<td>
+															{resumo.fk_filial} - {resumo.nome_filial}
+														</td>
+														<td>{resumo.unidade_medida}</td>
+													</tr>
+												);
+											})}
+										</tbody>
+									</Table>
+								</Col>
+							</Row>
+						</>
 					)}
 			</Container>
 		</>

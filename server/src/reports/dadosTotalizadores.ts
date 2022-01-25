@@ -34,6 +34,9 @@ export class ReportDetalhesTotalizadores {
     if (key === "lotes_desativados") {
       return database("con_cargas").where("e_lote", 1).where("ativo", 0);
     }
+    if (key === "completo") {
+      return database("con_cargas").where("e_lote", 0);
+    }
 
     throw new Error("Invalid key");
   }
@@ -49,11 +52,17 @@ export class ReportDetalhesTotalizadores {
         "con_situacoes_cargas.descricao as situacao.descricao",
         "con_situacoes_cargas.cor as situacao.cor",
         "FILIAL.FIL_DSC as filial.descricao",
+        "CADASTRO_GERAL.CG_NOME as nome_motorista",
       ])
       .join(
         "con_situacoes_cargas",
         "con_situacoes_cargas.id",
         "con_cargas.fk_situacao"
+      )
+      .leftJoin(
+        "CADASTRO_GERAL",
+        "CADASTRO_GERAL.CG_COD",
+        "con_cargas.codigo_motorista"
       )
       .leftJoin("FILIAL", "FILIAL.FIL_COD", "con_cargas.fk_filial");
     if (data_inicio) {
@@ -119,7 +128,15 @@ export class ReportDetalhesTotalizadores {
         description: "Documento de transporte",
         type: "string",
       },
-      { name: "placa_veiculo", description: "Placa", type: "string" },
+      { name: "placa_veiculo", description: "Placa Cavalo", type: "string" },
+      { name: "placa_carreta", description: "Placa Carreta", type: "string" },
+      { name: "placa_veiculo", description: "Placa Bitrem", type: "string" },
+      {
+        name: "codigo_motorista",
+        description: "Código motorista",
+        type: "string",
+      },
+      { name: "nome_motorista", description: "Nome motorista", type: "string" },
       {
         name: "observacao_gr",
         description: "Observação do GR",
@@ -135,6 +152,11 @@ export class ReportDetalhesTotalizadores {
       {
         name: "observacao_exclusao",
         description: "Observação Exclusão",
+        type: "string",
+      },
+      {
+        name: "observacao_cancelamento",
+        description: "Observação Cancelamento",
         type: "string",
       },
     ];
