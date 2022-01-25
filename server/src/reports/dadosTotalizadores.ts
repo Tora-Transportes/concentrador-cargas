@@ -132,6 +132,11 @@ export class ReportDetalhesTotalizadores {
         type: "date",
       },
       { name: "ativo", description: "Ativo", type: "string" },
+      {
+        name: "observacao_exclusao",
+        description: "Observação Exclusão",
+        type: "string",
+      },
     ];
 
     const searchResult = await query;
