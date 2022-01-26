@@ -190,6 +190,7 @@ function Manual() {
 	async function carregarCarga() {
 		try {
 			const carga = (await ServiceCargas.index({ id })).data.data;
+			console.log(carga);
 			setLoteInicial(carga.e_lote);
 			for (const i in carga) {
 				const nonNullValue = carga[i] === null ? "" : carga[i];

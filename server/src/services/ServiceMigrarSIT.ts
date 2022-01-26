@@ -88,7 +88,11 @@ class ServiceMigrarSit implements IServiceSit {
       dataAtualizacao = DateUtils.getCurrentDate();
     }
 
-    if (!carga.fk_filial || isNaN(Number(carga.fk_filial))) {
+    if (
+      isNaN(Number(carga.fk_filial)) ||
+      carga.fk_filial === null ||
+      carga.fk_filial === undefined
+    ) {
       throw new Error("A carga não possui filial vinculada");
     }
 

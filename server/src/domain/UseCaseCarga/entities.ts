@@ -68,7 +68,7 @@ export class UseCaseAddCarga {
       if (cargaImportada.results.length > 0) {
         console.log(cargaImportada, "duplicada com ", carga);
         throw new AppError(
-          "A carga já foi cadastrada com o conjunto documento de transporte + tipo de carga",
+          "A carga já foi cadastrada com o documento de transporte",
           409
         );
       }

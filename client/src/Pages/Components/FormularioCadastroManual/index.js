@@ -126,7 +126,7 @@ function FormularioCadastroManual({
 						<FilialSelect
 							placeholder=" "
 							name="fk_filial"
-							value={formik.values.fk_filial || ""}
+							value={formik.values.fk_filial ?? ""}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							required
