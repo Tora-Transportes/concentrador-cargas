@@ -118,7 +118,7 @@ function Visualizar() {
 			name: "fk_filial",
 			description: "Código da filial",
 			selector: (row) =>
-				row.fk_filial
+				row.fk_filial || row["filial.descricao"]
 					? `${row.fk_filial} - ${row["filial.descricao"]}`
 					: row.fk_filial,
 			Filter: (props) => <Form.Control type="number" {...props} />,
