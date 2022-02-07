@@ -98,7 +98,6 @@ function RotasPendentes() {
 			name: "distancia_ate_destino",
 			description: "Distância até o destino",
 			selector: (row) => {
-				console.log(row);
 				if (!row.distancia_ate_destino) {
 					return "";
 				}
