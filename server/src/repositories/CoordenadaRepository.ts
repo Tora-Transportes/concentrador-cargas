@@ -24,6 +24,11 @@ export class CoordenadaRepository {
     const total = database("con_coordenadas_veiculos")
       .count("placa as total")
       .first();
+    query.leftJoin(
+      "con_veiculos_distancia",
+      "con_veiculos_distancia.fk_placa",
+      "con_coordenadas_veiculos.placa"
+    );
     for (const [key, value] of Object.entries({
       placa,
       mct,
@@ -58,11 +63,7 @@ export class CoordenadaRepository {
     query.orderBy("mct");
     query.limit(pageSize);
     query.offset((currentPage - 1) * pageSize);
-    query.leftJoin(
-      "con_veiculos_distancia",
-      "con_veiculos_distancia.fk_placa",
-      "con_coordenadas_veiculos.placa"
-    );
+
     const totalRegisters = Number((await total)?.total) || 0;
     const totalPages = Math.ceil(totalRegisters / pageSize);
     return {
