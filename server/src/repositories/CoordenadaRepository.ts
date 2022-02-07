@@ -15,7 +15,12 @@ export class CoordenadaRepository {
       categoria_veiculo,
     } = filter;
     const currentPage = Number(page ?? 1) < 1 ? 1 : Number(page ?? 1);
-    const query = database("con_coordenadas_veiculos").select("*");
+    const query = database("con_coordenadas_veiculos").select([
+      "con_coordenadas_veiculos.*",
+      "distancia_ate_destino",
+      "tempo_ate_destino",
+      "con_veiculos_distancia.data_atualizacao as data_calculo",
+    ]);
     const total = database("con_coordenadas_veiculos")
       .count("placa as total")
       .first();
@@ -31,8 +36,19 @@ export class CoordenadaRepository {
       categoria_veiculo,
     })) {
       if (value !== undefined && key) {
-        query.where(key, value);
-        total.where(key, value);
+        if (
+          [
+            "cidade_atual",
+            "ultima_viagem_origem",
+            "ultima_viagem_destino",
+          ].includes(key)
+        ) {
+          query.where(key, "like", `%${value.toUpperCase()}%`);
+          total.where(key, "like", `%${value.toUpperCase()}%`);
+        } else {
+          query.where(key, value);
+          total.where(key, value);
+        }
       }
     }
 
@@ -42,6 +58,11 @@ export class CoordenadaRepository {
     query.orderBy("mct");
     query.limit(pageSize);
     query.offset((currentPage - 1) * pageSize);
+    query.leftJoin(
+      "con_veiculos_distancia",
+      "con_veiculos_distancia.fk_placa",
+      "con_coordenadas_veiculos.placa"
+    );
     const totalRegisters = Number((await total)?.total) || 0;
     const totalPages = Math.ceil(totalRegisters / pageSize);
     return {

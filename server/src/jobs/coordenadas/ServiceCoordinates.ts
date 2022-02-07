@@ -3,10 +3,25 @@ import axios from "axios";
 import cron from "node-cron";
 import TextUtils from "../../Utils/text";
 import ArrayUtils from "../../Utils/array";
-import fs from "fs";
-import path from "path";
+import DateUtils from "../../Utils/date";
 
 class ServiceCoordinates {
+  private tokensMapsRoute: Array<string> = [];
+  private counterMapsRouter = 0;
+  constructor() {
+    this.tokensMapsRoute =
+      process.env.BING_MAPS_API_TOKEN?.split(";").filter((i) => !!i) ?? [];
+    if (!this.tokensMapsRoute || this.tokensMapsRoute.length === 0) {
+      throw new Error("Os tokens BING_MAPS_API_TOKEN não foram definidos");
+    }
+  }
+
+  nextDistanceToken() {
+    return this.tokensMapsRoute[
+      this.counterMapsRouter++ % this.tokensMapsRoute.length
+    ];
+  }
+
   async getVehiclesCoodinates() {
     return mssqlCoordenadas("MAXPOSITION")
       .select([
@@ -35,7 +50,7 @@ class ServiceCoordinates {
         (CORI.CID_NOM || ' - ' || EORI.UF_SIGLA) AS ORIGEM,
         (CDES.CID_NOM || ' - ' || EDES.UF_SIGLA) AS DESTINO,
         DVF_DT_EMISSAO AS DT_EMISSAO
-        FROM (SELECT ROW_NUMBER() OVER (PARTITION BY COD_CAVALO ORDER BY NUM_DVF DESC) as POS, DVF.CID_ORI, DVF.CID_DES, DVF.COD_CAVALO, DVF.NUM_DVF, DVF.DVF_DT_EMISSAO FROM DVF) T1 
+        FROM (SELECT ROW_NUMBER() OVER (PARTITION BY COD_CAVALO ORDER BY DVF_DT_EMISSAO DESC) as POS, DVF.CID_ORI, DVF.CID_DES, DVF.COD_CAVALO, DVF.NUM_DVF, DVF.DVF_DT_EMISSAO FROM DVF) T1 
         JOIN CIDADE CORI ON CORI.CID_COD = T1.CID_ORI
         JOIN ESTADO EORI ON CORI.UF_COD = EORI.UF_COD
         JOIN CIDADE CDES ON CDES.CID_COD = T1.CID_DES
@@ -63,7 +78,7 @@ class ServiceCoordinates {
       (CORI.CID_NOM || ' - ' || EORI.UF_SIGLA) AS ORIGEM,
       (CDES.CID_NOM || ' - ' || EDES.UF_SIGLA) AS DESTINO,
       RPA_DT_EMISSAO AS DT_EMISSAO
-      FROM (SELECT ROW_NUMBER() OVER (PARTITION BY VEI_COD ORDER BY RPA_NUM DESC) as POS, RPA.CID_COD, RPA.CID_CID_COD, RPA.VEI_COD, RPA.RPA_NUM, RPA.RPA_DT_EMISSAO FROM RPA) T1
+      FROM (SELECT ROW_NUMBER() OVER (PARTITION BY VEI_COD ORDER BY RPA_DT_EMISSAO DESC) as POS, RPA.CID_COD, RPA.CID_CID_COD, RPA.VEI_COD, RPA.RPA_NUM, RPA.RPA_DT_EMISSAO FROM RPA) T1
       JOIN CIDADE CORI ON CORI.CID_COD = T1.CID_COD
       JOIN ESTADO EORI ON CORI.UF_COD = EORI.UF_COD
       JOIN CIDADE CDES ON CDES.CID_COD = T1.CID_CID_COD
@@ -181,11 +196,15 @@ class ServiceCoordinates {
     console.log("Traduzindo a saida para o formato desejado");
     const tradutorCodigosPlacas = new Map();
     const tradutorCategoriaVeiculo = new Map();
+    const tradutorDestinoVeiculo = new Map();
     for (const i of categorias) {
       tradutorCategoriaVeiculo.set(i.placa, i.categoria);
       tradutorCategoriaVeiculo.set(i.codigo_veiculo, i.categoria);
+
       tradutorCodigosPlacas.set(i.placa, i.codigo_veiculo);
       tradutorCodigosPlacas.set(i.codigo_veiculo, i.placa);
+
+      tradutorDestinoVeiculo.set(i.placa, []);
     }
 
     const veiculos = coordenadas.map((veiculo: Record<string, any>) => {
@@ -225,9 +244,96 @@ class ServiceCoordinates {
     });
     return veiculos;
   }
+
+  async getCoordinatesFromAPI(city: string, state: string, country?: string) {
+    const data = (
+      await axios.get("https://nominatim.openstreetmap.org/search", {
+        params: {
+          format: "json",
+          city,
+          state,
+          country,
+        },
+        headers: {
+          "Accept-Language": "pt-br",
+        },
+      })
+    ).data;
+
+    return data;
+  }
+
+  async getDistancesFromAPI(
+    origin_lat: string,
+    origin_lon: string,
+    target_lat: string,
+    target_lon: string
+  ) {
+    const api_key = String(this.nextDistanceToken());
+
+    const data = (
+      await axios.post(
+        `https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?key=${api_key}`,
+        {
+          origins: [
+            {
+              latitude: origin_lat,
+              longitude: origin_lon,
+            },
+          ],
+          destinations: [
+            {
+              latitude: target_lat,
+              longitude: target_lon,
+            },
+          ],
+          travelMode: "Driving",
+          timeUnit: "second",
+        }
+      )
+    ).data;
+
+    return data;
+  }
 }
 
 export default async function () {
+  async function calcDistance(service: ServiceCoordinates, vehicle: any) {
+    const response = await service.getDistancesFromAPI(
+      vehicle.lat,
+      vehicle.lon,
+      vehicle.lat_destino,
+      vehicle.lon_destino
+    );
+    const tripInfo = response?.resourceSets[0]?.resources[0]?.results[0];
+    if (
+      tripInfo &&
+      tripInfo.travelDistance !== -1 &&
+      tripInfo.travelDuration !== -1
+    ) {
+      const { travelDistance, travelDuration } = tripInfo;
+      const actualVehicle = await database("con_veiculos_distancia")
+        .where("fk_placa", vehicle.placa)
+        .first();
+      if (actualVehicle) {
+        await database("con_veiculos_distancia")
+          .update({
+            distancia_ate_destino: travelDistance,
+            tempo_ate_destino: travelDuration,
+            data_atualizacao: DateUtils.getCurrentDate(),
+          })
+          .where("fk_placa", vehicle.placa);
+      } else {
+        await database("con_veiculos_distancia").insert({
+          fk_placa: vehicle.placa,
+          distancia_ate_destino: travelDistance,
+          tempo_ate_destino: travelDuration,
+          data_atualizacao: DateUtils.getCurrentDate(),
+        });
+      }
+    }
+  }
+
   async function job() {
     console.log("--------------JOB COORDENADAS--------------");
     console.time("JOB COORDENADAS");
@@ -237,12 +343,13 @@ export default async function () {
     console.log(
       "Buscando cidades na api e salvando na base de dados de tecnologia"
     );
-    console.time("AUTOCOMPLETE - Cidades destino");
-    await new Promise((resolve) => {
+    const promiseUpdateCityName = new Promise((resolve) => {
+      console.time("AUTOCOMPLETE - Cidades destino");
       let requestInProgress = false;
       const interval = setInterval(async () => {
         if (requestInProgress) return;
         if (cidadesVazias.length === 0) {
+          console.timeEnd("AUTOCOMPLETE - Cidades destino");
           clearInterval(interval);
           return resolve(true);
         }
@@ -280,10 +387,127 @@ export default async function () {
         }
       }, 1000);
     });
-    console.timeEnd("AUTOCOMPLETE - Cidades destino");
+
+    console.time("CALC - DISTANCIA VEICULOS");
+    console.log("Calculando distancia e salvando na base de dados");
+    console.log("Carregando veiculos em memoria para completar com distancia");
+    const veiculos = await database.raw(`
+      select "placa", "con_coordenadas_veiculos"."lat", "con_coordenadas_veiculos"."lon", "ultima_viagem_destino", "con_localizacoes"."lat" "lat_destino", "lng" "lon_destino"
+        from "con_coordenadas_veiculos"
+        left join "con_localizacoes" on ("cidade" || ' - ' || "sigla_estado") = "ultima_viagem_destino"
+        where "con_coordenadas_veiculos"."lat" is not null and "con_coordenadas_veiculos"."lon" is not null and "con_coordenadas_veiculos"."ultima_viagem_destino" is not null and "placa" is not null
+    `);
+
+    const jobsApiDistance = new Set();
+    for (let i = 0; i < veiculos.length; i++) {
+      const veiculo = veiculos[i];
+
+      // este bloco atualiza as informações das cidades para funcionar como uma especie de cache
+      if (veiculo.lat_destino === null || veiculo.lon_destino === null) {
+        const [city, state] = String(veiculo.ultima_viagem_destino).split(
+          " - "
+        );
+
+        if (state === "NC") {
+          continue;
+        }
+        const coords = await service.getCoordinatesFromAPI(city, state);
+        await new Promise((resolve) => {
+          setTimeout(resolve, 1000);
+        });
+
+        if (coords.length === 0) {
+          continue;
+        }
+
+        const { lat, lon } = coords[0];
+        console.log(
+          "Encontrei as coordenadas ",
+          coords[0],
+          " para a localidade de ",
+          city,
+          state
+        );
+        const cityExists = await database("con_localizacoes")
+          .select("cidade")
+          .where("cidade", city)
+          .where("sigla_estado", state)
+          .first();
+        if (cityExists) {
+          await database("con_localizacoes")
+            .update({
+              lat,
+              lng: lon,
+            })
+            .where("cidade", city)
+            .where("sigla_estado", state);
+        } else {
+          const fields = coords[0]?.display_name?.split(", ");
+          const pais =
+            fields.length > 0
+              ? fields[fields.length - 1].toUpperCase().trim()
+              : "BRASIL";
+          const countryInfo = await database("con_localizacoes")
+            .select(["sigla_pais", "sigla_pais_estendida", "estado"])
+            .where("sigla_estado", state)
+            .where("pais", pais)
+            .whereNotNull("estado")
+            .whereNotNull("sigla_pais")
+            .whereNotNull("sigla_pais_estendida")
+            .first();
+          await database("con_localizacoes").insert({
+            id: 2,
+            lat,
+            lng: lon,
+            cidade: city,
+            pais,
+            sigla_pais: countryInfo?.sigla_pais ?? "NC",
+            sigla_pais_estendida: countryInfo?.sigla_pais_estendida ?? "NC",
+            estado: countryInfo?.estado ?? null,
+            sigla_estado: state,
+          });
+        }
+        for (let j = i; j < veiculos.length; j++) {
+          if (veiculos[j].ultima_viagem_destino === `${city} - ${state}`) {
+            veiculos[j].lat_destino = lat;
+            veiculos[j].lon_destino = lon;
+          }
+        }
+      }
+
+      jobsApiDistance.add(veiculo);
+
+      if (jobsApiDistance.size >= 5) {
+        console.log("Processando lote");
+        console.time(`Lote com ${jobsApiDistance.size}`);
+        await Promise.all(
+          Array.from(jobsApiDistance).map((j) =>
+            calcDistance(service, j).catch(console.error)
+          )
+        );
+        console.timeEnd(`Lote com ${jobsApiDistance.size}`);
+        jobsApiDistance.clear();
+      }
+    }
+
+    if (jobsApiDistance.size > 0) {
+      console.log("Processando lote final", jobsApiDistance);
+      console.time(`Lote com ${jobsApiDistance.size}`);
+      await Promise.all(
+        Array.from(jobsApiDistance).map((j) =>
+          calcDistance(service, j).catch(console.error)
+        )
+      );
+      console.timeEnd(`Lote com ${jobsApiDistance.size}`);
+      jobsApiDistance.clear();
+    }
+    console.timeEnd("CALC - DISTANCIA VEICULOS");
+
+    await promiseUpdateCityName;
+
     console.timeEnd("JOB COORDENADAS");
     console.log("------------FIM JOB COORDENADAS------------");
   }
 
-  cron.schedule("*/30 * * * *", job);
+  cron.schedule("0 * * * *", job);
 }

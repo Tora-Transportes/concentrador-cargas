@@ -9,3 +9,5 @@ DROP TABLE "con_rotas_pendentes";
 DROP TABLE "con_situacoes_cargas";
 DROP TABLE "con_localizacoes";
 DROP SEQUENCE "seq_con_cargas";
+DROP TABLE "con_coordenadas_veiculos";
+DROP TABLE "con_veiculos_distancia";

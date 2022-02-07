@@ -95,6 +95,46 @@ function RotasPendentes() {
 			selector: (row) => row.ultima_viagem_destino,
 		},
 		{
+			name: "distancia_ate_destino",
+			description: "Distância até o destino",
+			selector: (row) => {
+				console.log(row);
+				if (!row.distancia_ate_destino) {
+					return "";
+				}
+				return `${Number(row.distancia_ate_destino).toFixed(2)} KM`;
+			},
+			Filter: () => null,
+		},
+		{
+			name: "tempo_ate_destino",
+			description: "Tempo até o destino",
+			selector: (row) => {
+				if (!row.tempo_ate_destino) {
+					return "";
+				}
+				const totalMinutes = Math.floor(Number(row.tempo_ate_destino) / 60);
+				const hours = Math.floor(totalMinutes / 60);
+				const minutes = Math.ceil(totalMinutes % 60);
+				return `${hours}h ${minutes}m`;
+			},
+			Filter: () => null,
+		},
+		{
+			name: "data_calculo",
+			description: "Data cálculo distância",
+			selector: (row) => {
+				if (!row?.data_calculo) {
+					return "";
+				}
+				const [data, time] = row.data_calculo?.split("T");
+				return `${data.split("-").reverse().join("-")} às ${
+					time.split(".")[0]
+				}`;
+			},
+			Filter: () => null,
+		},
+		{
 			name: "data_emissao_documento",
 			description: "Emissão Doc. ultima viagem",
 			selector: (row) =>
