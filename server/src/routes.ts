@@ -101,5 +101,9 @@ routes.get(
   RelatorioController.detalhesTotalizadores
 );
 routes.get("/relatorio/resumo_diario", RelatorioController.gerarResumoDiario);
+routes.get(
+  "/relatorio/media_aprovacao_gr",
+  RelatorioController.gerarResumoTempoMedioAtendimentoGr
+);
 
 export default routes;

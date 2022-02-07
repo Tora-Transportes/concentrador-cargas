@@ -17,11 +17,25 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import FilialSelect from "src/Pages/Components/FilialSelect";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+function convertDateToReadableTime(seconds) {
+	let secs = Number(seconds);
+	let days = Math.trunc(secs / 86400);
+	secs -= days * 86400;
+
+	let hours = Math.trunc(secs / 3600);
+	secs -= hours * 3600;
+
+	let minutes = Math.trunc(secs / 60);
+
+	return `${days} dia(s), ${hours} hora(s), ${minutes} minuto(s)`;
+}
+
 function ViewRotasPendentes({
 	totalizadores,
 	reload,
 	handleExportExcel,
 	resumosDiarios,
+	tempoMedioAprovacaoGr,
 }) {
 	const [totalGeral, setTotalGeral] = useState(0);
 	const dataInicial = useRef(null);
@@ -372,6 +386,22 @@ function ViewRotasPendentes({
 						</Table>
 					</Col>
 				</Row>
+				<hr />
+				<Table>
+					<thead>
+						<tr>
+							<th>Tempo médio para aprovação</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								{tempoMedioAprovacaoGr?.media &&
+									convertDateToReadableTime(tempoMedioAprovacaoGr.media)}
+							</td>
+						</tr>
+					</tbody>
+				</Table>
 				<hr />
 				{dataInicial?.current?.value &&
 					dataFinal?.current?.value &&

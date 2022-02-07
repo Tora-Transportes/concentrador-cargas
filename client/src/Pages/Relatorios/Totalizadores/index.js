@@ -43,6 +43,7 @@ function RelatoriosMain() {
 			},
 		],
 	});
+	const [tempoMedioAprovacaoGr, setTempoMedioAprovacaoGr] = useState(null);
 	const [resumosDiarios, setResumosDiarios] = useState([]);
 	const [filters, setFilters] = useState({
 		data_inicio: "",
@@ -61,6 +62,12 @@ function RelatoriosMain() {
 			setLoading(true);
 			setTotalizadores(
 				(await ServiceRelatorios.totalizadores(filters)).data.data
+			);
+
+			setTempoMedioAprovacaoGr(
+				await (
+					await ServiceRelatorios.mediaAprovacaoGr()
+				).data.data[0]
 			);
 
 			if (!filters.fk_filial || !filters.data_final || !filters.data_inicio) {
@@ -118,6 +125,7 @@ function RelatoriosMain() {
 				reload={setFilters}
 				handleExportExcel={handleExportExcel}
 				resumosDiarios={resumosDiarios}
+				tempoMedioAprovacaoGr={tempoMedioAprovacaoGr}
 			/>
 		</>
 	);

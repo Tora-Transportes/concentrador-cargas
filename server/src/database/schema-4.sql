@@ -31,3 +31,11 @@ alter table "con_coordenadas_veiculos" DROP COLUMN "tempo_ate_destino";
 alter table "con_coordenadas_veiculos" DROP COLUMN "distancia_ate_destino";
 
 alter table "con_veiculos_distancia" rename column "placa" TO "fk_placa";
+
+
+create table "con_cargas_logs_aprovacao" (
+    "fk_carga" INTEGER PRIMARY KEY,
+    "segundos" INTEGER DEFAULT NULL,
+    "fk_usuario" VARCHAR(100) not null,
+    "data_criacao" DATE NOT NULL
+);

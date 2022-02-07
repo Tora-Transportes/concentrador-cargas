@@ -3,6 +3,7 @@ import { notifyAll } from "../../socketsRoutes";
 
 import { CargaRepository } from "../../repositories/CargaRepository";
 import ServiceMigrarSIT from "../../services/ServiceMigrarSIT";
+import ServiceLogTime from "../../services/ServiceLogTime";
 
 import { VeiculoRepository } from "../../repositories/VeiculoRepository";
 
@@ -35,7 +36,8 @@ const modules = {
     userRepository,
     notifyAll,
     ServiceMigrarSIT,
-    veiculoRepository
+    veiculoRepository,
+    ServiceLogTime
   ),
   UseCaseViewCargas: new UseCaseViewCargas(cargaRepository),
   UseCaseDeleteCarga: new UseCaseDeleteCarga(cargaRepository, notifyAll),

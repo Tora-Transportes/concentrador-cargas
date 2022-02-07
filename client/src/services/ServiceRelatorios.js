@@ -12,6 +12,10 @@ class ServiceRelatorios {
 		});
 	}
 
+	async mediaAprovacaoGr() {
+		return api.get("/relatorio/media_aprovacao_gr");
+	}
+
 	async exportToXlsx({ data_inicio, data_final, key, fk_filial } = {}) {
 		return api.get(`/relatorio/totalizadores/${key}`, {
 			responseType: "arraybuffer",

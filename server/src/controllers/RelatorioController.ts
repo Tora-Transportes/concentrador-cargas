@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { ReportTotalizadores } from "../reports/totalizadores";
 import { ReportDetalhesTotalizadores } from "../reports/dadosTotalizadores";
 import { ReportResumoPorDia } from "../reports/resumoPorDia";
+import { TempoMedioAprovacaoGr } from "../reports/tempoMedioAprovacaoGr";
+
 import fs from "fs";
 import AppError from "../models/AppError";
 class RelatorioController {
@@ -49,6 +51,13 @@ class RelatorioController {
         data_inicio: String(data_inicio),
         data_final: String(data_final),
       }),
+    });
+  }
+
+  async gerarResumoTempoMedioAtendimentoGr(req: Request, res: Response) {
+    const report = new TempoMedioAprovacaoGr();
+    return res.json({
+      data: await report.generate(),
     });
   }
 }

@@ -171,13 +171,17 @@ export interface IServiceSit {
   migrar(cargas: ICarga[]): Promise<any>;
   cancelar(cargas: ICarga[]): Promise<any>;
 }
+export interface IServiceLogTime {
+  create(obj: Record<string, any>): Promise<any>;
+}
 export class UseCaseUpdateCarga {
   constructor(
     private cargaRepository: IRepositoryUpdateCarga,
     private userRepository: IUserRepository,
     private notifyAll: (event: IEventSocket) => void,
     private serviceSit: IServiceSit,
-    private veiculoRepository: IVeiculoRepository
+    private veiculoRepository: IVeiculoRepository,
+    private serviceLogTime: IServiceLogTime
   ) {}
   async run(cargaDTO: Record<string, any>, oid: string) {
     const validator = factoryCargaValidator();
@@ -360,7 +364,22 @@ export class UseCaseUpdateCarga {
     ) as ICarga;
 
     if (cargaOficial.fk_situacao === ECargaStatus.APROVADO_PELO_GR) {
+      // aqui eu populo a tabela con_cargas_logs_aprovacao para mostrar quanto tempo demora pelas mãos da GR
+      let time = -1;
+      const currentDate = DateUtils.getCurrentDate();
+      if (cargaCadastrada.data_atualizacao instanceof Date) {
+        time = Math.ceil(
+          (currentDate.getTime() - cargaCadastrada.data_atualizacao.getTime()) /
+            1000
+        );
+      }
       await this.serviceSit.migrar([cargaOficial]);
+      await this.serviceLogTime.create({
+        fk_carga: cargaOficial.id,
+        segundos: time,
+        fk_usuario: oid,
+        data_criacao: currentDate,
+      });
     }
     if (cargaOficial.fk_situacao === ECargaStatus.CARGA_CANCELADA) {
       await this.serviceSit.cancelar([cargaOficial]);

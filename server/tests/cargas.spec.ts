@@ -7,11 +7,8 @@ import {
   IUserRepository,
   UseCaseAddCargaDerivada,
   IServiceSit,
-  // UseCaseAddCargaDerivada,
-  // UseCaseUpdateCarga,
-  // UseCaseViewCargas,
+  IServiceLogTime,
   UseCaseDeleteCarga,
-  // UseCaseImportCarga,
 } from "../src/domain/UseCaseCarga/entities";
 
 import { ICarga } from "../src/models/ICargas";
@@ -216,16 +213,23 @@ class MockServiceSit implements IServiceSit {
     return;
   }
 }
+class MockServiceLogTime implements IServiceLogTime {
+  async create(obj: Record<string, any>): Promise<any> {
+    return obj;
+  }
+}
 describe("Update carga", () => {
   let cargaRepository: MockRepositoryCarga;
   let userRepository: MockUserRepository;
   let serviceSit: MockServiceSit;
   let veiculoRepository: MockVeiculoRepository;
+  let serviceLogTime: MockServiceLogTime;
   beforeEach(() => {
     cargaRepository = new MockRepositoryCarga();
     userRepository = new MockUserRepository();
     serviceSit = new MockServiceSit();
     veiculoRepository = new MockVeiculoRepository();
+    serviceLogTime = new MockServiceLogTime();
   });
 
   it("Não é possível atualizar o fk_situacao da carga para 3 ou 2 sem uma placa", async () => {
@@ -234,7 +238,8 @@ describe("Update carga", () => {
       userRepository,
       mockNotifyAll,
       serviceSit,
-      veiculoRepository
+      veiculoRepository,
+      serviceLogTime
     );
 
     const cargaInicial = await new UseCaseAddCarga(
@@ -277,7 +282,8 @@ describe("Update carga", () => {
       userRepository,
       mockNotifyAll,
       serviceSit,
-      veiculoRepository
+      veiculoRepository,
+      serviceLogTime
     );
 
     const cargaInicial = await new UseCaseAddCarga(
@@ -336,7 +342,8 @@ describe("Update carga", () => {
       userRepository,
       mockNotifyAll,
       serviceSit,
-      veiculoRepository
+      veiculoRepository,
+      serviceLogTime
     );
 
     const cargaInicial = await new UseCaseAddCarga(
@@ -399,7 +406,8 @@ describe("Update carga", () => {
       userRepository,
       mockNotifyAll,
       serviceSit,
-      veiculoRepository
+      veiculoRepository,
+      serviceLogTime
     );
 
     const cargaInicial = await new UseCaseAddCarga(
@@ -435,7 +443,8 @@ describe("Update carga", () => {
       userRepository,
       mockNotifyAll,
       serviceSit,
-      veiculoRepository
+      veiculoRepository,
+      serviceLogTime
     );
 
     const loteInicial = await new UseCaseAddCarga(
@@ -472,7 +481,8 @@ describe("Update carga", () => {
       userRepository,
       mockNotifyAll,
       serviceSit,
-      veiculoRepository
+      veiculoRepository,
+      serviceLogTime
     );
 
     const loteInicial = await new UseCaseAddCarga(
@@ -594,7 +604,8 @@ describe("Update carga", () => {
       userRepository,
       mockNotifyAll,
       serviceSit,
-      veiculoRepository
+      veiculoRepository,
+      serviceLogTime
     );
 
     userRepository.setPermissions(["DELETAR_CARGAS", "APROVAR_VEICULOS"]);
@@ -681,7 +692,8 @@ describe("Update carga", () => {
       userRepository,
       mockNotifyAll,
       serviceSit,
-      veiculoRepository
+      veiculoRepository,
+      serviceLogTime
     );
 
     userRepository.setPermissions(["DELETAR_CARGAS"]);
@@ -752,7 +764,8 @@ describe("Update carga", () => {
       userRepository,
       mockNotifyAll,
       serviceSit,
-      veiculoRepository
+      veiculoRepository,
+      serviceLogTime
     );
 
     const cargaInicial = await new UseCaseAddCarga(
