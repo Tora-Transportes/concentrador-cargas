@@ -39,3 +39,10 @@ create table "con_cargas_logs_aprovacao" (
     "fk_usuario" VARCHAR(100) not null,
     "data_criacao" DATE NOT NULL
 );
+
+
+update "con_situacoes_cargas" set "descricao" = 'Documento emitido' where "id" = 6;
+
+insert into "con_localizacoes" ("id", "cidade", "estado", "pais", "lat", "lng", "sigla_pais", "sigla_pais_estendida", "capital", "sigla_estado") values
+(2, 'SENADOR CANEDO', 'GOIAS', 'BRASIL', null, null, 'BR', 'BRA', null, 'GO');
+
