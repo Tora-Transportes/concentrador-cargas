@@ -49,3 +49,19 @@ insert into "con_localizacoes" ("id", "cidade", "estado", "pais", "lat", "lng", 
 alter table "con_coordenadas_veiculos" add (
     "distancia_prevista" FLOAT DEFAULT NULL
 );
+
+insert into "con_localizacoes" ("id", "cidade", "estado", "pais", "lat", "lng", "sigla_pais", "sigla_pais_estendida", "capital", "sigla_estado") values
+(2, 'JERONIMO MONTEIRO', 'ESPIRITO SANTO', 'BRASIL', null, null, 'BR', 'BRA', null, 'ES');
+
+
+alter table "con_veiculos_distancia" add (
+    "data_previsao_chegada" DATE DEFAULT NULL
+);
+
+
+alter table "con_veiculos_distancia" drop column "data_previsao_chegada";
+alter table "con_veiculos_distancia" drop column "tempo_ate_destino";
+alter table "con_coordenadas_veiculos" add (
+    "tempo_ate_destino" FLOAT DEFAULT NULL,
+    "data_previsao_chegada" DATE DEFAULT NULL
+);

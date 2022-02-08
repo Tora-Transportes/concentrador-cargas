@@ -18,7 +18,6 @@ export class CoordenadaRepository {
     const query = database("con_coordenadas_veiculos").select([
       "con_coordenadas_veiculos.*",
       "distancia_ate_destino",
-      "tempo_ate_destino",
       "con_veiculos_distancia.data_atualizacao as data_calculo",
     ]);
     const total = database("con_coordenadas_veiculos")

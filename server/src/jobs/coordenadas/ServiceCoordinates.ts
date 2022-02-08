@@ -177,7 +177,22 @@ class ServiceCoordinates {
           " - ",
           ", "
         )}_${String(data[i].ultima_viagem_destino).replace(" - ", ", ")}`;
-        data[i].distancia_prevista = hash.get(token) ?? null;
+        if (hash.get(token)) {
+          data[i].distancia_prevista = hash.get(token) ?? null;
+          data[i].tempo_ate_destino = this.calcularPrevisaoDeChegada(
+            hash.get(token)
+          ) as any;
+
+          const DIA_EM_MS = 60 * 60 * 24 * 1000;
+          const previsaoChegadaEmMs =
+            new Date(data[i].data_emissao_documento).getTime() +
+            DIA_EM_MS +
+            Number(data[i].tempo_ate_destino) * 1000;
+
+          const dataPrevisaochegada = new Date();
+          dataPrevisaochegada.setTime(previsaoChegadaEmMs);
+          data[i].data_previsao_chegada = dataPrevisaochegada as any;
+        }
       }
     }
 
@@ -285,6 +300,8 @@ class ServiceCoordinates {
         categoria_veiculo: tradutorCategoriaVeiculo.get(veiculo.placa),
         data_emissao_documento: ultimaViagem?.DT_EMISSAO,
         distancia_prevista: null,
+        tempo_ate_destino: null,
+        data_previsao_chegada: null,
       };
     });
     return veiculos;
@@ -340,15 +357,16 @@ class ServiceCoordinates {
 
     return data;
   }
-}
 
-export default async function () {
-  function calcularPrevisaoDeChegada(distancia: number) {
+  calcularPrevisaoDeChegada(distancia: number) {
     return (
       Math.trunc(distancia / 500) * 86400 +
       (((distancia % 500) * 8) / 500) * 60 * 60
     );
   }
+}
+
+export default async function () {
   async function calcDistance(service: ServiceCoordinates, vehicle: any) {
     const response = await service.getDistancesFromAPI(
       vehicle.lat,
@@ -370,7 +388,6 @@ export default async function () {
         await database("con_veiculos_distancia")
           .update({
             distancia_ate_destino: travelDistance,
-            tempo_ate_destino: calcularPrevisaoDeChegada(travelDistance),
             data_atualizacao: DateUtils.getCurrentDate(),
           })
           .where("fk_placa", vehicle.placa);
@@ -378,7 +395,6 @@ export default async function () {
         await database("con_veiculos_distancia").insert({
           fk_placa: vehicle.placa,
           distancia_ate_destino: travelDistance,
-          tempo_ate_destino: calcularPrevisaoDeChegada(travelDistance),
           data_atualizacao: DateUtils.getCurrentDate(),
         });
       }

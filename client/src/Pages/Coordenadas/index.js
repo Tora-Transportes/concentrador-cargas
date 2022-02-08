@@ -97,7 +97,7 @@ function RotasPendentes() {
 		},
 		{
 			name: "distancia_ate_destino",
-			description: "Distância até o destino",
+			description: "Distância veículo até destino",
 			selector: (row) => {
 				if (!row.distancia_ate_destino) {
 					return "";
@@ -122,14 +122,34 @@ function RotasPendentes() {
 		{
 			name: "data_previsao_chegada",
 			description: "Data previsão de chegada",
-			selector: () => `10/01/2020`,
+			selector: (row) => {
+				if (!row.data_previsao_chegada) {
+					return "";
+				}
+				return row.data_previsao_chegada
+					.split("T")[0]
+					.split("-")
+					.reverse()
+					.join("-");
+			},
 			Filter: () => null,
 		},
 		{
 			name: "status_prazo",
 			description: "Status prazo",
-			selector: () => `Dentro do prazo`,
+			selector: (row) => {
+				if (!row.data_previsao_chegada) {
+					return "NC";
+				}
+				const currentDate = new Date().toISOString().split("T")[0];
+				return currentDate <= row.data_previsao_chegada.split("T")[0] ? (
+					<span className="text-success">Dentro do prazo</span>
+				) : (
+					<span className="text-danger">Fora do prazo</span>
+				);
+			},
 			Filter: () => null,
+			static_column: true,
 		},
 		{
 			name: "cidade_atual",
