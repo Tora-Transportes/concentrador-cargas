@@ -588,6 +588,6 @@ export default async function () {
     console.timeEnd("JOB COORDENADAS");
     console.log("------------FIM JOB COORDENADAS------------");
   }
-  job();
-  // cron.schedule("0 * * * *", job);
+
+  cron.schedule("0 * * * *", job);
 }
