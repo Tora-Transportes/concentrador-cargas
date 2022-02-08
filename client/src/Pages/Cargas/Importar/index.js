@@ -6,6 +6,7 @@ import swal from "sweetalert";
 import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import * as xlsx from "xlsx";
+import TextUtils from "../../Utils/text";
 
 function Importar() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -40,6 +41,17 @@ function Importar() {
 		setLoading(false);
 	}
 
+	function normalizeLocation(location) {
+		let output = "BRASIL/" + TextUtils.normalize(location).replace(",", "/");
+		while (output.indexOf(" /") !== -1) {
+			output = output.replace(" /", "/");
+		}
+		while (output.indexOf("/ ") !== -1) {
+			output = output.replace("/ ", "/");
+		}
+		return output;
+	}
+
 	async function handlePreview() {
 		if (inputFile.current?.files?.length) {
 			setCadastrados([]);
@@ -54,7 +66,18 @@ function Importar() {
 					const worksheet = workbook.Sheets[sheetNames[0]];
 					const json = xlsx.utils.sheet_to_json(worksheet);
 
-					resolve(json);
+					resolve(
+						json.map((i) => {
+							const tmp = {};
+							for (const oldKey of Object.keys(i)) {
+								const newKey = TextUtils.normalize(oldKey)
+									.toLowerCase()
+									.replace(" ", "_");
+								tmp[newKey] = i[oldKey];
+							}
+							return tmp;
+						})
+					);
 				};
 			});
 
@@ -67,7 +90,7 @@ function Importar() {
 		<>
 			<LoadingScreen />
 			<NavbarNavigator />
-			<Container className="text-center mb-5">
+			<Container fluid className="text-center mb-5">
 				<Row className="p-5 mt-1">
 					<h1>Importação das cargas</h1>
 				</Row>
@@ -122,6 +145,7 @@ function Importar() {
 							<th>Cliente</th>
 							<th>É lote ?</th>
 							<th>Observação</th>
+							<th>Destinatário</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -129,13 +153,14 @@ function Importar() {
 							preview.map((i, index) => (
 								<tr key={index}>
 									<td></td>
-									<td>{i["Unidade"]}</td>
-									<td>{i["Quantidade"]}</td>
-									<td>{i["Origem"]}</td>
-									<td>{i["Destino"]}</td>
-									<td>{i["Destinatário"]}</td>
+									<td>{i.unidade}</td>
+									<td>{i.quantidade}</td>
+									<td>{normalizeLocation(i.origem)}</td>
+									<td>{normalizeLocation(i.destino)}</td>
+									<td>{i.cliente}</td>
 									<td>SIM</td>
-									<td>{i["OBSERVAÇÃO"]}</td>
+									<td>{i.observacao}</td>
+									<td>{i.destinatario}</td>
 								</tr>
 							))}
 
@@ -149,6 +174,7 @@ function Importar() {
 								<td>{i.cliente}</td>
 								<td>{i.e_lote ? "SIM" : "NÃO"}</td>
 								<td>{i.observacao}</td>
+								<td>{i.local_coleta}</td>
 							</tr>
 						))}
 					</tbody>

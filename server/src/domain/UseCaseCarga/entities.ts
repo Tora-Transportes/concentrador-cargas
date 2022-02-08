@@ -536,10 +536,14 @@ export class UseCaseListPendentRoutes {
   }
 }
 
+export interface IClientRepository {
+  searchBatch(cpnjs: string[]): Promise<any>;
+}
 export class UseCaseImportCarga {
   constructor(
     private cargaRepository: IRepositoryAddCarga,
-    private notifyAll: (event: IEventSocket) => void
+    private notifyAll: (event: IEventSocket) => void,
+    private clientRepository: IClientRepository
   ) {}
   async run(file: Buffer | undefined, usuario: string | undefined) {
     if (!file || !file?.buffer) {
@@ -549,26 +553,71 @@ export class UseCaseImportCarga {
     const workbook = xlsx.read(file.buffer);
     const worksheet = workbook.Sheets["Planilha1"];
     const jsonSheet = <Record<string, any>[]>(
-      xlsx.utils.sheet_to_json(worksheet)
+      xlsx.utils.sheet_to_json(worksheet).map((i: any) => {
+        const tmp: Record<string, any> = {};
+        for (const oldKey of Object.keys(i)) {
+          const newKey = TextUtils.normalize(oldKey)
+            .toLowerCase()
+            .replace(" ", "_");
+          tmp[newKey] = i[oldKey];
+        }
+        return tmp;
+      })
     );
+
+    const normalizeLocation = (location: string) => {
+      let output =
+        "BRASIL/" +
+        TextUtils.normalize(location.split(",").reverse().join(",")).replace(
+          ",",
+          "/"
+        );
+      while (output.indexOf(" /") !== -1) {
+        output = output.replace(" /", "/");
+      }
+      while (output.indexOf("/ ") !== -1) {
+        output = output.replace("/ ", "/");
+      }
+      return output;
+    };
+
+    const cnpjs = new Set<string>();
+    for (const i of jsonSheet) {
+      const cleanText = TextUtils.normalize(i.cnpj).replace(/\D/g, "");
+      cnpjs.add(cleanText);
+      i.cnpj = cleanText;
+    }
+
+    const uniqueCnpjs = Array.from<string>(cnpjs);
+    const clients = await this.clientRepository.searchBatch(uniqueCnpjs);
+    const tokensCnpj = new Map();
+    for (const i of clients) {
+      tokensCnpj.set(
+        i.documento_federal,
+        `${i.organizacao_fantasia} - ${i.documento_federal} - ${i.cidade}/${i.uf}`
+      );
+    }
 
     const validator = factoryCargaValidator();
     const timestamp = DateUtils.getCurrentDate();
     const cargas = await Promise.all(
       jsonSheet.map(async (row: Record<string, any>): Promise<ICarga> => {
+        if (!tokensCnpj.get(row.cnpj)) {
+          throw new AppError(
+            `Verifique os fornecedores pois o cnpj ${row.cnpj} não foi encontrado no SIT`,
+            400
+          );
+        }
         const clone: ICarga = {
           e_lote: true,
-          cliente: TextUtils.normalize(row["Destinatário"]),
-          observacao: row["OBSERVAÇÃO"],
-          quantidade: Number(row["Quantidade"]),
-          quantidade_atual: Number(row["Quantidade"]),
-          origem_carga:
-            "BRASIL/" +
-            TextUtils.normalize(row["Origem"]).split(", ").reverse().join("/"),
-          destino_carga:
-            "BRASIL/" +
-            TextUtils.normalize(row["Destino"]).split(", ").reverse().join("/"),
-          unidade_medida: TextUtils.normalize(row["Unidade"]),
+          cliente: tokensCnpj.get(row.cnpj),
+          observacao: row.observacao,
+          local_entrega: row.destinatario,
+          quantidade: Number(row.quantidade),
+          quantidade_atual: Number(row.quantidade),
+          origem_carga: normalizeLocation(row.origem),
+          destino_carga: normalizeLocation(row.destino),
+          unidade_medida: TextUtils.normalize(row.unidade),
           canal_comunicacao: "manual",
           usuario: nomeUsuario,
           responsavel_cadastro: nomeUsuario,
