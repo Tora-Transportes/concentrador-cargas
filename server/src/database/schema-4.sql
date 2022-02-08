@@ -46,3 +46,6 @@ update "con_situacoes_cargas" set "descricao" = 'Documento emitido' where "id" =
 insert into "con_localizacoes" ("id", "cidade", "estado", "pais", "lat", "lng", "sigla_pais", "sigla_pais_estendida", "capital", "sigla_estado") values
 (2, 'SENADOR CANEDO', 'GOIAS', 'BRASIL', null, null, 'BR', 'BRA', null, 'GO');
 
+alter table "con_coordenadas_veiculos" add (
+    "distancia_prevista" FLOAT DEFAULT NULL
+);

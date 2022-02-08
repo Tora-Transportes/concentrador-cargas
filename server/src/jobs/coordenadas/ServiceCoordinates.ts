@@ -1,4 +1,4 @@
-import database, { mssqlCoordenadas } from "../../database";
+import database, { mssqlCoordenadas, mssql } from "../../database";
 import axios from "axios";
 import cron from "node-cron";
 import TextUtils from "../../Utils/text";
@@ -137,6 +137,50 @@ class ServiceCoordinates {
     console.time("Popular tabela");
     console.log("Carregando lista de coordenadas");
     const data = await this.list();
+
+    console.log(
+      "Calculando distancia prevista com base na tabela de rotas da produção"
+    );
+    const distanciasAProcurar = new Set<string>();
+    for (const i of data) {
+      if (i.ultima_viagem_origem && i.ultima_viagem_destino) {
+        distanciasAProcurar.add(
+          `${i.ultima_viagem_origem.replace(
+            " - ",
+            ", "
+          )}_${i.ultima_viagem_destino.replace(" - ", ", ")}`
+        );
+      }
+    }
+    const cidadesAProcurar = Array.from<string>(distanciasAProcurar);
+    if (cidadesAProcurar.length > 0) {
+      const distancias: Array<Record<string, number | string>> =
+        await mssql.raw(
+          `select distancia, concat(origem,'_' ,destino) as token from ROTAS_OPERACAO_NEW where concat(origem,'_' ,destino) in (${cidadesAProcurar
+            .map(() => `?`)
+            .join(",")})`,
+          cidadesAProcurar
+        );
+
+      const hash = new Map();
+      for (const i of distancias) {
+        const { distancia, token } = i;
+        hash.set(token, distancia);
+      }
+
+      for (let i = 0; i < data.length; i++) {
+        if (!data[i].ultima_viagem_destino || !data[i].ultima_viagem_origem) {
+          continue;
+        }
+
+        const token = `${String(data[i].ultima_viagem_origem).replace(
+          " - ",
+          ", "
+        )}_${String(data[i].ultima_viagem_destino).replace(" - ", ", ")}`;
+        data[i].distancia_prevista = hash.get(token) ?? null;
+      }
+    }
+
     console.log("Separando cidades vazias");
     const cidadesVazias = data.filter((i) => !i.cidade_atual);
 
@@ -240,6 +284,7 @@ class ServiceCoordinates {
           : null,
         categoria_veiculo: tradutorCategoriaVeiculo.get(veiculo.placa),
         data_emissao_documento: ultimaViagem?.DT_EMISSAO,
+        distancia_prevista: null,
       };
     });
     return veiculos;
@@ -508,6 +553,6 @@ export default async function () {
     console.timeEnd("JOB COORDENADAS");
     console.log("------------FIM JOB COORDENADAS------------");
   }
-
-  cron.schedule("0 * * * *", job);
+  job();
+  // cron.schedule("0 * * * *", job);
 }

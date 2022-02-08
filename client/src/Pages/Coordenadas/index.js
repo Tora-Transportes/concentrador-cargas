@@ -88,9 +88,10 @@ function RotasPendentes() {
 			selector: (row) => row.ultima_viagem_destino,
 		},
 		{
-			name: "distancia_total",
+			name: "distancia_prevista",
 			description: "Distância prevista rota",
-			selector: () => `99999 KM`,
+			selector: (row) =>
+				row.distancia_prevista ? `${row.distancia_prevista} KM` : "NC",
 		},
 		{
 			name: "distancia_ate_destino",
