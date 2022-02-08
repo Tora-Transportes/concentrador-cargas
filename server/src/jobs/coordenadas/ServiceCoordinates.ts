@@ -343,6 +343,12 @@ class ServiceCoordinates {
 }
 
 export default async function () {
+  function calcularPrevisaoDeChegada(distancia: number) {
+    return (
+      Math.trunc(distancia / 500) * 86400 +
+      (((distancia % 500) * 8) / 500) * 60 * 60
+    );
+  }
   async function calcDistance(service: ServiceCoordinates, vehicle: any) {
     const response = await service.getDistancesFromAPI(
       vehicle.lat,
@@ -356,7 +362,7 @@ export default async function () {
       tripInfo.travelDistance !== -1 &&
       tripInfo.travelDuration !== -1
     ) {
-      const { travelDistance, travelDuration } = tripInfo;
+      const { travelDistance } = tripInfo;
       const actualVehicle = await database("con_veiculos_distancia")
         .where("fk_placa", vehicle.placa)
         .first();
@@ -364,7 +370,7 @@ export default async function () {
         await database("con_veiculos_distancia")
           .update({
             distancia_ate_destino: travelDistance,
-            tempo_ate_destino: travelDuration,
+            tempo_ate_destino: calcularPrevisaoDeChegada(travelDistance),
             data_atualizacao: DateUtils.getCurrentDate(),
           })
           .where("fk_placa", vehicle.placa);
@@ -372,7 +378,7 @@ export default async function () {
         await database("con_veiculos_distancia").insert({
           fk_placa: vehicle.placa,
           distancia_ate_destino: travelDistance,
-          tempo_ate_destino: travelDuration,
+          tempo_ate_destino: calcularPrevisaoDeChegada(travelDistance),
           data_atualizacao: DateUtils.getCurrentDate(),
         });
       }

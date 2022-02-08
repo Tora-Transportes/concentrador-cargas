@@ -15,20 +15,8 @@ import { BsDownload } from "react-icons/bs";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import FilialSelect from "src/Pages/Components/FilialSelect";
+import DateUtils from "../../Utils/date";
 ChartJS.register(ArcElement, Tooltip, Legend);
-
-function convertDateToReadableTime(seconds) {
-	let secs = Number(seconds);
-	let days = Math.trunc(secs / 86400);
-	secs -= days * 86400;
-
-	let hours = Math.trunc(secs / 3600);
-	secs -= hours * 3600;
-
-	let minutes = Math.trunc(secs / 60);
-
-	return `${days} dia(s), ${hours} hora(s), ${minutes} minuto(s)`;
-}
 
 function ViewRotasPendentes({
 	totalizadores,
@@ -397,7 +385,9 @@ function ViewRotasPendentes({
 						<tr>
 							<td>
 								{tempoMedioAprovacaoGr?.media &&
-									convertDateToReadableTime(tempoMedioAprovacaoGr.media)}
+									DateUtils.convertDateToReadableTime(
+										tempoMedioAprovacaoGr.media
+									)}
 							</td>
 						</tr>
 					</tbody>

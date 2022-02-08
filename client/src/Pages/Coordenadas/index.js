@@ -9,6 +9,8 @@ import { Form } from "react-bootstrap";
 import { SiGooglemaps } from "react-icons/si";
 import useLocalStorage from "../Components/useLocalstorage";
 
+import DateUtils from "../Utils/date";
+
 function reducerActiveColumns(state, action) {
 	const index = state.findIndex((i) => i.name === action.name);
 	let before;
@@ -111,10 +113,9 @@ function RotasPendentes() {
 				if (!row.tempo_ate_destino) {
 					return "";
 				}
-				const totalMinutes = Math.floor(Number(row.tempo_ate_destino) / 60);
-				const hours = Math.floor(totalMinutes / 60);
-				const minutes = Math.ceil(totalMinutes % 60);
-				return `${hours}h ${minutes}m`;
+				return DateUtils.convertDateToReadableTime(
+					Number(row.tempo_ate_destino)
+				);
 			},
 			Filter: () => null,
 		},
