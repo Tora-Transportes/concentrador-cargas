@@ -366,10 +366,11 @@ export class UseCaseUpdateCarga {
     if (cargaOficial.fk_situacao === ECargaStatus.APROVADO_PELO_GR) {
       // aqui eu populo a tabela con_cargas_logs_aprovacao para mostrar quanto tempo demora pelas mãos da GR
       let time = -1;
-      const currentDate = DateUtils.getCurrentDate();
+      const currentDateLog = DateUtils.getCurrentDate();
       if (cargaCadastrada.data_atualizacao instanceof Date) {
         time = Math.ceil(
-          (currentDate.getTime() - cargaCadastrada.data_atualizacao.getTime()) /
+          (currentDateLog.getTime() -
+            cargaCadastrada.data_atualizacao.getTime()) /
             1000
         );
       }
@@ -378,7 +379,7 @@ export class UseCaseUpdateCarga {
         fk_carga: cargaOficial.id,
         segundos: time,
         fk_usuario: oid,
-        data_criacao: currentDate,
+        data_criacao: currentDateLog,
       });
     }
     if (cargaOficial.fk_situacao === ECargaStatus.CARGA_CANCELADA) {
