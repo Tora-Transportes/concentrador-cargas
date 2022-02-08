@@ -28,7 +28,7 @@ function ViewCoordenadas({
 }) {
 	return (
 		<>
-			<Container className="text-center mb-5 mt-4">
+			<Container fluid className="text-center mb-5 mt-4">
 				<Row className="mb-2">
 					<h1>Coordenadas - Veículos</h1>
 				</Row>

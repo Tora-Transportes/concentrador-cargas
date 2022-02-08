@@ -67,6 +67,69 @@ function RotasPendentes() {
 			selector: (row) => row.placa,
 		},
 		{
+			name: "data_emissao_documento",
+			description: "Emissão Doc. ultima viagem",
+			selector: (row) =>
+				row.data_emissao_documento
+					?.split("T")[0]
+					.split("-")
+					.reverse()
+					.join("-"),
+			Filter: () => null,
+		},
+		{
+			name: "ultima_viagem_origem",
+			description: "Origem ultima viagem",
+			selector: (row) => row.ultima_viagem_origem,
+		},
+		{
+			name: "ultima_viagem_destino",
+			description: "Destino ultima viagem",
+			selector: (row) => row.ultima_viagem_destino,
+		},
+		{
+			name: "distancia_total",
+			description: "Distância prevista rota",
+			selector: () => `99999 KM`,
+		},
+		{
+			name: "distancia_ate_destino",
+			description: "Distância até o destino",
+			selector: (row) => {
+				if (!row.distancia_ate_destino) {
+					return "";
+				}
+				return `${Number(row.distancia_ate_destino).toFixed(2)} KM`;
+			},
+			Filter: () => null,
+		},
+		{
+			name: "tempo_ate_destino",
+			description: "Previsão de chegada",
+			selector: (row) => {
+				if (!row.tempo_ate_destino) {
+					return "";
+				}
+				const totalMinutes = Math.floor(Number(row.tempo_ate_destino) / 60);
+				const hours = Math.floor(totalMinutes / 60);
+				const minutes = Math.ceil(totalMinutes % 60);
+				return `${hours}h ${minutes}m`;
+			},
+			Filter: () => null,
+		},
+		{
+			name: "data_previsao_chegada",
+			description: "Data previsão de chegada",
+			selector: () => `10/01/2020`,
+			Filter: () => null,
+		},
+		{
+			name: "status_prazo",
+			description: "Status prazo",
+			selector: () => `Dentro do prazo`,
+			Filter: () => null,
+		},
+		{
 			name: "cidade_atual",
 			description: "Posição Atual",
 			selector: (row) => (
@@ -83,66 +146,6 @@ function RotasPendentes() {
 					<SiGooglemaps />
 				</a>
 			),
-		},
-		{
-			name: "ultima_viagem_origem",
-			description: "Origem ultima viagem",
-			selector: (row) => row.ultima_viagem_origem,
-		},
-		{
-			name: "ultima_viagem_destino",
-			description: "Destino ultima viagem",
-			selector: (row) => row.ultima_viagem_destino,
-		},
-		{
-			name: "distancia_ate_destino",
-			description: "Distância até o destino",
-			selector: (row) => {
-				if (!row.distancia_ate_destino) {
-					return "";
-				}
-				return `${Number(row.distancia_ate_destino).toFixed(2)} KM`;
-			},
-			Filter: () => null,
-		},
-		{
-			name: "tempo_ate_destino",
-			description: "Tempo até o destino",
-			selector: (row) => {
-				if (!row.tempo_ate_destino) {
-					return "";
-				}
-				const totalMinutes = Math.floor(Number(row.tempo_ate_destino) / 60);
-				const hours = Math.floor(totalMinutes / 60);
-				const minutes = Math.ceil(totalMinutes % 60);
-				return `${hours}h ${minutes}m`;
-			},
-			Filter: () => null,
-		},
-		{
-			name: "data_calculo",
-			description: "Data cálculo distância",
-			selector: (row) => {
-				if (!row?.data_calculo) {
-					return "";
-				}
-				const [data, time] = row.data_calculo?.split("T");
-				return `${data.split("-").reverse().join("-")} às ${
-					time.split(".")[0]
-				}`;
-			},
-			Filter: () => null,
-		},
-		{
-			name: "data_emissao_documento",
-			description: "Emissão Doc. ultima viagem",
-			selector: (row) =>
-				row.data_emissao_documento
-					?.split("T")[0]
-					.split("-")
-					.reverse()
-					.join("-"),
-			Filter: () => null,
 		},
 		{
 			name: "categoria_veiculo",
@@ -190,6 +193,20 @@ function RotasPendentes() {
 			name: "mct",
 			description: "MCT",
 			selector: (row) => row.mct,
+		},
+		{
+			name: "data_calculo",
+			description: "Data cálculo distância",
+			selector: (row) => {
+				if (!row?.data_calculo) {
+					return "";
+				}
+				const [data, time] = row.data_calculo?.split("T");
+				return `${data.split("-").reverse().join("-")} às ${
+					time.split(".")[0]
+				}`;
+			},
+			Filter: () => null,
 		},
 	];
 	const defaultStorageColumns = columns.map((i) => ({
