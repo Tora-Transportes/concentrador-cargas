@@ -13,6 +13,7 @@ export class CoordenadaRepository {
       documento,
       tipo_documento,
       categoria_veiculo,
+      setor_veiculo,
     } = filter;
     const currentPage = Number(page ?? 1) < 1 ? 1 : Number(page ?? 1);
     const query = database("con_coordenadas_veiculos").select([
@@ -38,6 +39,7 @@ export class CoordenadaRepository {
       documento,
       tipo_documento,
       categoria_veiculo,
+      setor_veiculo,
     })) {
       if (value !== undefined && key) {
         if (
@@ -45,6 +47,7 @@ export class CoordenadaRepository {
             "cidade_atual",
             "ultima_viagem_origem",
             "ultima_viagem_destino",
+            "setor_veiculo",
           ].includes(key)
         ) {
           query.where(key, "like", `%${value.toUpperCase()}%`);

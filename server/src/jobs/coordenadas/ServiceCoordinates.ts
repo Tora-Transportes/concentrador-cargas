@@ -222,7 +222,11 @@ class ServiceCoordinates {
           "VEI_PLACA as placa",
           "VEI_CATEGORIA as categoria",
           "VEI_COD as codigo_veiculo",
+          "AREA_PRODUCAO.ARE_DSC as area_producao",
+          "SETOR_VEICULO.SV_DSC as setor_veiculo",
         ])
+        .leftJoin("SETOR_VEICULO", "SETOR_VEICULO.SV_COD", "VEICULO.SV_COD")
+        .leftJoin("AREA_PRODUCAO", "AREA_PRODUCAO.ARE_COD", "VEICULO.ARE_COD")
         .whereIn(
           "VEI_PLACA",
           coordenadas.slice(start, end).map((i) => i.placa)
@@ -256,6 +260,7 @@ class ServiceCoordinates {
     const tradutorCodigosPlacas = new Map();
     const tradutorCategoriaVeiculo = new Map();
     const tradutorDestinoVeiculo = new Map();
+    const tradutorSetorAreaVeiculo = new Map();
     for (const i of categorias) {
       tradutorCategoriaVeiculo.set(i.placa, i.categoria);
       tradutorCategoriaVeiculo.set(i.codigo_veiculo, i.categoria);
@@ -264,6 +269,13 @@ class ServiceCoordinates {
       tradutorCodigosPlacas.set(i.codigo_veiculo, i.placa);
 
       tradutorDestinoVeiculo.set(i.placa, []);
+
+      // CALCULO DO SETOR DO VEICULO, ESSE BLOCO TEM UMA GRANDE CHANCE DE SER UMA GAMBIARRA DA PRODUCAO
+      const setorVeiculo =
+        i.area_producao === "DEDICADO CONGONHAS" && !i.setor_veiculo
+          ? "FR-CONGONHAS"
+          : i.setor_veiculo;
+      tradutorSetorAreaVeiculo.set(i.placa, setorVeiculo);
     }
 
     const veiculos = coordenadas.map((veiculo: Record<string, any>) => {
@@ -302,6 +314,7 @@ class ServiceCoordinates {
         distancia_prevista: null,
         tempo_ate_destino: null,
         data_previsao_chegada: null,
+        setor_veiculo: tradutorSetorAreaVeiculo.get(veiculo.placa) ?? null,
       };
     });
     return veiculos;

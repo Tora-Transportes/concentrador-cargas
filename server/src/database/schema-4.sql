@@ -65,3 +65,7 @@ alter table "con_coordenadas_veiculos" add (
     "tempo_ate_destino" FLOAT DEFAULT NULL,
     "data_previsao_chegada" DATE DEFAULT NULL
 );
+
+alter table "con_coordenadas_veiculos" add (
+    "setor_veiculo" VARCHAR(1000) DEFAULT NULL
+);

@@ -14,6 +14,7 @@ class ServiceCoordenadas {
 		tipo_documento,
 		categoria_veiculo,
 		limit,
+		setor_veiculo,
 	}) {
 		return api.get("/coordenadas", {
 			params: {
@@ -30,6 +31,7 @@ class ServiceCoordenadas {
 				tipo_documento,
 				categoria_veiculo,
 				limit,
+				setor_veiculo,
 			},
 		});
 	}

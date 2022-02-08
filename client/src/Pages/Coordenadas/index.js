@@ -69,6 +69,11 @@ function RotasPendentes() {
 			selector: (row) => row.placa,
 		},
 		{
+			name: "setor_veiculo",
+			description: "Setor Veículo",
+			selector: (row) => row.setor_veiculo,
+		},
+		{
 			name: "data_emissao_documento",
 			description: "Emissão Doc. ultima viagem",
 			selector: (row) =>
