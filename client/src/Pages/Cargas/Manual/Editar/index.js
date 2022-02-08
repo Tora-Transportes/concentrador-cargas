@@ -142,20 +142,23 @@ function Manual() {
 		setLoading(false);
 	}
 
-	async function handleColocarEmViagem() {
+	async function handleEmitirDocumento() {
 		setLoading(true);
 		try {
-			const ok = await swal(`Certeza que deseja colocar a carga em viagem ?`, {
-				dangerMode: true,
-				buttons: ["Cancelar", true],
-				icon: "warning",
-			});
+			const ok = await swal(
+				`Certeza que deseja emitir o documento dessa carga ?`,
+				{
+					dangerMode: true,
+					buttons: ["Cancelar", true],
+					icon: "warning",
+				}
+			);
 			if (ok) {
 				await ServiceCargas.update({
 					...formik.values,
 					fk_situacao: 6,
 				});
-				await swal("Sucesso!", "Carga colocada em viagem", "success");
+				await swal("Sucesso!", "Documento emitido", "success");
 				await carregarCarga();
 			} else {
 				await swal("Nenhuma alteração realizada");
@@ -296,9 +299,9 @@ function Manual() {
 								<Button
 									variant="info"
 									className="p-3 fw-bold"
-									onClick={handleColocarEmViagem}
+									onClick={handleEmitirDocumento}
 								>
-									Colocar em viagem
+									Emitir documento
 								</Button>
 							</Col>
 						)}
