@@ -13,6 +13,7 @@ import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
 import NavbarNavigator from "../../Components/NavbarNavigator";
 
 import TabelaCargas from "../../Components/TabelaCargas";
+import { Link } from "react-router-dom";
 
 function VisualizarCargas({
 	handleExportExcel,
@@ -34,9 +35,14 @@ function VisualizarCargas({
 			<LoadingComponent />
 			<NavbarNavigator />
 			<Container fluid className="text-center mb-5">
-				<Row>
+				<Row className="mt-3 text-end">
 					<Col>
-						<h1 className="mb-5 mt-5">Grid de Lotes</h1>
+						<h1>Grid de Lotes</h1>
+					</Col>
+					<Col>
+						<Link target="_blank" to="/relatorios">
+							<Button variant="">Ir para relatórios</Button>
+						</Link>
 					</Col>
 				</Row>
 				<Row>
