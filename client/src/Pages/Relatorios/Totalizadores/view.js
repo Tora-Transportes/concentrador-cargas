@@ -3,15 +3,16 @@ import { useState } from "react";
 import {
 	Container,
 	Row,
-	Card,
 	Col,
 	Table,
 	Form,
 	FloatingLabel,
 	Button,
+	Accordion,
 } from "react-bootstrap";
 import { FaPowerOff, FaRobot, FaHandsWash } from "react-icons/fa";
 import { BsDownload } from "react-icons/bs";
+import { GiClick } from "react-icons/gi";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import FilialSelect from "src/Pages/Components/FilialSelect";
@@ -57,270 +58,69 @@ function ViewRotasPendentes({
 	return (
 		<>
 			<Container className="text-center mb-5 mt-4">
-				<Row className="mb-2">
-					<h1>Visão geral</h1>
-				</Row>
-				<Row>
-					<Col sm={12} md={6}>
-						<FloatingLabel label="Início" className="mb-3">
-							<Form.Control
-								ref={dataInicial}
-								type="date"
-								placeholder=" "
-								name="data_inicio"
-							/>
-						</FloatingLabel>
-					</Col>
-					<Col>
-						<FloatingLabel label="Final" className="mb-3">
-							<Form.Control
-								ref={dataFinal}
-								type="date"
-								placeholder=" "
-								name="data_final"
-							/>
-						</FloatingLabel>
-					</Col>
-				</Row>
-				<Row className="mb-3">
-					<Col>
-						<FloatingLabel label="*Código da filial" className="mb-3">
-							<FilialSelect
-								placeholder=" "
-								name="fk_filial"
-								value={codigoFilial || ""}
-								onChange={(event) => setCodigoFilial(event.target.value)}
-							/>
-						</FloatingLabel>
-					</Col>
-					<Col sm={1}>
-						<Button className="p-3" onClick={applyFilter}>
-							Aplicar
-						</Button>
-					</Col>
-				</Row>
-				<Row className="text-center">
-					<Col>
-						<Card
-							style={{ minWidth: "18rem" }}
-							className="pt-4 pb-4 border border-success"
-						>
-							<Card.Body>
-								<Card.Title>
-									Cargas ativas
-									<Button
-										variant=""
-										onClick={() => handleExportExcel("ativas")}
-									>
-										<BsDownload />
-									</Button>
-								</Card.Title>
-								<Card.Text>
-									<FaPowerOff size={30} className="text-success" />
-								</Card.Text>
-								<h1>
-									<b>{totalizadores.cargas_ativas}</b>
-								</h1>
-								<Card.Text>
-									<span className="text-danger">
-										{percentage(
-											totalizadores.cargas_ativas +
-												totalizadores.cargas_desativadas,
-											totalizadores.cargas_ativas
-										)}
-										%
-									</span>{" "}
-									do total de cargas
-								</Card.Text>
-							</Card.Body>
-						</Card>
-					</Col>
-					<Col>
-						<Card
-							style={{ minWidth: "18rem" }}
-							className="pt-4 pb-4 border border-danger"
-						>
-							<Card.Body>
-								<Card.Title>
-									Cargas desativadas{" "}
-									<Button
-										variant=""
-										onClick={() => handleExportExcel("desativadas")}
-									>
-										<BsDownload />
-									</Button>
-								</Card.Title>
-								<Card.Text>
-									<FaPowerOff size={30} className="text-danger" />
-								</Card.Text>
-								<h1>
-									<b>{totalizadores.cargas_desativadas}</b>
-								</h1>
-								<Card.Text>
-									<span className="text-danger">
-										{percentage(
-											totalizadores.cargas_ativas +
-												totalizadores.cargas_desativadas,
-											totalizadores.cargas_desativadas
-										)}
-										%
-									</span>{" "}
-									do total de cargas
-								</Card.Text>
-							</Card.Body>
-						</Card>
-					</Col>
-				</Row>
-
 				<hr />
-				<Row className="text-center">
-					<Col>
-						<Card
-							style={{ minWidth: "18rem" }}
-							className="pt-4 pb-4 border border-success"
-						>
-							<Card.Body>
-								<Card.Title>
-									Cargas extraidas do <b>PORTAL</b>
-									<Button
-										variant=""
-										onClick={() => handleExportExcel("portal")}
-									>
-										<BsDownload />
-									</Button>
-								</Card.Title>
-								<Card.Text>
-									<FaRobot size={30} className="text-success" />
-								</Card.Text>
-								<h1>
-									<b>{totalizadores.cadastro_portal}</b>
-								</h1>
-								<Card.Text>
-									<span className="text-danger">
-										{percentage(
-											totalizadores.cadastro_manual +
-												totalizadores.cadastro_portal,
-											totalizadores.cadastro_portal
-										)}
-										%
-									</span>{" "}
-									do total de cargas
-								</Card.Text>
-							</Card.Body>
-						</Card>
-					</Col>
-					<Col>
-						<Card
-							style={{ minWidth: "18rem" }}
-							className="pt-4 pb-4 border border-success"
-						>
-							<Card.Body>
-								<Card.Title>
-									Cargas cadastradas <b>MANUALMENTE</b>
-									<Button
-										variant=""
-										onClick={() => handleExportExcel("manual")}
-									>
-										<BsDownload />
-									</Button>
-								</Card.Title>
-								<Card.Text>
-									<FaHandsWash size={30} className="text-success" />
-								</Card.Text>
-								<h1>
-									<b>{totalizadores.cadastro_manual}</b>
-								</h1>
-								<Card.Text>
-									<span className="text-danger">
-										{percentage(
-											totalizadores.cadastro_manual +
-												totalizadores.cadastro_portal,
-											totalizadores.cadastro_manual
-										)}
-										%
-									</span>{" "}
-									do total de cargas
-								</Card.Text>
-							</Card.Body>
-						</Card>
-					</Col>
-				</Row>
+				<span>
+					O tempo médio de aprovação de veículos pelo GR é de{" "}
+					<b>
+						{tempoMedioAprovacaoGr?.media &&
+							DateUtils.convertDateToReadableTime(tempoMedioAprovacaoGr.media)}
+					</b>
+				</span>
 				<hr />
 
-				<Row className="text-center">
-					<Col>
-						<Card
-							style={{ minWidth: "18rem" }}
-							className="pt-4 pb-4 border border-success"
-						>
-							<Card.Body>
-								<Card.Title>
-									Lotes ativos
-									<Button
-										variant=""
-										onClick={() => handleExportExcel("lotes_ativos")}
-									>
-										<BsDownload />
+				<Accordion>
+					<Accordion.Item eventKey="0">
+						<Accordion.Header>
+							<b>
+								Filtros aqui <GiClick size={25} />
+							</b>
+						</Accordion.Header>
+						<Accordion.Body>
+							<Row>
+								<Col sm={12} md={6}>
+									<FloatingLabel label="Início" className="mb-3">
+										<Form.Control
+											ref={dataInicial}
+											type="date"
+											placeholder=" "
+											name="data_inicio"
+										/>
+									</FloatingLabel>
+								</Col>
+								<Col>
+									<FloatingLabel label="Final" className="mb-3">
+										<Form.Control
+											ref={dataFinal}
+											type="date"
+											placeholder=" "
+											name="data_final"
+										/>
+									</FloatingLabel>
+								</Col>
+							</Row>
+							<Row className="mb-3">
+								<Col>
+									<FloatingLabel label="*Código da filial" className="mb-3">
+										<FilialSelect
+											placeholder=" "
+											name="fk_filial"
+											value={codigoFilial || ""}
+											onChange={(event) => setCodigoFilial(event.target.value)}
+										/>
+									</FloatingLabel>
+								</Col>
+								<Col sm={1}>
+									<Button className="p-3" onClick={applyFilter}>
+										Aplicar
 									</Button>
-								</Card.Title>
-								<Card.Text>
-									<FaPowerOff size={30} className="text-success" />
-								</Card.Text>
-								<h1>
-									<b>{totalizadores.lotes_ativos}</b>
-								</h1>
-								<Card.Text>
-									<span className="text-danger">
-										{percentage(
-											totalizadores.lotes_ativos +
-												totalizadores.lotes_desativados,
-											totalizadores.lotes_ativos
-										)}
-										%
-									</span>{" "}
-									do total de lotes
-								</Card.Text>
-							</Card.Body>
-						</Card>
-					</Col>
-					<Col>
-						<Card
-							style={{ minWidth: "18rem" }}
-							className="pt-4 pb-4 border border-danger"
-						>
-							<Card.Body>
-								<Card.Title>
-									Lotes desativados{" "}
-									<Button
-										variant=""
-										onClick={() => handleExportExcel("lotes_desativados")}
-									>
-										<BsDownload />
-									</Button>
-								</Card.Title>
-								<Card.Text>
-									<FaPowerOff size={30} className="text-danger" />
-								</Card.Text>
-								<h1>
-									<b>{totalizadores.lotes_desativados}</b>
-								</h1>
-								<Card.Text>
-									<span className="text-danger">
-										{percentage(
-											totalizadores.lotes_ativos +
-												totalizadores.lotes_desativados,
-											totalizadores.lotes_desativados
-										)}
-										%
-									</span>{" "}
-									do total de lotes
-								</Card.Text>
-							</Card.Body>
-						</Card>
-					</Col>
-				</Row>
-				<hr />
+								</Col>
+							</Row>
+						</Accordion.Body>
+					</Accordion.Item>
+				</Accordion>
 
+				<hr />
+				<hr />
 				<Row className="text-center mx-auto">
 					<Col lg={4} md={6} sm={12}>
 						<Doughnut
@@ -375,24 +175,245 @@ function ViewRotasPendentes({
 					</Col>
 				</Row>
 				<hr />
-				<Table>
-					<thead>
-						<tr>
-							<th>Tempo médio para aprovação</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>
-								{tempoMedioAprovacaoGr?.media &&
-									DateUtils.convertDateToReadableTime(
-										tempoMedioAprovacaoGr.media
-									)}
-							</td>
-						</tr>
-					</tbody>
-				</Table>
+
+				<Accordion>
+					<Accordion.Item eventKey="1">
+						<Accordion.Header>
+							<b>Cargas Ativas X Desativadas</b>
+						</Accordion.Header>
+						<Accordion.Body>
+							<Table>
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Situação</th>
+										<th>Percentual</th>
+										<th>Total</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											<FaPowerOff size={30} className="text-success" />
+										</td>
+										<td>Cargas ativas</td>
+										<td>
+											<span className="text-danger">
+												{percentage(
+													totalizadores.cargas_ativas +
+														totalizadores.cargas_desativadas,
+													totalizadores.cargas_ativas
+												)}
+												%
+											</span>
+										</td>
+										<td>
+											<b>{totalizadores.cargas_ativas}</b>
+										</td>
+										<td>
+											<Button
+												variant=""
+												onClick={() => handleExportExcel("ativas")}
+											>
+												<BsDownload />
+											</Button>
+										</td>
+									</tr>
+
+									<tr>
+										<td>
+											<FaPowerOff size={30} className="text-danger" />
+										</td>
+										<td>Cargas desativadas</td>
+										<td>
+											<span className="text-danger">
+												{percentage(
+													totalizadores.cargas_ativas +
+														totalizadores.cargas_desativadas,
+													totalizadores.cargas_desativadas
+												)}
+												%
+											</span>
+										</td>
+										<td>
+											<b>{totalizadores.cargas_desativadas}</b>
+										</td>
+										<td>
+											<Button
+												variant=""
+												onClick={() => handleExportExcel("desativadas")}
+											>
+												<BsDownload />
+											</Button>
+										</td>
+									</tr>
+								</tbody>
+							</Table>
+						</Accordion.Body>
+					</Accordion.Item>
+					<Accordion.Item eventKey="2">
+						<Accordion.Header>
+							<b>Cargas cadastradas por origem</b>
+						</Accordion.Header>
+						<Accordion.Body>
+							<Table>
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Situação</th>
+										<th>Percentual</th>
+										<th>Total</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											<FaRobot size={30} className="text-success" />
+										</td>
+										<td>
+											Cargas extraidas do <b>PORTAL</b>
+										</td>
+										<td>
+											<span className="text-danger">
+												{percentage(
+													totalizadores.cadastro_manual +
+														totalizadores.cadastro_portal,
+													totalizadores.cadastro_portal
+												)}
+												%
+											</span>
+										</td>
+										<td>
+											<b>{totalizadores.cadastro_portal}</b>
+										</td>
+										<td>
+											<Button
+												variant=""
+												onClick={() => handleExportExcel("portal")}
+											>
+												<BsDownload />
+											</Button>
+										</td>
+									</tr>
+
+									<tr>
+										<td>
+											<FaHandsWash size={30} className="text-success" />
+										</td>
+										<td>
+											Cargas cadastradas <b>MANUALMENTE</b>
+										</td>
+										<td>
+											<span className="text-danger">
+												{percentage(
+													totalizadores.cadastro_manual +
+														totalizadores.cadastro_portal,
+													totalizadores.cadastro_manual
+												)}
+												%
+											</span>
+										</td>
+										<td>
+											<b>{totalizadores.cadastro_manual}</b>
+										</td>
+										<td>
+											<Button
+												variant=""
+												onClick={() => handleExportExcel("manual")}
+											>
+												<BsDownload />
+											</Button>
+										</td>
+									</tr>
+								</tbody>
+							</Table>
+						</Accordion.Body>
+					</Accordion.Item>
+					<Accordion.Item eventKey="3">
+						<Accordion.Header>
+							<b>Lotes Ativos X Desativados</b>
+						</Accordion.Header>
+						<Accordion.Body>
+							<Table>
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Situação</th>
+										<th>Percentual</th>
+										<th>Total</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											<FaPowerOff size={30} className="text-success" />
+										</td>
+										<td>Lotes ativos</td>
+										<td>
+											<span className="text-danger">
+												{percentage(
+													totalizadores.lotes_ativos +
+														totalizadores.lotes_desativados,
+													totalizadores.lotes_ativos
+												)}
+												%
+											</span>
+										</td>
+										<td>
+											<b>{totalizadores.lotes_ativos}</b>
+										</td>
+										<td>
+											<Button
+												variant=""
+												onClick={() => handleExportExcel("lotes_ativos")}
+											>
+												<BsDownload />
+											</Button>
+										</td>
+									</tr>
+
+									<tr>
+										<td>
+											<FaPowerOff size={30} className="text-danger" />
+										</td>
+										<td>Lotes desativados</td>
+										<td>
+											<span className="text-danger">
+												{percentage(
+													totalizadores.lotes_ativos +
+														totalizadores.lotes_desativados,
+													totalizadores.lotes_desativados
+												)}
+												%
+											</span>
+										</td>
+										<td>
+											<b>{totalizadores.lotes_desativados}</b>
+										</td>
+										<td>
+											<Button
+												variant=""
+												onClick={() => handleExportExcel("lotes_desativados")}
+											>
+												<BsDownload />
+											</Button>
+										</td>
+									</tr>
+								</tbody>
+							</Table>
+						</Accordion.Body>
+					</Accordion.Item>
+				</Accordion>
+
 				<hr />
+
+				<span>
+					A listagem de cargas transportadas por dia só vai aparecer caso o
+					filtro esteja aplicado com filial, data inicial e data final
+				</span>
 				{dataInicial?.current?.value &&
 					dataFinal?.current?.value &&
 					codigoFilial && (
