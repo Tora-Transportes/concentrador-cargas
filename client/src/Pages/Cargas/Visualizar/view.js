@@ -15,6 +15,7 @@ import CaptionStatusCarga from "../../Components/CaptionStatusCarga";
 
 import TabelaCargas from "../../Components/TabelaCargas";
 import { Link } from "react-router-dom";
+import chartImg from "../../../assets/chart.png";
 
 function VisualizarCargas({
 	handleExportExcel,
@@ -36,15 +37,22 @@ function VisualizarCargas({
 			<LoadingComponent />
 			<NavbarNavigator />
 			<Container fluid className="text-center mb-5">
-				<Row className="mt-3 text-end">
+				<Row className="mt-3 text-center">
 					<Col>
 						<h1>Grid de Cargas</h1>
 					</Col>
-					<Col>
-						<Link target="_blank" to="/relatorios">
-							<Button variant="">Ir para relatórios</Button>
-						</Link>
-					</Col>
+
+					<Link target="_blank" to="/relatorios">
+						<img
+							src={chartImg}
+							style={{
+								width: "80px",
+								position: "absolute",
+								right: "10px",
+								top: "80px",
+							}}
+						/>
+					</Link>
 				</Row>
 				<Row>
 					<Col className="text-start">
