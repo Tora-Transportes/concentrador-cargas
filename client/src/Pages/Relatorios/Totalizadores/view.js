@@ -33,7 +33,11 @@ function ViewRotasPendentes({
 	function percentage(total, piece) {
 		try {
 			const value = (Number(piece) * 100) / Number(total);
-			return Number(value.toFixed(2));
+			const output = Number(value.toFixed(2));
+			if (isNaN(Number(output))) {
+				return 0;
+			}
+			return output;
 		} catch (error) {
 			return 0;
 		}
