@@ -31,7 +31,7 @@ export class ReportResumoPorDia {
         
         left join FILIAL on FILIAL.FIL_COD = "c_cad"."fk_filial"
         
-        where "c_cad"."unidade_medida" = 'KG' AND "c_cad"."e_lote" = 0
+        where "c_cad"."e_lote" = 0
         and "c_cad"."fk_filial" = ?
         and to_char("c_cad"."data_cadastro", 'yyyy-mm-dd') >= ?
         and to_char("c_cad"."data_cadastro", 'yyyy-mm-dd') <= ?
