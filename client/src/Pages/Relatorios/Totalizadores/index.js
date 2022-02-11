@@ -101,7 +101,7 @@ function RelatoriosMain() {
 		return () => {
 			io.offAny(reload);
 		};
-	}, [io]);
+	}, [io, reload, filters]);
 
 	useEffect(() => {
 		let isMounted = true;
