@@ -115,6 +115,10 @@ class ServiceFinishCargas {
     );
   }
 
+  distinct<T>(list: T[]): T[] {
+    return Array.from(new Set(list));
+  }
+
   async *run() {
     const PAGE_SIZE = 100;
     const totalRegisters = Number(
@@ -153,18 +157,18 @@ class ServiceFinishCargas {
       }
 
       const numerosDeCargas = cargasSit.map((i) => i.NUM_CAR);
-      const cargasComCTE = (await this.searchCTEs(numerosDeCargas)).map(
-        (i) => i.NUM_CAR
+      const cargasComCTE = this.distinct(
+        (await this.searchCTEs(numerosDeCargas)).map((i) => i.NUM_CAR)
       );
-      const cargasComMDFE = (await this.searchMDFEs(cargasComCTE)).map(
-        (i: any) => i.NUM_VIAGEM
+      const cargasComMDFE = this.distinct(
+        (await this.searchMDFEs(cargasComCTE)).map((i: any) => i.NUM_VIAGEM)
       );
 
-      const cargasComNFSE = (await this.searchNFSE(numerosDeCargas)).map(
-        (i) => i.NUM_CAR
+      const cargasComNFSE = this.distinct(
+        (await this.searchNFSE(numerosDeCargas)).map((i) => i.NUM_CAR)
       );
-      const cargasRPADVF = (await this.searchRPADVF(cargasComNFSE)).map(
-        (i) => i.NUM_CAR
+      const cargasRPADVF = this.distinct(
+        (await this.searchRPADVF(cargasComNFSE)).map((i) => i.NUM_CAR)
       );
 
       console.log("CTE", cargasComCTE);
