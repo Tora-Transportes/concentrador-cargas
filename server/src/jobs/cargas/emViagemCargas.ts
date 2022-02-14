@@ -149,7 +149,7 @@ class ServiceFinishCargas {
 
       const translate = new Map();
       for (const i of cargasSit) {
-        translate.set(i.NUM_CAR, i.COD_ATS);
+        translate.set(String(i.NUM_CAR), i.COD_ATS);
       }
 
       const numerosDeCargas = cargasSit.map((i) => i.NUM_CAR);
@@ -177,7 +177,7 @@ class ServiceFinishCargas {
       console.log("------------------------TRADUTOR------------------------");
 
       for (const cargaParaFinalizar of cargasComMDFE) {
-        const codigoATS = translate.get(cargaParaFinalizar);
+        const codigoATS = translate.get(String(cargaParaFinalizar));
         if (!codigoATS) {
           console.error(
             `A carga ${cargaParaFinalizar} tem está com o codigo ATS vazio > ${codigoATS}`
@@ -191,7 +191,7 @@ class ServiceFinishCargas {
       }
 
       for (const cargaParaFinalizar of cargasRPADVF) {
-        const codigoATS = translate.get(cargaParaFinalizar);
+        const codigoATS = translate.get(String(cargaParaFinalizar));
         if (!codigoATS) {
           console.error(
             `A carga ${cargaParaFinalizar} tem está com o codigo ATS vazio > ${codigoATS}`
