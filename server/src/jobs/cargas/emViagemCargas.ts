@@ -71,7 +71,8 @@ class ServiceFinishCargas {
       SELECT CAST(REC.REC_NUM AS VARCHAR(40)) AS DOC_ID,
       REC.REC_HR_EMISSAO AS DT_HORA_EMISSAO,
       NULL AS DT_CANCELAMENTO,
-      'NFSE' AS TIPO_DOC
+      'NFSE' AS TIPO_DOC,
+      ITC.NUM_CAR
       FROM ITEM_CARGA  ITC
       INNER JOIN RECEITA REC ON REC.TDM_COD = ITC.TDM_COD
       AND ITC.FIL_COD = REC.FIL_COD 
@@ -151,48 +152,56 @@ class ServiceFinishCargas {
         translate.set(i.NUM_CAR, i.COD_ATS);
       }
 
-      const documentosCTE = await this.searchCTEs(
-        cargasSit.map((i) => i.NUM_CAR)
-      );
-
-      const cargasComCTE = Array.from(
-        new Set(documentosCTE.map((i) => i.NUM_CAR))
+      const numerosDeCargas = cargasSit.map((i) => i.NUM_CAR);
+      const cargasComCTE = (await this.searchCTEs(numerosDeCargas)).map(
+        (i) => i.NUM_CAR
       );
       const cargasComMDFE = (await this.searchMDFEs(cargasComCTE)).map(
         (i: any) => i.NUM_VIAGEM
       );
-      const cargasComNFSE = (await this.searchNFSE(cargasComCTE)).map(
-        (i) => i.NUM_VIAGEM
+
+      const cargasComNFSE = (await this.searchNFSE(numerosDeCargas)).map(
+        (i) => i.NUM_CAR
       );
-      const cargasRPADVF = (await this.searchRPADVF(cargasComCTE)).map(
+      const cargasRPADVF = (await this.searchRPADVF(cargasComNFSE)).map(
         (i) => i.NUM_CAR
       );
 
       console.log("CTE", cargasComCTE);
-      console.log("CNS", cargasComNFSE);
-      console.log("CRD", cargasRPADVF);
+      console.log("NFSE", cargasComNFSE);
+      console.log("RPA_DVF", cargasRPADVF);
 
-      for (const cte of cargasComCTE) {
-        const codigoATS = translate.get(cte);
+      for (const cargaParaFinalizar of cargasComMDFE) {
+        const codigoATS = translate.get(cargaParaFinalizar);
         if (!codigoATS) {
           throw new Error(
-            `A carga ${cte} tem está com o codigo ATS vazio > ${codigoATS}`
+            `A carga ${cargaParaFinalizar} tem está com o codigo ATS vazio > ${codigoATS}`
           );
         }
-        if (cargasComMDFE.includes(cte)) {
-          console.log(`MDFE > Finaliza a carga ${cte} - ${codigoATS}`);
-          yield codigoATS;
-        } else if (cargasComNFSE.includes(cte) && cargasRPADVF.includes(cte)) {
-          yield codigoATS;
-          console.log(`NFSE > Finaliza a carga ${cte} - ${codigoATS}`);
+        console.log(
+          `MDFE > Finaliza a carga ${cargaParaFinalizar} - ${codigoATS}`
+        );
+        yield codigoATS;
+      }
+
+      for (const cargaParaFinalizar of cargasRPADVF) {
+        const codigoATS = translate.get(cargaParaFinalizar);
+        if (!codigoATS) {
+          throw new Error(
+            `A carga ${cargaParaFinalizar} tem está com o codigo ATS vazio > ${codigoATS}`
+          );
         }
+        console.log(
+          `NFSE > Finaliza a carga ${cargaParaFinalizar} - ${codigoATS}`
+        );
+        yield codigoATS;
       }
     }
   }
 }
 
 export default async function run() {
-  cron.schedule("* * * * *", async () => {
+  async function job() {
     console.log(
       "|-------------------JOB CARGA EM VIAGEM---------------------|"
     );
@@ -219,5 +228,6 @@ export default async function run() {
     console.log(
       "|-----------------FIM JOB CARGA EM VIAGEM-------------------|"
     );
-  });
+  }
+  cron.schedule("* * * * *", job);
 }
