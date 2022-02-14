@@ -143,16 +143,19 @@ class ServiceFinishCargas {
           .offset((page - 1) * PAGE_SIZE)
       ).map((i) => i.id);
 
-      const cargasSit = await database("CARGA")
-        .select(["NUM_CAR", "COD_ATS"])
-        .where("CAR_TP_DOC", 5)
+      const referenciasCargasSit = await database("CARGA")
+        .select(["NUM_CAR", "COD_ATS", "CAR_TP_DOC"])
         .whereIn("COD_ATS", idsCargasConcentrador);
 
+      // O tipo de documento tem que ser 5
+      const cargasSit = referenciasCargasSit.filter(
+        (i) => Number(i.CAR_TP_DOC) === 5
+      );
       console.log("Encontrei as seguintes cargas no SIT ");
       console.table(cargasSit);
 
       const translate = new Map();
-      for (const i of cargasSit) {
+      for (const i of referenciasCargasSit) {
         translate.set(String(i.NUM_CAR), i.COD_ATS);
       }
 
@@ -240,5 +243,6 @@ export default async function run() {
       "|-----------------FIM JOB CARGA EM VIAGEM-------------------|"
     );
   }
-  cron.schedule("* * * * *", job);
+  // cron.schedule("* * * * *", job);
+  job();
 }
