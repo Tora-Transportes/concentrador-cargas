@@ -243,6 +243,5 @@ export default async function run() {
       "|-----------------FIM JOB CARGA EM VIAGEM-------------------|"
     );
   }
-  // cron.schedule("* * * * *", job);
-  job();
+  cron.schedule("* * * * *", job);
 }
