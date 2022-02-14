@@ -168,8 +168,13 @@ class ServiceFinishCargas {
       );
 
       console.log("CTE", cargasComCTE);
+      console.log("MDFE", cargasComMDFE);
       console.log("NFSE", cargasComNFSE);
       console.log("RPA_DVF", cargasRPADVF);
+      console.log("------------------------TRADUTOR------------------------");
+      console.log("INDEX|NUM_CAR|COD_ATS");
+      console.table(Array.from(translate));
+      console.log("------------------------TRADUTOR------------------------");
 
       for (const cargaParaFinalizar of cargasComMDFE) {
         const codigoATS = translate.get(cargaParaFinalizar);
