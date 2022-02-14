@@ -174,9 +174,10 @@ class ServiceFinishCargas {
       for (const cargaParaFinalizar of cargasComMDFE) {
         const codigoATS = translate.get(cargaParaFinalizar);
         if (!codigoATS) {
-          throw new Error(
+          console.error(
             `A carga ${cargaParaFinalizar} tem está com o codigo ATS vazio > ${codigoATS}`
           );
+          continue;
         }
         console.log(
           `MDFE > Finaliza a carga ${cargaParaFinalizar} - ${codigoATS}`
@@ -187,9 +188,10 @@ class ServiceFinishCargas {
       for (const cargaParaFinalizar of cargasRPADVF) {
         const codigoATS = translate.get(cargaParaFinalizar);
         if (!codigoATS) {
-          throw new Error(
+          console.error(
             `A carga ${cargaParaFinalizar} tem está com o codigo ATS vazio > ${codigoATS}`
           );
+          continue;
         }
         console.log(
           `NFSE > Finaliza a carga ${cargaParaFinalizar} - ${codigoATS}`
