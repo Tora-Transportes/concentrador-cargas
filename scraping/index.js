@@ -2,6 +2,7 @@ require("dotenv").config();
 require("oracledb").initOracleClient({
   libDir: process.env.DB_ORACLE_LIB_DIR,
 });
+const moment = require("moment-timezone");
 
 const path = require("path");
 const https = require("https");
@@ -28,52 +29,100 @@ const database = require('knex')({
     },
 });
 
-
-
-// ORIGEM
-const origemDePara = new Map();
-// origemDePara.set('LU16', '60894730004011');
-// origemDePara.set('LU10', '60894730002906');
-// origemDePara.set('LU15', '60894730005093');
-// origemDePara.set('LC01', '60894730006308');
-// origemDePara.set('LC02', '60894730002663');
-// origemDePara.set('LU08', '60894730002582');
-// origemDePara.set('LU11', '60894730003120');
-// origemDePara.set('LU20', '60894730007703');
-origemDePara.set('LU16', 'SP/SAO PAULO');
-origemDePara.set('LU08', 'MG/IPATINGA');
-origemDePara.set('LC02', 'SP/SANTO ANDRE');
-origemDePara.set('LU10', 'MG/SANTA LUZIA');
-origemDePara.set('LU11', 'MG/BETIM');
-origemDePara.set('LU15', 'MG/CONTAGEM');
-origemDePara.set('LC01', 'SP/CUBATAO');
-origemDePara.set('LU20', 'SP/ITAQUAQUECETUBA');
-
-// CLIENTE
-const clienteDePara = new Map();
-clienteDePara.set('LU16', '60894730004011');
-clienteDePara.set('LU10', '60894730002582');
-clienteDePara.set('LU15', '60894730002582');
-clienteDePara.set('LC01', '60894730006308');
-clienteDePara.set('LC02', '60894730006308');
-clienteDePara.set('LU08', '60894730002582');
-clienteDePara.set('LU11', '60894730002582');
-clienteDePara.set('LU20', '60894730004011');
+const deParaTransportadorCarga = new Map();
+deParaTransportadorCarga.set("20468310005020", {origem: "BRASIL/MG/SANTA LUZIA", cliente: "60894730002582", filial: 157});
+deParaTransportadorCarga.set("20468310007317", {origem: "BRASIL/MG/IMBIRUCU", cliente: "60894730002582", filial: 154});
+deParaTransportadorCarga.set("20468310009603", {origem: "BRASIL/MG/IPATINGA", cliente: "60894730002582", filial: 26});
   
-
-async function factoryCarga(row, cnpjResolver) {
-    const normalizeText = text => text.toUpperCase()
+function normalizeText (text){
+    return text.toUpperCase()
         .normalize("NFD")
+        .trim()
         .replace(/[\u0300-\u036f]/g, "");
-    
-    const codigoDePara = row.origem.split(" - ")[0];
-    const cliente = clienteDePara.get(codigoDePara);
-    const origem = origemDePara.get(codigoDePara);
+}
+
+function getCurrentDate() {
+    const currentDate = moment
+      .utc(moment.tz("America/Sao_Paulo").format("YYYY-MM-DDTHH:mm:ss"))
+      .toDate();
+    return currentDate;
+}
+
+async function enviarCargasParaApi(cargas) {
+    const agent = new https.Agent({  
+        rejectUnauthorized: false
+    });
+
+    try {
+        await axios.post(`${process.env.URL_API}/portal/cargas`, {
+            cargas
+        }, {
+            httpsAgent: agent
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function agruparCargasPorDocumento(cargas) {
+    const hashCargas = new Map();
+
+    for(const i of cargas) {
+        if(hashCargas.has(i.documento_transporte)) {
+            hashCargas.get(i.documento_transporte).observacao = hashCargas.get(i.documento_transporte).observacao || "";
+            hashCargas.get(i.documento_transporte).quantidade = Number(hashCargas.get(i.documento_transporte).quantidade) + Number(i.quantidade);
+            hashCargas.get(i.documento_transporte).quantidade_atual = hashCargas.get(i.documento_transporte).quantidade;
+            hashCargas.get(i.documento_transporte).observacao += "Carga: "+i.tipo_carga+",\nQuantidade: "+i.quantidade+",\nUnidade medida: "+i.unidade_medida+"\n\n";
+        } else {
+            hashCargas.set(i.documento_transporte, i);
+        }
+    }
+    const cargasAgrupadas = [];
+    for(const i of hashCargas) {
+        cargasAgrupadas.push(i[1]);
+    }
+    return cargasAgrupadas;
+}
+
+async function popularClientes(cargas) {
+    const clientes = new Set();
+    for(const i of cargas) {
+        clientes.add(i.cliente);
+    }
+
+    const cnpjs = await database("ORGANIZACAO as ORG")
+    .join("PRACA as PRA", "PRA.ORG_COD", "ORG.ORG_COD")
+    .join("CIDADE as CID", "CID.CID_COD", "PRA.CID_COD")
+    .join("ESTADO as EST", "EST.UF_COD", "CID.UF_COD")
+    .select([
+        "ORG.ORG_RAZAO_SOCIAL AS organizacao",
+        "ORG.ORG_FANTASIA AS organizacao_fantasia",
+        "PRA.PCA_DOC_FEDERAL as documento_federal",
+        "PRA.PCA_END as endereco",
+        "CID.CID_NOM as cidade",
+        "EST.UF_SIGLA as uf",
+    ])
+    .whereIn("PRA.PCA_DOC_FEDERAL", Array.from(clientes));
+
+    const fornecedoresCache = new Map();
+    for(const i of cnpjs) {
+        const value = `${i.organizacao} - ${i.documento_federal} - ${i.cidade}/${i.uf}`;
+        fornecedoresCache.set(i.documento_federal, value);
+    }
+
+    return cargas.map(i => ({...i, cliente: fornecedoresCache.get(i.cliente) || i.cliente}));
+}
+
+function factoryCarga(row) {
+    const {cliente, origem, filial} = deParaTransportadorCarga.get(row.cnpj_fornecedor);
+    if(!cliente || !origem || !filial) {
+        console.error(`O de para falhou com o cnpj '${i.cnpj_fornecedor}' > retornou cliente: ${cliente} | origem: ${origem} | filial: ${filial}`);
+    }
 
     return {
-        cliente: await cnpjResolver(cliente),
+        cliente: cliente,
         e_lote: false,
-        origem_carga: "BRASIL/MG/SANTA LUZIA", // row.origem ? normalizeText(`BRASIL/${origem}`) : null,
+        origem_carga: origem,
         destino_carga: row.uf_destino && row.municipio_destino ? normalizeText(`BRASIL/${row.uf_destino}/${row.municipio_destino}`): null,
         data_entrega: null,
         data_coleta: null,
@@ -83,8 +132,8 @@ async function factoryCarga(row, cnpjResolver) {
         responsavel_cadastro: "BOT IMPORTACAO PORTAL",
         canal_comunicacao: "portal",
         observacao: null,
-        data_cadastro: new Date(),
-        data_atualizacao: new Date(),
+        data_cadastro: getCurrentDate(),
+        data_atualizacao: getCurrentDate(),
         ativo: 1,
         acessorios_requisitos: null,
         usuario: "BOT IMPORTACAO PORTAL",
@@ -99,25 +148,23 @@ async function factoryCarga(row, cnpjResolver) {
         placa_veiculo: null,
         observacao_gr: null,
         documento_transporte: row.documento_transporte,
-        fk_filial: 157
+        fk_filial: filial
     }
 }
 
-const deleteFolderRecursive = function (directoryPath) {
+function deleteFolderRecursive(directoryPath) {
     if (fs.existsSync(directoryPath)) {
         fs.readdirSync(directoryPath).forEach((file, index) => {
-          const curPath = path.join(directoryPath, file);
-          if (fs.lstatSync(curPath).isDirectory()) {
-           // recurse
-            deleteFolderRecursive(curPath);
-          } else {
-            // delete file
-            fs.unlinkSync(curPath);
-          }
+            const curPath = path.join(directoryPath, file);
+            if (fs.lstatSync(curPath).isDirectory()) {
+                deleteFolderRecursive(curPath);
+            } else {
+                fs.unlinkSync(curPath);
+            }
         });
         fs.rmdirSync(directoryPath);
-      }
-    };
+    }
+}
 
 async function main() {
     deleteFolderRecursive("htmls");
@@ -126,74 +173,19 @@ async function main() {
     } catch (error) {
         console.error(error);
         process.exit(1);
-        throw error;
     }
 
     const cargas = minerarNotas().filter(i => {
-        const match = "20468310005020";
-        return String(i.cnpj_fornecedor) === match;
+        return ["20468310005020","20468310007317","20468310009603"].includes(String(i.cnpj_fornecedor));
     });
-    fs.writeFileSync("output.json", JSON.stringify(cargas));
-
-    const fornecedoresCache = new Map();
     
-    const cargasFormatadas = await Promise.all(cargas.map(i => factoryCarga(i, async (cnpj) => {
-        const cached = fornecedoresCache.get(cnpj);
-        if(cached) {
-            return `${cached.organizacao} - ${cached.documento_federal} - ${cached.cidade}/${cached.uf}`;
-        } else {
-            const query = await database("ORGANIZACAO as ORG")
-                .join("PRACA as PRA", "PRA.ORG_COD", "ORG.ORG_COD")
-                .join("CIDADE as CID", "CID.CID_COD", "PRA.CID_COD")
-                .join("ESTADO as EST", "EST.UF_COD", "CID.UF_COD")
-                .select([
-                    "ORG.ORG_RAZAO_SOCIAL AS organizacao",
-                    "ORG.ORG_FANTASIA AS organizacao_fantasia",
-                    "PRA.PCA_DOC_FEDERAL as documento_federal",
-                    "PRA.PCA_END as endereco",
-                    "CID.CID_NOM as cidade",
-                    "EST.UF_SIGLA as uf",
-                ])
-                .where("PRA.PCA_DOC_FEDERAL", cnpj)
-                .first();
-            fornecedoresCache.set(cnpj, query);
-            return `${query.organizacao} - ${query.documento_federal} - ${query.cidade}/${query.uf}`;
-        }
-    })));
+    const cargasSemFornecedores = cargas.map(factoryCarga);
+    const cargasComFornecedores = await popularClientes(cargasSemFornecedores);
+    const cargasAgrupadas = agruparCargasPorDocumento(cargasComFornecedores);
+    fs.writeFileSync("output.json", JSON.stringify(cargasAgrupadas));
 
-    const hashCargas = new Map();
-
-    for(const i of cargasFormatadas) {
-        if(hashCargas.has(i.documento_transporte)) {
-            hashCargas.get(i.documento_transporte).observacao = hashCargas.get(i.documento_transporte).observacao || "";
-            hashCargas.get(i.documento_transporte).quantidade = Number(hashCargas.get(i.documento_transporte).quantidade) + Number(i.quantidade);
-            hashCargas.get(i.documento_transporte).quantidade_atual = hashCargas.get(i.documento_transporte).quantidade;
-            hashCargas.get(i.documento_transporte).observacao += "Carga: "+i.tipo_carga+",\nQuantidade: "+i.quantidade+",\nUnidade medida: "+i.unidade_medida+"\n\n";
-        } else {
-            hashCargas.set(i.documento_transporte, i);
-        }
-    }
-    const cargasParaInserir = [];
-    for(const i of hashCargas) {
-        cargasParaInserir.push(i[1]);
-    }
-    console.log("Enviando", cargasParaInserir.length, "cargas");
-    const agent = new https.Agent({  
-        rejectUnauthorized: false
-    });
-
-    try {
-        await axios.post(`${process.env.URL_API}/portal/cargas`, {
-            cargas: cargasParaInserir
-        }, {
-            httpsAgent: agent
-        });
-    } catch (error) {
-        console.log(error);
-    }
+    console.log("Enviando", cargasAgrupadas.length, "cargas");
+    enviarCargasParaApi(cargasAgrupadas);
 }
 
 module.exports = main;
-// main().then(()=> {
-//     process.exit(0);
-// });
