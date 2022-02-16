@@ -313,6 +313,7 @@ describe("Update carga", () => {
         canal_comunicacao: "manual",
         responsavel_cadastro: "Andre Alves Leocadio",
         placa_veiculo: "BWC8809",
+        codigo_motorista: 12,
       },
       "OID"
     );
@@ -373,6 +374,7 @@ describe("Update carga", () => {
         canal_comunicacao: "manual",
         responsavel_cadastro: "Andre Alves Leocadio",
         placa_veiculo: "BWC8809",
+        codigo_motorista: 12,
         fk_situacao: 3,
       },
       "OID"
@@ -392,6 +394,7 @@ describe("Update carga", () => {
           canal_comunicacao: "manual",
           responsavel_cadastro: "Andre Alves Leocadio",
           placa_veiculo: "BWC8809",
+          codigo_motorista: 12,
           fk_situacao: 3,
         },
         "OID"
@@ -424,6 +427,7 @@ describe("Update carga", () => {
       canal_comunicacao: "manual",
       responsavel_cadastro: "Andre Alves Leocadio",
       placa_veiculo: "BWC8809",
+      codigo_motorista: 12,
     });
     expect(cargaInicial.fk_situacao).toBe(2);
 
@@ -499,6 +503,7 @@ describe("Update carga", () => {
       canal_comunicacao: "manual",
       responsavel_cadastro: "Andre Alves Leocadio",
       placa_veiculo: "BWC8809",
+      codigo_motorista: 12,
     });
 
     const cargaAtualizada = await useCase.run(
@@ -624,6 +629,7 @@ describe("Update carga", () => {
       canal_comunicacao: "manual",
       responsavel_cadastro: "Andre Alves Leocadio",
       placa_veiculo: "BWC8809",
+      codigo_motorista: 12,
     });
 
     await useCase.run(
@@ -638,6 +644,7 @@ describe("Update carga", () => {
         canal_comunicacao: "manual",
         responsavel_cadastro: "Andre Alves Leocadio",
         placa_veiculo: "BWC8809",
+        codigo_motorista: 12,
         fk_situacao: 3,
         observacao_gr: "TESTE",
       },
@@ -659,6 +666,7 @@ describe("Update carga", () => {
           canal_comunicacao: "manual",
           responsavel_cadastro: "Andre Alves Leocadio",
           placa_veiculo: "ASD1234", // MUDANCA DE PLACA
+          codigo_motorista: 12,
           observacao_gr: "TESTE",
         },
         "OID"
@@ -677,6 +685,7 @@ describe("Update carga", () => {
         canal_comunicacao: "manual",
         responsavel_cadastro: "Andre Alves Leocadio",
         placa_veiculo: "BWC8809",
+        codigo_motorista: 12,
         fk_situacao: 5,
         observacao_cancelamento: "meu teste",
       },

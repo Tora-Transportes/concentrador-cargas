@@ -265,7 +265,7 @@ export class UseCaseUpdateCarga {
       }
     } else {
       if (carga.placa_veiculo) {
-        if (!(await this.veiculoRepository.hasDriver(carga.placa_veiculo))) {
+        if (!carga.codigo_motorista) {
           throw new AppError(
             "A placa informada não possui nenhum motorista cadastrado",
             400
