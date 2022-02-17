@@ -12,7 +12,11 @@ import DateUtils from "../../Utils/date";
 
 import xlsx from "xlsx";
 import { IVeiculoRepository } from "../../repositories/VeiculoRepository";
+import EPermissions from "../../models/EPermissions";
 
+export interface IUserRepository {
+  index(oid: string): Promise<any>;
+}
 export interface IRepositoryAddCarga {
   create(carga: ICarga): Promise<ICarga>;
   index(id: number): Promise<ICarga | undefined>;
@@ -28,9 +32,13 @@ export class UseCaseAddCarga {
   constructor(
     private cargaRepository: IRepositoryAddCarga,
     private notifyAll: (event: IEventSocket) => void,
-    private veiculoRepository: IVeiculoRepository
+    private veiculoRepository: IVeiculoRepository,
+    private userRepository: IUserRepository
   ) {}
-  async run(cargaDTO: Record<string, any>) {
+  async run(
+    cargaDTO: Record<string, any>,
+    oid: string | null | undefined = null
+  ) {
     cargaDTO.id = await this.cargaRepository.nextId();
 
     const validator = factoryCargaValidator();
@@ -45,7 +53,17 @@ export class UseCaseAddCarga {
     carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
 
     if (carga.placa_veiculo) {
-      if (!(await this.veiculoRepository.hasDriver(carga.placa_veiculo))) {
+      // Caso o oid nao esteja definido o bot de scraping é quem está enviando as cargas
+      if (oid) {
+        const usuario = await this.userRepository.index(oid);
+        if (!usuario?.permissoes?.includes(EPermissions.VINCULAR_PLACA)) {
+          throw new AppError(
+            "O usuário atual não possui a permissão 'VINCULAR_PLACA'",
+            403
+          );
+        }
+      }
+      if (!carga.codigo_motorista) {
         throw new AppError(
           "A placa informada não possui nenhum motorista cadastrado",
           400
@@ -164,9 +182,6 @@ export class UseCaseAddCargaDerivada {
   }
 }
 
-export interface IUserRepository {
-  index(oid: string): Promise<any>;
-}
 export interface IServiceSit {
   migrar(cargas: ICarga[]): Promise<any>;
   cancelar(cargas: ICarga[]): Promise<any>;
@@ -264,6 +279,18 @@ export class UseCaseUpdateCarga {
         );
       }
     } else {
+      const TeveMudancaPlaca = (placaAntiga: any, placaNova: any) => {
+        return placaAntiga ? placaNova !== placaAntiga : !!placaNova;
+      };
+      if (
+        !user?.permissoes?.includes(EPermissions.VINCULAR_PLACA) &&
+        TeveMudancaPlaca(cargaCadastrada.placa_veiculo, carga.placa_veiculo)
+      ) {
+        throw new AppError(
+          "O usuário atual não possui a permissão 'VINCULAR_PLACA'",
+          403
+        );
+      }
       if (carga.placa_veiculo) {
         if (!carga.codigo_motorista) {
           throw new AppError(

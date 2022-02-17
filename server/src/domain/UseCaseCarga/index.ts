@@ -26,7 +26,8 @@ const modules = {
   UseCaseAddCarga: new UseCaseAddCarga(
     cargaRepository,
     notifyAll,
-    veiculoRepository
+    veiculoRepository,
+    userRepository
   ),
   UseCaseAddCargaDerivada: new UseCaseAddCargaDerivada(
     cargaRepository,

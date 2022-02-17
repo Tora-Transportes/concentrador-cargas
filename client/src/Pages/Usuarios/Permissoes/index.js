@@ -26,6 +26,7 @@ function Permissoes() {
 			permissao_cadastrar_produtos: false,
 			permissao_aprovar_veiculos: false,
 			permissao_aprovar_viagem: false,
+			permissao_vincular_placa: false,
 		},
 	});
 
@@ -60,6 +61,9 @@ function Permissoes() {
 		}
 		if (formik.values.permissao_aprovar_viagem) {
 			permissoes.push("APROVAR_VIAGEM");
+		}
+		if (formik.values.permissao_vincular_placa) {
+			permissoes.push("VINCULAR_PLACA");
 		}
 		if (
 			await swal(
@@ -133,6 +137,15 @@ function Permissoes() {
 							onChange={handleChangeCheckbox}
 							label={`Aprovar viagem`}
 							id="permissao_aprovar_viagem"
+							inline
+						/>
+						<Form.Check
+							type="checkbox"
+							name="permissao_vincular_placa"
+							checked={formik.values.permissao_vincular_placa}
+							onChange={handleChangeCheckbox}
+							label={`Vincular placa`}
+							id="permissao_vincular_placa"
 							inline
 						/>
 					</Col>

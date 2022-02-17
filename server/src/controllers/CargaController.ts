@@ -6,11 +6,10 @@ import useCasesCarga from "../domain/UseCaseCarga";
 class CargaController {
   async create(req: Request, res: Response) {
     const cargaDTO = { ...req.body };
-    cargaDTO.usuario = TokenAd.getClaims(
-      String(req.headers.authorization)
-    ).name;
+    const { name, oid } = TokenAd.getClaims(String(req.headers.authorization));
+    cargaDTO.usuario = name;
 
-    const carga = await useCasesCarga.UseCaseAddCarga.run(cargaDTO);
+    const carga = await useCasesCarga.UseCaseAddCarga.run(cargaDTO, oid);
     return res.json({
       data: carga,
     });
@@ -20,6 +19,7 @@ class CargaController {
     const { cargas } = req.body;
 
     const useCase = useCasesCarga.UseCaseAddCarga;
+
     const cargasToInsert = await Promise.all(
       cargas.map(async (i: any) => {
         try {

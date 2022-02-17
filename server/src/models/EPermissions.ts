@@ -4,6 +4,7 @@ enum EPermissions {
   ALTERAR_PERMISSOES = "ALTERAR_PERMISSOES",
   APROVAR_VEICULOS = "APROVAR_VEICULOS",
   APROVAR_VIAGEM = "APROVAR_VIAGEM",
+  VINCULAR_PLACA = "VINCULAR_PLACA",
 }
 
 export function isValidPermission(permission: string) {
@@ -12,7 +13,8 @@ export function isValidPermission(permission: string) {
     permission === EPermissions.CADASTRAR_PRODUTOS ||
     permission === EPermissions.ALTERAR_PERMISSOES ||
     permission === EPermissions.APROVAR_VEICULOS ||
-    permission === EPermissions.APROVAR_VIAGEM
+    permission === EPermissions.APROVAR_VIAGEM ||
+    permission === EPermissions.VINCULAR_PLACA
   );
 }
 
