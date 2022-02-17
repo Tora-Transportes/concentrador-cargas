@@ -69,6 +69,21 @@ function RotasPendentes() {
 			selector: (row) => row.placa,
 		},
 		{
+			name: "tipo_cavalo",
+			description: "Tipo cavalo",
+			selector: (row) => row.tipo_cavalo,
+		},
+		{
+			name: "tipo_carreta",
+			description: "Tipo carreta",
+			selector: (row) => row.tipo_carreta,
+		},
+		{
+			name: "telefone_motorista",
+			description: "Telefone Motorista",
+			selector: (row) => row.telefone_motorista,
+		},
+		{
 			name: "setor_veiculo",
 			description: "Setor Veículo",
 			selector: (row) => row.setor_veiculo,
@@ -215,6 +230,11 @@ function RotasPendentes() {
 					<option value="RPA">RPA</option>
 				</Form.Select>
 			),
+		},
+		{
+			name: "nome_motorista",
+			description: "Motorista",
+			selector: (row) => row.nome_motorista,
 		},
 		{
 			name: "mct",

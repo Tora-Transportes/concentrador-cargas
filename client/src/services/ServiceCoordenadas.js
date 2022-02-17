@@ -15,6 +15,10 @@ class ServiceCoordenadas {
 		categoria_veiculo,
 		limit,
 		setor_veiculo,
+		tipo_cavalo,
+		tipo_carreta,
+		nome_motorista,
+		telefone_motorista,
 	}) {
 		return api.get("/coordenadas", {
 			params: {
@@ -32,6 +36,10 @@ class ServiceCoordenadas {
 				categoria_veiculo,
 				limit,
 				setor_veiculo,
+				tipo_cavalo,
+				tipo_carreta,
+				nome_motorista,
+				telefone_motorista,
 			},
 		});
 	}
@@ -48,6 +56,11 @@ class ServiceCoordenadas {
 		documento,
 		tipo_documento,
 		categoria_veiculo,
+		setor_veiculo,
+		tipo_cavalo,
+		tipo_carreta,
+		nome_motorista,
+		telefone_motorista,
 	}) {
 		return api.get("/relatorio/coordenadas", {
 			responseType: "arraybuffer",
@@ -63,6 +76,11 @@ class ServiceCoordenadas {
 				documento,
 				tipo_documento,
 				categoria_veiculo,
+				setor_veiculo,
+				tipo_cavalo,
+				tipo_carreta,
+				nome_motorista,
+				telefone_motorista,
 			},
 		});
 	}

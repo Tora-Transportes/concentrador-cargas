@@ -14,6 +14,10 @@ export class CoordenadaRepository {
       tipo_documento,
       categoria_veiculo,
       setor_veiculo,
+      tipo_cavalo,
+      tipo_carreta,
+      telefone_motorista,
+      nome_motorista,
     } = filter;
     const currentPage = Number(page ?? 1) < 1 ? 1 : Number(page ?? 1);
     const query = database("con_coordenadas_veiculos").select([
@@ -40,22 +44,14 @@ export class CoordenadaRepository {
       tipo_documento,
       categoria_veiculo,
       setor_veiculo,
+      tipo_cavalo,
+      tipo_carreta,
+      telefone_motorista,
+      nome_motorista,
     })) {
       if (value !== undefined && key) {
-        if (
-          [
-            "cidade_atual",
-            "ultima_viagem_origem",
-            "ultima_viagem_destino",
-            "setor_veiculo",
-          ].includes(key)
-        ) {
-          query.where(key, "like", `%${value.toUpperCase()}%`);
-          total.where(key, "like", `%${value.toUpperCase()}%`);
-        } else {
-          query.where(key, value);
-          total.where(key, value);
-        }
+        query.where(key, "like", `%${value.toUpperCase()}%`);
+        total.where(key, "like", `%${value.toUpperCase()}%`);
       }
     }
 
