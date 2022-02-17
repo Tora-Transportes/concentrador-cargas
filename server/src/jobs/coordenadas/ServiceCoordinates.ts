@@ -217,31 +217,50 @@ class ServiceCoordinates {
       const start = (page - 1) * 1000;
       const end = start + 999;
       console.log(`Carregando Chunk de dados ${page} dos veiculos`);
-      const queryTipoVeiculo = await database("VEICULO")
+      const queryTipoVeiculo = database("VEICULO")
         .select([
-          "VEI_PLACA as placa",
-          "VEI_CATEGORIA as categoria",
-          "VEI_COD as codigo_veiculo",
+          "VEICULO.VEI_PLACA as placa",
+          "VEICULO.VEI_CATEGORIA as categoria",
+          "VEICULO.VEI_COD as codigo_veiculo",
           "AREA_PRODUCAO.ARE_DSC as area_producao",
           "SETOR_VEICULO.SV_DSC as setor_veiculo",
+          "CADASTRO_GERAL.CG_NOME as nome_motorista",
+          "TV_CAVALO.TV_DSC as tipo_cavalo",
+          "TV_CARRETA.TV_DSC as tipo_carreta",
         ])
+        .leftJoin("CADASTRO_GERAL", "CADASTRO_GERAL.CG_COD", "VEICULO.CG_MOT")
         .leftJoin("SETOR_VEICULO", "SETOR_VEICULO.SV_COD", "VEICULO.SV_COD")
         .leftJoin("AREA_PRODUCAO", "AREA_PRODUCAO.ARE_COD", "VEICULO.ARE_COD")
+        .leftJoin(
+          "TIPO_VEICULO as TV_CAVALO",
+          "TV_CAVALO.TV_COD",
+          "VEICULO.TV_COD"
+        )
+        .leftJoin(
+          "VEICULO as VEICULO_CARRETA",
+          "VEICULO_CARRETA.VEI_COD",
+          "VEICULO.COD_CARRETA"
+        )
+        .leftJoin(
+          "TIPO_VEICULO as TV_CARRETA",
+          "TV_CARRETA.TV_COD",
+          "VEICULO_CARRETA.TV_COD"
+        )
         .whereIn(
-          "VEI_PLACA",
+          "VEICULO.VEI_PLACA",
           coordenadas.slice(start, end).map((i) => i.placa)
         );
       accumulatorPromise.push(queryTipoVeiculo);
     }
 
-    const categorias = [];
+    const complementosDadosVeiculos = [];
     for (const i of await Promise.all(accumulatorPromise)) {
-      categorias.push(...i);
+      complementosDadosVeiculos.push(...i);
     }
 
     const veiculosAutonomos = [];
     const veiculosFrotas = [];
-    for (const i of categorias) {
+    for (const i of complementosDadosVeiculos) {
       if (i.categoria === "A" || i.categoria === "C") {
         veiculosAutonomos.push(i.codigo_veiculo);
       } else if (i.categoria === "F") {
@@ -257,38 +276,31 @@ class ServiceCoordinates {
     ]);
 
     console.log("Traduzindo a saida para o formato desejado");
-    const tradutorCodigosPlacas = new Map();
-    const tradutorCategoriaVeiculo = new Map();
-    const tradutorDestinoVeiculo = new Map();
-    const tradutorSetorAreaVeiculo = new Map();
-    for (const i of categorias) {
-      tradutorCategoriaVeiculo.set(i.placa, i.categoria);
-      tradutorCategoriaVeiculo.set(i.codigo_veiculo, i.categoria);
-
-      tradutorCodigosPlacas.set(i.placa, i.codigo_veiculo);
-      tradutorCodigosPlacas.set(i.codigo_veiculo, i.placa);
-
-      tradutorDestinoVeiculo.set(i.placa, []);
+    const hashComplementosPorPlaca = new Map();
+    for (const i of complementosDadosVeiculos) {
+      hashComplementosPorPlaca.set(i.placa, i);
 
       // CALCULO DO SETOR DO VEICULO, ESSE BLOCO TEM UMA GRANDE CHANCE DE SER UMA GAMBIARRA DA PRODUCAO
       const setorVeiculo =
         i.area_producao === "DEDICADO CONGONHAS" && !i.setor_veiculo
           ? "FR-CONGONHAS"
           : i.setor_veiculo;
-      tradutorSetorAreaVeiculo.set(i.placa, setorVeiculo);
+      hashComplementosPorPlaca.get(i.placa).setor_veiculo = setorVeiculo;
     }
 
     const veiculos = coordenadas.map((veiculo: Record<string, any>) => {
       const tipoDocumento = ["A", "C"].includes(
-        tradutorCategoriaVeiculo.get(veiculo.placa)
+        hashComplementosPorPlaca.get(veiculo.placa)?.categoria
       )
         ? "RPA"
-        : tradutorCategoriaVeiculo.get(veiculo.placa)
+        : hashComplementosPorPlaca.get(veiculo.placa)?.categoria
         ? "DVF"
         : null;
       const arrayViagem =
         tipoDocumento === "RPA" ? lastTripsAutonomous : lastTripsFleet;
-      const codigoVeiculo = tradutorCodigosPlacas.get(veiculo.placa);
+      const codigoVeiculo = hashComplementosPorPlaca.get(
+        veiculo.placa
+      )?.codigo_veiculo;
       const ultimaViagem = arrayViagem.find(
         (i: Record<string, any>) => i.VEI_COD === codigoVeiculo
       );
@@ -298,23 +310,31 @@ class ServiceCoordinates {
         lat: veiculo.lat ?? null,
         lon: veiculo.lon ?? null,
         documento: ultimaViagem?.NUM_DOC ?? null,
+        distancia_prevista: null,
+        tempo_ate_destino: null,
+        data_previsao_chegada: null,
         tipo_documento: tipoDocumento,
+        codigo_veiculo: codigoVeiculo ?? null,
+        data_emissao_documento: ultimaViagem?.DT_EMISSAO,
         cidade_atual: veiculo.cidade_uf
           ? TextUtils.normalize(veiculo.cidade_uf).trim()
           : null,
-        codigo_veiculo: codigoVeiculo ?? null,
         ultima_viagem_origem: ultimaViagem?.ORIGEM
           ? TextUtils.normalize(ultimaViagem.ORIGEM)
           : null,
         ultima_viagem_destino: ultimaViagem?.DESTINO
           ? TextUtils.normalize(ultimaViagem.DESTINO)
           : null,
-        categoria_veiculo: tradutorCategoriaVeiculo.get(veiculo.placa),
-        data_emissao_documento: ultimaViagem?.DT_EMISSAO,
-        distancia_prevista: null,
-        tempo_ate_destino: null,
-        data_previsao_chegada: null,
-        setor_veiculo: tradutorSetorAreaVeiculo.get(veiculo.placa) ?? null,
+        categoria_veiculo: hashComplementosPorPlaca.get(veiculo.placa)
+          ?.categoria,
+        setor_veiculo:
+          hashComplementosPorPlaca.get(veiculo.placa)?.setor_veiculo ?? null,
+        nome_motorista:
+          hashComplementosPorPlaca.get(veiculo.placa)?.nome_motorista ?? null,
+        tipo_cavalo:
+          hashComplementosPorPlaca.get(veiculo.placa)?.tipo_cavalo ?? null,
+        tipo_carreta:
+          hashComplementosPorPlaca.get(veiculo.placa)?.tipo_carreta ?? null,
       };
     });
     return veiculos;
@@ -423,171 +443,171 @@ export default async function () {
     console.log(
       "Buscando cidades na api e salvando na base de dados de tecnologia"
     );
-    const promiseUpdateCityName = new Promise((resolve) => {
-      console.time("AUTOCOMPLETE - Cidades destino");
-      let requestInProgress = false;
-      const interval = setInterval(async () => {
-        if (requestInProgress) return;
-        if (cidadesVazias.length === 0) {
-          console.timeEnd("AUTOCOMPLETE - Cidades destino");
-          clearInterval(interval);
-          return resolve(true);
-        }
-        const cidade = cidadesVazias.pop();
-        if (!cidade) {
-          throw new Error("Impossivel");
-        }
+    // const promiseUpdateCityName = new Promise((resolve) => {
+    //   console.time("AUTOCOMPLETE - Cidades destino");
+    //   let requestInProgress = false;
+    //   const interval = setInterval(async () => {
+    //     if (requestInProgress) return;
+    //     if (cidadesVazias.length === 0) {
+    //       console.timeEnd("AUTOCOMPLETE - Cidades destino");
+    //       clearInterval(interval);
+    //       return resolve(true);
+    //     }
+    //     const cidade = cidadesVazias.pop();
+    //     if (!cidade) {
+    //       throw new Error("Impossivel");
+    //     }
 
-        try {
-          requestInProgress = true;
-          cidade.cidade_atual = await service.searchInApi(
-            cidade.lat,
-            cidade.lon,
-            cidade.placa
-          );
-          await Promise.all([
-            mssqlCoordenadas("MAXPOSITION")
-              .where("PLACA", cidade.placa)
-              .where("MCT", cidade.mct)
-              .update({
-                CIDADE_UF: cidade.cidade_atual,
-              }),
-            database("con_coordenadas_veiculos")
-              .where("placa", cidade.placa)
-              .where("mct", cidade.mct)
-              .update({
-                cidade_atual: cidade.cidade_atual,
-              }),
-          ]);
-          console.log(`Busquei e retornei ${cidade.cidade_atual}`);
-          requestInProgress = false;
-        } catch (error) {
-          requestInProgress = false;
-          console.error("Erro no job", error, cidade);
-        }
-      }, 1000);
-    });
+    //     try {
+    //       requestInProgress = true;
+    //       cidade.cidade_atual = await service.searchInApi(
+    //         cidade.lat,
+    //         cidade.lon,
+    //         cidade.placa
+    //       );
+    //       await Promise.all([
+    //         mssqlCoordenadas("MAXPOSITION")
+    //           .where("PLACA", cidade.placa)
+    //           .where("MCT", cidade.mct)
+    //           .update({
+    //             CIDADE_UF: cidade.cidade_atual,
+    //           }),
+    //         database("con_coordenadas_veiculos")
+    //           .where("placa", cidade.placa)
+    //           .where("mct", cidade.mct)
+    //           .update({
+    //             cidade_atual: cidade.cidade_atual,
+    //           }),
+    //       ]);
+    //       console.log(`Busquei e retornei ${cidade.cidade_atual}`);
+    //       requestInProgress = false;
+    //     } catch (error) {
+    //       requestInProgress = false;
+    //       console.error("Erro no job", error, cidade);
+    //     }
+    //   }, 1000);
+    // });
 
-    console.time("CALC - DISTANCIA VEICULOS");
-    console.log("Calculando distancia e salvando na base de dados");
-    console.log("Carregando veiculos em memoria para completar com distancia");
-    const veiculos = await database.raw(`
-      select "placa", "con_coordenadas_veiculos"."lat", "con_coordenadas_veiculos"."lon", "ultima_viagem_destino", "con_localizacoes"."lat" "lat_destino", "lng" "lon_destino"
-        from "con_coordenadas_veiculos"
-        left join "con_localizacoes" on ("cidade" || ' - ' || "sigla_estado") = "ultima_viagem_destino"
-        where "con_coordenadas_veiculos"."lat" is not null and "con_coordenadas_veiculos"."lon" is not null and "con_coordenadas_veiculos"."ultima_viagem_destino" is not null and "placa" is not null
-    `);
+    // console.time("CALC - DISTANCIA VEICULOS");
+    // console.log("Calculando distancia e salvando na base de dados");
+    // console.log("Carregando veiculos em memoria para completar com distancia");
+    // const veiculos = await database.raw(`
+    //   select "placa", "con_coordenadas_veiculos"."lat", "con_coordenadas_veiculos"."lon", "ultima_viagem_destino", "con_localizacoes"."lat" "lat_destino", "lng" "lon_destino"
+    //     from "con_coordenadas_veiculos"
+    //     left join "con_localizacoes" on ("cidade" || ' - ' || "sigla_estado") = "ultima_viagem_destino"
+    //     where "con_coordenadas_veiculos"."lat" is not null and "con_coordenadas_veiculos"."lon" is not null and "con_coordenadas_veiculos"."ultima_viagem_destino" is not null and "placa" is not null
+    // `);
 
-    const jobsApiDistance = new Set();
-    for (let i = 0; i < veiculos.length; i++) {
-      const veiculo = veiculos[i];
+    // const jobsApiDistance = new Set();
+    // for (let i = 0; i < veiculos.length; i++) {
+    //   const veiculo = veiculos[i];
 
-      // este bloco atualiza as informações das cidades para funcionar como uma especie de cache
-      if (veiculo.lat_destino === null || veiculo.lon_destino === null) {
-        const [city, state] = String(veiculo.ultima_viagem_destino).split(
-          " - "
-        );
+    //   // este bloco atualiza as informações das cidades para funcionar como uma especie de cache
+    //   if (veiculo.lat_destino === null || veiculo.lon_destino === null) {
+    //     const [city, state] = String(veiculo.ultima_viagem_destino).split(
+    //       " - "
+    //     );
 
-        if (state === "NC") {
-          continue;
-        }
-        const coords = await service.getCoordinatesFromAPI(city, state);
-        await new Promise((resolve) => {
-          setTimeout(resolve, 1000);
-        });
+    //     if (state === "NC") {
+    //       continue;
+    //     }
+    //     const coords = await service.getCoordinatesFromAPI(city, state);
+    //     await new Promise((resolve) => {
+    //       setTimeout(resolve, 1000);
+    //     });
 
-        if (coords.length === 0) {
-          continue;
-        }
+    //     if (coords.length === 0) {
+    //       continue;
+    //     }
 
-        const { lat, lon } = coords[0];
-        console.log(
-          "Encontrei as coordenadas ",
-          coords[0],
-          " para a localidade de ",
-          city,
-          state
-        );
-        const cityExists = await database("con_localizacoes")
-          .select("cidade")
-          .where("cidade", city)
-          .where("sigla_estado", state)
-          .first();
-        if (cityExists) {
-          await database("con_localizacoes")
-            .update({
-              lat,
-              lng: lon,
-            })
-            .where("cidade", city)
-            .where("sigla_estado", state);
-        } else {
-          const fields = coords[0]?.display_name?.split(", ");
-          const pais =
-            fields.length > 0
-              ? fields[fields.length - 1].toUpperCase().trim()
-              : "BRASIL";
-          const countryInfo = await database("con_localizacoes")
-            .select(["sigla_pais", "sigla_pais_estendida", "estado"])
-            .where("sigla_estado", state)
-            .where("pais", pais)
-            .whereNotNull("estado")
-            .whereNotNull("sigla_pais")
-            .whereNotNull("sigla_pais_estendida")
-            .first();
-          await database("con_localizacoes").insert({
-            id: 2,
-            lat,
-            lng: lon,
-            cidade: city,
-            pais,
-            sigla_pais: countryInfo?.sigla_pais ?? "NC",
-            sigla_pais_estendida: countryInfo?.sigla_pais_estendida ?? "NC",
-            estado: countryInfo?.estado ?? null,
-            sigla_estado: state,
-          });
-        }
-        for (let j = i; j < veiculos.length; j++) {
-          if (veiculos[j].ultima_viagem_destino === `${city} - ${state}`) {
-            veiculos[j].lat_destino = lat;
-            veiculos[j].lon_destino = lon;
-          }
-        }
-      }
+    //     const { lat, lon } = coords[0];
+    //     console.log(
+    //       "Encontrei as coordenadas ",
+    //       coords[0],
+    //       " para a localidade de ",
+    //       city,
+    //       state
+    //     );
+    //     const cityExists = await database("con_localizacoes")
+    //       .select("cidade")
+    //       .where("cidade", city)
+    //       .where("sigla_estado", state)
+    //       .first();
+    //     if (cityExists) {
+    //       await database("con_localizacoes")
+    //         .update({
+    //           lat,
+    //           lng: lon,
+    //         })
+    //         .where("cidade", city)
+    //         .where("sigla_estado", state);
+    //     } else {
+    //       const fields = coords[0]?.display_name?.split(", ");
+    //       const pais =
+    //         fields.length > 0
+    //           ? fields[fields.length - 1].toUpperCase().trim()
+    //           : "BRASIL";
+    //       const countryInfo = await database("con_localizacoes")
+    //         .select(["sigla_pais", "sigla_pais_estendida", "estado"])
+    //         .where("sigla_estado", state)
+    //         .where("pais", pais)
+    //         .whereNotNull("estado")
+    //         .whereNotNull("sigla_pais")
+    //         .whereNotNull("sigla_pais_estendida")
+    //         .first();
+    //       await database("con_localizacoes").insert({
+    //         id: 2,
+    //         lat,
+    //         lng: lon,
+    //         cidade: city,
+    //         pais,
+    //         sigla_pais: countryInfo?.sigla_pais ?? "NC",
+    //         sigla_pais_estendida: countryInfo?.sigla_pais_estendida ?? "NC",
+    //         estado: countryInfo?.estado ?? null,
+    //         sigla_estado: state,
+    //       });
+    //     }
+    //     for (let j = i; j < veiculos.length; j++) {
+    //       if (veiculos[j].ultima_viagem_destino === `${city} - ${state}`) {
+    //         veiculos[j].lat_destino = lat;
+    //         veiculos[j].lon_destino = lon;
+    //       }
+    //     }
+    //   }
 
-      jobsApiDistance.add(veiculo);
+    //   jobsApiDistance.add(veiculo);
 
-      if (jobsApiDistance.size >= 5) {
-        console.log("Processando lote");
-        console.time(`Lote com ${jobsApiDistance.size}`);
-        await Promise.all(
-          Array.from(jobsApiDistance).map((j) =>
-            calcDistance(service, j).catch(console.error)
-          )
-        );
-        console.timeEnd(`Lote com ${jobsApiDistance.size}`);
-        jobsApiDistance.clear();
-      }
-    }
+    //   if (jobsApiDistance.size >= 5) {
+    //     console.log("Processando lote");
+    //     console.time(`Lote com ${jobsApiDistance.size}`);
+    //     await Promise.all(
+    //       Array.from(jobsApiDistance).map((j) =>
+    //         calcDistance(service, j).catch(console.error)
+    //       )
+    //     );
+    //     console.timeEnd(`Lote com ${jobsApiDistance.size}`);
+    //     jobsApiDistance.clear();
+    //   }
+    // }
 
-    if (jobsApiDistance.size > 0) {
-      console.log("Processando lote final", jobsApiDistance);
-      console.time(`Lote com ${jobsApiDistance.size}`);
-      await Promise.all(
-        Array.from(jobsApiDistance).map((j) =>
-          calcDistance(service, j).catch(console.error)
-        )
-      );
-      console.timeEnd(`Lote com ${jobsApiDistance.size}`);
-      jobsApiDistance.clear();
-    }
-    console.timeEnd("CALC - DISTANCIA VEICULOS");
+    // if (jobsApiDistance.size > 0) {
+    //   console.log("Processando lote final", jobsApiDistance);
+    //   console.time(`Lote com ${jobsApiDistance.size}`);
+    //   await Promise.all(
+    //     Array.from(jobsApiDistance).map((j) =>
+    //       calcDistance(service, j).catch(console.error)
+    //     )
+    //   );
+    //   console.timeEnd(`Lote com ${jobsApiDistance.size}`);
+    //   jobsApiDistance.clear();
+    // }
+    // console.timeEnd("CALC - DISTANCIA VEICULOS");
 
-    await promiseUpdateCityName;
+    // await promiseUpdateCityName;
 
     console.timeEnd("JOB COORDENADAS");
     console.log("------------FIM JOB COORDENADAS------------");
   }
-
-  cron.schedule("0 * * * *", job);
+  job();
+  // cron.schedule("0 * * * *", job);
 }
