@@ -113,7 +113,7 @@ function RotasPendentes() {
 		},
 		{
 			name: "tempo_ate_destino",
-			description: "Previsão de chegada",
+			description: "Previsão Calculada",
 			selector: (row) => {
 				if (!row.tempo_ate_destino) {
 					return "";
@@ -126,7 +126,7 @@ function RotasPendentes() {
 		},
 		{
 			name: "data_previsao_chegada",
-			description: "Data previsão de chegada",
+			description: "Previsão Real",
 			selector: (row) => {
 				if (!row.data_previsao_chegada) {
 					return "";
