@@ -120,7 +120,21 @@ function RotasPendentes() {
 		{
 			name: "telefone_motorista",
 			description: "Telefone Motorista",
-			selector: (row) => row.telefone_motorista,
+			selector: (row) => {
+				if (!row.telefone_motorista) return "";
+
+				const telefone = "5531" + row.telefone_motorista?.replace(/\D/g, "");
+				return (
+					<a
+						className="text-decoration-none"
+						href={`https://web.whatsapp.com/send/?phone=${telefone}&text=Olá ${row.nome_motorista}`}
+						rel="nofollow noreferrer"
+						target="_blank"
+					>
+						{row.telefone_motorista}
+					</a>
+				);
+			},
 		},
 		{
 			name: "setor_veiculo",
