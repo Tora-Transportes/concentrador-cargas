@@ -23,7 +23,14 @@ class ServiceCoordinates {
   }
 
   async getVehiclesCoodinates() {
-    return mssqlCoordenadas("MAXPOSITION")
+    return mssqlCoordenadas(
+      mssqlCoordenadas.raw(`
+      (select *,
+      ROW_NUMBER() OVER (PARTITION BY PLACA ORDER BY DT_ALTERACAO DESC) POSITION
+      from MAXPOSITION
+      where placa is not null) t1
+    `)
+    )
       .select([
         "MCT as mct",
         "PLACA as placa",
@@ -31,7 +38,7 @@ class ServiceCoordinates {
         "LON as lon",
         "CIDADE_UF as  cidade_uf",
       ])
-      .whereNotNull("PLACA")
+      .where("POSITION", 1)
       .andWhereRaw("YEAR(DT_ALTERACAO) >= '2022'")
       .orderBy(["PLACA", "MCT"]);
   }
@@ -198,8 +205,9 @@ class ServiceCoordinates {
       }
     }
 
-    console.log("Separando cidades vazias");
+    console.time("Separando cidades vazias");
     const cidadesVazias = data.filter((i) => !i.cidade_atual);
+    console.timeEnd("Separando cidades vazias");
 
     console.time("Atualizando cache local");
     await database("con_coordenadas_veiculos").delete();
@@ -431,6 +439,14 @@ class ServiceCoordinates {
       (((distancia % 500) * 8) / 500) * 60 * 60
     );
   }
+
+  async removerObservacoesEAtualizarDocumentosModificados() {
+    await database.raw(`merge into "con_dados_coordenadas" dados
+    using "con_coordenadas_veiculos" coord
+    on (dados."fk_placa" = coord."placa")
+    when matched then update set dados."ultimo_documento" = coord."documento", dados."observacao" = null, dados."usuario_observacao" = null where ("ultimo_documento" <> "documento" or ("ultimo_documento" is null and "documento" is not null))
+    when not matched then insert ("fk_placa", "ultimo_documento") values (coord."placa", coord."documento")`);
+  }
 }
 
 export default async function () {
@@ -474,6 +490,16 @@ export default async function () {
     const service = new ServiceCoordinates();
     const cidadesVazias = await service.populateLocalTable();
     console.log("tenho que buscar ", cidadesVazias.length, " cidades");
+
+    try {
+      console.time("Atualizando documentos e removendo observacoes");
+      await service.removerObservacoesEAtualizarDocumentosModificados();
+      console.timeEnd("Atualizando documentos e removendo observacoes");
+    } catch (error) {
+      console.error("PUTS");
+      throw "cole";
+    }
+
     console.log(
       "Buscando cidades na api e salvando na base de dados de tecnologia"
     );

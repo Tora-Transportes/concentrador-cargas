@@ -10,6 +10,8 @@ import { SiGooglemaps } from "react-icons/si";
 import useLocalStorage from "../Components/useLocalstorage";
 
 import DateUtils from "../Utils/date";
+import CollapseHint from "../Components/CollapseHint";
+import swal from "sweetalert";
 
 function reducerActiveColumns(state, action) {
 	const index = state.findIndex((i) => i.name === action.name);
@@ -61,6 +63,43 @@ function RotasPendentes() {
 	const [cargas, dispatchCargas] = useReducer(cargasReducer, defaultCargas);
 
 	const [itensPerPage, setItensPerPage] = useState(10);
+
+	async function perguntarEAlterarDadosCoordenada(placa) {
+		if (!placa) {
+			swal("Placa vazia");
+			return;
+		}
+
+		const observacao = await swal(
+			"Alterar observação",
+			"Digite a observação",
+			"warning",
+			{
+				dangerMode: true,
+				buttons: ["Cancelar", true],
+				content: "input",
+			}
+		);
+		if (!observacao) {
+			swal("Operação cancelada");
+			return;
+		}
+
+		await ServiceCoordenadas.update({ observacao, placa });
+		swal("Sucesso", "Observação vinculada", "success");
+		for (let i = 0; i < cargas.results.length; i++) {
+			if (String(cargas.results[i].placa) === placa) {
+				cargas.results[i].observacao = observacao.toUpperCase();
+				break;
+			}
+		}
+		dispatchCargas({
+			type: "SET",
+			payload: {
+				...cargas,
+			},
+		});
+	}
 
 	const columns = [
 		{
@@ -212,6 +251,18 @@ function RotasPendentes() {
 					<option value="C">Carreteiro</option>
 					<option value="F">Frota</option>
 				</Form.Select>
+			),
+		},
+		{
+			name: "observacao",
+			description: "Observação Usuario",
+			selector: (row) => (
+				<CollapseHint
+					text={row.observacao || ""}
+					onClick={() => {
+						perguntarEAlterarDadosCoordenada(row.placa);
+					}}
+				/>
 			),
 		},
 		{

@@ -18,12 +18,14 @@ export class CoordenadaRepository {
       tipo_carreta,
       telefone_motorista,
       nome_motorista,
+      observacao,
     } = filter;
     const currentPage = Number(page ?? 1) < 1 ? 1 : Number(page ?? 1);
     const query = database("con_coordenadas_veiculos").select([
       "con_coordenadas_veiculos.*",
       "distancia_ate_destino",
       "con_veiculos_distancia.data_atualizacao as data_calculo",
+      "con_dados_coordenadas.observacao",
     ]);
     const total = database("con_coordenadas_veiculos")
       .count("placa as total")
@@ -31,6 +33,17 @@ export class CoordenadaRepository {
     query.leftJoin(
       "con_veiculos_distancia",
       "con_veiculos_distancia.fk_placa",
+      "con_coordenadas_veiculos.placa"
+    );
+    query.leftJoin(
+      "con_dados_coordenadas",
+      "con_dados_coordenadas.fk_placa",
+      "con_coordenadas_veiculos.placa"
+    );
+
+    total.leftJoin(
+      "con_dados_coordenadas",
+      "con_dados_coordenadas.fk_placa",
       "con_coordenadas_veiculos.placa"
     );
     for (const [key, value] of Object.entries({
@@ -48,6 +61,7 @@ export class CoordenadaRepository {
       tipo_carreta,
       telefone_motorista,
       nome_motorista,
+      observacao,
     })) {
       if (value !== undefined && key) {
         query.where(key, "like", `%${value.toUpperCase()}%`);
@@ -70,5 +84,16 @@ export class CoordenadaRepository {
       total_pages: totalPages,
       results: await query,
     };
+  }
+
+  async update(placa: string, dados: Record<string, any>) {
+    const dadosParaAtualizar = { ...dados };
+    if (dadosParaAtualizar.observacao) {
+      dadosParaAtualizar.observacao =
+        dadosParaAtualizar?.observacao?.toUpperCase();
+    }
+    return await database("con_dados_coordenadas")
+      .update(dadosParaAtualizar)
+      .where("fk_placa", placa);
   }
 }

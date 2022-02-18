@@ -4,6 +4,7 @@ import xlsx from "xlsx";
 import os from "os";
 import path from "path";
 import fs from "fs";
+import TokenAd from "../models/TokenAd";
 
 class CoordenadasController {
   async search(req: Request, res: Response) {
@@ -53,6 +54,18 @@ class CoordenadasController {
     stream.pipe(res);
     fs.unlinkSync(filename);
     return res;
+  }
+
+  async update(req: Request, res: Response) {
+    const { placa } = req.params;
+    const { observacao } = req.body;
+    const { name } = TokenAd.getClaims(String(req.headers.authorization));
+    await useCases.UseCaseUpdateDadosCoordenada.run(
+      placa,
+      { observacao },
+      name
+    );
+    return res.json({ observacao, usuario_observacao: name, fk_placa: placa });
   }
 }
 
