@@ -97,8 +97,12 @@ class ServiceCoordenadas {
 		});
 	}
 
-	async update({ observacao, placa, responsavel_placa }) {
-		return api.put(`/coordenadas/${placa}`, { observacao, responsavel_placa });
+	async update({ observacao, placa, responsavel_placa, data_janela }) {
+		return api.put(`/coordenadas/${placa}`, {
+			observacao,
+			responsavel_placa,
+			data_janela,
+		});
 	}
 }
 

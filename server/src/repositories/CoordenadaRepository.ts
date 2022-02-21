@@ -34,6 +34,7 @@ export class CoordenadaRepository {
       "distancia_ate_destino",
       "con_veiculos_distancia.data_atualizacao as data_calculo",
       "con_dados_coordenadas.observacao",
+      "con_dados_coordenadas.data_janela",
       "con_dados_coordenadas.responsavel_placa",
       "con_usuarios.nome as responsavel_placa_nome",
       "con_usuarios.email as responsavel_placa_email",

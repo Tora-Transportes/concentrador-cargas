@@ -129,7 +129,6 @@ function RotasPendentes() {
 
 			for (let i = 0; i < cargas.results.length; i++) {
 				if (cargas.results[i].placa === linha.placa) {
-					cargas.results[i];
 					Object.assign(cargas.results[i], resultadoAtualizacao);
 					break;
 				}
@@ -143,6 +142,52 @@ function RotasPendentes() {
 			target.value = linha.responsavel_placa;
 		}
 	}
+
+	async function handleChangeDataJanela(linha, target) {
+		const dataJanela = target.value ? target.value + ":00.000Z" : null;
+		const certeza = await swal(
+			"Alterar Data janela",
+			"Tem certeza ?",
+			"warning",
+			{
+				dangerMode: true,
+				buttons: ["Cancelar", true],
+			}
+		);
+		if (!certeza) {
+			target.value = linha.data_janela
+				? String(linha.data_janela).split(".")[0]
+				: "";
+			swal("Operação cancelada");
+			return;
+		}
+
+		try {
+			const resultadoAtualizacao = (
+				await ServiceCoordenadas.update({
+					data_janela: dataJanela,
+					placa: linha.placa,
+				})
+			).data;
+
+			for (let i = 0; i < cargas.results.length; i++) {
+				if (cargas.results[i].placa === linha.placa) {
+					Object.assign(cargas.results[i], resultadoAtualizacao);
+					break;
+				}
+			}
+			swal("Sucesso", "Data Janela editada", "success");
+			dispatchCargas({
+				type: "SET",
+				payload: { ...cargas },
+			});
+		} catch (error) {
+			target.value = linha.data_janela
+				? String(linha.data_janela).split(".")[0]
+				: "";
+		}
+	}
+
 	const columns = [
 		{
 			name: "placa",
@@ -307,6 +352,17 @@ function RotasPendentes() {
 					<option value="C">Carreteiro</option>
 					<option value="F">Frota</option>
 				</Form.Select>
+			),
+		},
+		{
+			name: "data_janela",
+			description: "Data Janela",
+			selector: (row) => (
+				<Form.Control
+					value={row.data_janela ? String(row.data_janela).split(".")[0] : ""}
+					type="datetime-local"
+					onChange={({ target }) => handleChangeDataJanela(row, target)}
+				/>
 			),
 		},
 		{

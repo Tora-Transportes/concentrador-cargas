@@ -58,11 +58,11 @@ class CoordenadasController {
 
   async update(req: Request, res: Response) {
     const { placa } = req.params;
-    const { observacao, responsavel_placa } = req.body;
+    const { observacao, responsavel_placa, data_janela } = req.body;
     const { oid } = TokenAd.getClaims(String(req.headers.authorization));
     const objeto = await useCases.UseCaseUpdateDadosCoordenada.run(
       placa,
-      { observacao, responsavel_placa },
+      { observacao, responsavel_placa, data_janela },
       oid
     );
     return res.json({

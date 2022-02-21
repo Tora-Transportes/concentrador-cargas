@@ -23,7 +23,7 @@ export class UseCaseUpdateDadosCoordenada {
 
   async run(
     placa: string,
-    { observacao, responsavel_placa }: Record<string, string>,
+    { observacao, responsavel_placa, data_janela }: Record<string, string>,
     oid: string
   ) {
     const usuarioLogado = await this.userRepository.index(oid);
@@ -45,6 +45,12 @@ export class UseCaseUpdateDadosCoordenada {
       : responsavel_placa === undefined
       ? undefined
       : responsavel_placa;
+    const dataJanela = [null, ""].includes(data_janela)
+      ? null
+      : data_janela === undefined
+      ? undefined
+      : data_janela;
+
     if (usuarioResponsavelPelaPlaca !== undefined) {
       if (!usuarioLogado.permissoes.includes(EPermissions.VINCULAR_PLACA)) {
         throw new AppError(
@@ -70,6 +76,7 @@ export class UseCaseUpdateDadosCoordenada {
         ? undefined
         : usuario,
       usuario_observacao: [null, ""].includes(observacao) ? undefined : usuario,
+      data_janela: dataJanela,
     };
 
     await this.coordenadaRepository.update(placa, atualizacao);
