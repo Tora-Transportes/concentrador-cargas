@@ -12,3 +12,7 @@ create table "con_dados_coordenadas" (
     "ultimo_documento" VARCHAR(100) DEFAULT NULL
 );
 
+alter table "con_dados_coordenadas" add (
+    "responsavel_placa" VARCHAR(2048) DEFAULT NULL,
+    "usuario_placa" VARCHAR(2048) DEFAULT NULL
+);

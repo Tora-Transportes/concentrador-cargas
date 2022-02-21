@@ -20,6 +20,8 @@ class ServiceCoordenadas {
 		nome_motorista,
 		telefone_motorista,
 		observacao,
+		responsavel_placa,
+		responsavel_placa_nome,
 	}) {
 		return api.get("/coordenadas", {
 			params: {
@@ -42,6 +44,8 @@ class ServiceCoordenadas {
 				nome_motorista,
 				telefone_motorista,
 				observacao,
+				responsavel_placa,
+				responsavel_placa_nome,
 			},
 		});
 	}
@@ -64,6 +68,8 @@ class ServiceCoordenadas {
 		nome_motorista,
 		telefone_motorista,
 		observacao,
+		responsavel_placa,
+		responsavel_placa_nome,
 	}) {
 		return api.get("/relatorio/coordenadas", {
 			responseType: "arraybuffer",
@@ -85,12 +91,14 @@ class ServiceCoordenadas {
 				nome_motorista,
 				telefone_motorista,
 				observacao,
+				responsavel_placa,
+				responsavel_placa_nome,
 			},
 		});
 	}
 
-	async update({ observacao, placa }) {
-		return api.put(`/coordenadas/${placa}`, { observacao });
+	async update({ observacao, placa, responsavel_placa }) {
+		return api.put(`/coordenadas/${placa}`, { observacao, responsavel_placa });
 	}
 }
 

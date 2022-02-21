@@ -90,8 +90,18 @@ function TabelaCargas({ columns, get_data, values }) {
 		}
 	}, [page, orderby.values, get_data]);
 
+	useEffect(() => {
+		console.log(page);
+	}, [page]);
+
+	const firstDebounceRun = useRef(true);
 	useDebouncedFunction(
 		() => {
+			if (firstDebounceRun.current) {
+				firstDebounceRun.current = false;
+				return;
+			}
+			console.log("DR", firstDebounceRun);
 			if (page === 1) {
 				notify();
 			} else {

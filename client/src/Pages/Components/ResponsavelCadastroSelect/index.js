@@ -26,7 +26,9 @@ function ResponsavelCadastroSelect(props) {
 		<Form.Select {...props}>
 			<option></option>
 			{responsaveis?.map((i) => (
-				<option key={i.oid}>{i.nome}</option>
+				<option key={i.oid} value={props.key_value === "oid" ? i.oid : i.nome}>
+					{i.nome}
+				</option>
 			))}
 		</Form.Select>
 	);

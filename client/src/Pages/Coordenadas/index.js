@@ -5,13 +5,14 @@ import ViewMonitoramento from "./view";
 import ServiceCoordenadas from "src/services/ServiceCoordenadas";
 import factoryReducerCargas from "../../hooks/storageCargas/factoryReducerCargas";
 
-import { Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { SiGooglemaps } from "react-icons/si";
 import useLocalStorage from "../Components/useLocalstorage";
 
 import DateUtils from "../Utils/date";
 import CollapseHint from "../Components/CollapseHint";
 import swal from "sweetalert";
+import ResponsavelCadastroSelect from "../Components/ResponsavelCadastroSelect";
 
 function reducerActiveColumns(state, action) {
 	const index = state.findIndex((i) => i.name === action.name);
@@ -101,6 +102,47 @@ function RotasPendentes() {
 		});
 	}
 
+	async function handleChangeResponsavelPlaca(linha, target) {
+		const responsavel = target.value;
+		const certeza = await swal(
+			"Alterar Responsável placa",
+			"Tem certeza ?",
+			"warning",
+			{
+				dangerMode: true,
+				buttons: ["Cancelar", true],
+			}
+		);
+		if (!certeza) {
+			target.value = linha.responsavel_placa;
+			swal("Operação cancelada");
+			return;
+		}
+
+		try {
+			const resultadoAtualizacao = (
+				await ServiceCoordenadas.update({
+					responsavel_placa: responsavel,
+					placa: linha.placa,
+				})
+			).data;
+
+			for (let i = 0; i < cargas.results.length; i++) {
+				if (cargas.results[i].placa === linha.placa) {
+					cargas.results[i];
+					Object.assign(cargas.results[i], resultadoAtualizacao);
+					break;
+				}
+			}
+			swal("Sucesso", "Usuário vinculado", "success");
+			dispatchCargas({
+				type: "SET",
+				payload: { ...cargas },
+			});
+		} catch (error) {
+			target.value = linha.responsavel_placa;
+		}
+	}
 	const columns = [
 		{
 			name: "placa",
@@ -270,14 +312,24 @@ function RotasPendentes() {
 		{
 			name: "observacao",
 			description: "Observação Usuario",
-			selector: (row) => (
-				<CollapseHint
-					text={row.observacao || ""}
-					onClick={() => {
-						perguntarEAlterarDadosCoordenada(row.placa);
-					}}
-				/>
-			),
+			selector: (row) =>
+				row.observacao ? (
+					<CollapseHint
+						text={row.observacao}
+						onClick={() => {
+							perguntarEAlterarDadosCoordenada(row.placa);
+						}}
+					/>
+				) : (
+					<Button
+						variant="outline-secondary"
+						onClick={() => {
+							perguntarEAlterarDadosCoordenada(row.placa);
+						}}
+					>
+						Adicionar
+					</Button>
+				),
 		},
 		{
 			name: "documento",
@@ -300,6 +352,24 @@ function RotasPendentes() {
 			name: "nome_motorista",
 			description: "Motorista",
 			selector: (row) => row.nome_motorista,
+		},
+		{
+			name: "responsavel_placa_nome",
+			description: "RP Nome",
+			selector: (row) => (
+				<ResponsavelCadastroSelect
+					onChange={({ target }) => handleChangeResponsavelPlaca(row, target)}
+					value={row.responsavel_placa || ""}
+					key_value="oid"
+				/>
+			),
+			Filter: (props) => <ResponsavelCadastroSelect {...props} />,
+		},
+		{
+			name: "responsavel_placa_email",
+			description: "RP Email",
+			selector: (row) => row.responsavel_placa_email,
+			static_column: true,
 		},
 		{
 			name: "mct",
