@@ -79,12 +79,28 @@ class MockRepositoryCarga
   }
 }
 
+class MockUserRepository implements IUserRepository {
+  private permissions: string[] = ["APROVAR_VEICULOS", "VINCULAR_PLACA"];
+  async setPermissions(permissions: string[]) {
+    this.permissions = permissions;
+  }
+  async index(oid: string): Promise<any> {
+    return {
+      oid: oid,
+      nome: "Andre Alves Leocadio",
+      email: "andre.leocadio@tora.com.br",
+      permissoes: [...this.permissions],
+    };
+  }
+}
 describe("Add carga", () => {
   let cargaRepository: MockRepositoryCarga;
   let veiculoRepository: MockVeiculoRepository;
+  let userRepository: MockUserRepository;
   beforeEach(() => {
     cargaRepository = new MockRepositoryCarga();
     veiculoRepository = new MockVeiculoRepository();
+    userRepository = new MockUserRepository();
   });
   it("Não é possível gerar carga sem campos obrigatorios", async () => {
     /**
@@ -99,7 +115,8 @@ describe("Add carga", () => {
     const useCase = new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      veiculoRepository
+      veiculoRepository,
+      userRepository
     );
     try {
       await useCase.run({
@@ -122,7 +139,8 @@ describe("Add carga", () => {
     const useCase = new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      veiculoRepository
+      veiculoRepository,
+      userRepository
     );
     try {
       await useCase.run({
@@ -158,7 +176,8 @@ describe("Add carga", () => {
     const useCase = new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      veiculoRepository
+      veiculoRepository,
+      userRepository
     );
     try {
       await useCase.run({
@@ -191,20 +210,6 @@ describe("Add carga", () => {
   });
 });
 
-class MockUserRepository implements IUserRepository {
-  private permissions: string[] = ["APROVAR_VEICULOS"];
-  async setPermissions(permissions: string[]) {
-    this.permissions = permissions;
-  }
-  async index(oid: string): Promise<any> {
-    return {
-      oid: oid,
-      nome: "Andre Alves Leocadio",
-      email: "andre.leocadio@tora.com.br",
-      permissoes: [...this.permissions],
-    };
-  }
-}
 class MockServiceSit implements IServiceSit {
   async cancelar(cargas: ICarga[]): Promise<any> {
     return;
@@ -245,7 +250,8 @@ describe("Update carga", () => {
     const cargaInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      veiculoRepository
+      veiculoRepository,
+      userRepository
     ).run({
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
@@ -289,7 +295,8 @@ describe("Update carga", () => {
     const cargaInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      veiculoRepository
+      veiculoRepository,
+      userRepository
     ).run({
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
@@ -350,7 +357,8 @@ describe("Update carga", () => {
     const cargaInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      veiculoRepository
+      veiculoRepository,
+      userRepository
     ).run({
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
@@ -416,7 +424,8 @@ describe("Update carga", () => {
     const cargaInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      veiculoRepository
+      veiculoRepository,
+      userRepository
     ).run({
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
@@ -454,7 +463,8 @@ describe("Update carga", () => {
     const loteInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      veiculoRepository
+      veiculoRepository,
+      userRepository
     ).run({
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
@@ -465,6 +475,7 @@ describe("Update carga", () => {
       canal_comunicacao: "manual",
       responsavel_cadastro: "Andre Alves Leocadio",
       placa_veiculo: "BWC8809",
+      codigo_motorista: 12,
     });
 
     await expect(
@@ -492,7 +503,8 @@ describe("Update carga", () => {
     const loteInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      veiculoRepository
+      veiculoRepository,
+      userRepository
     ).run({
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
@@ -536,7 +548,8 @@ describe("Update carga", () => {
     const cargaInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      veiculoRepository
+      veiculoRepository,
+      userRepository
     ).run({
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
@@ -571,7 +584,8 @@ describe("Update carga", () => {
     const cargaInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      veiculoRepository
+      veiculoRepository,
+      userRepository
     ).run({
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
@@ -618,7 +632,8 @@ describe("Update carga", () => {
     const cargaInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      veiculoRepository
+      veiculoRepository,
+      userRepository
     ).run({
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
@@ -710,7 +725,8 @@ describe("Update carga", () => {
     const cargaInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      veiculoRepository
+      veiculoRepository,
+      userRepository
     ).run({
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
@@ -780,7 +796,8 @@ describe("Update carga", () => {
     const cargaInicial = await new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      veiculoRepository
+      veiculoRepository,
+      userRepository
     ).run({
       e_lote: true,
       cliente: "ARCELLOR MITTAL",
@@ -817,7 +834,8 @@ describe("Update carga", () => {
     const useCaseAdd = new UseCaseAddCarga(
       cargaRepository,
       mockNotifyAll,
-      veiculoRepository
+      veiculoRepository,
+      userRepository
     );
     const cargaCadastrada = await useCaseAdd.run({
       e_lote: false,
