@@ -5,6 +5,7 @@ import requireMicrosoftAuthentication, {
 	withAdalLoginApi,
 } from "./MicrosoftAuthentication";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
 
 const LoggedApp = withAdalLoginApi(() => <App />);
 
