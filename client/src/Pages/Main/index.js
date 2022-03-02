@@ -10,11 +10,6 @@ const queueCoresAtuais = [];
 function Main() {
 	const [userData, setUserData] = useState({});
 
-	useEffect(() => {
-		const nome = getClaims().name;
-		setUserData({ nome });
-	}, []);
-
 	const inputCorAtual = useRef(null);
 	const [visibilidadeTeclas, setVisibilidadeTeclas] = useState(false);
 	const [levelGame, setLevelGame] = useState(-1);
@@ -26,6 +21,22 @@ function Main() {
 		"danger",
 		"warning",
 	];
+
+	function salvarTimestampUltimaVezJogada() {
+		const timestamp = new Date().getTime();
+		localStorage.setItem("ultima_vez_jogada", timestamp);
+	}
+
+	function usuarioPodeJogar() {
+		const ultimaVezJogada = localStorage.getItem("ultima_vez_jogada");
+		if (!ultimaVezJogada) {
+			return true;
+		}
+
+		const diferencaEmMinutos =
+			(new Date().getTime() - Number(ultimaVezJogada)) / 60000;
+		return diferencaEmMinutos >= 60;
+	}
 
 	function popularCoresAtuaisGame(quantidade) {
 		console.log("populando com", quantidade, "cores");
@@ -40,6 +51,7 @@ function Main() {
 		setVisibilidadeTeclas(false);
 		const corCorreta = queueCoresAtuais.shift();
 		if (cor !== corCorreta) {
+			salvarTimestampUltimaVezJogada();
 			toast.error(`Você falhou na rodada ${levelGame}`, { autoClose: false });
 			setLevelGame(-1);
 			return;
@@ -93,6 +105,11 @@ function Main() {
 	}
 
 	useEffect(() => {
+		const nome = getClaims().name;
+		setUserData({ nome });
+	}, []);
+
+	useEffect(() => {
 		if (levelGame > -1) {
 			popularCoresAtuaisGame(levelGame + 1);
 			mostrarCores();
@@ -128,52 +145,70 @@ function Main() {
 
 				<hr className="mb-5 mt-5" />
 
-				{levelGame > -1 && (
-					<Row className="mt-5">
-						<Col>
-							<Button variant="" ref={inputCorAtual} className="w-100"></Button>
-						</Col>
-					</Row>
-				)}
+				<Row
+					className={
+						usuarioPodeJogar() ? "invisible" : "text-center h5 text-danger"
+					}
+				>
+					<Col>
+						Você já se exercitou, agora é hora de avaliar seus melhores
+						veículos. Desejamos um excelente dia de trabalho!
+					</Col>
+				</Row>
 
-				{levelGame > -1 && (
-					<Row className="mt-5 text-end">
-						<Col>
-							Level <b>{levelGame}</b>
-						</Col>
-					</Row>
-				)}
-				{levelGame > -1 && (
-					<Row className="mt-5">
-						{coresBotoesGame.map((i) => (
-							<Col key={i}>
+				<Row className={usuarioPodeJogar() ? "" : "invisible"}>
+					{levelGame > -1 && (
+						<Row className="mt-5">
+							<Col>
 								<Button
-									variant={i}
-									className={`w-100 text-${i}`}
-									onClick={() => {
-										chamarProximoPasso(i);
-									}}
-									disabled={!visibilidadeTeclas}
+									variant=""
+									ref={inputCorAtual}
+									className="w-100"
+								></Button>
+							</Col>
+						</Row>
+					)}
+
+					{levelGame > -1 && (
+						<Row className="mt-5 text-end">
+							<Col>
+								Level <b>{levelGame}</b>
+							</Col>
+						</Row>
+					)}
+					{levelGame > -1 && (
+						<Row className="mt-5">
+							{coresBotoesGame.map((i) => (
+								<Col key={i}>
+									<Button
+										variant={i}
+										className={`w-100 text-${i}`}
+										onClick={() => {
+											chamarProximoPasso(i);
+										}}
+										disabled={!visibilidadeTeclas}
+									>
+										_
+									</Button>
+								</Col>
+							))}
+						</Row>
+					)}
+					{levelGame === -1 && (
+						<Row className="mt-5">
+							<Col>
+								<Button
+									variant="outline-success"
+									className="w-100"
+									onClick={iniciarGame}
 								>
-									_
+									Exercite sua memória para garantir uma melhor tomada de
+									decisão durante seu dia de trabalho.
 								</Button>
 							</Col>
-						))}
-					</Row>
-				)}
-				{levelGame === -1 && (
-					<Row className="mt-5">
-						<Col>
-							<Button
-								variant="outline-success"
-								className="w-100"
-								onClick={iniciarGame}
-							>
-								Exercite sua memória
-							</Button>
-						</Col>
-					</Row>
-				)}
+						</Row>
+					)}
+				</Row>
 			</Container>
 		</>
 	);
