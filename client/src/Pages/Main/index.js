@@ -4,6 +4,11 @@ import { ToastContainer, toast } from "react-toastify";
 import NavbarNavigator from "../Components/NavbarNavigator";
 import { getClaims } from "../../MicrosoftAuthentication";
 import "./index.css";
+import { Link } from "react-router-dom";
+
+import { SiGooglemaps } from "react-icons/si";
+import { FaChartBar, FaTruckMoving } from "react-icons/fa";
+import { FaBoxes } from "react-icons/fa";
 
 const queueCoresAtuais = [];
 
@@ -140,6 +145,39 @@ function Main() {
 								de decisão para à escolha de um veículo.
 							</li>
 						</ul>
+					</Col>
+				</Row>
+
+				<hr className="mb-5 mt-5" />
+
+				<Row className="text-center">
+					<Col lg={3}>
+						<Link to="/relatorios" className="text-decoration-none">
+							<FaChartBar size={50} />
+							<br />
+							<b>Relatórios</b>
+						</Link>
+					</Col>
+					<Col lg={3}>
+						<Link to="/veiculos/coordenadas" className="text-decoration-none">
+							<SiGooglemaps size={50} />
+							<br />
+							<b>Coordenadas</b>
+						</Link>
+					</Col>
+					<Col lg={3}>
+						<Link to="/cargas/visualizar" className="text-decoration-none">
+							<FaTruckMoving size={50} />
+							<br />
+							<b>Cargas</b>
+						</Link>
+					</Col>
+					<Col lg={3}>
+						<Link to="/lotes/visualizar" className="text-decoration-none">
+							<FaBoxes size={50} />
+							<br />
+							<b>Lotes</b>
+						</Link>
 					</Col>
 				</Row>
 
