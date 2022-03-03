@@ -239,7 +239,7 @@ class ServiceCoordinates {
           "TV_CAVALO.TV_DSC as tipo_cavalo",
           "TV_CARRETA.TV_DSC as tipo_carreta",
           database.raw(
-            'CGA_MOT_CEL.CGA_TELEFONE || NVL(CGA_MOT_CEL.CGA_TELEFONE, CGA_DSC) "telefone_motorista"'
+            '(CGA_MOT_CEL.CGA_DDD || CGA_MOT_CEL.CGA_TELEFONE) "telefone_motorista"'
           ),
         ])
         .leftJoin("CADASTRO_GERAL", "CADASTRO_GERAL.CG_COD", "VEICULO.CG_MOT")
@@ -669,4 +669,5 @@ export default async function () {
     console.log("------------FIM JOB COORDENADAS------------");
   }
   cron.schedule("0 * * * *", job);
+  job();
 }

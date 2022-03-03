@@ -210,7 +210,7 @@ function RotasPendentes() {
 			selector: (row) => {
 				if (!row.telefone_motorista) return "";
 
-				const telefone = "5531" + row.telefone_motorista?.replace(/\D/g, "");
+				const telefone = "55" + row.telefone_motorista?.replace(/\D/g, "");
 				return (
 					<a
 						className="text-decoration-none"
