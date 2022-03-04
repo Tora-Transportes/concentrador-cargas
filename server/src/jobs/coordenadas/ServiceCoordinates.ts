@@ -669,5 +669,4 @@ export default async function () {
     console.log("------------FIM JOB COORDENADAS------------");
   }
   cron.schedule("0 * * * *", job);
-  job();
 }
