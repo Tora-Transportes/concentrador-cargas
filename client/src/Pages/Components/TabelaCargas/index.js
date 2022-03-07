@@ -5,7 +5,7 @@ import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
 import useDebouncedFunction from "../useDebounceFunction";
 import "./index.css";
 
-function TabelaCargas({ columns, get_data, values }) {
+function TabelaCargas({ columns, get_data, values, responsive = true }) {
 	const [data, setData] = useState([]);
 	const [page, setPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
@@ -113,8 +113,22 @@ function TabelaCargas({ columns, get_data, values }) {
 	);
 
 	return (
-		<Table striped bordered hover responsive className="table-external">
+		<Table
+			striped
+			bordered
+			hover
+			responsive={responsive}
+			className="table-external"
+		>
 			<thead>
+				<tr>
+					<td colSpan={columns.length} style={{ padding: 0, margin: 0 }}>
+						<Pagination id="paginacao_barra" size="sm">
+							<Pagination.Prev onClick={previousPage} />
+							<Pagination.Next onClick={nextPage} />
+						</Pagination>
+					</td>
+				</tr>
 				<tr>
 					{columns.map((i) => (
 						<th key={"col-header-" + i.name} className="text-center">
@@ -185,14 +199,6 @@ function TabelaCargas({ columns, get_data, values }) {
 						<span className="ml-1 mr-1">
 							Página {page} de {totalPages}
 						</span>
-					</td>
-				</tr>
-				<tr>
-					<td colSpan={columns.length}>
-						<Pagination size="lg">
-							<Pagination.Prev onClick={previousPage} />
-							<Pagination.Next onClick={nextPage} />
-						</Pagination>
 					</td>
 				</tr>
 			</tfoot>

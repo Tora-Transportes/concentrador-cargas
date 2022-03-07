@@ -26,6 +26,13 @@ function ViewCoordenadas({
 	itensPerPage,
 	setItensPerPage,
 }) {
+	React.useEffect(() => {
+		const interval = setTimeout(() => {
+			window.scrollTo(0, 10000);
+		}, 1000);
+
+		return () => clearInterval(interval);
+	});
 	return (
 		<>
 			<Container fluid className="text-center mb-5 mt-4">
@@ -60,13 +67,20 @@ function ViewCoordenadas({
 				<Row>
 					<Col>Total de {totalRegisters} registros.</Col>
 				</Row>
-				<Row>
+				<Row
+					style={{
+						width: "100%",
+						maxHeight: "70vh",
+						overflowY: "scroll",
+					}}
+				>
 					<TabelaCargas
 						columns={columns.filter((i) =>
 							displayColumns.find((c) => c.name === i.name)
 						)}
 						get_data={get_data}
 						values={data}
+						responsive={false}
 					/>
 				</Row>
 				<Modal
