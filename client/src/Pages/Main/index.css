@@ -18,3 +18,13 @@
   border: 1px solid #024c01;
   opacity: 0.4;
 }
+
+.icone-tora {
+  color: #024c01;
+  transition: 0.2s;
+}
+
+.icone-tora:hover {
+  color: #048a01;
+  font-size: 15pt;
+}
