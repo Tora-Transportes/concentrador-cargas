@@ -341,6 +341,28 @@ export class UseCaseUpdateCarga {
       );
     }
 
+    if (Number(carga.fk_situacao) === ECargaStatus.APROVADO_PELO_GR) {
+      if (null === carga.fk_filial || undefined === carga.fk_filial) {
+        throw new AppError(
+          'Não é possível atualizar a situacao para "VEICULO APROVADO" sem preencher a filial',
+          400
+        );
+      }
+
+      if (
+        !carga.origem_carga ||
+        !carga.destino_carga ||
+        carga.origem_carga.split("/").length !== 3 ||
+        carga.destino_carga.split("/").length !== 3
+      ) {
+        throw new AppError("Origem e/ou destino em formatos incorretos", 400);
+      }
+
+      if (!carga.cliente || carga.cliente.split(" - ").length !== 3) {
+        throw new AppError("Erro no nome do cliente", 400);
+      }
+    }
+
     if (
       carga.fk_situacao === ECargaStatus.AGUARDANDO_ALOCACAO &&
       carga.placa_veiculo

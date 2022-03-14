@@ -4,17 +4,18 @@
 - Não é possível cadastrar carga sem:
     - e_lote
     - cliente
-    - quantidade
+    - **quantidade**
     - unidade_medida
     - canal_comunicacao
     - responsavel_cadastro
-- Não é possível excluir carga sem a permissao CADASTRAR_PRODUTOS.
+- Não é possível excluir carga sem a permissao DELETAR_CARGAS.
 - Não é possivel registrar uma placa sem motorista vinculado.
 - Carga nao pode ser movimentada apos ser cancelada.
 - Os unicos movimentos que a carga pode fazer apos ser aprovada pelo gr é ser cancelada ou ter o documento emitido.
 - O usuário deve possuir a permissao DELETAR_CARGAS para realizar o cancelamento da carga.
 - O usuário deve possuir a permissao VINCULAR_PLACA para vincular a placa na carga.
 - Não é possível registrar uma carga com quantidade vazia ou negativa.
+- Para deletar uma carga é necessário preencher observacao_exclusao
 
 ## SITUACAO VEICULO
 |ID|DESCRICAO|
