@@ -1,3 +1,7 @@
+import chai, { expect } from "chai";
+import chaiAsPromised from "chai-as-promised";
+chai.use(chaiAsPromised);
+
 import {
   IRepositoryUpdadeProduto,
   UseCaseAddProduto,
@@ -36,7 +40,7 @@ describe("Add produto", () => {
       usuario: jwtToken,
     });
 
-    expect(response.nome).toMatch(expected);
+    expect(response.nome).to.eq(expected);
   });
 
   it("Não é possivel cadastrar produtos com nome repetido", async () => {
@@ -47,12 +51,12 @@ describe("Add produto", () => {
       usuario: jwtToken,
     });
 
-    expect(() =>
+    await expect(
       useCase.run({
         nome: nameToInsert,
         usuario: jwtToken,
       })
-    ).rejects.toThrowError();
+    ).to.be.rejected;
   });
 });
 
@@ -92,7 +96,7 @@ describe("Update produto", () => {
       id: 1,
     });
 
-    expect(produto.nome).toMatch("TESTE");
+    expect(produto.nome).to.eq("TESTE");
   });
 
   it("Não é possível atualizar produto para um nome que ja existe", async () => {
@@ -114,12 +118,12 @@ describe("Update produto", () => {
 
     const useCaseUpdate = new UseCaseUpdateProduto(mockRepo);
 
-    expect(() => {
-      return useCaseUpdate.run({
+    await expect(
+      useCaseUpdate.run({
         usuario: jwtToken,
         nome: "teste2",
         id: 1,
-      });
-    }).rejects.toThrowError();
+      })
+    ).to.be.rejected;
   });
 });

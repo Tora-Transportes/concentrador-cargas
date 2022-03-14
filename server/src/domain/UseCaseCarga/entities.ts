@@ -1,11 +1,9 @@
-import { RotasPendentesRepository } from "../../repositories/RotasPendentesRepository";
 import { IPaginationResult } from "../../repositories/CargaRepository";
 import { IEventSocket } from "../../socketsRoutes";
 import { ICarga } from "../../models/ICargas";
 import ECargaStatus from "../../models/ECargaStatus";
 import { factoryCargaValidator } from "../../validations/CargaValidator";
 import AppError from "../../models/AppError";
-import { ServiceDistanceLocations } from "../../services/ServiceDistanceLocations";
 import TokenAd from "../../models/TokenAd";
 import TextUtils from "../../Utils/text";
 import DateUtils from "../../Utils/date";
@@ -32,7 +30,6 @@ export class UseCaseAddCarga {
   constructor(
     private cargaRepository: IRepositoryAddCarga,
     private notifyAll: (event: IEventSocket) => void,
-    private veiculoRepository: IVeiculoRepository,
     private userRepository: IUserRepository
   ) {}
   async run(
@@ -105,15 +102,13 @@ export class UseCaseAddCarga {
     return carga;
   }
 }
-
 export interface IRepositoryUpdateCarga extends IRepositoryAddCarga {
   update(id: number, carga: ICarga): Promise<ICarga>;
 }
 export class UseCaseAddCargaDerivada {
   constructor(
     private cargaRepository: IRepositoryUpdateCarga,
-    private notifyAll: (event: IEventSocket) => void,
-    private veiculoRepository: IVeiculoRepository
+    private notifyAll: (event: IEventSocket) => void
   ) {}
   async run(cargaDTO: Record<string, any>) {
     cargaDTO.id = await this.cargaRepository.nextId();
@@ -141,7 +136,7 @@ export class UseCaseAddCargaDerivada {
     }
 
     if (carga.placa_veiculo) {
-      if (!(await this.veiculoRepository.hasDriver(carga.placa_veiculo))) {
+      if (!carga.codigo_motorista) {
         throw new AppError(
           "A placa informada não possui nenhum motorista cadastrado",
           400
@@ -189,13 +184,13 @@ export interface IServiceSit {
 export interface IServiceLogTime {
   create(obj: Record<string, any>): Promise<any>;
 }
+
 export class UseCaseUpdateCarga {
   constructor(
     private cargaRepository: IRepositoryUpdateCarga,
     private userRepository: IUserRepository,
     private notifyAll: (event: IEventSocket) => void,
     private serviceSit: IServiceSit,
-    private veiculoRepository: IVeiculoRepository,
     private serviceLogTime: IServiceLogTime
   ) {}
   async run(cargaDTO: Record<string, any>, oid: string) {
@@ -490,76 +485,6 @@ export class UseCaseDeleteCarga {
       details: { id },
     });
     return cargaAtualizada;
-  }
-}
-
-export class UseCaseGetDistanceBetween {
-  async run(search: Record<string, any>) {
-    const clone = { ...search };
-    for (const i in clone) {
-      clone[i] = clone[i]?.toUpperCase();
-    }
-    const { cidade_origem, cidade_destino, estado_origem, estado_destino } =
-      clone;
-    if (estado_origem.length !== 2 || estado_destino.length !== 2) {
-      throw new AppError("Deve ser informado a sigla dos estados", 400);
-    }
-    const service = new ServiceDistanceLocations();
-    const distance = await service.find({
-      cidade_origem,
-      cidade_destino,
-      estado_origem,
-      estado_destino,
-    });
-
-    if (distance === null) {
-      const rotasRepository = new RotasPendentesRepository();
-      const rota = await rotasRepository.findByNames({
-        cidade_origem,
-        cidade_destino,
-        estado_origem,
-        estado_destino,
-      });
-
-      if (!rota) {
-        const id = await rotasRepository.getNextId();
-        await rotasRepository.create({
-          id,
-          cidade_origem,
-          cidade_destino,
-          estado_origem,
-          estado_destino,
-        });
-      }
-      throw new AppError(
-        "Não existe nenhuma rota cadastrada entre esses dois pontos",
-        404
-      );
-    }
-
-    return distance;
-  }
-}
-
-export class UseCaseListPendentRoutes {
-  async run(filter: Record<string, any>) {
-    const rotasRepository = new RotasPendentesRepository();
-    const { page } = filter;
-    const clone = { ...filter };
-    for (const i in clone) {
-      if (clone[i] && isNaN(Number(clone[i]))) {
-        clone[i] = String(clone[i]).toUpperCase();
-      }
-    }
-    let currentPage = 1;
-    if (!isNaN(Number(page))) {
-      currentPage = Number(page);
-    }
-    const rotas = await rotasRepository.search(
-      { ...filter, page: undefined },
-      currentPage
-    );
-    return rotas;
   }
 }
 

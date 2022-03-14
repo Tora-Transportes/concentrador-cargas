@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import {
   UseCaseGetDistanceBetween,
   UseCaseListPendentRoutes,
-} from "../domain/UseCaseCarga/entities";
+} from "../domain/UseCaseRoutes";
 import ServiceAutocomplete from "../services/ServiceAutocomplete";
 import ServiceDetailsVehicle from "../services/ServiceDetailsVehicle";
 

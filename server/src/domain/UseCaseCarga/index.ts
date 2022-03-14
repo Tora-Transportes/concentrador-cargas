@@ -6,8 +6,6 @@ import ServiceMigrarSIT from "../../services/ServiceMigrarSIT";
 import { ClientRepository } from "../../repositories/ClientRepository";
 import ServiceLogTime from "../../services/ServiceLogTime";
 
-import { VeiculoRepository } from "../../repositories/VeiculoRepository";
-
 import {
   UseCaseAddCarga,
   UseCaseAddCargaDerivada,
@@ -19,27 +17,23 @@ import {
 
 const userRepository = new UsuarioRepository();
 const cargaRepository = new CargaRepository();
-const veiculoRepository = new VeiculoRepository();
 const clientRepository = new ClientRepository();
 
 const modules = {
   UseCaseAddCarga: new UseCaseAddCarga(
     cargaRepository,
     notifyAll,
-    veiculoRepository,
     userRepository
   ),
   UseCaseAddCargaDerivada: new UseCaseAddCargaDerivada(
     cargaRepository,
-    notifyAll,
-    veiculoRepository
+    notifyAll
   ),
   UseCaseUpdateCarga: new UseCaseUpdateCarga(
     cargaRepository,
     userRepository,
     notifyAll,
     ServiceMigrarSIT,
-    veiculoRepository,
     ServiceLogTime
   ),
   UseCaseViewCargas: new UseCaseViewCargas(cargaRepository),
