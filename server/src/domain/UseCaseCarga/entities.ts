@@ -88,7 +88,11 @@ export class UseCaseAddCarga {
       });
 
       if (cargaImportada.results.length > 0) {
-        console.log(cargaImportada, "duplicada com ", carga);
+        console.log(
+          "Documento de transporte ",
+          carga.documento_transporte,
+          " duplicado"
+        );
         throw new AppError(
           "A carga já foi cadastrada com o documento de transporte",
           409
