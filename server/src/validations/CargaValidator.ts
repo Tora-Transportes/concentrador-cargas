@@ -6,8 +6,6 @@ export function factoryCargaValidator() {
     observacao_gr: yup.string().notRequired().nullable(),
     placa_veiculo: yup.string().nullable().notRequired(),
     usuario: yup.string().notRequired(),
-    local_entrega: yup.string().nullable(),
-    local_coleta: yup.string().nullable(),
     janela_entrega: yup.string().nullable(),
     janela_coleta: yup.string().nullable(),
     informacoes_restritivas: yup.string().nullable(),
@@ -49,6 +47,7 @@ export function factoryCargaValidator() {
     placa_carreta: yup.string().nullable().notRequired(),
     placa_bitrem: yup.string().nullable().notRequired(),
     codigo_motorista: yup.number().nullable().notRequired(),
+    locais: yup.array().of(yup.string()).notRequired(),
   });
 
   return cargaValidator;

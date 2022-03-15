@@ -22,6 +22,7 @@ import InputPlaca from "../InputPlaca";
 import FilialSelect from "../FilialSelect";
 import ServiceVeiculos from "src/services/ServiceVeiculos";
 import swal from "sweetalert";
+import ListAddItens from "../ListAddItens";
 
 function FormularioCadastroManual({
 	formik,
@@ -351,7 +352,8 @@ function FormularioCadastroManual({
 					</FloatingLabel>
 				</Col>
 			</Row>
-			<Row>
+
+			{/* <Row>
 				<Col sm={12} md={6}>
 					<FloatingLabel label="*Local coleta" className="mb-3">
 						<Form.Control
@@ -376,7 +378,8 @@ function FormularioCadastroManual({
 						/>
 					</FloatingLabel>
 				</Col>
-			</Row>
+			</Row> */}
+
 			{distancia && (
 				<Row>
 					<Col>
@@ -556,6 +559,14 @@ function FormularioCadastroManual({
 						/>
 					</Form.Group>
 				</Col>
+			</Row>
+
+			<Row>
+				<ListAddItens
+					value={formik.values.locais}
+					name="locais"
+					onChange={formik.handleChange}
+				/>
 			</Row>
 
 			<Modal show={veiculo !== null} size="lg" onHide={() => setVeiculo(null)}>

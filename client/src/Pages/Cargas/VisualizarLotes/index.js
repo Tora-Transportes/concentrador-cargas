@@ -176,18 +176,6 @@ function Visualizar() {
 			Filter: (props) => <ResponsavelCadastroSelect {...props} />,
 		},
 		{
-			name: "local_coleta",
-			description: "Local de coleta",
-			selector: (row) => row.local_coleta || "",
-			Filter: () => null,
-		},
-		{
-			name: "local_entrega",
-			description: "Local de entrega",
-			selector: (row) => row.local_entrega || "",
-			Filter: () => null,
-		},
-		{
 			name: "janela_coleta",
 			description: "Janela de coleta",
 			selector: (row) => row.janela_coleta || "",

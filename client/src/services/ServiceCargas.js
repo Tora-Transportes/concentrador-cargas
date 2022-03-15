@@ -18,14 +18,13 @@ class ServiceCargas {
 		informacoes_restritivas,
 		janela_entrega,
 		janela_coleta,
-		local_coleta,
-		local_entrega,
 		placa_veiculo,
 		fk_filial,
 		documento_transporte,
 		codigo_motorista,
 		placa_carreta,
 		placa_bitrem,
+		locais,
 	}) {
 		const carga = {
 			e_lote,
@@ -45,8 +44,6 @@ class ServiceCargas {
 			informacoes_restritivas,
 			janela_entrega,
 			janela_coleta,
-			local_coleta,
-			local_entrega,
 			placa_veiculo,
 			fk_filial,
 			documento_transporte,
@@ -55,6 +52,7 @@ class ServiceCargas {
 
 			placa_carreta,
 			placa_bitrem,
+			locais,
 		};
 
 		return api.post("/cargas", carga);
@@ -79,8 +77,6 @@ class ServiceCargas {
 		informacoes_restritivas,
 		janela_entrega,
 		janela_coleta,
-		local_coleta,
-		local_entrega,
 		fk_lote_pai,
 		placa_veiculo,
 		fk_filial,
@@ -108,8 +104,6 @@ class ServiceCargas {
 			informacoes_restritivas,
 			janela_entrega,
 			janela_coleta,
-			local_coleta,
-			local_entrega,
 			fk_lote_pai,
 			placa_veiculo,
 			fk_filial,
@@ -142,8 +136,6 @@ class ServiceCargas {
 		informacoes_restritivas,
 		janela_entrega,
 		janela_coleta,
-		local_coleta,
-		local_entrega,
 		placa_veiculo,
 		fk_situacao,
 		observacao_gr,
@@ -153,6 +145,7 @@ class ServiceCargas {
 		codigo_motorista,
 		placa_carreta,
 		placa_bitrem,
+		locais,
 	}) {
 		const carga = {
 			e_lote,
@@ -172,8 +165,6 @@ class ServiceCargas {
 			informacoes_restritivas,
 			janela_entrega,
 			janela_coleta,
-			local_coleta,
-			local_entrega,
 			placa_veiculo,
 			fk_situacao,
 			observacao_gr,
@@ -185,6 +176,7 @@ class ServiceCargas {
 
 			placa_carreta,
 			placa_bitrem,
+			locais,
 		};
 
 		return api.put(`/cargas/${id}`, carga);

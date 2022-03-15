@@ -13,8 +13,6 @@ export interface ICarga {
   responsavel_cadastro: string;
   canal_comunicacao: string;
 
-  local_entrega?: string | null;
-  local_coleta?: string | null;
   janela_entrega?: string | null;
   janela_coleta?: string | null;
   informacoes_restritivas?: string | null;
@@ -41,4 +39,6 @@ export interface ICarga {
 
   observacao_cancelamento?: string | null;
   observacao_exclusao?: string | null;
+
+  locais?: undefined | string[];
 }

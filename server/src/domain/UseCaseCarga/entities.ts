@@ -12,6 +12,10 @@ import xlsx from "xlsx";
 import EPermissions from "../../models/EPermissions";
 import { CargaValidationOperation } from "../../validations/CargaValidationOperation";
 
+export interface IParadasRepository {
+  clear(codigoCarga: number): Promise<void>;
+  insert(codigoCarga: number, locais: string[]): Promise<void>;
+}
 export interface IUserRepository {
   index(oid: string): Promise<any>;
 }
@@ -30,7 +34,8 @@ export class UseCaseAddCarga {
   constructor(
     private cargaRepository: IRepositoryAddCarga,
     private notifyAll: (event: IEventSocket) => void,
-    private userRepository: IUserRepository
+    private userRepository: IUserRepository,
+    private locaisRepository: IParadasRepository
   ) {}
   async run(
     cargaDTO: Record<string, any>,
@@ -43,6 +48,14 @@ export class UseCaseAddCarga {
       abortEarly: false,
       stripUnknown: true,
     });
+
+    if (Array.isArray(carga.locais)) {
+      const locais = carga.locais;
+
+      await this.locaisRepository.clear(carga.id);
+      await this.locaisRepository.insert(carga.id, locais);
+    }
+    carga.locais = undefined;
 
     const currentDate = DateUtils.getCurrentDate();
     carga.data_atualizacao = currentDate;
@@ -100,7 +113,8 @@ export interface IRepositoryUpdateCarga extends IRepositoryAddCarga {
 export class UseCaseAddCargaDerivada {
   constructor(
     private cargaRepository: IRepositoryUpdateCarga,
-    private notifyAll: (event: IEventSocket) => void
+    private notifyAll: (event: IEventSocket) => void,
+    private locaisRepository: IParadasRepository
   ) {}
   async run(cargaDTO: Record<string, any>) {
     cargaDTO.id = await this.cargaRepository.nextId();
@@ -123,6 +137,7 @@ export class UseCaseAddCargaDerivada {
     carga.unidade_medida = lotePai.unidade_medida;
 
     const cargasCadastrada = await this.cargaRepository.index(carga.id);
+    console.log(cargasCadastrada);
     if (cargasCadastrada) {
       throw new AppError("Uma carga com esse Código já foi cadastrada", 400);
     }
@@ -140,7 +155,17 @@ export class UseCaseAddCargaDerivada {
     })) as ICarga;
 
     const operation = new CargaValidationOperation({ has: () => true });
-    await this.cargaRepository.create(operation.validate(null, carga));
+    const cargaOficial = operation.validate(null, carga);
+    await this.cargaRepository.create(cargaOficial);
+
+    if (Array.isArray(novoPai.locais)) {
+      const locais = novoPai.locais;
+
+      await this.locaisRepository.clear(cargaOficial.id);
+      await this.locaisRepository.insert(cargaOficial.id, locais);
+    }
+    novoPai.locais = undefined;
+
     await this.cargaRepository.update(lotePai.id, {
       ...novoPai,
       quantidade_atual: quantidadeRestante,
@@ -165,14 +190,14 @@ export interface IServiceSit {
 export interface IServiceLogTime {
   create(obj: Record<string, any>): Promise<any>;
 }
-
 export class UseCaseUpdateCarga {
   constructor(
     private cargaRepository: IRepositoryUpdateCarga,
     private userRepository: IUserRepository,
     private notifyAll: (event: IEventSocket) => void,
     private serviceSit: IServiceSit,
-    private serviceLogTime: IServiceLogTime
+    private serviceLogTime: IServiceLogTime,
+    private locaisRepository: IParadasRepository
   ) {}
   async run(cargaDTO: Record<string, any>, oid: string) {
     const validator = factoryCargaValidator();
@@ -180,6 +205,14 @@ export class UseCaseUpdateCarga {
       abortEarly: false,
       stripUnknown: true,
     });
+
+    if (Array.isArray(carga.locais)) {
+      const locais = carga.locais;
+
+      await this.locaisRepository.clear(carga.id);
+      await this.locaisRepository.insert(carga.id, locais);
+    }
+    carga.locais = undefined;
 
     const currentDate = DateUtils.getCurrentDate();
     carga.data_atualizacao = currentDate;
@@ -408,7 +441,6 @@ export class UseCaseImportCarga {
           e_lote: true,
           cliente: tokensCnpj.get(row.cnpj),
           observacao: row.observacao,
-          local_entrega: row.destinatario,
           quantidade: Number(row.quantidade),
           quantidade_atual: Number(row.quantidade),
           origem_carga: normalizeLocation(row.origem),

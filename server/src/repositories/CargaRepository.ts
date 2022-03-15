@@ -17,7 +17,7 @@ export class CargaRepository {
   }
 
   async index(id: number): Promise<ICarga | undefined> {
-    return await database("con_cargas")
+    const carga = await database("con_cargas")
       .select([
         "con_cargas.*",
         "con_situacoes_cargas.descricao as situacao.descricao",
@@ -38,6 +38,13 @@ export class CargaRepository {
         "con_cargas.codigo_motorista"
       )
       .leftJoin("FILIAL", "FILIAL.FIL_COD", "con_cargas.fk_filial");
+    if (!carga) return;
+    const locais = (
+      await database("con_locais_carga")
+        .where("fk_carga", id)
+        .select(["descricao"])
+    ).map((i) => i.descricao);
+    return { ...carga, locais };
   }
 
   async create(carga: ICarga): Promise<ICarga> {
