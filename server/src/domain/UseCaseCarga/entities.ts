@@ -9,8 +9,8 @@ import TextUtils from "../../Utils/text";
 import DateUtils from "../../Utils/date";
 
 import xlsx from "xlsx";
-import { IVeiculoRepository } from "../../repositories/VeiculoRepository";
 import EPermissions from "../../models/EPermissions";
+import { CargaValidationOperation } from "../../validations/CargaValidationOperation";
 
 export interface IUserRepository {
   index(oid: string): Promise<any>;
@@ -49,6 +49,12 @@ export class UseCaseAddCarga {
     carga.data_cadastro = currentDate;
     carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
 
+    const operation = new CargaValidationOperation({
+      has: (permission: string) => {
+        return true;
+      },
+    });
+
     if (carga.placa_veiculo) {
       // Caso o oid nao esteja definido o bot de scraping é quem está enviando as cargas
       if (oid) {
@@ -60,18 +66,6 @@ export class UseCaseAddCarga {
           );
         }
       }
-      if (!carga.codigo_motorista) {
-        throw new AppError(
-          "A placa informada não possui nenhum motorista cadastrado",
-          400
-        );
-      }
-    }
-
-    const cargasCadastrada = await this.cargaRepository.index(carga.id);
-
-    if (cargasCadastrada) {
-      throw new AppError("Uma carga com esse Código já foi cadastrada", 400);
     }
 
     // Esse bloco funciona para a importacao de cargas
@@ -90,14 +84,12 @@ export class UseCaseAddCarga {
     }
     //////////////////////////////////////////////////
 
-    carga.fk_situacao = ECargaStatus.AGUARDANDO_ALOCACAO;
-    if (Number(carga.placa_veiculo?.length) > 5) {
-      carga.fk_situacao = ECargaStatus.AGUARDANDO_GR;
-    }
-    await this.cargaRepository.create(carga);
+    const cargaOficial = operation.validate(null, carga);
+
+    await this.cargaRepository.create(cargaOficial);
     this.notifyAll({
       name: "@carga-create",
-      details: await this.cargaRepository.index(carga.id),
+      details: await this.cargaRepository.index(cargaOficial.id),
     });
     return carga;
   }
@@ -135,15 +127,6 @@ export class UseCaseAddCargaDerivada {
       throw new AppError("Uma carga com esse Código já foi cadastrada", 400);
     }
 
-    if (carga.placa_veiculo) {
-      if (!carga.codigo_motorista) {
-        throw new AppError(
-          "A placa informada não possui nenhum motorista cadastrado",
-          400
-        );
-      }
-    }
-
     const quantidadeRestante =
       Number(lotePai.quantidade_atual) - Number(carga.quantidade);
     if (quantidadeRestante < 0) {
@@ -155,11 +138,9 @@ export class UseCaseAddCargaDerivada {
     const novoPai = (await validator.validate(lotePai, {
       stripUnknown: true,
     })) as ICarga;
-    carga.fk_situacao = ECargaStatus.AGUARDANDO_ALOCACAO;
-    if (Number(carga.placa_veiculo?.length) > 5) {
-      carga.fk_situacao = ECargaStatus.AGUARDANDO_GR;
-    }
-    await this.cargaRepository.create(carga);
+
+    const operation = new CargaValidationOperation({ has: () => true });
+    await this.cargaRepository.create(operation.validate(null, carga));
     await this.cargaRepository.update(lotePai.id, {
       ...novoPai,
       quantidade_atual: quantidadeRestante,
@@ -205,6 +186,13 @@ export class UseCaseUpdateCarga {
     carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
 
     const cargaCadastrada = await this.cargaRepository.index(carga.id);
+    const user = await this.userRepository.index(oid);
+    const operation = new CargaValidationOperation({
+      has: (permission: string) => {
+        return user.permissoes.includes(permission);
+      },
+    });
+
     if (!cargaCadastrada) {
       throw new AppError(
         `Nenhuma carga foi encontrada com o código ${carga.id}`,
@@ -216,174 +204,6 @@ export class UseCaseUpdateCarga {
         403
       );
     }
-    if (cargaCadastrada.fk_situacao === ECargaStatus.CARGA_CANCELADA) {
-      throw new AppError(
-        "A carga não pode ser movimentada após ser cancelada",
-        400
-      );
-    }
-
-    if (cargaCadastrada.fk_situacao === ECargaStatus.DOCUMENTO_EMITIDO) {
-      throw new AppError(
-        "A carga não pode ser movimentada após ter seu documento emitido",
-        400
-      );
-    }
-
-    if (
-      cargaCadastrada.fk_situacao === ECargaStatus.APROVADO_PELO_GR &&
-      ![ECargaStatus.CARGA_CANCELADA, ECargaStatus.DOCUMENTO_EMITIDO].includes(
-        Number(carga.fk_situacao)
-      )
-    ) {
-      throw new AppError(
-        "Após a carga ser aprovada pelo gr ela só pode ser cancelada ou ter seu documento emitido e não editada",
-        400
-      );
-    }
-
-    const user = await this.userRepository.index(oid);
-
-    if (carga.fk_situacao === ECargaStatus.DOCUMENTO_EMITIDO) {
-      if (user?.permissoes.includes("APROVAR_VIAGEM")) {
-        Object.assign(carga, cargaCadastrada);
-        carga.fk_situacao = ECargaStatus.DOCUMENTO_EMITIDO;
-      } else {
-        throw new AppError(
-          "O usuário não possui a permissão 'APROVAR_VIAGEM'",
-          403
-        );
-      }
-    }
-
-    if (carga.fk_situacao === ECargaStatus.CARGA_CANCELADA) {
-      if (!user?.permissoes.includes("DELETAR_CARGAS")) {
-        throw new AppError(
-          "O usuário informado não possui a permissão 'DELETAR_CARGAS'",
-          403
-        );
-      }
-      const observacaoCancelamento = carga.observacao_cancelamento;
-      Object.assign(carga, cargaCadastrada);
-      carga.observacao_cancelamento = observacaoCancelamento;
-      carga.fk_situacao = ECargaStatus.CARGA_CANCELADA;
-      if (!carga.observacao_cancelamento) {
-        throw new AppError(
-          "Ao cancelar uma carga a observação deve ser preenchida",
-          400
-        );
-      }
-    } else {
-      const TeveMudancaPlaca = (placaAntiga: any, placaNova: any) => {
-        return placaAntiga ? placaNova !== placaAntiga : !!placaNova;
-      };
-      if (
-        !user?.permissoes?.includes(EPermissions.VINCULAR_PLACA) &&
-        TeveMudancaPlaca(cargaCadastrada.placa_veiculo, carga.placa_veiculo)
-      ) {
-        throw new AppError(
-          "O usuário atual não possui a permissão 'VINCULAR_PLACA'",
-          403
-        );
-      }
-      if (carga.placa_veiculo) {
-        if (!carga.codigo_motorista) {
-          throw new AppError(
-            "A placa informada não possui nenhum motorista cadastrado",
-            400
-          );
-        }
-      }
-    }
-
-    if (carga.e_lote === false && cargaCadastrada.e_lote === true) {
-      throw new AppError(
-        "Não é possível transformar um lote em uma carga",
-        400
-      );
-    }
-
-    // O usuario deve ter permissao para aprovar o status da carga para 3 - Aprovado pelo GR ou 4 - veiculo reprovado
-    if (
-      [ECargaStatus.APROVADO_PELO_GR, ECargaStatus.VEICULO_REPROVADO].includes(
-        Number(carga.fk_situacao)
-      ) &&
-      Number(cargaCadastrada.fk_situacao) === ECargaStatus.AGUARDANDO_GR
-    ) {
-      if (!user?.permissoes.includes("APROVAR_VEICULOS")) {
-        throw new AppError(
-          "O usuário informado não possui a permissão 'APROVAR_VEICULOS'",
-          403
-        );
-      }
-    }
-
-    // O status passa a ser "Veículo atribuido" caso a placa seja definida e a situação seja 1 ou 4
-    if (
-      [
-        ECargaStatus.AGUARDANDO_ALOCACAO,
-        ECargaStatus.VEICULO_REPROVADO,
-      ].includes(Number(cargaCadastrada.fk_situacao)) &&
-      carga.placa_veiculo
-    ) {
-      carga.fk_situacao = ECargaStatus.AGUARDANDO_GR;
-    }
-
-    if (
-      [ECargaStatus.APROVADO_PELO_GR, ECargaStatus.VEICULO_REPROVADO].includes(
-        Number(carga.fk_situacao)
-      ) &&
-      !carga.observacao_gr
-    ) {
-      throw new AppError(
-        "Observação deve ser especificada ao aprovar ou reprovar veículos",
-        400
-      );
-    }
-
-    if (Number(carga.fk_situacao) === ECargaStatus.APROVADO_PELO_GR) {
-      if (null === carga.fk_filial || undefined === carga.fk_filial) {
-        throw new AppError(
-          'Não é possível atualizar a situacao para "VEICULO APROVADO" sem preencher a filial',
-          400
-        );
-      }
-
-      if (
-        !carga.origem_carga ||
-        !carga.destino_carga ||
-        carga.origem_carga.split("/").length !== 3 ||
-        carga.destino_carga.split("/").length !== 3
-      ) {
-        throw new AppError("Origem e/ou destino em formatos incorretos", 400);
-      }
-
-      if (!carga.cliente || carga.cliente.split(" - ").length !== 3) {
-        throw new AppError("Erro no nome do cliente", 400);
-      }
-    }
-
-    if (
-      carga.fk_situacao === ECargaStatus.AGUARDANDO_ALOCACAO &&
-      carga.placa_veiculo
-    ) {
-      carga.fk_situacao = cargaCadastrada.fk_situacao;
-    }
-
-    // Caso o veículo não possua uma placa cadastrada sua situação vai voltar para "aguardando alocação" ou "veiculo reprovado"
-    if (
-      !carga.placa_veiculo &&
-      carga.fk_situacao !== ECargaStatus.CARGA_CANCELADA
-    ) {
-      carga.fk_situacao = ECargaStatus.AGUARDANDO_ALOCACAO;
-    }
-
-    // Os lotes nao podem ter sua unidade de medida e quantidade alterados
-    if (cargaCadastrada.e_lote) {
-      carga.unidade_medida = cargaCadastrada.unidade_medida;
-      carga.quantidade = cargaCadastrada.quantidade;
-    }
-
     // ao atualizar o lote nao se deve resetar a contagem da quantidade_atual
     if (cargaCadastrada.e_lote) {
       carga.quantidade_atual =
@@ -396,10 +216,12 @@ export class UseCaseUpdateCarga {
       ? carga.placa_veiculo.trim().toUpperCase()
       : carga.placa_veiculo;
 
+    const cargaOperation = operation.validate(cargaCadastrada, carga);
+
     const { janela_entrega, janela_coleta, e_lote } = carga;
     const cargaOficial = validator.cast(
       {
-        ...carga,
+        ...cargaOperation,
         documento_transporte: cargaCadastrada.documento_transporte,
         janela_entrega: e_lote ? null : janela_entrega,
         janela_coleta: e_lote ? null : janela_coleta,

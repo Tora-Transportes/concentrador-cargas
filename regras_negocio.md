@@ -60,3 +60,8 @@
 - Não é possível atualizar a situacao para "VEICULO APROVADO" sem preencher a filial.
 - Não é possível atualizar a situacao da carga para "VEICULO_APROVADO" se a origem e/ou destino da carga nao estiver no formato "PAIS/UF/CIDADE".
 - Não é possível atualizar a situacao da carga para "VEICULO_APROVADO" se o cliente nao estiver no formato correto "NOME - CNPJ - UF/CIDADE".
+
+
+- Não é possível atualizar a situacao para "DOCUMENTO EMITIDO" sem a permissao "APROVAR_VIAGEM".
+- Não é possível reaplicar a placa sem a permissão "VINCULAR_PLACA"
+- Ao salvar uma carga que esteja no status "REPROVADO PELA GR" o status deve ser atualizado para "AGUARDANDO APROVACAO DA GR"
