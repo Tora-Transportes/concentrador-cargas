@@ -419,6 +419,17 @@ describe("Gerenciamento da carga", () => {
     ).to.throws(
       "O usuário deve possuir a permissao VINCULAR_PLACA para vincular a placa na carga."
     );
+
+    expect(
+      validator.validate(
+        { ...cargaValida, placa_veiculo: null },
+        {
+          ...cargaValida,
+          placa_veiculo: "",
+        }
+      ).placa_veiculo
+    ).to.be.eq("");
+
     mockPermission.permissions = ["VINCULAR_PLACA"];
     expect(
       validator.validate(cargaValida, {
