@@ -28,6 +28,7 @@ class CargaController {
             ...i,
           });
         } catch (error) {
+          console.log(error);
           return null;
         }
       })
