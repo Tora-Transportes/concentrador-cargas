@@ -15,8 +15,15 @@ import RotasController from "./controllers/RotasController";
 import SituacoesCargasController from "./controllers/SituacoesCargasController";
 import CoordenadasController from "./controllers/CoordenadaController";
 import RelatorioController from "./controllers/RelatorioController";
+import CredenciaisController from "./controllers/CredenciaisController";
 
 const routes = Router();
+
+routes.get("/credenciais", CredenciaisController.get);
+routes.post("/credenciais", CredenciaisController.post);
+routes.put("/credenciais/:portal/:user", CredenciaisController.put);
+routes.get("/credenciais/:portal/:user", CredenciaisController.index);
+routes.delete("/credenciais/:portal/:user", CredenciaisController.delete);
 
 routes.post("/portal/cargas", CargaController.createByImport);
 

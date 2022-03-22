@@ -15,8 +15,8 @@ import RotasPendentes from "./Pages/Rotas/Pendentes";
 import SituacaoVeiculos from "./Pages/Veiculos/Pendentes";
 import CoordenadasVeiculos from "./Pages/Coordenadas";
 import RelatoriosMain from "./Pages/Relatorios/Totalizadores";
+import Credenciais from "./Pages/Credenciais";
 
-import ListAddItens from "./Pages/Components/ListAddItens";
 export default function AllRoutes() {
 	return (
 		<BrowserRouter>
@@ -50,16 +50,7 @@ export default function AllRoutes() {
 					component={CoordenadasVeiculos}
 				/>
 				<Route path="/relatorios" exact component={RelatoriosMain} />
-				<Route
-					path="/tests"
-					exact
-					component={() => (
-						<ListAddItens
-							value={["mano", "cole", "321"]}
-							onChange={(e) => alert(JSON.stringify(e.target.value, null, 2))}
-						/>
-					)}
-				/>
+				<Route path="/tests" exact component={Credenciais} />
 			</Switch>
 		</BrowserRouter>
 	);
