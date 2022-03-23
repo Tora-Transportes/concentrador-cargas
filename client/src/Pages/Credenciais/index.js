@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Table, Form, FloatingLabel, Container, Button } from "react-bootstrap";
+import {
+	Form,
+	FloatingLabel,
+	Container,
+	Button,
+	Row,
+	Col,
+	Card,
+} from "react-bootstrap";
 import NavbarNavigator from "../Components/NavbarNavigator";
 import ServiceCredenciais from "../../services/ServiceCredenciais";
 import { BiBlock, BiCheck } from "react-icons/bi";
@@ -144,42 +152,47 @@ export default function Credenciais() {
 	return (
 		<>
 			<NavbarNavigator />
-			<Table className="text-center" striped bordered hover>
-				<thead>
-					<tr>
-						<th>Portal</th>
-						<th>Usuário</th>
-						<th>Login bem sucedido</th>
-						<th>Situação</th>
-						<th>Ações</th>
-					</tr>
-				</thead>
-				<tbody>
-					{data.map((i) => (
-						<tr key={i.portal + i.user}>
-							<td>{i.portal}</td>
-							<td>{i.user}</td>
-							<td>{i.successfulAttempts}</td>
-							<td>
-								{i.errored ? (
-									<BiBlock size="25" className="text-danger" />
-								) : (
-									<BiCheck size="25" className="text-success" />
-								)}
-							</td>
-							<td className="d-flex justify-content-around">
-								<a onClick={(event) => deletarCredencial(i, event)} href="#">
-									<BsFillTrashFill />
-								</a>
-								<a onClick={(event) => mudarSenha(i, event)} href="#">
-									<BsPencilSquare />
-								</a>
-							</td>
-						</tr>
-					))}
-				</tbody>
-			</Table>
 			<Container>
+				<Row>
+					{data.map((i) => (
+						<Col key={i.portal + i.user}>
+							<Card
+								className="text-center mt-3 mb-3 mx-auto"
+								border="primary"
+								style={{ width: "15rem" }}
+							>
+								<Card.Header>{i.portal}</Card.Header>
+								<Card.Body>
+									<Card.Title>{i.user}</Card.Title>
+									{i.errored ? (
+										<BiBlock size="25" className="text-danger" />
+									) : (
+										<BiCheck size="25" className="text-success" />
+									)}
+									<Card.Text>
+										{i.successfulAttempts} Logins realizados
+									</Card.Text>
+									<div className="d-flex justify-content-around">
+										<a
+											onClick={(event) => deletarCredencial(i, event)}
+											href="#"
+										>
+											<BsFillTrashFill />
+										</a>
+										<a onClick={(event) => mudarSenha(i, event)} href="#">
+											<BsPencilSquare />
+										</a>
+									</div>
+								</Card.Body>
+							</Card>
+							{/* <td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td ></td> */}
+						</Col>
+					))}
+				</Row>
 				<Form onSubmit={formik.handleSubmit}>
 					<FloatingLabel controlId="portal" label="Portal" className="mb-3">
 						<Form.Control
