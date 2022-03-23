@@ -97,7 +97,9 @@ function RelatoriosMain() {
 	}
 
 	useEffect(() => {
-		io.onAny(reload);
+		io.on("@cargas-create", reload);
+		io.on("@cargas-update", reload);
+		io.on("@cargas-delete", reload);
 		return () => {
 			io.offAny(reload);
 		};
