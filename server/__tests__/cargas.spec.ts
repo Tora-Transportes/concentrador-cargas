@@ -399,7 +399,7 @@ describe("Gerenciamento da carga", () => {
   );
 
   // PERMISSOES
-  it("O usuário deve possuir a permissao VINCULAR_PLACA para vincular a placa na carga.", () => {
+  it("O usuário não deve possuir a permissao VINCULAR_PLACA para vincular a placa na carga.", () => {
     const { validator, mockPermission } = makeSut();
     mockPermission.permissions = [];
     const cargaValida = {
@@ -416,9 +416,7 @@ describe("Gerenciamento da carga", () => {
         codigo_motorista: 12,
         observacao_cancelamento: "cancelada",
       })
-    ).to.throws(
-      "O usuário deve possuir a permissao VINCULAR_PLACA para vincular a placa na carga."
-    );
+    ).to.not.throws();
 
     expect(
       validator.validate(

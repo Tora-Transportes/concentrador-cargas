@@ -22,17 +22,6 @@ export class CargaValidationOperation {
     }
 
     if (cargaAnterior) {
-      const possuiPlacaCargaAnterior = !!cargaAnterior.placa_veiculo;
-      const possuiPlacaCargaAtual = !!cargaAtual.placa_veiculo;
-      if (cargaAnterior.placa_veiculo !== cargaAtual.placa_veiculo) {
-        if (!(!possuiPlacaCargaAnterior && !possuiPlacaCargaAtual)) {
-          if (!this.hasPermission.has("VINCULAR_PLACA")) {
-            throw new Error(
-              "O usuário deve possuir a permissao VINCULAR_PLACA para vincular a placa na carga."
-            );
-          }
-        }
-      }
       if (cargaAtual.ativo === 0 && cargaAnterior.ativo === 1) {
         if (!this.hasPermission.has("DELETAR_CARGAS")) {
           throw new Error(
