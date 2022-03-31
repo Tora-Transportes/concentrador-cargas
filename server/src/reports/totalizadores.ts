@@ -50,7 +50,7 @@ export class ReportTotalizadores {
   }: IFilter) {
     const query = database(
       database.raw(
-        `(select 'portal' "canal_comunicacao" from dual union select 'manual' from dual) "con_vw_canal"`
+        `(select 'portal' "canal_comunicacao" from dual union select 'manual' from dual union select 'email' from dual) "con_vw_canal"`
       )
     )
       .select(["con_vw_canal.canal_comunicacao"])
@@ -165,6 +165,7 @@ export class ReportTotalizadores {
       cargas_desativadas: 0,
       cadastro_portal: 0,
       cadastro_manual: 0,
+      cadastro_email: 0,
       lotes_ativos: 0,
       lotes_desativados: 0,
       geral: [],
@@ -192,6 +193,9 @@ export class ReportTotalizadores {
     for (const i of canais) {
       if (i.canal_comunicacao === "portal") {
         output.cadastro_portal = Number(i.total);
+      }
+      if (i.canal_comunicacao === "email") {
+        output.cadastro_email = Number(i.total);
       }
       if (i.canal_comunicacao === "manual") {
         output.cadastro_manual = Number(i.total);

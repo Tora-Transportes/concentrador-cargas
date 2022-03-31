@@ -36,7 +36,7 @@ export function factoryCargaValidator() {
       .string()
       .required("O local da criação da carga deve ser preenchida")
       .matches(
-        new RegExp("^(manual|portal)$", "g"),
+        new RegExp("^(manual|portal|email)$", "g"),
         "O local de criação da carga informado é inválido, deve ser algum desses [manual ou portal]"
       ),
     fk_lote_pai: yup.string().nullable(),

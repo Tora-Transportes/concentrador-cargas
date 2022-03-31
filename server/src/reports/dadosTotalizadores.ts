@@ -38,6 +38,13 @@ export class ReportDetalhesTotalizadores {
       return database("con_cargas").where("e_lote", 0);
     }
 
+    if (key === "email") {
+      return database("con_cargas")
+        .where("e_lote", 0)
+        .where("ativo", 1)
+        .where("canal_comunicacao", "email");
+    }
+
     throw new Error("Invalid key");
   }
 

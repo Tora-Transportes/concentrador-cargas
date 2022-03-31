@@ -13,6 +13,7 @@ class RelatorioController {
         "cargas_desativadas": 0,
         "cadastro_portal": 0,
         "cadastro_manual": 0,
+        "cadastro_email": 0,
         "geral" : [
             {"total": 0, "fk_situacao": 1, "descricao": "Teste 1"},
             {"total": 0, "fk_situacao": 2, "descricao": "Teste 2"}
@@ -34,8 +35,13 @@ class RelatorioController {
     await report.generate(req.params.key, req.query, filename);
     const stream = fs.createReadStream(filename);
     stream.pipe(res);
-    fs.unlinkSync(filename);
-    return res;
+
+    return new Promise((resolve) => {
+      res.on("close", () => {
+        fs.unlinkSync(filename);
+        resolve(res);
+      });
+    });
   }
 
   async gerarResumoDiario(req: Request, res: Response) {

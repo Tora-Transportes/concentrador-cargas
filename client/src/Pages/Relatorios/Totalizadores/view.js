@@ -283,7 +283,8 @@ function ViewRotasPendentes({
 											<span className="text-danger">
 												{percentage(
 													totalizadores.cadastro_manual +
-														totalizadores.cadastro_portal,
+														totalizadores.cadastro_portal +
+														totalizadores.cadastro_email,
 													totalizadores.cadastro_portal
 												)}
 												%
@@ -304,6 +305,37 @@ function ViewRotasPendentes({
 
 									<tr>
 										<td>
+											<FaRobot size={30} className="text-success" />
+										</td>
+										<td>
+											Cargas extraidas do <b>EMAIL</b>
+										</td>
+										<td>
+											<span className="text-danger">
+												{percentage(
+													totalizadores.cadastro_manual +
+														totalizadores.cadastro_portal +
+														totalizadores.cadastro_email,
+													totalizadores.cadastro_email
+												)}
+												%
+											</span>
+										</td>
+										<td>
+											<b>{totalizadores.cadastro_email}</b>
+										</td>
+										<td>
+											<Button
+												variant=""
+												onClick={() => handleExportExcel("email")}
+											>
+												<BsDownload />
+											</Button>
+										</td>
+									</tr>
+
+									<tr>
+										<td>
 											<FaHandsWash size={30} className="text-success" />
 										</td>
 										<td>
@@ -313,7 +345,8 @@ function ViewRotasPendentes({
 											<span className="text-danger">
 												{percentage(
 													totalizadores.cadastro_manual +
-														totalizadores.cadastro_portal,
+														totalizadores.cadastro_portal +
+														totalizadores.cadastro_email,
 													totalizadores.cadastro_manual
 												)}
 												%
