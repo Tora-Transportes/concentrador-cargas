@@ -50,7 +50,7 @@ export default function AllRoutes() {
 					component={CoordenadasVeiculos}
 				/>
 				<Route path="/relatorios" exact component={RelatoriosMain} />
-				<Route path="/tests" exact component={Credenciais} />
+				<Route path="/credenciais" exact component={Credenciais} />
 			</Switch>
 		</BrowserRouter>
 	);
