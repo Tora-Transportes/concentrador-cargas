@@ -22,6 +22,10 @@ class ServiceRelatorios {
 			params: { data_inicio, data_final, fk_filial },
 		});
 	}
+
+	async producaoVeiculo(placa) {
+		return api.get(`/relatorio/producao_veiculo/${placa}`);
+	}
 }
 
 export default new ServiceRelatorios();

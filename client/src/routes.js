@@ -16,6 +16,7 @@ import SituacaoVeiculos from "./Pages/Veiculos/Pendentes";
 import CoordenadasVeiculos from "./Pages/Coordenadas";
 import RelatoriosMain from "./Pages/Relatorios/Totalizadores";
 import Credenciais from "./Pages/Credenciais";
+import CalendarioProducao from "./Pages/CalendarioProducao";
 
 export default function AllRoutes() {
 	return (
@@ -51,6 +52,7 @@ export default function AllRoutes() {
 				/>
 				<Route path="/relatorios" exact component={RelatoriosMain} />
 				<Route path="/credenciais" exact component={Credenciais} />
+				<Route path="/producao" exact component={CalendarioProducao} />
 			</Switch>
 		</BrowserRouter>
 	);
