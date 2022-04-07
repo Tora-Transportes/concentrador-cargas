@@ -1,37 +1,106 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import {
+	Container,
+	Row,
+	Col,
+	Form,
+	Table,
+	Accordion,
+	Button,
+	Modal,
+} from "react-bootstrap";
+import { BsGear } from "react-icons/bs";
 import NavbarNavigator from "../Components/NavbarNavigator";
-import Calendar from "react-awesome-calendar";
 import swal from "sweetalert";
 import ServiceRelatorios from "src/services/ServiceRelatorios";
 import useLoadingScreen from "../Components/LoadingScreen";
 export default function CalendarioProducao() {
-	const [events, setEvents] = useState([]);
+	const [events, setEvents] = useState({});
+	const [show, setShow] = useState(false);
 	const [Loading, setLoading] = useLoadingScreen();
+	const [form, setForm] = useState({
+		data_inicio: null,
+		data_final: null,
+		observacao: null,
+	});
+	const [codigoVeiculo, setCodigoVeiculo] = useState(null);
+	const [jsx, setJsx] = useState(null);
 
-	// [
-	// 	{
-	// 		id: 1,
-	// 		color: "#fd3153",
-	// 		from: "2022-04-02T18:00:00+00:00",
-	// 		to: "2022-04-05T19:00:00+00:00",
-	// 		title: "This is an event",
-	// 	},
-	// 	{
-	// 		id: 2,
-	// 		color: "#1ccb9e",
-	// 		from: "2022-04-01T13:00:00+00:00",
-	// 		to: "2022-04-05T14:00:00+00:00",
-	// 		title: "This is another event",
-	// 	},
-	// 	{
-	// 		id: 3,
-	// 		color: "#3694DF",
-	// 		from: "2022-04-05T13:00:00+00:00",
-	// 		to: "2022-04-05T20:00:00+00:00",
-	// 		title: "This is also another event",
-	// 	},
-	// ];
+	function handleForm(event) {
+		const { name, value } = event.target;
+		setForm({ ...form, [name]: value });
+	}
+	function resetForm() {
+		const limpo = {};
+		for (const i in form) {
+			limpo[i] = null;
+		}
+		setForm(limpo);
+	}
+
+	/*
+	{
+		"ano": {
+			"mes": {
+				"dia1": [],
+				"dia2": [],
+			}
+		}
+	}
+
+
+	{
+		"CODIGO_VEICULO": "13213213213",
+		"EVENTOS": [
+			{
+				"RANK": 1,
+				"EVENTO": "DOCUMENTO RPA",
+				"CONTEUDO": "089862000",
+				"ORIGEM": "CONTAGEM - MG",
+				"DESTINO": "TIMOTEO - MG",
+				"DATA_INICIO": "2021-05-17T03:00:00.000Z",
+				"DATA_FINAL": "2021-05-18T06:32:09.600Z"
+			},
+			{
+				"RANK": 1,
+				"EVENTO": "DOCUMENTO DVF",
+				"CONTEUDO": "089862465",
+				"ORIGEM": "CONTAGEM - MG",
+				"DESTINO": "TIMOTEO - MG",
+				"DATA_INICIO": "2021-05-17T03:00:00.000Z",
+				"DATA_FINAL": "2021-05-18T06:32:09.600Z"
+			},
+			{
+				"RANK": 2,
+				"EVENTO": "JUSTIFICATIVA",
+				"CONTEUDO": "O USUÁRIO NÃO POSSUI JUSTIFICATIVA",
+				"ORIGEM": null,
+				"DESTINO": null,
+				"DATA_INICIO": "2021-05-19T03:00:00.000Z",
+				"DATA_FINAL": "2021-05-25T06:32:09.600Z"
+			}
+		]
+	}
+
+	*/
+
+	function calcularPercentualTrabalho(ano) {
+		let diasTrabalhados = 0;
+		let diasAno = 0;
+		for (const mes in events[ano]) {
+			for (const dia in events[ano][mes]) {
+				diasAno += 1;
+				for (const j of events[ano][mes][dia]) {
+					if (j.EVENTO === "DOCUMENTO RPA" || j.EVENTO === "DOCUMENTO DVF") {
+						diasTrabalhados += 1;
+						break;
+					}
+				}
+			}
+		}
+
+		return { ano, diasTrabalhados, diasAno };
+	}
 
 	async function handleSearch(event) {
 		const placa = event.target.value.toUpperCase().substring(0, 7);
@@ -39,20 +108,206 @@ export default function CalendarioProducao() {
 
 		if (placa.length < 7) {
 			event.target.value = "";
+			setEvents({});
+			setCodigoVeiculo(null);
 			return swal("Ops! 👀", "Placa inválida", "warning");
 		}
 
 		setLoading(true);
-		const { data } = await ServiceRelatorios.producaoVeiculo(placa);
+		let data;
+		try {
+			data = (await ServiceRelatorios.producaoVeiculo(placa)).data.data;
+		} catch (error) {
+			setEvents({});
+			setCodigoVeiculo(null);
+			setLoading(false);
+			return;
+		}
 		setLoading(false);
-		const dataToEvents = data.data.map((i, index) => ({
-			id: index + 1,
-			color: "#1ccb9e",
-			from: i.DT_EMISSAO.split(".")[0] + "+00:00",
-			to: i.PREVISAO_CHEGADA.split(".")[0] + "+00:00",
-			title: `${i.NUM_DOC} - DE: ${i.ORIGEM} ATÉ ${i.DESTINO}`,
-		}));
-		setEvents(dataToEvents);
+
+		setCodigoVeiculo(data.CODIGO_VEICULO);
+		const structuredEvents = {};
+		for (const i of data.EVENTOS) {
+			const ano_origem = i.DATA_INICIO.substring(0, 4);
+			const ano_destino = i.DATA_FINAL ? i.DATA_FINAL.substring(0, 4) : null;
+
+			if (ano_origem && !structuredEvents[ano_origem]) {
+				structuredEvents[ano_origem] = {};
+				for (let j = 1; j <= 12; j++) {
+					const chaveMes = j < 10 ? `0${j}` : j;
+					structuredEvents[ano_origem][chaveMes] = {};
+					for (let k = 1; k <= 31; k++) {
+						const chaveDia = k < 10 ? `0${k}` : k;
+						structuredEvents[ano_origem][chaveMes][chaveDia] = [];
+					}
+				}
+			}
+			if (ano_destino && !structuredEvents[ano_destino]) {
+				structuredEvents[ano_destino] = {};
+
+				for (let j = 1; j <= 12; j++) {
+					const chaveMes = j < 10 ? `0${j}` : j;
+					structuredEvents[ano_destino][chaveMes] = {};
+					for (let k = 1; k <= 31; k++) {
+						const chaveDia = k < 10 ? `0${k}` : k;
+						structuredEvents[ano_destino][chaveMes][chaveDia] = [];
+					}
+				}
+			}
+
+			const mes_origem = i.DATA_INICIO.substring(5, 7);
+			const dia_origem = i.DATA_INICIO.substring(8, 10);
+
+			const evento = {
+				...i,
+				CODIGO_VEICULO: data.CODIGO_VEICULO,
+			};
+			structuredEvents[ano_origem][mes_origem][dia_origem].push(evento);
+			if (i.DATA_FINAL !== null) {
+				const data_inicio = new Date(i.DATA_INICIO.split("T")[0]);
+				data_inicio.setDate(data_inicio.getDate() + 1);
+				while (
+					data_inicio.toISOString().split("T")[0] <= i.DATA_FINAL.split("T")[0]
+				) {
+					const ano = data_inicio.getFullYear();
+					const mes = data_inicio.toISOString().substring(5, 7);
+					const dia = data_inicio.toISOString().substring(8, 10);
+
+					structuredEvents[ano][mes][dia].push(evento);
+
+					data_inicio.setDate(data_inicio.getDate() + 1);
+				}
+			}
+		}
+
+		setEvents(structuredEvents);
+	}
+
+	function onHide() {
+		setShow(false);
+		resetForm();
+	}
+
+	async function handleAddObservacao(event) {
+		event.preventDefault();
+		if (!codigoVeiculo) {
+			return swal("Ops! 👀", "Nenhum veículo foi selecionado", "warning");
+		}
+		const evento = {
+			EVENTO: "JUSTIFICATIVA",
+			CONTEUDO: form.observacao,
+			ORIGEM: null,
+			DESTINO: null,
+			DATA_INICIO: form.data_inicio + "T00:00:00.000Z",
+			DATA_FINAL: form.data_final + "T00:00:00.000Z",
+			RANK: 1,
+		};
+
+		const eventoApi = {
+			codigo_veiculo: codigoVeiculo,
+			data_inicio: new Date(form.data_inicio + "T00:00:00"),
+			data_final: new Date(form.data_final + "T00:00:00"),
+			conteudo: form.observacao,
+		};
+
+		try {
+			await ServiceRelatorios.criarEventoProducao(eventoApi);
+		} catch (error) {
+			return;
+		}
+
+		const data_inicio = new Date(form.data_inicio + "T00:00:00");
+		const ano = data_inicio.getFullYear();
+
+		let mes = data_inicio.getMonth() + 1;
+		mes = mes < 10 ? `0${mes}` : String(mes);
+
+		let dia = data_inicio.getDate();
+		dia = dia < 10 ? `0${dia}` : String(dia);
+
+		const structuredEvents = { ...events };
+
+		if (ano && !structuredEvents[ano]) {
+			structuredEvents[ano] = {};
+			for (let j = 1; j <= 12; j++) {
+				const chaveMes = j < 10 ? `0${j}` : j;
+				structuredEvents[ano][chaveMes] = {};
+				for (let k = 1; k <= 31; k++) {
+					const chaveDia = k < 10 ? `0${k}` : k;
+					structuredEvents[ano][chaveMes][chaveDia] = [];
+				}
+			}
+		}
+
+		structuredEvents[ano][mes][dia].push(evento);
+
+		data_inicio.setDate(data_inicio.getDate() + 1);
+		while (data_inicio.toISOString().split("T")[0] <= form.data_final) {
+			const ano = data_inicio.getFullYear();
+
+			let mes = data_inicio.getMonth() + 1;
+			mes = mes < 10 ? `0${mes}` : String(mes);
+
+			let dia = data_inicio.getDate();
+			dia = dia < 10 ? `0${dia}` : String(dia);
+
+			structuredEvents[ano][mes][dia].push(evento);
+
+			data_inicio.setDate(data_inicio.getDate() + 1);
+		}
+
+		setEvents(structuredEvents);
+		setShow(false);
+		resetForm();
+	}
+
+	function padding(element, size) {
+		const output = String(element).substring(0, size).padStart(size, "0");
+		return output;
+	}
+
+	function formatarData(data) {
+		if (!data) return "";
+		return String(data).split("T")[0].split("-").reverse().join("/");
+	}
+
+	function mostrarEventos(ano, mes, dia) {
+		const eventos = events[ano][padding(mes, 2)][padding(dia, 2)];
+		if (eventos.length === 0) {
+			return null;
+		}
+		return (
+			<div className="eventos-dia">
+				{eventos.map((evento, index) => {
+					return (
+						<div key={index} className="border p-3">
+							<div>
+								<b>CONTEUDO</b>: {evento.CONTEUDO}
+							</div>
+							<div>
+								<b>EVENTO</b>: {evento.EVENTO}
+							</div>
+							<div>
+								<b>DATA_INICIO</b>: {formatarData(evento.DATA_INICIO)}
+							</div>
+							<div>
+								<b>DATA_FINAL</b>: {formatarData(evento.DATA_FINAL)}
+							</div>
+							{evento.ORIGEM && (
+								<div>
+									<b>ORIGEM</b>: {evento.ORIGEM}
+								</div>
+							)}
+							{evento.DESTINO && (
+								<div>
+									<b>DESTINO</b>: {evento.DESTINO}
+								</div>
+							)}
+						</div>
+					);
+				})}
+			</div>
+		);
 	}
 
 	return (
@@ -60,7 +315,10 @@ export default function CalendarioProducao() {
 			<Loading />
 			<NavbarNavigator />
 			<Container>
-				<Row className="mt-3">
+				<pre>
+					{/* <code>{JSON.stringify(events["2022"]["04"], null, 4)}</code> */}
+				</pre>
+				<Row className="mt-3 mb-3">
 					<Form>
 						<Col sm={12} md={6}>
 							<Form.Control
@@ -69,16 +327,162 @@ export default function CalendarioProducao() {
 								onBlur={handleSearch}
 							/>
 						</Col>
+						{codigoVeiculo && (
+							<Button
+								variant="outline-info"
+								onClick={() => setShow((old) => !old)}
+							>
+								<BsGear />
+							</Button>
+						)}
 					</Form>
 				</Row>
-				<Row>
-					<Col>
-						<Calendar
-							events={events}
-							onEventClick={(event) => alert(event.title)}
-						/>
-					</Col>
-				</Row>
+
+				<Accordion className="mb-5">
+					{Object.keys(events)
+						.sort((a, b) => Number(b) - Number(a))
+						.map((ano) => {
+							const { diasAno, diasTrabalhados } =
+								calcularPercentualTrabalho(ano);
+							return (
+								<Accordion.Item eventKey={ano} key={ano}>
+									<Accordion.Header>
+										Em <b>{`"${ano}"`}</b>
+										{" esse veículo trabalhou " +
+											((diasTrabalhados / diasAno) * 100).toFixed(2) +
+											"% dos dias"}
+									</Accordion.Header>
+									<Accordion.Body>
+										<Row>
+											<h1 className="h2">ANO {ano}</h1>
+											<Col>
+												<Table className="text-center">
+													<thead>
+														<tr>
+															<th>MÊS</th>
+															<th colSpan={31}>DIAS</th>
+														</tr>
+													</thead>
+													<tbody>
+														{Object.keys(events[ano])
+															.sort((a, b) => Number(a) - Number(b))
+															.map((mes) => (
+																<tr key={ano + mes}>
+																	<td className="bg-secondary">{mes}</td>
+																	{Array.from("0".repeat(31)).map(
+																		(i, index) => (
+																			<td
+																				onClick={() =>
+																					setJsx(
+																						mostrarEventos(ano, mes, index + 1)
+																					)
+																				}
+																				key={index}
+																				className={
+																					events[ano][mes][
+																						index + 1 < 10
+																							? "0" + (index + 1)
+																							: index + 1
+																					].length > 0
+																						? events[ano][mes][
+																								index + 1 < 10
+																									? "0" + (index + 1)
+																									: index + 1
+																						  ][0].EVENTO === "JUSTIFICATIVA"
+																							? "bg-warning"
+																							: "bg-success"
+																						: new Date(ano, mes, 0).getDate() <
+																						  index + 1
+																						? "bg-white text-white"
+																						: ""
+																				}
+																			>
+																				{index + 1 < 10
+																					? `0${index + 1}`
+																					: index + 1}
+																			</td>
+																		)
+																	)}
+																</tr>
+															))}
+													</tbody>
+												</Table>
+											</Col>
+										</Row>
+									</Accordion.Body>
+								</Accordion.Item>
+							);
+						})}
+				</Accordion>
+
+				<Modal show={show} onHide={onHide}>
+					<Form onSubmit={handleAddObservacao}>
+						<Modal.Header closeButton>
+							<Modal.Title>Cadastrar JUSTIFICATIVA</Modal.Title>
+						</Modal.Header>
+						<Modal.Body>
+							<Form.Group className="mb-3" controlId="id_data_inicio">
+								<Form.Label>Data início</Form.Label>
+								<Form.Control
+									type="date"
+									name="data_inicio"
+									onChange={handleForm}
+									value={form.data_inicio}
+									required
+								/>
+							</Form.Group>
+							{form.data_inicio && (
+								<>
+									<Form.Group className="mb-3" controlId="id_data_final">
+										<Form.Label>Data final</Form.Label>
+										<Form.Control
+											type="date"
+											name="data_final"
+											onChange={handleForm}
+											value={form.data_final}
+											min={form.data_inicio}
+											defaultValue={form.data_inicio}
+											required
+										/>
+									</Form.Group>
+									{form.data_final && (
+										<Form.Group className="mb-3" controlId="id_observacao">
+											<Form.Label>Observação</Form.Label>
+											<Form.Control
+												as="textarea"
+												type="text"
+												name="observacao"
+												onChange={handleForm}
+												value={form.observacao}
+												required
+											/>
+										</Form.Group>
+									)}
+								</>
+							)}
+						</Modal.Body>
+						<Modal.Footer>
+							<Button variant="secondary" onClick={onHide}>
+								Sair
+							</Button>
+							<Button variant="primary" type="submit">
+								Confirmar
+							</Button>
+						</Modal.Footer>
+					</Form>
+				</Modal>
+
+				<Modal show={jsx} onHide={() => setJsx(null)}>
+					<Modal.Header closeButton>
+						<Modal.Title>Detalhes evento</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>{jsx}</Modal.Body>
+					<Modal.Footer>
+						<Button variant="secondary" onClick={() => setJsx(null)}>
+							Sair
+						</Button>
+					</Modal.Footer>
+				</Modal>
 			</Container>
 		</>
 	);

@@ -16,3 +16,11 @@ alter table "con_cargas" drop column "local_entrega";
 
 
 
+create sequence "seq_con_prd_justificativas";
+create table "con_producao_justificativas" (
+    "id" INTEGER NOT NULL PRIMARY KEY,
+    "codigo_veiculo" INTEGER NOT NULL,
+    "conteudo" VARCHAR2(2048) NOT NULL,
+    "data_inicio" DATE NOT NULL,
+    "data_final" DATE NOT NULL
+);

@@ -26,6 +26,20 @@ class ServiceRelatorios {
 	async producaoVeiculo(placa) {
 		return api.get(`/relatorio/producao_veiculo/${placa}`);
 	}
+
+	async criarEventoProducao({
+		data_inicio,
+		data_final,
+		conteudo,
+		codigo_veiculo,
+	}) {
+		return api.post("/eventos/producao", {
+			data_inicio,
+			data_final,
+			conteudo,
+			codigo_veiculo,
+		});
+	}
 }
 
 export default new ServiceRelatorios();

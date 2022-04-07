@@ -16,6 +16,7 @@ import SituacoesCargasController from "./controllers/SituacoesCargasController";
 import CoordenadasController from "./controllers/CoordenadaController";
 import RelatorioController from "./controllers/RelatorioController";
 import CredenciaisController from "./controllers/CredenciaisController";
+import ProducaoController from "./controllers/ProducaoController";
 
 const routes = Router();
 
@@ -114,4 +115,10 @@ routes.get(
   RelatorioController.gerarResumoTempoMedioAtendimentoGr
 );
 
+routes.get(
+  "/relatorio/producao_veiculo/:placa_veiculo",
+  ProducaoController.index
+);
+
+routes.post("/eventos/producao", ProducaoController.createEvent);
 export default routes;
