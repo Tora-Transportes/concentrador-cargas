@@ -120,5 +120,9 @@ routes.get(
   ProducaoController.index
 );
 
-routes.post("/eventos/producao", ProducaoController.createEvent);
+routes.post(
+  "/eventos/producao",
+  HasPermission("REGISTRAR_JUSTIFICATIVA"),
+  ProducaoController.createEvent
+);
 export default routes;

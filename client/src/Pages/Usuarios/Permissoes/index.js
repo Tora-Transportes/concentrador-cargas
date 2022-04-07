@@ -27,6 +27,7 @@ function Permissoes() {
 			permissao_aprovar_veiculos: false,
 			permissao_aprovar_viagem: false,
 			permissao_vincular_placa: false,
+			permissao_registrar_justificativa: false,
 		},
 	});
 
@@ -64,6 +65,9 @@ function Permissoes() {
 		}
 		if (formik.values.permissao_vincular_placa) {
 			permissoes.push("VINCULAR_PLACA");
+		}
+		if (formik.values.permissao_registrar_justificativa) {
+			permissoes.push("REGISTRAR_JUSTIFICATIVA");
 		}
 		if (
 			await swal(
@@ -146,6 +150,15 @@ function Permissoes() {
 							onChange={handleChangeCheckbox}
 							label={`Vincular placa`}
 							id="permissao_vincular_placa"
+							inline
+						/>
+						<Form.Check
+							type="checkbox"
+							name="permissao_registrar_justificativa"
+							checked={formik.values.permissao_registrar_justificativa}
+							onChange={handleChangeCheckbox}
+							label={`Registrar Justificativa`}
+							id="permissao_registrar_justificativa"
 							inline
 						/>
 					</Col>
