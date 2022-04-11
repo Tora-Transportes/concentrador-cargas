@@ -32,7 +32,10 @@ class Credenciais implements ICredentialStorage {
   }
   async save(credentials: ICredential[]): Promise<void> {
     await database("con_credenciais").delete();
-    return database("con_credenciais").insert(credentials);
+    if (credentials.length > 0) {
+      await database("con_credenciais").insert(credentials);
+    }
+    return;
   }
 }
 
