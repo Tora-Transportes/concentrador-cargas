@@ -1,14 +1,15 @@
 import { Request, Response } from "express";
 import AppError from "../models/AppError";
 import fs from "fs";
-import path from "path";
+import database from "../database";
 import { notifyAll } from "../socketsRoutes";
+import Encrypt from "../services/Encrypt";
 
 export interface ICredential {
   user: string;
   portal: string;
   password: string | null;
-  successfulAttempts: number;
+  successful_attempts: number;
   errored: boolean;
 }
 
@@ -26,19 +27,12 @@ class Credenciais implements ICredentialStorage {
     return Credenciais.instance;
   }
 
-  private filename = "";
-  private constructor() {
-    this.filename = path.join(__dirname, "..", "..", "credenciais.json");
-  }
-
   async list(): Promise<ICredential[]> {
-    if (fs.existsSync(this.filename)) {
-      return JSON.parse(fs.readFileSync(this.filename).toString());
-    }
-    return [];
+    return database("con_credenciais").select("*");
   }
   async save(credentials: ICredential[]): Promise<void> {
-    fs.writeFileSync(this.filename, JSON.stringify(credentials));
+    await database("con_credenciais").delete();
+    return database("con_credenciais").insert(credentials);
   }
 }
 
@@ -51,7 +45,11 @@ class CredenciaisController {
     return response.json(
       (await domain.list()).map((i) => ({
         ...i,
-        password: canSeePassword ? i.password : null,
+        password: !canSeePassword
+          ? null
+          : i.password
+          ? Encrypt.decrypt(String(i.password))
+          : null,
       }))
     );
   }
@@ -76,8 +74,8 @@ class CredenciaisController {
     const credential: ICredential = {
       user,
       portal,
-      password,
-      successfulAttempts: 0,
+      password: Encrypt.encrypt(String(password)),
+      successful_attempts: 0,
       errored: false,
     };
     credentials.push(credential);
@@ -90,7 +88,7 @@ class CredenciaisController {
     return response.send();
   }
   async put(request: Request, response: Response) {
-    const { password, successfulAttempts, errored } = request.body;
+    const { password, successful_attempts, errored } = request.body;
     const { user, portal } = request.params;
     if (!user || !password || !portal) {
       throw new AppError("informações incompletas", 400);
@@ -101,12 +99,12 @@ class CredenciaisController {
 
     for (const i of credentials) {
       if (i.user === user && i.portal === portal) {
-        i.password = password;
+        i.password = Encrypt.encrypt(String(password));
         i.errored = errored === undefined ? i.errored : errored;
-        i.successfulAttempts =
-          successfulAttempts === undefined
-            ? i.successfulAttempts
-            : successfulAttempts;
+        i.successful_attempts =
+          successful_attempts === undefined
+            ? i.successful_attempts
+            : successful_attempts;
         notifyAll({
           name: "@credenciais-update",
           details: [{ ...i, password: null }],
@@ -139,7 +137,10 @@ class CredenciaisController {
 
     for (const i of credentials) {
       if (i.user === user && i.portal === portal) {
-        return response.json(i);
+        return response.json({
+          ...i,
+          password: Encrypt.decrypt(String(i.password)),
+        });
       }
     }
 

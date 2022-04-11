@@ -24,3 +24,12 @@ create table "con_producao_justificativas" (
     "data_inicio" DATE NOT NULL,
     "data_final" DATE NOT NULL
 );
+
+
+create table "con_credenciais" (
+    "user" VARCHAR2(500) NOT NULL,
+    "portal" VARCHAR2(500) NOT NULL,
+    "errored" INTEGER DEFAULT 0 NOT NULL,
+    "successful_attempts" INTEGER DEFAULT 0 NOT NULL,
+    "password" VARCHAR2(2048)
+);
