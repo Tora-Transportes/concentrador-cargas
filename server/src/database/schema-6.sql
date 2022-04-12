@@ -33,3 +33,5 @@ create table "con_credenciais" (
     "successful_attempts" INTEGER DEFAULT 0 NOT NULL,
     "password" VARCHAR2(2048)
 );
+
+alter table "con_credenciais" add constraint const_pk_credenciais primary key("portal", "user");

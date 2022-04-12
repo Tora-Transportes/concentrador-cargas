@@ -15,10 +15,37 @@ export interface ICredential {
 
 export interface ICredentialStorage {
   list(): Promise<ICredential[]>;
-  save(credentials: ICredential[]): Promise<void>;
+  index(portal: string, user: string): Promise<ICredential | null>;
+  update(credencial: ICredential): Promise<void>;
+  delete(portal: string, user: string): Promise<void>;
+  save(credentials: ICredential): Promise<void>;
 }
 
 class Credenciais implements ICredentialStorage {
+  async index(portal: string, user: string): Promise<ICredential | null> {
+    return (
+      (await database("con_credenciais")
+        .select("*")
+        .first()
+        .where("portal", portal)
+        .where("user", user)) ?? null
+    );
+  }
+  async update(credencial: ICredential): Promise<void> {
+    const { portal, user } = credencial;
+    await database("con_credenciais")
+      .update(credencial)
+      .where("portal", portal)
+      .where("user", user);
+    return;
+  }
+  async delete(portal: string, user: string): Promise<void> {
+    await database("con_credenciais")
+      .delete()
+      .where("portal", portal)
+      .where("user", user);
+    return;
+  }
   static instance: Credenciais;
   static instanciate() {
     if (!Credenciais.instance) {
@@ -30,12 +57,8 @@ class Credenciais implements ICredentialStorage {
   async list(): Promise<ICredential[]> {
     return database("con_credenciais").select("*");
   }
-  async save(credentials: ICredential[]): Promise<void> {
-    await database("con_credenciais").delete();
-    if (credentials.length > 0) {
-      await database("con_credenciais").insert(credentials);
-    }
-    return;
+  async save(credentials: ICredential): Promise<void> {
+    return await database("con_credenciais").insert(credentials);
   }
 }
 
@@ -65,14 +88,8 @@ class CredenciaisController {
       );
     }
     const domain = Credenciais.instanciate();
-    const credentials = await domain.list();
-    for (const i of credentials) {
-      if (i.portal === portal && i.user === user) {
-        throw new AppError(
-          "Essa credencial ja foi cadastrada, caso necessario atualize a mesma",
-          400
-        );
-      }
+    if ((await domain.index(portal, user)) !== null) {
+      throw new AppError("Esta credencial ja existe", 400);
     }
     const credential: ICredential = {
       user,
@@ -81,8 +98,7 @@ class CredenciaisController {
       successful_attempts: 0,
       errored: false,
     };
-    credentials.push(credential);
-    await domain.save(credentials);
+    await domain.save(credential);
     console.log("ENVIANDO EVENTO");
     notifyAll({
       name: "@credenciais-create",
@@ -98,31 +114,25 @@ class CredenciaisController {
     }
 
     const domain = Credenciais.instanciate();
-    const credentials = await domain.list();
+    const credential = await domain.index(portal, user);
 
-    for (const i of credentials) {
-      if (i.user === user && i.portal === portal) {
-        i.password = Encrypt.encrypt(String(password));
-        i.errored = errored === undefined ? i.errored : errored;
-        i.successful_attempts =
-          successful_attempts === undefined
-            ? i.successful_attempts
-            : successful_attempts;
-        notifyAll({
-          name: "@credenciais-update",
-          details: [{ ...i, password: null }],
-        });
-        await domain.save(credentials);
-        return response.send();
-      }
+    if (!credential) {
+      throw new AppError("A credencial informada não existe", 404);
     }
 
-    throw new AppError(
-      "Não foi possivel encontrar o usuario especificado",
-      400
-    );
+    credential.password = Encrypt.encrypt(String(password));
+    credential.errored = errored === undefined ? credential.errored : errored;
+    credential.successful_attempts =
+      successful_attempts === undefined
+        ? credential.successful_attempts
+        : successful_attempts;
+    notifyAll({
+      name: "@credenciais-update",
+      details: [{ ...credential, password: null }],
+    });
+    await domain.update(credential);
+    return response.send();
   }
-
   async index(request: Request, response: Response) {
     const { user, portal } = request.params;
     if (!user || !portal) {
@@ -136,20 +146,18 @@ class CredenciaisController {
       throw new AppError("API_KEY_TOKEN incorreto", 401);
     }
     const domain = Credenciais.instanciate();
-    const credentials = await domain.list();
+    const credential = await domain.index(portal, user);
 
-    for (const i of credentials) {
-      if (i.user === user && i.portal === portal) {
-        return response.json({
-          ...i,
-          password: Encrypt.decrypt(String(i.password)),
-        });
-      }
+    if (credential) {
+      return response.json({
+        ...credential,
+        password: Encrypt.decrypt(String(credential.password)),
+      });
     }
 
     throw new AppError(
       "Não foi possivel encontrar o usuario especificado",
-      400
+      404
     );
   }
   async delete(request: Request, response: Response) {
@@ -158,14 +166,11 @@ class CredenciaisController {
       throw new AppError("informações incompletas", 400);
     }
     const domain = Credenciais.instanciate();
-    const credentials = (await domain.list()).filter(
-      (i) => !(i.portal === portal && i.user === user)
-    );
+    await domain.delete(portal, user);
     notifyAll({
       name: "@credenciais-delete",
       details: [{ user, portal }],
     });
-    await domain.save(credentials);
     response.send();
   }
 }
