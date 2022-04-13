@@ -84,7 +84,7 @@ export default function Credenciais() {
 				swal("Registro inserido");
 				setData([
 					...data,
-					{ ...values, errored: false, successfulAttempts: 0 },
+					{ ...values, errored: false, successful_attempts: 0 },
 				]);
 				formik.resetForm();
 			} else {
@@ -114,7 +114,7 @@ export default function Credenciais() {
 		}
 	}
 	async function mudarSenha(
-		{ user, portal, successfulAttempts },
+		{ user, portal, successful_attempts },
 		event = null
 	) {
 		if (event) {
@@ -135,7 +135,7 @@ export default function Credenciais() {
 				portal,
 				password,
 				errored: false,
-				successfulAttempts,
+				successful_attempts,
 			});
 
 			swal("Registro Atualizado");
@@ -170,7 +170,7 @@ export default function Credenciais() {
 										<BiCheck size="25" className="text-success" />
 									)}
 									<Card.Text>
-										{i.successfulAttempts} Logins realizados
+										{i.successful_attempts} Logins realizados
 									</Card.Text>
 									<div className="d-flex justify-content-around">
 										<a
