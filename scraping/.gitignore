@@ -1,7 +1,6 @@
-node_modules/
-htmls/
-package-lock.json
-yarn.lock
-test.js
+__pycache__
+*.log
+*.html
+*.json
 .env
-output.json
+venv
