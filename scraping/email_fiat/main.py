@@ -158,6 +158,21 @@ for msg in messages:
 
     data_coleta = formatar_data(blocos[0]['data_coleta'])
 
+
+    filial = None
+    if "BRASIL/PR" in origem_carga:
+        filial = 21
+    else:
+        for i in ["BALDIM","BARAO DE COCAIS","BELO HORIZONTE","BELO VALE","BETIM","BOM JESUS DO AMPARO","BONFIM","BRUMADINHO","CAETE","CAPIM BRANCO","CONFINS","CONTAGEM","ESMERALDAS","FLORESTAL","FORTUNA DE MINAS","FUNILANDIA","IBIRITE","IGARAPE","INHAUMA","ITABIRITO","ITAGUARA","ITATIAIUCU","ITAUNA","JABOTICATUBAS","JUATUBA","LAGOA SANTA","MARIO CAMPOS","MATEUS LEME","MATOZINHOS","MOEDA","NOVA LIMA","NOVA UNIAO","PARA DE MINAS","PEDRO LEOPOLDO","PRUDENTE DE MORAIS"]:
+            if i in origem_carga:
+                filial = 153
+                break
+        if filial is None:
+            filial = 77
+
+
+    
+
     carga = {
         "usuario": "BOT IMPORTACAO PORTAL",
         "responsavel_cadastro": "BOT IMPORTACAO PORTAL",
@@ -177,7 +192,7 @@ for msg in messages:
 
         "cliente": cliente_pagador,
         "documento_transporte": ativacao,
-        "fk_filial": None,
+        "fk_filial": filial,
         "origem_carga": origem_carga,
         "destino_carga": destino_carga,
         "observacao": observacao,
