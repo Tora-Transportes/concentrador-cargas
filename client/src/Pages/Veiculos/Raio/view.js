@@ -132,8 +132,8 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 							<thead>
 								<tr>
 									<th>
-										<Button variant="outline-info">
-											<BsDownload onClick={exportCsv} />
+										<Button variant="outline-info" onClick={exportCsv}>
+											<BsDownload />
 										</Button>
 									</th>
 									<th>Distancia KM</th>
