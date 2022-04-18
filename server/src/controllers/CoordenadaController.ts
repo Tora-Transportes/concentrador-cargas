@@ -5,6 +5,8 @@ import os from "os";
 import path from "path";
 import fs from "fs";
 import TokenAd from "../models/TokenAd";
+import { ServiceDistanceLocations } from "../services/ServiceDistanceLocations";
+import AppError from "../models/AppError";
 
 class CoordenadasController {
   async search(req: Request, res: Response) {
@@ -69,6 +71,29 @@ class CoordenadasController {
       fk_placa: placa,
       ...objeto,
     });
+  }
+
+  async listVehiclesInRange(req: Request, res: Response) {
+    const placa = req.params.placa;
+    const { distancia_km } = req.query;
+    if (placa.length < 7) {
+      throw new AppError("Placa inválida", 400);
+    }
+
+    if (!distancia_km || isNaN(Number(distancia_km))) {
+      throw new AppError(
+        "Query param distancia_km inválido ou não informado",
+        400
+      );
+    }
+
+    const service = new ServiceDistanceLocations();
+    const veiculos = await service.listVehiclesInRange(
+      placa,
+      Number(distancia_km)
+    );
+
+    return res.json(veiculos);
   }
 }
 

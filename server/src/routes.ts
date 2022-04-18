@@ -100,6 +100,10 @@ routes.get("/recomendacoes/filiais", RecomendacoesController.filiais);
 
 routes.get("/situacoes/cargas", SituacoesCargasController.search);
 
+routes.get(
+  "/coordenadas/:placa/range",
+  CoordenadasController.listVehiclesInRange
+);
 routes.put("/coordenadas/:placa", CoordenadasController.update);
 routes.get("/coordenadas", CoordenadasController.search);
 routes.get("/relatorio/coordenadas", CoordenadasController.export);

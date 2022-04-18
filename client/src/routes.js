@@ -17,6 +17,7 @@ import CoordenadasVeiculos from "./Pages/Coordenadas";
 import RelatoriosMain from "./Pages/Relatorios/Totalizadores";
 import Credenciais from "./Pages/Credenciais";
 import CalendarioProducao from "./Pages/CalendarioProducao";
+import RaioVeiculos from "./Pages/Veiculos/Raio";
 
 export default function AllRoutes() {
 	return (
@@ -44,6 +45,8 @@ export default function AllRoutes() {
 				<Route path="/produtos" exact component={Produtos} />
 				<Route path="/rotas/pendentes" exact component={RotasPendentes} />
 				<Route path="/veiculos/aprovacao" exact component={SituacaoVeiculos} />
+
+				<Route path="/veiculos/raio" exact component={RaioVeiculos} />
 
 				<Route
 					path="/veiculos/coordenadas"

@@ -104,6 +104,10 @@ class ServiceCoordenadas {
 			data_janela,
 		});
 	}
+
+	async listVehiclesInRange({ placa, distancia_km }) {
+		return api.get(`/coordenadas/${placa}/range`, { params: { distancia_km } });
+	}
 }
 
 export default new ServiceCoordenadas();
