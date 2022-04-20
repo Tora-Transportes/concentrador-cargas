@@ -110,7 +110,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 							</Form.Group>
 
 							<Form.Group controlId="formdistancia">
-								<Form.Label>Distancia</Form.Label>
+								<Form.Label>Distancia (KM)</Form.Label>
 								<Form.Control
 									type="number"
 									min="1"

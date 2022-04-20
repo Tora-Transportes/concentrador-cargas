@@ -78,13 +78,23 @@ function Main() {
 		const pp = [];
 		for (let i = 0; i < quantidade; i++) {
 			const p = new Promise((resolve) => {
-				setTimeout(() => {
+				const interval1 = setTimeout(() => {
 					const cor = queueCoresAtuais.shift();
 					queueCoresAtuais.push(cor);
 					console.log(cor);
-					setTimeout(() => {
+					const interval2 = setTimeout(() => {
 						inputCorAtual.current.setAttribute("class", `w-100 btn`);
+						if (!inputCorAtual.current) {
+							clearInterval(interval1);
+							clearInterval(interval2);
+							return;
+						}
 					}, 500);
+					if (!inputCorAtual.current) {
+						clearInterval(interval1);
+						clearInterval(interval2);
+						return;
+					}
 					inputCorAtual.current.setAttribute("class", `w-100 btn btn-${cor}`);
 					resolve(cor);
 				}, (i + 1) * 1500);

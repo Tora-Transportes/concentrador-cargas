@@ -8,16 +8,20 @@ import {
 	Accordion,
 	Button,
 	Modal,
+	InputGroup,
 } from "react-bootstrap";
 import { BsGear } from "react-icons/bs";
 import NavbarNavigator from "../Components/NavbarNavigator";
 import swal from "sweetalert";
 import ServiceRelatorios from "src/services/ServiceRelatorios";
 import useLoadingScreen from "../Components/LoadingScreen";
+import caminhaoImg from "../../assets/caminhao.gif";
+
 export default function CalendarioProducao() {
 	const [events, setEvents] = useState({});
 	const [show, setShow] = useState(false);
 	const [Loading, setLoading] = useLoadingScreen();
+	const [placa, setPlaca] = useState("");
 	const [form, setForm] = useState({
 		data_inicio: null,
 		data_final: null,
@@ -103,11 +107,9 @@ export default function CalendarioProducao() {
 	}
 
 	async function handleSearch(event) {
-		const placa = event.target.value.toUpperCase().substring(0, 7);
-		event.target.value = placa;
-
+		event.preventDefault();
 		if (placa.length < 7) {
-			event.target.value = "";
+			setPlaca("");
 			setEvents({});
 			setCodigoVeiculo(null);
 			return swal("Ops! 👀", "Placa inválida", "warning");
@@ -315,17 +317,20 @@ export default function CalendarioProducao() {
 			<Loading />
 			<NavbarNavigator />
 			<Container>
-				<pre>
-					{/* <code>{JSON.stringify(events["2022"]["04"], null, 4)}</code> */}
-				</pre>
 				<Row className="mt-3 mb-3">
-					<Form>
+					<Form onSubmit={handleSearch}>
 						<Col sm={12} md={6}>
-							<Form.Control
-								type="text"
-								placeholder="PLACA DO VEICULO (AAA8778)"
-								onBlur={handleSearch}
-							/>
+							<InputGroup>
+								<Form.Control
+									type="text"
+									placeholder="PLACA DO VEICULO (AAA8778)"
+									value={placa}
+									onChange={(event) =>
+										setPlaca(event.target.value.toUpperCase().substring(0, 7))
+									}
+								/>
+								<Button type="submit">🔍</Button>
+							</InputGroup>
 						</Col>
 						{codigoVeiculo && (
 							<Button
@@ -337,6 +342,19 @@ export default function CalendarioProducao() {
 						)}
 					</Form>
 				</Row>
+
+				{Object.keys(events).length === 0 && (
+					<Row className="mt-5 p-5">
+						<p className="font-monospace">
+							Nessa tela consulte a produção de uma placa específica
+						</p>
+						<img
+							src={caminhaoImg}
+							alt="caminhao verde"
+							style={{ maxWidth: "800px" }}
+						/>
+					</Row>
+				)}
 
 				<Accordion className="mb-5">
 					{Object.keys(events)
@@ -356,57 +374,72 @@ export default function CalendarioProducao() {
 										<Row>
 											<h1 className="h2">ANO {ano}</h1>
 											<Col>
-												<Table className="text-center">
-													<thead>
-														<tr>
-															<th>MÊS</th>
-															<th colSpan={31}>DIAS</th>
-														</tr>
-													</thead>
-													<tbody>
-														{Object.keys(events[ano])
-															.sort((a, b) => Number(a) - Number(b))
-															.map((mes) => (
-																<tr key={ano + mes}>
-																	<td className="bg-secondary">{mes}</td>
-																	{Array.from("0".repeat(31)).map(
-																		(i, index) => (
-																			<td
-																				onClick={() =>
-																					setJsx(
-																						mostrarEventos(ano, mes, index + 1)
-																					)
-																				}
-																				key={index}
-																				className={
-																					events[ano][mes][
-																						index + 1 < 10
-																							? "0" + (index + 1)
-																							: index + 1
-																					].length > 0
-																						? events[ano][mes][
-																								index + 1 < 10
-																									? "0" + (index + 1)
-																									: index + 1
-																						  ][0].EVENTO === "JUSTIFICATIVA"
-																							? "bg-warning"
-																							: "bg-success"
-																						: new Date(ano, mes, 0).getDate() <
-																						  index + 1
-																						? "bg-white text-white"
-																						: ""
-																				}
-																			>
-																				{index + 1 < 10
-																					? `0${index + 1}`
-																					: index + 1}
-																			</td>
-																		)
-																	)}
-																</tr>
-															))}
-													</tbody>
-												</Table>
+												<div
+													style={{
+														width: "100%",
+														overflowX: "scroll",
+													}}
+												>
+													<Table className="text-center">
+														<thead>
+															<tr>
+																<th>MÊS</th>
+																<th colSpan={31}>DIAS</th>
+															</tr>
+														</thead>
+														<tbody>
+															{Object.keys(events[ano])
+																.sort((a, b) => Number(a) - Number(b))
+																.map((mes) => (
+																	<tr key={ano + mes}>
+																		<td className="bg-secondary">{mes}</td>
+																		{Array.from("0".repeat(31)).map(
+																			(i, index) => (
+																				<td
+																					onClick={() =>
+																						setJsx(
+																							mostrarEventos(
+																								ano,
+																								mes,
+																								index + 1
+																							)
+																						)
+																					}
+																					key={index}
+																					className={
+																						events[ano][mes][
+																							index + 1 < 10
+																								? "0" + (index + 1)
+																								: index + 1
+																						].length > 0
+																							? events[ano][mes][
+																									index + 1 < 10
+																										? "0" + (index + 1)
+																										: index + 1
+																							  ][0].EVENTO === "JUSTIFICATIVA"
+																								? "bg-warning"
+																								: "bg-success"
+																							: new Date(
+																									ano,
+																									mes,
+																									0
+																							  ).getDate() <
+																							  index + 1
+																							? "bg-white text-white"
+																							: ""
+																					}
+																				>
+																					{index + 1 < 10
+																						? `0${index + 1}`
+																						: index + 1}
+																				</td>
+																			)
+																		)}
+																	</tr>
+																))}
+														</tbody>
+													</Table>
+												</div>
 											</Col>
 										</Row>
 									</Accordion.Body>
