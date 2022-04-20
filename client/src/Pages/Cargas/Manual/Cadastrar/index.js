@@ -8,11 +8,13 @@ import { getClaims } from "../../../../MicrosoftAuthentication";
 import ServiceProdutos from "../../../../services/ServiceProdutos";
 import FormularioCadastroManual from "../../../Components/FormularioCadastroManual";
 import CabecalhoFixado from "../../../Components/CabecalhoFixado";
+import { useHistory } from "react-router-dom";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [produtos, setProdutos] = useState([]);
 	const [distancia, setDistancia] = useState(null);
+	const history = useHistory();
 
 	const formik = useFormik({
 		initialValues: {
@@ -65,6 +67,34 @@ function Manual() {
 		setDistancia(null);
 	}, [formik.values.destino_carga, formik.values.origem_carga]);
 
+	function buscarCargaComDocumentoDeTransporte({ documento_transporte, id }) {
+		if (documento_transporte) {
+			ServiceCargas.search({
+				documento_transporte,
+			}).then(({ data: { data } }) => {
+				const cargaDocumento = data.results.find(
+					(i) => i.documento_transporte === documento_transporte && i.id !== id
+				);
+				if (cargaDocumento) {
+					swal(
+						"Ops !",
+						`O documento digitado já existe na carga ${cargaDocumento.id} deseja ir para a tela de edição da mesma ?`,
+						"warning",
+						{
+							buttons: ["Não", "Sim"],
+						}
+					).then((mudarDeTela) => {
+						if (mudarDeTela) {
+							history.push(`/cargas/manual/${cargaDocumento.id}`);
+						} else {
+							formik.setFieldValue("documento_transporte", "");
+						}
+					});
+				}
+			});
+		}
+	}
+
 	async function handleSearchDistance({ destino_carga, origem_carga }) {
 		if (destino_carga && origem_carga) {
 			const [, estado_origem, cidade_origem] = origem_carga.split("/");
@@ -104,6 +134,9 @@ function Manual() {
 			<Container className="mb-5 mt-5">
 				<Form onSubmit={formik.handleSubmit}>
 					<FormularioCadastroManual
+						buscarCargaComDocumentoDeTransporte={
+							buscarCargaComDocumentoDeTransporte
+						}
 						handleSearchDistance={handleSearchDistance}
 						produtos={produtos}
 						distancia={distancia}

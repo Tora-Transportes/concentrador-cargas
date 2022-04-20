@@ -49,8 +49,8 @@ export default function ListAddItens({ onChange, value, name }) {
 
 	return (
 		<ol className="border list-unstyled">
-			{list?.map((i) => (
-				<li key={i}>
+			{list?.map((i, index) => (
+				<li key={i + index}>
 					<Button
 						className="m-1 ml-5 w-100 text-start fw-bold"
 						variant="outline-danger"

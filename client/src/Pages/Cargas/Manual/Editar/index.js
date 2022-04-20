@@ -193,7 +193,6 @@ function Manual() {
 	async function carregarCarga() {
 		try {
 			const carga = (await ServiceCargas.index({ id })).data.data;
-			console.log(carga);
 			setLoteInicial(carga.e_lote);
 			for (const i in carga) {
 				const nonNullValue = carga[i] === null ? "" : carga[i];
@@ -211,14 +210,46 @@ function Manual() {
 		}
 	}
 
+	function buscarCargaComDocumentoDeTransporte(form) {
+		if (form.documento_transporte) {
+			ServiceCargas.search({
+				documento_transporte: form.documento_transporte,
+			}).then(({ data: { data } }) => {
+				const cargaDocumento = data.results.find(
+					(i) =>
+						i.documento_transporte === form.documento_transporte &&
+						i.id !== form.id
+				);
+				if (cargaDocumento) {
+					swal(
+						"Ops !",
+						`O documento digitado já existe na carga ${cargaDocumento.id} deseja ir para a tela de edição da mesma ?`,
+						"warning",
+						{
+							buttons: ["Não", "Sim"],
+						}
+					).then((mudarDeTela) => {
+						if (mudarDeTela) {
+							history.replace(`/reload`);
+							history.push(`/cargas/manual/${cargaDocumento.id}`);
+						} else {
+							formik.setFieldValue("documento_transporte", "");
+						}
+					});
+				}
+			});
+		}
+	}
+
 	useEffect(() => {
 		let isMounted = true;
 		setLoading(true);
 
-		carregarCarga();
-		if (isMounted) {
-			setLoading(false);
-		}
+		carregarCarga().finally(() => {
+			if (isMounted) {
+				setLoading(false);
+			}
+		});
 		return () => {
 			isMounted = false;
 		};
@@ -245,6 +276,9 @@ function Manual() {
 			<Container className="mb-5 mt-5">
 				<Form onSubmit={formik.handleSubmit}>
 					<FormularioCadastroManual
+						buscarCargaComDocumentoDeTransporte={
+							buscarCargaComDocumentoDeTransporte
+						}
 						handleSearchDistance={handleSearchDistance}
 						produtos={produtos}
 						distancia={distancia}

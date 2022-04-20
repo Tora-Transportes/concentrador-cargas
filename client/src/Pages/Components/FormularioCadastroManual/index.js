@@ -30,6 +30,7 @@ function FormularioCadastroManual({
 	distancia,
 	handleSearchDistance,
 	disabledFields = [],
+	buscarCargaComDocumentoDeTransporte,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
@@ -140,7 +141,10 @@ function FormularioCadastroManual({
 							name="documento_transporte"
 							value={formik.values.documento_transporte}
 							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
+							onBlur={(...rest) => {
+								formik.handleBlur(...rest);
+								buscarCargaComDocumentoDeTransporte(formik.values);
+							}}
 						/>
 					</FloatingLabel>
 				</Col>
