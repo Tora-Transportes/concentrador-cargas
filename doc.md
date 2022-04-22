@@ -27,3 +27,4 @@
   - coleta o resultado do repositórios/servicos/domain
     - caso seja uma alteração na carga é emitido um evento no websocket
   - envia o resultado para o usuario
+
