@@ -83,12 +83,12 @@ function Main() {
 					queueCoresAtuais.push(cor);
 					console.log(cor);
 					const interval2 = setTimeout(() => {
-						inputCorAtual.current.setAttribute("class", `w-100 btn`);
 						if (!inputCorAtual.current) {
 							clearInterval(interval1);
 							clearInterval(interval2);
 							return;
 						}
+						inputCorAtual.current.setAttribute("class", `w-100 btn`);
 					}, 500);
 					if (!inputCorAtual.current) {
 						clearInterval(interval1);
