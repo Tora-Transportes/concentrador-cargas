@@ -13,6 +13,13 @@ export class CargaValidationOperation {
       cargaSaida.fk_situacao = 1;
     }
 
+    if (
+      cargaAtual.placa_veiculo &&
+      (cargaAtual.fk_situacao == 1 || !cargaAtual.fk_situacao)
+    ) {
+      cargaSaida.fk_situacao = 2;
+    }
+
     if (cargaAnterior === null && cargaAtual.placa_veiculo) {
       if (!this.hasPermission.has("VINCULAR_PLACA")) {
         throw new Error(
