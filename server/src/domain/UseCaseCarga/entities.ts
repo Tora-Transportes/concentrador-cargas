@@ -358,6 +358,7 @@ export class UseCaseDeleteCarga {
       usuario,
       data_atualizacao: DateUtils.getCurrentDate(),
       observacao_exclusao: observacaoExclusao,
+      locais: undefined,
     };
 
     await this.cargaRepository.update(carga.id, cargaAtualizada as ICarga);
