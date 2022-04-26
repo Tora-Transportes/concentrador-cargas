@@ -108,6 +108,49 @@ class ServiceCoordenadas {
 	async listVehiclesInRange({ placa, distancia_km }) {
 		return api.get(`/coordenadas/${placa}/range`, { params: { distancia_km } });
 	}
+
+	async searchRoute({ placa, cnpj }) {
+		// return {
+		// 	data: {
+		// 		cnpj: cnpj,
+		// 		placa: placa,
+		// 		latitude_origem: -23.476389,
+		// 		longitude_origem: -46.439444,
+		// 		latitude_destino: -23.467848999999998,
+		// 		longitude_destino: -46.48377,
+		// 		distancia_km: 5.855,
+		// 		duracao_viagem_direta: 504,
+		// 	},
+		// };
+		return api.get(`/coordenadas/${placa}/empresa/${cnpj}`);
+	}
+
+	async listVehiclesInRangeEnterprise({ cnpj, distancia_km }) {
+		return api.get(`/coordenadas/empresa/${cnpj}`, {
+			params: { distancia_km },
+		});
+		// return {
+		// 	data: {
+		// 		cnpj: cnpj,
+		// 		latitude_origem: -23.476389,
+		// 		longitude_origem: -46.439444,
+		// 		veiculos: [
+		// 			{
+		// 				placa: "ABC1234",
+		// 				latitude: -22.476389,
+		// 				longitude: -46.439444,
+		// 				distancia_km: 12.5,
+		// 			},
+		// 			{
+		// 				placa: "ABC1235",
+		// 				latitude: -23.476389,
+		// 				longitude: -46.439444,
+		// 				distancia_km: 13.5,
+		// 			},
+		// 		],
+		// 	},
+		// };
+	}
 }
 
 export default new ServiceCoordenadas();

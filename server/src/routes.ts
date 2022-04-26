@@ -104,6 +104,15 @@ routes.get(
   "/coordenadas/:placa/range",
   CoordenadasController.listVehiclesInRange
 );
+
+routes.get(
+  "/coordenadas/:placa/empresa/:cnpj",
+  CoordenadasController.searchRouteVehicles
+);
+routes.get(
+  "/coordenadas/empresa/:cnpj",
+  CoordenadasController.listVehiclesInRangeEnterprise
+);
 routes.put("/coordenadas/:placa", CoordenadasController.update);
 routes.get("/coordenadas", CoordenadasController.search);
 routes.get("/relatorio/coordenadas", CoordenadasController.export);

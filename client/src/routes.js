@@ -18,6 +18,8 @@ import RelatoriosMain from "./Pages/Relatorios/Totalizadores";
 import Credenciais from "./Pages/Credenciais";
 import CalendarioProducao from "./Pages/CalendarioProducao";
 import RaioVeiculos from "./Pages/Veiculos/Raio";
+import DestinoCarga from "./Pages/Veiculos/DestinoCarga";
+import RaioEmpresa from "./Pages/Veiculos/RaioEmpresa";
 
 export default function AllRoutes() {
 	return (
@@ -47,6 +49,8 @@ export default function AllRoutes() {
 				<Route path="/veiculos/aprovacao" exact component={SituacaoVeiculos} />
 
 				<Route path="/veiculos/raio" exact component={RaioVeiculos} />
+				<Route path="/veiculos/destino" exact component={DestinoCarga} />
+				<Route path="/veiculos/raio/empresa" exact component={RaioEmpresa} />
 
 				<Route
 					path="/veiculos/coordenadas"

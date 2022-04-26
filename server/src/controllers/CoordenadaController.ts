@@ -95,6 +95,44 @@ class CoordenadasController {
 
     return res.json(veiculos);
   }
+
+  async listVehiclesInRangeEnterprise(req: Request, res: Response) {
+    const { distancia_km } = req.query;
+    const { cnpj } = req.params;
+    if (cnpj.length < 14) {
+      throw new AppError("CNPJ inválido", 400);
+    }
+
+    if (!distancia_km || isNaN(Number(distancia_km))) {
+      throw new AppError(
+        "Query param distancia_km inválido ou não informado",
+        400
+      );
+    }
+
+    const service = new ServiceDistanceLocations();
+    const veiculos = await service.listVehiclesInRangeEnterprise(
+      cnpj,
+      Number(distancia_km)
+    );
+
+    return res.json(veiculos);
+  }
+
+  async searchRouteVehicles(req: Request, res: Response) {
+    const { cnpj, placa } = req.params;
+    if (placa.length < 7) {
+      throw new AppError("Placa inválida", 400);
+    }
+    if (cnpj.length < 14) {
+      throw new AppError("CNPJ inválido", 400);
+    }
+
+    const service = new ServiceDistanceLocations();
+    const veiculos = await service.searchRouteToEnterprise(placa, cnpj);
+
+    return res.json(veiculos);
+  }
 }
 
 export default new CoordenadasController();
