@@ -92,11 +92,8 @@ async function job () {
         ])
         .where("cliente", "like", "%MAGNESITA%")
         .whereNotNull("placa_veiculo")
-        .where("fk_situacao", SITUACOES_APROVADO_PELO_GR)
-        .orWhere(q1 => {
-            q1.whereRaw(`(trunc(SYSDATE) - trunc("data_atualizacao")) <= ?`, [DIAS_A_ENVIAR_APOS_EMISSAO]);
-            q1.where("fk_situacao", "=", String(SITUACAO_DOCUMENTO_EMITIDO));
-        });
+        .whereIn("fk_situacao", [SITUACOES_APROVADO_PELO_GR, SITUACAO_DOCUMENTO_EMITIDO]);
+
     const veiculos = await query;
     const CHUNK_SIZE = 50;
     for(let i=0;i<veiculos.length;i+=CHUNK_SIZE) {
