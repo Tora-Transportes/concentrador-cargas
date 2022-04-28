@@ -48,6 +48,7 @@ const apps = scrapings.map(scraping => (
         cwd: path.join(__dirname, `scraping_${scraping.portal}`),
         script : "main.py",
         env: {...env, PORTAL: scraping.portal, LOGIN: scraping.user},
+        max_restarts: 3
     }
 ));
 
