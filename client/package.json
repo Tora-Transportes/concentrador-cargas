@@ -26,6 +26,8 @@
     "formik": "^2.2.9",
     "jwt-decode": "^3.1.1",
     "leaflet": "^1.8.0",
+    "primeicons": "^5.0.0",
+    "primereact": "^8.1.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-adal": "^0.5.0",

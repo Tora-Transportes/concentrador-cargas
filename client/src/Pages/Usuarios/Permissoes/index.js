@@ -1,40 +1,40 @@
-import React, { useState } from "react";
-import {
-	Container,
-	Row,
-	Col,
-	Form,
-	FormControl,
-	InputGroup,
-	Table,
-} from "react-bootstrap";
+import React, { useState, useRef } from "react";
+import "./index.css";
+import { Container, Row, Col } from "react-bootstrap";
 import { useFormik } from "formik";
 import NavbarNavigator from "../../Components/NavbarNavigator";
 import ServiceUsuarios from "../../../services/ServiceUsuarios";
 import useDebouncedFunction from "../../Components/useDebounceFunction";
-import { BsSearch } from "react-icons/bs";
-import { FaRegSave } from "react-icons/fa";
 import swal from "sweetalert";
+import { MultiSelect } from "primereact/multiselect";
+import { MdDeleteForever } from "react-icons/md";
+//import { BsSearch } from "react-icons/bs";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { allTipoPermissoes } from "../../Utils/permissionUser";
+import {
+	actionBodyTemplate,
+	emailBodyTemplate,
+	nameBodyTemplate,
+	permissBodyTemplate,
+} from "./templateDataTable";
+
 function Permissoes() {
 	const [users, setUsers] = useState([]);
+	const [permissSelecionado, setPermissSeleciondo] = useState([]);
+	const [globalFilter, setGlobalFilter] = useState();
+
+	const dadosTabela = useRef(null);
+
+	const limparPermissoes = () => {
+		setPermissSeleciondo([]);
+	};
 
 	const formik = useFormik({
 		initialValues: {
 			query: "",
-			permissao_deletar_cargas: false,
-			permissao_alterar_permissoes: false,
-			permissao_cadastrar_produtos: false,
-			permissao_aprovar_veiculos: false,
-			permissao_aprovar_viagem: false,
-			permissao_vincular_placa: false,
-			permissao_registrar_justificativa: false,
 		},
 	});
-
-	function handleChangeCheckbox(event) {
-		const { name, checked } = event.target;
-		formik.setFieldValue(name, checked);
-	}
 
 	useDebouncedFunction(
 		function () {
@@ -46,51 +46,73 @@ function Permissoes() {
 		500
 	);
 
-	async function handleSavePermissions(oid) {
-		const permissoes = [];
-		if (formik.values.permissao_deletar_cargas) {
-			permissoes.push("DELETAR_CARGAS");
-		}
-		if (formik.values.permissao_alterar_permissoes) {
-			permissoes.push("ALTERAR_PERMISSOES");
-		}
-		if (formik.values.permissao_cadastrar_produtos) {
-			permissoes.push("CADASTRAR_PRODUTOS");
-		}
-		if (formik.values.permissao_aprovar_veiculos) {
-			permissoes.push("APROVAR_VEICULOS");
-		}
-		if (formik.values.permissao_aprovar_viagem) {
-			permissoes.push("APROVAR_VIAGEM");
-		}
-		if (formik.values.permissao_vincular_placa) {
-			permissoes.push("VINCULAR_PLACA");
-		}
-		if (formik.values.permissao_registrar_justificativa) {
-			permissoes.push("REGISTRAR_JUSTIFICATIVA");
-		}
-		if (
-			await swal(
-				"👀",
-				"Certeza que deseja aplicar essas permissões para o usuário ?",
-				"warning",
-				{
-					buttons: ["Não", true],
+	async function handleSavePermissions(rowData, apagar) {
+		const { oid, permissoes } = await rowData;
+
+		if (!permissSelecionado.length && !apagar) {
+			await swal("👀", "Nenhuma alteração aplicada", "warning");
+		} else {
+			permissSelecionado.map((item) => {
+				if (!permissoes.includes(item.name)) {
+					permissoes.push(item.name);
 				}
-			)
-		) {
-			await ServiceUsuarios.changePermissions({ oid, permissoes });
-			setUsers((old) =>
-				old.map((i) => {
-					if (i.oid === oid) {
-						return { ...i, permissoes: permissoes };
-					}
-					return i;
+			});
+			const message = apagar
+				? "Certeza que deseja deletar permissão do usuário ?"
+				: "Certeza que deseja aplicar essas permissões para o usuário?";
+
+			if (
+				await swal("👀", message, "warning", {
+					buttons: ["Não", true],
 				})
-			);
-			swal("Sucesso", "Permissões alteradas", "success");
+			) {
+				await ServiceUsuarios.changePermissions({ oid, permissoes });
+				setUsers((old) =>
+					old.map((i) => {
+						if (i.oid === oid) {
+							return { ...i, permissoes: permissoes };
+						}
+						return i;
+					})
+				);
+				swal("Sucesso", "Permissões alteradas", "success");
+				limparPermissoes();
+			}
 		}
 	}
+
+	const deletePermission = (permissCancelada, oid) => {
+		users.map((item) => {
+			if (item.oid === oid) {
+				item.permissoes.splice(item.permissoes.indexOf(permissCancelada), 1);
+				handleSavePermissions(item, true);
+			}
+		});
+	};
+
+	const getActionBodyTemplate = (rowData) => {
+		return actionBodyTemplate(rowData, handleSavePermissions);
+	};
+
+	const getPermissBodyTemplate = (rowData) => {
+		return permissBodyTemplate(rowData, deletePermission);
+	};
+
+	const renderHeader = () => {
+		return (
+			<div className="header-table-add-permission">
+				<div className="menu-header-table-permission">
+					<input
+						placeholder="Fazer uma busca global"
+						value={globalFilter}
+						onChange={(e) => setGlobalFilter(e.target.value)}
+						className=" input-empty"
+					/>
+					<i className="pi pi-search" />
+				</div>
+			</div>
+		);
+	};
 
 	return (
 		<>
@@ -98,116 +120,78 @@ function Permissoes() {
 			<Container className="text-center mb-5 mt-5">
 				<Row>
 					<Col>
-						<Form.Check
-							type="checkbox"
-							name="permissao_deletar_cargas"
-							checked={formik.values.permissao_deletar_cargas}
-							onChange={handleChangeCheckbox}
-							label={`Deletar cargas`}
-							id="permissao_deletar_cargas"
-							inline
-						/>
-						<Form.Check
-							type="checkbox"
-							name="permissao_alterar_permissoes"
-							checked={formik.values.permissao_alterar_permissoes}
-							onChange={handleChangeCheckbox}
-							label={`Alterar permissões`}
-							id="permissao_alterar_permissoes"
-							inline
-						/>
-						<Form.Check
-							type="checkbox"
-							name="permissao_cadastrar_produtos"
-							checked={formik.values.permissao_cadastrar_produtos}
-							onChange={handleChangeCheckbox}
-							label={`Cadastrar produtos`}
-							id="permissao_cadastrar_produtos"
-							inline
-						/>
-						<Form.Check
-							type="checkbox"
-							name="permissao_aprovar_veiculos"
-							checked={formik.values.permissao_aprovar_veiculos}
-							onChange={handleChangeCheckbox}
-							label={`Aprovar veículos`}
-							id="permissao_aprovar_veiculos"
-							inline
-						/>
-						<Form.Check
-							type="checkbox"
-							name="permissao_aprovar_viagem"
-							checked={formik.values.permissao_aprovar_viagem}
-							onChange={handleChangeCheckbox}
-							label={`Aprovar viagem`}
-							id="permissao_aprovar_viagem"
-							inline
-						/>
-						<Form.Check
-							type="checkbox"
-							name="permissao_vincular_placa"
-							checked={formik.values.permissao_vincular_placa}
-							onChange={handleChangeCheckbox}
-							label={`Vincular placa`}
-							id="permissao_vincular_placa"
-							inline
-						/>
-						<Form.Check
-							type="checkbox"
-							name="permissao_registrar_justificativa"
-							checked={formik.values.permissao_registrar_justificativa}
-							onChange={handleChangeCheckbox}
-							label={`Registrar Justificativa`}
-							id="permissao_registrar_justificativa"
-							inline
-						/>
+						<h1 className="title-H1">Permissões dos usuários</h1>
 					</Col>
 				</Row>
 				<Row>
-					<InputGroup className="mb-2">
-						<InputGroup.Text>
-							<BsSearch />
-						</InputGroup.Text>
-						<FormControl
-							name="query"
-							onChange={formik.handleChange}
-							value={formik.values.query}
-							placeholder="..."
-						/>
-					</InputGroup>
-				</Row>
-				<Row className="mt-1">
-					<Col>
-						<Table striped bordered hover>
-							<thead>
-								<tr>
-									<th>Nome</th>
-									<th>Email</th>
-									<th>Permissões</th>
-									<th>Aplicar permissão</th>
-								</tr>
-							</thead>
-							<tbody>
-								{users.map((i) => (
-									<tr key={i.oid}>
-										<td>{i.nome}</td>
-										<td>{i.email}</td>
-										<td>
-											{i.permissoes.map((j) => (
-												<span key={i.oid + j} className="fw-bold">
-													{j}
-													<br />
-												</span>
-											))}
-										</td>
-										<td>
-											<FaRegSave onClick={() => handleSavePermissions(i.oid)} />
-										</td>
-									</tr>
-								))}
-							</tbody>
-						</Table>
-					</Col>
+					<div className="page-add-permissin-user">
+						{/* <p>Selecione todas as permissõe para o usuário no checkbox abaixo.</p> */}
+						<div className="form-multSelect">
+							<MultiSelect
+								display="chip"
+								value={permissSelecionado}
+								options={allTipoPermissoes}
+								onChange={(e) => setPermissSeleciondo(e.value)}
+								optionLabel="name"
+								placeholder="Selecionar permições"
+								filter={true}
+								filterPlaceholder="Procurar"
+							/>
+
+							<button
+								onClick={limparPermissoes}
+								disabled={permissSelecionado.length === 0}
+								className="form-multSelect-button"
+							>
+								<MdDeleteForever size={20} color="white" />
+								<span>Limpar buscas</span>
+							</button>
+						</div>
+
+						<div className="table-add-permission">
+							<DataTable
+								ref={dadosTabela}
+								value={users}
+								globalFilter={globalFilter}
+								header={renderHeader()}
+								paginator
+								rows={10}
+								paginatorTemplate=" PrevPageLink PageLinks NextPageLink  CurrentPageReport RowsPerPageDropdown"
+								rowsPerPageOptions={[15, 20, 25]}
+							>
+								<Column
+									body={nameBodyTemplate}
+									field="nome"
+									header="Nome"
+									className="table-column-nome"
+								/>
+								<Column
+									body={emailBodyTemplate}
+									field="email"
+									header="Email"
+									className="table-column-email"
+								/>
+								<Column
+									key="permissoes"
+									columnKey="permissoesColumn"
+									body={getPermissBodyTemplate}
+									field="permissoes"
+									className="table-column-permissoes"
+									header="Permissão"
+								/>
+								<Column
+									body={getActionBodyTemplate}
+									className="table-column-button"
+									headerStyle={{ width: "9em", textAlign: "center" }}
+									bodyStyle={{
+										textAlign: "center",
+										overflow: "visible",
+										backgroundColor: "#eefdec",
+									}}
+								/>
+							</DataTable>
+						</div>
+					</div>
 				</Row>
 			</Container>
 		</>
