@@ -1,295 +1,282 @@
-.title-H1{
-    color: #024c01;
-    margin-bottom: 3vh;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+.title-h1 {
+  margin-bottom: 3vh;
+  color: #024c01;
+  text-shadow: 3px 3px 5px #161515;
+  margin-bottom: 0.5em;
 }
 
-.form-check-input{
-    cursor: pointer;
-    transition: 500ms linear; 
+/* Tabela css */
+
+.p-datatable table {
+  box-shadow: 9px 0 5px rgb(50 50 50 / 77%);
+  margin-top: 2em;
 }
 
-.form-check-input:hover{
-    background-color: rgb(0, 81, 255);
-    transform: scale(1.4);
+.text-center .imput-row {
+  margin: 17px 0 17px 0;
 }
 
-.form-check-label{
-    color:#191970;
+.head-table-tr {
+  color: #024c01;
 }
 
-.form-check-regist-justific{
-    margin-top: 13px;
+.text-center .mt-1 tbody td .icon-save {
+  height: 28px;
+  width: 22px;
+  color: #024c01;
+  cursor: pointer;
 }
 
-.text-center .imput-row{
-    margin: 17px 0 17px 0;
+.page-add-permissin-user,
+.form-multSelect {
+  width: 100%;
 }
 
-
-.head-table-tr{
-    color: #024c01
+.page-add-permissin-user {
+  padding: 0 15px;
+  margin-bottom: 20px;
 }
 
-.fw-bold{
-    color:#191970
+.form-multSelect {
+  display: flex;
+  flex-direction: row;
+  padding: 9px;
+  background-color: #f3f3f3;
+  border-radius: 10px;
 }
 
-.text-center .mt-1 tbody  td .icon-save{
-    height: 28px;
-    width: 22px;
-    color: #024c01;
-    cursor: pointer;
+.form-multSelect-button,
+.button-table-add-permission button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  border: none;
+  border-radius: 5px;
+  transition: 0.4s ease-in-out;
+  cursor: pointer;
 }
 
-.icon-save-td{
-    vertical-align: middle;
+.form-multSelect-button {
+  background-color: rgba(44, 139, 248, 0.801);
+  padding: 5px;
+  color: white;
+  margin-bottom: 10px;
+  margin-inline-start: auto;
 }
 
-.mt-1 tbody .td-talbe{
-    vertical-align: middle;
+.form-multSelect-button:hover {
+  background-color: rgba(73, 157, 252, 0.801);
 }
 
-.page-add-permissin-user, .form-multSelect, .main-div-title {
-    width: 100%;
-  }
-  
-  .page-add-permissin-user {
-    padding: 0 15px;
-    margin-bottom: 20px;
-  }
-  
-  .main-div-title{
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    align-items: center;
-  }
-  
-  .div-title{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    height: 100%;
-  }
-  
-  .div-title h1{
-    font-size: 1.7em;
-    color: #008000;
+.form-multSelect-button:disabled {
+  background-color: #d8bfd8;
+  cursor: not-allowed;
+  margin-bottom: 10px;
+  margin-inline-start: auto;
+}
 
-  }
-  
-  
+.p-multiselect.p-multiselect-chip .p-multiselect-token span {
+  color: #1c1c1c;
+}
+.button-table-add-permission button {
+  background-color: #008000;
+  padding: 7px 10px;
+  color: white;
+}
+
+.button-table-add-permission button:disabled,
+.button-table-add-permission button:disabled:hover {
+  cursor: not-allowed;
+  background-color: rgb(196, 122, 122);
+}
+
+.button-table-add-permission button span {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.button-table-add-permission button:hover {
+  background-color: rgb(90, 226, 63);
+}
+
+.form-multSelect-button span {
+  font-weight: bold;
+  color: white;
+  margin-left: 5px;
+}
+.table-add-permission,
+.form-multSelect {
+  margin-bottom: 15px;
+  display: contents;
+}
+.menu-header-table-permission {
+  display: flex;
+  align-items: center;
+  background-color: #ffff;
+  width: 30%;
+  border-radius: 3.5px;
+  border: 1px solid #a6a6a6;
+  justify-content: space-between;
+  margin-left: 10px;
+}
+
+.button-table-add-permission {
+  display: flex;
+  justify-content: center;
+}
+
+.menu-header-table-permission input {
+  padding: 8px;
+  border: none;
+  width: 100%;
+}
+
+.menu-header-table-permission i {
+  margin-right: 15px;
+  margin-left: 10px;
+}
+
+/* colunas da tabela */
+
+.logo-button-table-apagar-permission {
+  color: red;
+  float: left;
+  margin-right: 15px;
+  margin-top: 3px;
+  cursor: pointer;
+}
+
+.table-column-nome,
+.table-column-email,
+.table-column-permissao {
+  background-color: #eefdec;
+  color: #000000;
+}
+
+.table-column-permissoes {
+  background-color: #eefdec;
+  color: #483d8b;
+}
+
+.table-column-button {
+  text-align: "center";
+  overflow: "visible";
+  background-color: "#eefdec";
+}
+
+.p-column-title {
+  color: #008000;
+}
+
+.p-multiselect {
+  max-width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 694px) {
   .form-multSelect {
     display: flex;
-    /* justify-content: space-between; */
-    flex-direction: row;
-    padding: 9px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
     background-color: #f3f3f3;
     border-radius: 10px;
   }
-  
-  .form-multSelect-button, .button-table-add-permission button, .actions-form button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    border: none;
-    border-radius: 5px;
-    transition: .4s ease-in-out;
-    cursor: pointer;
-  }
-  
-  
-  .form-multSelect-button{
-    background-color: rgba(44, 139, 248, 0.801);
-    padding: 5px;
-    color: white;
-    margin-bottom: 10px;
-    margin-inline-start: auto;
-  }
-  
-  .form-multSelect-button:hover{
-    background-color: rgba(73, 157, 252, 0.801);
-  }
-  
-  .form-multSelect-button:disabled {
-    background-color: #D8BFD8;
-    cursor: not-allowed;
-    margin-bottom: 10px;
-    margin-inline-start: auto;
-  }
-  .p-multiselect.p-multiselect-chip .p-multiselect-token span{
-    color: #1C1C1C;
-  }
-
-
-  .button-table-add-permission button{
-    background-color: #008000;
-    padding: 7px 10px;
-    color: white;
-  }
-  
-  .button-table-add-permission button:disabled, .button-table-add-permission button:disabled:hover{
-    cursor: not-allowed;
-    background-color: rgb(196, 122, 122);
-  
-  }
-  
-
-  .button-table-add-permission button span{
-    margin-left: 5px;
-    font-weight: bold;
-  
-  }
-  
-  .button-table-add-permission button:hover{
-    background-color: rgb(90, 226, 63)
-  }
-  
-  .form-multSelect-button span{
-    font-weight: bold;
-    color: white;
-    margin-left: 5px;
-  }
-  
-
-  .table-add-permission, .form-multSelect, .main-div-title {
-    margin-bottom: 15px;
-    display: contents;
-  }
-  
-  .header-table-add-permission {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 5px;
-  }
-  
-
-  .menu-header-table-permission{
-    display: flex;
-    align-items: center;
-    background-color: #FFFF;
-    width: 30%;
-    border-radius: 3.5px;
-    border: 1px solid #a6a6a6;
-    justify-content: space-between;
-    margin-left: 10px;
-  }
 
   .button-table-add-permission {
-    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
     justify-content: center;
+    margin-bottom: 10px;
   }
 
-  .menu-header-table-permission input {
-    padding: 8px;
-    border: none;
+  .header-table-add-permission {
+    background-color: #ffffff !important;
+  }
+
+  td {
+    border-right: 1px solid #c8c8c8 !important;
+    border-left: 1px solid #c8c8c8 !important;
+  }
+}
+@media only screen and (max-width: 961px) {
+  .menu-header-table-permission {
     width: 100%;
   }
-
-  .menu-header-table-permission i {
-    margin-right: 15px;
-    margin-left: 10px;
-  }
-
-  /* colunas da tabela */
-
-  .logo-button-table-apagar-permission{
-    color: red;
-    float: left;
-    margin-right: 15px;
-    margin-top: 3px;
-    cursor: pointer;
-  }
-
-  .table-column-nome, .table-column-email, .table-column-permissao{
-    background-color: #eefdec;
-    color: #000000
-  }
-
-  .table-column-permissoes {
-    background-color: #eefdec;
-    color: #483D8B;
-  }
-
-  .p-column-title{
-    color: #008000
-  }
-
-  @keyframes in{
-    from {
-      transform: translateY(20px);
-      opacity: 0;
-    }
-    
-    to {
-      transform: translateY(0px);
-      opacity: 1;
-    }
-  }
-  
-  
-  @media only screen and (max-width: 694px) {
-    .form-multSelect {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      padding: 20px;
-      background-color: #f3f3f3;
-      border-radius: 10px;
-    }
-  
-    .button-table-add-permission{
-      width: 100%;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 10px;
-    }
-  
-    .header-table-add-permission {
-      background-color: #FFFFFF !important;
-    }
-  
-    td{
-      border-right: 1px solid #C8C8C8 !important;
-      border-left: 1px solid #C8C8C8 !important;
-    }
-    
-  }
-  
-  @media only screen and (max-width: 415px) {
-
-    /* .p-datatable[pr_id_1] .p-datatable-tbody > tr > td{
-      display: block;
-    } */
-
-    .menu-header-table-permission{
-      width: 100%;
-    }
-
-      
   .form-multSelect-button:disabled {
     margin-right: 20%;
   }
+}
 
-    .div-title h1{
-      font-size: 1.3em;
-    }
-    .div-title p{
-      font-size: .8em;
-    }
+@media (max-width: 992px) {
+  .ModalStyle {
+    height: 100%;
+    overflow: auto;
+    padding: 2px;
+    width: 70%;
   }
-  
-  .p-multiselect{
-    max-width: 100%;
-    margin-top: 5px;
-    margin-bottom: 5px;
+
+  .dentroModal {
+    margin-left: 4%;
   }
-  
+
+  .dentroModalEdicao {
+    margin-left: 5%;
+  }
+
+  .MuiStepper-horizontal {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .buttonDiv button {
+    font-size: 0.9em;
+    padding: 5px;
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  .buttonDiv {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* css nativa da tabela */
+.datatable-responsive-demo .p-datatable-responsive-demo .p-datatable-tbody>tr>td .p-column-title {
+  display: none;
+}
 
 
+@media screen and (max-width: 50em) {
+
+  .datatable-responsive-demo .p-datatable.p-datatable-responsive-demo .p-datatable-thead>tr>th,
+  .datatable-responsive-demo .p-datatable.p-datatable-responsive-demo .p-datatable-tfoot>tr>td {
+      display: none !important;
+  }
+
+  .datatable-responsive-demo .p-datatable.p-datatable-responsive-demo .p-datatable-tbody>tr>td {
+      text-align: left;
+      display: block;
+      width: 100%;
+      float: left;
+      clear: left;
+      border: 0 none;
+  }
+
+  .datatable-responsive-demo .p-datatable.p-datatable-responsive-demo .p-datatable-tbody>tr>td .p-column-title {
+      padding: .4rem;
+      min-width: 30%;
+      display: inline-block;
+      margin: -.4em 1em -.4em -.4rem;
+      font-weight: bold;
+  }
+
+
+}
 

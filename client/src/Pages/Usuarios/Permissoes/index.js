@@ -8,11 +8,11 @@ import useDebouncedFunction from "../../Components/useDebounceFunction";
 import swal from "sweetalert";
 import { MultiSelect } from "primereact/multiselect";
 import { MdDeleteForever } from "react-icons/md";
-//import { BsSearch } from "react-icons/bs";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { allTipoPermissoes } from "../../Utils/permissionUser";
 import {
+	renderHeader,
 	actionBodyTemplate,
 	emailBodyTemplate,
 	nameBodyTemplate,
@@ -98,34 +98,21 @@ function Permissoes() {
 		return permissBodyTemplate(rowData, deletePermission);
 	};
 
-	const renderHeader = () => {
-		return (
-			<div className="header-table-add-permission">
-				<div className="menu-header-table-permission">
-					<input
-						placeholder="Fazer uma busca global"
-						value={globalFilter}
-						onChange={(e) => setGlobalFilter(e.target.value)}
-						className=" input-empty"
-					/>
-					<i className="pi pi-search" />
-				</div>
-			</div>
-		);
+	const getRenderHeader = () => {
+		return renderHeader(globalFilter, setGlobalFilter);
 	};
 
 	return (
 		<>
 			<NavbarNavigator />
-			<Container className="text-center mb-5 mt-5">
+			<Container className="text-center mb-4 mt-4">
 				<Row>
 					<Col>
-						<h1 className="title-H1">Permissões dos usuários</h1>
+						<h1 className="title-h1">Permissões dos usuários</h1>
 					</Col>
 				</Row>
 				<Row>
 					<div className="page-add-permissin-user">
-						{/* <p>Selecione todas as permissõe para o usuário no checkbox abaixo.</p> */}
 						<div className="form-multSelect">
 							<MultiSelect
 								display="chip"
@@ -149,47 +136,46 @@ function Permissoes() {
 						</div>
 
 						<div className="table-add-permission">
-							<DataTable
-								ref={dadosTabela}
-								value={users}
-								globalFilter={globalFilter}
-								header={renderHeader()}
-								paginator
-								rows={10}
-								paginatorTemplate=" PrevPageLink PageLinks NextPageLink  CurrentPageReport RowsPerPageDropdown"
-								rowsPerPageOptions={[15, 20, 25]}
-							>
-								<Column
-									body={nameBodyTemplate}
-									field="nome"
-									header="Nome"
-									className="table-column-nome"
-								/>
-								<Column
-									body={emailBodyTemplate}
-									field="email"
-									header="Email"
-									className="table-column-email"
-								/>
-								<Column
-									key="permissoes"
-									columnKey="permissoesColumn"
-									body={getPermissBodyTemplate}
-									field="permissoes"
-									className="table-column-permissoes"
-									header="Permissão"
-								/>
-								<Column
-									body={getActionBodyTemplate}
-									className="table-column-button"
-									headerStyle={{ width: "9em", textAlign: "center" }}
-									bodyStyle={{
-										textAlign: "center",
-										overflow: "visible",
-										backgroundColor: "#eefdec",
-									}}
-								/>
-							</DataTable>
+							<div className="datatable-responsive-demo">
+								<DataTable
+									className="p-datatable-responsive-demo"
+									ref={dadosTabela}
+									value={users}
+									globalFilter={globalFilter}
+									header={getRenderHeader()}
+									paginator
+									rows={10}
+									emptyMessage="Não foram encontrado nenhum resultado nesta busca"
+									paginatorTemplate=" PrevPageLink PageLinks NextPageLink  CurrentPageReport RowsPerPageDropdown"
+									rowsPerPageOptions={[15, 20, 25]}
+								>
+									<Column
+										body={nameBodyTemplate}
+										field="nome"
+										header="Nome"
+										className="table-column-nome"
+									/>
+									<Column
+										body={emailBodyTemplate}
+										field="email"
+										header="Email"
+										className="table-column-email"
+									/>
+									<Column
+										key="permissoes"
+										columnKey="permissoesColumn"
+										body={getPermissBodyTemplate}
+										field="permissoes"
+										className="table-column-permissoes"
+										header="Permissão"
+									/>
+									<Column
+										body={getActionBodyTemplate}
+										className="table-column-button"
+										headerStyle={{ width: "9em", textAlign: "center" }}
+									/>
+								</DataTable>
+							</div>
 						</div>
 					</div>
 				</Row>

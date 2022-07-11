@@ -2,6 +2,22 @@ import React from "react";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { MdDeleteForever } from "react-icons/md";
 
+export const renderHeader = (globalFilter, setGlobalFilter) => {
+	return (
+		<div className="header-table-add-permission">
+			<div className="menu-header-table-permission">
+				<input
+					placeholder="Fazer uma busca global"
+					value={globalFilter}
+					onChange={(e) => setGlobalFilter(e.target.value)}
+					className=" input-empty"
+				/>
+				<i className="pi pi-search" />
+			</div>
+		</div>
+	);
+};
+
 export const actionBodyTemplate = (rowData, handleSavePermissions) => {
 	return (
 		<div className="button-table-add-permission">

@@ -1,33 +1,29 @@
-import React, { useEffect, useState } from "react";
-import {
-	Container,
-	Row,
-	Col,
-	ListGroup,
-	InputGroup,
-	Button,
-	Form,
-	Table,
-	FormControl,
-} from "react-bootstrap";
+import React, { useEffect, useState, useRef } from "react";
+import "./index.css";
+import { Container, Row } from "react-bootstrap";
 import { useFormik } from "formik";
 import NavbarNavigator from "../Components/NavbarNavigator";
 import ServiceProdutos from "../../services/ServiceProdutos";
-import { MdAddCircleOutline } from "react-icons/md";
 import swal from "sweetalert";
 import { getClaims } from "../../MicrosoftAuthentication";
 import useLoadingScreen from "../Components/LoadingScreen";
-
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
 import {
-	BsPencilSquare,
-	BsTrash,
-	BsCheckLg,
-	BsInfoCircle,
-} from "react-icons/bs";
+	nameBodyTemplate,
+	opcoesTemplate,
+	situacaoBodyTemplate,
+	usuarioBodyTemplate,
+	renderHeader,
+} from "./templateDataTable";
 
 function Produtos() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [produtos, setProdutos] = useState([]);
+	const [globalFilter, setGlobalFilter] = useState();
+
+	const dadosTabela = useRef(null);
+
 	const formik = useFormik({
 		initialValues: {
 			nome: "",
@@ -108,13 +104,13 @@ function Produtos() {
 		}
 
 		try {
-			await ServiceProdutos.update({ nome: produto, id });
+			await ServiceProdutos.update({ nome: produto.toUpperCase(), id });
 			swal("Sucesso!", "Produto atualizado", "success");
 			setProdutos((p) =>
 				p
 					.map((i) => {
 						if (i.id !== id) return i;
-						return { ...i, nome: produto };
+						return { ...i, nome: produto.toUpperCase() };
 					})
 					.sort((a, b) => (a.nome > b.nome ? 1 : -1))
 			);
@@ -129,113 +125,66 @@ function Produtos() {
 		});
 	}, []);
 
+	const getOpcoesTemplate = (rowData) => {
+		return opcoesTemplate(
+			rowData,
+			swal,
+			handleEditProduto,
+			handleDelete,
+			handleEnableProduto
+		);
+	};
+
+	const getRenderHeader = () => {
+		return renderHeader(formik, globalFilter, setGlobalFilter);
+	};
+
 	return (
 		<>
 			<LoadingScreen />
 			<NavbarNavigator />
-			<Container className="text-center mb-5 mt-5">
+			<Container className="text-center mb-3 mt-3">
 				<Row>
-					<Form onSubmit={formik.handleSubmit}>
-						<InputGroup className="mb-2">
-							<Button variant="outline-info" type="submit">
-								<MdAddCircleOutline />
-							</Button>
-							<FormControl
-								name="nome"
-								onChange={formik.handleChange}
-								value={formik.values.nome}
-								placeholder=". . ."
-								list="nome_produtos"
+					<h1 className="title-h1">Produtos</h1>
+					<div className="datatable-responsive-demoPermissoes">
+						<DataTable
+							className="p-datatable-responsive-demoPermissoes"
+							ref={dadosTabela}
+							globalFilter={globalFilter}
+							value={produtos}
+							header={getRenderHeader()}
+							paginator
+							rows={60}
+							paginatorTemplate=" PrevPageLink PageLinks NextPageLink  CurrentPageReport RowsPerPageDropdown"
+							emptyMessage="Não foram encontrado nenhum resultado nesta busca"
+							rowsPerPageOptions={[80, 100]}
+						>
+							<Column
+								body={nameBodyTemplate}
+								field="nome"
+								header="Nome"
+								bodyStyle={{ color: "red" }}
+								//className="table-column-nome"
 							/>
-							<datalist id="nome_produtos">
-								{produtos.map((i) => (
-									<option key={i.nome}>{i.nome}</option>
-								))}
-							</datalist>
-						</InputGroup>
-					</Form>
-				</Row>
-				<hr className="mt-5 mb-5" />
-				<Row>
-					<Col>
-						<ListGroup as="ol">
-							<Row>
-								<Table>
-									<thead>
-										<tr>
-											<th>Nome</th>
-											<th>Atualizado Por:</th>
-											<th>Situação</th>
-											<th>Ações</th>
-										</tr>
-									</thead>
-									<tbody>
-										{produtos
-											.filter(
-												(i) =>
-													JSON.stringify(i).indexOf(formik.values.nome) !== -1
-											)
-											.map((i) => (
-												<tr
-													key={i.id}
-													className={!i.ativo ? "text-danger" : ""}
-												>
-													<td>{i.nome}</td>
-													<td>{i.usuario}</td>
-													<td>{i.ativo ? "Ativo" : "Desativado"}</td>
-													<td>
-														{!!i.ativo && (
-															<>
-																<a
-																	href=""
-																	onClick={(e) => {
-																		e.preventDefault();
-																		handleEditProduto(i.id);
-																	}}
-																>
-																	<BsPencilSquare />
-																</a>{" "}
-																<a
-																	href=""
-																	onClick={(e) => {
-																		e.preventDefault();
-																		handleDelete(i.id);
-																	}}
-																>
-																	<BsTrash />
-																</a>
-															</>
-														)}{" "}
-														{!i.ativo && (
-															<>
-																<a
-																	href=""
-																	onClick={(e) => {
-																		e.preventDefault();
-																		handleEnableProduto(i.id);
-																	}}
-																>
-																	<BsCheckLg />
-																</a>{" "}
-																<a
-																	href=" "
-																	onClick={(e) => {
-																		e.preventDefault();
-																		swal(i.observacao);
-																	}}
-																>
-																	<BsInfoCircle />
-																</a>
-															</>
-														)}
-													</td>
-												</tr>
-											))}
-									</tbody>
-								</Table>
-							</Row>
-						</ListGroup>
-					</Col>
+							<Column
+								body={usuarioBodyTemplate}
+								field="usuario"
+								header="Atualizado Por:"
+								className="table-column-email"
+							/>
+							<Column
+								body={situacaoBodyTemplate}
+								field="ativo"
+								className="table-column-permissoes"
+								header="Situação"
+							/>
+							<Column
+								header="Ações"
+								body={getOpcoesTemplate}
+								className="table-column-acoes"
+							/>
+						</DataTable>
+					</div>
 				</Row>
 			</Container>
 		</>
