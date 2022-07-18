@@ -1,0 +1,13 @@
+.card-text:last-child {
+  display: flex;
+  margin: 5px;
+}
+
+.col-legenda{
+  border-left: 2px solid #d3d3d3;
+  margin: 2px;
+}
+
+.icon-text {
+    margin-bottom: 5px;
+}

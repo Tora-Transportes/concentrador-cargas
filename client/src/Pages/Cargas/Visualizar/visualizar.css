@@ -1,0 +1,11 @@
+@media only screen and (max-width: 576px) {
+  .row-inicio-carga button {
+    width: 100%;
+  }
+  .inicio-col-legenda{
+    margin-bottom: 5px;
+  }
+  .inicio-col-registros {
+    margin-bottom: 5px;
+  }
+}

@@ -1,20 +1,55 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Table, Pagination, Form } from "react-bootstrap";
-import { useFormik } from "formik";
-import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
-import useDebouncedFunction from "../useDebounceFunction";
 import "./index.css";
+import { Button, Row, Col, Form, Container } from "react-bootstrap";
+import { useFormik } from "formik";
+import useDebouncedFunction from "../useDebounceFunction";
+import { DataTable } from "primereact/datatable";
+//import { BsGear } from "react-icons/bs";
+import { Column } from "primereact/column";
+import { IoIosRefreshCircle } from "react-icons/io";
+import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
+//import CaptionStatusCarga from "../CaptionStatusCarga";
+import { MultiSelect } from "primereact/multiselect";
 
-function TabelaCargas({ columns, get_data, values, responsive = true }) {
+function TabelaCargas({
+	columns,
+	get_data,
+	values,
+	//handleExportExcel,
+	//handleToggleModal,
+	resetView,
+	setItensPerPage,
+	itensPerPage,
+}) {
 	const [data, setData] = useState([]);
 	const [page, setPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
+	//const [dynamicColumns, setDynamicColums] = useState();
+	const [sortField, setSortField] = useState();
+	const [sortOrder, setSortOrder] = useState();
+	const [selectedColumns, setSelectedColumns] = useState(columns);
+	//const [globalFilter, setGlobalFilter] = useState();
+	const dadosTabela = useRef(null);
+
+	const onColumnToggle = (event) => {
+		let selectedColumns = event.value;
+		let orderedSelectedColumns = columns.filter((col) =>
+			selectedColumns.some((sCol) => sCol.field === col.field)
+		);
+		setSelectedColumns(orderedSelectedColumns);
+	};
+
+	const onSort = (e) => {
+		setSortField(e.sortField);
+		setSortOrder(e.sortOrder);
+	};
 
 	useEffect(() => {
-		const { results, total_pages, current_page } = values;
+		const { total_pages, results, current_page } = values;
 		setData(results);
 		setPage(current_page);
 		setTotalPages(total_pages);
+		//setGlobalFilter();
 	}, [values]);
 
 	const filter = useFormik({
@@ -71,15 +106,116 @@ function TabelaCargas({ columns, get_data, values, responsive = true }) {
 		});
 	}
 
-	function getOrderByIcon(columnName) {
-		if (columnName === orderby.values.column) {
-			return orderby.values.direction === "desc" ? (
-				<AiOutlineArrowDown />
-			) : (
-				<AiOutlineArrowUp />
-			);
-		}
-	}
+	// function getOrderByIcon(columnName) {
+	// 	if (columnName === orderby.values.column) {
+	// 		return orderby.values.direction === "desc" ? (
+	// 			<AiOutlineArrowDown />
+	// 		) : (
+	// 			<AiOutlineArrowUp />
+	// 		);
+	// 	}
+	// }
+
+	// useEffect(() => {
+	// 	(async () => {
+	const setDynamicColums = selectedColumns.map((col) => {
+		return (
+			<Column
+				key={col.field}
+				field={col.field}
+				style={col.style}
+				header={col.header}
+				body={col.body}
+				sortable={col.sortable}
+				filter={true}
+				filterPlaceholder={col.filterPlaceholder}
+				filterElement={
+					col.filterElement && (
+						<col.filterElement
+							name={col.field}
+							value={filter.getFieldProps("fk_situacao").value || ""}
+							onChange={filter.handleChange}
+							className="w-100"
+						/>
+					)
+				}
+				static_column={
+					col.static_column !== true &&
+					!col.Filter && (
+						<Form.Control
+							name={col.field}
+							onChange={filter.handleChange}
+							className="w-100"
+						/>
+					)
+				}
+			/>
+		);
+	});
+
+	//})();
+	//}, [data, page, columns]);
+
+	const header = (
+		<Container fluid>
+			<Row className="header-table">
+				<Col
+					className="header-col-multiselect text-start"
+					style={{ marginLeft: "-26px" }}
+				>
+					<MultiSelect
+						value={selectedColumns}
+						options={columns}
+						optionLabel="header"
+						onChange={onColumnToggle}
+						style={{
+							height: "43px",
+							alignItems: "center",
+							width: " 15.7em",
+						}}
+						filterPlaceholder="Procurar"
+						placeholder="config tabela"
+					/>
+				</Col>
+				<Col>
+					<select
+						className="btn"
+						value={itensPerPage}
+						onChange={(e) => setItensPerPage(e.target.value)}
+					>
+						<option value="5">👀 5</option>
+						<option value="10">👀 10</option>
+						<option value="20">👀 20</option>
+						<option value="50">👀 50</option>
+						<option value="100">👀 100</option>
+						<option value="500">👀 500</option>
+					</select>
+				</Col>
+				<Col className=" header-col-atualiza">
+					<Button
+						variant="primary"
+						onClick={resetView}
+						className="header-button-atualiza"
+					>
+						<IoIosRefreshCircle /> Atualizar tabela
+					</Button>
+				</Col>
+			</Row>
+		</Container>
+	);
+
+	const footerTemplateVendedor = () => {
+		return (
+			<Col className="footer-table">
+				<Button variant="outline-info" onClick={previousPage}>
+					<HiChevronDoubleLeft /> Voltar paginação
+				</Button>
+				<Button variant="outline-info" onClick={nextPage}>
+					Proxíma paginação <HiChevronDoubleRight />
+				</Button>
+			</Col>
+		);
+	};
 
 	const firstRun = useRef(true);
 	useEffect(() => {
@@ -91,7 +227,7 @@ function TabelaCargas({ columns, get_data, values, responsive = true }) {
 	}, [page, orderby.values, get_data]);
 
 	useEffect(() => {
-		console.log(page);
+		//console.log(page);
 	}, [page]);
 
 	const firstDebounceRun = useRef(true);
@@ -101,7 +237,7 @@ function TabelaCargas({ columns, get_data, values, responsive = true }) {
 				firstDebounceRun.current = false;
 				return;
 			}
-			console.log("DR", firstDebounceRun);
+			//console.log("DR", firstDebounceRun);
 			if (page === 1) {
 				notify();
 			} else {
@@ -113,96 +249,28 @@ function TabelaCargas({ columns, get_data, values, responsive = true }) {
 	);
 
 	return (
-		<Table
-			striped
-			bordered
-			hover
-			responsive={responsive}
-			className="table-external"
-		>
-			<thead>
-				<tr>
-					<td colSpan={columns.length} style={{ padding: 0, margin: 0 }}>
-						<Pagination id="paginacao_barra" size="sm">
-							<Pagination.Prev onClick={previousPage} />
-							<Pagination.Next onClick={nextPage} />
-						</Pagination>
-					</td>
-				</tr>
-				<tr>
-					{columns.map((i) => (
-						<th key={"col-header-" + i.name} className="text-center">
-							<a
-								className="text-decoration-none text-black"
-								href="#"
-								onClick={(e) => {
-									e.preventDefault();
-									if (i.static_column === true) {
-										return;
-									}
-									const column = i.name;
-									if (
-										orderby.values.column === column &&
-										orderby.values.direction === "asc"
-									) {
-										orderby.setValues({
-											column,
-											direction: "desc",
-										});
-									} else {
-										orderby.setValues({
-											column,
-											direction: "asc",
-										});
-									}
-								}}
-							>
-								{i.description} {getOrderByIcon(i.name)}
-							</a>
-						</th>
-					))}
-				</tr>
-				<tr>
-					{columns.map((i) => (
-						<th key={"col-header-2-" + i.name} className="text-center">
-							{i.Filter && (
-								<i.Filter
-									name={i.name}
-									value={filter.getFieldProps(i.name).value || ""}
-									onChange={filter.handleChange}
-									className="w-100"
-								/>
-							)}
-							{i.static_column !== true && !i.Filter && (
-								<Form.Control
-									name={i.name}
-									onChange={filter.handleChange}
-									className="w-100"
-								/>
-							)}
-						</th>
-					))}
-				</tr>
-			</thead>
-			<tbody>
-				{data?.map((row, index) => (
-					<tr key={"row-" + index}>
-						{columns.map((col, indexCol) => (
-							<td key={"col-" + indexCol}>{col.selector(row)}</td>
-						))}
-					</tr>
-				))}
-			</tbody>
-			<tfoot>
-				<tr className="text-start">
-					<td colSpan={columns.length}>
-						<span className="ml-1 mr-1">
-							Página {page} de {totalPages}
-						</span>
-					</td>
-				</tr>
-			</tfoot>
-		</Table>
+		<div>
+			<div className="datatable-responsive-gridCargas">
+				<DataTable
+					reorderableColumns
+					//onRowReorder={(e) => setData(e.value)}
+					sortField={sortField}
+					sortOrder={sortOrder}
+					onSort={onSort}
+					className="p-datatable-responsive-grid"
+					responsiveLayout="scroll"
+					emptyMessage="Não foram encontradas cobranças"
+					ref={dadosTabela}
+					value={data}
+					header={header}
+					footer={footerTemplateVendedor}
+					filterDisplay="row"
+				>
+					<Column header="Mover Linha" rowReorder />
+					{setDynamicColums}
+				</DataTable>
+			</div>
+		</div>
 	);
 }
 
