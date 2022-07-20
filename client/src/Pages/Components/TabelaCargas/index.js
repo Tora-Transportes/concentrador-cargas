@@ -24,11 +24,9 @@ function TabelaCargas({
 	const [data, setData] = useState([]);
 	const [page, setPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
-	//const [dynamicColumns, setDynamicColums] = useState();
 	const [sortField, setSortField] = useState();
 	const [sortOrder, setSortOrder] = useState();
 	const [selectedColumns, setSelectedColumns] = useState(columns);
-	//const [globalFilter, setGlobalFilter] = useState();
 	const dadosTabela = useRef(null);
 
 	const onColumnToggle = (event) => {
@@ -49,7 +47,6 @@ function TabelaCargas({
 		setData(results);
 		setPage(current_page);
 		setTotalPages(total_pages);
-		//setGlobalFilter();
 	}, [values]);
 
 	const filter = useFormik({
@@ -106,18 +103,6 @@ function TabelaCargas({
 		});
 	}
 
-	// function getOrderByIcon(columnName) {
-	// 	if (columnName === orderby.values.column) {
-	// 		return orderby.values.direction === "desc" ? (
-	// 			<AiOutlineArrowDown />
-	// 		) : (
-	// 			<AiOutlineArrowUp />
-	// 		);
-	// 	}
-	// }
-
-	// useEffect(() => {
-	// 	(async () => {
 	const setDynamicColums = selectedColumns.map((col) => {
 		return (
 			<Column
@@ -129,6 +114,7 @@ function TabelaCargas({
 				sortable={col.sortable}
 				filter={true}
 				filterPlaceholder={col.filterPlaceholder}
+				rowReorder={col.rowReorder}
 				filterElement={
 					col.filterElement && (
 						<col.filterElement
@@ -144,6 +130,7 @@ function TabelaCargas({
 					!col.Filter && (
 						<Form.Control
 							name={col.field}
+							value={filter.getFieldProps("fk_situacao").value || ""}
 							onChange={filter.handleChange}
 							className="w-100"
 						/>
@@ -153,29 +140,20 @@ function TabelaCargas({
 		);
 	});
 
-	//})();
-	//}, [data, page, columns]);
-
 	const header = (
 		<Container fluid>
 			<Row className="header-table">
 				<Col
 					className="header-col-multiselect text-start"
-					style={{ marginLeft: "-26px" }}
+					// style={{ marginLeft: "-26px" }}
 				>
-					<MultiSelect
-						value={selectedColumns}
-						options={columns}
-						optionLabel="header"
-						onChange={onColumnToggle}
-						style={{
-							height: "43px",
-							alignItems: "center",
-							width: " 15.7em",
-						}}
-						filterPlaceholder="Procurar"
-						placeholder="config tabela"
-					/>
+					<Button
+						variant="primary"
+						onClick={resetView}
+						className="header-button-atualiza"
+					>
+						<IoIosRefreshCircle /> Atualizar tabela
+					</Button>
 				</Col>
 				<Col>
 					<select
@@ -192,13 +170,17 @@ function TabelaCargas({
 					</select>
 				</Col>
 				<Col className=" header-col-atualiza">
-					<Button
-						variant="primary"
-						onClick={resetView}
-						className="header-button-atualiza"
-					>
-						<IoIosRefreshCircle /> Atualizar tabela
-					</Button>
+					<MultiSelect
+						display="chip"
+						value={selectedColumns}
+						options={columns}
+						onChange={onColumnToggle}
+						optionLabel="header"
+						placeholder="modificar tabela"
+						filter={true}
+						filterPlaceholder="Procurar"
+						className="p-column-filter"
+					/>
 				</Col>
 			</Row>
 		</Container>
@@ -226,10 +208,6 @@ function TabelaCargas({
 		}
 	}, [page, orderby.values, get_data]);
 
-	useEffect(() => {
-		//console.log(page);
-	}, [page]);
-
 	const firstDebounceRun = useRef(true);
 	useDebouncedFunction(
 		() => {
@@ -237,7 +215,6 @@ function TabelaCargas({
 				firstDebounceRun.current = false;
 				return;
 			}
-			//console.log("DR", firstDebounceRun);
 			if (page === 1) {
 				notify();
 			} else {
@@ -266,7 +243,6 @@ function TabelaCargas({
 					footer={footerTemplateVendedor}
 					filterDisplay="row"
 				>
-					<Column header="Mover Linha" rowReorder />
 					{setDynamicColums}
 				</DataTable>
 			</div>

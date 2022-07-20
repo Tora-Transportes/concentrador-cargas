@@ -22,8 +22,14 @@ function formatDateAndHour(date) {
 
 export const columns = [
 	{
+		field: "fild",
+		header: "Ajustar tabela",
+		rowReorder: "rowReorder",
+		body: (row) => row,
+	},
+	{
 		field: "fk_situacao",
-		header: "Situação",
+		header: "Situação da carga",
 		body: (row) => (
 			<StatusTooltip
 				color={row["situacao.cor"]}
@@ -57,7 +63,9 @@ export const columns = [
 		field: "cliente",
 		header: "Cliente",
 		body: (row) => row.cliente.split(" -")[0],
-		filterElement: (props) => <InputCliente label="" {...props} />,
+		filterElement: (props) => (
+			<InputCliente label="" {...props} style={{ height: "20px" }} />
+		),
 		sortable: "sortable",
 	},
 	{

@@ -104,16 +104,6 @@ function Visualizar() {
 		false
 	);
 	const [itensPerPage, setItensPerPage] = useState(5);
-	// function formatDate(date) {
-	// 	return date?.split("T")[0].split("-").reverse().join("/");
-	// }
-	// function formatDateAndHour(date) {
-	// 	if (!date) return "";
-	// 	const [day, time] = date?.split("T");
-	// 	const daysFormatted = day.split("-").reverse().join("/");
-	// 	const timeFormatted = time.split(".")[0];
-	// 	return `${daysFormatted} ${timeFormatted}`;
-	// }
 
 	async function handleExportExcel() {
 		setLoading(true);

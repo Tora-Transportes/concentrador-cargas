@@ -1,16 +1,6 @@
 import React, { useState } from "react";
 import "./visualizar.css";
-import {
-	Container,
-	Row,
-	Col,
-	Button,
-	// Button,
-	// Modal,
-	// InputGroup,
-	// FormControl,
-} from "react-bootstrap";
-//import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import NavbarNavigator from "../../Components/NavbarNavigator";
 
 import TabelaCargas from "../../Components/TabelaCargas";
@@ -18,7 +8,6 @@ import { Link } from "react-router-dom";
 import chartImg from "../../../assets/chart.png";
 import ModalLegendaCargas from "src/Pages/Cargas/modal/legendaCarga";
 import { AiFillFileExcel } from "react-icons/ai";
-// import { AiFillFileExcel } from "react-icons/ai";
 
 function VisualizarCargas({
 	handleExportExcel,
@@ -26,10 +15,8 @@ function VisualizarCargas({
 	values,
 	columns,
 	LoadingComponent,
-	//handleToggleModal,
 	displayColumns = [],
-	// dispatchColumns,
-	// activeModal = true,
+	dispatchColumns,
 	itensPerPage = 5,
 	setItensPerPage,
 	resetView,
@@ -90,7 +77,7 @@ function VisualizarCargas({
 							get_data={get_data}
 							values={values}
 							handleExportExcel={handleExportExcel}
-							//handleToggleModal={handleToggleModal}
+							dispatchColumns={dispatchColumns}
 							resetView={resetView}
 							setItensPerPage={setItensPerPage}
 							itensPerPage={itensPerPage}
