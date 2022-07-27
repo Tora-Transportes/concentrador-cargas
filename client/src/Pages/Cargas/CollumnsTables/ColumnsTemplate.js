@@ -22,12 +22,6 @@ function formatDateAndHour(date) {
 
 export const columns = [
 	{
-		field: "fild",
-		header: "Ajustar tabela",
-		rowReorder: "rowReorder",
-		body: (row) => row,
-	},
-	{
 		field: "fk_situacao",
 		header: "Situação da carga",
 		body: (row) => (
@@ -44,9 +38,41 @@ export const columns = [
 		sortable: "sortable",
 	},
 	{
+		field: "documento_transporte",
+		header: "Documento de transporte",
+		body: (row) => row.documento_transporte,
+		sortable: "sortable",
+	},
+	{
 		field: "id",
 		header: "Código da Carga",
 		body: (row) => row.id,
+		sortable: "sortable",
+	},
+	{
+		field: "editar",
+		header: "Editar/Vincular",
+		static_column: true,
+		body: (row) => (
+			<Link
+				to={`/cargas/${
+					row.canal_comunicacao === "portal" ? "manual" : "manual"
+				}/${row.id}`}
+				target="_blank"
+				rel="noopener"
+			>
+				<BsPencilSquare />
+			</Link>
+		),
+		sortable: "sortable",
+	},
+	{
+		field: "cliente",
+		header: "Cliente",
+		body: (row) => row.cliente.split(" -")[0],
+		filterElement: (props) => (
+			<InputCliente label="" {...props} style={{ height: "20px" }} />
+		),
 		sortable: "sortable",
 	},
 	{
@@ -60,13 +86,11 @@ export const columns = [
 		filterElement: (props) => <Form.Control type="number" {...props} />,
 	},
 	{
-		field: "cliente",
-		header: "Cliente",
-		body: (row) => row.cliente.split(" -")[0],
-		filterElement: (props) => (
-			<InputCliente label="" {...props} style={{ height: "20px" }} />
-		),
+		field: "data_cadastro",
+		header: "Data Cadastro",
+		body: (row) => formatDateAndHour(row.data_cadastro),
 		sortable: "sortable",
+		filterElement: (props) => <Form.Control type="date" {...props} />,
 	},
 	{
 		field: "origem_carga",
@@ -91,13 +115,6 @@ export const columns = [
 		field: "data_entrega",
 		header: "Data Entrega",
 		body: (row) => formatDate(row.data_entrega),
-		sortable: "sortable",
-		filterElement: (props) => <Form.Control type="date" {...props} />,
-	},
-	{
-		field: "data_cadastro",
-		header: "Data Cadastro",
-		body: (row) => formatDateAndHour(row.data_cadastro),
 		sortable: "sortable",
 		filterElement: (props) => <Form.Control type="date" {...props} />,
 	},
@@ -175,29 +192,6 @@ export const columns = [
 		header: "Lote origem",
 		body: (row) => row.fk_lote_pai,
 		Filter: () => null,
-		sortable: "sortable",
-	},
-	{
-		field: "documento_transporte",
-		header: "Documento de transporte",
-		body: (row) => row.documento_transporte,
-		sortable: "sortable",
-	},
-	{
-		field: "editar",
-		header: "Editar/Vincular",
-		static_column: true,
-		body: (row) => (
-			<Link
-				to={`/cargas/${
-					row.canal_comunicacao === "portal" ? "manual" : "manual"
-				}/${row.id}`}
-				target="_blank"
-				rel="noopener"
-			>
-				<BsPencilSquare />
-			</Link>
-		),
 		sortable: "sortable",
 	},
 	{

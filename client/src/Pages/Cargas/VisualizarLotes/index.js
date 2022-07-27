@@ -1,54 +1,12 @@
 import React, { useReducer, useState, useEffect, useCallback } from "react";
-import View from "./view";
-
-import { Form } from "react-bootstrap";
-import { BsPencilSquare } from "react-icons/bs";
-import InputCliente from "src/Pages/Components/InputCliente";
-import ResponsavelCadastroSelect from "src/Pages/Components/ResponsavelCadastroSelect";
-import { Link } from "react-router-dom";
+import View from "../ViewsVisualizacao";
 import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import useLocalstorage from "../../Components/useLocalstorage";
-
 import factoryReducerCargas from "../../../hooks/storageCargas/factoryReducerCargas";
 import io from "../../../services/socket";
-
-import CollapseHint from "../../Components/CollapseHint";
-
-function reducerActiveColumns(state, action) {
-	const index = state.findIndex((i) => i.name === action.name);
-	let before;
-	switch (action.type) {
-		case "ENABLE_FIELD":
-			return state.map((i) =>
-				i.name === action.name ? { ...i, active: true } : i
-			);
-		case "DISABLE_FIELD":
-			return state.map((i) =>
-				i.name === action.name ? { ...i, active: false } : i
-			);
-		case "UP_FIELD":
-			if (index > 0) {
-				before = state[index - 1];
-				state[index - 1] = state[index];
-				state[index] = before;
-			}
-			return [...state];
-		case "DOWN_FIELD":
-			if (index < state.length - 1) {
-				before = state[index];
-				state[index] = state[index + 1];
-				state[index + 1] = before;
-			}
-			return [...state];
-		case "ENABLE_ALL":
-			return state.map((i) => ({ ...i, active: true }));
-		case "DISABLE_ALL":
-			return state.map((i) => ({ ...i, active: false }));
-		default:
-			throw new Error("Invalid action");
-	}
-}
+import { reducerActiveColumns } from "src/Pages/Components/Reducer/reducerActiveColumns";
+import { columns } from "../CollumnsTables/ColumnsTemplate";
 
 function reducerToggleModal(state) {
 	return !state;
@@ -87,163 +45,10 @@ function Visualizar() {
 		};
 	}, [io]);
 
-	const columns = [
-		{
-			name: "id",
-			description: "Código da Carga",
-			selector: (row) => row.id,
-		},
-		{
-			name: "fk_filial",
-			description: "Código da filial",
-			selector: (row) =>
-				row.fk_filial || row["filial.descricao"]
-					? `${row.fk_filial} - ${row["filial.descricao"]}`
-					: row.fk_filial,
-			Filter: (props) => <Form.Control type="number" {...props} />,
-		},
-		{
-			name: "cliente",
-			description: "Cliente",
-			selector: (row) => row.cliente.split(" -")[0],
-			Filter: (props) => (
-				<div className="mt-3">
-					<InputCliente label="" {...props} style={{ height: "24px" }} />
-				</div>
-			),
-		},
-		{
-			name: "origem_carga",
-			description: "Origem",
-			selector: (row) => row.origem_carga,
-		},
-		{
-			name: "destino_carga",
-			description: "Destino",
-			selector: (row) => row.destino_carga,
-		},
-		{
-			name: "data_coleta",
-			description: "Data coleta",
-			selector: (row) => formatDate(row.data_coleta),
-			Filter: (props) => <Form.Control type="date" {...props} />,
-		},
-		{
-			name: "data_entrega",
-			description: "Data Entrega",
-			selector: (row) => formatDate(row.data_entrega),
-			Filter: (props) => <Form.Control type="date" {...props} />,
-		},
-		{
-			name: "data_cadastro",
-			description: "Data Cadastro",
-			selector: (row) => formatDateAndHour(row.data_cadastro),
-			Filter: (props) => <Form.Control type="date" {...props} />,
-		},
-		{
-			name: "tipo_carga",
-			description: "Tipo Carga",
-			selector: (row) => row.tipo_carga,
-		},
-		{
-			name: "canal_comunicacao",
-			description: "Canal comunicação",
-			selector: (row) => row.canal_comunicacao,
-			Filter: () => null,
-		},
-		{
-			name: "unidade_medida",
-			description: "UN",
-			selector: (row) => row.unidade_medida,
-			Filter: () => null,
-		},
-		{
-			name: "quantidade",
-			description: "Quantidade Original",
-			selector: (row) => row.quantidade,
-			Filter: () => null,
-		},
-		{
-			name: "quantidade_atual",
-			description: "Quantidade Atual",
-			selector: (row) => row.quantidade_atual,
-			Filter: () => null,
-		},
-		{
-			name: "responsavel_cadastro",
-			description: "Responsável Cadastro",
-			selector: (row) => row.responsavel_cadastro,
-			Filter: (props) => <ResponsavelCadastroSelect {...props} />,
-		},
-		{
-			name: "janela_coleta",
-			description: "Janela de coleta",
-			selector: (row) => row.janela_coleta || "",
-			Filter: () => null,
-		},
-		{
-			name: "janela_entrega",
-			description: "Janela de entrega",
-			selector: (row) => row.janela_entrega || "",
-			Filter: () => null,
-		},
-		{
-			name: "acessorios_requisitos",
-			description: "Acessórios e requisitos",
-			selector: (row) => (
-				<CollapseHint text={row.acessorios_requisitos || ""} />
-			),
-			Filter: () => null,
-		},
-		{
-			name: "informacoes_restritivas",
-			description: "Informações restritivas",
-			selector: (row) => (
-				<CollapseHint text={row.informacoes_restritivas || ""} />
-			),
-			Filter: () => null,
-		},
-		{
-			name: "observacao",
-			description: "Observações",
-			selector: (row) => <CollapseHint text={row.observacao || ""} />,
-			Filter: () => null,
-		},
-		{
-			name: "data_atualizacao",
-			description: "Data última atualização",
-			selector: (row) => formatDateAndHour(row.data_atualizacao),
-			Filter: () => null,
-		},
-		{
-			name: "gerar_nova_carga",
-			description: "Gerar carga derivada",
-			static_column: true,
-			selector: (row) => (
-				<Link to={`/cargas/derivadas/${row.id}`} target="_blank" rel="noopener">
-					<BsPencilSquare />
-				</Link>
-			),
-		},
-		{
-			name: "editar",
-			description: "Editar/Vincular",
-			static_column: true,
-			selector: (row) => (
-				<Link
-					to={`/cargas/${row.canal_comunicacao}/${row.id}`}
-					target="_blank"
-					rel="noopener"
-				>
-					<BsPencilSquare />
-				</Link>
-			),
-		},
-	];
 	const defaultStorageColumns = columns.map((i) => ({
-		name: i.name,
+		field: i.field,
 		active: true,
-		description: i.description,
+		header: i.header,
 	}));
 
 	const [storage, setStorage] = useLocalstorage(
@@ -261,16 +66,6 @@ function Visualizar() {
 		false
 	);
 	const [itensPerPage, setItensPerPage] = useState(5);
-	function formatDate(date) {
-		return date?.split("T")[0].split("-").reverse().join("/");
-	}
-	function formatDateAndHour(date) {
-		if (!date) return "";
-		const [day, time] = date?.split("T");
-		const daysFormatted = day.split("-").reverse().join("/");
-		const timeFormatted = time.split(".")[0];
-		return `${daysFormatted} ${timeFormatted}`;
-	}
 
 	function resetView() {
 		localStorage.removeItem("table-columns-lote");
@@ -329,10 +124,10 @@ function Visualizar() {
 
 	const columnsToDisplay = displayColumns
 		.filter((i) => i.active)
-		.map((i) => i.name);
+		.map((i) => i.field);
 
 	const orderedColumns = columnsToDisplay.map((i) =>
-		columns.find((j) => j.name === i)
+		columns.find((j) => j.field === i)
 	);
 
 	useEffect(() => {
@@ -343,7 +138,7 @@ function Visualizar() {
 		<View
 			handleExportExcel={handleExportExcel}
 			get_data={get_data}
-			columns={orderedColumns.filter((c) => columnsToDisplay.includes(c.name))}
+			columns={orderedColumns.filter((c) => columnsToDisplay.includes(c.field))}
 			LoadingComponent={LoadingComponent}
 			displayColumns={displayColumns}
 			dispatchColumns={reducerColumns}
@@ -352,8 +147,9 @@ function Visualizar() {
 			itensPerPage={itensPerPage}
 			setItensPerPage={setItensPerPage}
 			resetView={resetView}
-			cargas={cargas}
+			values={cargas}
 			totalRegisters={totalRegisters}
+			tituloPag="Grid de Cargas em Lote"
 		/>
 	);
 }

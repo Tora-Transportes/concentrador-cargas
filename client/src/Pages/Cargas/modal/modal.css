@@ -11,3 +11,21 @@
 .icon-text {
     margin-bottom: 5px;
 }
+
+@media screen and (max-width: 575px){
+  
+  .card-text:last-child {
+    display: grid;
+  }
+
+  .col-legenda{
+    border: 2px solid #d3d3d3;
+    margin-bottom: 4px;
+  }
+
+  .row-inicio-carga button {
+    margin-left: 20%;
+    width: auto;
+}
+
+}

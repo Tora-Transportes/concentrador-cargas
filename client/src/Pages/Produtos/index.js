@@ -158,6 +158,7 @@ function Produtos() {
 							paginatorTemplate=" PrevPageLink PageLinks NextPageLink  CurrentPageReport RowsPerPageDropdown"
 							emptyMessage="Não foram encontrado nenhum resultado nesta busca"
 							rowsPerPageOptions={[80, 100]}
+							stripedRows
 						>
 							<Column
 								body={nameBodyTemplate}

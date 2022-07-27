@@ -1,0 +1,35 @@
+.text-end button {
+  width: 60%;
+}
+
+.row-dropdown-buttons {
+  display: none;
+}
+
+.sidebar-button-table{
+  height: 5vh
+}
+
+@media only screen and (max-width: 576px) {
+  .row-inicio-carga button {
+    width: 100%;
+  }
+  .inicio-col-legenda, .excel-button {
+    display: none;
+  }
+
+  .excel-button {
+    display: none;
+  }
+  .inicio-col-registros {
+    margin-bottom: 5px;
+  }
+
+  .text-end button {
+    width: 100%;
+  }
+
+  .p-sidebar-left .p-sidebar{
+    width: 8rem;
+  }
+}

@@ -196,6 +196,9 @@ Botton .button-acoes-table{
       font-weight: bold;
   }
 
-
+  .p-datatable table{
+    background-color: #000;
+  }
+  
 }
 

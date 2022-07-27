@@ -1,46 +1,9 @@
 import React, { useReducer, useState, useEffect, useCallback } from "react";
-import View from "./view";
+import View from "../ViewsVisualizacao";
 import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
-import useLocalstorage from "../../Components/useLocalstorage";
 import io from "../../../services/socket";
 import factoryReducerCargas from "src/hooks/storageCargas/factoryReducerCargas";
-import { columns } from "./ColumnsTemplate";
-
-function reducerActiveColumns(state, action) {
-	const index = state.findIndex((i) => i.field === action.field);
-	let before;
-	switch (action.type) {
-		case "ENABLE_FIELD":
-			return state.map((i) =>
-				i.field === action.field ? { ...i, active: true } : i
-			);
-		case "DISABLE_FIELD":
-			return state.map((i) =>
-				i.field === action.field ? { ...i, active: false } : i
-			);
-		case "UP_FIELD":
-			if (index > 0) {
-				before = state[index - 1];
-				state[index - 1] = state[index];
-				state[index] = before;
-			}
-			return [...state];
-		case "DOWN_FIELD":
-			if (index < state.length - 1) {
-				before = state[index];
-				state[index] = state[index + 1];
-				state[index + 1] = before;
-			}
-			return [...state];
-		case "ENABLE_ALL":
-			return state.map((i) => ({ ...i, active: true }));
-		case "DISABLE_ALL":
-			return state.map((i) => ({ ...i, active: false }));
-		default:
-			throw new Error("Invalid action");
-	}
-}
 
 function reducerToggleModal(state) {
 	return !state;
@@ -83,22 +46,8 @@ function Visualizar() {
 		};
 	}, [io]);
 
-	const defaultStorageColumns = columns.map((i) => ({
-		field: i.field,
-		active: true,
-		header: i.header,
-	}));
-
-	const [storage, setStorage] = useLocalstorage(
-		"table-columns",
-		defaultStorageColumns
-	);
 	const [filtroAtual, setFiltroAtual] = useState(null);
 	const [LoadingComponent, setLoading] = useLoadingScreen();
-	const [displayColumns, reducerColumns] = useReducer(
-		reducerActiveColumns,
-		storage === null ? defaultStorageColumns : storage
-	);
 	const [activeModal, handleToggleModal] = useReducer(
 		reducerToggleModal,
 		false
@@ -165,33 +114,19 @@ function Visualizar() {
 		[itensPerPage, setTotalRegisters]
 	);
 
-	const columnsToDisplay = displayColumns
-		.filter((i) => i.active)
-		.map((i) => i.field);
-
-	const orderedColumns = columnsToDisplay.map((i) =>
-		columns.find((j) => j.field === i)
-	);
-
-	useEffect(() => {
-		setStorage(displayColumns);
-	}, [displayColumns]);
-
 	return (
 		<View
 			handleExportExcel={handleExportExcel}
 			get_data={get_data}
 			values={cargas}
-			columns={orderedColumns.filter((c) => columnsToDisplay.includes(c.field))}
 			LoadingComponent={LoadingComponent}
-			displayColumns={displayColumns}
-			dispatchColumns={reducerColumns}
 			activeModal={activeModal}
 			handleToggleModal={handleToggleModal}
 			itensPerPage={itensPerPage}
 			setItensPerPage={setItensPerPage}
 			resetView={resetView}
 			totalRegisters={totalRegisters}
+			tituloPag="Grid de Cargas"
 		/>
 	);
 }

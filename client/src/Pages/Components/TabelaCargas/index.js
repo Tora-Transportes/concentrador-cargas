@@ -1,33 +1,41 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./index.css";
-import { Button, Row, Col, Form, Container } from "react-bootstrap";
+import { Form, Row } from "react-bootstrap";
 import { useFormik } from "formik";
 import useDebouncedFunction from "../useDebounceFunction";
 import { DataTable } from "primereact/datatable";
-//import { BsGear } from "react-icons/bs";
 import { Column } from "primereact/column";
-import { IoIosRefreshCircle } from "react-icons/io";
-import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
-//import CaptionStatusCarga from "../CaptionStatusCarga";
-import { MultiSelect } from "primereact/multiselect";
+import { Toast } from "primereact/toast";
+import useLocalStorage from "../useLocalstorage";
+import { columns } from "../../Cargas/CollumnsTables/ColumnsTemplate.js";
+import {
+	footerTableFunction,
+	headerTableFunction,
+	//SideBarFuncition,
+} from "./layoutTable";
 
 function TabelaCargas({
-	columns,
 	get_data,
 	values,
-	//handleExportExcel,
-	//handleToggleModal,
 	resetView,
 	setItensPerPage,
 	itensPerPage,
+	paginaCargaLot,
 }) {
 	const [data, setData] = useState([]);
 	const [page, setPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
 	const [sortField, setSortField] = useState();
 	const [sortOrder, setSortOrder] = useState();
-	const [selectedColumns, setSelectedColumns] = useState(columns);
+	const tipoDeBuscaPorPagina = paginaCargaLot
+		? "table-columns-lote"
+		: "table-columns";
+	const [storage, setStorage] = useLocalStorage(tipoDeBuscaPorPagina, columns);
+	const [selectedColumns, setSelectedColumns] = useState([]);
+	const firstDebounceRun = useRef(true);
 	const dadosTabela = useRef(null);
+	const firstRun = useRef(true);
+	const toast = useRef(null);
 
 	const onColumnToggle = (event) => {
 		let selectedColumns = event.value;
@@ -35,6 +43,12 @@ function TabelaCargas({
 			selectedColumns.some((sCol) => sCol.field === col.field)
 		);
 		setSelectedColumns(orderedSelectedColumns);
+		setStorage(orderedSelectedColumns);
+		toast.current.show({
+			severity: "success",
+			summary: "Coluna modificada com sucesso!",
+			life: 2000,
+		});
 	};
 
 	const onSort = (e) => {
@@ -49,7 +63,7 @@ function TabelaCargas({
 		setTotalPages(total_pages);
 	}, [values]);
 
-	const filter = useFormik({
+	const formik = useFormik({
 		initialValues: {},
 	});
 
@@ -71,9 +85,9 @@ function TabelaCargas({
 		};
 
 		// columns
-		for (const i in filter.values) {
-			if (![undefined, null, ""].includes(filter.values[i])) {
-				options.filters[i] = filter.values[i];
+		for (const i in formik.values) {
+			if (![undefined, null, ""].includes(formik.values[i])) {
+				options.filters[i] = formik.values[i];
 			}
 		}
 
@@ -103,9 +117,13 @@ function TabelaCargas({
 		});
 	}
 
-	const setDynamicColums = selectedColumns.map((col) => {
+	const colunsFiltrado = columns.filter((i) =>
+		storage.find((c) => c.field === i.field)
+	);
+	const setDynamicColums = colunsFiltrado.map((col) => {
 		return (
 			<Column
+				columnKey={col.field}
 				key={col.field}
 				field={col.field}
 				style={col.style}
@@ -114,24 +132,22 @@ function TabelaCargas({
 				sortable={col.sortable}
 				filter={true}
 				filterPlaceholder={col.filterPlaceholder}
-				rowReorder={col.rowReorder}
 				filterElement={
 					col.filterElement && (
 						<col.filterElement
 							name={col.field}
-							value={filter.getFieldProps("fk_situacao").value || ""}
-							onChange={filter.handleChange}
+							value={formik.value}
+							onChange={formik.handleChange}
 							className="w-100"
 						/>
 					)
 				}
 				static_column={
 					col.static_column !== true &&
-					!col.Filter && (
+					!col.filterElement && (
 						<Form.Control
 							name={col.field}
-							value={filter.getFieldProps("fk_situacao").value || ""}
-							onChange={filter.handleChange}
+							onChange={formik.handleChange}
 							className="w-100"
 						/>
 					)
@@ -140,66 +156,6 @@ function TabelaCargas({
 		);
 	});
 
-	const header = (
-		<Container fluid>
-			<Row className="header-table">
-				<Col
-					className="header-col-multiselect text-start"
-					// style={{ marginLeft: "-26px" }}
-				>
-					<Button
-						variant="primary"
-						onClick={resetView}
-						className="header-button-atualiza"
-					>
-						<IoIosRefreshCircle /> Atualizar tabela
-					</Button>
-				</Col>
-				<Col>
-					<select
-						className="btn"
-						value={itensPerPage}
-						onChange={(e) => setItensPerPage(e.target.value)}
-					>
-						<option value="5">👀 5</option>
-						<option value="10">👀 10</option>
-						<option value="20">👀 20</option>
-						<option value="50">👀 50</option>
-						<option value="100">👀 100</option>
-						<option value="500">👀 500</option>
-					</select>
-				</Col>
-				<Col className=" header-col-atualiza">
-					<MultiSelect
-						display="chip"
-						value={selectedColumns}
-						options={columns}
-						onChange={onColumnToggle}
-						optionLabel="header"
-						placeholder="modificar tabela"
-						filter={true}
-						filterPlaceholder="Procurar"
-						className="p-column-filter"
-					/>
-				</Col>
-			</Row>
-		</Container>
-	);
-
-	const footerTemplateVendedor = () => {
-		return (
-			<Col className="footer-table">
-				<Button variant="outline-info" onClick={previousPage}>
-					<HiChevronDoubleLeft /> Voltar paginação
-				</Button>
-				<Button variant="outline-info" onClick={nextPage}>
-					Proxíma paginação <HiChevronDoubleRight />
-				</Button>
-			</Col>
-		);
-	};
-
-	const firstRun = useRef(true);
 	useEffect(() => {
 		if (firstRun.current) {
 			firstRun.current = false;
@@ -208,7 +164,6 @@ function TabelaCargas({
 		}
 	}, [page, orderby.values, get_data]);
 
-	const firstDebounceRun = useRef(true);
 	useDebouncedFunction(
 		() => {
 			if (firstDebounceRun.current) {
@@ -221,32 +176,45 @@ function TabelaCargas({
 				setPage(1);
 			}
 		},
-		filter.values,
+		formik.values,
 		1000
 	);
 
+	const headerTable = headerTableFunction(
+		resetView,
+		itensPerPage,
+		setItensPerPage,
+		selectedColumns,
+		columns,
+		onColumnToggle
+	);
+
+	const footerTable = footerTableFunction(previousPage, nextPage);
+
 	return (
-		<div>
+		<Row>
+			<Toast ref={toast} className="w-25"></Toast>
 			<div className="datatable-responsive-gridCargas">
 				<DataTable
 					reorderableColumns
-					//onRowReorder={(e) => setData(e.value)}
 					sortField={sortField}
+					scrollHeight="60vh"
 					sortOrder={sortOrder}
 					onSort={onSort}
 					className="p-datatable-responsive-grid"
 					responsiveLayout="scroll"
-					emptyMessage="Não foram encontradas cobranças"
+					emptyMessage="Não foram encontrado nenhum resultado nesta busca"
 					ref={dadosTabela}
 					value={data}
-					header={header}
-					footer={footerTemplateVendedor}
+					header={headerTable}
+					footer={footerTable}
 					filterDisplay="row"
+					dataKey="field"
 				>
 					{setDynamicColums}
 				</DataTable>
 			</div>
-		</div>
+		</Row>
 	);
 }
 

@@ -13,11 +13,11 @@
   width: 53%;
 }
 
-.header-col-atualiza {
+/* .header-button-multiselect {
   text-align: right;
-}
+} */
 
-.header-table .header-col-multiselect {
+.header-table .header-col-atualiza {
   text-align: start;
   margin-left: -24px;
 }
@@ -26,46 +26,77 @@
   height: 43px;
   align-items: center;
   width: 13em;
-  margin-right: -23px;
+  /* margin-right: -23px; */
 }
+
+/* .button-sideBar {
+  width: 100%;
+} */
+
 .footer-table Button {
   margin-left: 20px;
 }
 
+.button-input-multiselect {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  border-radius: 5px;
+  transition: 0.4s ease-in-out;
+  color: white;
+  background-color: #eefdec;
+  border: 1px solid #e4e7e4;
+  height: 6vh;
+  margin-top: 5px;
+}
+
+.p-multiselect {
+  margin-right: -24px;
+}
+
+.paginator-table-col {
+  display: none;
+}
+
+/* .inputGroup-multSelect {
+  justify-content: center;
+} */
+
 @media only screen and (max-width: 461px) {
+  .paginator-table-col {
+    display: grid;
+  }
+  .datatable-responsive-gridCargas
+  .p-datatable-header {
+    display: none;
+  }
+
+  .sidebar-button-table {
+    height: 5vh;
+  }
   .title-h1 {
     margin-right: 50px;
+  }
+
+  .sidebar-div {
+    display: inline;
   }
 
   .header-table-col-buttons {
     display: grid;
   }
-
-  .header-col-atualiza {
-    text-align: center;
-  }
-
-  .header-button-atualiza {
-    margin-right: 0;
-    width: 237px;
-  }
-
-  .header-table select {
+  /* .header-table select {
     margin-bottom: 5px;
     background-color: #d4dde0;
     width: inherit;
-  }
+  } */
 
-  .header-table .header-col-multiselect {
-    text-align: start;
-    margin: 5px 0 7px 0;
-
-  }
-
+  /* 
   .p-column-filter{
     margin-right: 0;
     width: auto;
-  }
+  } */
 
   .footer-table {
     display: grid;
@@ -149,7 +180,7 @@
   display: none;
 }
 
-/* @media screen and (max-width: 50em) {
+@media screen and (max-width: 50em) {
   .datatable-responsive-gridCargas
     .p-datatable.p-datatable-responsive-gridCargas
     .p-datatable-thead
@@ -188,4 +219,10 @@
     margin: -0.4em 1em -0.4em -0.4rem;
     font-weight: bold;
   }
-} */
+
+  .datatable-responsive-gridCargas
+    .p-datatable
+    table {
+    background-color: #fff;
+  }
+}

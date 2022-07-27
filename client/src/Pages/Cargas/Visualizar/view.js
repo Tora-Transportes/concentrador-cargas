@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./visualizar.css";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import NavbarNavigator from "../../Components/NavbarNavigator";
-
 import TabelaCargas from "../../Components/TabelaCargas";
 import { Link } from "react-router-dom";
 import chartImg from "../../../assets/chart.png";

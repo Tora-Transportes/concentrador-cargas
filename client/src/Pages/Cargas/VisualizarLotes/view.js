@@ -1,44 +1,39 @@
-import React from "react";
-import {
-	Container,
-	Row,
-	Col,
-	Button,
-	Modal,
-	InputGroup,
-	FormControl,
-} from "react-bootstrap";
-import { BsDownload, BsGear } from "react-icons/bs";
-import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
+import React, { useState } from "react";
+import "./visualizaLote.css";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import NavbarNavigator from "../../Components/NavbarNavigator";
-
 import TabelaCargas from "../../Components/TabelaCargas";
 import { Link } from "react-router-dom";
 import chartImg from "../../../assets/chart.png";
+import ModalLegendaCargas from "src/Pages/Cargas/modal/legendaCarga";
+import { AiFillFileExcel } from "react-icons/ai";
 
 function VisualizarCargas({
 	handleExportExcel,
 	get_data,
 	columns,
 	LoadingComponent,
-	handleToggleModal,
 	displayColumns = [],
 	dispatchColumns,
-	activeModal = true,
 	itensPerPage = 5,
 	setItensPerPage,
 	resetView,
 	cargas,
 	totalRegisters = null,
 }) {
+	const [modalShow, setModalShow] = useState(false);
 	return (
 		<>
 			<LoadingComponent />
 			<NavbarNavigator />
 			<Container fluid className="text-center mb-5">
-				<Row className="mt-3 text-center">
+				<ModalLegendaCargas
+					show={modalShow}
+					onHide={() => setModalShow(false)}
+				/>
+				<Row className="mt-3 text-center row-title">
 					<Col>
-						<h1>Grid de Cargas</h1>
+						<h1 className="title-h1">Grid de Cargas em Lote</h1>
 					</Col>
 
 					<Link target="_blank" to="/relatorios">
@@ -53,139 +48,44 @@ function VisualizarCargas({
 						/>
 					</Link>
 				</Row>
-				<Row>
-					<Col className="text-start">
-						<Button variant="outline-info" onClick={handleExportExcel}>
-							Exportar <BsDownload />
+				<Row className="row-inicio-carga mt-5 mb-2 ">
+					<Col className=" inicio-col-legenda text-start">
+						<Button variant="secondary" onClick={() => setModalShow(true)}>
+							Legenda situações de carga
 						</Button>
-						<Button variant="outline-info" onClick={handleToggleModal}>
-							<BsGear /> Configurar visão
-						</Button>
-						<Button variant="outline-info" onClick={resetView}>
-							Buscar novos campos
-						</Button>
-						<select
-							className="btn"
-							value={itensPerPage}
-							onChange={(e) => setItensPerPage(e.target.value)}
-						>
-							<option value="5">👀 5</option>
-							<option value="10">👀 10</option>
-							<option value="20">👀 20</option>
-							<option value="50">👀 50</option>
-							<option value="100">👀 100</option>
-							<option value="500">👀 500</option>
-						</select>
 					</Col>
-				</Row>
-				<Row>
-					<Col>
-						{totalRegisters ? (
+					<Col sm={6} className="inicio-col-registros">
+						{totalRegisters && (
 							<>
 								Total de <b>{totalRegisters}</b> registros
 							</>
-						) : (
-							""
 						)}
+					</Col>
+					<Col className="text-end">
+						<Button variant="success" onClick={handleExportExcel}>
+							<AiFillFileExcel /> Exportar Excel
+						</Button>
 					</Col>
 				</Row>
 				<Row>
 					<Col sm={12}>
 						<TabelaCargas
 							columns={columns.filter((i) =>
-								displayColumns.find((c) => c.name === i.name)
+								displayColumns.find((c) => c.field === i.field)
 							)}
 							get_data={get_data}
 							values={cargas}
+							handleExportExcel={handleExportExcel}
+							dispatchColumns={dispatchColumns}
+							resetView={resetView}
+							setItensPerPage={setItensPerPage}
+							itensPerPage={itensPerPage}
 						/>
 					</Col>
 				</Row>
 				<Row>
 					<Col sm={12}></Col>
 				</Row>
-
-				<Modal
-					show={activeModal}
-					onHide={handleToggleModal}
-					backdrop="static"
-					keyboard={false}
-					size="lg"
-				>
-					<Modal.Header>
-						<Modal.Title>
-							Gerenciamento da Tabela <br />
-							<Button
-								variant=""
-								className="ml-3"
-								onClick={() => dispatchColumns({ type: "ENABLE_ALL" })}
-							>
-								Marcar todos
-							</Button>
-							<Button
-								variant=""
-								className="ml-3"
-								onClick={() => dispatchColumns({ type: "DISABLE_ALL" })}
-							>
-								Desmarcar todos
-							</Button>
-						</Modal.Title>
-					</Modal.Header>
-					<Modal.Body>
-						{displayColumns.map((column) => (
-							<InputGroup key={column.name}>
-								<InputGroup.Checkbox
-									name={column.name}
-									checked={column.active}
-									onChange={(e) => {
-										if (e.target.checked) {
-											dispatchColumns({
-												type: "ENABLE_FIELD",
-												name: column.name,
-											});
-										} else {
-											dispatchColumns({
-												type: "DISABLE_FIELD",
-												name: column.name,
-											});
-										}
-									}}
-								/>
-								<InputGroup.Text>
-									<Button
-										variant=""
-										onClick={() =>
-											dispatchColumns({
-												type: "UP_FIELD",
-												name: column.name,
-											})
-										}
-									>
-										<AiOutlineArrowUp />
-									</Button>
-								</InputGroup.Text>
-								<InputGroup.Text>
-									<Button
-										variant=""
-										onClick={() =>
-											dispatchColumns({
-												type: "DOWN_FIELD",
-												name: column.name,
-											})
-										}
-									>
-										<AiOutlineArrowDown />
-									</Button>
-								</InputGroup.Text>
-								<FormControl readOnly value={column.description} />
-							</InputGroup>
-						))}
-					</Modal.Body>
-					<Modal.Footer>
-						<Button variant="primary" onClick={handleToggleModal}>
-							Fechar
-						</Button>
-					</Modal.Footer>
-				</Modal>
 			</Container>
 		</>
 	);
