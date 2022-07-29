@@ -10,12 +10,13 @@ import { Button as ButtonReact } from "primereact/button";
 import { BiCog } from "react-icons/bi";
 import { Sidebar } from "primereact/sidebar";
 import { SideBarFuncition } from "src/Pages/Components/TabelaCargas/layoutTable";
+import { columns } from "../CollumnsTables/ColumnsTemplate";
 
 function VisualizarCargas({
 	handleExportExcel,
 	get_data,
 	LoadingComponent,
-	itensPerPage = 5,
+	itensPerPage = 10,
 	setItensPerPage,
 	resetView,
 	values,
@@ -54,7 +55,7 @@ function VisualizarCargas({
 					<Col className="text-start">
 						<ButtonReact
 							label="Detales Tabela"
-							icon={<BiCog className="me-2" />}
+							icon={<BiCog className="me-1" />}
 							onClick={() => setVisibleLeft(true)}
 							className="sidebar-button-table"
 						/>
@@ -85,6 +86,7 @@ function VisualizarCargas({
 					</Sidebar>
 					<Col sm={12}>
 						<TabelaCargas
+							columns={columns}
 							get_data={get_data}
 							values={values}
 							handleExportExcel={handleExportExcel}
@@ -92,8 +94,10 @@ function VisualizarCargas({
 							setItensPerPage={setItensPerPage}
 							itensPerPage={itensPerPage}
 							setModalShow={setModalShow}
-							paginaCargaLot={
-								tituloPag === "Grid de Cargas em Lote" ? true : false
+							tipoDeBuscaPorPagina={
+								tituloPag === "Grid de Cargas em Lote"
+									? "table-columns-lote"
+									: "table-columns"
 							}
 						/>
 					</Col>

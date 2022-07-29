@@ -5,10 +5,6 @@ import useLoadingScreen from "../../Components/LoadingScreen";
 import io from "../../../services/socket";
 import factoryReducerCargas from "src/hooks/storageCargas/factoryReducerCargas";
 
-function reducerToggleModal(state) {
-	return !state;
-}
-
 function Visualizar() {
 	const [totalRegisters, setTotalRegisters] = useState(0);
 	const defaultCargas = {
@@ -18,6 +14,9 @@ function Visualizar() {
 	};
 	const cargasReducer = useCallback(factoryReducerCargas(defaultCargas), []);
 	const [cargas, dispatchCargas] = useReducer(cargasReducer, defaultCargas);
+	const [filtroAtual, setFiltroAtual] = useState(null);
+	const [LoadingComponent, setLoading] = useLoadingScreen();
+	const [itensPerPage, setItensPerPage] = useState(10);
 
 	useEffect(() => {
 		const actionCargasCreate = (payload) => {
@@ -45,14 +44,6 @@ function Visualizar() {
 			io.off("@carga-delete", actionCargasDelete);
 		};
 	}, [io]);
-
-	const [filtroAtual, setFiltroAtual] = useState(null);
-	const [LoadingComponent, setLoading] = useLoadingScreen();
-	const [activeModal, handleToggleModal] = useReducer(
-		reducerToggleModal,
-		false
-	);
-	const [itensPerPage, setItensPerPage] = useState(5);
 
 	async function handleExportExcel() {
 		setLoading(true);
@@ -120,8 +111,6 @@ function Visualizar() {
 			get_data={get_data}
 			values={cargas}
 			LoadingComponent={LoadingComponent}
-			activeModal={activeModal}
-			handleToggleModal={handleToggleModal}
 			itensPerPage={itensPerPage}
 			setItensPerPage={setItensPerPage}
 			resetView={resetView}

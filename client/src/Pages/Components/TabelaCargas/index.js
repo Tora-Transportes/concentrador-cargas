@@ -7,48 +7,63 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Toast } from "primereact/toast";
 import useLocalStorage from "../useLocalstorage";
-import { columns } from "../../Cargas/CollumnsTables/ColumnsTemplate.js";
-import {
-	footerTableFunction,
-	headerTableFunction,
-	//SideBarFuncition,
-} from "./layoutTable";
+import { footerTableFunction, headerTableFunction } from "./layoutTable";
 
 function TabelaCargas({
+	columns,
 	get_data,
 	values,
+	hideHeader,
 	resetView,
 	setItensPerPage,
 	itensPerPage,
-	paginaCargaLot,
+	tipoDeBuscaPorPagina,
 }) {
 	const [data, setData] = useState([]);
+	const [storage, setStorage] = useLocalStorage(tipoDeBuscaPorPagina, columns);
 	const [page, setPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
 	const [sortField, setSortField] = useState();
 	const [sortOrder, setSortOrder] = useState();
-	const tipoDeBuscaPorPagina = paginaCargaLot
-		? "table-columns-lote"
-		: "table-columns";
-	const [storage, setStorage] = useLocalStorage(tipoDeBuscaPorPagina, columns);
-	const [selectedColumns, setSelectedColumns] = useState([]);
+	const initialSelectColumns = columns.filter((i) =>
+		storage.find((c) => {
+			if (c.name === i.name) return c;
+		})
+	);
+	const [selectedColumns, setSelectedColumns] = useState(initialSelectColumns);
 	const firstDebounceRun = useRef(true);
 	const dadosTabela = useRef(null);
 	const firstRun = useRef(true);
 	const toast = useRef(null);
 
+	// functions of tables
 	const onColumnToggle = (event) => {
 		let selectedColumns = event.value;
-		let orderedSelectedColumns = columns.filter((col) =>
-			selectedColumns.some((sCol) => sCol.field === col.field)
-		);
-		setSelectedColumns(orderedSelectedColumns);
-		setStorage(orderedSelectedColumns);
+		setSelectedColumns(selectedColumns);
+		setStorage(selectedColumns);
 		toast.current.show({
 			severity: "success",
 			summary: "Coluna modificada com sucesso!",
 			life: 2000,
 		});
+	};
+
+	const ordernarUnidadeColunas = (e) => {
+		const sequenciaColuns = e.columns.map((item) => item.props.field);
+		const arrayColumns = [];
+		if (storage) {
+			sequenciaColuns.filter((i) =>
+				storage.find((c) => {
+					if (c.name === i) arrayColumns.push(c);
+				})
+			);
+			setStorage(arrayColumns);
+			toast.current.show({
+				severity: "success",
+				summary: "Coluna modificada com sucesso!",
+				life: 2000,
+			});
+		}
 	};
 
 	const onSort = (e) => {
@@ -116,40 +131,39 @@ function TabelaCargas({
 			return v - 1 < 1 ? v : v - 1;
 		});
 	}
-
-	const colunsFiltrado = columns.filter((i) =>
-		storage.find((c) => c.field === i.field)
+	const colunsFiltrado = [];
+	storage.filter((i) =>
+		columns.find((c) => {
+			if (c.name === i.name) colunsFiltrado.push(c);
+		})
 	);
 	const setDynamicColums = colunsFiltrado.map((col) => {
 		return (
 			<Column
-				columnKey={col.field}
-				key={col.field}
-				field={col.field}
+				columnKey={col.name}
+				key={col.name}
+				field={col.name}
 				style={col.style}
-				header={col.header}
-				body={col.body}
+				header={col.description}
+				body={col.selector}
 				sortable={col.sortable}
 				filter={true}
-				filterPlaceholder={col.filterPlaceholder}
 				filterElement={
-					col.filterElement && (
-						<col.filterElement
-							name={col.field}
+					col.Filter ? (
+						<col.Filter
+							name={col.name}
 							value={formik.value}
 							onChange={formik.handleChange}
 							className="w-100"
 						/>
-					)
-				}
-				static_column={
-					col.static_column !== true &&
-					!col.filterElement && (
-						<Form.Control
-							name={col.field}
-							onChange={formik.handleChange}
-							className="w-100"
-						/>
+					) : (
+						col.static_column !== true && (
+							<Form.Control
+								name={col.name}
+								onChange={formik.handleChange}
+								className="w-100"
+							/>
+						)
 					)
 				}
 			/>
@@ -180,14 +194,16 @@ function TabelaCargas({
 		1000
 	);
 
-	const headerTable = headerTableFunction(
-		resetView,
-		itensPerPage,
-		setItensPerPage,
-		selectedColumns,
-		columns,
-		onColumnToggle
-	);
+	const headerTable = hideHeader
+		? ""
+		: headerTableFunction(
+				resetView,
+				itensPerPage,
+				setItensPerPage,
+				selectedColumns,
+				columns,
+				onColumnToggle
+		  );
 
 	const footerTable = footerTableFunction(previousPage, nextPage);
 
@@ -197,6 +213,7 @@ function TabelaCargas({
 			<div className="datatable-responsive-gridCargas">
 				<DataTable
 					reorderableColumns
+					onColReorder={ordernarUnidadeColunas}
 					sortField={sortField}
 					scrollHeight="60vh"
 					sortOrder={sortOrder}
@@ -209,7 +226,7 @@ function TabelaCargas({
 					header={headerTable}
 					footer={footerTable}
 					filterDisplay="row"
-					dataKey="field"
+					dataKey="name"
 				>
 					{setDynamicColums}
 				</DataTable>

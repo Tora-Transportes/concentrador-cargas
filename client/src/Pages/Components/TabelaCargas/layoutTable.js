@@ -18,7 +18,6 @@ const PaginatorTable = ({ itensPerPage, setItensPerPage, setVisibleLeft }) => {
 			value={itensPerPage}
 			onChange={(e) => showOpcaoPaginatot(e)}
 		>
-			<option value="5">👀 5</option>
 			<option value="10">👀 10</option>
 			<option value="20">👀 20</option>
 			<option value="50">👀 50</option>
@@ -50,11 +49,13 @@ export const headerTableFunction = (
 						<FcServices className="header-table-icon-button" />
 					</button>
 					<MultiSelect
-						display="chip"
+						//display="chip"
+						fixedPlaceholder={true}
+						dataKey="name"
 						value={selectedColumns}
 						options={columns}
 						onChange={(e) => onColumnToggle(e)}
-						optionLabel="header"
+						optionLabel="description"
 						placeholder="Configurar tabela"
 						filter={true}
 						removeIcon
@@ -92,15 +93,17 @@ export const SideBarFuncition = ({
 
 	return (
 		<Row>
-			<Col lg={12} sm={12} className="text-center mb-2">
-				<ButtonReact
-					label="Legenda carga"
-					icon={<MdOutlineSubtitles />}
-					onClick={() => showLegendaCarga()}
-					className=" w-100"
-				/>
-			</Col>
-			<Col lg={12} sm={12} className="text-center mb-2">
+			{setModalShow !== undefined && (
+				<Col lg={12} className="text-center mb-2">
+					<ButtonReact
+						label="Legenda carga"
+						icon={<MdOutlineSubtitles />}
+						onClick={() => showLegendaCarga()}
+						className=" w-100"
+					/>
+				</Col>
+			)}
+			<Col lg={12} className="text-center mb-2">
 				<ButtonReact
 					label=" Excel "
 					icon={<AiFillFileExcel />}
@@ -108,7 +111,7 @@ export const SideBarFuncition = ({
 					className="p-button-success w-100"
 				/>
 			</Col>
-			<Col lg={12} sm={12} className="text-center mb-2">
+			<Col lg={12} className="text-center mb-2">
 				<ButtonReact
 					label=" Redefinir tabela "
 					icon={<MdRefresh />}
@@ -116,7 +119,7 @@ export const SideBarFuncition = ({
 					className="p-button-info w-100"
 				/>
 			</Col>
-			<Col lg={12} sm={12} className="text-center mb-2 paginator-table-col">
+			<Col lg={12} className="text-center mb-2 paginator-table-col">
 				<PaginatorTable
 					itensPerPage={itensPerPage}
 					setItensPerPage={setItensPerPage}

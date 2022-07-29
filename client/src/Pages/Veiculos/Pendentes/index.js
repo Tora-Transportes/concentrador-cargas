@@ -3,13 +3,11 @@ import useLoadingScreen from "../../Components/LoadingScreen";
 import NavbarNavigator from "../../Components/NavbarNavigator";
 import ViewMonitoramento from "./view";
 import ServiceCargas from "src/services/ServiceCargas";
-import { Link } from "react-router-dom";
 import swal from "sweetalert";
-import { Button } from "react-bootstrap";
 import factoryReducerCargas from "../../../hooks/storageCargas/factoryReducerCargas";
-import { BsHandThumbsUpFill, BsHandThumbsDownFill } from "react-icons/bs";
 
 import io from "../../../services/socket";
+import { getColumns } from "./columnsTable";
 
 function RotasPendentes() {
 	const defaultCargas = {
@@ -21,6 +19,8 @@ function RotasPendentes() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [lastOptions, setLastOptions] = useState({});
 	const [cargas, dispatchCargas] = useReducer(cargasReducer, defaultCargas);
+	const [itensPerPage, setItensPerPage] = useState(10);
+	const [totalRegisters, setTotalRegisters] = useState(0);
 
 	async function repopularVisao() {
 		if (cargas.results.length <= 4) {
@@ -66,56 +66,7 @@ function RotasPendentes() {
 		}
 	}
 
-	const columns = [
-		{
-			name: "id",
-			description: "Codigo da carga",
-			selector: (row) => (
-				<Link
-					target="_blank"
-					className="text-decoration-none"
-					to={`/cargas/manual/${row.id}`}
-				>
-					{row.id}
-				</Link>
-			),
-		},
-		{
-			name: "placa_veiculo",
-			description: "Placa veículo",
-			selector: (row) => row.placa_veiculo,
-		},
-		{
-			name: "origem_carga",
-			description: "Origem",
-			selector: (row) => row.origem_carga,
-		},
-		{
-			name: "destino_carga",
-			description: "Destino",
-			selector: (row) => row.destino_carga,
-		},
-		{
-			name: "Aprovar",
-			description: "Aprovar",
-			static_column: true,
-			selector: (row) => (
-				<Button variant="" onClick={() => aprovarVeiculo(row)}>
-					<BsHandThumbsUpFill style={{ color: "green" }} />
-				</Button>
-			),
-		},
-		{
-			name: "Reprovar",
-			description: "Reprovar",
-			static_column: true,
-			selector: (row) => (
-				<Button variant="" onClick={() => reprovarVeiculo(row)}>
-					<BsHandThumbsDownFill style={{ color: "red" }} />
-				</Button>
-			),
-		},
-	];
+	const columns = getColumns(aprovarVeiculo, reprovarVeiculo);
 
 	useEffect(() => {
 		const actionCargasCreate = (payload) => {
@@ -161,6 +112,7 @@ function RotasPendentes() {
 			});
 
 			setLoading(false);
+			setTotalRegisters(data.data.total_registers);
 			dispatchCargas({
 				type: "SET",
 				payload: { ...data.data, current_page: data.data.page },
@@ -177,6 +129,9 @@ function RotasPendentes() {
 				get_data={tableFetchData}
 				columns={columns}
 				data={cargas}
+				itensPerPage={itensPerPage}
+				setItensPerPage={setItensPerPage}
+				totalRegisters={totalRegisters}
 			/>
 		</>
 	);

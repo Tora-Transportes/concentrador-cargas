@@ -2,15 +2,8 @@ import React, { useReducer, useState, useEffect, useCallback } from "react";
 import View from "../ViewsVisualizacao";
 import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
-import useLocalstorage from "../../Components/useLocalstorage";
 import factoryReducerCargas from "../../../hooks/storageCargas/factoryReducerCargas";
 import io from "../../../services/socket";
-import { reducerActiveColumns } from "src/Pages/Components/Reducer/reducerActiveColumns";
-import { columns } from "../CollumnsTables/ColumnsTemplate";
-
-function reducerToggleModal(state) {
-	return !state;
-}
 
 function Visualizar() {
 	const [totalRegisters, setTotalRegisters] = useState(0);
@@ -21,6 +14,9 @@ function Visualizar() {
 	};
 	const reducerCargas = useCallback(factoryReducerCargas(defaultCargas), []);
 	const [cargas, dispatchCargas] = useReducer(reducerCargas, defaultCargas);
+	const [filtroAtual, setFiltroAtual] = useState(null);
+	const [LoadingComponent, setLoading] = useLoadingScreen();
+	const [itensPerPage, setItensPerPage] = useState(5);
 
 	useEffect(() => {
 		const actionCargasCreate = (payload) => {
@@ -44,28 +40,6 @@ function Visualizar() {
 			io.off("@carga-delete", actionCargasDelete);
 		};
 	}, [io]);
-
-	const defaultStorageColumns = columns.map((i) => ({
-		field: i.field,
-		active: true,
-		header: i.header,
-	}));
-
-	const [storage, setStorage] = useLocalstorage(
-		"table-columns-lote",
-		defaultStorageColumns
-	);
-	const [filtroAtual, setFiltroAtual] = useState(null);
-	const [LoadingComponent, setLoading] = useLoadingScreen();
-	const [displayColumns, reducerColumns] = useReducer(
-		reducerActiveColumns,
-		storage === null ? defaultStorageColumns : storage
-	);
-	const [activeModal, handleToggleModal] = useReducer(
-		reducerToggleModal,
-		false
-	);
-	const [itensPerPage, setItensPerPage] = useState(5);
 
 	function resetView() {
 		localStorage.removeItem("table-columns-lote");
@@ -122,28 +96,11 @@ function Visualizar() {
 		[itensPerPage, dispatchCargas, setTotalRegisters]
 	);
 
-	const columnsToDisplay = displayColumns
-		.filter((i) => i.active)
-		.map((i) => i.field);
-
-	const orderedColumns = columnsToDisplay.map((i) =>
-		columns.find((j) => j.field === i)
-	);
-
-	useEffect(() => {
-		setStorage(displayColumns);
-	}, [displayColumns]);
-
 	return (
 		<View
 			handleExportExcel={handleExportExcel}
 			get_data={get_data}
-			columns={orderedColumns.filter((c) => columnsToDisplay.includes(c.field))}
 			LoadingComponent={LoadingComponent}
-			displayColumns={displayColumns}
-			dispatchColumns={reducerColumns}
-			activeModal={activeModal}
-			handleToggleModal={handleToggleModal}
 			itensPerPage={itensPerPage}
 			setItensPerPage={setItensPerPage}
 			resetView={resetView}

@@ -1,14 +1,14 @@
 export function reducerActiveColumns(state, action) {
-	const index = state.findIndex((i) => i.field === action.field);
+	const index = state.findIndex((i) => i.name === action.name);
 	let before;
 	switch (action.type) {
 		case "ENABLE_FIELD":
 			return state.map((i) =>
-				i.field === action.field ? { ...i, active: true } : i
+				i.name === action.name ? { ...i, active: true } : i
 			);
 		case "DISABLE_FIELD":
 			return state.map((i) =>
-				i.field === action.field ? { ...i, active: false } : i
+				i.name === action.name ? { ...i, active: false } : i
 			);
 		case "UP_FIELD":
 			if (index > 0) {
