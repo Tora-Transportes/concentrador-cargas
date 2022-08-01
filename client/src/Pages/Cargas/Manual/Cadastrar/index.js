@@ -78,16 +78,19 @@ function Manual() {
 				if (cargaDocumento) {
 					swal(
 						"Ops !",
-						`O documento digitado já existe na carga ${cargaDocumento.id} deseja ir para a tela de edição da mesma ?`,
+						`O documento digitado já existe na carga ${cargaDocumento.id}!`,
 						"warning",
 						{
-							buttons: ["Não", "Sim"],
+							buttons: ["Continuar cadastrando", "Editar carga"],
 						}
 					).then((mudarDeTela) => {
 						if (mudarDeTela) {
 							history.push(`/cargas/manual/${cargaDocumento.id}`);
 						} else {
-							formik.setFieldValue("documento_transporte", "");
+							formik.setFieldValue(
+								"documento_transporte",
+								documento_transporte
+							);
 						}
 					});
 				}
