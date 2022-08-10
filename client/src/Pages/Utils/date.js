@@ -11,4 +11,10 @@ export default {
 
 		return `${days} dia(s), ${hours} hora(s), ${minutes} minuto(s)`;
 	},
+
+	formatDate: (value) => {
+		if (value == null) return "Sem informação";
+		const [data, time] = value?.split("T");
+		return `${data.split("-").reverse().join("-")} às ${time.split(".")[0]}`;
+	},
 };

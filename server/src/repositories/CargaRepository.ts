@@ -1,5 +1,5 @@
 import database from "../database";
-import { ICarga } from "../models/ICargas";
+import { ICarga, ICargaCTE } from "../models/ICargas";
 import { Knex } from "knex";
 
 export interface IPaginationResult<T> {
@@ -8,7 +8,6 @@ export interface IPaginationResult<T> {
   total_registers: number;
   results: T[];
 }
-
 export class CargaRepository {
   async nextId(): Promise<number> {
     return Number(
@@ -45,6 +44,38 @@ export class CargaRepository {
         .select(["descricao"])
     ).map((i) => i.descricao);
     return { ...carga, locais };
+  }
+
+  async searchCET(id: string): Promise<ICargaCTE> {
+    const result = await database("CARGA")
+      .select(["CARGA.NUM_CAR"])
+      .join("VEICULO", "VEICULO.VEI_COD", "CARGA.COD_VEI")
+      .first()
+      .where("CARGA.CAR_TP_DOC", 5)
+      .where("VEICULO.VEI_PLACA", id)
+      .orderBy("CARGA.CAR_DT", "DESC");
+
+    let dadosCET;
+    if (result != undefined) {
+      dadosCET = await database.raw(
+        `SELECT
+            REC.REC_HR_EMISSAO AS DT_HORA_EMISSAO,
+            NULL AS DT_CANCELAMENTO,
+            'CTE' AS TIPO_DOC,
+            REC.REC_PES_REAL AS DT_PESO_REAL,
+            REC.REC_DT_ENTREGA AS DT_ENTREGA
+            FROM ITEM_CARGA  ITC
+            INNER JOIN RECEITA REC ON REC.TDM_COD = ITC.TDM_COD
+            AND ITC.FIL_COD = REC.FIL_COD
+            AND REC.REC_NUM = ITC.REC_NUM
+            WHERE ITC.NUM_CAR = (${result?.NUM_CAR})
+            AND REC.TDM_COD in (24)
+            ORDER BY REC.REC_HR_EMISSAO DESC`
+      );
+    }
+    return {
+      results: dadosCET,
+    };
   }
 
   async create(carga: ICarga): Promise<ICarga> {

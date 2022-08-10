@@ -1,3 +1,4 @@
+import { ICargaCTE } from "./../../models/ICargas";
 import { IPaginationResult } from "../../repositories/CargaRepository";
 import { IEventSocket } from "../../socketsRoutes";
 import { ICarga } from "../../models/ICargas";
@@ -322,6 +323,16 @@ export class UseCaseViewCargas {
   }
 }
 
+export interface IVeiwsDataCTE {
+  searchCET(id: string): Promise<ICargaCTE>;
+}
+export class UseCaseViewCargasCTE {
+  constructor(private cargaRepoitory: IVeiwsDataCTE) {}
+  async run(id: string) {
+    const resultCET = await this.cargaRepoitory.searchCET(id);
+    return resultCET;
+  }
+}
 export class UseCaseDeleteCarga {
   constructor(
     private cargaRepository: IRepositoryUpdateCarga,

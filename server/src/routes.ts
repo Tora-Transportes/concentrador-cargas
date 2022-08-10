@@ -17,6 +17,7 @@ import CoordenadasController from "./controllers/CoordenadaController";
 import RelatorioController from "./controllers/RelatorioController";
 import CredenciaisController from "./controllers/CredenciaisController";
 import ProducaoController from "./controllers/ProducaoController";
+import CargaTecController from "./controllers/CargaTecController";
 
 const routes = Router();
 
@@ -40,6 +41,7 @@ routes.post(
   multer().single("file"),
   CargaController.importSheet
 );
+routes.get("/cargaCTE/:id", CargaTecController.indexCTE);
 routes.get("/cargas/:id", CargaController.index);
 routes.put("/cargas/:id", CargaController.update);
 routes.delete(

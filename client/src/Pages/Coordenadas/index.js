@@ -19,6 +19,8 @@ function RotasPendentes() {
 	const [lastOptions, setLastOptions] = useState({});
 	const [cargas, dispatchCargas] = useReducer(cargasReducer, defaultCargas);
 	const [itensPerPage, setItensPerPage] = useState(10);
+	const [visibleCardCte, setVisibleCardCte] = useState(false);
+	const [dataCTE, setDataCTE] = useState();
 
 	async function perguntarEAlterarDadosCoordenada(placa) {
 		if (!placa) {
@@ -143,10 +145,16 @@ function RotasPendentes() {
 		}
 	}
 
+	const showCardCTE = (rowData) => {
+		setDataCTE(rowData);
+		setVisibleCardCte(true);
+	};
+
 	const columns = getColumns(
 		handleChangeDataJanela,
 		perguntarEAlterarDadosCoordenada,
-		handleChangeResponsavelPlaca
+		handleChangeResponsavelPlaca,
+		showCardCTE
 	);
 
 	function resetView() {
@@ -199,6 +207,7 @@ function RotasPendentes() {
 		},
 		[setLoading, dispatchCargas, itensPerPage]
 	);
+
 	return (
 		<>
 			<LoadingScreen />
@@ -212,6 +221,8 @@ function RotasPendentes() {
 				resetView={resetView}
 				itensPerPage={itensPerPage}
 				setItensPerPage={setItensPerPage}
+				visibleCteCardObject={{ visibleCardCte, setVisibleCardCte }}
+				dadosCTEObjet={{ dataCTE, setDataCTE }}
 			/>
 		</>
 	);

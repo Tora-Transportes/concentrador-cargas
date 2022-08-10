@@ -14,6 +14,7 @@ import {
   UseCaseViewCargas,
   UseCaseDeleteCarga,
   UseCaseImportCarga,
+  UseCaseViewCargasCTE,
 } from "./entities";
 
 const userRepository = new UsuarioRepository();
@@ -48,6 +49,7 @@ const modules = {
     notifyAll,
     clientRepository
   ),
+  UseCaseViewCargasCTE: new UseCaseViewCargasCTE(cargaRepository),
 };
 
 export default modules;

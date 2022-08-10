@@ -120,7 +120,7 @@ function Permissoes() {
 								options={allTipoPermissoes}
 								onChange={(e) => setPermissSeleciondo(e.value)}
 								optionLabel="name"
-								placeholder="Selecionar permições"
+								placeholder="Selecionar permissões"
 								filter={true}
 								filterPlaceholder="Procurar"
 							/>

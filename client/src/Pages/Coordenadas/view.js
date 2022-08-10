@@ -4,7 +4,9 @@ import TabelaCargas from "../Components/TabelaCargas";
 import { Button as ButtonReact } from "primereact/button";
 import { Sidebar } from "primereact/sidebar";
 import { BiCog } from "react-icons/bi";
+import { Dialog } from "primereact/dialog";
 import { SideBarFuncition } from "../Components/TabelaCargas/layoutTable";
+import InfoCTEcard from "./infoCTEcard";
 
 function ViewCoordenadas({
 	columns,
@@ -15,8 +17,12 @@ function ViewCoordenadas({
 	resetView,
 	itensPerPage,
 	setItensPerPage,
+	visibleCteCardObject,
+	dadosCTEObjet,
 }) {
 	const [visibleLeft, setVisibleLeft] = useState(false);
+	const { visibleCardCte, setVisibleCardCte } = visibleCteCardObject;
+	const { dataCTE } = dadosCTEObjet;
 	React.useEffect(() => {
 		const interval = setTimeout(() => {
 			window.scrollTo(0, 10000);
@@ -24,6 +30,18 @@ function ViewCoordenadas({
 
 		return () => clearInterval(interval);
 	});
+
+	const onHide = (stateMethod) => {
+		stateMethod(false);
+	};
+
+	const headerDialog = (
+		<div className="header-dialog">
+			<h4>
+				Informações referente a placa <strong>{dataCTE?.placa}</strong>
+			</h4>
+		</div>
+	);
 	return (
 		<>
 			<Container fluid className="text-center mb-5 mt-4">
@@ -49,10 +67,28 @@ function ViewCoordenadas({
 					<Col></Col>
 				</Row>
 				<Row>
+					<Dialog
+						className="dialog-cte"
+						header={headerDialog}
+						visible={visibleCardCte}
+						onHide={() => onHide(setVisibleCardCte)}
+						closable={true}
+					>
+						<InfoCTEcard
+							rowInfoPlaca={dataCTE}
+							setVisibleCardCte={setVisibleCardCte}
+						/>
+
+						<ButtonReact
+							label="Voltar"
+							onClick={() => setVisibleCardCte(false)}
+							className="dialog-btn-voltar"
+						/>
+					</Dialog>
 					<Sidebar
 						visible={visibleLeft}
 						onHide={() => setVisibleLeft(false)}
-						style={{ width: "15em", height: "auto" }}
+						className="sidebar-detales-tarefa"
 					>
 						<SideBarFuncition
 							itensPerPage={itensPerPage}

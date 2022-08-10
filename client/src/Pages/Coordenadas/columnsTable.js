@@ -1,4 +1,5 @@
 import { SiGooglemaps } from "react-icons/si";
+import { BsInfoCircle } from "react-icons/bs";
 import DateUtils from "../Utils/date";
 import { Button, Form } from "react-bootstrap";
 import CollapseHint from "../Components/CollapseHint";
@@ -7,13 +8,37 @@ import ResponsavelCadastroSelect from "../Components/ResponsavelCadastroSelect";
 export const getColumns = (
 	handleChangeDataJanela,
 	perguntarEAlterarDadosCoordenada,
-	handleChangeResponsavelPlaca
+	handleChangeResponsavelPlaca,
+	showCardCTE
 ) => {
 	return [
+		{
+			name: "",
+			description: "Detales",
+			selector: (row) => (
+				<Button
+					variant="Link"
+					onClick={() => showCardCTE(row)}
+					className="text-primary"
+				>
+					<BsInfoCircle className="mb-1" /> Info CTE
+				</Button>
+			),
+		},
 		{
 			name: "placa",
 			description: "Placa",
 			selector: (row) => row.placa,
+		},
+		{
+			name: "placa_carreta",
+			description: "Placa carreta",
+			selector: (row) => row.placa_carreta,
+		},
+		{
+			name: "placa_bitrem",
+			description: "Placa bitrem",
+			selector: (row) => row.placa_bitrem,
 		},
 		{
 			name: "tipo_cavalo",

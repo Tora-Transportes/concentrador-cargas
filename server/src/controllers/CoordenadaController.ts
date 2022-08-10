@@ -13,8 +13,12 @@ class CoordenadasController {
     const pageSize = isNaN(Number(req.query.limit))
       ? 5
       : Number(req.query.limit);
+    const result = await useCases.UseCaseViewCoordenada.run(
+      req.query,
+      pageSize
+    );
     return res.json({
-      data: await useCases.UseCaseViewCoordenada.run(req.query, pageSize),
+      data: result,
     });
   }
 
