@@ -122,7 +122,7 @@ export class CoordenadaRepository {
       placa_carreta,
       cpf_motorista,
     })) {
-      console.log("AAAAAAA");
+      console.log("Geovana");
 
       if (value !== undefined && key) {
         const columnName = traducaoNomeColuna.get(key) ?? key;
