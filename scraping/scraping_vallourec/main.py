@@ -385,6 +385,7 @@ def converter_carga_para_concentrador(carga_portal):
 
         if i["descricaoTipoCliente"].lower() == "destino final":
             destino = i["clienteFormatado"]
+            destinoAuxiliar = destino
             if destino is not None:
                 destino = "BRASIL/" + "/".join(reversed(destino.split(' - ')[-1].strip().upper().split('/')))
 
@@ -407,7 +408,8 @@ def converter_carga_para_concentrador(carga_portal):
         "responsavel_cadastro": "BOT IMPORTACAO PORTAL",
         "canal_comunicacao": "portal",
         "unidade_medida": "KG",
-        "cliente": "VALLOUREC SOLUCOES TUBULARES BRASIL S A - 08689024000292 - JECEABA/MG",
+        #"cliente": "VALLOUREC SOLUCOES TUBULARES BRASIL S A - 08689024000292 - JECEABA/MG"
+        "cliente": "VALLOUREC SOLUCOES TUBULARES BRASIL S A - 08689024000101 - BELO HORIZONTE/MG",
         "fk_filial": 8, # FILIAL DE MANNESMANN
 
         "documento_transporte": carga_portal["id"],
@@ -422,8 +424,13 @@ def converter_carga_para_concentrador(carga_portal):
         "destino_carga": destino,
         "locais": list( map(lambda x: f"{x['descricaoTipoCliente']} : {x['clienteFormatado']}", carga_portal["clientes"]) ),
         "informacoes_restritivas": f"descricaoTipoVeiculo: {carga_portal['descricaoTipoVeiculo']}\ndescricaoCapacidadeVeiculo: {carga_portal['descricaoCapacidadeVeiculo']}\ndescricaoComprimentoVeiculo: {carga_portal['descricaoComprimentoVeiculo']}\n",
-        "acessorios_requisitos": carga_portal["descricaoItemCarregamento"],
-        "observacao": "OBSERVACOES_INDICACOES: " + str(carga_portal["observacoesIndicacoes"]) + "\nTIPO CONTRATO: " + str(carga_portal["tipoContrato"]) + "\nMATERIAL: " + str(carga_portal["material"])
+        "acessorios_requisitos": "DF: " + destinoAuxiliar + "\n/\n" + str(carga_portal["descricaoItemCarregamento"]),
+        "observacao": "DEPOSITO: " + str(carga_portal['depositosJanelas'][0]['depositoSigla']) + "\n/\n"
+         + str(carga_portal["observacoesIndicacoes"]) 
+         + "\nTIPO CONTRATO: " 
+         + str(carga_portal["tipoContrato"]) 
+         + "\nMATERIAL: " + str(carga_portal["material"])
+        
     }
     return carga_concentrador
 
