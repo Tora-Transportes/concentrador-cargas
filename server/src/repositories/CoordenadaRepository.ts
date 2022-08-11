@@ -122,6 +122,8 @@ export class CoordenadaRepository {
       placa_carreta,
       cpf_motorista,
     })) {
+      console.log("AAAAAAA");
+
       if (value !== undefined && key) {
         const columnName = traducaoNomeColuna.get(key) ?? key;
         if (traducaoNomeColuna.get(key)) {
