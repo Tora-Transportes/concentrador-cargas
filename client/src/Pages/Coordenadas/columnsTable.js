@@ -1,9 +1,11 @@
 import { SiGooglemaps } from "react-icons/si";
-import { BsInfoCircle } from "react-icons/bs";
+import { BsInfoCircle, BsPencilSquare } from "react-icons/bs";
 import DateUtils from "../Utils/date";
 import { Button, Form } from "react-bootstrap";
 import CollapseHint from "../Components/CollapseHint";
 import ResponsavelCadastroSelect from "../Components/ResponsavelCadastroSelect";
+//mport swal from "sweetalert";
+import { Link } from "react-router-dom";
 
 export const getColumns = (
 	handleChangeDataJanela,
@@ -49,6 +51,28 @@ export const getColumns = (
 			name: "tipo_carreta",
 			description: "Tipo carreta",
 			selector: (row) => row.tipo_carreta,
+		},
+		{
+			name: "editar",
+			description: "Editar/Vincular",
+			static_column: true,
+			selector: (row) => {
+				if (!row.id) {
+					return console.log("ROW id"); //swal("Ops!", "Não existe o codigo da carga", "warning");
+				}
+				return (
+					<Link
+						to={`/cargas/${
+							row.canal_comunicacao === "portal" ? "manual" : "manual"
+						}/${row.id}`}
+						target="_blank"
+						rel="noopener"
+					>
+						<BsPencilSquare />
+					</Link>
+				);
+			},
+			sortable: "sortable",
 		},
 		{
 			name: "telefone_motorista",
