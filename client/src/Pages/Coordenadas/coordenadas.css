@@ -1,0 +1,53 @@
+.dialog-cte {
+  width: 50%;
+  height: auto;
+}
+
+.p-sidebar-left .p-sidebar {
+  width: 15em !important;
+  height: auto !important;
+}
+
+.p-card-title {
+  color: #00652e;
+}
+
+.ul-card-li {
+  margin-left: 1vw;
+}
+
+.header-dialog {
+  text-align: center;
+  color: #00652e;
+}
+
+.header-dialog strong {
+  color: #800000;
+}
+
+.dialog-btn-voltar {
+  margin-left: 2vw !important;
+  height: 4.5vh !important;
+  width: auto !important;
+  background-color: #00652e !important;
+}
+
+#botao-detalhe-tabela{
+  background: #00652E;
+  border: none;
+}
+
+
+@media only screen and (max-width: 768px) {
+  .dialog-cte {
+    width: 95%;
+    height: auto;
+  }
+
+  .dialog-btn-voltar {
+    margin-left: 9.5vw !important;
+    height: 5vh !important;
+    width: 35% !important;
+    background-color: #00652e !important;
+}
+}

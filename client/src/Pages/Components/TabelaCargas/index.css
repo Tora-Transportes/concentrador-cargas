@@ -1,22 +1,211 @@
-.table-external td,
-.table-external th {
+/* Tabela */
+
+.header-table {
+  align-items: center;
+}
+
+.header-table-col-buttons {
+  text-align: left;
+}
+
+.header-button-atualiza {
+  margin-right: -24px;
+  width: 53%;
+}
+
+.header-table .header-col-atualiza {
+  text-align: start;
+  margin-left: -24px;
+}
+
+.p-column-filter {
+  height: 43px;
+  align-items: center;
+  width: 13em;
+}
+
+.footer-table Button {
+  margin-left: 20px;
+}
+
+.button-input-multiselect {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  border-radius: 5px;
+  transition: 0.4s ease-in-out;
+  color: white;
+  background-color: #eefdec;
+  border: 1px solid #e4e7e4;
+  height: 2.7em;
+  margin-top: 5px;
+}
+
+.p-multiselect {
+  margin-right: -24px;
+}
+
+.paginator-table-col {
+  display: none;
+}
+
+
+/* css nativa da tabela */
+.datatable-responsive-gridCargas
+  .p-datatable-responsive-grid
+  .p-datatable-tbody
+  > tr
+  > td
+  .p-column-title {
+  display: none;
+}
+.datatable-responsive-gridCargas
+  .p-datatable-responsive-grid
+  .p-datatable-thead
+  > tr
+  > th {
+  text-align: center;
+  font-size: 13.5px;
   white-space: nowrap;
 }
 
-.table-external th {
-  min-width: 200px;
+.datatable-responsive-gridCargas
+  .p-datatable-responsive-grid
+  .p-column-header-content {
+  display: contents;
 }
 
-.table-external thead th {
+.p-datatable .p-datatable-tbody > tr {
+  font-size: 13.5px;
+}
+
+.p-datatable .p-datatable-tbody > tr td {
+  color: #000;
+}
+
+.datatable-responsive-gridCargas
+  .p-datatable-responsive-grid
+  .p-datatable-tbody
+  > tr
+  > td {
   text-align: center;
-  vertical-align: middle;
+  background-color: lavender;
 }
 
-a.page-link {
-  padding-left: 100px !important;
-  padding-right: 100px !important;
+.datatable-responsive-gridCargas
+  .p-datatable-responsive-grid
+  .p-fluid
+  .p-inputtext {
+  width: auto;
+  height: 2.5em;
 }
 
-#paginacao_barra {
-  margin-bottom: 0 !important;
+.datatable-responsive-gridCargas
+  .p-datatable-responsive-grid
+  .p-column-filter-row
+  .p-column-filter-element {
+  /* width: auto; */
+  height: 2.5em;
+}
+.datatable-responsive-gridCargas
+  .p-datatable-responsive-grid
+  .p-column-filter-row {
+  width: max-content;
+  margin: 0 auto;
+}
+
+.datatable-responsive-gridCargas
+  .p-datatable-responsive-grid
+  .p-column-filter-row
+  .mb-3 {
+  margin-bottom: 0;
+}
+.mb-3 .form-floating {
+  margin-bottom: 0;
+}
+
+.p-column-filter-row .p-column-filter-menu-button,
+.p-column-filter-row .p-column-filter-clear-button {
+  display: none;
+}
+
+@media only screen and (max-width: 461px) {
+  .paginator-table-col {
+    display: grid;
+  }
+  .datatable-responsive-gridCargas
+  .p-datatable-header {
+    display: none;
+  }
+
+  .sidebar-button-table {
+    height: 5vh;
+  }
+  .title-h1 {
+    margin-right: 50px;
+  }
+
+  .sidebar-div {
+    display: inline;
+  }
+
+  .header-table-col-buttons {
+    display: grid;
+  }
+
+  .footer-table {
+    display: grid;
+  }
+
+  .footer-table Button {
+    margin: 3px;
+  }
+}
+
+@media screen and (max-width: 50em) {
+  .datatable-responsive-gridCargas
+    .p-datatable.p-datatable-responsive-gridCargas
+    .p-datatable-thead
+    > tr
+    > th,
+  .datatable-responsive-gridCargas
+    .p-datatable.p-datatable-responsive-gridCargas
+    .p-datatable-tfoot
+    > tr
+    > td {
+    display: none !important;
+  }
+
+  .datatable-responsive-gridCargas
+    .p-datatable.p-datatable-responsive-gridCargas
+    .p-datatable-tbody
+    > tr
+    > td {
+    text-align: left;
+    display: grid;
+    width: 100%;
+    float: left;
+    clear: left;
+    border: 0 none;
+  }
+
+  .datatable-responsive-gridCargas
+    .p-datatable.p-datatable-responsive-gridCargas
+    .p-datatable-tbody
+    > tr
+    > td
+    .p-column-title {
+    padding: 0.4rem;
+    min-width: 30%;
+    display: inline-block;
+    margin: -0.4em 1em -0.4em -0.4rem;
+    font-weight: bold;
+  }
+
+  .datatable-responsive-gridCargas
+    .p-datatable
+    table {
+    background-color: #fff;
+  }
 }

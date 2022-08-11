@@ -126,6 +126,7 @@ function FormularioCadastroManual({
 				<Col sm={12} md={6}>
 					<FloatingLabel label="*Código da filial" className="mb-3">
 						<FilialSelect
+							id="Codigo-filial"
 							placeholder=" "
 							name="fk_filial"
 							value={formik.values.fk_filial ?? ""}
@@ -138,6 +139,7 @@ function FormularioCadastroManual({
 				<Col>
 					<FloatingLabel label="Documento de transporte" className="mb-3">
 						<Form.Control
+							id="doc-trans"
 							name="documento_transporte"
 							value={formik.values.documento_transporte}
 							onChange={formik.handleChange}
@@ -202,7 +204,7 @@ function FormularioCadastroManual({
 				<>
 					<Row className="mb-5">
 						<Col sm={12}>
-							<h3>Dados do veículo</h3>
+							<h3 id="title-check-não">Dados do veículo</h3>
 						</Col>
 					</Row>
 					<Row>
@@ -215,6 +217,7 @@ function FormularioCadastroManual({
 						</Form.Text>
 						<Col sm={12}>
 							<InputPlaca
+								id="Plca-cavalo"
 								readOnly={
 									formik.values.fk_situacao &&
 									![1, 2, 4].includes(Number(formik.values.fk_situacao))

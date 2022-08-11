@@ -13,7 +13,7 @@ function CaptionStatusCarga() {
 	return (
 		<Accordion>
 			<Accordion.Item eventKey="0">
-				<Accordion.Header>Legenda das situações de carga</Accordion.Header>
+				<Accordion.Header>Legenda situações de carga</Accordion.Header>
 				<Accordion.Body>
 					<Table>
 						<thead>

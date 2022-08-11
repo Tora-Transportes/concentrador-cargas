@@ -38,6 +38,9 @@ export class CoordenadaRepository {
       "con_dados_coordenadas.responsavel_placa",
       "con_usuarios.nome as responsavel_placa_nome",
       "con_usuarios.email as responsavel_placa_email",
+      "con_cargas.placa_carreta",
+      "con_cargas.placa_bitrem",
+      "con_cargas.id",
     ]);
     const total = database("con_coordenadas_veiculos")
       .count("placa as total")
@@ -69,6 +72,13 @@ export class CoordenadaRepository {
       "con_usuarios.oid",
       "con_dados_coordenadas.responsavel_placa"
     );
+
+    query.leftJoin(
+      "con_cargas",
+      "con_cargas.placa_veiculo",
+      "con_coordenadas_veiculos.placa"
+    );
+
     for (const [key, value] of Object.entries({
       placa,
       mct,

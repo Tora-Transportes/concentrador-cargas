@@ -1,3 +1,4 @@
+import { ICargaCTE } from "./../../models/ICargas";
 import { IPaginationResult } from "../../repositories/CargaRepository";
 import { IEventSocket } from "../../socketsRoutes";
 import { ICarga } from "../../models/ICargas";
@@ -87,19 +88,13 @@ export class UseCaseAddCarga {
         documento_transporte: carga.documento_transporte,
       });
 
-      if (cargaImportada.results.length > 0) {
-        console.log(
-          "Documento de transporte ",
-          carga.documento_transporte,
-          " duplicado"
-        );
+      if (cargaImportada.results[0].id === carga.id) {
         throw new AppError(
-          "A carga já foi cadastrada com o documento de transporte",
+          " Este documento de transporte com este codigo de carga já estão cadastrado!",
           409
         );
       }
     }
-    //////////////////////////////////////////////////
 
     const cargaOficial = operation.validate(null, carga);
 
@@ -328,6 +323,16 @@ export class UseCaseViewCargas {
   }
 }
 
+export interface IVeiwsDataCTE {
+  searchCET(id: string): Promise<ICargaCTE>;
+}
+export class UseCaseViewCargasCTE {
+  constructor(private cargaRepoitory: IVeiwsDataCTE) {}
+  async run(id: string) {
+    const resultCET = await this.cargaRepoitory.searchCET(id);
+    return resultCET;
+  }
+}
 export class UseCaseDeleteCarga {
   constructor(
     private cargaRepository: IRepositoryUpdateCarga,

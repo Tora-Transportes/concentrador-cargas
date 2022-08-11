@@ -6,19 +6,58 @@ import { SiGooglesheets } from "react-icons/si";
 // import { BsPeople } from "react-icons/bs";
 import NavbarNavigator from "../../Components/NavbarNavigator";
 import "./index.css";
+import createSequence from "tooltip-sequence";
 
 function Main() {
+	const options = {
+		backdropColor: "#6262625d",
+		sequence: [
+			{
+				element: "#titulo-selecionar-modo-carga",
+				description:
+					"<h2>Don't forget to import!</h2><div>Add these lines when using in a front end framework.</div>",
+				placement: "bottom",
+			},
+			{
+				element: "#hand",
+				description:
+					"<h2>Color, color, everywhere! ❤️🧡💛💚💙💜💗🖤</h2><div>Option to choose the backdrop color.</div>",
+				placement: "bottom",
+			},
+			{
+				element: "#import",
+				description:
+					"<h2>Placement - Top! ⬆️</h2><div>Option to place the tooltip on the top of the element.</div>",
+				placement: "bottom",
+			},
+		],
+		onComplete: function () {
+			console.log("Completed!");
+		},
+	};
+
+	function handleClick(event) {
+		event.preventDefault();
+		createSequence(options);
+	}
 	return (
 		<>
 			<NavbarNavigator />
 			<Container className="text-center mb-5">
 				<Row className="p-5 mt-1">
-					<h1>Selecione o modo qual a carga foi coletada</h1>
-					<hr className="mt-5" />
+					<h1 onClick={handleClick} id="titulo-selecionar-modo-carga">
+						Selecione o modo qual a carga foi coletada
+					</h1>
 					<Col md={6} className="p-5 puts" sm={12}>
 						<Link className="text-decoration-none" to="/cargas/manual">
-							<MdOutlineWavingHand size={80} />
-							<h2 className="fs-3">Manual</h2>
+							<MdOutlineWavingHand
+								size={80}
+								style={{ color: "#00652E" }}
+								id="hand"
+							/>
+							<h2 className="fs-3" id="title-manual">
+								Manual
+							</h2>
 						</Link>
 					</Col>
 					{/* <Col md={6} className="p-5 puts" sm={12}>
@@ -29,11 +68,16 @@ function Main() {
 					</Col> */}
 					<Col sm={12} md={6} className="p-5 puts">
 						<Link className="text-decoration-none" to="/cargas/importar">
-							<SiGooglesheets size={80} />
-							<h2 className="fs-3">Importação em lote</h2>
+							<SiGooglesheets
+								size={80}
+								style={{ color: "#00652E" }}
+								id="import"
+							/>
+							<h2 className="fs-3" id="title-import">
+								Importação em lote
+							</h2>
 						</Link>
 					</Col>
-					<hr />
 				</Row>
 				<Row></Row>
 			</Container>

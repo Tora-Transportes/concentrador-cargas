@@ -9,6 +9,8 @@ import ServiceProdutos from "../../../../services/ServiceProdutos";
 import FormularioCadastroManual from "../../../Components/FormularioCadastroManual";
 import CabecalhoFixado from "../../../Components/CabecalhoFixado";
 import { useHistory } from "react-router-dom";
+import createSequence from "tooltip-sequence";
+import "../../../Styles/index.css";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -78,16 +80,19 @@ function Manual() {
 				if (cargaDocumento) {
 					swal(
 						"Ops !",
-						`O documento digitado já existe na carga ${cargaDocumento.id} deseja ir para a tela de edição da mesma ?`,
+						`O documento digitado já existe na carga ${cargaDocumento.id}!`,
 						"warning",
 						{
-							buttons: ["Não", "Sim"],
+							buttons: ["Continuar cadastrando", "Editar carga"],
 						}
 					).then((mudarDeTela) => {
 						if (mudarDeTela) {
 							history.push(`/cargas/manual/${cargaDocumento.id}`);
 						} else {
-							formik.setFieldValue("documento_transporte", "");
+							formik.setFieldValue(
+								"documento_transporte",
+								documento_transporte
+							);
 						}
 					});
 				}
@@ -127,10 +132,75 @@ function Manual() {
 		formik.setFieldValue("id", "(Vai ser auto gerado)");
 	}
 
+	const options = {
+		backdropColor: "#6262625d",
+		sequence: [
+			{
+				element: "#button-cad-carga",
+				description:
+					"<h2>Don't forget to import!</h2><div>Add these lines when using in a front end framework.</div>",
+				placement: "bottom",
+			},
+			{
+				element: "#Codigo-filial",
+				description:
+					"<h2>Campos iniciais!</h2><div>Os campos a cima são inseridos automaticamente</div>",
+				placement: "top",
+			},
+			{
+				element: "#doc-trans",
+				description:
+					"<h2>Documento</h2><div>Option to place the tooltip on the top of the element.</div>",
+				placement: "top",
+			},
+			{
+				element: "#e_lote_sim",
+				description:
+					"<h2>Placement - Right!</h2><div>será necessário adicionar algumas informações como informar um cliente, origem de carga, destino de carga etc</div>",
+				placement: "bottom",
+			},
+			{
+				element: "#e_lote_nao",
+				description:
+					"<h2>Installation Package!</h2><div>Será necessário adicionar informações do caminhão e do motorista </div>",
+				placement: "bottom",
+			},
+			{
+				element: "#title-check-não",
+				description:
+					"<h2>Dados do Veículo</h2><div>Será necessário adicionar informações do caminhão e do motorista </div>",
+				placement: "bottom",
+			},
+			{
+				element: "#Plca-cavalo",
+				description:
+					"<h2>Informações</h2><div>Será necessário adicionar informações do caminhão e do motorista </div>",
+				placement: "top",
+			},
+			{
+				element: "#",
+				description:
+					"<h2>Installation Package!</h2><div>Será necessário adicionar informações do caminhão e do motorista </div>",
+				placement: "bottom",
+			},
+		],
+		onComplete: function () {
+			console.log("Completed!");
+		},
+	};
+
+	function handleClick(event) {
+		event.preventDefault();
+		createSequence(options);
+	}
+
 	return (
 		<>
 			<LoadingScreen />
 			<CabecalhoFixado>Cadastro de carga aberta manualmente</CabecalhoFixado>
+			<Button onClick={handleClick} id="button-cad-carga">
+				Ajuda
+			</Button>
 			<Container className="mb-5 mt-5">
 				<Form onSubmit={formik.handleSubmit}>
 					<FormularioCadastroManual

@@ -1,23 +1,84 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Table, Pagination, Form } from "react-bootstrap";
-import { useFormik } from "formik";
-import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
-import useDebouncedFunction from "../useDebounceFunction";
 import "./index.css";
+import { Form, Row } from "react-bootstrap";
+import { useFormik } from "formik";
+import useDebouncedFunction from "../useDebounceFunction";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { Toast } from "primereact/toast";
+import useLocalStorage from "../useLocalstorage";
+import { footerTableFunction, headerTableFunction } from "./layoutTable";
 
-function TabelaCargas({ columns, get_data, values, responsive = true }) {
+function TabelaCargas({
+	columns,
+	get_data,
+	values,
+	hideHeader,
+	resetView,
+	setItensPerPage,
+	itensPerPage,
+	tipoDeBuscaPorPagina,
+}) {
 	const [data, setData] = useState([]);
+	const [storage, setStorage] = useLocalStorage(tipoDeBuscaPorPagina, columns);
 	const [page, setPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
+	const [sortField, setSortField] = useState();
+	const [sortOrder, setSortOrder] = useState();
+	const initialSelectColumns = columns.filter((i) =>
+		storage.find((c) => {
+			if (c.name === i.name) return c;
+		})
+	);
+	const [selectedColumns, setSelectedColumns] = useState(initialSelectColumns);
+	const firstDebounceRun = useRef(true);
+	const dadosTabela = useRef(null);
+	const firstRun = useRef(true);
+	const toast = useRef(null);
+
+	// functions of tables
+	const onColumnToggle = (event) => {
+		let selectedColumns = event.value;
+		setSelectedColumns(selectedColumns);
+		setStorage(selectedColumns);
+		toast.current.show({
+			severity: "success",
+			summary: "Coluna modificada com sucesso!",
+			life: 2000,
+		});
+	};
+
+	const ordernarUnidadeColunas = (e) => {
+		const sequenciaColuns = e.columns.map((item) => item.props.field);
+		const arrayColumns = [];
+		if (storage) {
+			sequenciaColuns.filter((i) =>
+				storage.find((c) => {
+					if (c.name === i) arrayColumns.push(c);
+				})
+			);
+			setStorage(arrayColumns);
+			toast.current.show({
+				severity: "success",
+				summary: "Coluna modificada com sucesso!",
+				life: 2000,
+			});
+		}
+	};
+
+	const onSort = (e) => {
+		setSortField(e.sortField);
+		setSortOrder(e.sortOrder);
+	};
 
 	useEffect(() => {
-		const { results, total_pages, current_page } = values;
+		const { total_pages, results, current_page } = values;
 		setData(results);
 		setPage(current_page);
 		setTotalPages(total_pages);
 	}, [values]);
 
-	const filter = useFormik({
+	const formik = useFormik({
 		initialValues: {},
 	});
 
@@ -39,9 +100,9 @@ function TabelaCargas({ columns, get_data, values, responsive = true }) {
 		};
 
 		// columns
-		for (const i in filter.values) {
-			if (![undefined, null, ""].includes(filter.values[i])) {
-				options.filters[i] = filter.values[i];
+		for (const i in formik.values) {
+			if (![undefined, null, ""].includes(formik.values[i])) {
+				options.filters[i] = formik.values[i];
 			}
 		}
 
@@ -70,18 +131,46 @@ function TabelaCargas({ columns, get_data, values, responsive = true }) {
 			return v - 1 < 1 ? v : v - 1;
 		});
 	}
+	const colunsFiltrado = [];
+	storage.filter((i) =>
+		columns.find((c) => {
+			if (c.name === i.name) colunsFiltrado.push(c);
+		})
+	);
+	const setDynamicColums = colunsFiltrado.map((col) => {
+		return (
+			<Column
+				columnKey={col.name}
+				key={col.name}
+				field={col.name}
+				style={col.style}
+				header={col.description}
+				body={col.selector}
+				sortable={col.sortable}
+				filter={true}
+				id={col.id}
+				filterElement={
+					col.Filter ? (
+						<col.Filter
+							name={col.name}
+							value={formik.value}
+							onChange={formik.handleChange}
+							className="w-100"
+						/>
+					) : (
+						col.static_column !== true && (
+							<Form.Control
+								name={col.name}
+								onChange={formik.handleChange}
+								className="w-100"
+							/>
+						)
+					)
+				}
+			/>
+		);
+	});
 
-	function getOrderByIcon(columnName) {
-		if (columnName === orderby.values.column) {
-			return orderby.values.direction === "desc" ? (
-				<AiOutlineArrowDown />
-			) : (
-				<AiOutlineArrowUp />
-			);
-		}
-	}
-
-	const firstRun = useRef(true);
 	useEffect(() => {
 		if (firstRun.current) {
 			firstRun.current = false;
@@ -90,119 +179,61 @@ function TabelaCargas({ columns, get_data, values, responsive = true }) {
 		}
 	}, [page, orderby.values, get_data]);
 
-	useEffect(() => {
-		console.log(page);
-	}, [page]);
-
-	const firstDebounceRun = useRef(true);
 	useDebouncedFunction(
 		() => {
 			if (firstDebounceRun.current) {
 				firstDebounceRun.current = false;
 				return;
 			}
-			console.log("DR", firstDebounceRun);
 			if (page === 1) {
 				notify();
 			} else {
 				setPage(1);
 			}
 		},
-		filter.values,
+		formik.values,
 		1000
 	);
 
+	const headerTable = hideHeader
+		? ""
+		: headerTableFunction(
+				resetView,
+				itensPerPage,
+				setItensPerPage,
+				selectedColumns,
+				columns,
+				onColumnToggle
+		  );
+
+	const footerTable = footerTableFunction(previousPage, nextPage);
+
 	return (
-		<Table
-			striped
-			bordered
-			hover
-			responsive={responsive}
-			className="table-external"
-		>
-			<thead>
-				<tr>
-					<td colSpan={columns.length} style={{ padding: 0, margin: 0 }}>
-						<Pagination id="paginacao_barra" size="sm">
-							<Pagination.Prev onClick={previousPage} />
-							<Pagination.Next onClick={nextPage} />
-						</Pagination>
-					</td>
-				</tr>
-				<tr>
-					{columns.map((i) => (
-						<th key={"col-header-" + i.name} className="text-center">
-							<a
-								className="text-decoration-none text-black"
-								href="#"
-								onClick={(e) => {
-									e.preventDefault();
-									if (i.static_column === true) {
-										return;
-									}
-									const column = i.name;
-									if (
-										orderby.values.column === column &&
-										orderby.values.direction === "asc"
-									) {
-										orderby.setValues({
-											column,
-											direction: "desc",
-										});
-									} else {
-										orderby.setValues({
-											column,
-											direction: "asc",
-										});
-									}
-								}}
-							>
-								{i.description} {getOrderByIcon(i.name)}
-							</a>
-						</th>
-					))}
-				</tr>
-				<tr>
-					{columns.map((i) => (
-						<th key={"col-header-2-" + i.name} className="text-center">
-							{i.Filter && (
-								<i.Filter
-									name={i.name}
-									value={filter.getFieldProps(i.name).value || ""}
-									onChange={filter.handleChange}
-									className="w-100"
-								/>
-							)}
-							{i.static_column !== true && !i.Filter && (
-								<Form.Control
-									name={i.name}
-									onChange={filter.handleChange}
-									className="w-100"
-								/>
-							)}
-						</th>
-					))}
-				</tr>
-			</thead>
-			<tbody>
-				{data?.map((row, index) => (
-					<tr key={"row-" + index}>
-						{columns.map((col, indexCol) => (
-							<td key={"col-" + indexCol}>{col.selector(row)}</td>
-						))}
-					</tr>
-				))}
-			</tbody>
-			<tfoot>
-				<tr className="text-start">
-					<td colSpan={columns.length}>
-						<span className="ml-1 mr-1">
-							Página {page} de {totalPages}
-						</span>
-					</td>
-				</tr>
-			</tfoot>
-		</Table>
+		<Row>
+			<Toast ref={toast} className="w-25"></Toast>
+			<div className="datatable-responsive-gridCargas">
+				<DataTable
+					id="Tabela-coordenadas"
+					reorderableColumns
+					onColReorder={ordernarUnidadeColunas}
+					sortField={sortField}
+					scrollHeight="60vh"
+					sortOrder={sortOrder}
+					onSort={onSort}
+					className="p-datatable-responsive-grid"
+					responsiveLayout="scroll"
+					emptyMessage="Não foram encontrado nenhum resultado nesta busca"
+					ref={dadosTabela}
+					value={data}
+					header={headerTable}
+					footer={footerTable}
+					filterDisplay="row"
+					dataKey="name"
+				>
+					{setDynamicColums}
+				</DataTable>
+			</div>
+		</Row>
 	);
 }
 

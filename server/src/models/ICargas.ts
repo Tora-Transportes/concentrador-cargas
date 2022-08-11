@@ -42,3 +42,14 @@ export interface ICarga {
 
   locais?: undefined | string[];
 }
+
+export interface ICargaCTE {
+  results: {
+    DOC_ID?: string;
+    DT_HORA_EMISSAO?: Date | null;
+    DT_CANCELAMENTO?: Date | null;
+    TIPO_DOC?: string;
+    DT_PESO_REAL?: number;
+    DT_ENTREGA?: Date | null;
+  };
+}

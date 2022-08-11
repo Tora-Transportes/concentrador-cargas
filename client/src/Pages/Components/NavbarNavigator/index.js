@@ -2,7 +2,7 @@ import React from "react";
 import { Container, ListGroup, Navbar, Offcanvas } from "react-bootstrap";
 import { FaSignOutAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import logo from "../../../assets/tora.ico";
+import logo from "../../../assets/logotora.png";
 import { getClaims, logout } from "../../../MicrosoftAuthentication";
 
 import "./index.css";

@@ -1,0 +1,281 @@
+.title-h1 {
+  margin-bottom: 3vh;
+  color: #00652E;
+  margin-bottom: 0.5em;
+}
+
+/* Tabela css */
+
+.p-datatable table {
+  box-shadow: 9px 0 5px rgb(50 50 50 / 77%);
+  margin-top: 2em;
+}
+
+.text-center .imput-row {
+  margin: 17px 0 17px 0;
+}
+
+.head-table-tr {
+  color: #024c01;
+}
+
+.text-center .mt-1 tbody td .icon-save {
+  height: 28px;
+  width: 22px;
+  color: #00652E;
+  cursor: pointer;
+}
+
+.page-add-permissin-user,
+.form-multSelect {
+  width: 100%;
+}
+
+.page-add-permissin-user {
+  padding: 0 15px;
+  margin-bottom: 20px;
+}
+
+.form-multSelect {
+  display: flex;
+  flex-direction: row;
+  padding: 9px;
+  background-color: #f3f3f3;
+  border-radius: 10px;
+}
+
+.form-multSelect-button,
+.button-table-add-permission button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  border: none;
+  border-radius: 5px;
+  transition: 0.4s ease-in-out;
+  cursor: pointer;
+}
+
+.form-multSelect-button {
+  background-color: rgba(44, 139, 248, 0.801);
+  padding: 5px;
+  color: white;
+  margin-bottom: 10px;
+  margin-inline-start: auto;
+}
+
+.form-multSelect-button:hover {
+  background-color: rgba(73, 157, 252, 0.801);
+}
+
+.form-multSelect-button:disabled {
+  background-color: #d8bfd8;
+  cursor: not-allowed;
+  margin-bottom: 10px;
+  margin-inline-start: auto;
+}
+
+.p-multiselect.p-multiselect-chip .p-multiselect-token span {
+  color: #1c1c1c;
+}
+.button-table-add-permission button {
+  background-color: #008000;
+  padding: 7px 10px;
+  color: white;
+}
+
+.button-table-add-permission button:disabled,
+.button-table-add-permission button:disabled:hover {
+  cursor: not-allowed;
+  background-color: rgb(196, 122, 122);
+}
+
+.button-table-add-permission button span {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.button-table-add-permission button:hover {
+  background-color: rgb(90, 226, 63);
+}
+
+.form-multSelect-button span {
+  font-weight: bold;
+  color: white;
+  margin-left: 5px;
+}
+.table-add-permission,
+.form-multSelect {
+  margin-bottom: 15px;
+  display: contents;
+}
+.menu-header-table-permission {
+  display: flex;
+  align-items: center;
+  background-color: #ffff;
+  width: 30%;
+  border-radius: 3.5px;
+  border: 1px solid #a6a6a6;
+  justify-content: space-between;
+  margin-left: 10px;
+}
+
+.button-table-add-permission {
+  display: flex;
+  justify-content: center;
+}
+
+.menu-header-table-permission input {
+  padding: 8px;
+  border: none;
+  width: 100%;
+}
+
+.menu-header-table-permission i {
+  margin-right: 15px;
+  margin-left: 10px;
+}
+
+/* colunas da tabela */
+
+.logo-button-table-apagar-permission {
+  color: red;
+  float: left;
+  margin-right: 15px;
+  margin-top: 3px;
+  cursor: pointer;
+}
+
+.table-column-nome,
+.table-column-email,
+.table-column-permissao {
+  background-color: #eefdec;
+  color: #000000;
+}
+
+.table-column-permissoes {
+  background-color: #eefdec;
+  color: #483d8b;
+}
+
+.table-column-button {
+  text-align: "center";
+  overflow: "visible";
+  background-color: "#eefdec";
+}
+
+.p-column-title {
+  color: #008000;
+}
+
+.p-multiselect {
+  max-width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 694px) {
+  .form-multSelect {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+  }
+
+  .button-table-add-permission {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  .header-table-add-permission {
+    background-color: #ffffff !important;
+  }
+
+  td {
+    border-right: 1px solid #c8c8c8 !important;
+    border-left: 1px solid #c8c8c8 !important;
+  }
+}
+@media only screen and (max-width: 961px) {
+  .menu-header-table-permission {
+    width: 100%;
+  }
+  .form-multSelect-button:disabled {
+    margin-right: 20%;
+  }
+}
+
+@media (max-width: 992px) {
+  .ModalStyle {
+    height: 100%;
+    overflow: auto;
+    padding: 2px;
+    width: 70%;
+  }
+
+  .dentroModal {
+    margin-left: 4%;
+  }
+
+  .dentroModalEdicao {
+    margin-left: 5%;
+  }
+
+  .MuiStepper-horizontal {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .buttonDiv button {
+    font-size: 0.9em;
+    padding: 5px;
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  .buttonDiv {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* css nativa da tabela */
+.datatable-responsive-demo .p-datatable-responsive-demo .p-datatable-tbody>tr>td .p-column-title {
+  display: none;
+}
+
+
+@media screen and (max-width: 50em) {
+
+  .datatable-responsive-demo .p-datatable.p-datatable-responsive-demo .p-datatable-thead>tr>th,
+  .datatable-responsive-demo .p-datatable.p-datatable-responsive-demo .p-datatable-tfoot>tr>td {
+      display: none !important;
+  }
+
+  .datatable-responsive-demo .p-datatable.p-datatable-responsive-demo .p-datatable-tbody>tr>td {
+      text-align: left;
+      display: block;
+      width: 100%;
+      float: left;
+      clear: left;
+      border: 0 none;
+  }
+
+  .datatable-responsive-demo .p-datatable.p-datatable-responsive-demo .p-datatable-tbody>tr>td .p-column-title {
+      padding: .4rem;
+      min-width: 30%;
+      display: inline-block;
+      margin: -.4em 1em -.4em -.4rem;
+      font-weight: bold;
+  }
+
+
+}
+
