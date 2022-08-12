@@ -15,19 +15,19 @@ function Main() {
 			{
 				element: "#titulo-selecionar-modo-carga",
 				description:
-					"<h2>Don't forget to import!</h2><div>Add these lines when using in a front end framework.</div>",
+					"<h2>Bem-vindo</h2><div>Nessa etapa selecione a forma que deseja realizar o cadastro da carga que foi coletada e então prossiga.</div>",
 				placement: "bottom",
 			},
 			{
 				element: "#hand",
 				description:
-					"<h2>Color, color, everywhere! ❤️🧡💛💚💙💜💗🖤</h2><div>Option to choose the backdrop color.</div>",
+					"<h2>Manual</h2><div>Se sua carga foi coletada de forma manual Selecione está opção.</div>",
 				placement: "bottom",
 			},
 			{
 				element: "#import",
 				description:
-					"<h2>Placement - Top! ⬆️</h2><div>Option to place the tooltip on the top of the element.</div>",
+					"<h2>Importar</h2><div>Caso sua carga foi coletada em um Arquivo Selecione está opção.</div>",
 				placement: "bottom",
 			},
 		],
