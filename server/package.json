@@ -56,6 +56,6 @@
     "start": "node src/index.js",
     "dev": "ts-node-dev src/index.ts --respawn --transpile-only",
     "build": "tsc",
-    "test": "jest --forceExit --detectOpenHandles --no-cache --testPathIgnorePatterns=build"
+    "test": "ts-mocha --watch __tests__/**/*.spec.ts"
   }
 }

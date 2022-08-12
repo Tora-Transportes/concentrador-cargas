@@ -11,7 +11,7 @@ class Credenciais:
         return put(api_url, json=credenciais, verify=False)
 
     def emitir_erro_login(self, credenciais, api_url):
-        credenciais["errored"] = True
+        credenciais["errored"] = 1
         return put(api_url, json=credenciais, verify=False)
 
     def buscar_credenciais_login(self, api_url, api_token):
