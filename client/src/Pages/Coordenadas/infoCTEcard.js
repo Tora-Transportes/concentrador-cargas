@@ -18,6 +18,11 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 			const { data } = await ServiceCargaCTE.search(rowInfoPlaca?.placa);
 
 			if (data.data.results) {
+				const arrayDoc_ID = await data.data?.results.map(
+					(item) => ` ${item.DOC_ID};`
+				);
+				data.data.results[0].DOC_ID = [...new Set(arrayDoc_ID)];
+
 				const result = await { ...rowInfoPlaca, ...data.data?.results[0] };
 				setDataCTE([result]);
 				setLoading(false);
@@ -60,6 +65,11 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 									<li className="ul-card-li">
 										<h6>
 											Tipo documento: <strong>{i.TIPO_DOC}</strong>
+										</h6>
+									</li>
+									<li className="ul-card-li">
+										<h6>
+											Código CTE: <strong>{i.DOC_ID}</strong>
 										</h6>
 									</li>
 									<li className="ul-card-li">
@@ -218,6 +228,11 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 									</li>
 									<li className="ul-card-li">
 										<h6>
+											Apelido carreta: <strong>{i.apelido_carreta}</strong>
+										</h6>
+									</li>
+									<li className="ul-card-li">
+										<h6>
 											Tipo cavalo: <strong>{i.tipo_cavalo}</strong>
 										</h6>
 									</li>
@@ -250,6 +265,11 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 										<h6>
 											Telefone motorista:{" "}
 											<strong>{i.telefone_motorista}</strong>
+										</h6>
+									</li>
+									<li className="ul-card-li">
+										<h6>
+											CPF motorista: <strong>{i.cpf_motorista}</strong>
 										</h6>
 									</li>
 								</Card>

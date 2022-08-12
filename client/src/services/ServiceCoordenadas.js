@@ -22,6 +22,11 @@ class ServiceCoordenadas {
 		observacao,
 		responsavel_placa,
 		responsavel_placa_nome,
+		id,
+		placa_bitrem,
+		placa_carreta,
+		cpf_motorista,
+		apelido_carreta,
 	}) {
 		return api.get("/coordenadas", {
 			params: {
@@ -46,6 +51,11 @@ class ServiceCoordenadas {
 				observacao,
 				responsavel_placa,
 				responsavel_placa_nome,
+				id,
+				placa_bitrem,
+				placa_carreta,
+				cpf_motorista,
+				apelido_carreta,
 			},
 		});
 	}

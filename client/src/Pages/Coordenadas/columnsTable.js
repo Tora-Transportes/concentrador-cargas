@@ -53,6 +53,11 @@ export const getColumns = (
 			selector: (row) => row.tipo_carreta,
 		},
 		{
+			name: "apelido_carreta",
+			description: "Apelido Carreta",
+			selector: (row) => row.apelido_carreta,
+		},
+		{
 			name: "editar",
 			description: "Editar/Vincular",
 			static_column: true,
@@ -92,6 +97,11 @@ export const getColumns = (
 					</a>
 				);
 			},
+		},
+		{
+			name: "cpf_motorista",
+			description: "Cpf motorista",
+			selector: (row) => row.cpf_motorista,
 		},
 		{
 			name: "setor_veiculo",

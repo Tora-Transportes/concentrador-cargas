@@ -58,7 +58,7 @@ export class CargaRepository {
     let dadosCET;
     if (result != undefined) {
       dadosCET = await database.raw(
-        `SELECT
+        `SELECT CAST(REC.REC_NUM AS VARCHAR(40)) AS DOC_ID,
             REC.REC_HR_EMISSAO AS DT_HORA_EMISSAO,
             NULL AS DT_CANCELAMENTO,
             'CTE' AS TIPO_DOC,

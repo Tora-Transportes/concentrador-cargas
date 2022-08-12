@@ -7,6 +7,7 @@ export class CoordenadaRepository {
     traducaoNomeColuna.set("responsavel_placa_nome", "con_usuarios.nome");
     traducaoNomeColuna.set("responsavel_placa_email", "con_usuarios.email");
     traducaoNomeColuna.set("cpf_motorista", "CG_IDENTIFICACAO.CGI_NUM");
+    traducaoNomeColuna.set("apelido_carreta", "APV.AV_DSC");
 
     const { order_column, order_direction, page } = filter;
     const {
@@ -28,7 +29,13 @@ export class CoordenadaRepository {
       responsavel_placa,
       responsavel_placa_nome,
       responsavel_placa_email,
+      id,
+      placa_bitrem,
+      placa_carreta,
+      cpf_motorista,
+      apelido_carreta,
     } = filter;
+
     const currentPage = Number(page ?? 1) < 1 ? 1 : Number(page ?? 1);
     const query = database("con_coordenadas_veiculos").select([
       "con_coordenadas_veiculos.*",
@@ -43,6 +50,7 @@ export class CoordenadaRepository {
       "con_cargas.placa_bitrem",
       "con_cargas.id",
       "CG_IDENTIFICACAO.CGI_NUM as cpf_motorista",
+      "APV.AV_DSC as apelido_carreta",
     ]);
     const total = database("con_coordenadas_veiculos")
       .count("placa as total")
@@ -81,22 +89,52 @@ export class CoordenadaRepository {
       "con_coordenadas_veiculos.placa"
     );
 
+    total.leftJoin(
+      "con_cargas",
+      "con_cargas.placa_veiculo",
+      "con_coordenadas_veiculos.placa"
+    );
+
     query.leftJoin(
       "CADASTRO_GERAL AS CAG",
       "CAG.CG_COD",
       "con_cargas.codigo_motorista"
     );
 
-    query.leftJoin(
-      "CG_IDENTIFICACAO ",
-      "CG_IDENTIFICACAO.LOC_COD",
-      "CAG.LOC_COD"
+    total.leftJoin(
+      "CADASTRO_GERAL AS CAG",
+      "CAG.CG_COD",
+      "con_cargas.codigo_motorista"
     );
 
-    let id;
-    let placa_bitrem;
-    let placa_carreta;
-    let cpf_motorista;
+    query.leftJoin("CG_IDENTIFICACAO ", function () {
+      this.on("CG_IDENTIFICACAO.LOC_COD", "CAG.LOC_COD").andOn(
+        "CG_IDENTIFICACAO.CG_COD",
+        "CAG.CG_COD"
+      );
+    });
+
+    total.leftJoin("CG_IDENTIFICACAO ", function () {
+      this.on("CG_IDENTIFICACAO.LOC_COD", "CAG.LOC_COD").andOn(
+        "CG_IDENTIFICACAO.CG_COD",
+        "CAG.CG_COD"
+      );
+    });
+
+    query.leftJoin(
+      "VEICULO as VEI",
+      "VEI.VEI_PLACA",
+      "con_coordenadas_veiculos.placa"
+    );
+
+    total.leftJoin(
+      "VEICULO as VEI",
+      "VEI.VEI_PLACA",
+      "con_coordenadas_veiculos.placa"
+    );
+
+    query.leftJoin("APELIDO_VEICULO as APV", "APV.AV_SEQ", "VEI.AV_SEQ");
+    total.leftJoin("APELIDO_VEICULO as APV", "APV.AV_SEQ", "VEI.AV_SEQ");
 
     for (const [key, value] of Object.entries({
       placa,
@@ -121,9 +159,8 @@ export class CoordenadaRepository {
       placa_bitrem,
       placa_carreta,
       cpf_motorista,
+      apelido_carreta,
     })) {
-      console.log("Geovana");
-
       if (value !== undefined && key) {
         const columnName = traducaoNomeColuna.get(key) ?? key;
         if (traducaoNomeColuna.get(key)) {
