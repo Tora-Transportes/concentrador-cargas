@@ -21,6 +21,8 @@ import RaioVeiculos from "./Pages/Veiculos/Raio";
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css";
+import DestinoCarga from "./Pages/Veiculos/DestinoCarga";
+import RaioEmpresa from "./Pages/Veiculos/RaioEmpresa";
 
 export default function AllRoutes() {
 	return (
@@ -50,6 +52,8 @@ export default function AllRoutes() {
 				<Route path="/veiculos/aprovacao" exact component={SituacaoVeiculos} />
 
 				<Route path="/veiculos/raio" exact component={RaioVeiculos} />
+				<Route path="/veiculos/destino" exact component={DestinoCarga} />
+				<Route path="/veiculos/raio/empresa" exact component={RaioEmpresa} />
 
 				<Route
 					path="/veiculos/coordenadas"

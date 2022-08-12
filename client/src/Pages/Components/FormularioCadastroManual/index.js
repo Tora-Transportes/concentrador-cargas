@@ -96,6 +96,7 @@ function FormularioCadastroManual({
 				<Col>
 					<FloatingLabel label="*Responsável pelo cadastro" className="mb-3">
 						<Form.Control
+							id="campo-aut"
 							type="text"
 							placeholder=" "
 							name="responsavel_cadastro"
@@ -126,6 +127,7 @@ function FormularioCadastroManual({
 				<Col sm={12} md={6}>
 					<FloatingLabel label="*Código da filial" className="mb-3">
 						<FilialSelect
+							id="Codigo-filial"
 							placeholder=" "
 							name="fk_filial"
 							value={formik.values.fk_filial ?? ""}
@@ -138,6 +140,7 @@ function FormularioCadastroManual({
 				<Col>
 					<FloatingLabel label="Documento de transporte" className="mb-3">
 						<Form.Control
+							id="doc-trans"
 							name="documento_transporte"
 							value={formik.values.documento_transporte}
 							onChange={formik.handleChange}
@@ -202,7 +205,7 @@ function FormularioCadastroManual({
 				<>
 					<Row className="mb-5">
 						<Col sm={12}>
-							<h3>Dados do veículo</h3>
+							<h3 id="title-check-não">Dados do veículo</h3>
 						</Col>
 					</Row>
 					<Row>
@@ -215,6 +218,7 @@ function FormularioCadastroManual({
 						</Form.Text>
 						<Col sm={12}>
 							<InputPlaca
+								id="Plca-cavalo"
 								readOnly={
 									formik.values.fk_situacao &&
 									![1, 2, 4].includes(Number(formik.values.fk_situacao))
@@ -279,6 +283,7 @@ function FormularioCadastroManual({
 						</Col>
 						<Col lg={1}>
 							<Button
+								id="botao-detail-veiculo"
 								onClick={() =>
 									handleShowDetailsAboutVehicle(formik.values.placa_veiculo)
 								}
@@ -288,6 +293,7 @@ function FormularioCadastroManual({
 						</Col>
 						<Col lg={1}>
 							<Button
+								id="botao-deb-veiculo"
 								onClick={() =>
 									handleShowDebitAboutVehicle(formik.values.placa_veiculo)
 								}
@@ -316,6 +322,7 @@ function FormularioCadastroManual({
 			<Row>
 				<Col>
 					<InputCliente
+						id="info-clie"
 						type="text"
 						placeholder=" "
 						name="cliente"
@@ -517,7 +524,9 @@ function FormularioCadastroManual({
 			<Row>
 				<Col>
 					<Form.Group className="mb-3">
-						<Form.Label>Pré-Requisitos e Acessórios do veículo</Form.Label>
+						<Form.Label id="info-add">
+							Pré-Requisitos e Acessórios do veículo
+						</Form.Label>
 						<Form.Control
 							placeholder="Neste campo é adicionado informações, Exemplo: Motorista necessita de treinamento atualizado no cliente, cinta e luvas"
 							as="textarea"
@@ -567,6 +576,7 @@ function FormularioCadastroManual({
 
 			<Row>
 				<ListAddItens
+					id="botao-add"
 					value={formik.values.locais}
 					name="locais"
 					onChange={formik.handleChange}

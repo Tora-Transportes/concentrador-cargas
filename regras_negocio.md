@@ -5,6 +5,7 @@
     - e_lote
     - cliente
     - **quantidade**
+    - **quantidade_atual**
     - unidade_medida
     - canal_comunicacao
     - responsavel_cadastro
@@ -31,6 +32,8 @@
 - Ao modificar o campo placa do veiculo a situacao deve ser resetada para "AGUARDANDO ALOCACAO DO VEICULO" se não tiver placa e "AGUARDANDO APROVACAO DO GR" caso tenha placa.
 - Não é possível atualizar a situacao para "AGUARDANDO ALOCACAO DO VEICULO" com uma placa de veículo cadastrado.
 - Ao cadastrar carga que não possui rota entre origem_carga e destino_carga deve ser colocado na tela de pendencias para ser revisado.
+- Não é possível atualizar a situacao para "DOCUMENTO EMITIDO" sem a permissao "APROVAR_VIAGEM".
+- Ao salvar uma carga que esteja no status "REPROVADO PELA GR" o status deve ser atualizado para "AGUARDANDO APROVACAO DA GR"
 
 ## LOTE
 - Não é possível atualizar um lote para virar uma carga.
@@ -53,6 +56,7 @@
 
 ## COORDENADAS
 - Não é possível modificar o vinculo de um programador com uma placa sem a permissão VINCULAR_PLACA.
+- Não é possível vincular um usuario a uma placa sem a permissão "VINCULAR_PLACA"
 
 ## MONITORAMENTO
 - Não é possível atualizar a situacao para "VEICULO APROVADO" ou "VEICULO REPROVADO" sem a permissao de "APROVAR_VEICULOS".
@@ -60,8 +64,3 @@
 - Não é possível atualizar a situacao para "VEICULO APROVADO" sem preencher a filial.
 - Não é possível atualizar a situacao da carga para "VEICULO_APROVADO" se a origem e/ou destino da carga nao estiver no formato "PAIS/UF/CIDADE".
 - Não é possível atualizar a situacao da carga para "VEICULO_APROVADO" se o cliente nao estiver no formato correto "NOME - CNPJ - UF/CIDADE".
-
-
-- Não é possível atualizar a situacao para "DOCUMENTO EMITIDO" sem a permissao "APROVAR_VIAGEM".
-- Não é possível reaplicar a placa sem a permissão "VINCULAR_PLACA"
-- Ao salvar uma carga que esteja no status "REPROVADO PELA GR" o status deve ser atualizado para "AGUARDANDO APROVACAO DA GR"

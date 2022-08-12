@@ -1,0 +1,131 @@
+DONO;TABELA;COLUNA;DESCRICAO;FORMATO;TABELA_ORIGEM
+USU_TORA;con_cargas;informacoes_restritivas;Informações de restrição sobre o veículo;;
+USU_TORA;con_cargas;janela_coleta;Hora da coleta da carga;;
+USU_TORA;con_cargas;janela_entrega;Hora de entrega da carga;;
+USU_TORA;con_cargas;local_coleta;COLUNA LEGADA, NÃO É MAIS UTILIZADA, APENAS NÃO FOI REMOVIDA;;
+USU_TORA;con_cargas;local_entrega;COLUNA LEGADA, NÃO É MAIS UTILIZADA, APENAS NÃO FOI REMOVIDA;;
+USU_TORA;con_cargas;fk_lote_pai;Referencia ao lote, quanto a carga é derivada de um lote;;con_cargas.id
+USU_TORA;con_cargas;quantidade_atual;Quantidade atual do registro, utilizado quando o registro é um lote;;
+USU_TORA;con_cargas;fk_situacao;"Situacao da carga, ""Criada"" ""Em viagem"", etc...";;con_situacoes_cargas.id
+USU_TORA;con_cargas;placa_veiculo;Placa do veículo que vai transportar a carga;;VEICULO.VEI_PLACA
+USU_TORA;con_cargas;observacao_gr;Observação do GR após aprovar ou reprovar o veículo;;
+USU_TORA;con_cargas;documento_transporte;Documento de transporte da carga;;
+USU_TORA;con_cargas;fk_filial;Código da filial do SIT;;FILIAL.FIL_COD
+USU_TORA;con_cargas;observacao_cancelamento;Observação preenchida caso a carga seja bloqueada;;
+USU_TORA;con_cargas;observacao_exclusao;Observação preenchida caso a carga seja excluída;;
+USU_TORA;con_cargas;placa_carreta;Placa da carreta que vai transportar a carga;;VEICULO.VEI_PLACA
+USU_TORA;con_cargas;placa_bitrem;Placa do bitrem que vai transportar a carga;;VEICULO.VEI_PLACA
+USU_TORA;con_cargas;codigo_motorista;Código identificador do motorista;;CADASTRO_GERAL.CG_COD
+USU_TORA;con_cargas;id;Código identificador da carga;;
+USU_TORA;con_cargas;cliente;String que representa o fornecedor;NOME - CNPJ - CIDADE/SIGLA_UF;
+USU_TORA;con_cargas;e_lote;Campo que identifica se esse registro é uma carga ou um lote, 0=carga 1=lote;;
+USU_TORA;con_cargas;origem_carga;String que representa a origem da carga;PAIS/SIGLA_UF/CIDADE;
+USU_TORA;con_cargas;destino_carga;String que representa o destino da carga;PAIS/SIGLA_UF/CIDADE;
+USU_TORA;con_cargas;data_entrega;Data planejada para coleta da carga;;
+USU_TORA;con_cargas;data_coleta;Data planejada para entrega da carga;;
+USU_TORA;con_cargas;tipo_carga;O Produto da carga;;con_produtos.id
+USU_TORA;con_cargas;quantidade;Quantidade inicial da carga;;
+USU_TORA;con_cargas;unidade_medida;Unidade medida da carga;;
+USU_TORA;con_cargas;responsavel_cadastro;Nome do usuário que realizou o cadastro da carga;;
+USU_TORA;con_cargas;canal_comunicacao;Origem da carga, Ex: email, portal, manual;;
+USU_TORA;con_cargas;observacao;Observação sobre a carga;;
+USU_TORA;con_cargas;data_cadastro;Data de cadastro da carga;;
+USU_TORA;con_cargas;data_atualizacao;Data ultima atualizacao da carga;;
+USU_TORA;con_cargas;ativo;Identifica se a carga foi excluída ou não;;
+USU_TORA;con_cargas;acessorios_requisitos;Acessórios necessário para o veículo poder transportar a carga;;
+USU_TORA;con_cargas;usuario;Nome do usuário que realizou a ultima alteração no registro;;
+;;;;;
+USU_TORA;con_cargas_logs_aprovacao;fk_carga;Referencia da carga da carga que foi aprovada ou reprovada;;com_cargas.id
+USU_TORA;con_cargas_logs_aprovacao;segundos;Quantidade de segundos que a carga ficou em espera;;
+USU_TORA;con_cargas_logs_aprovacao;fk_usuario;Referencia ao usuario que aprovou ou reprovou a carga;;com_usuarios.oid
+USU_TORA;con_cargas_logs_aprovacao;data_criacao;Data de criação do registro;;
+;;;;;
+USU_TORA;con_coordenadas_veiculos;data_previsao_chegada;Data de emissão do documento + tempo_ate_destino + 1 dia;;
+USU_TORA;con_coordenadas_veiculos;distancia_prevista;Distancia prevista da rota, puxa de uma tabela estatica no SQL server, a produção cadastra manualmente;;
+USU_TORA;con_coordenadas_veiculos;tempo_ate_destino;Tempo até o destino em segundos considerando que o veículo anda 500KM por dia e usando o campo distancia_prevista;;
+USU_TORA;con_coordenadas_veiculos;setor_veiculo;Setor a qual o veículo pertence, NESSA COLUNA TEM UMA REGRA ESPECIFICA NO CODIGO;;
+USU_TORA;con_coordenadas_veiculos;tipo_carreta;Tipo do carreta do veículo, [CARRETA, CAVALO MECANICO];;
+USU_TORA;con_coordenadas_veiculos;telefone_motorista;Numero do telefone do motorista;;
+USU_TORA;con_coordenadas_veiculos;nome_motorista;Nome do motorista do veículo;;
+USU_TORA;con_coordenadas_veiculos;tipo_cavalo;Tipo do cavalo do veículo, [CARRETA, CAVALO MECANICO];;
+USU_TORA;con_coordenadas_veiculos;mct;Codigo do rastreador, não é utilizado pra nada;;
+USU_TORA;con_coordenadas_veiculos;placa;placa do veiculo;;
+USU_TORA;con_coordenadas_veiculos;lat;latitude atual do veiculo;;
+USU_TORA;con_coordenadas_veiculos;lon;longitude atual do veículo;;
+USU_TORA;con_coordenadas_veiculos;cidade_atual;Cidade atual em que o veículo se encontra;CIDADE - SIGLA_UF;
+USU_TORA;con_coordenadas_veiculos;codigo_veiculo;Código do veículo;;VEICULO.VEI_COD
+USU_TORA;con_coordenadas_veiculos;ultima_viagem_origem;Origem do documento da última viagem;CIDADE - SIGLA_UF;
+USU_TORA;con_coordenadas_veiculos;ultima_viagem_destino;Destino do documento da última viagem;CIDADE - SIGLA_UF;
+USU_TORA;con_coordenadas_veiculos;documento;Numero do documento de transporte;;
+USU_TORA;con_coordenadas_veiculos;tipo_documento;Identifica se o documento é RPA ou DVF;;
+USU_TORA;con_coordenadas_veiculos;categoria_veiculo;Identifica a categoria do veículo, Carreteiro, Agregado ou Frota [C, A, F];;
+USU_TORA;con_coordenadas_veiculos;data_emissao_documento;Data de emissão do ultimo documento vinculado ao veículo;;
+;;;;;
+USU_TORA;con_credenciais;user;Usuário necessário para fazer login no portal;;
+USU_TORA;con_credenciais;portal;Portal que o usuario irá fazer login;;
+USU_TORA;con_credenciais;errored;Identifica se o ultimo login resultou em erro de senha 0=tudo ok 1=senha incorreta;;
+USU_TORA;con_credenciais;successful_attempts;quantidade de logins bem sucedidos no portal com o usuario;;
+USU_TORA;con_credenciais;password;senha do portal, encriptada pelo algoritmo AES;;
+;;;;;
+USU_TORA;con_dados_coordenadas;fk_placa;Referencia a uma placa de veiculo;;
+USU_TORA;con_dados_coordenadas;observacao;Observação sobre a placa;;
+USU_TORA;con_dados_coordenadas;usuario_observacao;Usuário que cadastrou a observação;;
+USU_TORA;con_dados_coordenadas;ultimo_documento;Ultimo documento que estava vinculado na carga quando a observação foi cadastrada;;
+USU_TORA;con_dados_coordenadas;responsavel_placa;Responsável pela placa;;
+USU_TORA;con_dados_coordenadas;usuario_placa;Usuario que cadastrou o responsavel pela placa;;
+USU_TORA;con_dados_coordenadas;data_janela;Data de janela da carga;;
+;;;;;
+USU_TORA;con_locais_carga;fk_carga;Referencia a carga que esse local pertence;;com_cargas.id
+USU_TORA;con_locais_carga;posicao;Ordem que ele vai aparecer na listagem, Ex: 1, 2, 3, 4...;;
+USU_TORA;con_locais_carga;descricao;Descrição do local ;;
+;;;;;
+USU_TORA;con_localizacoes;id;Identificador do local;;
+USU_TORA;con_localizacoes;cidade;Nome cidade;;
+USU_TORA;con_localizacoes;estado;Nome estado;;
+USU_TORA;con_localizacoes;pais;Nome pais;;
+USU_TORA;con_localizacoes;lat;latitude;;
+USU_TORA;con_localizacoes;lng;longitude;;
+USU_TORA;con_localizacoes;sigla_pais;sigla do pais;;
+USU_TORA;con_localizacoes;sigla_pais_estendida;sigla do pais estendida;;
+USU_TORA;con_localizacoes;capital;capital do pais;;
+USU_TORA;con_localizacoes;sigla_estado;sigla do estado;;
+;;;;;
+USU_TORA;con_logs;timestamp;Milisegundos desde 1970;;
+USU_TORA;con_logs;token;Token do usuario enviado pelo react-adal;;
+USU_TORA;con_logs;oid;Identificador do usuário;;con_usuarios.oid
+USU_TORA;con_logs;url;url preenchida na requisicao;;
+USU_TORA;con_logs;corpo;Corpo da mensagem;;
+USU_TORA;con_logs;metodo;Metodo HTTP usado;;
+;;;;;
+USU_TORA;con_producao_justificativas;id;Id das justificativas na produtividade do veiculo;;
+USU_TORA;con_producao_justificativas;codigo_veiculo;Código do cavalo do veiculo;;VEICULO.VEI_COD
+USU_TORA;con_producao_justificativas;conteudo;Descrição da justificativa;;
+USU_TORA;con_producao_justificativas;data_inicio;Data início que a justificativa comeca a valer;;
+USU_TORA;con_producao_justificativas;data_final;Data final que a justificativa vale;;
+;;;;;
+USU_TORA;con_produtos;id;Identificador do produto;;
+USU_TORA;con_produtos;nome;Descricao do produto;;
+USU_TORA;con_produtos;usuario;Usuário que cadastrou o produto;;
+USU_TORA;con_produtos;ativo;Identifica se o produto foi excluido ou não;;
+USU_TORA;con_produtos;observacao;Observação preenchida quando o produto é excluido;;
+;;;;;
+USU_TORA;con_rotas_pendentes;id;Identificador da rota pendente;;
+USU_TORA;con_rotas_pendentes;cidade_origem;Cidade Origem;;
+USU_TORA;con_rotas_pendentes;estado_origem;Estado Origem Sigla;;
+USU_TORA;con_rotas_pendentes;cidade_destino;Cidade Destino;;
+USU_TORA;con_rotas_pendentes;estado_destino;Estado Destino Sigla;;
+;;;;;
+USU_TORA;con_situacoes_cargas;id;Identificador da situacao;;
+USU_TORA;con_situacoes_cargas;cor;Cor que vai ser mostrada na carga;;
+USU_TORA;con_situacoes_cargas;descricao;Descrição da situação;;
+;;;;;
+USU_TORA;con_usuarios;email;Email do usuário;;
+USU_TORA;con_usuarios;oid;Identificador do usuário;;
+USU_TORA;con_usuarios;nome;Nome do usuário;;
+;;;;;
+USU_TORA;con_usuarios_permissoes;fk_usuario;Referencia ao usuário;;com_usuarios.oid
+USU_TORA;con_usuarios_permissoes;permissao;Valor da permissão;;
+;;;;;
+USU_TORA;con_veiculos_distancia;fk_placa;Referencia a placa do veículo;;
+USU_TORA;con_veiculos_distancia;distancia_ate_destino;Distancia do veículo até o destino da ultima viagem em KM;;
+USU_TORA;con_veiculos_distancia;data_atualizacao;Data de atualizacao do registro;;

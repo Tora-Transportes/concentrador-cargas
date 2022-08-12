@@ -15,10 +15,12 @@ export const getColumns = (
 ) => {
 	return [
 		{
+			id: "coluna1",
 			name: "",
-			description: "Detales",
+			description: "Detalhes",
 			selector: (row) => (
 				<Button
+					id="coluna1"
 					variant="Link"
 					onClick={() => showCardCTE(row)}
 					className="text-primary"

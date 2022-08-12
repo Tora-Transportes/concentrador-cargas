@@ -93,7 +93,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 					</MapContainer>
 				)}
 				<Row className="mb-2">
-					<h1>Raio - Veículos</h1>
+					<h1>Veículos no raio de outro veículo</h1>
 				</Row>
 				<Row>
 					<Col>

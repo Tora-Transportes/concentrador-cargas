@@ -148,6 +148,7 @@ function TabelaCargas({
 				body={col.selector}
 				sortable={col.sortable}
 				filter={true}
+				// id={col.id}
 				filterElement={
 					col.Filter ? (
 						<col.Filter
@@ -212,6 +213,7 @@ function TabelaCargas({
 			<Toast ref={toast} className="w-25"></Toast>
 			<div className="datatable-responsive-gridCargas">
 				<DataTable
+					id="Tabela-coordenadas"
 					reorderableColumns
 					onColReorder={ordernarUnidadeColunas}
 					sortField={sortField}

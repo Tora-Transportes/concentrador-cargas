@@ -1,7 +1,6 @@
 .title-h1 {
   margin-bottom: 3vh;
-  color: #024c01;
-  text-shadow: 3px 3px 5px #161515;
+  color: #00652E;
   margin-bottom: 0.5em;
 }
 
@@ -23,7 +22,7 @@
 .text-center .mt-1 tbody td .icon-save {
   height: 28px;
   width: 22px;
-  color: #024c01;
+  color: #00652E;
   cursor: pointer;
 }
 

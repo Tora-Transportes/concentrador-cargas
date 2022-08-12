@@ -110,7 +110,7 @@ print("Realizando login")
 html_logado = login(session, credenciais['user'], credenciais['password'])
 if "Login ou Senha Incorretos!" in html_logado.text:
     print("Login e/ou senha incorretos")
-    credenciais_storage.emitir_erro_login(url_api_credenciais, os.environ['API_TOKEN'])
+    credenciais_storage.emitir_erro_login(credenciais, url_api_credenciais)
     print("Esperando 30 minutos antes de finalizar processo")
     time.sleep(1800)
     exit(1)

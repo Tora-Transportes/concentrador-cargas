@@ -2,7 +2,7 @@ import React from "react";
 import { Container, ListGroup, Navbar, Offcanvas } from "react-bootstrap";
 import { FaSignOutAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import logo from "../../../assets/tora.ico";
+import logo from "../../../assets/logotora.png";
 import { getClaims, logout } from "../../../MicrosoftAuthentication";
 
 import "./index.css";
@@ -83,9 +83,17 @@ function NavbarNavigator(props) {
 								<Link to="/producao">
 									<ListGroup.Item action>Produção</ListGroup.Item>
 								</Link>
+								<hr />
 								<Link to="/veiculos/raio">
-									<ListGroup.Item action>Raio veículos</ListGroup.Item>
+									<ListGroup.Item action>Veículos X Veículos</ListGroup.Item>
 								</Link>
+								<Link to="/veiculos/destino">
+									<ListGroup.Item action>Veículo até Empresa</ListGroup.Item>
+								</Link>
+								<Link to="/veiculos/raio/empresa">
+									<ListGroup.Item action>Raio Empresa</ListGroup.Item>
+								</Link>
+								<hr />
 								<Link to="/">
 									<ListGroup.Item
 										action

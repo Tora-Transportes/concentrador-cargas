@@ -14,6 +14,7 @@ const PaginatorTable = ({ itensPerPage, setItensPerPage, setVisibleLeft }) => {
 	};
 	return (
 		<select
+			id="edit-linhas-tabela"
 			className="btn"
 			value={itensPerPage}
 			onChange={(e) => showOpcaoPaginatot(e)}
@@ -50,6 +51,7 @@ export const headerTableFunction = (
 					</button>
 					<MultiSelect
 						//display="chip"
+						id="Config-campos-tabela"
 						fixedPlaceholder={true}
 						dataKey="name"
 						value={selectedColumns}
@@ -133,10 +135,20 @@ export const SideBarFuncition = ({
 export const footerTableFunction = (previousPage, nextPage) => {
 	return (
 		<Col className="footer-table">
-			<Button variant="outline-info" onClick={previousPage}>
+			<Button
+				style={{ background: "#00652E", border: "none", color: "#FFFFFF" }}
+				variant="outline-info"
+				id="Botao-voltar-pag"
+				onClick={previousPage}
+			>
 				<HiChevronDoubleLeft /> Voltar paginação
 			</Button>
-			<Button variant="outline-info" onClick={nextPage}>
+			<Button
+				variant="outline-info"
+				id="Botao-proxima-pag"
+				style={{ background: "#00652E", border: "none", color: "#FFFFFF" }}
+				onClick={nextPage}
+			>
 				Proxíma paginação <HiChevronDoubleRight />
 			</Button>
 		</Col>

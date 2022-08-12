@@ -7,6 +7,7 @@ import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import * as xlsx from "xlsx";
 import TextUtils from "../../Utils/text";
+import createSequence from "tooltip-sequence";
 
 function Importar() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -86,13 +87,65 @@ function Importar() {
 		}
 	}
 
+	const options = {
+		backdropColor: "#6262625d",
+		sequence: [
+			{
+				element: "#title-import",
+				description:
+					"<h2>Bem-vindo</h2><div>Add these lines when using in a front end framework.</div>",
+				placement: "bottom",
+			},
+			{
+				element: "#botao-download",
+				description:
+					"<h2>Download de modelo</h2><div>Option to choose the backdrop color.</div>",
+				placement: "bottom",
+			},
+			{
+				element: "#import-arq",
+				description:
+					"<h2>Escolher Arquivo</h2><div>Option to place the tooltip on the top of the element.</div>",
+				placement: "top",
+			},
+			{
+				element: "#botao-process",
+				description:
+					"<h2>Processar</h2><div>Option to place the tooltip on the right of the element.</div>",
+				placement: "top",
+			},
+			{
+				element: "#title-tab-import-carg",
+				description:
+					"<h2>Tabela</h2><div>Option to place the tooltip on the right of the element.</div>",
+				placement: "top",
+			},
+			{
+				element: "#Table-impot-carg",
+				description:
+					"<h2>Tabela Preview e Resultados</h2><div>To install via npm or use the cdn check out this.</div>",
+				placement: "top",
+			},
+		],
+		onComplete: function () {
+			console.log("Completed!");
+		},
+	};
+
+	function handleClick(event) {
+		event.preventDefault();
+		createSequence(options);
+	}
+
 	return (
 		<>
 			<LoadingScreen />
 			<NavbarNavigator />
 			<Container fluid className="text-center mb-5">
 				<Row className="p-5 mt-1">
-					<h1>Importação das cargas</h1>
+					<h1 onClick={handleClick} id="title-import">
+						Importação das cargas
+					</h1>
 				</Row>
 				<Row>
 					<a
@@ -104,14 +157,14 @@ function Importar() {
 						rel="noreferrer"
 						className="text-decoration-none"
 					>
-						<Button variant="outline-primary">
+						<Button variant="outline-primary" id="botao-download">
 							Clique aqui para fazer o download da planilha de modelo{" "}
 							<BsDownload />
 						</Button>
 					</a>
 				</Row>
 				<hr className="mt-5" />
-				<Form onSubmit={handleImportCarga}>
+				<Form onSubmit={handleImportCarga} id="import-arq">
 					<Row>
 						<Col md={10} sm={12}>
 							<Form.Group controlId="formFile" className="mb-3">
@@ -126,15 +179,22 @@ function Importar() {
 							</Form.Group>
 						</Col>
 						<Col className="text-start">
-							<Button type="submit" variant="success" className="mt-4">
+							<Button
+								type="submit"
+								variant="success"
+								className="mt-4"
+								id="botao-process"
+							>
 								Processar
 							</Button>
 						</Col>
 					</Row>
 				</Form>
 
-				<h1 className="mt-5">Preview e resultados</h1>
-				<Table responsive striped bordered hover>
+				<h1 className="mt-5" id="title-tab-import-carg">
+					Preview e resultados
+				</h1>
+				<Table responsive striped bordered hover id="Table-impot-carg">
 					<thead>
 						<tr>
 							<th>Código da carga</th>

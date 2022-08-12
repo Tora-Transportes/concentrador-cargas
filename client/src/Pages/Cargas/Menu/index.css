@@ -1,3 +1,9 @@
 .puts a:hover svg {
   transform: scale(1.1);
 }
+
+#titulo-selecionar-modo-carga,
+#title-import,
+#title-manual{
+  color: #00652E;
+}
