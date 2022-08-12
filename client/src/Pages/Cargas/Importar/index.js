@@ -93,31 +93,37 @@ function Importar() {
 			{
 				element: "#title-import",
 				description:
-					"<h2>Don't forget to import!</h2><div>Add these lines when using in a front end framework.</div>",
+					"<h2>Bem-vindo</h2><div>Add these lines when using in a front end framework.</div>",
 				placement: "bottom",
 			},
 			{
 				element: "#botao-download",
 				description:
-					"<h2>Color, color, everywhere!</h2><div>Option to choose the backdrop color.</div>",
+					"<h2>Download de modelo</h2><div>Option to choose the backdrop color.</div>",
 				placement: "bottom",
 			},
 			{
 				element: "#import-arq",
 				description:
-					"<h2>Placement - Top! ⬆️</h2><div>Option to place the tooltip on the top of the element.</div>",
+					"<h2>Escolher Arquivo</h2><div>Option to place the tooltip on the top of the element.</div>",
 				placement: "top",
 			},
 			{
 				element: "#botao-process",
 				description:
-					"<h2>Placement - Right! ➡️</h2><div>Option to place the tooltip on the right of the element.</div>",
+					"<h2>Processar</h2><div>Option to place the tooltip on the right of the element.</div>",
+				placement: "top",
+			},
+			{
+				element: "#title-tab-import-carg",
+				description:
+					"<h2>Tabela</h2><div>Option to place the tooltip on the right of the element.</div>",
 				placement: "top",
 			},
 			{
 				element: "#Table-impot-carg",
 				description:
-					"<h2>Installation Package!</h2><div>To install via npm or use the cdn check out this.</div>",
+					"<h2>Tabela Preview e Resultados</h2><div>To install via npm or use the cdn check out this.</div>",
 				placement: "top",
 			},
 		],
@@ -185,7 +191,9 @@ function Importar() {
 					</Row>
 				</Form>
 
-				<h1 className="mt-5">Preview e resultados</h1>
+				<h1 className="mt-5" id="title-tab-import-carg">
+					Preview e resultados
+				</h1>
 				<Table responsive striped bordered hover id="Table-impot-carg">
 					<thead>
 						<tr>
