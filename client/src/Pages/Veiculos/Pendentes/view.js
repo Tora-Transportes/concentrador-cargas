@@ -17,37 +17,36 @@ function ViewRotasPendentes({
 			{
 				element: "#title-monit",
 				description:
-					"<h2>Don't forget to import!</h2><div>Add these lines when using in a front end framework.</div>",
+					"<h2>Bem-vindo</h2><div>A tela de monitoramento de veículos</div>",
 				placement: "bottom",
 			},
 			{
 				element: "#rows-monit",
 				description:
-					"<h2>Color, color, everywhere!</h2><div>Option to choose the backdrop color.</div>",
+					"<h2>Linhas da tabela</h2><div>Nesta opção você define a quantidade de linhas que será exibidas na tabela.</div>",
 				placement: "bottom",
 			},
 			{
 				element: "#total-reg",
 				description:
-					"<h2>Placement - Top! ⬆️</h2><div>Option to place the tooltip on the top of the element.</div>",
+					"<h2>Total de registros</h2><div>Total de resultados exibidos na tabela abaixo.</div>",
 				placement: "bottom",
 			},
 			{
 				element: "#Tabela-coordenadas",
-				description:
-					"<h2>Placement - Right! ➡️</h2><div>Option to place the tooltip on the right of the element.</div>",
+				description: "<h2>Tabela de Monitoramento</h2><div></div>",
 				placement: "top",
 			},
 			{
 				element: "#Botao-voltar-pag",
 				description:
-					"<h2>Installation Package!</h2><div>To install via npm or use the cdn check out this.</div>",
+					"<h2>Próxima Página</h2><div>Seguirá para uma próxima aba da tabela.</div>",
 				placement: "top",
 			},
 			{
 				element: "#Botao-proxima-pag",
 				description:
-					"<h2>Installation Package!</h2><div>To install via npm or use the cdn check out this.</div>",
+					"<h2>Voltar Página</h2><div>Voltará para uma aba anterior da tabela.</div>",
 				placement: "top",
 			},
 		],
