@@ -4,11 +4,13 @@ import TabelaCargas from "../Components/TabelaCargas";
 import { Button as ButtonReact } from "primereact/button";
 import { Sidebar } from "primereact/sidebar";
 import { BiCog } from "react-icons/bi";
+import { ImQrcode } from "react-icons/im";
 import { Dialog } from "primereact/dialog";
 import { SideBarFuncition } from "../Components/TabelaCargas/layoutTable";
 import InfoCTEcard from "./infoCTEcard";
 import createSequence from "tooltip-sequence";
 import "../Styles/index.css";
+import bandeira from "../../assets/bandeiraBrasil.png";
 
 function ViewCoordenadas({
 	columns,
@@ -39,9 +41,24 @@ function ViewCoordenadas({
 
 	const headerDialog = (
 		<div className="header-dialog">
-			<h4>
-				Informações referente a placa <strong>{dataCTE?.placa}</strong>
-			</h4>
+			{/* <h4>Informações referente a placa </h4> */}
+			<div className="row ms-1 row-placa">
+				<div className=" col col-placa-header">
+					<span className="text-light">BRASIL</span>
+					<img src={bandeira} alt="caminhao verde" />
+				</div>
+				<div className=" col col-placa-body">
+					<div className="col col-placa-body-qrCod">
+						{" "}
+						<ImQrcode />
+						<p>BR</p>
+					</div>
+
+					<div className="col col-placa-body-numero">
+						<span>{dataCTE?.placa}</span>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 
@@ -109,9 +126,6 @@ function ViewCoordenadas({
 				placement: "top",
 			},
 		],
-		onComplete: function () {
-			console.log("Completed!");
-		},
 	};
 
 	function handleClick(event) {

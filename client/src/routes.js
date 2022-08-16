@@ -23,6 +23,7 @@ import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css";
 import DestinoCarga from "./Pages/Veiculos/DestinoCarga";
 import RaioEmpresa from "./Pages/Veiculos/RaioEmpresa";
+import LinkCarga from "./Pages/Cargas/Manual/LinkCarga";
 
 export default function AllRoutes() {
 	return (
@@ -36,6 +37,11 @@ export default function AllRoutes() {
 
 				<Route path="/cargas/manual" exact component={CadastrarCargaManual} />
 				<Route path="/cargas/manual/:id" exact component={EditarCargaManual} />
+				<Route
+					path="/cargas/manual/visualizar/:id"
+					exact
+					component={LinkCarga}
+				/>
 				<Route
 					path="/cargas/derivadas/:id"
 					exact

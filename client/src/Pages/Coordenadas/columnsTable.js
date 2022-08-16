@@ -1,5 +1,6 @@
 import { SiGooglemaps } from "react-icons/si";
-import { BsInfoCircle, BsPencilSquare } from "react-icons/bs";
+import { BsInfoCircle } from "react-icons/bs";
+import { GiArchiveResearch } from "react-icons/gi";
 import DateUtils from "../Utils/date";
 import { Button, Form } from "react-bootstrap";
 import CollapseHint from "../Components/CollapseHint";
@@ -25,7 +26,7 @@ export const getColumns = (
 					onClick={() => showCardCTE(row)}
 					className="text-primary"
 				>
-					<BsInfoCircle className="mb-1" /> Info CTE
+					<BsInfoCircle className="mb-1" /> CTE
 				</Button>
 			),
 		},
@@ -61,21 +62,16 @@ export const getColumns = (
 		},
 		{
 			name: "editar",
-			description: "Editar/Vincular",
+			description: "Link",
 			static_column: true,
 			selector: (row) => {
-				if (!row.id) {
-					return console.log("ROW id"); //swal("Ops!", "Não existe o codigo da carga", "warning");
-				}
 				return (
 					<Link
-						to={`/cargas/${
-							row.canal_comunicacao === "portal" ? "manual" : "manual"
-						}/${row.id}`}
+						to={`/cargas/manual/visualizar/${row.id}`}
 						target="_blank"
 						rel="noopener"
 					>
-						<BsPencilSquare />
+						<GiArchiveResearch className="fs-5" />
 					</Link>
 				);
 			},
