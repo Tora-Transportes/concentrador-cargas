@@ -45,13 +45,14 @@ function CabecalhoFixado({ children }) {
 			},
 			{
 				element: "#title-check-não",
-				description: "<h2>Dados do Veículo</h2><div></div>",
+				description:
+					"<h2>Dados do Veículo</h2><div>Este campo só será visivél quando marcar a opção Não do checkbox.</div>",
 				placement: "top",
 			},
 			{
 				element: "#Plca-cavalo",
 				description:
-					"<h2>Informações</h2><div>Apos preencher este campo os outros será autopreenchido</div>",
+					"<h2>Informações</h2><div>Após preencher este campo os outros será autopreenchido</div>",
 				placement: "top",
 			},
 			{
