@@ -18,12 +18,12 @@ import RelatoriosMain from "./Pages/Relatorios/Totalizadores";
 import Credenciais from "./Pages/Credenciais";
 import CalendarioProducao from "./Pages/CalendarioProducao";
 import RaioVeiculos from "./Pages/Veiculos/Raio";
-import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
-import "primereact/resources/primereact.min.css"; //core css
-import "primeicons/primeicons.css";
 import DestinoCarga from "./Pages/Veiculos/DestinoCarga";
 import RaioEmpresa from "./Pages/Veiculos/RaioEmpresa";
 import LinkCarga from "./Pages/Cargas/Manual/LinkCarga";
+import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
+import "primereact/resources/primereact.min.css"; //core css
+import "primeicons/primeicons.css";
 
 export default function AllRoutes() {
 	return (
