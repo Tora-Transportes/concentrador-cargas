@@ -32,7 +32,7 @@ function Main() {
 			},
 		],
 		onComplete: function () {
-			console.log("Completed!");
+			window.location.reload();
 		},
 	};
 

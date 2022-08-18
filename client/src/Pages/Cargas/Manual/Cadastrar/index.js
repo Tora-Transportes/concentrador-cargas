@@ -9,8 +9,6 @@ import ServiceProdutos from "../../../../services/ServiceProdutos";
 import FormularioCadastroManual from "../../../Components/FormularioCadastroManual";
 import CabecalhoFixado from "../../../Components/CabecalhoFixado";
 import { useHistory } from "react-router-dom";
-// import createSequence from "tooltip-sequence";
-// import "../../../Styles/index.css";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -136,8 +134,7 @@ function Manual() {
 		<>
 			<LoadingScreen />
 			<CabecalhoFixado>Cadastro de carga aberta manualmente</CabecalhoFixado>
-			{/* <Button id="button-cad-carga">Ajuda</Button> */}
-			<Container className="mb-5 mt-5">
+			<Container className="mb-5 mt-5" style={{ scrollBehavior: "none" }}>
 				<Form onSubmit={formik.handleSubmit}>
 					<FormularioCadastroManual
 						buscarCargaComDocumentoDeTransporte={

@@ -104,7 +104,7 @@ function ViewCoordenadas({
 			},
 		],
 		onComplete: function () {
-			console.log("Completed!");
+			window.location.reload();
 		},
 	};
 

@@ -51,7 +51,7 @@ function ViewRotasPendentes({
 			},
 		],
 		onComplete: function () {
-			console.log("Completed!");
+			window.location.reload();
 		},
 	};
 	function handleClick(event) {

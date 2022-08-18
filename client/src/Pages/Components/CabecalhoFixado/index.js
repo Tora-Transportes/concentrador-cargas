@@ -34,7 +34,7 @@ function CabecalhoFixado({ children }) {
 			{
 				element: "#e_lote_sim",
 				description:
-					"<h2>É lote - <strong>SIM</strong></h2><div>será necessário adicionar algumas informações como informar um cliente, origem de carga, destino de carga etc. Sem necesside dos dados do veículo.</div>",
+					"<h2>É lote - <strong>SIM</strong></h2><div>será necessário adicionar algumas informações como informar um cliente, origem de carga, destino de carga etc. Sem necessidade dos dados do veículo.</div>",
 				placement: "bottom",
 			},
 			{
@@ -93,7 +93,7 @@ function CabecalhoFixado({ children }) {
 			},
 		],
 		onComplete: function () {
-			console.log("Completed!");
+			window.location.reload();
 		},
 	};
 
@@ -103,7 +103,10 @@ function CabecalhoFixado({ children }) {
 	}
 	return (
 		<>
-			<NavbarNavigator className="fixed-top" />
+			<NavbarNavigator
+				className="fixed-top"
+				style={{ scrollBehavior: "none" }}
+			/>
 			<h1
 				onClick={handleClick}
 				id="Cabeclho-fixado"
