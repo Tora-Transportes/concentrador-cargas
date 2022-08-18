@@ -5,7 +5,6 @@ import { Col, Row } from "react-bootstrap";
 import useLoadingScreen from "../Components/LoadingScreen";
 import swal from "sweetalert";
 import { Card } from "primereact/card";
-//import { formatDate } from "../Utils/formatDate";
 import DateUtils from "../Utils/date";
 
 function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
@@ -18,10 +17,17 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 			const { data } = await ServiceCargaCTE.search(rowInfoPlaca?.placa);
 
 			if (data.data.results) {
-				const arrayDoc_ID = await data.data?.results.map(
-					(item) => ` ${item.DOC_ID};`
-				);
+				const arrayDoc_ID = [];
+				const arrayPeso_real = [];
+				data.data.results.forEach((item) => {
+					arrayDoc_ID.push(` ${item.DOC_ID};`);
+					arrayPeso_real.push(` ${item.DT_PESO_REAL};`);
+				});
+				// const arrayDoc_ID = await data.data.results.map(
+				// 	(item) => ` ${item.DOC_ID};`
+				// );
 				data.data.results[0].DOC_ID = [...new Set(arrayDoc_ID)];
+				data.data.results[0].DT_PESO_REAL = arrayPeso_real;
 
 				const result = await { ...rowInfoPlaca, ...data.data?.results[0] };
 				setDataCTE([result]);
@@ -74,6 +80,11 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 									</li>
 									<li className="ul-card-li">
 										<h6>
+											Peso real: <strong>{i.DT_PESO_REAL}</strong>
+										</h6>
+									</li>
+									<li className="ul-card-li">
+										<h6>
 											Data emissão:{" "}
 											<strong>{DateUtils.formatDate(i.DT_HORA_EMISSAO)}</strong>
 										</h6>
@@ -82,11 +93,6 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 										<h6>
 											Data entrega:{" "}
 											<strong>{DateUtils.formatDate(i.DT_ENTREGA)}</strong>
-										</h6>
-									</li>
-									<li className="ul-card-li">
-										<h6>
-											Peso real: <strong>{i.DT_PESO_REAL}</strong>
 										</h6>
 									</li>
 									<li className="ul-card-li">
@@ -199,11 +205,6 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 											<strong>
 												{filterTipoCategoria(i.categoria_veiculo)}
 											</strong>
-										</h6>
-									</li>
-									<li className="ul-card-li">
-										<h6>
-											Responsàvel placa: <strong>{i.responsavel_placa}</strong>
 										</h6>
 									</li>
 									<li className="ul-card-li">

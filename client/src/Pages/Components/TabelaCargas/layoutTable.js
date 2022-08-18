@@ -5,7 +5,7 @@ import { Button as ButtonReact } from "primereact/button";
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
 import { AiFillFileExcel } from "react-icons/ai";
 import { MdRefresh, MdOutlineSubtitles } from "react-icons/md";
-import { FcServices } from "react-icons/fc";
+import { TbSettings } from "react-icons/tb";
 
 const PaginatorTable = ({ itensPerPage, setItensPerPage, setVisibleLeft }) => {
 	const showOpcaoPaginatot = (e) => {
@@ -47,7 +47,7 @@ export const headerTableFunction = (
 			<Col className=" text-right">
 				<InputGroup className="justify-content-center">
 					<button type="submit" className="button-input-multiselect">
-						<FcServices className="header-table-icon-button" />
+						<TbSettings className="header-table-icon-button" />
 					</button>
 					<MultiSelect
 						//display="chip"

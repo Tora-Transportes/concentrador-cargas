@@ -32,7 +32,7 @@ export class CoordenadaRepository {
       id,
       placa_bitrem,
       placa_carreta,
-      cpf_motorista,
+      //cpf_motorista,
       apelido_carreta,
     } = filter;
 
@@ -114,12 +114,12 @@ export class CoordenadaRepository {
       );
     });
 
-    total.leftJoin("CG_IDENTIFICACAO ", function () {
-      this.on("CG_IDENTIFICACAO.LOC_COD", "CAG.LOC_COD").andOn(
-        "CG_IDENTIFICACAO.CG_COD",
-        "CAG.CG_COD"
-      );
-    });
+    // total.leftJoin("CG_IDENTIFICACAO ", function () {
+    //   this.on("CG_IDENTIFICACAO.LOC_COD", "CAG.LOC_COD").andOn(
+    //     "CG_IDENTIFICACAO.CG_COD",
+    //     "CAG.CG_COD"
+    //   );
+    // });
 
     query.leftJoin(
       "VEICULO as VEI",
@@ -158,7 +158,7 @@ export class CoordenadaRepository {
       id,
       placa_bitrem,
       placa_carreta,
-      cpf_motorista,
+      //cpf_motorista,
       apelido_carreta,
     })) {
       if (value !== undefined && key) {

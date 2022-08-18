@@ -19,10 +19,13 @@
 .header-dialog {
   text-align: center;
   color: #00652e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-.header-dialog strong {
-  color: #800000;
+.header-dialog h4 {
+  font-size: 25px;
+  margin-left: 5%;
 }
 
 .dialog-btn-voltar {
@@ -30,6 +33,62 @@
   height: 4.5vh !important;
   width: auto !important;
   background-color: #00652e !important;
+}
+
+/*css placa*/
+.row-placa {
+  display: block !important;
+  border-width: 3.5px;
+  border-style: solid;
+  border-color: red;
+  border-radius: 15px;
+  width: 260px;
+  height: 90px;
+  margin-left: 1%;
+}
+
+.col-placa-header {
+  background-color: rgb(6, 6, 214);
+  text-align: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+.col-placa-header img{
+  width: 20px;
+  float: right;
+  margin-top: 5px;
+}
+
+.col-placa-body {
+  display: flex;
+  /* justify-content: center; */
+}
+
+.col-placa-body-qrCod {
+  text-align: start;
+  color: #000;
+  font-size: 14px;
+  margin-left: 2px;
+}
+
+.col-placa-body-qrCod p {
+  /* font-size: 10px;
+  margin: 11px 0 0 3px; */
+  font-size: 12px;
+  margin: 11px 0 0 0px;
+}
+
+.col-placa-body-numero {
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+  color: red;
+}
+.col-placa-body-numero span {
+  font-size: 3rem;
+  margin-top: -10px;
+  font-weight: 450;
+  letter-spacing: 2px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -43,5 +102,14 @@
     height: 5vh !important;
     width: 35% !important;
     background-color: #00652e !important;
-}
+  }
+
+  /* .header-dialog {
+    display: block;
+    padding-left: 25px;
+  }
+
+  .header-dialog h4 {
+    margin-right: 5%;
+  } */
 }
