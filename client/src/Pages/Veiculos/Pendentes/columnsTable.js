@@ -52,5 +52,10 @@ export const getColumns = (aprovarVeiculo, reprovarVeiculo) => {
 				</Button>
 			),
 		},
+		{
+			name: "documento_transporte",
+			description: "Doc Transporte",
+			selector: (row) => row.documento_transporte,
+		},
 	];
 };

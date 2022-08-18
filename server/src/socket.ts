@@ -1,5 +1,5 @@
 import { Server, Socket } from "socket.io";
-import { Server as HttpsServer } from "http";
+import { Server as HttpsServer } from "https";
 
 let io: Server | null = null;
 

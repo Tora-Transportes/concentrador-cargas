@@ -15,6 +15,9 @@ export default class ServiceDetailsVehicle {
         v.vei_dt_afericao AS data_afericao,
         v.vei_categoria AS forca_trabalho,
         v.vei_modelo AS modelo,
+        v.vei_renavam AS renavan,
+        v.vei_cert_prop AS certificado_propietario,
+        "con_coordenadas_veiculos"."telefone_motorista",
         nvl(v.vei_tp_assoalho, ' ') AS tipo_assoalho,
         v.sv_cod AS sv_cod,
         sv.sv_dsc AS setor_veiculo,
@@ -138,6 +141,7 @@ export default class ServiceDetailsVehicle {
         tecno.tecno_dsc TECNOLOGIA
     FROM
         veiculo v
+        LEFT JOIN "con_coordenadas_veiculos" on v.vei_cod = "con_coordenadas_veiculos"."codigo_veiculo"
         LEFT JOIN tipo_veiculo tv ON tv.tv_cod = v.tv_cod
         LEFT JOIN apelido_veiculo apv ON apv.av_seq = v.av_seq
         LEFT JOIN setor_veiculo sv ON sv.sv_cod = v.sv_cod

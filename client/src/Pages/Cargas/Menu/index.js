@@ -6,46 +6,49 @@ import { SiGooglesheets } from "react-icons/si";
 // import { BsPeople } from "react-icons/bs";
 import NavbarNavigator from "../../Components/NavbarNavigator";
 import "./index.css";
-import createSequence from "tooltip-sequence";
+// import createSequence from "tooltip-sequence";
 
 function Main() {
-	const options = {
-		backdropColor: "#6262625d",
-		sequence: [
-			{
-				element: "#titulo-selecionar-modo-carga",
-				description:
-					"<h2>Bem-vindo</h2><div>Nessa etapa selecione a forma que deseja realizar o cadastro da carga que foi coletada e então prossiga.</div>",
-				placement: "bottom",
-			},
-			{
-				element: "#hand",
-				description:
-					"<h2>Manual</h2><div>Se sua carga foi coletada de forma manual Selecione está opção.</div>",
-				placement: "bottom",
-			},
-			{
-				element: "#import",
-				description:
-					"<h2>Importar</h2><div>Caso sua carga foi coletada em um Arquivo Selecione está opção.</div>",
-				placement: "bottom",
-			},
-		],
-		onComplete: function () {
-			window.location.reload();
-		},
-	};
+	// const options = {
+	// 	backdropColor: "#6262625d",
+	// 	sequence: [
+	// 		{
+	// 			element: "#titulo-selecionar-modo-carga",
+	// 			description:
+	// 				"<h2>Bem-vindo</h2><div>Nessa etapa selecione a forma que deseja realizar o cadastro da carga que foi coletada e então prossiga.</div>",
+	// 			placement: "bottom",
+	// 		},
+	// 		{
+	// 			element: "#hand",
+	// 			description:
+	// 				"<h2>Manual</h2><div>Se sua carga foi coletada de forma manual Selecione está opção.</div>",
+	// 			placement: "bottom",
+	// 		},
+	// 		{
+	// 			element: "#import",
+	// 			description:
+	// 				"<h2>Importar</h2><div>Caso sua carga foi coletada em um Arquivo Selecione está opção.</div>",
+	// 			placement: "bottom",
+	// 		},
+	// 	],
+	// 	onComplete: function () {
+	// 		window.location.reload();
+	// 	},
+	// };
 
-	function handleClick(event) {
-		event.preventDefault();
-		createSequence(options);
-	}
+	// function handleClick(event) {
+	// 	event.preventDefault();
+	// 	createSequence(options);
+	// }
 	return (
 		<>
 			<NavbarNavigator />
 			<Container className="text-center mb-5">
 				<Row className="p-5 mt-1">
-					<h1 onClick={handleClick} id="titulo-selecionar-modo-carga">
+					<h1
+						// onClick={handleClick}
+						id="titulo-selecionar-modo-carga"
+					>
 						Selecione o modo qual a carga foi coletada
 					</h1>
 					<Col md={6} className="p-5 puts" sm={12}>

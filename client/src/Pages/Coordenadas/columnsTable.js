@@ -1,12 +1,12 @@
 import { SiGooglemaps } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
-import { GiArchiveResearch } from "react-icons/gi";
+//import { GiArchiveResearch } from "react-icons/gi";
 import DateUtils from "../Utils/date";
 import { Button, Form } from "react-bootstrap";
 import CollapseHint from "../Components/CollapseHint";
 import ResponsavelCadastroSelect from "../Components/ResponsavelCadastroSelect";
 //mport swal from "sweetalert";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 
 export const getColumns = (
 	handleChangeDataJanela,
@@ -35,16 +35,16 @@ export const getColumns = (
 			description: "Placa",
 			selector: (row) => row.placa,
 		},
-		{
-			name: "placa_carreta",
-			description: "Placa carreta",
-			selector: (row) => row.placa_carreta,
-		},
-		{
-			name: "placa_bitrem",
-			description: "Placa bitrem",
-			selector: (row) => row.placa_bitrem,
-		},
+		// {
+		// 	name: "placa_carreta",
+		// 	description: "Placa carreta",
+		// 	selector: (row) => row.placa_carreta,
+		// },
+		// {
+		// 	name: "placa_bitrem",
+		// 	description: "Placa bitrem",
+		// 	selector: (row) => row.placa_bitrem,
+		// },
 		{
 			name: "tipo_cavalo",
 			description: "Tipo cavalo",
@@ -55,28 +55,28 @@ export const getColumns = (
 			description: "Tipo carreta",
 			selector: (row) => row.tipo_carreta,
 		},
-		{
-			name: "apelido_carreta",
-			description: "Apelido Carreta",
-			selector: (row) => row.apelido_carreta,
-		},
-		{
-			name: "editar",
-			description: "Link",
-			static_column: true,
-			selector: (row) => {
-				return (
-					<Link
-						to={`/cargas/manual/visualizar/${row.id}`}
-						target="_blank"
-						rel="noopener"
-					>
-						<GiArchiveResearch className="fs-5" />
-					</Link>
-				);
-			},
-			sortable: "sortable",
-		},
+		// {
+		// 	name: "apelido_carreta",
+		// 	description: "Apelido Carreta",
+		// 	selector: (row) => row.apelido_carreta,
+		// },
+		// {
+		// 	name: "link",
+		// 	description: "Link",
+		// 	static_column: true,
+		// 	selector: (row) => {
+		// 		return (
+		// 			<Link
+		// 				to={`/cargas/manual/visualizar/${row.id}`}
+		// 				target="_blank"
+		// 				rel="noopener"
+		// 			>
+		// 				<GiArchiveResearch className="fs-5" />
+		// 			</Link>
+		// 		);
+		// 	},
+		// 	sortable: "sortable",
+		// },
 		{
 			name: "telefone_motorista",
 			description: "Telefone Motorista",
@@ -96,11 +96,11 @@ export const getColumns = (
 				);
 			},
 		},
-		{
-			name: "cpf_motorista",
-			description: "Cpf motorista",
-			selector: (row) => row.cpf_motorista,
-		},
+		// {
+		// 	name: "cpf_motorista",
+		// 	description: "Cpf motorista",
+		// 	selector: (row) => row.cpf_motorista,
+		// },
 		{
 			name: "setor_veiculo",
 			description: "Setor Veículo",
