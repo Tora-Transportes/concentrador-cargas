@@ -28,6 +28,7 @@ function FormularioCadastroManual({
 	formik,
 	produtos,
 	distancia,
+	distanciaIntermediaria,
 	handleSearchDistance,
 	disabledFields = [],
 	buscarCargaComDocumentoDeTransporte,
@@ -334,7 +335,7 @@ function FormularioCadastroManual({
 				</Col>
 			</Row>
 			<Row>
-				<Col sm={12} md={6}>
+				<Col sm={12} md={4}>
 					<FloatingLabel label="*Origem carga" className="mb-3">
 						<InputLocalizacao
 							keyDataList="origem_carga"
@@ -348,8 +349,25 @@ function FormularioCadastroManual({
 						/>
 					</FloatingLabel>
 				</Col>
-				<Col>
-					<FloatingLabel label="*Destino carga" className="mb-3">
+				<Col sm={12} md={4}>
+					<FloatingLabel
+						label="Destino intermediário da  carga"
+						className="mb-3"
+					>
+						<InputLocalizacao
+							keyDataList="destino_intermediario"
+							type="text"
+							placeholder=" "
+							name="destino_intermediario"
+							value={formik.values.destino_intermediario}
+							onChange={formik.handleChange}
+							onBlur={() => handleSearchDistance(formik.values)}
+							className="text-warning"
+						/>
+					</FloatingLabel>
+				</Col>
+				<Col sm={12} md={4}>
+					<FloatingLabel label="*Destino final da carga" className="mb-3">
 						<InputLocalizacao
 							keyDataList="destino_carga"
 							type="text"
@@ -358,6 +376,7 @@ function FormularioCadastroManual({
 							value={formik.values.destino_carga}
 							onChange={formik.handleChange}
 							onBlur={() => handleSearchDistance(formik.values)}
+							className="text-primary"
 							required
 						/>
 					</FloatingLabel>
@@ -391,11 +410,37 @@ function FormularioCadastroManual({
 				</Col>
 			</Row> */}
 
+			{distanciaIntermediaria && (
+				<Row>
+					<Col>
+						<FloatingLabel
+							label="Distancia entre a origem e o destino intermediário"
+							className="mb-3"
+						>
+							<Form.Control
+								type="text"
+								placeholder=" "
+								value={`A distancia entre ${
+									formik.values.origem_carga.split("/")[2]
+								} e ${
+									formik.values.destino_intermediario.split("/")[2]
+								} é de ${distanciaIntermediaria} KM.`}
+								className="text-warning"
+								readOnly
+							/>
+							<Form.Text id="passwordHelpBlock" muted>
+								O valor apresentado representa a distancia de centro a centro.
+							</Form.Text>
+						</FloatingLabel>
+						<hr />
+					</Col>
+				</Row>
+			)}
 			{distancia && (
 				<Row>
 					<Col>
 						<FloatingLabel
-							label="Distancia entre a origem e o destino"
+							label="Distancia entre a origem e o destino final"
 							className="mb-3"
 						>
 							<Form.Control
@@ -406,6 +451,7 @@ function FormularioCadastroManual({
 								} e ${
 									formik.values.destino_carga.split("/")[2]
 								} é de ${distancia} KM.`}
+								className="text-primary"
 								readOnly
 							/>
 							<Form.Text id="passwordHelpBlock" muted>
