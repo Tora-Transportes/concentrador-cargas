@@ -11,6 +11,14 @@
 .p-card-title {
   color: #00652e;
 }
+.p-checkbox .p-checkbox-box.p-highlight{
+  background-color: #00652e !important;
+  background: #00652e !important;
+}
+
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight{
+  color:#000 !important;
+}
 
 .ul-card-li {
   margin-left: 1vw;

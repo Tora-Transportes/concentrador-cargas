@@ -23,11 +23,8 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 					arrayDoc_ID.push(` ${item.DOC_ID};`);
 					arrayPeso_real.push(` ${item.DT_PESO_REAL};`);
 				});
-				// const arrayDoc_ID = await data.data.results.map(
-				// 	(item) => ` ${item.DOC_ID};`
-				// );
 				data.data.results[0].DOC_ID = [...new Set(arrayDoc_ID)];
-				data.data.results[0].DT_PESO_REAL = arrayPeso_real;
+				data.data.results[0].DT_PESO_REAL = [...new Set(arrayPeso_real)];
 
 				const result = await { ...rowInfoPlaca, ...data.data?.results[0] };
 				setDataCTE([result]);
@@ -184,7 +181,7 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 											Placa: <strong>{i.placa}</strong>
 										</h6>
 									</li>
-									<li className="ul-card-li">
+									{/* <li className="ul-card-li">
 										<h6>
 											Placa carreta: <strong>{i.placa_carreta}</strong>
 										</h6>
@@ -193,7 +190,7 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 										<h6>
 											Placa bitrem: <strong>{i.placa_bitrem}</strong>
 										</h6>
-									</li>
+									</li> */}
 									<li className="ul-card-li">
 										<h6>
 											Codigo veìculo: <strong>{i.codigo_veiculo}</strong>
@@ -227,11 +224,11 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 											Tipo carreta: <strong>{i.tipo_carreta}</strong>
 										</h6>
 									</li>
-									<li className="ul-card-li">
+									{/* <li className="ul-card-li">
 										<h6>
 											Apelido carreta: <strong>{i.apelido_carreta}</strong>
 										</h6>
-									</li>
+									</li> */}
 									<li className="ul-card-li">
 										<h6>
 											Tipo cavalo: <strong>{i.tipo_cavalo}</strong>
@@ -268,11 +265,11 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 											<strong>{i.telefone_motorista}</strong>
 										</h6>
 									</li>
-									<li className="ul-card-li">
+									{/* <li className="ul-card-li">
 										<h6>
 											CPF motorista: <strong>{i.cpf_motorista}</strong>
 										</h6>
-									</li>
+									</li> */}
 								</Card>
 							</div>
 						))}

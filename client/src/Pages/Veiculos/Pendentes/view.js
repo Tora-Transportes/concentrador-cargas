@@ -3,6 +3,8 @@ import { Container, Row, Col } from "react-bootstrap";
 import TabelaCargas from "../../Components/TabelaCargas";
 import createSequence from "tooltip-sequence";
 
+// import createSequence from "tooltip-sequence";
+import "../../Styles/index.css";
 function ViewRotasPendentes({
 	columns = [],
 	get_data,
