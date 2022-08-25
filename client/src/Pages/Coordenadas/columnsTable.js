@@ -35,16 +35,6 @@ export const getColumns = (
 			description: "Placa",
 			selector: (row) => row.placa,
 		},
-		// {
-		// 	name: "placa_carreta",
-		// 	description: "Placa carreta",
-		// 	selector: (row) => row.placa_carreta,
-		// },
-		// {
-		// 	name: "placa_bitrem",
-		// 	description: "Placa bitrem",
-		// 	selector: (row) => row.placa_bitrem,
-		// },
 		{
 			name: "tipo_cavalo",
 			description: "Tipo cavalo",
