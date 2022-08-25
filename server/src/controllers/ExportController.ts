@@ -8,9 +8,26 @@ import {
   IPaginationResult,
 } from "../repositories/CargaRepository";
 import { ICarga } from "../models/ICargas";
+import { calculateDiffDate } from "../Utils/formatData";
+import AppError from "../models/AppError";
 
 class ExportController {
   async generateReportFromCargasInScreen(req: Request, res: Response) {
+    const { date_execel_inicio, date_execel_fim } = req.query;
+    if (date_execel_inicio && date_execel_fim) {
+      const diferencaDate = await calculateDiffDate(
+        String(date_execel_inicio),
+        String(date_execel_fim)
+      );
+
+      if (diferencaDate > 31) {
+        throw new AppError(
+          "A diferença entre as datas não pode ser maior que 31 dias",
+          202
+        );
+      }
+    }
+
     const filename = path.resolve(
       os.tmpdir(),
       `RELATORIO_CARGAS-${new Date().getTime()}.xlsx`

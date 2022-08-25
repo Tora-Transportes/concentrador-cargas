@@ -6,11 +6,12 @@ import { Sidebar } from "primereact/sidebar";
 import { BiCog } from "react-icons/bi";
 import { ImQrcode } from "react-icons/im";
 import { Dialog } from "primereact/dialog";
-import { SideBarFuncition } from "../Components/TabelaCargas/layoutTable";
 import InfoCTEcard from "./infoCTEcard";
 // import createSequence from "tooltip-sequence";
 import "../Styles/index.css";
 import bandeira from "../../assets/bandeiraBrasil.png";
+import ModalDataExcel from "src/Pages/Cargas/modal/exportExcel";
+import { SideBarFuncition } from "../Utils/sideBar";
 
 function ViewCoordenadas({
 	columns,
@@ -23,10 +24,13 @@ function ViewCoordenadas({
 	setItensPerPage,
 	visibleCteCardObject,
 	dadosCTEObjet,
+	modalShowExcel,
+	setModalShowExcel,
 }) {
 	const [visibleLeft, setVisibleLeft] = useState(false);
 	const { visibleCardCte, setVisibleCardCte } = visibleCteCardObject;
 	const { dataCTE } = dadosCTEObjet;
+
 	React.useEffect(() => {
 		const interval = setTimeout(() => {
 			window.scrollTo(0, 10000);
@@ -129,9 +133,20 @@ function ViewCoordenadas({
 	// 	event.preventDefault();
 	// 	createSequence(options);
 	// }
+	const exportExcelDate = (dataInicio, dataFim, categoria_veiculo) => {
+		handleExportExcel(dataInicio, dataFim, categoria_veiculo);
+		setModalShowExcel(false);
+	};
+
 	return (
 		<>
 			<Container fluid className="text-center mb-5 mt-4">
+				<ModalDataExcel
+					show={modalShowExcel}
+					exportExcelDate={exportExcelDate}
+					onHide={() => setModalShowExcel(false)}
+					pagina={"coordenadas"}
+				/>
 				<Row className="mb-2">
 					<h1
 						className="title-h1"
@@ -192,6 +207,7 @@ function ViewCoordenadas({
 						<SideBarFuncition
 							itensPerPage={itensPerPage}
 							setItensPerPage={setItensPerPage}
+							setModalShowExcel={setModalShowExcel}
 							setVisibleLeft={setVisibleLeft}
 							handleExportExcel={handleExportExcel}
 							resetView={resetView}

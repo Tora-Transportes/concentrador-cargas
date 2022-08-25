@@ -17,6 +17,10 @@ import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import FilialSelect from "src/Pages/Components/FilialSelect";
 import DateUtils from "../../Utils/date";
+import { showToastMessage } from "src/Pages/Utils/toastMessage";
+import { Toast } from "primereact/toast";
+import diffiInDays from "src/Pages/Utils/diffInDays";
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function ViewRotasPendentes({
@@ -29,7 +33,8 @@ function ViewRotasPendentes({
 	const [totalGeral, setTotalGeral] = useState(0);
 	const dataInicial = useRef(null);
 	const dataFinal = useRef(null);
-	const [codigoFilial, setCodigoFilial] = useState(null);
+	const [codigoFilial, setCodigoFilial] = useState();
+	const toast = useRef(null);
 	function percentage(total, piece) {
 		try {
 			const value = (Number(piece) * 100) / Number(total);
@@ -44,11 +49,27 @@ function ViewRotasPendentes({
 	}
 
 	function applyFilter() {
-		reload({
-			data_inicio: dataInicial.current.value,
-			data_final: dataFinal.current.value,
-			fk_filial: codigoFilial,
-		});
+		const data_inicio = dataInicial.current.value;
+		const data_final = dataFinal.current.value;
+		const fk_filial = codigoFilial;
+		if (!data_inicio || !data_final || !fk_filial) {
+			const message =
+				"Data inicio, data fim e codigo filial são campos obrigatórios!";
+			showToastMessage(toast, "warn", message, 7000);
+		} else if (new Date(data_inicio) > new Date(data_final)) {
+			const message = "Data inicio deve ser maior ou igual a data fim!";
+			showToastMessage(toast, "warn", message, 7000);
+		} else if (diffiInDays(data_inicio, data_final) > 31) {
+			const message =
+				"A diferença entre as data inicio e data fim não pode ser maior que 31 dias!";
+			showToastMessage(toast, "warn", message, 7000);
+		} else {
+			reload({
+				data_inicio,
+				data_final,
+				fk_filial,
+			});
+		}
 	}
 
 	useEffect(() => {
@@ -63,6 +84,12 @@ function ViewRotasPendentes({
 		<>
 			<Container className="text-center mb-5 mt-4">
 				<hr />
+				<Toast
+					ref={toast}
+					className="w-25"
+					position="top-center"
+					style={{ color: "#024c01" }}
+				></Toast>
 				<span>
 					O tempo médio de aprovação de veículos pelo GR é de{" "}
 					<b>

@@ -1,7 +1,6 @@
 import database from "../database";
 import { ICarga, ICargaCTE } from "../models/ICargas";
 import { Knex } from "knex";
-
 export interface IPaginationResult<T> {
   page: number;
   total_pages: number;
@@ -101,7 +100,6 @@ export class CargaRepository {
     const realPage = isNaN(Number(page)) || Number(page) < 1 ? 1 : Number(page);
 
     const total = database("con_cargas").count("id as total").first();
-
     const results = database("con_cargas")
       .select([
         "con_cargas.*",
@@ -122,7 +120,15 @@ export class CargaRepository {
         "con_cargas.codigo_motorista"
       )
       .limit(pageSize)
-      .offset((realPage - 1) * pageSize);
+      .offset((realPage - 1) * pageSize)
+      .modify(function (con_cargas) {
+        if (query.date_execel_inicio && query.date_execel_fim) {
+          con_cargas.andWhereBetween("con_cargas.data_cadastro", [
+            new Date(query.date_execel_inicio + "T00:00:00"),
+            new Date(query.date_execel_fim + "T00:00:00"),
+          ]);
+        }
+      });
 
     const isValid = (value: string | null | undefined) =>
       !["", null, undefined, "null", "undefined"].includes(value);

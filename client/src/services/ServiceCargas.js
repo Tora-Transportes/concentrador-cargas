@@ -252,8 +252,10 @@ class ServiceCargas {
 		fk_filial,
 		order_column,
 		order_direction,
+		date_execel_inicio,
+		date_execel_fim,
 	}) {
-		return api.get("/relatorio/cargas", {
+		return await api.get("/relatorio/cargas", {
 			responseType: "arraybuffer",
 			params: {
 				id,
@@ -273,6 +275,8 @@ class ServiceCargas {
 				limit,
 				placa_veiculo,
 				documento_transporte,
+				date_execel_inicio,
+				date_execel_fim,
 			},
 		});
 	}
