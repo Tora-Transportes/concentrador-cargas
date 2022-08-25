@@ -3,7 +3,7 @@
 }
 
 .stop-scroll {
-  overflow: auto;
+  overflow: hidden;
   -webkit-overflow-scrolling: hidden;
 }
 

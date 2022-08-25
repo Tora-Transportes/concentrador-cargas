@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
-import NavbarNavigator from "../Components/NavbarNavigator";
+// import NavbarNavigator from "../Components/NavbarNavigator";
 import { getClaims } from "../../MicrosoftAuthentication";
 import "./index.css";
 import { Link } from "react-router-dom";
@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { SiGooglemaps } from "react-icons/si";
 import { FaChartBar, FaTruckMoving } from "react-icons/fa";
 import { FaBoxes } from "react-icons/fa";
+import Menusuperior from "../Components/MenuSuperior/menusuperior";
 
 const queueCoresAtuais = [];
 
@@ -134,73 +135,76 @@ function Main() {
 	return (
 		<>
 			<ToastContainer />
-			<NavbarNavigator />
+			{/* <NavbarNavigator /> */}
+			<Menusuperior />
 			<Container>
 				<Row>
 					<Col className="text-center mt-5 mb-5">
-						<h1>Seja bem vindo(a) ao Concentrador de cargas</h1>
+						<p id="style-title-main" className="class-p-title-main">
+							Seja bem vindo(a) ao Concentrador de cargas
+						</p>
 					</Col>
 				</Row>
-				<Row>
-					<Col sm={12} className="mt-2">
-						<h4>
-							Caro(a) <strong>{userData?.nome}</strong>!
-						</h4>
-					</Col>
-					<Col>
-						<ul>
-							<li className="h5">
-								O concentrador de cargas lhe proporciona uma melhor visibilidade
-								de demanda, além de auxiliar sua concentração na melhor tomada
-								de decisão para à escolha de um veículo.
-							</li>
-						</ul>
-					</Col>
-				</Row>
+				<div>
+					<div>
+						<p id="style-p-saudacao" className="class-p-saudacao">
+							Caro(a){userData?.nome}!
+						</p>
+					</div>
+					<div className="class-p-text">
+						<p id="style-p-text">
+							O concentrador de cargas lhe proporciona uma melhor visibilidade
+							de demanda, além de auxiliar sua concentração na <br /> melhor
+							tomada de decisão para à escolha de um veículo.
+						</p>
+					</div>
+				</div>
 
-				<hr className="mb-5 mt-5" />
-
-				<Row className="text-center">
-					<Col lg={3}>
+				<div className="class-icons-body">
+					<div>
 						<Link to="/relatorios" className="text-decoration-none icone-tora">
-							<FaChartBar size={50} />
+							<FaChartBar
+								size={50}
+								style={{ marginLeft: "1rem", color: "#00652E" }}
+							/>
 							<br />
-							<b>Relatórios</b>
+							<b style={{ color: "#00652E" }}>Relatórios</b>
 						</Link>
-					</Col>
-					<Col lg={3}>
+					</div>
+					<div>
 						<Link
 							to="/veiculos/coordenadas"
 							className="text-decoration-none icone-tora"
 						>
-							<SiGooglemaps size={50} />
+							<SiGooglemaps
+								size={50}
+								style={{ marginLeft: "1.5rem", color: "#00652E" }}
+							/>
 							<br />
-							<b>Coordenadas</b>
+							<b style={{ color: "#00652E" }}>Coordenadas</b>
 						</Link>
-					</Col>
-					<Col lg={3}>
+					</div>
+					<div>
 						<Link
 							to="/cargas/visualizar"
 							className="text-decoration-none icone-tora"
 						>
-							<FaTruckMoving size={50} />
+							<FaTruckMoving size={50} style={{ color: "#00652E" }} />
 							<br />
-							<b>Cargas</b>
+							<b style={{ color: "#00652E" }}>Cargas</b>
 						</Link>
-					</Col>
-					<Col lg={3}>
+					</div>
+					<div>
 						<Link
 							to="/lotes/visualizar"
 							className="text-decoration-none icone-tora"
 						>
-							<FaBoxes size={50} />
+							<FaBoxes size={50} style={{ color: "#00652E" }} />
 							<br />
-							<b>Lotes</b>
+							<b style={{ color: "#00652E" }}>Lotes</b>
 						</Link>
-					</Col>
-				</Row>
-
-				<hr className="mb-5 mt-5" />
+					</div>
+				</div>
 
 				<Row
 					className={
@@ -234,9 +238,9 @@ function Main() {
 						</Row>
 					)}
 					{levelGame > -1 && (
-						<Row className="mt-5">
+						<div className="class-jogo">
 							{coresBotoesGame.map((i) => (
-								<Col key={i}>
+								<div key={i}>
 									<Button
 										variant={i}
 										className={`w-100 text-${i}`}
@@ -247,26 +251,29 @@ function Main() {
 									>
 										_
 									</Button>
-								</Col>
+								</div>
 							))}
-						</Row>
+						</div>
 					)}
 					{levelGame === -1 && (
-						<Row className="mt-5">
-							<Col>
-								<Button
-									variant="outline-success"
-									className="w-100"
-									onClick={iniciarGame}
-								>
+						<div>
+							<div className="class-linha-jogo">
+								<p id="title-p-jogo">
+									{" "}
 									Exercite sua memória para garantir uma melhor tomada de
 									decisão durante seu dia de trabalho.
+								</p>
+								<Button
+									id="style-button-jogo"
+									className="class-button-jogue"
+									onClick={iniciarGame}
+								>
+									Jogue Agora!
 								</Button>
-							</Col>
-						</Row>
+							</div>
+						</div>
 					)}
 				</Row>
-				<hr className="mb-5 mt-5" />
 			</Container>
 		</>
 	);

@@ -11,11 +11,12 @@ import {
 	InputGroup,
 } from "react-bootstrap";
 import { BsGear } from "react-icons/bs";
-import NavbarNavigator from "../Components/NavbarNavigator";
+// import NavbarNavigator from "../Components/NavbarNavigator";
 import swal from "sweetalert";
 import ServiceRelatorios from "src/services/ServiceRelatorios";
 import useLoadingScreen from "../Components/LoadingScreen";
 import caminhaoImg from "../../assets/caminhao.gif";
+import Menusuperior from "../Components/MenuSuperior/menusuperior";
 
 export default function CalendarioProducao() {
 	const [events, setEvents] = useState({});
@@ -315,7 +316,7 @@ export default function CalendarioProducao() {
 	return (
 		<>
 			<Loading />
-			<NavbarNavigator />
+			<Menusuperior />
 			<Container>
 				<Row className="mt-3 mb-3">
 					<Form onSubmit={handleSearch}>

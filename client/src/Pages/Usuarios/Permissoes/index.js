@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import "./index.css";
 import { Container, Row, Col } from "react-bootstrap";
 import { useFormik } from "formik";
-import NavbarNavigator from "../../Components/NavbarNavigator";
+//import NavbarNavigator from "../../Components/NavbarNavigator";
 import ServiceUsuarios from "../../../services/ServiceUsuarios";
 import useDebouncedFunction from "../../Components/useDebounceFunction";
 import swal from "sweetalert";
@@ -18,6 +18,7 @@ import {
 	nameBodyTemplate,
 	permissBodyTemplate,
 } from "./templateDataTable";
+import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 
 function Permissoes() {
 	const [users, setUsers] = useState([]);
@@ -104,7 +105,8 @@ function Permissoes() {
 
 	return (
 		<>
-			<NavbarNavigator />
+			{/* <NavbarNavigator /> */}
+			<Menusuperior />
 			<Container className="text-center mb-4 mt-4">
 				<Row>
 					<Col>

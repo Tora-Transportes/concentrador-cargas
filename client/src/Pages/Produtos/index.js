@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import "./index.css";
 import { Container, Row } from "react-bootstrap";
 import { useFormik } from "formik";
-import NavbarNavigator from "../Components/NavbarNavigator";
+//import NavbarNavigator from "../Components/NavbarNavigator";
 import ServiceProdutos from "../../services/ServiceProdutos";
 import swal from "sweetalert";
 import { getClaims } from "../../MicrosoftAuthentication";
@@ -16,6 +16,7 @@ import {
 	usuarioBodyTemplate,
 	renderHeader,
 } from "./templateDataTable";
+import Menusuperior from "../Components/MenuSuperior/menusuperior";
 
 function Produtos() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -142,7 +143,8 @@ function Produtos() {
 	return (
 		<>
 			<LoadingScreen />
-			<NavbarNavigator />
+			{/* <NavbarNavigator /> */}
+			<Menusuperior />
 			<Container className="text-center mb-3 mt-3">
 				<Row>
 					<h1 className="title-h1">Produtos</h1>

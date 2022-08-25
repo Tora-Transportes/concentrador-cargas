@@ -9,7 +9,6 @@ import { Dialog } from "primereact/dialog";
 import { SideBarFuncition } from "../Components/TabelaCargas/layoutTable";
 import InfoCTEcard from "./infoCTEcard";
 import createSequence from "tooltip-sequence";
-import "../Styles/index.css";
 import bandeira from "../../assets/bandeiraBrasil.png";
 
 function ViewCoordenadas({

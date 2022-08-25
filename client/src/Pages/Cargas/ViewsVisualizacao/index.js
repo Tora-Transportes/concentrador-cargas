@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./viewsVisualizacao.css";
 import { Container, Row, Col } from "react-bootstrap";
-import NavbarNavigator from "../../Components/NavbarNavigator";
+// import NavbarNavigator from "../../Components/NavbarNavigator";
 import { Link } from "react-router-dom";
 import chartImg from "../../../assets/chart.png";
 import ModalLegendaCargas from "src/Pages/Cargas/modal/legendaCarga";
@@ -11,6 +11,7 @@ import { BiCog } from "react-icons/bi";
 import { Sidebar } from "primereact/sidebar";
 import { SideBarFuncition } from "src/Pages/Components/TabelaCargas/layoutTable";
 import { columns } from "../CollumnsTables/ColumnsTemplate";
+import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 
 function VisualizarCargas({
 	handleExportExcel,
@@ -28,7 +29,7 @@ function VisualizarCargas({
 	return (
 		<>
 			<LoadingComponent />
-			<NavbarNavigator />
+			<Menusuperior />
 			<Container fluid className="text-center mb-5">
 				<ModalLegendaCargas
 					show={modalShow}

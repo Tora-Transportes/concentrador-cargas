@@ -1,11 +1,12 @@
 import React, { useCallback, useReducer, useState } from "react";
 import useLoadingScreen from "../Components/LoadingScreen";
-import NavbarNavigator from "../Components/NavbarNavigator";
+// import NavbarNavigator from "../Components/NavbarNavigator";
 import ViewMonitoramento from "./view";
 import ServiceCoordenadas from "src/services/ServiceCoordenadas";
 import factoryReducerCargas from "../../hooks/storageCargas/factoryReducerCargas";
 import swal from "sweetalert";
 import { getColumns } from "./columnsTable";
+import Menusuperior from "../Components/MenuSuperior/menusuperior";
 
 function RotasPendentes() {
 	const defaultCargas = {
@@ -211,7 +212,8 @@ function RotasPendentes() {
 	return (
 		<>
 			<LoadingScreen />
-			<NavbarNavigator />
+			{/* <NavbarNavigator /> */}
+			<Menusuperior />
 			<ViewMonitoramento
 				get_data={tableFetchData}
 				columns={columns}

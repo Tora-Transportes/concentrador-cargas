@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useReducer, useState } from "react";
 import useLoadingScreen from "../../Components/LoadingScreen";
-import NavbarNavigator from "../../Components/NavbarNavigator";
+// import NavbarNavigator from "../../Components/NavbarNavigator";
 import ViewMonitoramento from "./view";
 import ServiceCargas from "src/services/ServiceCargas";
 import swal from "sweetalert";
@@ -8,6 +8,7 @@ import factoryReducerCargas from "../../../hooks/storageCargas/factoryReducerCar
 
 import io from "../../../services/socket";
 import { getColumns } from "./columnsTable";
+import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 
 function RotasPendentes() {
 	const defaultCargas = {
@@ -124,7 +125,8 @@ function RotasPendentes() {
 	return (
 		<>
 			<LoadingScreen />
-			<NavbarNavigator />
+			{/* <NavbarNavigator /> */}
+			<Menusuperior />
 			<ViewMonitoramento
 				get_data={tableFetchData}
 				columns={columns}
