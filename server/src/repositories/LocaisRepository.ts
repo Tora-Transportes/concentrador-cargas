@@ -9,8 +9,3 @@ export class LocaisRepository {
       ]);
   }
 }
-// async function teste() {
-//   console.log(await new LocaisRepository().search("Betim"));
-// }
-
-// teste();
