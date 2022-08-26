@@ -55,7 +55,7 @@ class ServiceCargas {
 			locais,
 		};
 
-		return api.post("/cargas", carga);
+		return await api.post("/cargas", carga);
 	}
 
 	async createDerivada({

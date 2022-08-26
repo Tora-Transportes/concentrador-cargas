@@ -16,7 +16,7 @@
 
 .class-linha-title{
     display: grid;
-    width: 70rem;
+    /* width: 70rem; */
     margin-left: 7rem;
     margin-top: -1rem;
 }
