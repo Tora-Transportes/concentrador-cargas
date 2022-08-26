@@ -1,0 +1,24 @@
+#title-cad-manual{
+    color: #00652E;
+    font-family: 'Poppins', sans-serif;
+    font-size: 32px;
+    font-weight: 500;
+}
+.class-titlte-cad1{
+    margin-left: 7rem;
+}
+
+.class-title-icon{
+    display: grid;
+    grid-template-columns: auto auto;
+    margin-top: 2.5rem;
+}
+
+.class-linha-title{
+    display: grid;
+    width: 70rem;
+    margin-left: 7rem;
+    margin-top: -1rem;
+}
+
+

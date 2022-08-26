@@ -21,6 +21,7 @@ import RaioVeiculos from "./Pages/Veiculos/Raio";
 import DestinoCarga from "./Pages/Veiculos/DestinoCarga";
 import RaioEmpresa from "./Pages/Veiculos/RaioEmpresa";
 import LinkCarga from "./Pages/Cargas/Manual/LinkCarga";
+// import Menusuperior from "./Pages/Components/MenuSuperior/menusuperior";
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css";
@@ -69,6 +70,7 @@ export default function AllRoutes() {
 				<Route path="/relatorios" exact component={RelatoriosMain} />
 				<Route path="/credenciais" exact component={Credenciais} />
 				<Route path="/producao" exact component={CalendarioProducao} />
+				{/* <Route path="/menu" exact component={<Menusuperior />} /> */}
 			</Switch>
 		</BrowserRouter>
 	);

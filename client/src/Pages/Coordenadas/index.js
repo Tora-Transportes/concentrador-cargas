@@ -1,6 +1,6 @@
 import React, { useCallback, useReducer, useState, useRef } from "react";
 import useLoadingScreen from "../Components/LoadingScreen";
-import NavbarNavigator from "../Components/NavbarNavigator";
+// import NavbarNavigator from "../Components/NavbarNavigator";
 import ViewMonitoramento from "./view";
 import ServiceCoordenadas from "src/services/ServiceCoordenadas";
 import factoryReducerCargas from "../../hooks/storageCargas/factoryReducerCargas";
@@ -8,6 +8,7 @@ import swal from "sweetalert";
 import { getColumns } from "./columnsTable";
 import { Toast } from "primereact/toast";
 import { showToastMessage } from "src/Pages/Utils/toastMessage";
+import Menusuperior from "../Components/MenuSuperior/menusuperior";
 
 function RotasPendentes() {
 	const defaultCargas = {
@@ -238,8 +239,9 @@ function RotasPendentes() {
 	return (
 		<>
 			<LoadingScreen />
-			<NavbarNavigator />
 			<Toast ref={toast} className="w-25" position="top-center"></Toast>
+			{/* <NavbarNavigator /> */}
+			<Menusuperior />
 			<ViewMonitoramento
 				get_data={tableFetchData}
 				columns={columns}

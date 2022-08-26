@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import useLoadingScreen from "../../Components/LoadingScreen";
-import NavbarNavigator from "../../Components/NavbarNavigator";
+//import NavbarNavigator from "../../Components/NavbarNavigator";
 import ViewRaio from "./view";
 import ServiceCoordenadas from "src/services/ServiceCoordenadas";
+import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 
 function RaioVeiculos() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -31,7 +32,8 @@ function RaioVeiculos() {
 	return (
 		<>
 			<LoadingScreen />
-			<NavbarNavigator />
+			{/* <NavbarNavigator /> */}
+			<Menusuperior />
 			<ViewRaio
 				raio={raio}
 				buscarVeiculosNoRaio={buscarVeiculosNoRaio}

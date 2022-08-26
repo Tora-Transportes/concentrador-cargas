@@ -7,8 +7,11 @@ import swal from "sweetalert";
 import { getClaims } from "../../../../MicrosoftAuthentication";
 import ServiceProdutos from "../../../../services/ServiceProdutos";
 import FormularioCadastroManual from "../../../Components/FormularioCadastroManual";
-import CabecalhoFixado from "../../../Components/CabecalhoFixado";
+// import CabecalhoFixado from "../../../Components/CabecalhoFixado";
 import { useHistory } from "react-router-dom";
+import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
+import { MdOutlineWavingHand } from "react-icons/md";
+import "../Cadastrar/style.css";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -135,7 +138,20 @@ function Manual() {
 	return (
 		<>
 			<LoadingScreen />
-			<CabecalhoFixado>Cadastro de carga aberta manualmente</CabecalhoFixado>
+			<Menusuperior />
+			<div className="class-title-icon">
+				<p id="title-cad-manual" className="class-titlte-cad1">
+					Cadastro de Carga - Manual
+				</p>
+				<MdOutlineWavingHand
+					size={30}
+					style={{ color: "#00652E", marginRight: "48rem", marginTop: ".5rem" }}
+					id="hand"
+				/>
+			</div>
+			<div className="class-linha-title">
+				<hr></hr>
+			</div>
 			<Container className="mb-5 mt-5" style={{ scrollBehavior: "none" }}>
 				<Form onSubmit={formik.handleSubmit}>
 					<FormularioCadastroManual

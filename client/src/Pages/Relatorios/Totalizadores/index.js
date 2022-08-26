@@ -1,10 +1,11 @@
 import React, { useRef } from "react";
 import useLoadingScreen from "../../Components/LoadingScreen";
-import NavbarNavigator from "../../Components/NavbarNavigator";
+// import NavbarNavigator from "../../Components/NavbarNavigator";
 import RelatoriosMainView from "./view";
 import ServiceRelatorios from "../../../services/ServiceRelatorios";
 import { useEffect, useState } from "react";
 import io from "../../../services/socket";
+import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 
 function RelatoriosMain() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -121,7 +122,8 @@ function RelatoriosMain() {
 	return (
 		<>
 			<LoadingScreen />
-			<NavbarNavigator />
+			{/* <NavbarNavigator /> */}
+			<Menusuperior />
 			<RelatoriosMainView
 				totalizadores={totalizadores}
 				reload={setFilters}
