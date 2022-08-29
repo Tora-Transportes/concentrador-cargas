@@ -17,8 +17,6 @@ function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [produtos, setProdutos] = useState([]);
 	const [distancia, setDistancia] = useState(null);
-	//const [distanciaIntermediaria, setDistanciaIntermediaria] = useState(null);
-	//const [distanciaFinal, setDistanciaFinal] = useState(true);
 	const history = useHistory();
 
 	const formik = useFormik({

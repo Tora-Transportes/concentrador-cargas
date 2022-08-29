@@ -18,6 +18,11 @@ export const getColumns = (aprovarVeiculo, reprovarVeiculo) => {
 			),
 		},
 		{
+			name: "documento_transporte",
+			description: "Doc Transporte",
+			selector: (row) => row.documento_transporte,
+		},
+		{
 			name: "placa_veiculo",
 			description: "Placa veículo",
 			selector: (row) => row.placa_veiculo,
@@ -51,11 +56,6 @@ export const getColumns = (aprovarVeiculo, reprovarVeiculo) => {
 					<BsHandThumbsDownFill style={{ color: "red" }} />
 				</Button>
 			),
-		},
-		{
-			name: "documento_transporte",
-			description: "Doc Transporte",
-			selector: (row) => row.documento_transporte,
 		},
 	];
 };
