@@ -64,7 +64,7 @@ export class UseCaseAddCarga {
     carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
 
     const operation = new CargaValidationOperation({
-      has: (permission: string) => {
+      has: () => {
         return true;
       },
     });
@@ -139,7 +139,6 @@ export class UseCaseAddCargaDerivada {
     carga.unidade_medida = lotePai.unidade_medida;
 
     const cargasCadastrada = await this.cargaRepository.index(carga.id);
-    console.log(cargasCadastrada);
     if (cargasCadastrada) {
       throw new AppError("Uma carga com esse Código já foi cadastrada", 400);
     }
