@@ -55,6 +55,12 @@ p{
     border: none;
 }
 
+.class-button1:hover{
+    color: #00652E;
+    background: transparent;
+    outline: none;
+}
+
 .class-button3,
 .class-button2,
 .class-button1{

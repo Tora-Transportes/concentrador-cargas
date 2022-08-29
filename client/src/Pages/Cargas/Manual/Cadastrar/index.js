@@ -11,10 +11,7 @@ import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { MdOutlineWavingHand } from "react-icons/md";
 import "../Cadastrar/style.css";
-<<<<<<< HEAD
 import HandleClick from "./tooltipsCadastro";
-=======
->>>>>>> ddc85fb70f465cd9a00459361e57dc7a772a22e3
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();

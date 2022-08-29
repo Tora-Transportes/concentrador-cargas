@@ -47,7 +47,7 @@ function Helper() {
 				className="class-accordion"
 			>
 				<Accordion.Item eventKey="0" id="style-button-accordion">
-					<Accordion.Header id="style-ac-header">
+					<Accordion.Header id="style-ac-header" className="class-header-acc">
 						Cadastrar Carga
 					</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
@@ -90,7 +90,7 @@ function Helper() {
 						/>
 
 						<Button
-							href="/cargas/menu"
+							href="/veiculos/coordenadas"
 							id="style-button-acc-1"
 							className="class-button2"
 						>
@@ -111,7 +111,7 @@ function Helper() {
 							style={{ width: "45rem", marginLeft: "3rem" }}
 						/>
 						<Button
-							href="/cargas/menu"
+							href="/veiculos/coordenadas"
 							id="style-button-acc-1"
 							className="class-button3"
 						>
