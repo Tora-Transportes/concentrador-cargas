@@ -1,24 +1,73 @@
-#title-cad-manual{
-    color: #00652E;
-    font-family: 'Poppins', sans-serif;
+#title-cad-manual {
+  color: #00652e;
+  font-family: "Poppins", sans-serif;
+  font-size: 32px;
+  font-weight: 500;
+}
+.class-titlte-cad1 {
+  margin-left: 7rem;
+}
+
+.class-title-icon {
+  display: grid;
+  grid-template-columns: auto auto;
+  margin-top: 2.5rem;
+}
+
+.class-linha-title {
+  display: grid;
+  /* width: 70rem; */
+  margin-left: 7rem;
+  margin-top: -1rem;
+}
+
+@media only screen and (max-width: 480px) {
+  #title-cad-manual {
+    color: #00652e;
+    font-family: "Poppins", sans-serif;
     font-size: 32px;
     font-weight: 500;
-}
-.class-titlte-cad1{
-    margin-left: 7rem;
-}
+  }
 
-.class-title-icon{
+  .class-titlte-cad1 {
     display: grid;
-    grid-template-columns: auto auto;
-    margin-top: 2.5rem;
-}
+    justify-self: center;
+    align-items: center;
+    margin-right: 7.2rem;
+  }
 
-.class-linha-title{
+  .class-title-icon {
     display: grid;
-    /* width: 70rem; */
-    margin-left: 7rem;
-    margin-top: -1rem;
+    grid-template-columns: auto;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #style-linha-cad {
+    display: grid;
+    width: 25rem;
+  }
+
+  .class-linha-title {
+    margin-left: 0.5rem;
+    margin-top: -4rem;
+  }
+
+  #style-linha-cad6,
+  #style-linha-cad5,
+  #style-linha-cad4,
+  #style-linha-cad3,
+  #style-linha-cad2{
+    display: grid;
+    width: 25rem;
+  }
+
+  .class-linha-title6,
+  .class-linha-title5,
+  .class-linha-title4,
+  .class-linha-title3,
+  .class-linha-title2{
+    display: grid;
+    justify-content: center;
+  }
 }
-
-

@@ -51,7 +51,7 @@ function VisualizarCargas({
 				/>
 				<Row className="mt-3 text-center">
 					<Col>
-						<h1 className="title-h1">{tituloPag}</h1>
+						<h1 id="title-h1">{tituloPag}</h1>
 					</Col>
 
 					<Link target="_blank" to="/relatorios">

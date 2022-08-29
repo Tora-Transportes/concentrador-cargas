@@ -1,6 +1,7 @@
 import createSequence from "tooltip-sequence";
+import "./index";
 
-const options1 = {
+const options = {
 	backdropColor: "#6262625d",
 	sequence: [
 		{
@@ -29,6 +30,6 @@ const options1 = {
 
 function HandleClick(event) {
 	event.preventDefault();
-	createSequence(options1);
+	createSequence(options);
 }
 export default HandleClick;
