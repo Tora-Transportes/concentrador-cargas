@@ -64,7 +64,7 @@ export class UseCaseAddCarga {
     carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
 
     const operation = new CargaValidationOperation({
-      has: (permission: string) => {
+      has: () => {
         return true;
       },
     });
@@ -88,10 +88,10 @@ export class UseCaseAddCarga {
         documento_transporte: carga.documento_transporte,
       });
 
-      // if (cargaImportada.results[0]?.id === carga.id) {
-      //   cargaDTO.id = await this.cargaRepository.nextId();
-      // }
-      if (cargaImportada.results.length > 0) {
+      if (
+        cargaImportada.results.length > 0 &&
+        cargaDTO.canal_comunicacao !== "manual"
+      ) {
         throw new AppError(
           "A carga já foi cadastrada com o documento de transporte",
           409
@@ -139,7 +139,6 @@ export class UseCaseAddCargaDerivada {
     carga.unidade_medida = lotePai.unidade_medida;
 
     const cargasCadastrada = await this.cargaRepository.index(carga.id);
-    console.log(cargasCadastrada);
     if (cargasCadastrada) {
       throw new AppError("Uma carga com esse Código já foi cadastrada", 400);
     }
