@@ -25,6 +25,7 @@ import LinkCarga from "./Pages/Cargas/Manual/LinkCarga";
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css";
+import Helper from "./Pages/Components/Helper/ajuda";
 
 export default function AllRoutes() {
 	return (
@@ -71,6 +72,7 @@ export default function AllRoutes() {
 				<Route path="/credenciais" exact component={Credenciais} />
 				<Route path="/producao" exact component={CalendarioProducao} />
 				{/* <Route path="/menu" exact component={<Menusuperior />} /> */}
+				<Route path="/ajuda" exact component={Helper} />
 			</Switch>
 		</BrowserRouter>
 	);

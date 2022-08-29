@@ -1,5 +1,5 @@
 import createSequence from "tooltip-sequence";
-import "../Cadastrar/index";
+import "./index";
 
 const options = {
 	backdropColor: "#6262625d",
