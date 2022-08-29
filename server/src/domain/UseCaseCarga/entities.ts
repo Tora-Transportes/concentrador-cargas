@@ -90,8 +90,7 @@ export class UseCaseAddCarga {
 
       if (
         cargaImportada.results.length > 0 &&
-        String(!cargaDTO.client_requisicao || cargaDTO?.client_requisicao) !==
-          "concentrador"
+        cargaDTO.canal_comunicacao !== "manual"
       ) {
         throw new AppError(
           "A carga já foi cadastrada com o documento de transporte",
