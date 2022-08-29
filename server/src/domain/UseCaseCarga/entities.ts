@@ -88,10 +88,11 @@ export class UseCaseAddCarga {
         documento_transporte: carga.documento_transporte,
       });
 
-      // if (cargaImportada.results[0]?.id === carga.id) {
-      //   cargaDTO.id = await this.cargaRepository.nextId();
-      // }
-      if (cargaImportada.results.length > 0) {
+      if (
+        cargaImportada.results.length > 0 &&
+        String(!cargaDTO.client_requisicao || cargaDTO?.client_requisicao) !==
+          "concentrador"
+      ) {
         throw new AppError(
           "A carga já foi cadastrada com o documento de transporte",
           409
