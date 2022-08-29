@@ -21,10 +21,16 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 				const arrayPeso_real = [];
 				data.data.results.forEach((item) => {
 					arrayDoc_ID.push(` ${item.DOC_ID};`);
-					arrayPeso_real.push(` ${item.DT_PESO_REAL};`);
+					arrayPeso_real.push(item.DT_PESO_REAL);
 				});
 				data.data.results[0].DOC_ID = [...new Set(arrayDoc_ID)];
-				data.data.results[0].DT_PESO_REAL = [...new Set(arrayPeso_real)];
+				data.data.results[0].DT_PESO_REAL = await arrayPeso_real
+					.reduce((soma, index) => {
+						const floatSoma = soma / 100;
+						const floatNum = index / 100;
+						return floatSoma + floatNum;
+					})
+					.toFixed(2);
 
 				const result = await { ...rowInfoPlaca, ...data.data?.results[0] };
 				setDataCTE([result]);
@@ -72,12 +78,12 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 									</li>
 									<li className="ul-card-li">
 										<h6>
-											Código CTE: <strong>{i.DOC_ID}</strong>
+											Números CTE: <strong>{i.DOC_ID}</strong>
 										</h6>
 									</li>
 									<li className="ul-card-li">
 										<h6>
-											Peso real: <strong>{i.DT_PESO_REAL}</strong>
+											Peso total: <strong>{i.DT_PESO_REAL}</strong>
 										</h6>
 									</li>
 									<li className="ul-card-li">

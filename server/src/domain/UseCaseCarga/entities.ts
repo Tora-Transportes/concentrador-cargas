@@ -88,12 +88,14 @@ export class UseCaseAddCarga {
         documento_transporte: carga.documento_transporte,
       });
 
-      if (cargaImportada.results[0]?.id === carga.id) {
-        // throw new AppError(
-        //   " Este documento de transporte com este codigo de carga já estão cadastrado!",
-        //   409
-        // );
-        cargaDTO.id = await this.cargaRepository.nextId();
+      // if (cargaImportada.results[0]?.id === carga.id) {
+      //   cargaDTO.id = await this.cargaRepository.nextId();
+      // }
+      if (cargaImportada.results.length > 0) {
+        throw new AppError(
+          "A carga já foi cadastrada com o documento de transporte",
+          409
+        );
       }
     }
 
