@@ -135,9 +135,6 @@ body, ul{
 
 @media (max-width: 600px){
 
-    #logo{
-        margin-top: 4rem;
-    }
     .material-icons-outlined{
         vertical-align: middle;
         position: relative;
@@ -150,19 +147,19 @@ body, ul{
     #menu{
         display: block;
         position: absolute;
-        width: 24rem;
-        top: 7rem;
-        left: 12px;
+        width: 26.9rem;
+        top: 3.1rem;
+        left: -1rem;
         background: #00652E;
         z-index: 1000;
-        height: 50rem;
+        height: 60rem;
         transition: .6s;
         font-size: 22px;
         visibility: hidden;
         overflow-y: hidden;
     }
     #nav.active #menu{
-        height: calc(70vh - 70px);
+        height: calc(80vh - 70px);
         visibility: visible;
         overflow-y: auto;
     }
@@ -170,7 +167,7 @@ body, ul{
 
     #menu a{
         padding: 1rem 0;
-        margin: 0 1rem;
+        margin: 1rem 1rem;
     }
 
     #btn-mobile{
@@ -186,7 +183,6 @@ body, ul{
         border-top: 4px solid ;
         width: 30px;
         color: #FFFF;
-        margin-top: 4rem;
     }
     #hamburguer::after, #hamburguer::before{
         content: '';
@@ -211,6 +207,14 @@ body, ul{
         top: -7px;
     }
 
+    .class-dropdown{
+        display: grid;
+        grid-template-rows: auto auto auto;
+    }
+
+    #style-button-drop{
+        font-size: 22px;
+    }
 }
 
 
@@ -222,12 +226,12 @@ body, ul{
     #menu{
         display: block;
         position: absolute;
-        width: 28rem;
+        width: 40rem;
         top: 7rem;
         left: 12px;
         background: #00652E;
         z-index: 1000;
-        height: 50rem;
+        height: 60rem;
         transition: .6s;
         font-size: 22px;
         visibility: hidden;
@@ -264,10 +268,11 @@ body, ul{
         display: block;
         width: 30px;
         height: 2.5px;
-        background: currentColor;
+        background: #00652e;
         margin-top: 5px;
         transition: 0.3s;
         position: relative;
+        background-color: transparent;
     }
     #nav.active #hamburguer{
         border-top-color: transparent;
