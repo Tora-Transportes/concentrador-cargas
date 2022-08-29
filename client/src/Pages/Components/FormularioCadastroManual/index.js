@@ -156,7 +156,9 @@ function FormularioCadastroManual({
 			</Row>
 			<Row>
 				<Col>
-					<hr />
+					<div className="class-linha-title2">
+						<hr id="style-linha-cad2"></hr>
+					</div>
 					<Form.Group className="mb-3">
 						*É Lote ?{" "}
 						<Form.Check
@@ -202,7 +204,9 @@ function FormularioCadastroManual({
 					</Form.Group>
 				</Col>
 			</Row>
-			<hr className="mb-5" />
+			<div className="class-linha-title3">
+				<hr id="style-linha-cad3"></hr>
+			</div>
 			{!formik.values.e_lote && (
 				<>
 					<Row className="mb-5">
@@ -317,7 +321,9 @@ function FormularioCadastroManual({
 								</FloatingLabel>
 							)}
 						</Col>
-						<hr className="mt-5" />
+						<div className="class-linha-title4">
+							<hr id="style-linha-cad4"></hr>
+						</div>
 					</Row>
 				</>
 			)}
@@ -445,7 +451,9 @@ function FormularioCadastroManual({
 								O valor apresentado representa a distancia de centro a centro.
 							</Form.Text>
 						</FloatingLabel>
-						<hr />
+						<div className="class-linha-title">
+							<hr id="style-linha-cad"></hr>
+						</div>
 					</Col>
 				</Row>
 			)}
@@ -471,7 +479,9 @@ function FormularioCadastroManual({
 								O valor apresentado representa a distancia de centro a centro.
 							</Form.Text>
 						</FloatingLabel>
-						<hr />
+						<div className="class-linha-title5">
+							<hr id="style-linha-cad5"></hr>
+						</div>
 					</Col>
 				</Row>
 			)}
@@ -578,7 +588,9 @@ function FormularioCadastroManual({
 				</Col>
 			</Row>
 
-			<hr className="mb-5 mt-5" />
+			<div className="class-linha-title6">
+				<hr id="style-linha-cad6"></hr>
+			</div>
 
 			<Row>
 				<Col>

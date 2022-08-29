@@ -154,7 +154,7 @@ function Manual() {
 				/>
 			</div>
 			<div className="class-linha-title">
-				<hr></hr>
+				<hr id="style-linha-cad"></hr>
 			</div>
 			<Container className="mb-5 mt-5" style={{ scrollBehavior: "none" }}>
 				<Form onSubmit={formik.handleSubmit}>
