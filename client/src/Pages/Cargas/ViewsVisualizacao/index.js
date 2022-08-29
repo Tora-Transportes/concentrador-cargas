@@ -5,12 +5,13 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import chartImg from "../../../assets/chart.png";
 import ModalLegendaCargas from "src/Pages/Cargas/modal/legendaCarga";
+import ModalDataExcel from "src/Pages/Cargas/modal/exportExcel";
 import TabelaCargas from "src/Pages/Components/TabelaCargas";
 import { Button as ButtonReact } from "primereact/button";
 import { BiCog } from "react-icons/bi";
 import { Sidebar } from "primereact/sidebar";
-import { SideBarFuncition } from "src/Pages/Components/TabelaCargas/layoutTable";
 import { columns } from "../CollumnsTables/ColumnsTemplate";
+import { SideBarFuncition } from "src/Pages/Utils/sideBar";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 
 function VisualizarCargas({
@@ -23,9 +24,17 @@ function VisualizarCargas({
 	values,
 	totalRegisters = null,
 	tituloPag,
+	modalShowExcel,
+	setModalShowExcel,
 }) {
 	const [modalShow, setModalShow] = useState(false);
 	const [visibleLeft, setVisibleLeft] = useState(false);
+
+	const exportExcelDate = (dataInicio, dataFim, codigoFilial) => {
+		handleExportExcel(dataInicio, dataFim, codigoFilial);
+		setModalShowExcel(false);
+	};
+
 	return (
 		<>
 			<LoadingComponent />
@@ -34,6 +43,11 @@ function VisualizarCargas({
 				<ModalLegendaCargas
 					show={modalShow}
 					onHide={() => setModalShow(false)}
+				/>
+				<ModalDataExcel
+					show={modalShowExcel}
+					exportExcelDate={exportExcelDate}
+					onHide={() => setModalShowExcel(false)}
 				/>
 				<Row className="mt-3 text-center">
 					<Col>
@@ -79,6 +93,8 @@ function VisualizarCargas({
 						<SideBarFuncition
 							itensPerPage={itensPerPage}
 							setItensPerPage={setItensPerPage}
+							setModalShowExcel={setModalShowExcel}
+							setModalDataExcel={setModalShowExcel}
 							setModalShow={setModalShow}
 							setVisibleLeft={setVisibleLeft}
 							handleExportExcel={handleExportExcel}
@@ -95,6 +111,7 @@ function VisualizarCargas({
 							setItensPerPage={setItensPerPage}
 							itensPerPage={itensPerPage}
 							setModalShow={setModalShow}
+							setModalShowExcel={setModalShowExcel}
 							tipoDeBuscaPorPagina={
 								tituloPag === "Grid de Cargas em Lote"
 									? "table-columns-lote"

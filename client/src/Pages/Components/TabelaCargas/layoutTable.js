@@ -1,10 +1,7 @@
 import React from "react";
 import { MultiSelect } from "primereact/multiselect";
 import { Button, Col, Container, InputGroup, Row } from "react-bootstrap";
-import { Button as ButtonReact } from "primereact/button";
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
-import { AiFillFileExcel } from "react-icons/ai";
-import { MdRefresh, MdOutlineSubtitles } from "react-icons/md";
 import { TbSettings } from "react-icons/tb";
 
 const PaginatorTable = ({ itensPerPage, setItensPerPage, setVisibleLeft }) => {
@@ -69,68 +66,6 @@ export const headerTableFunction = (
 		</Row>
 	</Container>
 );
-
-export const SideBarFuncition = ({
-	itensPerPage,
-	setItensPerPage,
-	setModalShow,
-	setVisibleLeft,
-	handleExportExcel,
-	resetView,
-}) => {
-	const showLegendaCarga = () => {
-		setModalShow(true);
-		setVisibleLeft(false);
-	};
-
-	const downloadExel = () => {
-		handleExportExcel();
-		setVisibleLeft(false);
-	};
-
-	const resetTable = () => {
-		setVisibleLeft(false);
-		resetView();
-	};
-
-	return (
-		<Row>
-			{setModalShow !== undefined && (
-				<Col lg={12} className="text-center mb-2">
-					<ButtonReact
-						label="Legenda carga"
-						icon={<MdOutlineSubtitles />}
-						onClick={() => showLegendaCarga()}
-						className=" w-100"
-					/>
-				</Col>
-			)}
-			<Col lg={12} className="text-center mb-2">
-				<ButtonReact
-					label=" Excel "
-					icon={<AiFillFileExcel />}
-					onClick={() => downloadExel()}
-					className="p-button-success w-100"
-				/>
-			</Col>
-			<Col lg={12} className="text-center mb-2">
-				<ButtonReact
-					label=" Redefinir tabela "
-					icon={<MdRefresh />}
-					onClick={() => resetTable()}
-					className="p-button-info w-100"
-				/>
-			</Col>
-			<Col lg={12} className="text-center mb-2 paginator-table-col">
-				<PaginatorTable
-					itensPerPage={itensPerPage}
-					setItensPerPage={setItensPerPage}
-					setVisibleLeft={setVisibleLeft}
-				/>
-			</Col>
-		</Row>
-	);
-};
 
 export const footerTableFunction = (previousPage, nextPage) => {
 	return (

@@ -11,14 +11,17 @@ import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { MdOutlineWavingHand } from "react-icons/md";
 import "../Cadastrar/style.css";
+<<<<<<< HEAD
 import HandleClick from "./tooltipsCadastro";
+=======
+>>>>>>> ddc85fb70f465cd9a00459361e57dc7a772a22e3
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [produtos, setProdutos] = useState([]);
 	const [distancia, setDistancia] = useState(null);
-	const [distanciaIntermediaria, setDistanciaIntermediaria] = useState(null);
-	const [distanciaFinal, setDistanciaFinal] = useState(true);
+	//const [distanciaIntermediaria, setDistanciaIntermediaria] = useState(null);
+	//const [distanciaFinal, setDistanciaFinal] = useState(true);
 	const history = useHistory();
 
 	const formik = useFormik({
@@ -103,12 +106,8 @@ function Manual() {
 		}
 	}
 
-	async function handleSearchDistance({
-		destino_carga,
-		origem_carga,
-		destino_intermediario,
-	}) {
-		const searcDistance = async (origem_carga, destino_carga) => {
+	async function handleSearchDistance({ destino_carga, origem_carga }) {
+		if (destino_carga && origem_carga) {
 			const [, estado_origem, cidade_origem] = origem_carga.split("/");
 			const [, estado_destino, cidade_destino] = destino_carga.split("/");
 			try {
@@ -118,28 +117,12 @@ function Manual() {
 					estado_origem,
 					estado_destino,
 				});
-				return data.data;
+				const distance = data.data;
+				setDistancia(distance);
+				return distance;
 			} catch (error) {
 				setDistancia(null);
 				return 1;
-			}
-		};
-
-		if (origem_carga && (destino_carga || destino_intermediario)) {
-			if (origem_carga && destino_carga && distanciaFinal) {
-				const distance = await searcDistance(
-					destino_intermediario,
-					destino_carga
-				);
-				setDistancia(distance);
-				setDistanciaFinal(false);
-			} else if (origem_carga && destino_intermediario) {
-				const distance = await searcDistance(
-					origem_carga,
-					destino_intermediario
-				);
-				setDistanciaIntermediaria(distance);
-				setDistanciaFinal(true);
 			}
 		}
 	}
@@ -185,7 +168,6 @@ function Manual() {
 						handleSearchDistance={handleSearchDistance}
 						produtos={produtos}
 						distancia={distancia}
-						distanciaIntermediaria={distanciaIntermediaria}
 						formik={formik}
 					/>
 					<Row>

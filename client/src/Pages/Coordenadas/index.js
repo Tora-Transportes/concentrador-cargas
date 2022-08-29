@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useState } from "react";
+import React, { useCallback, useReducer, useState, useRef } from "react";
 import useLoadingScreen from "../Components/LoadingScreen";
 // import NavbarNavigator from "../Components/NavbarNavigator";
 import ViewMonitoramento from "./view";
@@ -6,6 +6,8 @@ import ServiceCoordenadas from "src/services/ServiceCoordenadas";
 import factoryReducerCargas from "../../hooks/storageCargas/factoryReducerCargas";
 import swal from "sweetalert";
 import { getColumns } from "./columnsTable";
+import { Toast } from "primereact/toast";
+import { showToastMessage } from "src/Pages/Utils/toastMessage";
 import Menusuperior from "../Components/MenuSuperior/menusuperior";
 
 function RotasPendentes() {
@@ -22,6 +24,8 @@ function RotasPendentes() {
 	const [itensPerPage, setItensPerPage] = useState(10);
 	const [visibleCardCte, setVisibleCardCte] = useState(false);
 	const [dataCTE, setDataCTE] = useState();
+	const [modalShowExcel, setModalShowExcel] = useState(false);
+	const toast = useRef(null);
 
 	async function perguntarEAlterarDadosCoordenada(placa) {
 		if (!placa) {
@@ -163,24 +167,47 @@ function RotasPendentes() {
 		location.reload();
 	}
 
-	async function handleExportExcel() {
+	async function handleExportExcel(
+		date_execel_inicio,
+		date_execel_fim,
+		categoria_veiculo
+	) {
 		setLoading(true);
 		const { filters, orderBy } = lastOptions;
 		const options = {
 			...filters,
 			order_column: orderBy?.column,
 			order_direction: orderBy?.direction,
+			date_execel_inicio,
+			date_execel_fim,
+			categoria_veiculo,
 		};
 		const response = await ServiceCoordenadas.exportToXlsx(options);
-		const url = window.URL.createObjectURL(new Blob([response.data]));
-		const link = document.createElement("a");
-		link.href = url;
-		link.setAttribute(
-			"download",
-			`RELATORIO-COORDENADAS_${new Date().getTime()}.xlsx`
-		);
-		link.click();
-		setLoading(false);
+
+		if (response.status === 202) {
+			const message =
+				"A diferença entre as datas não pode ser maior que 31 dias!";
+			await showToastMessage(toast, "warn", message, 7000);
+			setLoading(false);
+			setModalShowExcel(true);
+		} else if (response.data.byteLength < 14493) {
+			const message =
+				"Não foram encontrado dados com estas informaçoes no filtro de data!";
+			await showToastMessage(toast, "warn", message, 7000);
+			setLoading(false);
+			setModalShowExcel(true);
+		} else {
+			const url = window.URL.createObjectURL(new Blob([response.data]));
+			const link = document.createElement("a");
+			link.href = url;
+			link.setAttribute(
+				"download",
+				`RELATORIO-COORDENADAS_${new Date().getTime()}.xlsx`
+			);
+			link.click();
+			setModalShowExcel(false);
+			setLoading(false);
+		}
 	}
 
 	const tableFetchData = useCallback(
@@ -212,6 +239,7 @@ function RotasPendentes() {
 	return (
 		<>
 			<LoadingScreen />
+			<Toast ref={toast} className="w-25" position="top-center"></Toast>
 			{/* <NavbarNavigator /> */}
 			<Menusuperior />
 			<ViewMonitoramento
@@ -225,6 +253,8 @@ function RotasPendentes() {
 				setItensPerPage={setItensPerPage}
 				visibleCteCardObject={{ visibleCardCte, setVisibleCardCte }}
 				dadosCTEObjet={{ dataCTE, setDataCTE }}
+				modalShowExcel={modalShowExcel}
+				setModalShowExcel={setModalShowExcel}
 			/>
 		</>
 	);

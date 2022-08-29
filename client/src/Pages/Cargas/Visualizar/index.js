@@ -1,9 +1,17 @@
-import React, { useReducer, useState, useEffect, useCallback } from "react";
+import React, {
+	useReducer,
+	useState,
+	useEffect,
+	useCallback,
+	useRef,
+} from "react";
 import View from "../ViewsVisualizacao";
 import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import io from "../../../services/socket";
 import factoryReducerCargas from "src/hooks/storageCargas/factoryReducerCargas";
+import { Toast } from "primereact/toast";
+import { showToastMessage } from "src/Pages/Utils/toastMessage";
 
 function Visualizar() {
 	const [totalRegisters, setTotalRegisters] = useState(0);
@@ -17,7 +25,8 @@ function Visualizar() {
 	const [filtroAtual, setFiltroAtual] = useState(null);
 	const [LoadingComponent, setLoading] = useLoadingScreen();
 	const [itensPerPage, setItensPerPage] = useState(10);
-
+	const [modalShowExcel, setModalShowExcel] = useState(false);
+	const toast = useRef(null);
 	useEffect(() => {
 		const actionCargasCreate = (payload) => {
 			if (!payload.e_lote) {
@@ -45,7 +54,11 @@ function Visualizar() {
 		};
 	}, [io]);
 
-	async function handleExportExcel() {
+	async function handleExportExcel(
+		date_execel_inicio,
+		date_execel_fim,
+		fk_filial
+	) {
 		setLoading(true);
 		const { filters, orderBy } = filtroAtual;
 		const options = {
@@ -53,17 +66,37 @@ function Visualizar() {
 			order_column: orderBy?.column,
 			order_direction: orderBy?.direction,
 			e_lote: 0,
+			date_execel_inicio,
+			date_execel_fim,
+			fk_filial,
 		};
+
 		const response = await ServiceCargas.exportToXlsx(options);
-		const url = window.URL.createObjectURL(new Blob([response.data]));
-		const link = document.createElement("a");
-		link.href = url;
-		link.setAttribute(
-			"download",
-			`RELATORIO-CARGAS_${new Date().getTime()}.xlsx`
-		);
-		link.click();
-		setLoading(false);
+
+		if (response.status === 202) {
+			const message =
+				"A diferença entre as datas não pode ser maior que 31 dias!";
+			await showToastMessage(toast, "warn", message, 7000);
+			setLoading(false);
+			setModalShowExcel(true);
+		} else if (response.data.byteLength < 14493) {
+			const message =
+				"Não foram encontrado dados com estas informaçoes no filtro de data!";
+			await showToastMessage(toast, "warn", message, 7000);
+			setLoading(false);
+			setModalShowExcel(true);
+		} else {
+			const url = window.URL.createObjectURL(new Blob([response.data]));
+			const link = document.createElement("a");
+			link.href = url;
+			link.setAttribute(
+				"download",
+				`RELATORIO-CARGAS_${new Date().getTime()}.xlsx`
+			);
+			link.click();
+			setModalShowExcel(false);
+			setLoading(false);
+		}
 	}
 
 	function resetView() {
@@ -106,17 +139,22 @@ function Visualizar() {
 	);
 
 	return (
-		<View
-			handleExportExcel={handleExportExcel}
-			get_data={get_data}
-			values={cargas}
-			LoadingComponent={LoadingComponent}
-			itensPerPage={itensPerPage}
-			setItensPerPage={setItensPerPage}
-			resetView={resetView}
-			totalRegisters={totalRegisters}
-			tituloPag="Grid de Cargas"
-		/>
+		<>
+			<Toast ref={toast} className="w-25" position="top-center"></Toast>
+			<View
+				handleExportExcel={handleExportExcel}
+				get_data={get_data}
+				values={cargas}
+				LoadingComponent={LoadingComponent}
+				itensPerPage={itensPerPage}
+				setItensPerPage={setItensPerPage}
+				resetView={resetView}
+				totalRegisters={totalRegisters}
+				tituloPag="Grid de Cargas"
+				modalShowExcel={modalShowExcel}
+				setModalShowExcel={setModalShowExcel}
+			/>
+		</>
 	);
 }
 

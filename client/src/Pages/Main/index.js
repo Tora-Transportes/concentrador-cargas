@@ -45,10 +45,8 @@ function Main() {
 	}
 
 	function popularCoresAtuaisGame(quantidade) {
-		console.log("populando com", quantidade, "cores");
 		for (let i = 0; i < quantidade; i++) {
 			const index = Math.ceil(Math.random() * 10000) % coresBotoesGame.length;
-			console.log(`Cor: ${coresBotoesGame[index]}`);
 			queueCoresAtuais.push(coresBotoesGame[index]);
 		}
 	}
@@ -64,14 +62,12 @@ function Main() {
 		}
 		toast.success("OK", { autoClose: 500 });
 		if (queueCoresAtuais.length === 0) {
-			console.log("Gerando novas cores");
 			setLevelGame((old) => old + 1);
 		}
 		setVisibilidadeTeclas(true);
 	}
 
 	async function mostrarCores() {
-		console.log("MOSTRANDO CORES");
 		setVisibilidadeTeclas(false);
 
 		const quantidade = queueCoresAtuais.length;
@@ -82,7 +78,6 @@ function Main() {
 				const interval1 = setTimeout(() => {
 					const cor = queueCoresAtuais.shift();
 					queueCoresAtuais.push(cor);
-					console.log(cor);
 					const interval2 = setTimeout(() => {
 						if (!inputCorAtual.current) {
 							clearInterval(interval1);

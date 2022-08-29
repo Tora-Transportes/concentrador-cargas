@@ -80,8 +80,10 @@ class ServiceCoordenadas {
 		observacao,
 		responsavel_placa,
 		responsavel_placa_nome,
+		date_execel_inicio,
+		date_execel_fim,
 	}) {
-		return api.get("/relatorio/coordenadas", {
+		return await api.get("/relatorio/coordenadas", {
 			responseType: "arraybuffer",
 			params: {
 				order_column,
@@ -103,6 +105,8 @@ class ServiceCoordenadas {
 				observacao,
 				responsavel_placa,
 				responsavel_placa_nome,
+				date_execel_inicio,
+				date_execel_fim,
 			},
 		});
 	}

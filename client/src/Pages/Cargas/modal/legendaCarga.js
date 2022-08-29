@@ -7,7 +7,7 @@ import StatusTooltip from "src/Pages/Components/StatusTooltip";
 import Card from "react-bootstrap/Card";
 import { Col } from "react-bootstrap";
 
-export default function ModalLegendaCargas(props) {
+export default function DataExcelCargas(props) {
 	const [situacoes, setSituacoes] = useState([]);
 	useEffect(() => {
 		ServiceSituacoesCargas.search().then(({ data }) => {

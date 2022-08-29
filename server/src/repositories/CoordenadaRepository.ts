@@ -33,6 +33,8 @@ export class CoordenadaRepository {
       // placa_bitrem,
       // placa_carreta,
       // apelido_carreta,
+      date_execel_inicio,
+      date_execel_fim,
     } = filter;
 
     const currentPage = Number(page ?? 1) < 1 ? 1 : Number(page ?? 1);
@@ -81,6 +83,18 @@ export class CoordenadaRepository {
       "con_usuarios.oid",
       "con_dados_coordenadas.responsavel_placa"
     );
+
+    query.modify(function (con_coordenadas_veiculos) {
+      if (date_execel_inicio && date_execel_fim) {
+        con_coordenadas_veiculos.andWhereBetween(
+          "con_coordenadas_veiculos.data_emissao_documento",
+          [
+            new Date(date_execel_inicio + "T00:00:00"),
+            new Date(date_execel_fim + "T00:00:00"),
+          ]
+        );
+      }
+    });
 
     // query.leftJoin(
     //   "con_cargas",
