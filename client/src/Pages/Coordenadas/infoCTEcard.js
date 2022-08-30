@@ -24,11 +24,9 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 					arrayPeso_real.push(item.DT_PESO_REAL);
 				});
 				data.data.results[0].DOC_ID = [...new Set(arrayDoc_ID)];
-				data.data.results[0].DT_PESO_REAL = await arrayPeso_real
+				data.data.results[0].DT_PESO_REAL = await [...new Set(arrayPeso_real)]
 					.reduce((soma, index) => {
-						const floatSoma = soma / 100;
-						const floatNum = index / 100;
-						return floatSoma + floatNum;
+						return parseFloat(soma + index);
 					})
 					.toFixed(2);
 

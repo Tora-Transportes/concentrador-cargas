@@ -96,11 +96,14 @@ export class CoordenadaRepository {
       }
     });
 
-    // query.leftJoin(
-    //   "con_cargas",
-    //   "con_cargas.placa_veiculo",
-    //   "con_coordenadas_veiculos.placa"
-    // );
+    // query
+    //   .leftJoin(
+    //     "con_cargas",
+    //     "con_cargas.placa_veiculo",
+    //     "con_coordenadas_veiculos.placa"
+    //   )
+    //   .groupBy("con_cargas.id")
+    //   .max("con_cargas.id");
 
     // total.leftJoin(
     //   "con_cargas",
@@ -120,7 +123,7 @@ export class CoordenadaRepository {
     //   "con_cargas.codigo_motorista"
     // );
 
-    // query.leftJoin("CG_IDENTIFICACAO ", function () {
+    // query.leftJoin("CG_IDENTIFICACAO ", function (){
     //   this.on("CG_IDENTIFICACAO.LOC_COD", "CAG.LOC_COD").andOn(
     //     "CG_IDENTIFICACAO.CG_COD",
     //     "CAG.CG_COD"
