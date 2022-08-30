@@ -91,13 +91,6 @@ export default class ServiceDetailsVehicle {
                 )
         ) AS STATUS_PROP,
         (
-            select DISTINCT CONCAT('(' || cga_ddd || ')',cga_dsc) "telefone" 
-                from cg_agenda 
-                where cg_cod = cg.cg_cod
-                AND ta_cod in (2,10)
-                AND loc_cod = cg.loc_cod
-            ) As TELEFONE_MOTORISTA,
-        (
             SELECT
                 CD_PROP.CGD_DSC
             FROM
