@@ -17,9 +17,7 @@ class CargaController {
 
   async createByImport(req: Request, res: Response) {
     const { cargas } = req.body;
-
     const useCase = useCasesCarga.UseCaseAddCarga;
-
     const cargasToInsert = await Promise.all(
       cargas.map(async (i: any) => {
         try {
