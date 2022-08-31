@@ -223,18 +223,13 @@ function Manual() {
 				if (cargaDocumento) {
 					swal(
 						"Ops !",
-						`O documento digitado já existe na carga ${cargaDocumento.id} deseja ir para a tela de edição da mesma ?`,
-						"warning",
-						{
-							buttons: ["Não", "Sim"],
-						}
-					).then((mudarDeTela) => {
-						if (mudarDeTela) {
-							history.replace(`/reload`);
-							history.push(`/cargas/manual/${cargaDocumento.id}`);
-						} else {
-							formik.setFieldValue("documento_transporte", "");
-						}
+						`O documento digitado já existe na carga ${cargaDocumento.id}!`,
+						"warning"
+					).then(() => {
+						formik.setFieldValue(
+							"documento_transporte",
+							form.documento_transporte
+						);
 					});
 				}
 			});

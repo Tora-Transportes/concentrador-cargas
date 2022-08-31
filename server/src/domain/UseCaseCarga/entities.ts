@@ -256,7 +256,10 @@ export class UseCaseUpdateCarga {
     const cargaOficial = validator.cast(
       {
         ...cargaOperation,
-        documento_transporte: cargaCadastrada.documento_transporte,
+        documento_transporte:
+          carga.canal_comunicacao === "manual"
+            ? carga.documento_transporte
+            : cargaCadastrada.documento_transporte,
         janela_entrega: e_lote ? null : janela_entrega,
         janela_coleta: e_lote ? null : janela_coleta,
       },
