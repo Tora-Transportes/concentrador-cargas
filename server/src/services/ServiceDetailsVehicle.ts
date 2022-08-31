@@ -95,8 +95,8 @@ export default class ServiceDetailsVehicle {
                 DISTINCT CONCAT('(' || cga_ddd || ')',cga_dsc) "telefone" 
             FROM cg_agenda 
             WHERE cg_cod = cg.cg_cod
-                AND ta_cod in (2,10)
                 AND loc_cod = cg.loc_cod
+                AND ta_cod in (2,10)
         ) As TELEFONE_MOTORISTA,
         (
             SELECT
