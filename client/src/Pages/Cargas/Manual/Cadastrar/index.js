@@ -167,12 +167,7 @@ function Manual() {
 					/>
 					<Row>
 						<Col>
-							<Button
-								variant="success"
-								type="submit"
-								className="p-3 fw-bold"
-								id="botao-cadastrar-carg"
-							>
+							<Button variant="success" type="submit" id="botao-cadastrar-carg">
 								Cadastrar
 							</Button>
 						</Col>

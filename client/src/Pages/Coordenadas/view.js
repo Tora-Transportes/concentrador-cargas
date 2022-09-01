@@ -7,11 +7,9 @@ import { BiCog } from "react-icons/bi";
 import { ImQrcode } from "react-icons/im";
 import { Dialog } from "primereact/dialog";
 import InfoCTEcard from "./infoCTEcard";
-import "../Styles/index.css";
 import bandeira from "../../assets/bandeiraBrasil.png";
 import HandleClick from "./tooltipsCoordenadas";
-
-import "../Styles/index.css";
+import "../Coordenadas/coordenadas.css";
 import ModalDataExcel from "src/Pages/Cargas/modal/exportExcel";
 import { SideBarFuncition } from "../Utils/sideBar";
 
@@ -83,7 +81,11 @@ function ViewCoordenadas({
 					pagina={"coordenadas"}
 				/>
 				<Row className="mb-2">
-					<h1 className="title-h1" id="title-coorde" onClick={HandleClick}>
+					<h1
+						className="class-title-Coord"
+						id="title-coorde"
+						onClick={HandleClick}
+					>
 						Coordenadas - Veículos
 					</h1>
 				</Row>

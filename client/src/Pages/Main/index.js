@@ -136,14 +136,14 @@ function Main() {
 				<Row>
 					<Col className="text-center mt-5 mb-5">
 						<p id="style-title-main" className="class-p-title-main">
-							Seja bem vindo(a) ao Concentrador de cargas
+							Seja bem vindo(a) ao Concentrador de Cargas
 						</p>
 					</Col>
 				</Row>
 				<div>
 					<div>
 						<p id="style-p-saudacao" className="class-p-saudacao">
-							Caro(a){userData?.nome}!
+							Caro(a) {userData?.nome}!
 						</p>
 					</div>
 					<div className="class-p-text">

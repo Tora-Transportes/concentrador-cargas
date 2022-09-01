@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import "../ListAddItens/style.css";
 import { Button } from "react-bootstrap";
 import swal from "sweetalert";
 
@@ -61,7 +61,11 @@ export default function ListAddItens({ onChange, value, name }) {
 				</li>
 			))}
 
-			<Button variant="outline-success" className="mb-3" onClick={addItem}>
+			<Button
+				id="style-botao-add"
+				className="class-button-add"
+				onClick={addItem}
+			>
 				Adicionar
 			</Button>
 		</ol>

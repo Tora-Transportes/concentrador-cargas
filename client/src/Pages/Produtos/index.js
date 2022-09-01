@@ -141,13 +141,13 @@ function Produtos() {
 	};
 
 	return (
-		<>
+		<div className="class-body-produtos">
 			<LoadingScreen />
 			{/* <NavbarNavigator /> */}
 			<Menusuperior />
 			<Container className="text-center mb-3 mt-3">
 				<Row>
-					<h1 className="title-h1">Produtos</h1>
+					<h1 className="class-title-produto">Produtos</h1>
 					<div className="datatable-responsive-demoPermissoes">
 						<DataTable
 							className="p-datatable-responsive-demoPermissoes"
@@ -190,7 +190,7 @@ function Produtos() {
 					</div>
 				</Row>
 			</Container>
-		</>
+		</div>
 	);
 }
 

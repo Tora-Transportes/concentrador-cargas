@@ -36,7 +36,7 @@ function VisualizarCargas({
 	};
 
 	return (
-		<>
+		<div className="class-body-gridcarga">
 			<LoadingComponent />
 			<Menusuperior />
 			<Container fluid className="text-center mb-5">
@@ -69,8 +69,8 @@ function VisualizarCargas({
 				<Row className="row-inicio-carga mt-3 mb-2 ">
 					<Col className="text-start">
 						<ButtonReact
-							id="style-button-detail"
 							label="Detalhes Tabela"
+							id="style-button-detail"
 							icon={<BiCog className="me-1" />}
 							onClick={() => setVisibleLeft(true)}
 							className="sidebar-button-table"
@@ -125,7 +125,7 @@ function VisualizarCargas({
 					<Col sm={12}></Col>
 				</Row>
 			</Container>
-		</>
+		</div>
 	);
 }
 

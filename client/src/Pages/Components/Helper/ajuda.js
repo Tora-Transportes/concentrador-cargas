@@ -26,16 +26,16 @@ function Helper() {
 		<div className="class-body">
 			<Menusuperior />
 			<div className="class-body-title">
-				<h1>Ajuda</h1>
-				<hr />
-				<p>
+				<h1 className="class-h1-ajuda">Ajuda</h1>
+				<hr className="class-hr-ajuda" />
+				<p className="class-p-ajuda">
 					Bem - vindo a tela Ajuda, nesta página será disponibilizado passo a
 					passo para as seguintes telas:
 					<br />
 					<strong>Coordenadas, Monitoramento e Cadastro de Cargas.</strong>
 				</p>
 
-				<p>
+				<p className="class-p-ajuda">
 					Selecione uma das opções e será redirecionado até a página para
 					iniciar o passo a passo:
 				</p>
@@ -56,17 +56,14 @@ function Helper() {
 							selecionar em qual forma deseja cadastrar a carga.
 						</p>
 						<p>Exemplo: Página de Selecão </p>
-						<img
-							src={caminhaogif}
-							style={{ width: "45rem", marginLeft: "3rem" }}
-						/>
+						<img src={caminhaogif} id="style-gif" />
 
 						<p>
 							Ao escolher a forma que irá cadastrar a Carga, será direcionado
 							para a página de Cadastro sendo manual ou importada.
 						</p>
 						<p>Exemplo: Página de Cadastro </p>
-						<img src={telacad} style={{ width: "45rem", marginLeft: "3rem" }} />
+						<img src={telacad} id="style-gif" />
 						<Button
 							href="/cargas/menu"
 							id="style-button-acc-1"
@@ -84,10 +81,7 @@ function Helper() {
 							selecionar em qual forma deseja cadastrar a carga.
 						</p>
 						<p>Exemplo: Página de Selecão </p>
-						<img
-							src={telaCoordenadas}
-							style={{ width: "45rem", marginLeft: "3rem" }}
-						/>
+						<img src={telaCoordenadas} id="style-gif" />
 
 						<Button
 							href="/veiculos/coordenadas"
@@ -106,10 +100,7 @@ function Helper() {
 							selecionar em qual forma deseja cadastrar a carga.
 						</p>
 						<p>Exemplo: Página de Selecão </p>
-						<img
-							src={telaMonitoramento}
-							style={{ width: "45rem", marginLeft: "3rem" }}
-						/>
+						<img src={telaMonitoramento} id="style-gif" />
 						<Button
 							href="/veiculos/aprovacao"
 							id="style-button-acc-1"

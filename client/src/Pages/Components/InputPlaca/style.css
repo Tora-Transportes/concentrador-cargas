@@ -1,0 +1,12 @@
+#Plca-cavalo{
+    width: 45rem;
+}
+.class-input-placaCav{
+    display: grid;
+    grid-template-columns: auto;
+    
+}
+
+.input-placaCav{
+margin-top: 1rem;
+}

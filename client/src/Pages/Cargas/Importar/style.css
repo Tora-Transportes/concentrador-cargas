@@ -1,28 +1,135 @@
-#botao-download{
-    background: #00652E;
+#botao-download {
+  background: #00652e;
+  border: none;
+  font-family: "Poppins", sans-serif;
+  width: 27rem;
+}
+#title-tab-import-carg,
+#title-import {
+  color: #00652e;
+  font-family: "Poppins", sans-serif;
+  font-size: 35px;
+  font-weight: 500;
+}
+#botao-process {
+  background: #00652e;
+  border: none;
+  width: 10rem;
+  height: 2.3rem;
+}
+
+.class-container-importar {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.class-import {
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-self: center;
+  align-items: center;
+  margin-top: 4rem;
+}
+.title-import {
+  margin-left: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.class-input-button {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 2rem;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+#style-input-arq {
+  width: 45rem;
+}
+.class-button-submit {
+  margin-top: .5rem;
+}
+
+.class-table-importCarga {
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+}
+
+ /*tabela*/
+ .class-title-preview{
+  display: grid;
+  justify-content: center;
+  text-align: center;
+  margin-top: 4rem;
+  margin-bottom: -2rem;
+}
+.class-table-importCarga{
+  display: grid;
+  justify-content: center;
+  margin: 4rem 0 0 3rem;
+  text-align: center;
+}
+
+@media only screen and (max-width: 480px) {
+  #title-import {
+    color: #00652e;
+    font-family: "Poppins", sans-serif;
+    font-size: 37px;
+    font-weight: 500;
+    text-align: center;
+  }
+  .class-import {
+    display: grid;
+    grid-template-rows: auto auto;
+    justify-self: center;
+    align-items: center;
+    margin-top: 4rem;
+  }
+  .title-import {
+    margin-left: 5rem;
+  }
+  .class-button-import {
+    margin-left: 2rem;
+  }
+  #botao-download {
+    background: #00652e;
     border: none;
-}
-.class-import-arq{
-    margin-top: 3rem;
-}
-.class-button-process{
-    margin-left: 6rem;
-    margin-top: 1rem;
-}
-#botao-process{
-    background: #00652E;
-    border: none;
+    font-family: "Poppins", sans-serif;
+    width: 20rem;
+  }
+
+  /*Input Escolher Arquivo*/
+  .class-input-button{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+   
+  }
+  #botao-process{
     width: 10rem;
-}
+  }
+  #style-input-arq {
+    width: 23rem;
+  }
 
-#title-import,
-#title-tab-import-carg{
-    color: #00652E;
-    font-size: 27px;
-    font-family: 'Poppins', sans-serif;
-}
-
-.class-title-prev,
-.class-title-import{
-    margin-top: 3rem;
+  /*tabela*/
+  .class-title-preview{
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    margin-top: 4rem;
+    margin-bottom: -2rem;
+    margin-left: .5rem;
+  }
+  .class-table-importCarga{
+    display: grid;
+    justify-content: center;
+    margin: 4rem 0 0 0;
+    text-align: center;
+  }
+  
 }

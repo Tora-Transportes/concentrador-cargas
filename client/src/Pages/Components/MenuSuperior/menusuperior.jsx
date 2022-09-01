@@ -3,12 +3,11 @@ import Logo from "../../../assets/logotoraico.png";
 import "./style.css";
 import { NavbarBrand } from "react-bootstrap";
 import { FaSignOutAlt } from "react-icons/fa";
-// import HandleClick from "../../Cargas/Manual/Cadastrar/tooltipsCadastro";
+import { logout } from "../../../MicrosoftAuthentication";
 
-function Menusuperior({ type }) {
+function Menusuperior() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
 
-  console.log(type);
   return (
     <div id="header">
       <NavbarBrand href="/">
@@ -84,7 +83,16 @@ function Menusuperior({ type }) {
             </a>
           </li>
           <li className="class-li">
-            <a id="style-a" href="/">
+            <a
+              id="style-a"
+              href="/"
+              action
+              onClick={() => {
+                setTimeout(() => {
+                  logout();
+                }, 200);
+              }}
+            >
               Sair <FaSignOutAlt />
             </a>
           </li>

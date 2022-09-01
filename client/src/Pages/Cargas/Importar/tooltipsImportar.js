@@ -1,5 +1,5 @@
-import "../Importar/index";
 import createSequence from "tooltip-sequence";
+import "../Importar/index";
 
 const options = {
 	backdropColor: "#6262625d",
@@ -42,7 +42,7 @@ const options = {
 		},
 	],
 	onComplete: function () {
-		console.log("Completed!");
+		window.location.reload();
 	},
 };
 
@@ -50,5 +50,4 @@ function HandleClick(event) {
 	event.preventDefault();
 	createSequence(options);
 }
-
 export default HandleClick;

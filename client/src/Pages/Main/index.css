@@ -115,3 +115,25 @@ body{
   margin-bottom: 3rem;
 }
 
+@media only screen and (max-width: 480px){
+  #title-p-jogo{
+    color: #939598;
+    font-weight: 500;
+    font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+  }
+  .class-button-jogue{
+    margin-left: 2rem;
+  }
+  #style-button-jogo{
+    background: #00652E;
+    border: none;
+    width: 18rem;
+  }
+  .class-jogo{
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 4rem;
+    margin-bottom: 3rem;
+  }
+}

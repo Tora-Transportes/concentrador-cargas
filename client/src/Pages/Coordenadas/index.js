@@ -237,7 +237,7 @@ function RotasPendentes() {
 	);
 
 	return (
-		<>
+		<div className="class-body-coordenadas">
 			<LoadingScreen />
 			<Toast ref={toast} className="w-25" position="top-center"></Toast>
 			{/* <NavbarNavigator /> */}
@@ -256,7 +256,7 @@ function RotasPendentes() {
 				modalShowExcel={modalShowExcel}
 				setModalShowExcel={setModalShowExcel}
 			/>
-		</>
+		</div>
 	);
 }
 

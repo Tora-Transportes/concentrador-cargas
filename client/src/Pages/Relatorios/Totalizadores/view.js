@@ -20,6 +20,7 @@ import DateUtils from "../../Utils/date";
 import { showToastMessage } from "src/Pages/Utils/toastMessage";
 import { Toast } from "primereact/toast";
 import diffiInDays from "src/Pages/Utils/diffInDays";
+import "../Totalizadores/style.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -81,7 +82,7 @@ function ViewRotasPendentes({
 	}, [totalizadores]);
 
 	return (
-		<>
+		<div className="class-body-relatorios">
 			<Container className="text-center mb-5 mt-4">
 				<hr />
 				<Toast
@@ -533,7 +534,7 @@ function ViewRotasPendentes({
 						</>
 					)}
 			</Container>
-		</>
+		</div>
 	);
 }
 

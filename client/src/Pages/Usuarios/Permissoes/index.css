@@ -1,3 +1,6 @@
+.class-body-permissoes{
+  font-family: 'Poppins', sans-serif;
+}
 .title-h1 {
   margin-bottom: 3vh;
   color: #00652E;
@@ -7,7 +10,7 @@
 /* Tabela css */
 
 .p-datatable table {
-  box-shadow: 9px 0 5px rgb(50 50 50 / 77%);
+  
   margin-top: 2em;
 }
 

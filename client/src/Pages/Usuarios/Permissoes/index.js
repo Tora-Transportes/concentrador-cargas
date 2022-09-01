@@ -104,13 +104,13 @@ function Permissoes() {
 	};
 
 	return (
-		<>
+		<div className="class-body-permissoes">
 			{/* <NavbarNavigator /> */}
 			<Menusuperior />
 			<Container className="text-center mb-4 mt-4">
 				<Row>
 					<Col>
-						<h1 className="title-h1">Permissões dos usuários</h1>
+						<h1 className="class-title-Permissao">Permissões dos usuários</h1>
 					</Col>
 				</Row>
 				<Row>
@@ -182,7 +182,7 @@ function Permissoes() {
 					</div>
 				</Row>
 			</Container>
-		</>
+		</div>
 	);
 }
 

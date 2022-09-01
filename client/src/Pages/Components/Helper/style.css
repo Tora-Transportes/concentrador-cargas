@@ -17,6 +17,10 @@
 
 }
 
+#style-gif{
+    width: 45rem;
+    margin-left: 3rem;
+}
 .class-accordion{
    display: grid;
    justify-content: center;
@@ -69,3 +73,42 @@ p{
     margin-top: 3rem;
 }
 
+
+@media only screen and (max-width: 480px){
+    .class-body-title{
+       display: grid;
+       margin-right: 4rem;
+    }
+    
+    h1{
+        font-family: 'Poppins', sans-serif;
+        color: #00652E;
+        margin-left: -5rem;
+    }
+    
+    hr{
+        width: 20rem;
+    }
+
+    .class-p-ajuda,
+    .class-hr-ajuda{
+        display: grid;
+        margin-left: -5rem;
+    }
+
+    #style-gif{
+        width: 20rem;
+        margin-left: 1rem;
+    }
+
+    #style-button-accordion{
+        width: 25rem;
+    }
+
+    .class-button3,
+    .class-button2,
+    .class-button1{
+        display: grid;
+        justify-self: center;
+    }
+}

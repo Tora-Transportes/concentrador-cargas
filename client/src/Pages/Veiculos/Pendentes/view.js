@@ -1,7 +1,9 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import TabelaCargas from "../../Components/TabelaCargas";
-import "../../Styles/index.css";
+import HandleClick from "./tooltipsMonitoramento";
+import "../Pendentes/style.css";
+
 function ViewRotasPendentes({
 	columns = [],
 	get_data,
@@ -11,10 +13,14 @@ function ViewRotasPendentes({
 	totalRegisters = 0,
 }) {
 	return (
-		<>
+		<div className="class-body-monito">
 			<Container fluid className="text-center mb-5 mt-4">
 				<Row className="mb-2">
-					<h1 className="title-h1" id="title-monit">
+					<h1
+						className="class-title-monit"
+						id="title-monit"
+						onClick={HandleClick}
+					>
 						Monitoramento - Veículos pendentes
 					</h1>
 				</Row>
@@ -26,11 +32,11 @@ function ViewRotasPendentes({
 							value={itensPerPage}
 							onChange={(e) => setItensPerPage(e.target.value)}
 						>
-							<option value="10">👀 10</option>
-							<option value="20">👀 20</option>
-							<option value="50">👀 50</option>
-							<option value="100">👀 100</option>
-							<option value="500">👀 500</option>
+							<option value="10">Rows 10</option>
+							<option value="20">Rows 20</option>
+							<option value="50">Rows 50</option>
+							<option value="100">Rows 100</option>
+							<option value="500">Rows 500</option>
 						</select>
 					</Col>
 					<Col className="text-center" id="total-reg">
@@ -47,7 +53,7 @@ function ViewRotasPendentes({
 					/>
 				</Row>
 			</Container>
-		</>
+		</div>
 	);
 }
 

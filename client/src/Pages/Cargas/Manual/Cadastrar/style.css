@@ -1,3 +1,6 @@
+.class-body-form{
+  font-family: 'Poppins', sans-serif;
+}
 #title-cad-manual {
   color: #00652e;
   font-family: "Poppins", sans-serif;
@@ -20,6 +23,7 @@
   margin-left: 7rem;
   margin-top: -1rem;
 }
+
 
 @media only screen and (max-width: 480px) {
   #title-cad-manual {
