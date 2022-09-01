@@ -1,13 +1,15 @@
 import React, { useRef, useState } from "react";
 import { Container, Row, Col, Form, Button, Table } from "react-bootstrap";
-import NavbarNavigator from "../../Components/NavbarNavigator";
+// import NavbarNavigator from "../../Components/NavbarNavigator";
 import { BsDownload } from "react-icons/bs";
 import swal from "sweetalert";
 import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import * as xlsx from "xlsx";
 import TextUtils from "../../Utils/text";
-import createSequence from "tooltip-sequence";
+import HandleClick from "./tooltipsImportar";
+import "../Importar/style.css";
+import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 
 function Importar() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -87,66 +89,20 @@ function Importar() {
 		}
 	}
 
-	const options = {
-		backdropColor: "#6262625d",
-		sequence: [
-			{
-				element: "#title-import",
-				description:
-					"<h2>Bem-vindo</h2><div>Nesta opção realizara o cadastro por importação.</div>",
-				placement: "bottom",
-			},
-			{
-				element: "#botao-download",
-				description:
-					"<h2>Download de modelo</h2><div>Ao clicar no botão será baixado uma planilha de modelo.</div>",
-				placement: "bottom",
-			},
-			{
-				element: "#import-arq",
-				description:
-					"<h2>Escolher Arquivo</h2><div>Nesta opção você poderá carregar seu arquivo ou seja sua planilha para ser importada.</div>",
-				placement: "top",
-			},
-			{
-				element: "#botao-process",
-				description:
-					"<h2>Processar</h2><div>Clicando no botão sua planilha importada será aberta na tabela abaixo.</div>",
-				placement: "top",
-			},
-			{
-				element: "#title-tab-import-carg",
-				description:
-					"<h2>Tabela</h2><div>Esta tabela trás os resultados de sua planilha importada.</div>",
-				placement: "top",
-			},
-			{
-				element: "#Table-impot-carg",
-				description:
-					"<h2>Preview e Resultados</h2><div>Resultados da sua importação, só terá resultado na tabela se sua planilha estiver de acordo com o modelo da planilha de modelo.</div>",
-				placement: "top",
-			},
-		],
-		onComplete: function () {
-			console.log("Completed!");
-		},
-	};
-
-	function handleClick(event) {
-		event.preventDefault();
-		createSequence(options);
-	}
-
 	return (
 		<>
 			<LoadingScreen />
-			<NavbarNavigator />
+			{/* <NavbarNavigator /> */}
+			<Menusuperior />
 			<Container fluid className="text-center mb-5">
-				<Row className="p-5 mt-1">
-					<h1 onClick={handleClick} id="title-import">
-						Importação das cargas
-					</h1>
-				</Row>
+				<p
+					onClick={HandleClick}
+					id="title-import"
+					className="class-title-import"
+				>
+					Importação das cargas
+				</p>
+
 				<Row>
 					<a
 						href={
@@ -157,17 +113,20 @@ function Importar() {
 						rel="noreferrer"
 						className="text-decoration-none"
 					>
-						<Button variant="outline-primary" id="botao-download">
-							Clique aqui para fazer o download da planilha de modelo{" "}
-							<BsDownload />
+						<Button id="botao-download">
+							Download planilha Modelo <BsDownload />
 						</Button>
 					</a>
 				</Row>
-				<hr className="mt-5" />
-				<Form onSubmit={handleImportCarga} id="import-arq">
+
+				<Form
+					onSubmit={handleImportCarga}
+					id="import-arq"
+					className="class-import-arq"
+				>
 					<Row>
 						<Col md={10} sm={12}>
-							<Form.Group controlId="formFile" className="mb-3">
+							<Form.Group controlId="formFile">
 								<Form.Label></Form.Label>
 								<Form.Control
 									type="file"
@@ -182,7 +141,7 @@ function Importar() {
 							<Button
 								type="submit"
 								variant="success"
-								className="mt-4"
+								className="class-button-process"
 								id="botao-process"
 							>
 								Processar
@@ -191,9 +150,9 @@ function Importar() {
 					</Row>
 				</Form>
 
-				<h1 className="mt-5" id="title-tab-import-carg">
+				<p className="class-title-prev" id="title-tab-import-carg">
 					Preview e resultados
-				</h1>
+				</p>
 				<Table responsive striped bordered hover id="Table-impot-carg">
 					<thead>
 						<tr>

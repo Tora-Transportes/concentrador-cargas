@@ -1,6 +1,10 @@
 .sidebar-button-table{
   height: 5vh;
 }
+#style-button-detail{
+  background: #00652e;
+  border: none;
+}
 
 @media only screen and (max-width: 576px) {
   .row-inicio-carga button {

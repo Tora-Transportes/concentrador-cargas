@@ -1,0 +1,28 @@
+#botao-download{
+    background: #00652E;
+    border: none;
+}
+.class-import-arq{
+    margin-top: 3rem;
+}
+.class-button-process{
+    margin-left: 6rem;
+    margin-top: 1rem;
+}
+#botao-process{
+    background: #00652E;
+    border: none;
+    width: 10rem;
+}
+
+#title-import,
+#title-tab-import-carg{
+    color: #00652E;
+    font-size: 27px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.class-title-prev,
+.class-title-import{
+    margin-top: 3rem;
+}

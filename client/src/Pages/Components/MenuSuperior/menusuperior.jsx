@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Logo from "../../../assets/logotoraico.png";
 import "./style.css";
-import { NavbarBrand } from "reactstrap";
+import { NavbarBrand } from "react-bootstrap";
 import { FaSignOutAlt } from "react-icons/fa";
 // import HandleClick from "../../Cargas/Manual/Cadastrar/tooltipsCadastro";
 
@@ -42,7 +42,7 @@ function Menusuperior({ type }) {
                 <a href="/cargas/menu">Cadastrar Carga</a>
                 <a href="/cargas/visualizar">Listagem de Cargas</a>
                 <a href="/lotes/visualizar">Listagem de Lotes</a>
-                <a href="/producao">Produção</a>
+                {/* <a href="/producao">Produção</a> */}
               </div>
             </div>
 
