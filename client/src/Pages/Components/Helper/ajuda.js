@@ -29,7 +29,7 @@ function Helper() {
 				<h1>Ajuda</h1>
 				<hr />
 				<p>
-					Bem - vindo a tela Ajuda, nesta página será disponibilizado passo a
+					Bem-vindo a tela Ajuda, nesta página será disponibilizado o passo a
 					passo para as seguintes telas:
 					<br />
 					<strong>Coordenadas, Monitoramento e Cadastro de Cargas.</strong>
@@ -48,14 +48,14 @@ function Helper() {
 			>
 				<Accordion.Item eventKey="0" id="style-button-accordion">
 					<Accordion.Header id="style-ac-header" className="class-header-acc">
-						Cadastrar Carga
+						Cadastrar Cargas
 					</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
 						<p>
 							No primeiro passo será direcionado para uma página em que você irá
 							selecionar em qual forma deseja cadastrar a carga.
 						</p>
-						<p>Exemplo: Página de Selecão </p>
+						<p>Exemplo: Página de Seleção </p>
 						<img
 							src={caminhaogif}
 							style={{ width: "45rem", marginLeft: "3rem" }}
@@ -72,7 +72,7 @@ function Helper() {
 							id="style-button-acc-1"
 							className="class-button1"
 						>
-							Navegar até a Página
+							Ir para Cadastrar Cargas
 						</Button>
 					</Accordion.Body>
 				</Accordion.Item>
@@ -94,7 +94,7 @@ function Helper() {
 							id="style-button-acc-1"
 							className="class-button2"
 						>
-							Navegar até a Página
+							Ir para Coordenadas
 						</Button>
 					</Accordion.Body>
 				</Accordion.Item>
@@ -115,7 +115,7 @@ function Helper() {
 							id="style-button-acc-1"
 							className="class-button3"
 						>
-							Navegar até a Página
+							Ir para Monitoramento
 						</Button>
 					</Accordion.Body>
 				</Accordion.Item>

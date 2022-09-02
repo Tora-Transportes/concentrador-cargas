@@ -76,7 +76,7 @@ export const footerTableFunction = (previousPage, nextPage) => {
 				id="Botao-voltar-pag"
 				onClick={previousPage}
 			>
-				<HiChevronDoubleLeft /> Voltar paginação
+				<HiChevronDoubleLeft /> Voltar
 			</Button>
 			<Button
 				variant="outline-info"
@@ -84,7 +84,7 @@ export const footerTableFunction = (previousPage, nextPage) => {
 				style={{ background: "#00652E", border: "none", color: "#FFFFFF" }}
 				onClick={nextPage}
 			>
-				Proxíma paginação <HiChevronDoubleRight />
+				Próxima <HiChevronDoubleRight />
 			</Button>
 		</Col>
 	);

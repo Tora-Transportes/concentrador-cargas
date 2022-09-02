@@ -69,7 +69,7 @@ function VisualizarCargas({
 				<Row className="row-inicio-carga mt-3 mb-2 ">
 					<Col className="text-start">
 						<ButtonReact
-							label="Detales Tabela"
+							label="Detalhes Tabela"
 							icon={<BiCog className="me-1" />}
 							onClick={() => setVisibleLeft(true)}
 							className="sidebar-button-table"

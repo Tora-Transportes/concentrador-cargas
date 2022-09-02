@@ -103,7 +103,7 @@ function ViewRotasPendentes({
 					<Accordion.Item eventKey="0">
 						<Accordion.Header>
 							<b>
-								Filtros aqui <GiClick size={25} />
+								Filtros <GiClick size={25} />
 							</b>
 						</Accordion.Header>
 						<Accordion.Body>
@@ -210,7 +210,7 @@ function ViewRotasPendentes({
 				<Accordion>
 					<Accordion.Item eventKey="1">
 						<Accordion.Header>
-							<b>Cargas Ativas X Desativadas</b>
+							<b>Cargas Ativadas X Desativadas</b>
 						</Accordion.Header>
 						<Accordion.Body>
 							<Table>
@@ -228,7 +228,7 @@ function ViewRotasPendentes({
 										<td>
 											<FaPowerOff size={30} className="text-success" />
 										</td>
-										<td>Cargas ativas</td>
+										<td>Cargas ativadas</td>
 										<td>
 											<span className="text-danger">
 												{percentage(
@@ -397,7 +397,7 @@ function ViewRotasPendentes({
 					</Accordion.Item>
 					<Accordion.Item eventKey="3">
 						<Accordion.Header>
-							<b>Lotes Ativos X Desativados</b>
+							<b>Lotes Ativos X Inativos</b>
 						</Accordion.Header>
 						<Accordion.Body>
 							<Table>
@@ -443,7 +443,7 @@ function ViewRotasPendentes({
 										<td>
 											<FaPowerOff size={30} className="text-danger" />
 										</td>
-										<td>Lotes desativados</td>
+										<td>Lotes inativos</td>
 										<td>
 											<span className="text-danger">
 												{percentage(
@@ -474,9 +474,9 @@ function ViewRotasPendentes({
 
 				<hr />
 
-				<span>
-					A listagem de cargas transportadas por dia só vai aparecer caso o
-					filtro esteja aplicado com filial, data inicial e data final
+				<span style={{ fontSize: "15px" }}>
+					A listagem de cargas transportadas por dia só irá aparecer caso o
+					filtro esteja aplicado com filial, data inicial e data final.
 				</span>
 				{dataInicial?.current?.value &&
 					dataFinal?.current?.value &&
