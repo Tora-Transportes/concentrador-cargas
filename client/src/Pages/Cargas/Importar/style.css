@@ -1,3 +1,6 @@
+.class-body-importCarga{
+  font-family: 'Poppins', sans-serif;
+}
 #botao-download {
   background: #00652e;
   border: none;
@@ -130,6 +133,7 @@
     justify-content: center;
     margin: 4rem 0 0 0;
     text-align: center;
+    font-family: 'Poppins', sans-serif;
   }
   
 }

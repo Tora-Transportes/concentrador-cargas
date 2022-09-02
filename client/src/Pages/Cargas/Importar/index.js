@@ -90,7 +90,7 @@ function Importar() {
 	}
 
 	return (
-		<>
+		<div className="class-body-importCarga">
 			<LoadingScreen />
 			{/* <NavbarNavigator /> */}
 			<Menusuperior />
@@ -193,7 +193,7 @@ function Importar() {
 					</Table>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
 

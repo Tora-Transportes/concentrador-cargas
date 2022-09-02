@@ -46,7 +46,7 @@ function Helper() {
 				alwaysOpen
 				className="class-accordion"
 			>
-				<Accordion.Item eventKey="0" id="style-button-accordion">
+				<Accordion.Item eventKey="1" id="style-button-accordion">
 					<Accordion.Header id="style-ac-header" className="class-header-acc">
 						Cadastrar Carga
 					</Accordion.Header>
@@ -55,7 +55,7 @@ function Helper() {
 							No primeiro passo será direcionado para uma página em que você irá
 							selecionar em qual forma deseja cadastrar a carga.
 						</p>
-						<p>Exemplo: Página de Selecão </p>
+						<p>Exemplo: Página de Seleção </p>
 						<img src={caminhaogif} id="style-gif" />
 
 						<p>
@@ -64,50 +64,67 @@ function Helper() {
 						</p>
 						<p>Exemplo: Página de Cadastro </p>
 						<img src={telacad} id="style-gif" />
-						<Button
-							href="/cargas/menu"
-							id="style-button-acc-1"
-							className="class-button1"
-						>
-							Navegar até a Página
-						</Button>
+						<div className="class-button-ir">
+							{/* <p className="class-p-nav">Navegar até a Página de Cadastro</p> */}
+							<Button
+								href="/cargas/menu"
+								id="style-button-acc-1"
+								className="class-button1"
+							>
+								Navegar até a Página de Cadastro
+							</Button>
+						</div>
 					</Accordion.Body>
 				</Accordion.Item>
-				<Accordion.Item eventKey="1" id="style-button-accordion">
-					<Accordion.Header>Coordenadas</Accordion.Header>
-					<Accordion.Body>
+
+				<Accordion.Item eventKey="2" id="style-button-accordion">
+					<Accordion.Header id="style-ac-header" className="class-header-acc">
+						Coordenadas
+					</Accordion.Header>
+					<Accordion.Body className="class-body-accordion">
 						<p>
 							No primeiro passo será direcionado para uma página em que você irá
 							selecionar em qual forma deseja cadastrar a carga.
 						</p>
-						<p>Exemplo: Página de Selecão </p>
+						<p>Exemplo: Página de Seleção </p>
 						<img src={telaCoordenadas} id="style-gif" />
 
-						<Button
-							href="/veiculos/coordenadas"
-							id="style-button-acc-1"
-							className="class-button2"
-						>
-							Navegar até a Página
-						</Button>
+						<div className="class-button-ir">
+							{/* <p className="class-p-nav">Navegar até a Página de Coordenadas</p> */}
+							<Button
+								href="/veiculos/coordenadas"
+								id="style-button-acc-1"
+								className="class-button1"
+							>
+								Navegar até a Página de Coordenadas
+							</Button>
+						</div>
 					</Accordion.Body>
 				</Accordion.Item>
-				<Accordion.Item eventKey="2" id="style-button-accordion">
-					<Accordion.Header>Monitoramento</Accordion.Header>
-					<Accordion.Body>
+				<Accordion.Item eventKey="3" id="style-button-accordion">
+					<Accordion.Header id="style-ac-header" className="class-header-acc">
+						Monitoramento
+					</Accordion.Header>
+					<Accordion.Body className="class-body-accordion">
 						<p>
 							No primeiro passo será direcionado para uma página em que você irá
 							selecionar em qual forma deseja cadastrar a carga.
 						</p>
-						<p>Exemplo: Página de Selecão </p>
+						<p>Exemplo: Página de Seleção </p>
 						<img src={telaMonitoramento} id="style-gif" />
-						<Button
-							href="/veiculos/aprovacao"
-							id="style-button-acc-1"
-							className="class-button3"
-						>
-							Navegar até a Página
-						</Button>
+
+						<div className="class-button-ir">
+							{/* <p className="class-p-nav">
+								Navegar até a Página de Monitoramento
+							</p> */}
+							<Button
+								href="/veiculos/aprovacao"
+								id="style-button-acc-1"
+								className="class-button1"
+							>
+								Navegar até a Página de Monitoramento
+							</Button>
+						</div>
 					</Accordion.Body>
 				</Accordion.Item>
 			</Accordion>

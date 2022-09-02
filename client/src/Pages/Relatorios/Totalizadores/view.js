@@ -84,7 +84,10 @@ function ViewRotasPendentes({
 	return (
 		<div className="class-body-relatorios">
 			<Container className="text-center mb-5 mt-4">
-				<hr />
+				<p id="style-title-rel" className="class-p-rel">
+					Relatório
+				</p>
+				<hr id="style-hr-rel" />
 				<Toast
 					ref={toast}
 					className="w-25"
@@ -98,7 +101,6 @@ function ViewRotasPendentes({
 							DateUtils.convertDateToReadableTime(tempoMedioAprovacaoGr.media)}
 					</b>
 				</span>
-				<hr />
 
 				<Accordion>
 					<Accordion.Item eventKey="0">

@@ -116,7 +116,12 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 								/>
 							</Form.Group>
 
-							<Button type="submit">Pesquisar</Button>
+							<Button
+								type="submit"
+								style={{ background: "#00652E", border: "none" }}
+							>
+								Pesquisar
+							</Button>
 						</Form>
 					</Col>
 				</Row>

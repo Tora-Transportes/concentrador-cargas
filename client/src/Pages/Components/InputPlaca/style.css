@@ -10,3 +10,9 @@
 .input-placaCav{
 margin-top: 1rem;
 }
+
+@media only screen and (max-width: 480px){
+    #Plca-cavalo{
+    width: 4rem;
+    }
+}

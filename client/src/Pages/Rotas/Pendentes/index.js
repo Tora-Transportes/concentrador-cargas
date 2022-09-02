@@ -1,8 +1,9 @@
 import React, { useCallback } from "react";
 import useLoadingScreen from "../../Components/LoadingScreen";
-import NavbarNavigator from "../../Components/NavbarNavigator";
+// import NavbarNavigator from "../../Components/NavbarNavigator";
 import ViewRotasPendentes from "./view";
 import ServiceRotas from "../../../services/ServiceRotas";
+import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 
 function RotasPendentes() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -58,7 +59,8 @@ function RotasPendentes() {
 	return (
 		<>
 			<LoadingScreen />
-			<NavbarNavigator />
+			{/* <NavbarNavigator /> */}
+			<Menusuperior />
 			<ViewRotasPendentes get_data={tableFetchData} columns={columns} />
 		</>
 	);

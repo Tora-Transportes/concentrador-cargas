@@ -44,29 +44,41 @@ function Menusuperior() {
                 {/* <a href="/producao">Produção</a> */}
               </div>
             </div>
-
-            <div className="dropdown-doc">
+            {/* <div className="dropdown-doc">
               <button id="style-button-drop" className="dropbtn-doc">
-                Documentos
+                Relatórios
               </button>
-              <div id="myDropdown-doc" className="dropdown-content-doc">
-                <a href="/veiculos/aprovacao">Monitoramento</a>
-                <a href="/veiculos/coordenadas">Coordenadas</a>
+               <div id="myDropdown-doc" className="dropdown-content-doc">
                 <a href="/relatorios">Relatórios</a>
               </div>
-            </div>
-
+            </div> */}
             <div className="dropdown-veic">
               <button id="style-button-drop" className="dropbtn-veic">
                 Veículos
               </button>
               <div id="myDropdown-veic" className="dropdown-content-veic">
+                <a href="/rotas/pendentes">Rotas pendentes</a>
                 <a href="/veiculos/raio">Veículos x Veículos</a>
                 <a href="/veiculos/destino">Veículos até Empresa</a>
                 <a href="/veiculos/raio/empresa">Raio Empresa</a>
               </div>
             </div>
           </div>
+          <li className="class-li">
+            <a id="style-a" href="/relatorios">
+              Relatórios
+            </a>
+          </li>
+          <li className="class-li">
+            <a id="style-a" href="/veiculos/coordenadas">
+              Coordenadas
+            </a>
+          </li>
+          <li className="class-li">
+            <a id="style-a" href="/veiculos/aprovacao">
+              Monitoramento
+            </a>
+          </li>
           <li className="class-li">
             <a id="style-a" href="/usuarios/permissoes">
               Permissões
