@@ -132,7 +132,7 @@ function Main() {
 			<ToastContainer />
 			{/* <NavbarNavigator /> */}
 			<Menusuperior />
-			<Container>
+			<Container className="class-body-main">
 				<Row>
 					<Col className="text-center mt-5 mb-5">
 						<p id="style-title-main" className="class-p-title-main">

@@ -2,6 +2,10 @@ body{
   font-family: 'Poppins', sans-serif;
 }
 
+.class-body-main{
+  margin-top: 5rem;
+}
+
 #navbar-tora {
   background-color: #024c01 !important;
   color: white !important;
