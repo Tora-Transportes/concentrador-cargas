@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-
+import "../DestinoCarga/style.css";
 import InputCliente from "../../Components/InputCliente";
 import DateUtils from "../../Utils/date";
 
@@ -42,7 +42,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 	}
 
 	return (
-		<>
+		<div className="class-body-destCarga">
 			<Container className="text-center mb-5 mt-4">
 				{rota && (
 					<MapContainer
@@ -83,7 +83,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 					</p>
 				)}
 				<Row className="mb-2">
-					<h1>Distancia entre o veículo e a empresa</h1>
+					<h1>Distância entre o veículo e a empresa:</h1>
 				</Row>
 				<Row>
 					<Col>
@@ -109,12 +109,17 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 								/>
 							</Form.Group>
 
-							<Button type="submit">Pesquisar</Button>
+							<Button
+								type="submit"
+								style={{ background: "#00652E", border: "none" }}
+							>
+								Pesquisar
+							</Button>
 						</Form>
 					</Col>
 				</Row>
 			</Container>
-		</>
+		</div>
 	);
 }
 

@@ -1,3 +1,6 @@
+.class-body-gridcarga{
+  font-family: 'Poppins', sans-serif;
+}
 .sidebar-button-table{
   height: 5vh;
 }
@@ -9,4 +12,9 @@
   .inicio-col-registros {
     margin-bottom: 5px;
   }
+}
+
+#style-button-detail{
+  background: #00652E;
+  border: none;
 }

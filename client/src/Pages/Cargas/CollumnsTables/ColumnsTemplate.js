@@ -45,7 +45,7 @@ export const columns = [
 	},
 	{
 		name: "id",
-		description: "Código da Carga",
+		description: "Código da carga",
 		selector: (row) => row.id,
 		sortable: "sortable",
 	},
@@ -87,7 +87,7 @@ export const columns = [
 	},
 	{
 		name: "data_cadastro",
-		description: "Data Cadastro",
+		description: "Data do cadastro",
 		selector: (row) => formatDateAndHour(row.data_cadastro),
 		sortable: "sortable",
 		Filter: (props) => <Form.Control type="date" {...props} />,
@@ -106,27 +106,27 @@ export const columns = [
 	},
 	{
 		name: "data_coleta",
-		description: "Data coleta",
+		description: "Data de coleta",
 		selector: (row) => formatDate(row.data_coleta),
 		sortable: "sortable",
 		Filter: (props) => <Form.Control type="date" {...props} />,
 	},
 	{
 		name: "data_entrega",
-		description: "Data Entrega",
+		description: "Data de entrega",
 		selector: (row) => formatDate(row.data_entrega),
 		sortable: "sortable",
 		Filter: (props) => <Form.Control type="date" {...props} />,
 	},
 	{
 		name: "tipo_carga",
-		description: "Tipo Carga",
+		description: "Tipo de carga",
 		selector: (row) => row.tipo_carga,
 		sortable: "sortable",
 	},
 	{
 		name: "canal_comunicacao",
-		description: "Canal comunicação",
+		description: "Canal de comunicação",
 		selector: (row) => row.canal_comunicacao,
 		sortable: "sortable",
 	},
@@ -144,7 +144,7 @@ export const columns = [
 	},
 	{
 		name: "responsavel_cadastro",
-		description: "Responsável Cadastro",
+		description: "Responsável pelo cadastro",
 		selector: (row) => row.responsavel_cadastro,
 		sortable: "sortable",
 		Filter: (props) => <ResponsavelCadastroSelect {...props} />,
@@ -185,13 +185,13 @@ export const columns = [
 	},
 	{
 		name: "data_atualizacao",
-		description: "Data última atualização",
+		description: "Data da última atualização",
 		selector: (row) => formatDateAndHour(row.data_atualizacao),
 		sortable: "sortable",
 	},
 	{
 		name: "fk_lote_pai",
-		description: "Lote origem",
+		description: "Lote de origem",
 		selector: (row) => row.fk_lote_pai,
 		Filter: () => null,
 		sortable: "sortable",
@@ -212,7 +212,7 @@ export const columns = [
 	},
 	{
 		name: "usuario",
-		description: "Responsável última alteração",
+		description: "Responsável pela última alteração",
 		selector: (row) => <CollapseHint text={row.usuario || ""} />,
 		sortable: "sortable",
 	},

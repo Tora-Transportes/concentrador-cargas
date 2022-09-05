@@ -291,7 +291,7 @@ export const getColumns = (
 		},
 		{
 			name: "responsavel_placa_email",
-			description: "RP Email",
+			description: "RP E-mail",
 			selector: (row) => row.responsavel_placa_email,
 			static_column: true,
 		},

@@ -16,11 +16,11 @@ const PaginatorTable = ({ itensPerPage, setItensPerPage, setVisibleLeft }) => {
 			value={itensPerPage}
 			onChange={(e) => showOpcaoPaginatot(e)}
 		>
-			<option value="10">👀 10</option>
-			<option value="20">👀 20</option>
-			<option value="50">👀 50</option>
-			<option value="100">👀 100</option>
-			<option value="500">👀 500</option>
+			<option value="10">10 linhas</option>
+			<option value="20">20 linhas</option>
+			<option value="50">50 linhas</option>
+			<option value="100">100 linhas</option>
+			<option value="500">500 linhas</option>
 		</select>
 	);
 };

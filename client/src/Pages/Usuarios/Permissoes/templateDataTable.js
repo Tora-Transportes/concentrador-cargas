@@ -7,7 +7,7 @@ export const renderHeader = (globalFilter, setGlobalFilter) => {
 		<div className="header-table-add-permission">
 			<div className="menu-header-table-permission">
 				<input
-					placeholder="Fazer uma busca global"
+					placeholder="Fazer busca global"
 					value={globalFilter}
 					onChange={(e) => setGlobalFilter(e.target.value)}
 					className=" input-empty"

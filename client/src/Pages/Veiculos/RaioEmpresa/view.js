@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-
+import "../RaioEmpresa/style.css";
 import InputCliente from "../../Components/InputCliente";
 import DateUtils from "../../Utils/date";
 
@@ -41,7 +41,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 	}
 
 	return (
-		<>
+		<div className="class-body-raioEmpresa">
 			<Container className="text-center mb-5 mt-4">
 				{rota && (
 					<MapContainer
@@ -116,12 +116,17 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 								/>
 							</Form.Group>
 
-							<Button type="submit">Pesquisar</Button>
+							<Button
+								type="submit"
+								style={{ background: "#00652E", border: "none" }}
+							>
+								Pesquisar
+							</Button>
 						</Form>
 					</Col>
 				</Row>
 			</Container>
-		</>
+		</div>
 	);
 }
 

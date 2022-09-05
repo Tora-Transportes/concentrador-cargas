@@ -29,7 +29,7 @@ export const renderHeader = (formik, globalFilter, setGlobalFilter) => {
 			<div className="header-table-filter-produto">
 				<InputGroup>
 					<FormControl
-						placeholder="Fazer uma busca global"
+						placeholder="Fazer busca global"
 						value={globalFilter}
 						onChange={(e) => setGlobalFilter(e.target.value)}
 					/>
@@ -55,7 +55,7 @@ export const opcoesTemplate = (
 						variant="outline-warning"
 						onClick={(e) => {
 							e.preventDefault();
-							handleEditProduto(rowData.id);
+							handleEditProduto(rowData.nome);
 						}}
 					>
 						<BsPencilSquare className="icon-editar" />
@@ -66,7 +66,7 @@ export const opcoesTemplate = (
 						variant="outline-danger"
 						onClick={(e) => {
 							e.preventDefault();
-							handleDelete(rowData.id);
+							handleDelete(rowData.nome);
 						}}
 					>
 						<BsTrash />

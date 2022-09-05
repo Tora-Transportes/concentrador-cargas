@@ -120,7 +120,7 @@ function RelatoriosMain() {
 		};
 	}, []);
 	return (
-		<>
+		<div className="class-body-relatorio">
 			<LoadingScreen />
 			{/* <NavbarNavigator /> */}
 			<Menusuperior />
@@ -131,7 +131,7 @@ function RelatoriosMain() {
 				resumosDiarios={resumosDiarios}
 				tempoMedioAprovacaoGr={tempoMedioAprovacaoGr}
 			/>
-		</>
+		</div>
 	);
 }
 

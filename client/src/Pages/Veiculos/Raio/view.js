@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col, Form, Button, Table } from "react-bootstrap";
 
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-
+import "../Raio/style.css";
 import { BsDownload } from "react-icons/bs";
 
 import L from "leaflet";
@@ -63,7 +63,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 	}
 
 	return (
-		<>
+		<div className="class-body-raio">
 			<Container className="text-center mb-5 mt-4">
 				{raio && (
 					<MapContainer
@@ -121,7 +121,12 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 								/>
 							</Form.Group>
 
-							<Button type="submit">Pesquisar</Button>
+							<Button
+								type="submit"
+								style={{ background: "#00652E", border: "none" }}
+							>
+								Pesquisar
+							</Button>
 						</Form>
 					</Col>
 				</Row>
@@ -159,7 +164,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 					)}
 				</Row>
 			</Container>
-		</>
+		</div>
 	);
 }
 

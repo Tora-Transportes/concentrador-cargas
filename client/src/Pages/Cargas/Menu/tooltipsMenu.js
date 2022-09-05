@@ -7,19 +7,19 @@ const options = {
 		{
 			element: "#titulo-selecionar-modo-carga",
 			description:
-				"<h2>Bem-vindo</h2><div>Nessa etapa selecione a forma que deseja realizar o cadastro da carga que foi coletada e então prossiga.</div>",
+				"<h2>Bem-vindo!</h2><div>Nesta etapa selecione a forma em que será realizado o cadastro da carga coletada e então prossiga.</div>",
 			placement: "bottom",
 		},
 		{
 			element: "#hand",
 			description:
-				"<h2>Manual</h2><div>Se sua carga foi coletada de forma manual Selecione está opção.</div>",
+				"<h2>Manual</h2><div>Para uma carga coletada manualmente, selecione esta opção.</div>",
 			placement: "bottom",
 		},
 		{
 			element: "#import",
 			description:
-				"<h2>Importar</h2><div>Caso sua carga foi coletada em um Arquivo Selecione está opção.</div>",
+				"<h2>Importar</h2><div>Caso a carga tenha sido coletada em um Arquivo, selecione esta opção.</div>",
 			placement: "bottom",
 		},
 	],

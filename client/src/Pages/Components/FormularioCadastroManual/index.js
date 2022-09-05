@@ -23,6 +23,7 @@ import FilialSelect from "../FilialSelect";
 import ServiceVeiculos from "src/services/ServiceVeiculos";
 import swal from "sweetalert";
 import ListAddItens from "../ListAddItens";
+import "../FormularioCadastroManual/style.css";
 
 function FormularioCadastroManual({
 	formik,
@@ -93,7 +94,7 @@ function FormularioCadastroManual({
 	}
 
 	return (
-		<>
+		<div className="class-body-form">
 			<Row>
 				<Col>
 					<FloatingLabel label="*Responsável pelo cadastro" className="mb-3">
@@ -224,6 +225,7 @@ function FormularioCadastroManual({
 						</Form.Text>
 						<Col sm={12}>
 							<InputPlaca
+								className="input-placaCav"
 								id="Plca-cavalo"
 								readOnly={
 									formik.values.fk_situacao &&
@@ -248,8 +250,8 @@ function FormularioCadastroManual({
 					</Row>
 					<Row>
 						<Col sm={12} md={6}>
-							<InputGroup className="mb-2">
-								<InputGroup.Text>Carreta 🚛</InputGroup.Text>
+							<InputGroup className="input-carreta mb-2">
+								<InputGroup.Text>Carreta</InputGroup.Text>
 								<Form.Control
 									readOnly
 									placeholder="Placa Carreta"
@@ -259,8 +261,8 @@ function FormularioCadastroManual({
 							</InputGroup>
 						</Col>
 						<Col>
-							<InputGroup className="mb-2">
-								<InputGroup.Text>Bitrem 🚛</InputGroup.Text>
+							<InputGroup className="input-bitrem mb-2">
+								<InputGroup.Text>Bitrem</InputGroup.Text>
 								<Form.Control
 									readOnly
 									placeholder="Placa Bitrem"
@@ -270,44 +272,42 @@ function FormularioCadastroManual({
 							</InputGroup>
 						</Col>
 					</Row>
-					<Row>
-						<Col>
-							<InputGroup className="mb-2">
-								<InputGroup.Text className="p-3">Motorista 👨‍🚒</InputGroup.Text>
-								<Form.Control
-									readOnly
-									placeholder="Motorista"
-									type="text"
-									value={
-										formik.values.codigo_motorista &&
-										formik.values.nome_motorista
-											? `${formik.values.codigo_motorista} - ${formik.values.nome_motorista}`
-											: ""
-									}
-								/>
-							</InputGroup>
-						</Col>
-						<Col lg={1}>
-							<Button
-								id="botao-detail-veiculo"
-								onClick={() =>
-									handleShowDetailsAboutVehicle(formik.values.placa_veiculo)
+
+					<div className="class-input-motorista">
+						<InputGroup id="style-ipunt-motorista" className="class-input-moto">
+							<InputGroup.Text>Motorista</InputGroup.Text>
+							<Form.Control
+								readOnly
+								placeholder="Motorista"
+								type="text"
+								value={
+									formik.values.codigo_motorista && formik.values.nome_motorista
+										? `${formik.values.codigo_motorista} - ${formik.values.nome_motorista}`
+										: ""
 								}
-							>
-								Detalhes veículo
-							</Button>
-						</Col>
-						<Col lg={1}>
-							<Button
-								id="botao-deb-veiculo"
-								onClick={() =>
-									handleShowDebitAboutVehicle(formik.values.placa_veiculo)
-								}
-							>
-								Débitos veículo
-							</Button>
-						</Col>
-					</Row>
+							/>
+						</InputGroup>
+						<Button
+							className="class-botao-DetalhesV"
+							id="botao-detail-veiculo"
+							onClick={() =>
+								handleShowDetailsAboutVehicle(formik.values.placa_veiculo)
+							}
+						>
+							Detalhes veículo
+						</Button>
+
+						<Button
+							className="class-botao-DetalhesV"
+							id="botao-deb-veiculo"
+							onClick={() =>
+								handleShowDebitAboutVehicle(formik.values.placa_veiculo)
+							}
+						>
+							Débitos veículo
+						</Button>
+					</div>
+
 					<Row>
 						<Col>
 							{formik.values.observacao_gr && (
@@ -645,14 +645,14 @@ function FormularioCadastroManual({
 				</Col>
 			</Row>
 
-			<Row>
+			<div>
 				<ListAddItens
-					id="botao-add"
+					id="style-botao-add"
 					value={formik.values.locais}
 					name="locais"
 					onChange={formik.handleChange}
 				/>
-			</Row>
+			</div>
 
 			<Modal show={veiculo !== null} size="lg" onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
@@ -716,7 +716,7 @@ function FormularioCadastroManual({
 					</Card>
 				)}
 			</Modal>
-		</>
+		</div>
 	);
 }
 

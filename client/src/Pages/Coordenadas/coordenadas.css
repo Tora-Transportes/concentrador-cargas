@@ -1,3 +1,6 @@
+.class-body-coordenadas{
+  font-family: 'Poppins', sans-serif;
+}
 .dialog-cte {
   width: 50%;
   height: auto;
@@ -120,4 +123,12 @@
   .header-dialog h4 {
     margin-right: 5%;
   } */
+}
+
+.class-title-Coord{
+  margin-left: -0.1rem;
+}
+#botao-detalhe-tabela{
+  background: #00652E;
+  border: none;
 }

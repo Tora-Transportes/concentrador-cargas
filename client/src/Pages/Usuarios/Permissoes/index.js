@@ -104,13 +104,13 @@ function Permissoes() {
 	};
 
 	return (
-		<>
+		<div className="class-body-permissoes">
 			{/* <NavbarNavigator /> */}
 			<Menusuperior />
 			<Container className="text-center mb-4 mt-4">
 				<Row>
 					<Col>
-						<h1 className="title-h1">Permissões dos usuários</h1>
+						<h1 className="class-title-Permissao">Permissões dos usuários</h1>
 					</Col>
 				</Row>
 				<Row>
@@ -147,7 +147,7 @@ function Permissoes() {
 									header={getRenderHeader()}
 									paginator
 									rows={10}
-									emptyMessage="Não foram encontrado nenhum resultado nesta busca"
+									emptyMessage="Não foram encontrados resultados nessa busca."
 									paginatorTemplate=" PrevPageLink PageLinks NextPageLink  CurrentPageReport RowsPerPageDropdown"
 									rowsPerPageOptions={[15, 20, 25]}
 								>
@@ -160,7 +160,7 @@ function Permissoes() {
 									<Column
 										body={emailBodyTemplate}
 										field="email"
-										header="Email"
+										header="E-mail"
 										className="table-column-email"
 									/>
 									<Column
@@ -169,7 +169,7 @@ function Permissoes() {
 										body={getPermissBodyTemplate}
 										field="permissoes"
 										className="table-column-permissoes"
-										header="Permissão"
+										header="Permissões"
 									/>
 									<Column
 										body={getActionBodyTemplate}
@@ -182,7 +182,7 @@ function Permissoes() {
 					</div>
 				</Row>
 			</Container>
-		</>
+		</div>
 	);
 }
 

@@ -36,7 +36,7 @@ function VisualizarCargas({
 	};
 
 	return (
-		<>
+		<div className="class-body-gridcarga">
 			<LoadingComponent />
 			<Menusuperior />
 			<Container fluid className="text-center mb-5">
@@ -70,6 +70,7 @@ function VisualizarCargas({
 					<Col className="text-start">
 						<ButtonReact
 							label="Detalhes Tabela"
+							id="style-button-detail"
 							icon={<BiCog className="me-1" />}
 							onClick={() => setVisibleLeft(true)}
 							className="sidebar-button-table"
@@ -113,7 +114,7 @@ function VisualizarCargas({
 							setModalShow={setModalShow}
 							setModalShowExcel={setModalShowExcel}
 							tipoDeBuscaPorPagina={
-								tituloPag === "Grid de Cargas em Lote"
+								tituloPag === "Listagem de Cargas em Lote"
 									? "table-columns-lote"
 									: "table-columns"
 							}
@@ -124,7 +125,7 @@ function VisualizarCargas({
 					<Col sm={12}></Col>
 				</Row>
 			</Container>
-		</>
+		</div>
 	);
 }
 

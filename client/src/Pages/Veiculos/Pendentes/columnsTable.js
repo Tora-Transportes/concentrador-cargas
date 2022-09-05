@@ -6,7 +6,7 @@ export const getColumns = (aprovarVeiculo, reprovarVeiculo) => {
 	return [
 		{
 			name: "id",
-			description: "Codigo da carga",
+			description: "Código da carga",
 			selector: (row) => (
 				<Link
 					target="_blank"
@@ -19,7 +19,7 @@ export const getColumns = (aprovarVeiculo, reprovarVeiculo) => {
 		},
 		{
 			name: "documento_transporte",
-			description: "Doc Transporte",
+			description: "Doc. Transporte",
 			selector: (row) => row.documento_transporte,
 		},
 		{

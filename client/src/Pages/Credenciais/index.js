@@ -71,8 +71,8 @@ export default function Credenciais() {
 		},
 		onSubmit: async (values) => {
 			const ok = await swal(
-				"Ops ?",
-				"Deseja cadastrar essa credencial no portal ?",
+				"Ops!",
+				"Deseja cadastrar essa credencial no portal?",
 				"warning",
 				{
 					buttons: ["Cancelar", true],
@@ -81,14 +81,14 @@ export default function Credenciais() {
 
 			if (ok) {
 				await ServiceCredenciais.create(values);
-				swal("Registro inserido");
+				swal("Registro inserido!");
 				setData([
 					...data,
 					{ ...values, errored: false, successful_attempts: 0 },
 				]);
 				formik.resetForm();
 			} else {
-				swal("Nenhuma alteração realizada");
+				swal("Nenhuma alteração foi realizada.");
 			}
 		},
 	});
@@ -98,8 +98,8 @@ export default function Credenciais() {
 			event.preventDefault();
 		}
 		const ok = await swal(
-			"Ops ?",
-			"Deseja deletar essa credencial ?",
+			"Ops!",
+			"Deseja deletar essa credencial?",
 			"warning",
 			{
 				buttons: ["Cancelar", true],
@@ -107,10 +107,10 @@ export default function Credenciais() {
 		);
 		if (ok) {
 			await ServiceCredenciais.delete({ user, portal });
-			swal("Registro removido");
+			swal("Registro removido.");
 			setData(data.filter((i) => !(i.user === user && i.portal === portal)));
 		} else {
-			swal("Nenhuma alteração realizada");
+			swal("Nenhuma alteração foi realizada.");
 		}
 	}
 	async function mudarSenha(
@@ -121,7 +121,7 @@ export default function Credenciais() {
 			event.preventDefault();
 		}
 		const password = await swal(
-			"Ops ?",
+			"Ops!",
 			"Digite a nova senha para esse portal",
 			"warning",
 			{
@@ -138,14 +138,14 @@ export default function Credenciais() {
 				successful_attempts,
 			});
 
-			swal("Registro Atualizado");
+			swal("Registro Atualizado!");
 			setData(
 				data.map((i) =>
 					i.user === user && i.portal === portal ? { ...i, errored: false } : i
 				)
 			);
 		} else {
-			swal("Nenhuma alteração realizada");
+			swal("Nenhuma alteração foi realizada.");
 		}
 	}
 

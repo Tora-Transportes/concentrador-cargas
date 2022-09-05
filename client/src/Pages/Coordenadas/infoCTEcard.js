@@ -197,7 +197,7 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 									</li> */}
 									<li className="ul-card-li">
 										<h6>
-											Codigo veìculo: <strong>{i.codigo_veiculo}</strong>
+											Código veículo: <strong>{i.codigo_veiculo}</strong>
 										</h6>
 									</li>
 									<li className="ul-card-li">
@@ -210,7 +210,7 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 									</li>
 									<li className="ul-card-li">
 										<h6>
-											RP Email: <strong>{i.responsavel_placa_email}</strong>
+											RP E-mail: <strong>{i.responsavel_placa_email}</strong>
 										</h6>
 									</li>
 									<li className="ul-card-li">
@@ -220,7 +220,7 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 									</li>
 									<li className="ul-card-li">
 										<h6>
-											Setor veìculo: <strong>{i.setor_veiculo}</strong>
+											Setor veículo: <strong>{i.setor_veiculo}</strong>
 										</h6>
 									</li>
 									<li className="ul-card-li">
@@ -245,13 +245,13 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 									</li>
 									<li className="ul-card-li">
 										<h6>
-											Origem ultima viagem:{" "}
+											Origem última viagem:{" "}
 											<strong>{i.ultima_viagem_origem}</strong>
 										</h6>
 									</li>
 									<li className="ul-card-li">
 										<h6>
-											Destino ultima viagem:{" "}
+											Destino última viagem:{" "}
 											<strong>{i.ultima_viagem_destino}</strong>
 										</h6>
 									</li>

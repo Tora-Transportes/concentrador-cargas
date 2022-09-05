@@ -1,4 +1,5 @@
-body{
+.class-body-main{
+  margin-top: 5rem;
   font-family: 'Poppins', sans-serif;
 }
 
@@ -38,14 +39,14 @@ body{
 }
 
 #style-title-main{
-  font-size: 32px;
+  font-size: 37px;
   color: #00652E;
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
 }
 
 #style-p-saudacao{
-  font-size: 18px;
+  font-size: 19px;
   color: #00652E;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
@@ -69,7 +70,7 @@ body{
 
 #style-p-text{
   color: #939598;
-  font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 500;
   text-align: center;
   font-size: 16px;
@@ -95,7 +96,7 @@ body{
 #title-p-jogo{
   color: #939598;
   font-weight: 500;
-  font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .class-button-jogue{
@@ -115,3 +116,25 @@ body{
   margin-bottom: 3rem;
 }
 
+@media only screen and (max-width: 480px){
+  #title-p-jogo{
+    color: #939598;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+  }
+  .class-button-jogue{
+    margin-left: 3rem;
+  }
+  #style-button-jogo{
+    background: #00652E;
+    border: none;
+    width: 18rem;
+  }
+  .class-jogo{
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 4rem;
+    margin-bottom: 3rem;
+  }
+}

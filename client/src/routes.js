@@ -16,7 +16,7 @@ import SituacaoVeiculos from "./Pages/Veiculos/Pendentes";
 import CoordenadasVeiculos from "./Pages/Coordenadas";
 import RelatoriosMain from "./Pages/Relatorios/Totalizadores";
 import Credenciais from "./Pages/Credenciais";
-import CalendarioProducao from "./Pages/CalendarioProducao";
+// import CalendarioProducao from "./Pages/CalendarioProducao";
 import RaioVeiculos from "./Pages/Veiculos/Raio";
 import DestinoCarga from "./Pages/Veiculos/DestinoCarga";
 import RaioEmpresa from "./Pages/Veiculos/RaioEmpresa";
@@ -70,8 +70,7 @@ export default function AllRoutes() {
 				/>
 				<Route path="/relatorios" exact component={RelatoriosMain} />
 				<Route path="/credenciais" exact component={Credenciais} />
-				<Route path="/producao" exact component={CalendarioProducao} />
-				{/* <Route path="/menu" exact component={<Menusuperior />} /> */}
+				{/* <Route path="/producao" exact component={CalendarioProducao} /> */}
 				<Route path="/ajuda" exact component={Helper} />
 			</Switch>
 		</BrowserRouter>

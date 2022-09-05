@@ -49,10 +49,10 @@ function Produtos() {
 		},
 	});
 
-	async function handleDelete(id) {
+	async function handleDelete(nome, id) {
 		const observacao = await swal(
 			"Ops?",
-			`Tem certeza que deseja desabilitar o produto ${id}
+			`Tem certeza que deseja desabilitar o produto ${nome}
 
 			Preencha a observação abaixo`,
 			"warning",
@@ -92,8 +92,8 @@ function Produtos() {
 		}
 	}
 
-	async function handleEditProduto(id) {
-		const produto = await swal(`Novo nome para o produto '${id}'`, {
+	async function handleEditProduto(nome) {
+		const produto = await swal(`Novo nome para o produto '${nome}'`, {
 			content: "input",
 			buttons: ["Cancelar", true],
 		});
@@ -105,12 +105,12 @@ function Produtos() {
 		}
 
 		try {
-			await ServiceProdutos.update({ nome: produto.toUpperCase(), id });
+			await ServiceProdutos.update({ id: produto.toUpperCase(), nome });
 			swal("Sucesso!", "Produto atualizado", "success");
 			setProdutos((p) =>
 				p
 					.map((i) => {
-						if (i.id !== id) return i;
+						if (i.nome !== nome) return i;
 						return { ...i, nome: produto.toUpperCase() };
 					})
 					.sort((a, b) => (a.nome > b.nome ? 1 : -1))
@@ -141,13 +141,13 @@ function Produtos() {
 	};
 
 	return (
-		<>
+		<div className="class-body-produtos">
 			<LoadingScreen />
 			{/* <NavbarNavigator /> */}
 			<Menusuperior />
 			<Container className="text-center mb-3 mt-3">
 				<Row>
-					<h1 className="title-h1">Produtos</h1>
+					<h1 className="class-title-produto">Produtos</h1>
 					<div className="datatable-responsive-demoPermissoes">
 						<DataTable
 							className="p-datatable-responsive-demoPermissoes"
@@ -158,7 +158,7 @@ function Produtos() {
 							paginator
 							rows={60}
 							paginatorTemplate=" PrevPageLink PageLinks NextPageLink  CurrentPageReport RowsPerPageDropdown"
-							emptyMessage="Não foram encontrado nenhum resultado nesta busca"
+							emptyMessage="Não foram encontrados resultados nessa busca."
 							rowsPerPageOptions={[80, 100]}
 							stripedRows
 						>
@@ -172,7 +172,7 @@ function Produtos() {
 							<Column
 								body={usuarioBodyTemplate}
 								field="usuario"
-								header="Atualizado Por:"
+								header="Atualizado por:"
 								className="table-column-email"
 							/>
 							<Column
@@ -190,7 +190,7 @@ function Produtos() {
 					</div>
 				</Row>
 			</Container>
-		</>
+		</div>
 	);
 }
 

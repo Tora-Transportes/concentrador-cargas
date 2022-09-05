@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import Logo from "../../../assets/logotoraico.png";
 import "./style.css";
-import { NavbarBrand } from "reactstrap";
+import { NavbarBrand } from "react-bootstrap";
 import { FaSignOutAlt } from "react-icons/fa";
-// import HandleClick from "../../Cargas/Manual/Cadastrar/tooltipsCadastro";
+import { logout } from "../../../MicrosoftAuthentication";
 
-function Menusuperior({ type }) {
+function Menusuperior() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
 
-  console.log(type);
   return (
     <div id="header">
       <NavbarBrand href="/">
@@ -30,44 +29,56 @@ function Menusuperior({ type }) {
         <ul id="menu" role="menu" className="class-ul">
           <li className="class-li">
             <a id="style-a" href="/">
-              Inicio
+              Início
             </a>
           </li>
           <div className="class-dropdown">
             <div className="dropdown">
               <button id="style-button-drop" className="dropbtn">
-                Carga
+                Cargas
               </button>
               <div id="myDropdown" className="dropdown-content">
-                <a href="/cargas/menu">Cadastrar Carga</a>
+                <a href="/cargas/menu">Cadastrar Cargas</a>
                 <a href="/cargas/visualizar">Listagem de Cargas</a>
                 <a href="/lotes/visualizar">Listagem de Lotes</a>
-                <a href="/producao">Produção</a>
+                {/* <a href="/producao">Produção</a> */}
               </div>
             </div>
-
-            <div className="dropdown-doc">
+            {/* <div className="dropdown-doc">
               <button id="style-button-drop" className="dropbtn-doc">
-                Documentos
+                Relatórios
               </button>
-              <div id="myDropdown-doc" className="dropdown-content-doc">
-                <a href="/veiculos/aprovacao">Monitoramento</a>
-                <a href="/veiculos/coordenadas">Coordenadas</a>
+               <div id="myDropdown-doc" className="dropdown-content-doc">
                 <a href="/relatorios">Relatórios</a>
               </div>
-            </div>
-
+            </div> */}
             <div className="dropdown-veic">
               <button id="style-button-drop" className="dropbtn-veic">
                 Veículos
               </button>
               <div id="myDropdown-veic" className="dropdown-content-veic">
+                <a href="/rotas/pendentes">Rotas pendentes</a>
                 <a href="/veiculos/raio">Veículos x Veículos</a>
                 <a href="/veiculos/destino">Veículos até Empresa</a>
                 <a href="/veiculos/raio/empresa">Raio Empresa</a>
               </div>
             </div>
           </div>
+          <li className="class-li">
+            <a id="style-a" href="/relatorios">
+              Relatórios
+            </a>
+          </li>
+          <li className="class-li">
+            <a id="style-a" href="/veiculos/coordenadas">
+              Coordenadas
+            </a>
+          </li>
+          <li className="class-li">
+            <a id="style-a" href="/veiculos/aprovacao">
+              Monitoramento
+            </a>
+          </li>
           <li className="class-li">
             <a id="style-a" href="/usuarios/permissoes">
               Permissões
@@ -84,7 +95,16 @@ function Menusuperior({ type }) {
             </a>
           </li>
           <li className="class-li">
-            <a id="style-a" href="/">
+            <a
+              id="style-a"
+              href="/"
+              action
+              onClick={() => {
+                setTimeout(() => {
+                  logout();
+                }, 200);
+              }}
+            >
               Sair <FaSignOutAlt />
             </a>
           </li>

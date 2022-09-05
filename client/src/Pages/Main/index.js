@@ -132,7 +132,7 @@ function Main() {
 			<ToastContainer />
 			{/* <NavbarNavigator /> */}
 			<Menusuperior />
-			<Container>
+			<Container className="class-body-main">
 				<Row>
 					<Col className="text-center mt-5 mb-5">
 						<p id="style-title-main" className="class-p-title-main">
@@ -255,7 +255,7 @@ function Main() {
 							<div className="class-linha-jogo">
 								<p id="title-p-jogo">
 									{" "}
-									Exercite sua memória para garantir a melhor tomada de decisão
+									Exercite sua memória, garantindo a melhor tomada de decisão
 									durante seu dia de trabalho.
 								</p>
 								<Button

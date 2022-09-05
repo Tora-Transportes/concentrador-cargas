@@ -20,6 +20,7 @@ import DateUtils from "../../Utils/date";
 import { showToastMessage } from "src/Pages/Utils/toastMessage";
 import { Toast } from "primereact/toast";
 import diffiInDays from "src/Pages/Utils/diffInDays";
+import "../Totalizadores/style.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -81,9 +82,12 @@ function ViewRotasPendentes({
 	}, [totalizadores]);
 
 	return (
-		<>
+		<div className="class-body-relatorios">
 			<Container className="text-center mb-5 mt-4">
-				<hr />
+				<p id="style-title-rel" className="class-p-rel">
+					Relatório
+				</p>
+				<hr id="style-hr-rel" />
 				<Toast
 					ref={toast}
 					className="w-25"
@@ -97,7 +101,6 @@ function ViewRotasPendentes({
 							DateUtils.convertDateToReadableTime(tempoMedioAprovacaoGr.media)}
 					</b>
 				</span>
-				<hr />
 
 				<Accordion>
 					<Accordion.Item eventKey="0">
@@ -335,7 +338,7 @@ function ViewRotasPendentes({
 											<FaRobot size={30} className="text-success" />
 										</td>
 										<td>
-											Cargas extraídas do <b>EMAIL</b>
+											Cargas extraídas do <b>E-MAIL</b>
 										</td>
 										<td>
 											<span className="text-danger">
@@ -533,7 +536,7 @@ function ViewRotasPendentes({
 						</>
 					)}
 			</Container>
-		</>
+		</div>
 	);
 }
 

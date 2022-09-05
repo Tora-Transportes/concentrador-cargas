@@ -8,7 +8,9 @@ import ServiceCargas from "../../../../services/ServiceCargas";
 import { getClaims } from "../../../../MicrosoftAuthentication";
 import ServiceProdutos from "src/services/ServiceProdutos";
 import FormularioCadastroManual from "src/Pages/Components/FormularioCadastroManual";
-import CabecalhoFixado from "src/Pages/Components/CabecalhoFixado";
+// import CabecalhoFixado from "src/Pages/Components/CabecalhoFixado";
+import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
+import "../Editar/style.css";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -267,8 +269,11 @@ function Manual() {
 	return (
 		<>
 			<LoadingScreen />
-			<CabecalhoFixado>Edição de carga aberta manualmente</CabecalhoFixado>
+			{/* <CabecalhoFixado>Edição de carga aberta manualmente</CabecalhoFixado> */}
+			<Menusuperior />
 			<Container className="mb-5 mt-5">
+				<p id="style-title-editorCarga">Editar carga aberta manualmente</p>
+				<hr />
 				<Form onSubmit={formik.handleSubmit}>
 					<FormularioCadastroManual
 						buscarCargaComDocumentoDeTransporte={

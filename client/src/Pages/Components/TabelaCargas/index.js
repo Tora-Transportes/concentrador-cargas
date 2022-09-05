@@ -148,7 +148,6 @@ function TabelaCargas({
 				body={col.selector}
 				sortable={col.sortable}
 				filter={true}
-				// id={col.id}
 				filterElement={
 					col.Filter ? (
 						<col.Filter
@@ -222,7 +221,7 @@ function TabelaCargas({
 					onSort={onSort}
 					className="p-datatable-responsive-grid"
 					responsiveLayout="scroll"
-					emptyMessage="Não foram encontrado nenhum resultado nesta busca"
+					emptyMessage="Não foram encontrados resultados nessa busca."
 					ref={dadosTabela}
 					value={data}
 					header={headerTable}

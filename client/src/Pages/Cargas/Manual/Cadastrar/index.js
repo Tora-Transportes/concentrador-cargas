@@ -54,8 +54,8 @@ function Manual() {
 					canal_comunicacao: "manual",
 				});
 				swal(
-					"Sucesso",
-					`A carga foi cadastrada com o identificador ${data.data.id}`,
+					"Sucesso!",
+					`A carga foi cadastrada com o identificador ${data.data.id} !`,
 					"success"
 				);
 				resetForm();
@@ -130,7 +130,7 @@ function Manual() {
 
 	function resetForm() {
 		formik.resetForm();
-		formik.setFieldValue("id", "(Vai ser auto gerado)");
+		formik.setFieldValue("id", "(gerado automaticamente)");
 	}
 
 	return (
@@ -167,12 +167,7 @@ function Manual() {
 					/>
 					<Row>
 						<Col>
-							<Button
-								variant="success"
-								type="submit"
-								className="p-3 fw-bold"
-								id="botao-cadastrar-carg"
-							>
+							<Button variant="success" type="submit" id="botao-cadastrar-carg">
 								Cadastrar
 							</Button>
 						</Col>
