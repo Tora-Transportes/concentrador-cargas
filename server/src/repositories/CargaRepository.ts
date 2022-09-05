@@ -218,6 +218,64 @@ export class CargaRepository {
     results.orderBy("con_cargas.id", "asc");
     const rows = await results;
 
+    console.log(results.toSQL().toNative());
+
+    const totalRegisters = Number((await total)?.total) || 0;
+    return {
+      page: realPage,
+      total_pages: Math.ceil(totalRegisters / pageSize),
+      total_registers: totalRegisters,
+      results: rows,
+    };
+  }
+
+  async searchExcel(
+    query: Record<string, any>,
+    page = 1,
+    pageSize = 5
+  ): Promise<IPaginationResult<ICarga>> {
+    const realPage = isNaN(Number(page)) || Number(page) < 1 ? 1 : Number(page);
+
+    const total = database("con_cargas").count("id as total").first();
+    const results = database("con_cargas")
+      .select([
+        "con_cargas.*",
+        "con_situacoes_cargas.descricao as situacao.descricao",
+        "con_situacoes_cargas.cor as situacao.cor",
+        "FILIAL.FIL_DSC as filial.descricao",
+        "CADASTRO_GERAL.CG_NOME as nome_motorista",
+      ])
+      .join(
+        "con_situacoes_cargas",
+        "con_situacoes_cargas.id",
+        "con_cargas.fk_situacao"
+      )
+      .leftJoin("FILIAL", "FILIAL.FIL_COD", "con_cargas.fk_filial")
+      .leftJoin(
+        "CADASTRO_GERAL",
+        "CADASTRO_GERAL.CG_COD",
+        "con_cargas.codigo_motorista"
+      )
+      .limit(pageSize)
+      .offset((realPage - 1) * pageSize)
+      .modify(function (con_cargas) {
+        if (query.date_execel_inicio && query.date_execel_fim) {
+          con_cargas.andWhereBetween("con_cargas.data_cadastro", [
+            new Date(query.date_execel_inicio + "T00:00:00"),
+            new Date(query.date_execel_fim + "T00:00:00"),
+          ]);
+        }
+      });
+    // if (isValid(query?.order_column)) {
+    //   results.orderBy(
+    //     "con_cargas." + String(query.order_column),
+    //     String(query?.order_direction)
+    //   );
+    // }
+
+    results.orderBy("con_cargas.id", "asc");
+    const rows = await results;
+
     const totalRegisters = Number((await total)?.total) || 0;
     return {
       page: realPage,
