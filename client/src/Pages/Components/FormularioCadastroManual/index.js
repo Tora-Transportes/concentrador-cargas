@@ -127,7 +127,7 @@ function FormularioCadastroManual({
 			</Row>
 			<Row>
 				<Col sm={12} md={6}>
-					<FloatingLabel label="*Código da filial" className="mb-3">
+					<FloatingLabel label="* Código da filial" className="mb-3">
 						<FilialSelect
 							id="Codigo-filial"
 							placeholder=" "
@@ -160,7 +160,7 @@ function FormularioCadastroManual({
 						<hr id="style-linha-cad2"></hr>
 					</div>
 					<Form.Group className="mb-3">
-						*É Lote ?{" "}
+						* É Lote?{" "}
 						<Form.Check
 							type="radio"
 							label="Sim"
@@ -186,10 +186,10 @@ function FormularioCadastroManual({
 							placement="bottom"
 							overlay={
 								<Tooltip id={`tooltip-bottom`}>
-									O campo Lote é para sinalizar o tipo de carga. Quando o lote é
-									Sim (Representa uma quantidade expressiva de volume de cargas
-									que devem ser retiradas). Quando Lote é Não (Representa uma
-									carga com um volume único).
+									O campo Lote sinaliza o tipo de carga. Quando o lote é Sim
+									(Representa uma quantidade expressiva de volume de cargas que
+									devem ser retiradas). Quando Lote é Não (Representa uma carga
+									com um volume único).
 								</Tooltip>
 							}
 						>

@@ -131,7 +131,7 @@ function ViewRotasPendentes({
 							</Row>
 							<Row className="mb-3">
 								<Col>
-									<FloatingLabel label="*Código da filial" className="mb-3">
+									<FloatingLabel label="* Código da filial" className="mb-3">
 										<FilialSelect
 											placeholder=" "
 											name="fk_filial"
@@ -304,7 +304,7 @@ function ViewRotasPendentes({
 											<FaRobot size={30} className="text-success" />
 										</td>
 										<td>
-											Cargas extraidas do <b>PORTAL</b>
+											Cargas extraídas do <b>PORTAL</b>
 										</td>
 										<td>
 											<span className="text-danger">
@@ -335,7 +335,7 @@ function ViewRotasPendentes({
 											<FaRobot size={30} className="text-success" />
 										</td>
 										<td>
-											Cargas extraidas do <b>EMAIL</b>
+											Cargas extraídas do <b>EMAIL</b>
 										</td>
 										<td>
 											<span className="text-danger">

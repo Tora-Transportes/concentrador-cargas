@@ -88,7 +88,7 @@ function Formulario({ formik, produtos, distancia }) {
 			</Row>
 			<Row>
 				<Col sm={12} md={6}>
-					<FloatingLabel label="*Código da filial" className="mb-3">
+					<FloatingLabel label="* Código da filial" className="mb-3">
 						<Form.Control
 							name="fk_filial"
 							value={formik.values.fk_filial ?? ""}

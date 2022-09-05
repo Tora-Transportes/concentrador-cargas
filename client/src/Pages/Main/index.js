@@ -150,7 +150,7 @@ function Main() {
 						<p id="style-p-text">
 							O concentrador de cargas lhe proporciona ampla visibilidade de
 							demanda, além de auxiliar sua concentração na melhor <br />
-							tomada de decisão para escolha de um veículo.
+							tomada de decisão para a escolha de um veículo.
 						</p>
 					</div>
 				</div>
