@@ -52,7 +52,7 @@ export const SideBarFuncition = ({
 			{setModalShow !== undefined && (
 				<Col lg={12} className="text-center mb-2">
 					<ButtonReact
-						label="Legenda carga"
+						label="Legendas de cargas"
 						icon={<MdOutlineSubtitles />}
 						onClick={() => showLegendaCarga()}
 						className=" w-100"

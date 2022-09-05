@@ -160,7 +160,7 @@ function FormularioCadastroManual({
 						<hr id="style-linha-cad2"></hr>
 					</div>
 					<Form.Group className="mb-3">
-						* É Lote?{" "}
+						*É Lote?{" "}
 						<Form.Check
 							type="radio"
 							label="Sim"

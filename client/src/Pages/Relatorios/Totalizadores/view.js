@@ -131,7 +131,7 @@ function ViewRotasPendentes({
 							</Row>
 							<Row className="mb-3">
 								<Col>
-									<FloatingLabel label="* Código da filial" className="mb-3">
+									<FloatingLabel label="*Código da filial" className="mb-3">
 										<FilialSelect
 											placeholder=" "
 											name="fk_filial"
