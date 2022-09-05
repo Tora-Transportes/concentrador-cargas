@@ -148,7 +148,6 @@ function TabelaCargas({
 				body={col.selector}
 				sortable={col.sortable}
 				filter={true}
-				// id={col.id}
 				filterElement={
 					col.Filter ? (
 						<col.Filter
