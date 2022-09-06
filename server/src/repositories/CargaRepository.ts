@@ -7,6 +7,9 @@ export interface IPaginationResult<T> {
   total_registers: number;
   results: T[];
 }
+export interface IResultExcel<T> {
+  results: T[];
+}
 export class CargaRepository {
   async nextId(): Promise<number> {
     return Number(
@@ -218,8 +221,6 @@ export class CargaRepository {
     results.orderBy("con_cargas.id", "asc");
     const rows = await results;
 
-    console.log(results.toSQL().toNative());
-
     const totalRegisters = Number((await total)?.total) || 0;
     return {
       page: realPage,
@@ -231,19 +232,44 @@ export class CargaRepository {
 
   async searchExcel(
     query: Record<string, any>,
-    page = 1,
     pageSize = 5
-  ): Promise<IPaginationResult<ICarga>> {
-    const realPage = isNaN(Number(page)) || Number(page) < 1 ? 1 : Number(page);
-
-    const total = database("con_cargas").count("id as total").first();
+  ): Promise<IResultExcel<ICarga>> {
     const results = database("con_cargas")
       .select([
-        "con_cargas.*",
-        "con_situacoes_cargas.descricao as situacao.descricao",
-        "con_situacoes_cargas.cor as situacao.cor",
-        "FILIAL.FIL_DSC as filial.descricao",
-        "CADASTRO_GERAL.CG_NOME as nome_motorista",
+        "con_cargas.id AS Código da carga",
+        "con_cargas.cliente AS Cliente",
+        database.raw(
+          `CASE WHEN "con_cargas"."e_lote" = 0 THEN 'Não' WHEN "con_cargas"."e_lote" = 1 THEN 'Sim' END AS "E lote"`
+        ),
+        "con_cargas.origem_carga AS Origem Carga",
+        "con_cargas.destino_carga AS Destino Carga",
+        database.raw(
+          `to_char("con_cargas"."data_coleta", 'dd/mm/yyyy') AS "Data Coleta"`
+        ),
+        database.raw(
+          `to_char("con_cargas"."data_entrega", 'dd/mm/yyyy') AS "Data Entrega"`
+        ),
+        "con_cargas.tipo_carga AS Tipo Material",
+        "con_cargas.quantidade AS Quantidade",
+        "con_cargas.quantidade_atual AS Quantidade Atual",
+        "con_cargas.fk_lote_pai AS Lote Pai",
+        "con_situacoes_cargas.descricao AS Situação",
+        "FILIAL.FIL_DSC AS Descrição Filial",
+        "con_cargas.fk_filial AS Código Filial",
+        "con_cargas.documento_transporte AS Documento de transporte",
+        "con_cargas.unidade_medida AS UN",
+        "con_cargas.responsavel_cadastro AS Responsável Cadastro",
+        "con_cargas.canal_comunicacao AS Canal AS Comunicação",
+        "con_cargas.observacao AS Observação",
+        "con_situacoes_cargas.descricao AS Status",
+        "con_cargas.placa_veiculo AS Placa",
+        "con_cargas.observacao_gr AS Observação do GR",
+        database.raw(
+          `to_char("con_cargas"."data_cadastro", 'dd/mm/yyyy') AS "Data Cadastro"`
+        ),
+        database.raw(
+          `to_char("con_cargas"."data_atualizacao", 'dd/mm/yyyy') AS "Data Atualização"`
+        ),
       ])
       .join(
         "con_situacoes_cargas",
@@ -257,7 +283,6 @@ export class CargaRepository {
         "con_cargas.codigo_motorista"
       )
       .limit(pageSize)
-      .offset((realPage - 1) * pageSize)
       .modify(function (con_cargas) {
         if (query.date_execel_inicio && query.date_execel_fim) {
           con_cargas.andWhereBetween("con_cargas.data_cadastro", [
@@ -265,22 +290,16 @@ export class CargaRepository {
             new Date(query.date_execel_fim + "T00:00:00"),
           ]);
         }
+      })
+      .modify(function (con_cargas) {
+        if (query.e_lote) {
+          con_cargas.where("con_cargas.e_lote", query.e_lote);
+        }
       });
-    // if (isValid(query?.order_column)) {
-    //   results.orderBy(
-    //     "con_cargas." + String(query.order_column),
-    //     String(query?.order_direction)
-    //   );
-    // }
 
     results.orderBy("con_cargas.id", "asc");
     const rows = await results;
-
-    const totalRegisters = Number((await total)?.total) || 0;
     return {
-      page: realPage,
-      total_pages: Math.ceil(totalRegisters / pageSize),
-      total_registers: totalRegisters,
       results: rows,
     };
   }
