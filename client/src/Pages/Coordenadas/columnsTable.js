@@ -34,16 +34,19 @@ export const getColumns = (
 			name: "placa",
 			description: "Placa",
 			selector: (row) => row.placa,
+			showFilter: true,
 		},
 		{
 			name: "tipo_cavalo",
 			description: "Tipo cavalo",
 			selector: (row) => row.tipo_cavalo,
+			showFilter: true,
 		},
 		{
 			name: "tipo_carreta",
 			description: "Tipo carreta",
 			selector: (row) => row.tipo_carreta,
+			showFilter: true,
 		},
 		// {
 		// 	name: "apelido_carreta",
@@ -85,6 +88,7 @@ export const getColumns = (
 					</a>
 				);
 			},
+			showFilter: true,
 		},
 		// {
 		// 	name: "cpf_motorista",
@@ -95,6 +99,7 @@ export const getColumns = (
 			name: "setor_veiculo",
 			description: "Setor veículo",
 			selector: (row) => row.setor_veiculo,
+			showFilter: true,
 		},
 		{
 			name: "data_emissao_documento",
@@ -111,17 +116,20 @@ export const getColumns = (
 			name: "ultima_viagem_origem",
 			description: "Origem última viagem",
 			selector: (row) => row.ultima_viagem_origem,
+			showFilter: true,
 		},
 		{
 			name: "ultima_viagem_destino",
 			description: "Destino última viagem",
 			selector: (row) => row.ultima_viagem_destino,
+			showFilter: true,
 		},
 		{
 			name: "distancia_prevista",
 			description: "Distância prevista rota",
 			selector: (row) =>
 				row.distancia_prevista ? `${row.distancia_prevista} KM` : "NC",
+			showFilter: true,
 		},
 		{
 			name: "distancia_ate_destino",
@@ -221,6 +229,7 @@ export const getColumns = (
 					<option value="F">Frota</option>
 				</Form.Select>
 			),
+			showFilter: true,
 		},
 		{
 			name: "data_janela",
@@ -232,6 +241,7 @@ export const getColumns = (
 					onChange={({ target }) => handleChangeDataJanela(row, target)}
 				/>
 			),
+			showFilter: true,
 		},
 		{
 			name: "observacao",
@@ -254,11 +264,13 @@ export const getColumns = (
 						Adicionar
 					</Button>
 				),
+			showFilter: true,
 		},
 		{
 			name: "documento",
 			description: "Documento",
 			selector: (row) => row.documento,
+			showFilter: true,
 		},
 		{
 			name: "tipo_documento",
@@ -271,11 +283,13 @@ export const getColumns = (
 					<option value="RPA">RPA</option>
 				</Form.Select>
 			),
+			showFilter: true,
 		},
 		{
 			name: "nome_motorista",
 			description: "Motorista",
 			selector: (row) => row.nome_motorista,
+			showFilter: true,
 		},
 		{
 			name: "responsavel_placa_nome",
@@ -288,6 +302,7 @@ export const getColumns = (
 				/>
 			),
 			Filter: (props) => <ResponsavelCadastroSelect {...props} />,
+			showFilter: true,
 		},
 		{
 			name: "responsavel_placa_email",
@@ -299,6 +314,7 @@ export const getColumns = (
 			name: "mct",
 			description: "MCT",
 			selector: (row) => row.mct,
+			showFilter: true,
 		},
 		{
 			name: "data_calculo",

@@ -8,8 +8,6 @@ function ViewRotasPendentes({
 	columns = [],
 	get_data,
 	data,
-	itensPerPage,
-	setItensPerPage,
 	totalRegisters = 0,
 }) {
 	return (
@@ -25,20 +23,7 @@ function ViewRotasPendentes({
 					</h1>
 				</Row>
 				<Row>
-					<Col lg={1} className="text-center ">
-						<select
-							id="rows-monit"
-							className="btn"
-							value={itensPerPage}
-							onChange={(e) => setItensPerPage(e.target.value)}
-						>
-							<option value="10">10</option>
-							<option value="20">20</option>
-							<option value="50">50</option>
-							<option value="100">100</option>
-							<option value="500">500</option>
-						</select>
-					</Col>
+					<Col lg={1} className="text-center "></Col>
 					<Col className="text-center" id="total-reg">
 						Total de {totalRegisters} registros.
 					</Col>

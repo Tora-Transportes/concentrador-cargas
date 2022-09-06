@@ -87,16 +87,16 @@ export const columns = [
 				? `${row.fk_filial} - ${row["filial.descricao"]}`
 				: row.fk_filial,
 		sortable: "sortable",
-		showFilter: true,
 		Filter: (props) => <Form.Control type="number" {...props} />,
+		showFilter: true,
 	},
 	{
 		name: "data_cadastro",
 		description: "Data do cadastro",
 		selector: (row) => formatDateAndHour(row.data_cadastro),
 		sortable: "sortable",
-		showFilter: true,
 		Filter: (props) => <Form.Control type="date" {...props} />,
+		showFilter: true,
 	},
 	{
 		name: "origem_carga",

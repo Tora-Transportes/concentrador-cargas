@@ -16,26 +16,31 @@ export const getColumns = (aprovarVeiculo, reprovarVeiculo) => {
 					{row.id}
 				</Link>
 			),
+			showFilter: true,
 		},
 		{
 			name: "documento_transporte",
 			description: "Doc. Transporte",
 			selector: (row) => row.documento_transporte,
+			showFilter: true,
 		},
 		{
 			name: "placa_veiculo",
 			description: "Placa veículo",
 			selector: (row) => row.placa_veiculo,
+			showFilter: true,
 		},
 		{
 			name: "origem_carga",
 			description: "Origem",
 			selector: (row) => row.origem_carga,
+			showFilter: true,
 		},
 		{
 			name: "destino_carga",
 			description: "Destino",
 			selector: (row) => row.destino_carga,
+			showFilter: true,
 		},
 		{
 			name: "Aprovar",
