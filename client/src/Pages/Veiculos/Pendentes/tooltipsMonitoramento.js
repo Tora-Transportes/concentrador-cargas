@@ -7,19 +7,19 @@ const options = {
 		{
 			element: "#title-monit",
 			description:
-				"<h2>Bem-vindo</h2><div>A tela Monitoramento na tabela seguinte irá passar por uma etapa de aprovação e reprovação.</div>",
+				"<h2>Bem-vindo!</h2><div>Na tela de Monitoramento, são controladas as etapas de aprovação e reprovação dos veículos, conforme mostra a tabela abaixo.</div>",
 			placement: "bottom",
 		},
 		{
 			element: "#rows-monit",
 			description:
-				"<h2>Linhas da Tabela</h2><div>Nesta opção você define a quantidade de linhas que será exibidas na tabela.</div>",
+				"<h2>Linhas da Tabela</h2><div>Nessa opção você define a quantidade de linhas que serão exibidas na tabela.</div>",
 			placement: "bottom",
 		},
 		{
 			element: "#import",
 			description:
-				"<h2>Importar</h2><div>Caso sua carga foi coletada em um Arquivo Selecione está opção.</div>",
+				"<h2>Importar</h2><div>Caso sua carga tenha coletada em um Arquivo Selecione essa opção.</div>",
 			placement: "bottom",
 		},
 		{

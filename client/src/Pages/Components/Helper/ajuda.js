@@ -36,8 +36,8 @@ function Helper() {
 				</p>
 
 				<p className="class-p-ajuda">
-					Selecione uma das opções e você será redirecionado até a página para
-					iniciar o passo a passo:
+					Selecione uma das opções e você será redirecionado até a página que
+					dará início ao passo a passo correspondente:
 				</p>
 			</div>
 
@@ -53,7 +53,7 @@ function Helper() {
 					<Accordion.Body className="class-body-accordion">
 						<p>
 							O primeiro passo irá te direcionar para uma página, em que você
-							irá selecionar a forma em que deseja cadastrar a carga.
+							deverá selecionar o modo que deseja cadastrar a carga.
 						</p>
 						<p>Exemplo da Página de Seleção: </p>
 
@@ -106,8 +106,10 @@ function Helper() {
 					</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
 						<p>
-							No primeiro passo será direcionado para uma página em que você irá
-							selecionar em qual forma deseja cadastrar a carga.
+							Nessa opção você será direcionado para a página de Monitoramento,
+							onde conseguirá verificar a situação dos veículos pendentes, e
+							aprovar ou reprovar esses veículos de acordo com a situação de
+							cada um.
 						</p>
 						<p>Exemplo da página de Monitoramento: </p>
 						<img src={telaMonitoramento} id="style-gif" />

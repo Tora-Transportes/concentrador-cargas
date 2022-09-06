@@ -46,7 +46,7 @@ function FormularioCadastroManual({
 			.data;
 		setVeiculo(vehicleData);
 		if (!vehicleData) {
-			swal("Não foi encontrado nenhum veículo com esta placa");
+			swal("Não foi encontrado nenhum veículo com essa placa");
 		}
 	}
 	useEffect(() => {
@@ -72,7 +72,7 @@ function FormularioCadastroManual({
 				);
 				return;
 			} else {
-				swal("Não foi encontrado nenhum veículo com esta placa");
+				swal("Não foi encontrado nenhum veículo com essa placa");
 			}
 		}
 		formik.setFieldValue("placa_carreta", null);
@@ -343,7 +343,7 @@ function FormularioCadastroManual({
 			</Row>
 			<Row>
 				<Col sm={12} md={6}>
-					<FloatingLabel label="*Origem carga" className="mb-3">
+					<FloatingLabel label="*Origem da carga" className="mb-3">
 						<InputLocalizacao
 							keyDataList="origem_carga"
 							type="text"
@@ -487,7 +487,7 @@ function FormularioCadastroManual({
 			)}
 			<Row>
 				<Col>
-					<FloatingLabel label="Data coleta" className="mb-3">
+					<FloatingLabel label="Data da coleta" className="mb-3">
 						<Form.Control
 							type="date"
 							placeholder=" "
@@ -499,7 +499,7 @@ function FormularioCadastroManual({
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="Data entrega" className="mb-3">
+					<FloatingLabel label="Data de entrega" className="mb-3">
 						<Form.Control
 							type="date"
 							placeholder=" "
@@ -541,7 +541,7 @@ function FormularioCadastroManual({
 			)}
 			<Row>
 				<Col sm={12} md={6}>
-					<FloatingLabel label="Tipo material" className="mb-3">
+					<FloatingLabel label="Tipo de material" className="mb-3">
 						<AutocompleteInput
 							keyDataList="tipo_carga"
 							options={produtos.filter((i) => !!i.ativo).map((i) => i.nome)}
@@ -596,10 +596,10 @@ function FormularioCadastroManual({
 				<Col>
 					<Form.Group className="mb-3">
 						<Form.Label id="info-add">
-							Pré-Requisitos e Acessórios do veículo
+							Pré-requisitos e acessórios do veículo
 						</Form.Label>
 						<Form.Control
-							placeholder="Neste campo é adicionado informações, Exemplo: Motorista necessita de treinamento atualizado no cliente, cinta e luvas"
+							placeholder="Nesse campo são adicionadas informações, exemplo(s): motorista necessita de treinamento atualizado no cliente, cinta, luvas, etc."
 							as="textarea"
 							rows={3}
 							name="acessorios_requisitos"
@@ -614,9 +614,9 @@ function FormularioCadastroManual({
 			<Row>
 				<Col>
 					<Form.Group className="mb-3">
-						<Form.Label>Informações Restritivas do Veículo</Form.Label>
+						<Form.Label>Informações restritivas do veículo</Form.Label>
 						<Form.Control
-							placeholder="Neste campo é adicionado informações, Exemplo: Proibido entrada de rodotrem"
+							placeholder="Nesse campo são adicionadas informações, exemplo: proibido entrada de rodotrem."
 							as="textarea"
 							rows={3}
 							name="informacoes_restritivas"
@@ -631,9 +631,9 @@ function FormularioCadastroManual({
 			<Row>
 				<Col>
 					<Form.Group className="mb-3">
-						<Form.Label>Observações Complementares</Form.Label>
+						<Form.Label>Observações complementares</Form.Label>
 						<Form.Control
-							placeholder="Neste campo é adicionado informações, Exemplo: Frete será pago por peso"
+							placeholder="Nesse campo são adicionadas informações, exemplo: frete será pago por peso."
 							as="textarea"
 							rows={3}
 							name="observacao"

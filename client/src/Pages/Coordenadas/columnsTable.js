@@ -69,7 +69,7 @@ export const getColumns = (
 		// },
 		{
 			name: "telefone_motorista",
-			description: "Telefone Motorista",
+			description: "Telefone motorista",
 			selector: (row) => {
 				if (!row.telefone_motorista) return "";
 
@@ -93,12 +93,12 @@ export const getColumns = (
 		// },
 		{
 			name: "setor_veiculo",
-			description: "Setor Veículo",
+			description: "Setor veículo",
 			selector: (row) => row.setor_veiculo,
 		},
 		{
 			name: "data_emissao_documento",
-			description: "Emissão Doc. ultima viagem",
+			description: "Emissão Doc. última viagem",
 			selector: (row) =>
 				row.data_emissao_documento
 					?.split("T")[0]
@@ -109,12 +109,12 @@ export const getColumns = (
 		},
 		{
 			name: "ultima_viagem_origem",
-			description: "Origem ultima viagem",
+			description: "Origem última viagem",
 			selector: (row) => row.ultima_viagem_origem,
 		},
 		{
 			name: "ultima_viagem_destino",
-			description: "Destino ultima viagem",
+			description: "Destino última viagem",
 			selector: (row) => row.ultima_viagem_destino,
 		},
 		{
@@ -136,7 +136,7 @@ export const getColumns = (
 		},
 		{
 			name: "tempo_ate_destino",
-			description: "Previsão Calculada",
+			description: "Previsão calculada",
 			selector: (row) => {
 				if (!row.tempo_ate_destino) {
 					return "";
@@ -149,7 +149,7 @@ export const getColumns = (
 		},
 		{
 			name: "data_previsao_chegada",
-			description: "Previsão Real",
+			description: "Previsão real",
 			selector: (row) => {
 				if (!row.data_previsao_chegada) {
 					return "";
@@ -181,7 +181,7 @@ export const getColumns = (
 		},
 		{
 			name: "cidade_atual",
-			description: "Posição Atual",
+			description: "Posição atual",
 			selector: (row) => (
 				<a
 					href={`https://www.google.com/maps/search/${String(row.lat).replace(
@@ -224,7 +224,7 @@ export const getColumns = (
 		},
 		{
 			name: "data_janela",
-			description: "Data Janela",
+			description: "Data janela",
 			selector: (row) => (
 				<Form.Control
 					value={row.data_janela ? String(row.data_janela).split(".")[0] : ""}
@@ -235,7 +235,7 @@ export const getColumns = (
 		},
 		{
 			name: "observacao",
-			description: "Observação Usuario",
+			description: "Observação usuário",
 			selector: (row) =>
 				row.observacao ? (
 					<CollapseHint
@@ -262,7 +262,7 @@ export const getColumns = (
 		},
 		{
 			name: "tipo_documento",
-			description: "Tipo Documento",
+			description: "Tipo de documento",
 			selector: (row) => row.tipo_documento,
 			Filter: (parameters) => (
 				<Form.Select {...parameters}>

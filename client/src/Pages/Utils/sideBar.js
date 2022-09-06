@@ -15,11 +15,11 @@ const PaginatorTable = ({ itensPerPage, setItensPerPage, setVisibleLeft }) => {
 			value={itensPerPage}
 			onChange={(e) => showOpcaoPaginatot(e)}
 		>
-			<option value="10">10 linhas</option>
-			<option value="20">20 linhas</option>
-			<option value="50">50 linhas</option>
-			<option value="100">100 linhas</option>
-			<option value="500">500 linhas</option>
+			<option value="10">10</option>
+			<option value="20">20</option>
+			<option value="50">50</option>
+			<option value="100">100</option>
+			<option value="500">500</option>
 		</select>
 	);
 };
@@ -52,7 +52,7 @@ export const SideBarFuncition = ({
 			{setModalShow !== undefined && (
 				<Col lg={12} className="text-center mb-2">
 					<ButtonReact
-						label="Legendas de cargas"
+						label=" Legenda das Cargas "
 						icon={<MdOutlineSubtitles />}
 						onClick={() => showLegendaCarga()}
 						className=" w-100"
@@ -69,7 +69,7 @@ export const SideBarFuncition = ({
 			</Col>
 			<Col lg={12} className="text-center mb-2">
 				<ButtonReact
-					label=" Redefinir tabela "
+					label=" Redefinir Tabela "
 					icon={<MdRefresh />}
 					onClick={() => resetTable()}
 					className="p-button-info w-100"

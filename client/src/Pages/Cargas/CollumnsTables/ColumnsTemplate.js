@@ -36,18 +36,21 @@ export const columns = [
 			</SelectStatusCarga>
 		),
 		sortable: "sortable",
+		showFilter: true,
 	},
 	{
 		name: "documento_transporte",
 		description: "Documento de transporte",
 		selector: (row) => row.documento_transporte,
 		sortable: "sortable",
+		showFilter: true,
 	},
 	{
 		name: "id",
 		description: "Código da carga",
 		selector: (row) => row.id,
 		sortable: "sortable",
+		showFilter: true,
 	},
 	{
 		name: "editar",
@@ -74,6 +77,7 @@ export const columns = [
 			<InputCliente label="" {...props} style={{ height: "20px" }} />
 		),
 		sortable: "sortable",
+		showFilter: true,
 	},
 	{
 		name: "fk_filial",
@@ -83,6 +87,7 @@ export const columns = [
 				? `${row.fk_filial} - ${row["filial.descricao"]}`
 				: row.fk_filial,
 		sortable: "sortable",
+		showFilter: true,
 		Filter: (props) => <Form.Control type="number" {...props} />,
 	},
 	{
@@ -90,6 +95,7 @@ export const columns = [
 		description: "Data do cadastro",
 		selector: (row) => formatDateAndHour(row.data_cadastro),
 		sortable: "sortable",
+		showFilter: true,
 		Filter: (props) => <Form.Control type="date" {...props} />,
 	},
 	{
@@ -97,18 +103,21 @@ export const columns = [
 		description: "Origem",
 		selector: (row) => row.origem_carga,
 		sortable: "sortable",
+		showFilter: true,
 	},
 	{
 		name: "destino_carga",
 		description: "Destino",
 		selector: (row) => row.destino_carga,
 		sortable: "sortable",
+		showFilter: true,
 	},
 	{
 		name: "data_coleta",
 		description: "Data de coleta",
 		selector: (row) => formatDate(row.data_coleta),
 		sortable: "sortable",
+		showFilter: true,
 		Filter: (props) => <Form.Control type="date" {...props} />,
 	},
 	{
@@ -116,6 +125,7 @@ export const columns = [
 		description: "Data de entrega",
 		selector: (row) => formatDate(row.data_entrega),
 		sortable: "sortable",
+		showFilter: true,
 		Filter: (props) => <Form.Control type="date" {...props} />,
 	},
 	{
@@ -123,6 +133,7 @@ export const columns = [
 		description: "Tipo de carga",
 		selector: (row) => row.tipo_carga,
 		sortable: "sortable",
+		showFilter: true,
 	},
 	{
 		name: "canal_comunicacao",
@@ -147,6 +158,7 @@ export const columns = [
 		description: "Responsável pelo cadastro",
 		selector: (row) => row.responsavel_cadastro,
 		sortable: "sortable",
+		showFilter: true,
 		Filter: (props) => <ResponsavelCadastroSelect {...props} />,
 	},
 

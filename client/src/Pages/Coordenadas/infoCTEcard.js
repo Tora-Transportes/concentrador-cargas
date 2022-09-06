@@ -86,13 +86,13 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 									</li>
 									<li className="ul-card-li">
 										<h6>
-											Data emissão:{" "}
+											Data de emissão:{" "}
 											<strong>{DateUtils.formatDate(i.DT_HORA_EMISSAO)}</strong>
 										</h6>
 									</li>
 									<li className="ul-card-li">
 										<h6>
-											Data entrega:{" "}
+											Data de entrega:{" "}
 											<strong>{DateUtils.formatDate(i.DT_ENTREGA)}</strong>
 										</h6>
 									</li>
@@ -129,13 +129,13 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 									</li>
 									<li className="ul-card-li">
 										<h6>
-											Data cálculo:{" "}
+											Data de cálculo:{" "}
 											<strong>{DateUtils.formatDate(i.data_calculo)}</strong>
 										</h6>
 									</li>
 									<li className="ul-card-li">
 										<h6>
-											Data emissão documento:{" "}
+											Data de emissão do documento:{" "}
 											<strong>
 												{DateUtils.formatDate(i.data_emissao_documento)}
 											</strong>

@@ -149,8 +149,8 @@ function Main() {
 					<div className="class-p-text">
 						<p id="style-p-text">
 							O concentrador de cargas lhe proporciona ampla visibilidade de
-							demanda, além de auxiliar sua concentração na melhor <br />
-							tomada de decisão para a escolha de um veículo.
+							demanda, além de auxiliar sua concentração para a melhor <br />
+							tomada de decisão na escolha de um veículo.
 						</p>
 					</div>
 				</div>
@@ -256,7 +256,7 @@ function Main() {
 								<p id="title-p-jogo">
 									{" "}
 									Exercite sua memória, garantindo a melhor tomada de decisão
-									durante seu dia de trabalho.
+									durante o seu dia de trabalho.
 								</p>
 								<Button
 									id="style-button-jogo"

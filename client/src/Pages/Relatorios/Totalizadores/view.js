@@ -55,14 +55,14 @@ function ViewRotasPendentes({
 		const fk_filial = codigoFilial;
 		if (!data_inicio || !data_final || !fk_filial) {
 			const message =
-				"Data inicio, data fim e codigo filial são campos obrigatórios!";
+				"Data início, data fim e codigo filial são campos obrigatórios!";
 			showToastMessage(toast, "warn", message, 7000);
 		} else if (new Date(data_inicio) > new Date(data_final)) {
-			const message = "Data inicio deve ser maior ou igual a data fim!";
+			const message = "Data início deve ser maior ou igual a data fim!";
 			showToastMessage(toast, "warn", message, 7000);
 		} else if (diffiInDays(data_inicio, data_final) > 31) {
 			const message =
-				"A diferença entre as data inicio e data fim não pode ser maior que 31 dias!";
+				"A diferença entre as datas início e fim não pode ser maior que 31 dias!";
 			showToastMessage(toast, "warn", message, 7000);
 		} else {
 			reload({
@@ -504,7 +504,7 @@ function ViewRotasPendentes({
 												<th>Total peso cadastrado</th>
 												<th>Total peso transportado</th>
 												<th>Viagens realizadas</th>
-												<th>Data cadastro</th>
+												<th>Data de cadastro</th>
 												<th>Filial</th>
 												<th>Unidade Medida</th>
 											</tr>

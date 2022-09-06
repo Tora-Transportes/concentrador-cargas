@@ -147,7 +147,7 @@ function TabelaCargas({
 				header={col.description}
 				body={col.selector}
 				sortable={col.sortable}
-				filter={true}
+				filter={col.showFilter}
 				filterElement={
 					col.Filter ? (
 						<col.Filter

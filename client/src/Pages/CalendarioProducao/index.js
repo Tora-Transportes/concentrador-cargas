@@ -456,7 +456,7 @@ export default function CalendarioProducao() {
 						</Modal.Header>
 						<Modal.Body>
 							<Form.Group className="mb-3" controlId="id_data_inicio">
-								<Form.Label>Data início</Form.Label>
+								<Form.Label>Data inicial</Form.Label>
 								<Form.Control
 									type="date"
 									name="data_inicio"
@@ -481,7 +481,7 @@ export default function CalendarioProducao() {
 									</Form.Group>
 									{form.data_final && (
 										<Form.Group className="mb-3" controlId="id_observacao">
-											<Form.Label>Observação</Form.Label>
+											<Form.Label>Observações</Form.Label>
 											<Form.Control
 												as="textarea"
 												type="text"

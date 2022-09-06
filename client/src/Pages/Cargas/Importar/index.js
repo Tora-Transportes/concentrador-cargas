@@ -143,7 +143,7 @@ function Importar() {
 				</div>
 
 				<h1 id="title-tab-import-carg" className="class-title-preview">
-					Preview e resultados
+					Visualização e Resultados:
 				</h1>
 				<div className="class-table-importCarga">
 					<Table responsive striped bordered hover id="Table-impot-carg">

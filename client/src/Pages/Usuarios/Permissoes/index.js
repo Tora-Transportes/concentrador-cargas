@@ -133,7 +133,7 @@ function Permissoes() {
 								className="form-multSelect-button"
 							>
 								<MdDeleteForever size={20} color="white" />
-								<span>Limpar buscas</span>
+								<span>Limpar Filtros</span>
 							</button>
 						</div>
 

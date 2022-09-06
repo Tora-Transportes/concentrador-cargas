@@ -88,7 +88,7 @@ function Formulario({ formik, produtos, distancia }) {
 			</Row>
 			<Row>
 				<Col sm={12} md={6}>
-					<FloatingLabel label="* Código da filial" className="mb-3">
+					<FloatingLabel label="*Código da filial" className="mb-3">
 						<Form.Control
 							name="fk_filial"
 							value={formik.values.fk_filial ?? ""}
@@ -236,7 +236,7 @@ function Formulario({ formik, produtos, distancia }) {
 			</Row>
 			<Row>
 				<Col sm={12} md={6}>
-					<FloatingLabel label="*Origem carga" className="mb-3">
+					<FloatingLabel label="*Origem da carga" className="mb-3">
 						<InputLocalizacao
 							keyDataList="origem_carga"
 							type="text"
@@ -250,7 +250,7 @@ function Formulario({ formik, produtos, distancia }) {
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="*Destino carga" className="mb-3">
+					<FloatingLabel label="*Destino da carga" className="mb-3">
 						<InputLocalizacao
 							keyDataList="destino_carga"
 							type="text"
@@ -292,7 +292,7 @@ function Formulario({ formik, produtos, distancia }) {
 			)}
 			<Row>
 				<Col>
-					<FloatingLabel label="Data coleta" className="mb-3">
+					<FloatingLabel label="Data da coleta" className="mb-3">
 						<Form.Control
 							type="date"
 							placeholder=" "
@@ -304,7 +304,7 @@ function Formulario({ formik, produtos, distancia }) {
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="Data entrega" className="mb-3">
+					<FloatingLabel label="Data de entrega" className="mb-3">
 						<Form.Control
 							type="date"
 							placeholder=" "
@@ -346,7 +346,7 @@ function Formulario({ formik, produtos, distancia }) {
 			)}
 			<Row>
 				<Col sm={12} md={6}>
-					<FloatingLabel label="Tipo material" className="mb-3">
+					<FloatingLabel label="Tipo de material" className="mb-3">
 						<AutocompleteInput
 							keyDataList="tipo_carga"
 							options={produtos.filter((i) => !!i.ativo).map((i) => i.nome)}
