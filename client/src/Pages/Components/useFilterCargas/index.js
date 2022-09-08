@@ -127,7 +127,7 @@ export const CargaFilter = ({ formik, onFilter }) => {
 						/>
 					</FloatingLabel>
 
-					<FloatingLabel label="É lote?">
+					<FloatingLabel label="É lote? ">
 						<Form.Select
 							placeholder=" "
 							value={formik.values.e_lote}

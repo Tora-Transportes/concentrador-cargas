@@ -62,7 +62,7 @@ export const opcoesTemplate = (
 						Editar
 					</Button>
 					<Button
-						style={{ color: "red" }}
+						// style={{ color: "red" }}
 						variant="outline-danger"
 						onClick={(e) => {
 							e.preventDefault();

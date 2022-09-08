@@ -65,11 +65,6 @@ function Menusuperior() {
             </div>
           </div>
           <li className="class-li">
-            <a id="style-a" href="/relatorios">
-              Relatórios
-            </a>
-          </li>
-          <li className="class-li">
             <a id="style-a" href="/veiculos/coordenadas">
               Coordenadas
             </a>
@@ -90,15 +85,18 @@ function Menusuperior() {
             </a>
           </li>
           <li className="class-li">
+            <a id="style-a" href="/relatorios">
+              Relatórios
+            </a>
+          </li>
+          <li className="class-li">
             <a id="style-a" href="/ajuda">
               Ajuda
             </a>
           </li>
-          <li className="class-li">
+          <li className="class-li" to="/">
             <a
               id="style-a"
-              href="/"
-              action
               onClick={() => {
                 setTimeout(() => {
                   logout();
