@@ -228,11 +228,11 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 											Tipo carreta: <strong>{i.tipo_carreta}</strong>
 										</h6>
 									</li>
-									{/* <li className="ul-card-li">
+									<li className="ul-card-li">
 										<h6>
 											Apelido carreta: <strong>{i.apelido_carreta}</strong>
 										</h6>
-									</li> */}
+									</li>
 									<li className="ul-card-li">
 										<h6>
 											Tipo cavalo: <strong>{i.tipo_cavalo}</strong>
@@ -269,11 +269,11 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 											<strong>{i.telefone_motorista}</strong>
 										</h6>
 									</li>
-									{/* <li className="ul-card-li">
+									<li className="ul-card-li">
 										<h6>
 											CPF motorista: <strong>{i.cpf_motorista}</strong>
 										</h6>
-									</li> */}
+									</li>
 								</Card>
 							</div>
 						))}
