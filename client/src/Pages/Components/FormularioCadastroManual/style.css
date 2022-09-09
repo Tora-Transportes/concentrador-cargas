@@ -25,15 +25,6 @@
     grid-template-columns: auto;
 }
 
-
-.btn,
-.btn-outline-sucess{
-    background: #00652E;
-    color: #ffff;
-    border: none;
-    margin-top: 1rem;
-}
-
 @media only screen and (max-width: 480px){
     .class-input-motorista{
         display: grid;
