@@ -10,7 +10,7 @@ import TextUtils from "../../Utils/text";
 import DateUtils from "../../Utils/date";
 
 import xlsx from "xlsx";
-import EPermissions from "../../models/EPermissions";
+//import EPermissions from "../../models/EPermissions";
 import { CargaValidationOperation } from "../../validations/CargaValidationOperation";
 
 export interface IParadasRepository {
