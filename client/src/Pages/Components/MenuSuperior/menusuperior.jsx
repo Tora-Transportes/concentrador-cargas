@@ -46,10 +46,11 @@ function Menusuperior() {
             </div>
             <div className="dropdown-veic">
               <button id="style-button-drop" className="dropbtn-veic">
-                Veículos
+                Relatórios
               </button>
               <div id="myDropdown-veic" className="dropdown-content-veic">
                 <a href="/rotas/pendentes">Rotas pendentes</a>
+                <a href="/relatorios">Painel de Controle</a>
                 <a href="/veiculos/raio">Veículos x Veículos</a>
                 <a href="/veiculos/destino">Veículos até Empresa</a>
                 <a href="/veiculos/raio/empresa">Raio Empresa</a>
@@ -76,11 +77,7 @@ function Menusuperior() {
               Produtos
             </a>
           </li>
-          <li className="class-li">
-            <a id="style-a" href="/relatorios">
-              Relatórios
-            </a>
-          </li>
+          <li className="class-li"></li>
           <li className="class-li">
             <a id="style-a" href="/ajuda">
               Ajuda
