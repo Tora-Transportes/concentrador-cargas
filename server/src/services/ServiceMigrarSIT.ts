@@ -74,7 +74,7 @@ class ServiceMigrarSit implements IServiceSit {
     }
 
     if (!carga.origem_carga || !carga.destino_carga) {
-      throw new Error("A carga não possui nenhuma origem e nenhum destino");
+      throw new Error("A carga não possui nenhuma origem e/ou destino.");
     }
 
     const [, uf_origem, cidade_origem] = carga.origem_carga.split("/");

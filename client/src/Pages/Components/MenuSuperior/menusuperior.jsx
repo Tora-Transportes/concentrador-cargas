@@ -44,14 +44,6 @@ function Menusuperior() {
                 {/* <a href="/producao">Produção</a> */}
               </div>
             </div>
-            {/* <div className="dropdown-doc">
-              <button id="style-button-drop" className="dropbtn-doc">
-                Relatórios
-              </button>
-               <div id="myDropdown-doc" className="dropdown-content-doc">
-                <a href="/relatorios">Relatórios</a>
-              </div>
-            </div> */}
             <div className="dropdown-veic">
               <button id="style-button-drop" className="dropbtn-veic">
                 Veículos
