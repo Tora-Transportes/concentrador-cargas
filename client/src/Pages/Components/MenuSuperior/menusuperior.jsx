@@ -94,11 +94,9 @@ function Menusuperior() {
               Ajuda
             </a>
           </li>
-          <li className="class-li">
+          <li className="class-li" to="/">
             <a
               id="style-a"
-              href="/"
-              action
               onClick={() => {
                 setTimeout(() => {
                   logout();

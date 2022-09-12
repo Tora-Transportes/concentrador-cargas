@@ -99,14 +99,15 @@ function TabelaCargas({
 			page: 1,
 		};
 
-		// columns
+		columns;
+
 		for (const i in formik.values) {
 			if (![undefined, null, ""].includes(formik.values[i])) {
 				options.filters[i] = formik.values[i];
 			}
 		}
 
-		// direction
+		// // direction
 		if (orderby.values.column) {
 			options.orderBy.column = orderby.values.column;
 			options.orderBy.direction = orderby.values.direction;
