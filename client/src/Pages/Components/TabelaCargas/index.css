@@ -42,6 +42,15 @@
   margin-top: 5px;
 }
 
+.dropLines {
+  height: 43px;
+}
+
+.dropLines span {
+  padding-block: 3px;
+  margin: auto;
+}
+
 .p-multiselect {
   margin-right: -24px;
 }
