@@ -93,7 +93,7 @@ function ViewCoordenadas({
 					<Col className="text-start">
 						<ButtonReact
 							id="botao-detalhe-tabela"
-							label="Detalhes Tabela"
+							label="Opções da Tabela"
 							icon={<BiCog className="me-2" />}
 							onClick={() => setVisibleLeft(true)}
 							className="sidebar-button-table"
