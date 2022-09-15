@@ -99,8 +99,6 @@ function TabelaCargas({
 			page: 1,
 		};
 
-		columns;
-
 		for (const i in formik.values) {
 			if (![undefined, null, ""].includes(formik.values[i])) {
 				options.filters[i] = formik.values[i];
@@ -132,12 +130,14 @@ function TabelaCargas({
 			return v - 1 < 1 ? v : v - 1;
 		});
 	}
+
 	const colunsFiltrado = [];
 	storage.filter((i) =>
 		columns.find((c) => {
 			if (c.name === i.name) colunsFiltrado.push(c);
 		})
 	);
+
 	const setDynamicColums = colunsFiltrado.map((col) => {
 		return (
 			<Column

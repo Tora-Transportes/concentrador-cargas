@@ -52,23 +52,8 @@ function Menusuperior() {
                 <a href="/relatorios">Relatórios</a>
               </div>
             </div> */}
-            <div className="dropdown-veic">
-              <button id="style-button-drop" className="dropbtn-veic">
-                Veículos
-              </button>
-              <div id="myDropdown-veic" className="dropdown-content-veic">
-                <a href="/rotas/pendentes">Rotas pendentes</a>
-                <a href="/veiculos/raio">Veículos x Veículos</a>
-                <a href="/veiculos/destino">Veículos até Empresa</a>
-                <a href="/veiculos/raio/empresa">Raio Empresa</a>
-              </div>
-            </div>
           </div>
-          <li className="class-li">
-            <a id="style-a" href="/relatorios">
-              Relatórios
-            </a>
-          </li>
+          <li className="class-li"></li>
           <li className="class-li">
             <a id="style-a" href="/veiculos/coordenadas">
               Coordenadas
@@ -89,6 +74,20 @@ function Menusuperior() {
               Produtos
             </a>
           </li>
+          <div className="class-dropdown">
+            <div className="dropdown-veic">
+              <button id="style-button-drop" className="dropbtn-veic">
+                Indicador Operacional
+              </button>
+              <div id="myDropdown-veic" className="dropdown-content-veic">
+                <a href="/relatorios">Relatórios</a>
+                <a href="/rotas/pendentes">Rotas pendentes</a>
+                <a href="/veiculos/raio/empresa">Raio Empresa</a>
+                <a href="/veiculos/raio">Veículos x Veículos</a>
+                <a href="/veiculos/destino">Veículos até Empresa</a>
+              </div>
+            </div>
+          </div>
           <li className="class-li">
             <a id="style-a" href="/ajuda">
               Ajuda

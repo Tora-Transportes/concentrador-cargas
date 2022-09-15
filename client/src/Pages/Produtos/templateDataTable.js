@@ -55,7 +55,7 @@ export const opcoesTemplate = (
 						variant="outline-warning"
 						onClick={(e) => {
 							e.preventDefault();
-							handleEditProduto(rowData.nome);
+							handleEditProduto(rowData.nome, rowData.id);
 						}}
 					>
 						<BsPencilSquare className="icon-editar" />
@@ -66,7 +66,7 @@ export const opcoesTemplate = (
 						variant="outline-danger"
 						onClick={(e) => {
 							e.preventDefault();
-							handleDelete(rowData.nome);
+							handleDelete(rowData.nome, rowData.id);
 						}}
 					>
 						<BsTrash />
