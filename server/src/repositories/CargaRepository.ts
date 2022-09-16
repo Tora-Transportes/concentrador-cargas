@@ -51,6 +51,7 @@ export class CargaRepository {
     database.raw(
       `CASE WHEN "con_cargas"."e_lote" = 0 THEN 'Não' WHEN "con_cargas"."e_lote" = 1 THEN 'Sim' END AS "E lote"`
     );
+    // console.log("teste carga", carga);
     console.log(">>>>>teste", carga.toSQL().toNative());
     if (!carga) return;
     const locais = (
