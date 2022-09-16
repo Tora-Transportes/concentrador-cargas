@@ -57,7 +57,11 @@ function Permissoes() {
 		const { oid, permissoes } = await rowData;
 
 		if (!permissSelecionado.length && !apagar) {
+<<<<<<< HEAD
 			await swal("", "Nenhuma alteração aplicada", "warning");
+=======
+			await swal("Nenhuma alteração aplicada", "warning");
+>>>>>>> b120edf827caacacad155a8dc4e3beed83bd3d4f
 		} else {
 			permissSelecionado.map((item) => {
 				if (!permissoes.includes(item.name)) {
@@ -65,11 +69,15 @@ function Permissoes() {
 				}
 			});
 			const message = apagar
-				? "Certeza que deseja deletar permissão do usuário ?"
-				: "Certeza que deseja aplicar essas permissões para o usuário?";
+				? "Certeza que deseja deletar permissão do usuário selecionado?"
+				: "Certeza que deseja aplicar essas permissões para o usuário selecionado?";
 
 			if (
+<<<<<<< HEAD
 				await swal("", message, "warning", {
+=======
+				await swal(message, "warning", {
+>>>>>>> b120edf827caacacad155a8dc4e3beed83bd3d4f
 					buttons: ["Não", true],
 				})
 			) {
@@ -117,7 +125,7 @@ function Permissoes() {
 			<div className="header-table-add-permission">
 				<div className="menu-header-table-permission">
 					<input
-						placeholder="Fazer busca global"
+						placeholder="Buscar"
 						value={globalFilter}
 						onChange={(e) => listeningFilter(e.target.value)}
 						className=" input-empty"
