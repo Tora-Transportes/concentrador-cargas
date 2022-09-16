@@ -1,5 +1,5 @@
 .class-body-main{
-  margin-top: 5rem;
+  /* margin-top: 5rem; */
   font-family: 'Poppins', sans-serif;
 }
 
@@ -34,9 +34,9 @@
   font-size: 15pt;
 }
 
-.class-p-title-main{
+/* .class-p-title-main{
   margin-top: 1rem;
-}
+} */
 
 #style-title-main{
   font-size: 37px;

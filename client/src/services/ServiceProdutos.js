@@ -9,14 +9,14 @@ class ServiceProdutos {
 	}
 
 	async update({ nome, id }) {
-		return api.put(`/produtos/${nome}`, { id });
+		return api.put(`/produtos/${id}`, { nome });
 	}
 
-	async delete({ nome, observacao }) {
-		return api.delete(`/produtos/${nome}`, { data: { observacao } });
+	async delete({ id, observacao }) {
+		return api.delete(`/produtos/${id}`, { data: { observacao } });
 	}
-	async enable({ nome }) {
-		return api.put(`/produtos/${nome}/ativar`);
+	async enable({ id }) {
+		return api.put(`/produtos/${id}/ativar`);
 	}
 }
 
