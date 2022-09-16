@@ -51,13 +51,8 @@ function Produtos() {
 
 	async function handleDelete(nome, id) {
 		const observacao = await swal(
-<<<<<<< HEAD
 			"Ops!",
 			`Tem certeza que deseja desabilitar o produto ${nome}
-=======
-			"Ops?",
-			`Tem certeza que deseja desabilitar o produto ${nome}?
->>>>>>> b120edf827caacacad155a8dc4e3beed83bd3d4f
 
 			Preencha a observação abaixo`,
 			"warning",

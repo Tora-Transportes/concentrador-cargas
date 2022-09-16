@@ -57,11 +57,7 @@ function Permissoes() {
 		const { oid, permissoes } = await rowData;
 
 		if (!permissSelecionado.length && !apagar) {
-<<<<<<< HEAD
 			await swal("", "Nenhuma alteração aplicada", "warning");
-=======
-			await swal("Nenhuma alteração aplicada", "warning");
->>>>>>> b120edf827caacacad155a8dc4e3beed83bd3d4f
 		} else {
 			permissSelecionado.map((item) => {
 				if (!permissoes.includes(item.name)) {
@@ -73,11 +69,7 @@ function Permissoes() {
 				: "Certeza que deseja aplicar essas permissões para o usuário selecionado?";
 
 			if (
-<<<<<<< HEAD
 				await swal("", message, "warning", {
-=======
-				await swal(message, "warning", {
->>>>>>> b120edf827caacacad155a8dc4e3beed83bd3d4f
 					buttons: ["Não", true],
 				})
 			) {

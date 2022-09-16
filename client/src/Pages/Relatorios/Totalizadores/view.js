@@ -246,12 +246,14 @@ function ViewRotasPendentes({
 											<b>{totalizadores.cargas_ativas}</b>
 										</td>
 										<td>
-											<Button
-												variant=""
-												onClick={() => handleExportExcel("ativas")}
-											>
-												<BsDownload />
-											</Button>
+											{codigoFilial && (
+												<Button
+													variant=""
+													onClick={() => handleExportExcel("ativas")}
+												>
+													<BsDownload />
+												</Button>
+											)}
 										</td>
 									</tr>
 
@@ -274,12 +276,14 @@ function ViewRotasPendentes({
 											<b>{totalizadores.cargas_desativadas}</b>
 										</td>
 										<td>
-											<Button
-												variant=""
-												onClick={() => handleExportExcel("desativadas")}
-											>
-												<BsDownload />
-											</Button>
+											{codigoFilial && (
+												<Button
+													variant=""
+													onClick={() => handleExportExcel("desativadas")}
+												>
+													<BsDownload />
+												</Button>
+											)}
 										</td>
 									</tr>
 								</tbody>
@@ -324,12 +328,14 @@ function ViewRotasPendentes({
 											<b>{totalizadores.cadastro_portal}</b>
 										</td>
 										<td>
-											<Button
-												variant=""
-												onClick={() => handleExportExcel("portal")}
-											>
-												<BsDownload />
-											</Button>
+											{codigoFilial && (
+												<Button
+													variant=""
+													onClick={() => handleExportExcel("portal")}
+												>
+													<BsDownload />
+												</Button>
+											)}
 										</td>
 									</tr>
 
