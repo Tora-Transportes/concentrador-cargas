@@ -76,11 +76,7 @@ function Manual() {
 		let ok = true;
 		if (askPermission) {
 			ok = await swal(
-<<<<<<< HEAD
 				"Ops!",
-=======
-				"Ops !",
->>>>>>> b120edf827caacacad155a8dc4e3beed83bd3d4f
 				"Tem certeza que deseja fechar esta página?",
 				"warning",
 				{
