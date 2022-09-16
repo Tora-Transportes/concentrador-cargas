@@ -76,8 +76,8 @@ function Manual() {
 		let ok = true;
 		if (askPermission) {
 			ok = await swal(
-				"Ops !",
-				"Tem certeza que deseja fechar esta página ?",
+				"Ops!",
+				"Tem certeza que deseja fechar esta página?",
 				"warning",
 				{
 					buttons: ["Cancelar", { text: "Sim", value: true }],
@@ -224,7 +224,7 @@ function Manual() {
 				);
 				if (cargaDocumento) {
 					swal(
-						"Ops !",
+						"Ops!",
 						`O documento digitado já existe na carga ${cargaDocumento.id}!`,
 						"warning"
 					).then(() => {

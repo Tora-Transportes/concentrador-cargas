@@ -34,7 +34,7 @@ export default function ListAddItens({ onChange, value, name }) {
 	async function removeItem(key) {
 		if (
 			await swal(
-				"Ops",
+				"Ops!",
 				"Você tem certeza que deseja excluir a parada selecionada?",
 				"warning",
 				{
