@@ -66,11 +66,6 @@ function TabelaCargas({
 		}
 	};
 
-	const onSort = (e) => {
-		setSortField(e.sortField);
-		setSortOrder(e.sortOrder);
-	};
-
 	useEffect(() => {
 		const { total_pages, results, current_page } = values;
 		setData(results);
@@ -89,6 +84,15 @@ function TabelaCargas({
 		},
 	});
 
+	const onSort = (e) => {
+		console.log("Teste", e);
+		if (e > -1) {
+			return orderby.direction;
+		}
+		setSortField(e.sortField);
+		setSortOrder(e.sortOrder);
+	};
+
 	async function notify() {
 		const options = {
 			filters: {},
@@ -99,20 +103,19 @@ function TabelaCargas({
 			page: 1,
 		};
 
-		// columns
-		for (const i in formik.values) {
-			if (![undefined, null, ""].includes(formik.values[i])) {
-				options.filters[i] = formik.values[i];
-			}
-		}
+		// for (const i in formik.values) {
+		// 	if (![undefined, null, ""].includes(formik.values[i])) {
+		// 		options.filters[i] = formik.values[i];
+		// 	}
+		// }
 
-		// direction
-		if (orderby.values.column) {
-			options.orderBy.column = orderby.values.column;
-			options.orderBy.direction = orderby.values.direction;
-		} else {
-			options.orderBy = null;
-		}
+		// // // direction
+		// if (orderby.values.column) {
+		// 	options.orderBy.column = orderby.values.column;
+		// 	options.orderBy.direction = orderby.values.direction;
+		// } else {
+		// 	options.orderBy = null;
+		// }
 
 		//page
 		options.page = page;
@@ -131,12 +134,14 @@ function TabelaCargas({
 			return v - 1 < 1 ? v : v - 1;
 		});
 	}
+
 	const colunsFiltrado = [];
 	storage.filter((i) =>
 		columns.find((c) => {
 			if (c.name === i.name) colunsFiltrado.push(c);
 		})
 	);
+
 	const setDynamicColums = colunsFiltrado.map((col) => {
 		return (
 			<Column

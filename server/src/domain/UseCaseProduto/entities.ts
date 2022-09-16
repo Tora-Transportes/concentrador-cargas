@@ -8,10 +8,12 @@ export interface IRepositoryAddProduto {
   findByName(nome: string): Promise<IProduto | undefined>;
   create(produto: IProduto): Promise<any>;
 }
+
 export class UseCaseAddProduto {
   constructor(private produtoRepository: IRepositoryAddProduto) {}
 
   async run(produto: Record<string, unknown>) {
+    console.log("teste prod", produto);
     if (!produto || !produto?.nome) {
       throw new AppError("O produto deve ter um nome", 400);
     }
