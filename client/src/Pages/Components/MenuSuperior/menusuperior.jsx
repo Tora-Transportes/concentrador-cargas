@@ -44,18 +44,6 @@ function Menusuperior() {
                 {/* <a href="/producao">Produção</a> */}
               </div>
             </div>
-            <div className="dropdown-veic">
-              <button id="style-button-drop" className="dropbtn-veic">
-                Relatórios
-              </button>
-              <div id="myDropdown-veic" className="dropdown-content-veic">
-                <a href="/rotas/pendentes">Rotas pendentes</a>
-                <a href="/relatorios">Painel de Controle</a>
-                <a href="/veiculos/raio">Veículos x Veículos</a>
-                <a href="/veiculos/destino">Veículos até Empresa</a>
-                <a href="/veiculos/raio/empresa">Raio Empresa</a>
-              </div>
-            </div>
           </div>
           <li className="class-li">
             <a id="style-a" href="/veiculos/coordenadas">
