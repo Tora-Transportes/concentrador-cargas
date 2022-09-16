@@ -14,7 +14,7 @@ function RaioEmpresa() {
 		setLoading(true);
 		const campos = empresa.split(" - ");
 		if (campos.length !== 3) {
-			return swal("Ops! 👀", "Empresa inválida", "error");
+			return swal("Ops!", "Empresa inválida", "error");
 		}
 		const cnpj = String(campos[1]).trim();
 		try {

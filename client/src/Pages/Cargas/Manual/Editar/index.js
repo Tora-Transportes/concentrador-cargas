@@ -77,7 +77,7 @@ function Manual() {
 		if (askPermission) {
 			ok = await swal(
 				"Ops !",
-				"Tem certeza que deseja fechar esta página ?",
+				"Tem certeza que deseja fechar esta página?",
 				"warning",
 				{
 					buttons: ["Cancelar", { text: "Sim", value: true }],
@@ -148,7 +148,7 @@ function Manual() {
 		setLoading(true);
 		try {
 			const ok = await swal(
-				`Certeza que deseja emitir o documento dessa carga ?`,
+				`Certeza que deseja emitir o documento dessa carga?`,
 				{
 					dangerMode: true,
 					buttons: ["Cancelar", true],
