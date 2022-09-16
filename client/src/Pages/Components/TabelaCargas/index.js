@@ -103,19 +103,19 @@ function TabelaCargas({
 			page: 1,
 		};
 
-		// for (const i in formik.values) {
-		// 	if (![undefined, null, ""].includes(formik.values[i])) {
-		// 		options.filters[i] = formik.values[i];
-		// 	}
-		// }
+		for (const i in formik.values) {
+			if (![undefined, null, ""].includes(formik.values[i])) {
+				options.filters[i] = formik.values[i];
+			}
+		}
 
-		// // // direction
-		// if (orderby.values.column) {
-		// 	options.orderBy.column = orderby.values.column;
-		// 	options.orderBy.direction = orderby.values.direction;
-		// } else {
-		// 	options.orderBy = null;
-		// }
+		// // direction
+		if (orderby.values.column) {
+			options.orderBy.column = orderby.values.column;
+			options.orderBy.direction = orderby.values.direction;
+		} else {
+			options.orderBy = null;
+		}
 
 		//page
 		options.page = page;
