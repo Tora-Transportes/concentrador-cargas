@@ -201,16 +201,16 @@ function Main() {
 					</div>
 				</div>
 
-				<Row
+				<div
 					className={
 						usuarioPodeJogar() ? "invisible" : "text-center h5 text-danger"
 					}
 				>
-					<Col>
+					<p className="class-p-fimjogo" id="style-p-fimjogo">
 						Você já se exercitou, agora é hora de avaliar seus melhores
 						veículos. Desejamos um excelente dia de trabalho!
-					</Col>
-				</Row>
+					</p>
+				</div>
 
 				<Row className={usuarioPodeJogar() ? "" : "invisible"}>
 					{levelGame > -1 && (

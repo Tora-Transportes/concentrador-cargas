@@ -86,7 +86,6 @@
 }
 
 .class-linha-jogo{
-  margin-top: 7rem;
   display: grid;
   grid-template-rows: auto auto;
   justify-content: center;
@@ -115,7 +114,13 @@
   grid-gap: 4rem;
   margin-bottom: 3rem;
 }
+.class-p-fimjogo{
+  margin-top: 4rem;
+}
 
+#style-p-fimjogo{
+  color: red;
+}
 @media only screen and (max-width: 480px){
   #title-p-jogo{
     color: #939598;
