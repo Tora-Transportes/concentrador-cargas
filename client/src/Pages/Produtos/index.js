@@ -53,7 +53,6 @@ function Produtos() {
 		const observacao = await swal(
 			"Ops!",
 			`Tem certeza que deseja desabilitar o produto ${nome}
-
 			Preencha a observação abaixo`,
 			"warning",
 			{
