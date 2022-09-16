@@ -39,7 +39,6 @@ function handleUsersConnected(registerEvents: (socket: Socket) => void): void {
 function getAllSockets() {
   return Object.keys(users).map((key) => users[key]);
 }
-
 export default {
   createServer,
   getInstance,
