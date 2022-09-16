@@ -1,8 +1,7 @@
 import React from "react";
+import "./../styleVeiculos.css";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import "../DestinoCarga/style.css";
 import InputCliente from "../../Components/InputCliente";
 import DateUtils from "../../Utils/date";
 
@@ -42,7 +41,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 	}
 
 	return (
-		<div className="class-body-destCarga">
+		<div className="class-body">
 			<Container className="text-center mb-5 mt-4">
 				{rota && (
 					<MapContainer

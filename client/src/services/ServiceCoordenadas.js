@@ -123,6 +123,12 @@ class ServiceCoordenadas {
 		return api.get(`/coordenadas/${placa}/range`, { params: { distancia_km } });
 	}
 
+	async listHistoryVeicles({ placa, date_inicio, date_fim }) {
+		return await api.get(`/coordenadas/${placa}/history`, {
+			params: { date_inicio, date_fim },
+		});
+	}
+
 	async searchRoute({ placa, cnpj }) {
 		// return {
 		// 	data: {

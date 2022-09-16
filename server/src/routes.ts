@@ -106,7 +106,10 @@ routes.get(
   "/coordenadas/:placa/range",
   CoordenadasController.listVehiclesInRange
 );
-
+routes.get(
+  "/coordenadas/:placa/history",
+  CoordenadasController.historyTravelVeicleController
+);
 routes.get(
   "/coordenadas/:placa/empresa/:cnpj",
   CoordenadasController.searchRouteVehicles

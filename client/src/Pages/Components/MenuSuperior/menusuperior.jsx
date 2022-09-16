@@ -54,6 +54,7 @@ function Menusuperior() {
                 <a href="/veiculos/raio">Veículos x Veículos</a>
                 <a href="/veiculos/destino">Veículos até Empresa</a>
                 <a href="/veiculos/raio/empresa">Raio Empresa</a>
+                <a href="/veiculos/historico">Histórico Veículos</a>
               </div>
             </div>
           </div>

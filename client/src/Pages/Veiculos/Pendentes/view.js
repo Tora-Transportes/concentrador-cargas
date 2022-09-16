@@ -1,8 +1,8 @@
 import React from "react";
+import "./../styleVeiculos.css";
 import { Container, Row, Col } from "react-bootstrap";
 import TabelaCargas from "../../Components/TabelaCargas";
 import HandleClick from "./tooltipsMonitoramento";
-import "../Pendentes/style.css";
 
 function ViewRotasPendentes({
 	columns = [],
@@ -11,7 +11,7 @@ function ViewRotasPendentes({
 	totalRegisters = 0,
 }) {
 	return (
-		<div className="class-body-monito">
+		<div className="class-body">
 			<Container fluid className="text-center mb-5 mt-4">
 				<Row className="mb-2">
 					<h1
