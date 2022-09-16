@@ -113,7 +113,7 @@ export default function CalendarioProducao() {
 			setPlaca("");
 			setEvents({});
 			setCodigoVeiculo(null);
-			return swal("Ops! 👀", "Placa inválida", "warning");
+			return swal("Ops!", "Placa inválida", "warning");
 		}
 
 		setLoading(true);
@@ -194,7 +194,7 @@ export default function CalendarioProducao() {
 	async function handleAddObservacao(event) {
 		event.preventDefault();
 		if (!codigoVeiculo) {
-			return swal("Ops! 👀", "Nenhum veículo foi selecionado", "warning");
+			return swal("Ops!", "Nenhum veículo foi selecionado", "warning");
 		}
 		const evento = {
 			EVENTO: "JUSTIFICATIVA",
