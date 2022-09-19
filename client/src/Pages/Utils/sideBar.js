@@ -68,7 +68,7 @@ export const SideBarFuncition = ({
 			)}
 			<Col lg={12} className="text-center mb-2">
 				<ButtonReact
-					label=" Excel "
+					label=" Importar Tabela "
 					icon={<AiFillFileExcel />}
 					onClick={() => downloadExel()}
 					className="p-button-success w-100"

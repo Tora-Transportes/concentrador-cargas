@@ -117,7 +117,7 @@ function Permissoes() {
 			<div className="header-table-add-permission">
 				<div className="menu-header-table-permission">
 					<input
-						placeholder="Buscar"
+						placeholder=" Pesquisar por coluna "
 						value={globalFilter}
 						onChange={(e) => listeningFilter(e.target.value)}
 						className=" input-empty"
@@ -148,7 +148,7 @@ function Permissoes() {
 								optionLabel="name"
 								placeholder="Selecionar permissões"
 								filter={true}
-								filterPlaceholder="Procurar"
+								filterPlaceholder=" Filtrar por "
 							/>
 
 							<button

@@ -68,10 +68,10 @@ function Menusuperior() {
           <div className="class-dropdown">
             <div className="dropdown-veic">
               <button id="style-button-drop" className="dropbtn-veic">
-                Indicador Operacional
+                Relatórios
               </button>
               <div id="myDropdown-veic" className="dropdown-content-veic">
-                <a href="/relatorios">Relatório</a>
+                <a href="/relatorios">Indicador Operacional</a>
                 <a href="/rotas/pendentes">Rotas pendentes</a>
                 <a href="/veiculos/raio/empresa">Raio Empresa</a>
                 <a href="/veiculos/raio">Veículos x Veículos</a>

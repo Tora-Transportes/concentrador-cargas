@@ -13,19 +13,19 @@ const options = {
 		{
 			element: "#botao-detalhe-tabela",
 			description:
-				"<h2>Botão Detalhes</h2><div>Opções de download da tabela *Coordenadas e redefinição das modificações feitas.</div>",
+				"<h2>Opções da Tabela</h2><div>Opções de download (tabela Coordenadas) e redefinição das modificações realizadas.</div>",
 			placement: "right",
 		},
 		{
 			element: "#info-registros",
 			description:
-				"<h2>Total de Registros</h2><div>Total de registros exibidos na tabela abaixo.</div>",
+				"<h2>Total de Registros</h2><div>Contabiliza os registros existentes, que serão exibidos na tabela abaixo.</div>",
 			placement: "bottom",
 		},
 		{
 			element: "#edit-linhas-tabela",
 			description:
-				"<h2>Linhas da tabela</h2><div>Nessa opção você define a quantidade de linhas que serão exibidas na tabela.</div>",
+				"<h2>Itens por página</h2><div>Nessa opção você define a quantidade de itens que serão exibidos na tabela.</div>",
 			placement: "bottom",
 		},
 		{
@@ -37,7 +37,7 @@ const options = {
 		{
 			element: "#Tabela-coordenadas",
 			description:
-				"<h2>Tabela Principal</h2><div>Essa tabela exibirá informações de rotas.</div>",
+				"<h2>Tabela Principal</h2><div>Aqui serão exibidas informações de rotas.</div>",
 			placement: "top",
 		},
 		{
@@ -49,13 +49,13 @@ const options = {
 		{
 			element: "#Botao-voltar-pag",
 			description:
-				"<h2>Voltar Página</h2><div>Voltará para a aba anterior da tabela.</div>",
+				"<h2>Botão Voltar</h2><div>Voltará para a aba anterior da tabela.</div>",
 			placement: "top",
 		},
 		{
 			element: "#Botao-proxima-pag",
 			description:
-				"<h2>Próxima Página</h2><div>Seguirá para a próxima aba da tabela.</div>",
+				"<h2>Botão Próxima</h2><div>Seguirá para a próxima aba da tabela.</div>",
 			placement: "top",
 		},
 	],

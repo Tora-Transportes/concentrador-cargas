@@ -269,13 +269,13 @@ function Formulario({ formik, produtos, distancia }) {
 				<Row>
 					<Col>
 						<FloatingLabel
-							label="Distancia entre a origem e o destino"
+							label="Distância entre a origem e o destino"
 							className="mb-3"
 						>
 							<Form.Control
 								type="text"
 								placeholder=" "
-								value={`A distancia entre ${
+								value={`A distância entre ${
 									formik.values.origem_carga.split("/")[2]
 								} e ${
 									formik.values.destino_carga.split("/")[2]
@@ -283,7 +283,7 @@ function Formulario({ formik, produtos, distancia }) {
 								readOnly
 							/>
 							<Form.Text id="passwordHelpBlock" muted>
-								O valor apresentado representa a distancia de centro a centro.
+								O valor mostrado representa a distância de centro a centro.
 							</Form.Text>
 						</FloatingLabel>
 						<hr />

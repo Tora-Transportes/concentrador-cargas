@@ -93,7 +93,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 					</MapContainer>
 				)}
 				<Row className="mb-2">
-					<h1>Veículos no raio de outro veículo</h1>
+					<h1>Veículos próximos</h1>
 				</Row>
 				<Row>
 					<Col>
@@ -110,7 +110,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 							</Form.Group>
 
 							<Form.Group controlId="formdistancia">
-								<Form.Label>Distancia (KM)</Form.Label>
+								<Form.Label>Distância (KM)</Form.Label>
 								<Form.Control
 									type="number"
 									min="1"
@@ -141,7 +141,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 											<BsDownload />
 										</Button>
 									</th>
-									<th>Distancia KM</th>
+									<th>Distância KM</th>
 									<th>Placa</th>
 									<th>Latitude</th>
 									<th>Longitude</th>
