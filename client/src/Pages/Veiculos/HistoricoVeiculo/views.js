@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import { Toast } from "primereact/toast";
 import {
 	Container,
 	Row,
@@ -12,10 +11,15 @@ import {
 import iconStart from "../../../assets/start.png";
 import iconFinish from "../../../assets/finish.png";
 import "./../styleVeiculos.css";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import {
+	MapContainer,
+	Marker,
+	//Polyline,
+	Popup,
+	TileLayer,
+} from "react-leaflet";
 import L from "leaflet";
 import { BsDownload } from "react-icons/bs";
-import { showToastMessage } from "src/Pages/Utils/toastMessage";
 
 const truckIcon = L.icon({
 	iconUrl:
@@ -36,22 +40,15 @@ const finishIcons = L.icon({
 function ViewHistoricoVeiculo({
 	buscarHistoricoVeicles,
 	historicoRotas,
-	setHistoricoRotas,
 	clearHistoricoRotas,
 }) {
-	const toast = useRef(null);
-	if (historicoRotas?.posicao?.length === 0) {
-		setHistoricoRotas(false);
-		const message =
-			"Não foram encontrado hitórico do veículo com este filtro de data!";
-		showToastMessage(toast, "warn", message, 7000);
-	}
-
 	const [fields, setFields] = React.useState({
 		placa: "",
 		date_inicio: new Date(),
 		date_fim: new Date(),
 	});
+
+	const polylineRef = useRef();
 
 	function handleChange(event) {
 		const { name, value } = event.target;
@@ -83,14 +80,13 @@ function ViewHistoricoVeiculo({
 		const csvURL = URL.createObjectURL(csvData);
 		const tempLink = document.createElement("a");
 		tempLink.href = csvURL;
-		tempLink.setAttribute("download", "historicoRotas.csv");
+		tempLink.setAttribute("download", "Historico-de-Rotas.csv");
 		tempLink.click();
 	}
 
 	return (
 		<div className="class-body">
 			<Container className="text-center mb-5 mt-4">
-				<Toast ref={toast} className="w-25" position="top-center"></Toast>
 				<Row className="mb-2">
 					<h1>Histórico de rotas do veículo</h1>
 				</Row>
@@ -142,13 +138,14 @@ function ViewHistoricoVeiculo({
 					</Button>
 				</Form>
 				<Row className="mt-3">
-					{historicoRotas?.posicao && (
+					{historicoRotas?.posicao.length > 0 && (
 						<MapContainer
 							center={[
 								historicoRotas?.posicao[0].LAT.replace(",", "."),
 								historicoRotas?.posicao[0].LON.replace(",", "."),
 							]}
 							zoom={11}
+							ref={polylineRef}
 							style={{ height: "80vh" }}
 						>
 							<TileLayer
@@ -165,29 +162,38 @@ function ViewHistoricoVeiculo({
 										? "Posição final da busca"
 										: `UF: ${position.UF.toUpperCase()} ,Municipio: ${position.MUN.toUpperCase()} ,Rua: ${position.RUA.toUpperCase()}.`;
 								return (
-									<Marker
-										key={fields.placa + index}
-										position={[
-											position.LAT.replace(",", "."),
-											position.LON.replace(",", "."),
-										]}
-										icon={
-											index === 0
-												? startIcons
-												: index === lastPosition
-												? finishIcons
-												: truckIcon
-										}
-									>
-										<Popup>{messagePopup}</Popup>
-									</Marker>
+									<>
+										<Marker
+											key={fields.placa + index}
+											position={[
+												position.LAT.replace(",", "."),
+												position.LON.replace(",", "."),
+											]}
+											icon={
+												index === 0
+													? startIcons
+													: index === lastPosition
+													? finishIcons
+													: truckIcon
+											}
+										>
+											<Popup>{messagePopup}</Popup>
+										</Marker>
+										{/* <Polyline
+											pathOptions={{ color: "lime" }}
+											position={[
+												position.LAT.replace(",", "."),
+												position.LON.replace(",", "."),
+											]}
+										/> */}
+									</>
 								);
 							})}
 						</MapContainer>
 					)}
 				</Row>
 				<Row>
-					{historicoRotas?.posicao && (
+					{historicoRotas?.posicao.length > 0 && (
 						<Table className="mt-5" striped bordered hover>
 							<thead>
 								<tr>
