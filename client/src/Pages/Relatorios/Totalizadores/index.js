@@ -76,7 +76,6 @@ function RelatoriosMain() {
 			} else {
 				const a = (await ServiceRelatorios.resumosDiarios(filters)).data.data;
 				setResumosDiarios(a);
-				console.log(a);
 			}
 			setLoading(false);
 		}, 300);

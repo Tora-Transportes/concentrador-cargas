@@ -19,7 +19,6 @@ const PaginatorTable = ({ itensPerPage, setItensPerPage, setVisibleLeft }) => {
 		{ name: "100", code: "100" },
 		{ name: "500", code: "500" },
 	];
-	console.log(itensPerPage);
 
 	return (
 		<Dropdown

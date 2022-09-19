@@ -21,18 +21,18 @@ export class CargaRepository {
     const carga = await database("con_cargas")
       .select([
         "con_cargas.*",
-        database.raw(
-          `SELECT 
-          replace(x.cliente,'	','') as CLIENTE
-      FROM (
-      SELECT
-          rtrim(ltrim(replace("cliente", '	 ',''))) AS CLIENTE
-      FROM "con_cargas"
+      //   database.raw(
+      //     `SELECT 
+      //     replace(x.cliente,'	','') as CLIENTE
+      // FROM (
+      // SELECT
+      //     rtrim(ltrim(replace("cliente", '	 ',''))) AS CLIENTE
+      // FROM "con_cargas"
       
-      )x -- sub query
-      ORDER BY 1 ASC;
-      `
-        ),
+      // )x -- sub query
+      // ORDER BY 1 ASC;
+      // `
+      //   ),
         "con_situacoes_cargas.descricao as situacao.descricao",
         "con_situacoes_cargas.cor as situacao.cor",
         "FILIAL.FIL_DSC as filial.descricao",
@@ -54,7 +54,7 @@ export class CargaRepository {
     database.raw(
       `CASE WHEN "con_cargas"."e_lote" = 0 THEN 'Não' WHEN "con_cargas"."e_lote" = 1 THEN 'Sim' END AS "E lote"`
     );
-    console.log("teste", carga.toSQL().toNative());
+
     if (!carga) return;
     const locais = (
       await database("con_locais_carga")
@@ -287,6 +287,7 @@ export class CargaRepository {
           `to_char("con_cargas"."data_atualizacao", 'dd/mm/yyyy') AS "Data Atualização"`
         ),
       ])
+      .where("fk_filial", query?.fk_filial)
       .join(
         "con_situacoes_cargas",
         "con_situacoes_cargas.id",
@@ -303,7 +304,7 @@ export class CargaRepository {
         if (query.date_execel_inicio && query.date_execel_fim) {
           con_cargas.andWhereBetween("con_cargas.data_cadastro", [
             new Date(query.date_execel_inicio + "T00:00:00"),
-            new Date(query.date_execel_fim + "T00:00:00"),
+            new Date(query.date_execel_fim + "T23:59:00"),
           ]);
         }
       })
