@@ -21,6 +21,7 @@ body, ul{
 #style-a{
     text-decoration: none;
     color: white;
+    cursor: pointer;
 }
 
 #style-a:hover{

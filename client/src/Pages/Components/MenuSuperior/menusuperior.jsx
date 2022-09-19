@@ -71,7 +71,7 @@ function Menusuperior() {
                 Indicador Operacional
               </button>
               <div id="myDropdown-veic" className="dropdown-content-veic">
-                <a href="/relatorios">Relatórios</a>
+                <a href="/relatorios">Relatório</a>
                 <a href="/rotas/pendentes">Rotas pendentes</a>
                 <a href="/veiculos/raio/empresa">Raio Empresa</a>
                 <a href="/veiculos/raio">Veículos x Veículos</a>

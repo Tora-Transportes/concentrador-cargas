@@ -43,7 +43,7 @@ const options = {
 		{
 			element: "#coluna1",
 			description:
-				"<h2>Botão info</h2><div>Nessa coluna as informações exibidas são clicavéis, ou seja, são botões que trazem mais informações sobre a rota.</div>",
+				"<h2>Botão info</h2><div>Nesta coluna as informaações exibidas são clicavéis são botões que traz mais informações sobre a rota.</div>",
 			placement: "top",
 		},
 		{
