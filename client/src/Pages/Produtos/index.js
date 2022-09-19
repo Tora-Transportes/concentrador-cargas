@@ -51,9 +51,8 @@ function Produtos() {
 
 	async function handleDelete(nome, id) {
 		const observacao = await swal(
-			"Ops?",
+			"Ops!",
 			`Tem certeza que deseja desabilitar o produto ${nome}
-
 			Preencha a observação abaixo`,
 			"warning",
 			{
@@ -92,7 +91,7 @@ function Produtos() {
 		}
 	}
 
-	async function handleEditProduto(nome) {
+	async function handleEditProduto(nome, id) {
 		const produto = await swal(`Novo nome para o produto '${nome}'`, {
 			content: "input",
 			buttons: ["Cancelar", true],
@@ -105,14 +104,19 @@ function Produtos() {
 		}
 
 		try {
-			await ServiceProdutos.update({ id: produto.toUpperCase(), nome });
+			await ServiceProdutos.update({ nome: produto, id });
+
 			swal("Sucesso!", "Produto atualizado", "success");
+
 			setProdutos((p) =>
 				p
+
 					.map((i) => {
-						if (i.nome !== nome) return i;
-						return { ...i, nome: produto.toUpperCase() };
+						if (i.id !== id) return i;
+
+						return { ...i, nome: produto };
 					})
+
 					.sort((a, b) => (a.nome > b.nome ? 1 : -1))
 			);
 		} catch (error) {

@@ -25,12 +25,13 @@ function ViewRotasPendentes({
 				<Row>
 					<Col lg={1} className="text-center "></Col>
 					<Col className="text-center" id="total-reg">
-						Total de {totalRegisters} registros.
+						Total de <strong>{totalRegisters}</strong> registros.
 					</Col>
 					<Col lg={1}></Col>
 				</Row>
 				<Row>
 					<TabelaCargas
+						id="tabela-mon"
 						columns={columns}
 						get_data={get_data}
 						values={data}

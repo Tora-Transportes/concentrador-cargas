@@ -157,20 +157,17 @@ function Main() {
 
 				<div className="class-icons-body">
 					<div>
-						<Link to="/relatorios" className="text-decoration-none icone-tora">
+						<Link to="/relatorios" className="class-link">
 							<FaChartBar
 								size={50}
 								style={{ marginLeft: "1rem", color: "#00652E" }}
 							/>
 							<br />
-							<b style={{ color: "#00652E" }}>Relatórios</b>
+							<b style={{ color: "#00652E" }}>Indicadores</b>
 						</Link>
 					</div>
 					<div>
-						<Link
-							to="/veiculos/coordenadas"
-							className="text-decoration-none icone-tora"
-						>
+						<Link to="/veiculos/coordenadas" className="class-link">
 							<SiGooglemaps
 								size={50}
 								style={{ marginLeft: "1.5rem", color: "#00652E" }}
@@ -180,20 +177,14 @@ function Main() {
 						</Link>
 					</div>
 					<div>
-						<Link
-							to="/cargas/visualizar"
-							className="text-decoration-none icone-tora"
-						>
+						<Link to="/cargas/visualizar" className="class-link">
 							<FaTruckMoving size={50} style={{ color: "#00652E" }} />
 							<br />
 							<b style={{ color: "#00652E" }}>Cargas</b>
 						</Link>
 					</div>
 					<div>
-						<Link
-							to="/lotes/visualizar"
-							className="text-decoration-none icone-tora"
-						>
+						<Link to="/lotes/visualizar" className="class-link">
 							<FaBoxes size={50} style={{ color: "#00652E" }} />
 							<br />
 							<b style={{ color: "#00652E" }}>Lotes</b>
@@ -201,16 +192,16 @@ function Main() {
 					</div>
 				</div>
 
-				<Row
+				<div
 					className={
 						usuarioPodeJogar() ? "invisible" : "text-center h5 text-danger"
 					}
 				>
-					<Col>
+					<p className="class-p-fimjogo" id="style-p-fimjogo">
 						Você já se exercitou, agora é hora de avaliar seus melhores
 						veículos. Desejamos um excelente dia de trabalho!
-					</Col>
-				</Row>
+					</p>
+				</div>
 
 				<Row className={usuarioPodeJogar() ? "" : "invisible"}>
 					{levelGame > -1 && (

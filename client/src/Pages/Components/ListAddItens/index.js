@@ -34,7 +34,7 @@ export default function ListAddItens({ onChange, value, name }) {
 	async function removeItem(key) {
 		if (
 			await swal(
-				"Ops",
+				"Ops!",
 				"Você tem certeza que deseja excluir a parada selecionada?",
 				"warning",
 				{
@@ -52,8 +52,8 @@ export default function ListAddItens({ onChange, value, name }) {
 			{list?.map((i, index) => (
 				<li key={i + index}>
 					<Button
-						className="m-1 ml-5 w-100 text-start fw-bold"
-						variant="outline-danger"
+						id="style-add-parada"
+						className="m-1 ml-5 w-100 text-start"
 						onClick={() => removeItem(i)}
 					>
 						{i}

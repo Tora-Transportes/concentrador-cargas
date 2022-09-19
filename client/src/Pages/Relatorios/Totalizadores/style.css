@@ -10,6 +10,13 @@
   margin: 4rem 65rem 0 0;
 }
 
+.class-grafico-relatorio{
+  margin-top: 3rem;
+}
+
+.class-acc-rel{
+  margin-top: 3rem;
+}
 @media only screen and (max-width: 480px) {
   .class-p-rel {
     margin: 3rem 16rem 0 0;

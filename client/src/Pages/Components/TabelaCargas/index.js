@@ -31,9 +31,7 @@ function TabelaCargas({
 		})
 	);
 	const [selectedColumns, setSelectedColumns] = useState(initialSelectColumns);
-	const firstDebounceRun = useRef(true);
 	const dadosTabela = useRef(null);
-	const firstRun = useRef(true);
 	const toast = useRef(null);
 
 	// functions of tables
@@ -66,11 +64,6 @@ function TabelaCargas({
 		}
 	};
 
-	const onSort = (e) => {
-		setSortField(e.sortField);
-		setSortOrder(e.sortOrder);
-	};
-
 	useEffect(() => {
 		const { total_pages, results, current_page } = values;
 		setData(results);
@@ -89,6 +82,25 @@ function TabelaCargas({
 		},
 	});
 
+	const onSort = (e) => {
+		console.log("Teste", e);
+		if (e.sortOrder === 1) {
+			console.log("if 1", e);
+			orderby.setValues({
+				columns,
+				direction: "asc",
+			});
+		} else {
+			console.log("if 2", e);
+			orderby.setValues({
+				columns,
+				direction: "desc",
+			});
+		}
+		setSortField();
+		setSortOrder();
+	};
+
 	async function notify() {
 		const options = {
 			filters: {},
@@ -98,15 +110,16 @@ function TabelaCargas({
 			},
 			page: 1,
 		};
+		columns;
 
-		// columns
+		//columns
 		for (const i in formik.values) {
 			if (![undefined, null, ""].includes(formik.values[i])) {
 				options.filters[i] = formik.values[i];
 			}
 		}
 
-		// direction
+		// // direction
 		if (orderby.values.column) {
 			options.orderBy.column = orderby.values.column;
 			options.orderBy.direction = orderby.values.direction;
@@ -116,7 +129,7 @@ function TabelaCargas({
 
 		//page
 		options.page = page;
-
+		console.log("teste este", options);
 		await get_data(options);
 	}
 
@@ -131,12 +144,14 @@ function TabelaCargas({
 			return v - 1 < 1 ? v : v - 1;
 		});
 	}
+
 	const colunsFiltrado = [];
 	storage.filter((i) =>
 		columns.find((c) => {
 			if (c.name === i.name) colunsFiltrado.push(c);
 		})
 	);
+
 	const setDynamicColums = colunsFiltrado.map((col) => {
 		return (
 			<Column
@@ -169,7 +184,7 @@ function TabelaCargas({
 			/>
 		);
 	});
-
+	const firstRun = useRef(true);
 	useEffect(() => {
 		if (firstRun.current) {
 			firstRun.current = false;
@@ -177,7 +192,7 @@ function TabelaCargas({
 			notify();
 		}
 	}, [page, orderby.values, get_data]);
-
+	const firstDebounceRun = useRef(true);
 	useDebouncedFunction(
 		() => {
 			if (firstDebounceRun.current) {
@@ -216,12 +231,12 @@ function TabelaCargas({
 					reorderableColumns
 					onColReorder={ordernarUnidadeColunas}
 					sortField={sortField}
+					responsiveLayout="scroll"
 					scrollHeight="60vh"
 					sortOrder={sortOrder}
 					onSort={onSort}
 					className="p-datatable-responsive-grid"
-					responsiveLayout="scroll"
-					emptyMessage="Não foram encontrados resultados nessa busca."
+					emptyMessage="Não foram encontrado nenhum resultado nesta busca"
 					ref={dadosTabela}
 					value={data}
 					header={headerTable}

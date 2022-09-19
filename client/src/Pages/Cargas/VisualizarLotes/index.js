@@ -56,7 +56,11 @@ function Visualizar() {
 		location.reload();
 	}
 
-	async function handleExportExcel(date_execel_inicio, date_execel_fim) {
+	async function handleExportExcel(
+		date_execel_inicio,
+		date_execel_fim,
+		fk_filial
+	) {
 		setLoading(true);
 		const { filters, orderBy } = filtroAtual;
 		const options = {
@@ -66,6 +70,7 @@ function Visualizar() {
 			e_lote: 1,
 			date_execel_inicio,
 			date_execel_fim,
+			fk_filial,
 		};
 
 		const response = await ServiceCargas.exportToXlsx(options);

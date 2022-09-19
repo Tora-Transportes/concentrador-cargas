@@ -39,6 +39,10 @@ export class CargaRepository {
         "con_cargas.codigo_motorista"
       )
       .leftJoin("FILIAL", "FILIAL.FIL_COD", "con_cargas.fk_filial");
+    database.raw(
+      `CASE WHEN "con_cargas"."e_lote" = 0 THEN 'Não' WHEN "con_cargas"."e_lote" = 1 THEN 'Sim' END AS "E lote"`
+    );
+
     if (!carga) return;
     const locais = (
       await database("con_locais_carga")
@@ -271,6 +275,7 @@ export class CargaRepository {
           `to_char("con_cargas"."data_atualizacao", 'dd/mm/yyyy') AS "Data Atualização"`
         ),
       ])
+      .where("fk_filial", query?.fk_filial)
       .join(
         "con_situacoes_cargas",
         "con_situacoes_cargas.id",
@@ -287,7 +292,7 @@ export class CargaRepository {
         if (query.date_execel_inicio && query.date_execel_fim) {
           con_cargas.andWhereBetween("con_cargas.data_cadastro", [
             new Date(query.date_execel_inicio + "T00:00:00"),
-            new Date(query.date_execel_fim + "T00:00:00"),
+            new Date(query.date_execel_fim + "T23:59:00"),
           ]);
         }
       })

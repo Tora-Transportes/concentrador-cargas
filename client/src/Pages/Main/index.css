@@ -1,5 +1,5 @@
 .class-body-main{
-  margin-top: 5rem;
+  /* margin-top: 5rem; */
   font-family: 'Poppins', sans-serif;
 }
 
@@ -34,9 +34,9 @@
   font-size: 15pt;
 }
 
-.class-p-title-main{
+/* .class-p-title-main{
   margin-top: 1rem;
-}
+} */
 
 #style-title-main{
   font-size: 37px;
@@ -86,7 +86,6 @@
 }
 
 .class-linha-jogo{
-  margin-top: 7rem;
   display: grid;
   grid-template-rows: auto auto;
   justify-content: center;
@@ -115,7 +114,17 @@
   grid-gap: 4rem;
   margin-bottom: 3rem;
 }
+.class-p-fimjogo{
+  margin-top: 4rem;
+}
 
+#style-p-fimjogo{
+  color: red;
+}
+
+.class-link{
+  text-decoration: none;
+}
 @media only screen and (max-width: 480px){
   #title-p-jogo{
     color: #939598;

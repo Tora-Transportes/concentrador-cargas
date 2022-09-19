@@ -43,7 +43,7 @@ const options = {
 		{
 			element: "#title-check-não",
 			description:
-				"<h2>Dados do Veículo</h2><div>Esse campo só será visto quando a opção do lote for *SIM.</div>",
+				"<h2>Dados do Veículo</h2><div>Esse campo só será visto quando a opção do lote for *NÃO.</div>",
 			placement: "top",
 		},
 		{

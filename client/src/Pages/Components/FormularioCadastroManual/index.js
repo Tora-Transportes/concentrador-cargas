@@ -433,13 +433,13 @@ function FormularioCadastroManual({
 				<Row>
 					<Col>
 						<FloatingLabel
-							label="Distancia entre a origem e o destino intermediário"
+							label="Distância entre a origem e o destino intermediário"
 							className="mb-3"
 						>
 							<Form.Control
 								type="text"
 								placeholder=" "
-								value={`A distancia entre ${
+								value={`A distância entre ${
 									formik.values.origem_carga.split("/")[2]
 								} e ${
 									formik.values.destino_intermediario.split("/")[2]
@@ -448,7 +448,7 @@ function FormularioCadastroManual({
 								readOnly
 							/>
 							<Form.Text id="passwordHelpBlock" muted>
-								O valor apresentado representa a distancia de centro a centro.
+								O valor mostrado representa a distância de centro a centro.
 							</Form.Text>
 						</FloatingLabel>
 						<div className="class-linha-title">
@@ -461,13 +461,13 @@ function FormularioCadastroManual({
 				<Row>
 					<Col>
 						<FloatingLabel
-							label="Distancia entre a origem e o destino final"
+							label="Distância entre a origem e o destino final"
 							className="mb-3"
 						>
 							<Form.Control
 								type="text"
 								placeholder=" "
-								value={`A distancia entre ${
+								value={`A distância entre ${
 									formik.values.origem_carga.split("/")[2]
 								} e ${
 									formik.values.destino_carga.split("/")[2]
@@ -476,7 +476,7 @@ function FormularioCadastroManual({
 								readOnly
 							/>
 							<Form.Text id="passwordHelpBlock" muted>
-								O valor apresentado representa a distancia de centro a centro.
+								O valor mostrado representa a distância de centro a centro.
 							</Form.Text>
 						</FloatingLabel>
 						<div className="class-linha-title5">
@@ -599,7 +599,7 @@ function FormularioCadastroManual({
 							Pré-requisitos e acessórios do veículo
 						</Form.Label>
 						<Form.Control
-							placeholder="Nesse campo são adicionadas informações, exemplo(s): motorista necessita de treinamento atualizado no cliente, cinta, luvas, etc."
+							placeholder="Adicione restrições e/ou acessórios do veículo caso necessário, exemplo(s): motorista necessita de treinamento atualizado no cliente, cinta, luvas, etc."
 							as="textarea"
 							rows={3}
 							name="acessorios_requisitos"
@@ -616,7 +616,7 @@ function FormularioCadastroManual({
 					<Form.Group className="mb-3">
 						<Form.Label>Informações restritivas do veículo</Form.Label>
 						<Form.Control
-							placeholder="Nesse campo são adicionadas informações, exemplo: proibido entrada de rodotrem."
+							placeholder="Adicione as informções restritivas do veículo, se houver, exemplo: proibido entrada de rodotrem."
 							as="textarea"
 							rows={3}
 							name="informacoes_restritivas"
@@ -633,7 +633,7 @@ function FormularioCadastroManual({
 					<Form.Group className="mb-3">
 						<Form.Label>Observações complementares</Form.Label>
 						<Form.Control
-							placeholder="Nesse campo são adicionadas informações, exemplo: frete será pago por peso."
+							placeholder="Adicione aqui as observações complementares, exemplo: frete será pago por peso."
 							as="textarea"
 							rows={3}
 							name="observacao"

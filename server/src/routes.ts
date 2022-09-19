@@ -73,6 +73,11 @@ routes.put(
   HasPermission("CADASTRAR_PRODUTOS"),
   ProdutoController.update
 );
+// routes.put(
+//   "/produtos/:id/nome",
+//   HasPermission("CADASTRAR_PRODUTOS"),
+//   ProdutoController.enable
+// );
 routes.put(
   "/produtos/:id/ativar",
   HasPermission("CADASTRAR_PRODUTOS"),
