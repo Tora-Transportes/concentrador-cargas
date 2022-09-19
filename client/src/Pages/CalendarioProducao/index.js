@@ -508,7 +508,7 @@ export default function CalendarioProducao() {
 
 				<Modal show={jsx} onHide={() => setJsx(null)}>
 					<Modal.Header closeButton>
-						<Modal.Title>Detalhes evento</Modal.Title>
+						<Modal.Title>Detalhes Evento</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>{jsx}</Modal.Body>
 					<Modal.Footer>
