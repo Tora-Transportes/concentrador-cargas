@@ -72,7 +72,7 @@ function Menusuperior() {
               </button>
               <div id="myDropdown-veic" className="dropdown-content-veic">
                 <a href="/relatorios">Indicador Operacional</a>
-                <a href="/rotas/pendentes">Rotas pendentes</a>
+                <a href="/rotas/pendentes">Rotas Pendentes</a>
                 <a href="/veiculos/raio/empresa">Raio Empresa</a>
                 <a href="/veiculos/raio">Veículos x Veículos</a>
                 <a href="/veiculos/destino">Veículos até Empresa</a>

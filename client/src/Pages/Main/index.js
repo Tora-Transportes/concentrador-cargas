@@ -163,7 +163,7 @@ function Main() {
 								style={{ marginLeft: "1rem", color: "#00652E" }}
 							/>
 							<br />
-							<b style={{ color: "#00652E" }}>Relatórios</b>
+							<b style={{ color: "#00652E" }}>Indicadores</b>
 						</Link>
 					</div>
 					<div>

@@ -52,21 +52,21 @@ function NavbarNavigator(props) {
 						<Offcanvas.Body>
 							<ListGroup className="sidebar-links">
 								<Link to="/cargas/menu">
-									<ListGroup.Item action>Cadastro de cargas</ListGroup.Item>
+									<ListGroup.Item action>Cadastro de Cargas</ListGroup.Item>
 								</Link>
 								<hr />
 								<Link to="/cargas/visualizar">
-									<ListGroup.Item action>Listagem de cargas</ListGroup.Item>
+									<ListGroup.Item action>Listagem de Cargas</ListGroup.Item>
 								</Link>
 								<Link to="/lotes/visualizar">
-									<ListGroup.Item action>Listagem de lotes</ListGroup.Item>
+									<ListGroup.Item action>Listagem de Lotes</ListGroup.Item>
 								</Link>
 								<hr />
 								<Link to="/produtos">
 									<ListGroup.Item action>Produtos</ListGroup.Item>
 								</Link>
 								<Link to="/rotas/pendentes">
-									<ListGroup.Item action>Rotas pendentes</ListGroup.Item>
+									<ListGroup.Item action>Rotas Pendentes</ListGroup.Item>
 								</Link>
 								<Link to="/usuarios/permissoes">
 									<ListGroup.Item action>Permissões</ListGroup.Item>

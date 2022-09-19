@@ -85,7 +85,7 @@ function ViewRotasPendentes({
 		<div className="class-body-relatorios">
 			<Container className="text-center mb-5 mt-4">
 				<p id="style-title-rel" className="class-p-rel">
-					Relatório
+					Informações
 				</p>
 				<hr id="style-hr-rel" />
 				<Toast
