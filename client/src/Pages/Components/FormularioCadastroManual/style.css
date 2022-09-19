@@ -25,6 +25,14 @@
     grid-template-columns: auto;
 }
 
+
+.class-botao-DetalhesV{
+    background: #00652E;
+    color: #ffff;
+    border: none;
+    margin-top: 1rem;
+}
+
 @media only screen and (max-width: 480px){
     .class-input-motorista{
         display: grid;

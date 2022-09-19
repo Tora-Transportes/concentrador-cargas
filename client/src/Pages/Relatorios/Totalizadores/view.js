@@ -153,11 +153,10 @@ function ViewRotasPendentes({
 					</Accordion.Item>
 				</Accordion>
 
-				<hr />
-				<hr />
 				<Row className="text-center mx-auto">
-					<Col lg={4} md={6} sm={12}>
+					<Col lg={4} md={10} sm={12}>
 						<Doughnut
+							style={{ marginTop: "2rem" }}
 							data={{
 								labels: totalizadores.geral.map((i) => i.descricao),
 								datasets: [
@@ -180,7 +179,7 @@ function ViewRotasPendentes({
 						/>
 					</Col>
 					<Col>
-						<Table striped bordered hover>
+						<Table striped bordered hover style={{ marginTop: "3rem" }}>
 							<thead>
 								<tr>
 									<th>Situação</th>
@@ -208,9 +207,8 @@ function ViewRotasPendentes({
 						</Table>
 					</Col>
 				</Row>
-				<hr />
 
-				<Accordion>
+				<Accordion className="class-acc-rel">
 					<Accordion.Item eventKey="1">
 						<Accordion.Header>
 							<b>Cargas Ativadas X Desativadas</b>
@@ -481,12 +479,10 @@ function ViewRotasPendentes({
 					</Accordion.Item>
 				</Accordion>
 
-				<hr />
-
-				<span style={{ fontSize: "15px" }}>
-					A listagem de cargas transportadas por dia só irá aparecer caso o
-					filtro esteja aplicado com filial, data inicial e data final.
-				</span>
+				<p style={{ marginTop: "2rem", color: "black" }}>
+					Obs: A listagem de cargas transportadas por dia só vai aparecer caso o
+					filtro esteja aplicado com filial, data inicial e data final
+				</p>
 				{dataInicial?.current?.value &&
 					dataFinal?.current?.value &&
 					codigoFilial && (

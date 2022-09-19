@@ -121,6 +121,10 @@
 #style-p-fimjogo{
   color: red;
 }
+
+.class-link{
+  text-decoration: none;
+}
 @media only screen and (max-width: 480px){
   #title-p-jogo{
     color: #939598;
