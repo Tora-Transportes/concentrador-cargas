@@ -21,18 +21,18 @@ export class CargaRepository {
     const carga = await database("con_cargas")
       .select([
         "con_cargas.*",
-        database.raw(
-          `SELECT 
-          replace(x.cliente,'	','') as CLIENTE
-      FROM (
-      SELECT
-          rtrim(ltrim(replace("cliente", '	 ',''))) AS CLIENTE
-      FROM "con_cargas"
+      //   database.raw(
+      //     `SELECT 
+      //     replace(x.cliente,'	','') as CLIENTE
+      // FROM (
+      // SELECT
+      //     rtrim(ltrim(replace("cliente", '	 ',''))) AS CLIENTE
+      // FROM "con_cargas"
       
-      )x -- sub query
-      ORDER BY 1 ASC;
-      `
-        ),
+      // )x -- sub query
+      // ORDER BY 1 ASC;
+      // `
+      //   ),
         "con_situacoes_cargas.descricao as situacao.descricao",
         "con_situacoes_cargas.cor as situacao.cor",
         "FILIAL.FIL_DSC as filial.descricao",
