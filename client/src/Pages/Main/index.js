@@ -136,7 +136,7 @@ function Main() {
 				<Row>
 					<Col className="text-center mt-5 mb-5">
 						<p id="style-title-main" className="class-p-title-main">
-							Seja bem vindo(a) ao Concentrador de Cargas
+							Seja bem-vindo(a) ao Concentrador de Cargas
 						</p>
 					</Col>
 				</Row>
@@ -148,9 +148,9 @@ function Main() {
 					</div>
 					<div className="class-p-text">
 						<p id="style-p-text">
-							O concentrador de cargas lhe proporciona uma melhor visibilidade
-							de demanda, além de auxiliar sua concentração na <br /> melhor
-							tomada de decisão para à escolha de um veículo.
+							O concentrador de cargas lhe proporciona ampla visibilidade de
+							demanda, além de auxiliar sua concentração para a melhor <br />
+							tomada de decisão na escolha de um veículo.
 						</p>
 					</div>
 				</div>
@@ -163,7 +163,7 @@ function Main() {
 								style={{ marginLeft: "1rem", color: "#00652E" }}
 							/>
 							<br />
-							<b style={{ color: "#00652E" }}>Relatórios</b>
+							<b style={{ color: "#00652E" }}>Indicadores</b>
 						</Link>
 					</div>
 					<div>
@@ -246,8 +246,8 @@ function Main() {
 							<div className="class-linha-jogo">
 								<p id="title-p-jogo">
 									{" "}
-									Exercite sua memória para garantir uma melhor tomada de
-									decisão durante seu dia de trabalho.
+									Exercite sua memória, garantindo a melhor tomada de decisão
+									durante o seu dia de trabalho.
 								</p>
 								<Button
 									id="style-button-jogo"

@@ -1,8 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Form, Button, Table } from "react-bootstrap";
-
+import "./../styleVeiculos.css";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import "../Raio/style.css";
 import { BsDownload } from "react-icons/bs";
 
 import L from "leaflet";
@@ -63,7 +62,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 	}
 
 	return (
-		<div className="class-body-raio">
+		<div className="class-body">
 			<Container className="text-center mb-5 mt-4">
 				{raio && (
 					<MapContainer
@@ -93,7 +92,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 					</MapContainer>
 				)}
 				<Row className="mb-2">
-					<h1>Veículos no raio de outro veículo</h1>
+					<h1>Veículos próximos</h1>
 				</Row>
 				<Row>
 					<Col>
@@ -110,7 +109,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 							</Form.Group>
 
 							<Form.Group controlId="formdistancia">
-								<Form.Label>Distancia (KM)</Form.Label>
+								<Form.Label>Distância (KM)</Form.Label>
 								<Form.Control
 									type="number"
 									min="1"
@@ -141,7 +140,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 											<BsDownload />
 										</Button>
 									</th>
-									<th>Distancia KM</th>
+									<th>Distância KM</th>
 									<th>Placa</th>
 									<th>Latitude</th>
 									<th>Longitude</th>

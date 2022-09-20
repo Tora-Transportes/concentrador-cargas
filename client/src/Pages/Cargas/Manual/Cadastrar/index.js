@@ -22,7 +22,7 @@ function Manual() {
 	const formik = useFormik({
 		initialValues: {
 			responsavel_cadastro: String(getClaims().name),
-			id: "(Vai ser auto gerado)",
+			id: "(Será autogerado)",
 			e_lote: false,
 			cliente: "",
 			destino_carga: "",
@@ -54,8 +54,8 @@ function Manual() {
 					canal_comunicacao: "manual",
 				});
 				swal(
-					"Sucesso",
-					`A carga foi cadastrada com o identificador ${data.data.id}`,
+					"Sucesso!",
+					`A carga foi cadastrada com o identificador ${data.data.id}!`,
 					"success"
 				);
 				resetForm();
@@ -130,7 +130,7 @@ function Manual() {
 
 	function resetForm() {
 		formik.resetForm();
-		formik.setFieldValue("id", "(Vai ser auto gerado)");
+		formik.setFieldValue("id", "(gerado automaticamente)");
 	}
 
 	return (

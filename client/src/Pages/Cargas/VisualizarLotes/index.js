@@ -56,7 +56,11 @@ function Visualizar() {
 		location.reload();
 	}
 
-	async function handleExportExcel(date_execel_inicio, date_execel_fim) {
+	async function handleExportExcel(
+		date_execel_inicio,
+		date_execel_fim,
+		fk_filial
+	) {
 		setLoading(true);
 		const { filters, orderBy } = filtroAtual;
 		const options = {
@@ -66,6 +70,7 @@ function Visualizar() {
 			e_lote: 1,
 			date_execel_inicio,
 			date_execel_fim,
+			fk_filial,
 		};
 
 		const response = await ServiceCargas.exportToXlsx(options);
@@ -77,7 +82,7 @@ function Visualizar() {
 			setModalShowExcel(true);
 		} else if (response.data.byteLength < 14493) {
 			const message =
-				"Não foram encontrado dados com estas informaçoes no filtro de data!";
+				"Não foram encontrados dados com essas informações no filtro de data.";
 			await showToastMessage(toast, "warn", message, 7000);
 			setLoading(false);
 			setModalShowExcel(true);
@@ -136,7 +141,7 @@ function Visualizar() {
 				resetView={resetView}
 				values={cargas}
 				totalRegisters={totalRegisters}
-				tituloPag="Grid de Cargas em Lote"
+				tituloPag="Listagem de Cargas em Lote"
 				modalShowExcel={modalShowExcel}
 				setModalShowExcel={setModalShowExcel}
 			/>

@@ -23,11 +23,11 @@ function Importar() {
 			if (inputFile.current) {
 				const files = inputFile.current.files;
 				if (files.length === 0) {
-					swal("Ops!", "Nenhum arquivo foi selecionado", "error");
+					swal("Ops!", "Nenhum arquivo foi selecionado.", "error");
 				} else if (
 					await swal(
 						"Ops!",
-						"Tem certeza que deseja importar o arquivo selecionado ?",
+						"Tem certeza que deseja importar o arquivo selecionado?",
 						"warning",
 						{ buttons: ["Não", true], dangerMode: true }
 					)
@@ -98,7 +98,7 @@ function Importar() {
 				<div className="class-import">
 					<div className="title-import">
 						<h1 onClick={HandleClick} id="title-import">
-							Importação das cargas
+							Importação de cargas
 						</h1>
 					</div>
 					<div className="class-button-import">
@@ -111,7 +111,7 @@ function Importar() {
 							rel="noreferrer"
 						>
 							<Button id="botao-download">
-								Download planilha Modelo <BsDownload />
+								Download planilha modelo <BsDownload />
 							</Button>
 						</a>
 					</div>
@@ -143,7 +143,7 @@ function Importar() {
 				</div>
 
 				<h1 id="title-tab-import-carg" className="class-title-preview">
-					Preview e resultados
+					Visualização e Resultados:
 				</h1>
 				<div className="class-table-importCarga">
 					<Table responsive striped bordered hover id="Table-impot-carg">
@@ -152,11 +152,11 @@ function Importar() {
 								<th>Código da carga</th>
 								<th>Unidade de medida</th>
 								<th>Quantidade</th>
-								<th>Origem carga</th>
-								<th>Destino carga</th>
+								<th>Origem da carga</th>
+								<th>Destino da carga</th>
 								<th>Cliente</th>
-								<th>É lote ?</th>
-								<th>Observação</th>
+								<th>É lote?</th>
+								<th>Observações</th>
 								<th>Destinatário</th>
 							</tr>
 						</thead>

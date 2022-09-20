@@ -17,22 +17,22 @@ function RotasPendentes() {
 		},
 		{
 			name: "cidade_origem",
-			description: "Cidade Origem",
+			description: "Cidade de Origem",
 			selector: (row) => row.cidade_origem,
 		},
 		{
 			name: "estado_origem",
-			description: "Estado Origem",
+			description: "Estado de Origem",
 			selector: (row) => row.estado_origem,
 		},
 		{
 			name: "cidade_destino",
-			description: "Cidade Destino",
+			description: "Cidade de Destino",
 			selector: (row) => row.cidade_destino,
 		},
 		{
 			name: "estado_destino",
-			description: "Estado Destino",
+			description: "Estado de Destino",
 			selector: (row) => row.estado_destino,
 		},
 	];

@@ -7,27 +7,21 @@ const options = {
 		{
 			element: "#title-monit",
 			description:
-				"<h2>Bem-vindo</h2><div>A tela Monitoramento na tabela seguinte irá passar por uma etapa de aprovação e reprovação.</div>",
-			placement: "bottom",
-		},
-		{
-			element: "#rows-monit",
-			description:
-				"<h2>Linhas da Tabela</h2><div>Nesta opção você define a quantidade de linhas que será exibidas na tabela.</div>",
+				"<h2>Bem-vindo!</h2><div>Na tela de Monitoramento, são controladas as etapas de aprovação e reprovação dos veículos, conforme mostra a tabela abaixo.</div>",
 			placement: "bottom",
 		},
 		{
 			element: "#total-reg",
 			description:
+				"<h2>Total de Registros</h2><div>Contabiliza os registros existentes, que serão exibidos na tabela abaixo.</div>",
+			placement: "bottom",
+		},
+		{
+			element: "#tabela-mon",
+			description:
 				"<h2>Total Registros</h2><div>total de registros exibidos na tabela abaixo.</div>",
 			placement: "bottom",
 		},
-		// {
-		// 	element: "#tabela-mon",
-		// 	description:
-		// 		"<h2>Total Registros</h2><div>total de registros exibidos na tabela abaixo.</div>",
-		// 	placement: "bottom",
-		// },
 	],
 	onComplete: function () {
 		window.location.reload();

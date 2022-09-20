@@ -13,7 +13,7 @@ export default {
 	},
 
 	formatDate: (value) => {
-		if (value == null) return "Sem informação";
+		if (value == null) return " ";
 		const [data, time] = value?.split("T");
 		return `${data.split("-").reverse().join("-")} às ${time.split(".")[0]}`;
 	},

@@ -87,7 +87,7 @@ export const CargaFilter = ({ formik, onFilter }) => {
 						/>
 					</FloatingLabel>
 
-					<FloatingLabel label="Tipo material">
+					<FloatingLabel label="Tipo de material">
 						<Form.Control
 							type="text"
 							placeholder=" "
@@ -117,7 +117,7 @@ export const CargaFilter = ({ formik, onFilter }) => {
 						/>
 					</FloatingLabel>
 
-					<FloatingLabel label="Data cadastro">
+					<FloatingLabel label="Data do cadastro">
 						<Form.Control
 							type="date"
 							placeholder=" "
@@ -127,7 +127,7 @@ export const CargaFilter = ({ formik, onFilter }) => {
 						/>
 					</FloatingLabel>
 
-					<FloatingLabel label="É lote ?">
+					<FloatingLabel label="É lote? ">
 						<Form.Select
 							placeholder=" "
 							value={formik.values.e_lote}

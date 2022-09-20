@@ -17,7 +17,7 @@ function Main() {
 					className="class-title-coleta"
 					onClick={HandleClick}
 				>
-					Selecione o modo qual a carga foi coletada
+					Selecione o modo no qual a carga foi coletada:
 				</h1>
 				<div className="class-button-icons">
 					<Link className="text-decoration-none" to="/cargas/manual">

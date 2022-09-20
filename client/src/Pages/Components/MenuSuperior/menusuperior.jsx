@@ -29,31 +29,22 @@ function Menusuperior() {
         <ul id="menu" role="menu" className="class-ul">
           <li className="class-li">
             <a id="style-a" href="/">
-              Inicio
+              Início
             </a>
           </li>
           <div className="class-dropdown">
             <div className="dropdown">
               <button id="style-button-drop" className="dropbtn">
-                Carga
+                Cargas
               </button>
               <div id="myDropdown" className="dropdown-content">
-                <a href="/cargas/menu">Cadastrar Carga</a>
+                <a href="/cargas/menu">Cadastrar Cargas</a>
                 <a href="/cargas/visualizar">Listagem de Cargas</a>
                 <a href="/lotes/visualizar">Listagem de Lotes</a>
                 {/* <a href="/producao">Produção</a> */}
               </div>
             </div>
-            {/* <div className="dropdown-doc">
-              <button id="style-button-drop" className="dropbtn-doc">
-                Relatórios
-              </button>
-               <div id="myDropdown-doc" className="dropdown-content-doc">
-                <a href="/relatorios">Relatórios</a>
-              </div>
-            </div> */}
           </div>
-          <li className="class-li"></li>
           <li className="class-li">
             <a id="style-a" href="/veiculos/coordenadas">
               Coordenadas
@@ -85,6 +76,7 @@ function Menusuperior() {
                 <a href="/veiculos/raio/empresa">Raio Empresa</a>
                 <a href="/veiculos/raio">Veículos x Veículos</a>
                 <a href="/veiculos/destino">Veículos até Empresa</a>
+                <a href="/veiculos/historico">Histórico Veículos</a>
               </div>
             </div>
           </div>

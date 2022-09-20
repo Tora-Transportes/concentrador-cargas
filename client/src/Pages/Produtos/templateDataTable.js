@@ -29,7 +29,7 @@ export const renderHeader = (formik, globalFilter, setGlobalFilter) => {
 			<div className="header-table-filter-produto">
 				<InputGroup>
 					<FormControl
-						placeholder="Fazer uma busca global"
+						placeholder="Pesquisar produtos"
 						value={globalFilter}
 						onChange={(e) => setGlobalFilter(e.target.value)}
 					/>
@@ -62,7 +62,6 @@ export const opcoesTemplate = (
 						Editar
 					</Button>
 					<Button
-						style={{ color: "red" }}
 						variant="outline-danger"
 						onClick={(e) => {
 							e.preventDefault();
@@ -93,7 +92,7 @@ export const opcoesTemplate = (
 						}}
 					>
 						<BsInfoCircle className="icon-info" />
-						Info ...
+						Info
 					</Button>
 				</>
 			)}

@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import "./index.css";
 import { Container, Row, Col } from "react-bootstrap";
 import { useFormik } from "formik";
-//import NavbarNavigator from "../../Components/NavbarNavigator";
 import ServiceUsuarios from "../../../services/ServiceUsuarios";
 import useDebouncedFunction from "../../Components/useDebounceFunction";
 import swal from "sweetalert";
@@ -12,7 +11,6 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { allTipoPermissoes } from "../../Utils/permissionUser";
 import {
-	renderHeader,
 	actionBodyTemplate,
 	emailBodyTemplate,
 	nameBodyTemplate,
@@ -23,12 +21,20 @@ import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 function Permissoes() {
 	const [users, setUsers] = useState([]);
 	const [permissSelecionado, setPermissSeleciondo] = useState([]);
-	const [globalFilter, setGlobalFilter] = useState();
+	const [globalFilter, setGlobalFilter] = useState([]);
 
 	const dadosTabela = useRef(null);
 
+	let disableClearFilter = false;
+
+	if ((permissSelecionado.length || globalFilter.length) < 1) {
+		disableClearFilter = true;
+	}
+
 	const limparPermissoes = () => {
 		setPermissSeleciondo([]);
+		setGlobalFilter([]);
+		window.location.reload();
 	};
 
 	const formik = useFormik({
@@ -51,7 +57,7 @@ function Permissoes() {
 		const { oid, permissoes } = await rowData;
 
 		if (!permissSelecionado.length && !apagar) {
-			await swal("👀", "Nenhuma alteração aplicada", "warning");
+			await swal("", "Nenhuma alteração aplicada", "warning");
 		} else {
 			permissSelecionado.map((item) => {
 				if (!permissoes.includes(item.name)) {
@@ -59,11 +65,11 @@ function Permissoes() {
 				}
 			});
 			const message = apagar
-				? "Certeza que deseja deletar permissão do usuário ?"
-				: "Certeza que deseja aplicar essas permissões para o usuário?";
+				? "Certeza que deseja deletar permissão do usuário selecionado?"
+				: "Certeza que deseja aplicar essas permissões para o usuário selecionado?";
 
 			if (
-				await swal("👀", message, "warning", {
+				await swal("", message, "warning", {
 					buttons: ["Não", true],
 				})
 			) {
@@ -77,7 +83,7 @@ function Permissoes() {
 					})
 				);
 				swal("Sucesso", "Permissões alteradas", "success");
-				limparPermissoes();
+				//limparPermissoes();
 			}
 		}
 	}
@@ -99,13 +105,31 @@ function Permissoes() {
 		return permissBodyTemplate(rowData, deletePermission);
 	};
 
+	const listeningFilter = (e) => {
+		setGlobalFilter(e);
+		if (e.length < 1) {
+			window.location.reload();
+		}
+	};
+
 	const getRenderHeader = () => {
-		return renderHeader(globalFilter, setGlobalFilter);
+		return (
+			<div className="header-table-add-permission">
+				<div className="menu-header-table-permission">
+					<input
+						placeholder=" Pesquisar por coluna "
+						value={globalFilter}
+						onChange={(e) => listeningFilter(e.target.value)}
+						className=" input-empty"
+					/>
+					<i className="pi pi-search" />
+				</div>
+			</div>
+		);
 	};
 
 	return (
 		<div className="class-body-permissoes">
-			{/* <NavbarNavigator /> */}
 			<Menusuperior />
 			<Container className="text-center mb-4 mt-4">
 				<Row>
@@ -124,16 +148,16 @@ function Permissoes() {
 								optionLabel="name"
 								placeholder="Selecionar permissões"
 								filter={true}
-								filterPlaceholder="Procurar"
+								filterPlaceholder=" Filtrar por "
 							/>
 
 							<button
 								onClick={limparPermissoes}
-								disabled={permissSelecionado.length === 0}
+								disabled={disableClearFilter}
 								className="form-multSelect-button"
 							>
 								<MdDeleteForever size={20} color="white" />
-								<span>Limpar buscas</span>
+								<span>Limpar Filtros</span>
 							</button>
 						</div>
 
@@ -141,13 +165,14 @@ function Permissoes() {
 							<div className="datatable-responsive-demo">
 								<DataTable
 									className="p-datatable-responsive-demo"
+									dataKey="oid"
 									ref={dadosTabela}
 									value={users}
 									globalFilter={globalFilter}
 									header={getRenderHeader()}
 									paginator
 									rows={10}
-									emptyMessage="Não foram encontrado nenhum resultado nesta busca"
+									emptyMessage="Não foram encontrados resultados nessa busca."
 									paginatorTemplate=" PrevPageLink PageLinks NextPageLink  CurrentPageReport RowsPerPageDropdown"
 									rowsPerPageOptions={[15, 20, 25]}
 								>
@@ -160,7 +185,7 @@ function Permissoes() {
 									<Column
 										body={emailBodyTemplate}
 										field="email"
-										header="Email"
+										header="E-mail"
 										className="table-column-email"
 									/>
 									<Column
@@ -169,7 +194,7 @@ function Permissoes() {
 										body={getPermissBodyTemplate}
 										field="permissoes"
 										className="table-column-permissoes"
-										header="Permissão"
+										header="Permissões"
 									/>
 									<Column
 										body={getActionBodyTemplate}

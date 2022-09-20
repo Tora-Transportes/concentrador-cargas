@@ -69,7 +69,7 @@ function VisualizarCargas({
 				<Row className="row-inicio-carga mt-3 mb-2 ">
 					<Col className="text-start">
 						<ButtonReact
-							label="Detalhes Tabela"
+							label="Opções da Tabela"
 							id="style-button-detail"
 							icon={<BiCog className="me-1" />}
 							onClick={() => setVisibleLeft(true)}
@@ -114,7 +114,7 @@ function VisualizarCargas({
 							setModalShow={setModalShow}
 							setModalShowExcel={setModalShowExcel}
 							tipoDeBuscaPorPagina={
-								tituloPag === "Grid de Cargas em Lote"
+								tituloPag === "Listagem de Cargas em Lote"
 									? "table-columns-lote"
 									: "table-columns"
 							}

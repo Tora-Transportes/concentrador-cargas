@@ -54,7 +54,7 @@ export class UseCaseUpdateDadosCoordenada {
     if (usuarioResponsavelPelaPlaca !== undefined) {
       if (!usuarioLogado.permissoes.includes(EPermissions.VINCULAR_PLACA)) {
         throw new AppError(
-          "O usuário atual não possui a permissão 'VINCULAR_PLACA'",
+          "O usuário não possui permissão para alterar o Responsável da Placa.",
           403
         );
       }

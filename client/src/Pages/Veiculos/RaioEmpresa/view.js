@@ -41,7 +41,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 	}
 
 	return (
-		<div className="class-body-raioEmpresa">
+		<div className="class-body">
 			<Container className="text-center mb-5 mt-4">
 				{rota && (
 					<MapContainer

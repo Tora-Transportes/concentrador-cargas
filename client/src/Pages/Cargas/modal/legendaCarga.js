@@ -22,9 +22,9 @@ export default function DataExcelCargas(props) {
 			aria-labelledby="contained-modal-title-vcenter"
 			centered
 		>
-			<Modal.Header closeButton className="text-center">
+			<Modal.Header closeButton className="text-center testeteste">
 				<Modal.Title id="contained-modal-title-vcenter">
-					Legenda situações de carga
+					Situação das cargas
 				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>

@@ -1,7 +1,7 @@
 import axios from "axios";
+import oracle from "../database";
 import database, { mssql, mssqlCoordenadas } from "../database";
 import AppError from "../models/AppError";
-
 export interface IQueryDistance {
   cidade_origem: string | undefined | null;
   cidade_destino: string | undefined | null;
@@ -23,7 +23,21 @@ export interface ISearchVehicleRange {
   latitude_origem: number;
   longitude_origem: number;
 }
+export interface IHistoryTravelVehicle {
+  mun: string;
+  uf: string;
+  rod: string;
+  rua: string;
+  mot: string;
+  lat: number;
+  lon: number;
+  disimei: number;
+}
 
+export interface IResultHistoryVeicle {
+  placa: string;
+  posicao: IHistoryTravelVehicle[];
+}
 export class ServiceDistanceLocations {
   async find(query: IQueryDistance): Promise<null | number> {
     const { cidade_origem, cidade_destino, estado_origem, estado_destino } =
@@ -249,6 +263,38 @@ export class ServiceDistanceLocations {
       latitude_origem: lat,
       longitude_origem: lon,
       veiculos: vehicles,
+    };
+  }
+
+  //a tabela da busca do  historico chama report
+  async historyTravelVeicleService(
+    plate: string,
+    date_inicio: string,
+    date_fim: string
+  ): Promise<IResultHistoryVeicle> {
+    const query = await oracle("VEICULO")
+      .select(["VEI_REFERENCIA"])
+      .first()
+      .where("VEI_PLACA", plate);
+
+    if (!query) {
+      throw new AppError(
+        "A placa especificada não existe ou não possui coordenadas cadastradas!",
+        404
+      );
+    }
+
+    const historyVeicle: IHistoryTravelVehicle[] = await mssqlCoordenadas(
+      "REPORTES"
+    )
+      .select(["ID", "DISIMEI", "LAT", "LON", "UF", "ROD", "RUA", "MOT", "MUN"])
+      //.limit(10)
+      .where("DISIMEI", query?.VEI_REFERENCIA)
+      .whereBetween("DTINC", [new Date(date_inicio), new Date(date_fim)]);
+
+    return {
+      placa: plate,
+      posicao: historyVeicle,
     };
   }
 }

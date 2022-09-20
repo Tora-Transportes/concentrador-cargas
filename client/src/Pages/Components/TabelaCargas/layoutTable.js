@@ -3,25 +3,33 @@ import { MultiSelect } from "primereact/multiselect";
 import { Button, Col, Container, InputGroup, Row } from "react-bootstrap";
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
 import { TbSettings } from "react-icons/tb";
+import { Dropdown } from "primereact/dropdown";
 
 const PaginatorTable = ({ itensPerPage, setItensPerPage, setVisibleLeft }) => {
+	const selectLines = { name: itensPerPage, code: itensPerPage };
+
 	const showOpcaoPaginatot = (e) => {
-		setItensPerPage(e.target.value);
+		setItensPerPage(e.target.value.code);
 		if (setVisibleLeft !== undefined) setVisibleLeft(false);
 	};
+	const optionsPaginate = [
+		{ name: "10", code: "10" },
+		{ name: "20", code: "20" },
+		{ name: "50", code: "50" },
+		{ name: "100", code: "100" },
+		{ name: "500", code: "500" },
+	];
+
 	return (
-		<select
+		<Dropdown
 			id="edit-linhas-tabela"
-			className="btn"
-			value={itensPerPage}
-			onChange={(e) => showOpcaoPaginatot(e)}
-		>
-			<option value="10">Rows 10</option>
-			<option value="20">Rows 20</option>
-			<option value="50">Rows 50</option>
-			<option value="100">Rows 100</option>
-			<option value="500">Rows 500</option>
-		</select>
+			className="dropLines"
+			value={selectLines}
+			options={optionsPaginate}
+			onChange={showOpcaoPaginatot}
+			optionLabel="name"
+			placeholder="Itens por página"
+		/>
 	);
 };
 
@@ -55,7 +63,7 @@ export const headerTableFunction = (
 						options={columns}
 						onChange={(e) => onColumnToggle(e)}
 						optionLabel="description"
-						placeholder="Configurar tabela"
+						placeholder="Configurar Tabela"
 						filter={true}
 						removeIcon
 						filterPlaceholder="Procurar"
@@ -76,7 +84,7 @@ export const footerTableFunction = (previousPage, nextPage) => {
 				id="Botao-voltar-pag"
 				onClick={previousPage}
 			>
-				<HiChevronDoubleLeft /> Voltar paginação
+				<HiChevronDoubleLeft /> Voltar
 			</Button>
 			<Button
 				variant="outline-info"
@@ -84,7 +92,7 @@ export const footerTableFunction = (previousPage, nextPage) => {
 				style={{ background: "#00652E", border: "none", color: "#FFFFFF" }}
 				onClick={nextPage}
 			>
-				Proxíma paginação <HiChevronDoubleRight />
+				Próxima <HiChevronDoubleRight />
 			</Button>
 		</Col>
 	);

@@ -51,9 +51,8 @@ function Produtos() {
 
 	async function handleDelete(nome, id) {
 		const observacao = await swal(
-			"Ops?",
+			"Ops!",
 			`Tem certeza que deseja desabilitar o produto ${nome}
-
 			Preencha a observação abaixo`,
 			"warning",
 			{
@@ -163,7 +162,7 @@ function Produtos() {
 							paginator
 							rows={60}
 							paginatorTemplate=" PrevPageLink PageLinks NextPageLink  CurrentPageReport RowsPerPageDropdown"
-							emptyMessage="Não foram encontrado nenhum resultado nesta busca"
+							emptyMessage="Não foram encontrados resultados nessa busca."
 							rowsPerPageOptions={[80, 100]}
 							stripedRows
 						>
@@ -177,7 +176,7 @@ function Produtos() {
 							<Column
 								body={usuarioBodyTemplate}
 								field="usuario"
-								header="Atualizado Por:"
+								header="Atualizado por:"
 								className="table-column-email"
 							/>
 							<Column

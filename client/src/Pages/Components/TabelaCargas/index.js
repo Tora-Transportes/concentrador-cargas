@@ -83,15 +83,12 @@ function TabelaCargas({
 	});
 
 	const onSort = (e) => {
-		console.log("Teste", e);
 		if (e.sortOrder === 1) {
-			console.log("if 1", e);
 			orderby.setValues({
 				columns,
 				direction: "asc",
 			});
 		} else {
-			console.log("if 2", e);
 			orderby.setValues({
 				columns,
 				direction: "desc",
@@ -129,7 +126,6 @@ function TabelaCargas({
 
 		//page
 		options.page = page;
-		console.log("teste este", options);
 		await get_data(options);
 	}
 
@@ -162,7 +158,7 @@ function TabelaCargas({
 				header={col.description}
 				body={col.selector}
 				sortable={col.sortable}
-				filter={true}
+				filter={col.showFilter}
 				filterElement={
 					col.Filter ? (
 						<col.Filter

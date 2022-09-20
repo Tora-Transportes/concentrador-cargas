@@ -16,7 +16,7 @@ export default class ServiceDetailsVehicle {
         v.vei_categoria AS forca_trabalho,
         v.vei_modelo AS modelo,
         v.vei_renavam AS renavan,
-        v.vei_cert_prop AS certificado_propietario,
+        v.vei_cert_prop AS certificado_proprietario,
         nvl(v.vei_tp_assoalho, ' ') AS tipo_assoalho,
         v.sv_cod AS sv_cod,
         sv.sv_dsc AS setor_veiculo,
