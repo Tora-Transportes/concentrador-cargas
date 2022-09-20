@@ -25,3 +25,25 @@
     width: 63rem;
     margin-left: 5rem;
 }
+
+
+
+@media only screen and (max-width: 768px) {
+    .class-title-dest{
+        margin-left: -0.2rem;
+    }
+
+    .class-body-viewdest{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+ 
+    }
+
+    .class-card-dest{
+        margin-left: .1rem;
+        width: 24rem;
+        height: 24rem;
+    }
+}
+

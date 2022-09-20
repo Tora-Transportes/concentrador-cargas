@@ -32,4 +32,21 @@
         margin-left: -0.2rem;
     }
 
+    .class-body-viewraioemp{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+ 
+    }
+
+    .class-card-raioemp{
+        margin-left: .1rem;
+        width: 24rem;
+        height: 24rem;
+    }
+    .class-button-pesqraioemp{
+        display: flex;
+        align-items: center;
+    
+    }
 }
