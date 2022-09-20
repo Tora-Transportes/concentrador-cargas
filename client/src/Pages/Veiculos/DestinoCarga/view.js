@@ -82,7 +82,9 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 					</p>
 				)}
 				<Row className="mb-2">
-					<h1>Distância entre o veículo e a empresa:</h1>
+					<h1 className="class-title-dest">
+						Distância entre o veículo e a empresa:
+					</h1>
 				</Row>
 				<div>
 					<Card className="class-card-dest">

@@ -118,8 +118,7 @@ export class CargaRepository {
         //     rtrim(ltrim(replace("cliente", '	 ',''))) AS CLIENTE
         // FROM "con_cargas"
 
-        // )x -- sub query
-        // ORDER BY 1 ASC;
+        // )x
         // `
         //   ),
         "con_situacoes_cargas.descricao as situacao.descricao",
@@ -233,7 +232,7 @@ export class CargaRepository {
         String(query?.order_direction)
       );
     }
-
+    console.log(">>>>>teste", results.toSQL().toNative());
     results.orderBy("con_cargas.id", "asc");
     const rows = await results;
 
