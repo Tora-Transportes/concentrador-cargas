@@ -14,6 +14,7 @@ import Produtos from "./Pages/Produtos";
 import RotasPendentes from "./Pages/Rotas/Pendentes";
 import SituacaoVeiculos from "./Pages/Veiculos/Pendentes";
 import CoordenadasVeiculos from "./Pages/Coordenadas";
+import ConsultaCarga from "./Pages/Coordenadas/ConsultaCargas/consultaCargas";
 import RelatoriosMain from "./Pages/Relatorios/Totalizadores";
 import Credenciais from "./Pages/Credenciais";
 // import CalendarioProducao from "./Pages/CalendarioProducao";
@@ -70,6 +71,8 @@ export default function AllRoutes() {
 					exact
 					component={CoordenadasVeiculos}
 				/>
+				<Route path="/consulta/cargas/:id" exact component={ConsultaCarga} />
+
 				<Route path="/relatorios" exact component={RelatoriosMain} />
 				<Route path="/credenciais" exact component={Credenciais} />
 				{/* <Route path="/producao" exact component={CalendarioProducao} /> */}
