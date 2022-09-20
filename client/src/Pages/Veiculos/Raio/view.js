@@ -1,9 +1,9 @@
 import React from "react";
-import { Container, Row, Col, Form, Button, Table } from "react-bootstrap";
+import { Container, Row, Form, Button, Table, Card } from "react-bootstrap";
 import "./../styleVeiculos.css";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { BsDownload } from "react-icons/bs";
-
+import "../Raio/style.css";
 import L from "leaflet";
 
 const originIcon = L.icon({
@@ -94,12 +94,13 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 				<Row className="mb-2">
 					<h1>Veículos próximos</h1>
 				</Row>
-				<Row>
-					<Col>
-						<Form onSubmit={handleSubmit}>
+				<div>
+					<Card className="class-card-raio">
+						<Form onSubmit={handleSubmit} className="class-body-viewraio">
 							<Form.Group controlId="formPlaca">
 								<Form.Label>Placa</Form.Label>
 								<Form.Control
+									style={{ width: "20rem" }}
 									type="text"
 									name="placa"
 									value={fields.placa}
@@ -111,6 +112,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 							<Form.Group controlId="formdistancia">
 								<Form.Label>Distância (KM)</Form.Label>
 								<Form.Control
+									style={{ width: "20rem" }}
 									type="number"
 									min="1"
 									name="distancia_km"
@@ -122,13 +124,14 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 
 							<Button
 								type="submit"
-								style={{ background: "#00652E", border: "none" }}
+								id="style-button-pesqraio"
+								className="class-button-pesqraio"
 							>
 								Pesquisar
 							</Button>
 						</Form>
-					</Col>
-				</Row>
+					</Card>
+				</div>
 
 				<Row>
 					{raio && (

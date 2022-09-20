@@ -1,10 +1,10 @@
 import React from "react";
 import "./../styleVeiculos.css";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Form, Button, Card } from "react-bootstrap";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import InputCliente from "../../Components/InputCliente";
 import DateUtils from "../../Utils/date";
-
+import "../DestinoCarga/style.css";
 import L from "leaflet";
 
 const originIcon = L.icon({
@@ -84,12 +84,13 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 				<Row className="mb-2">
 					<h1>Distância entre o veículo e a empresa:</h1>
 				</Row>
-				<Row>
-					<Col>
-						<Form onSubmit={handleSubmit}>
+				<div>
+					<Card className="class-card-dest">
+						<Form onSubmit={handleSubmit} className="class-body-viewdest">
 							<Form.Group controlId="formDestino">
 								<Form.Label>Empresa</Form.Label>
 								<InputCliente
+									style={{ width: "23rem", height: "3rem" }}
 									name="empresa"
 									value={fields.empresa}
 									onChange={handleChange}
@@ -100,6 +101,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 							<Form.Group controlId="formPlaca">
 								<Form.Label>Placa</Form.Label>
 								<Form.Control
+									style={{ width: "23rem", height: "3rem" }}
 									type="text"
 									name="placa"
 									value={fields.placa}
@@ -110,13 +112,14 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 
 							<Button
 								type="submit"
-								style={{ background: "#00652E", border: "none" }}
+								id="style-button-pesqDest"
+								className="class-button-pesqDest"
 							>
 								Pesquisar
 							</Button>
 						</Form>
-					</Col>
-				</Row>
+					</Card>
+				</div>
 			</Container>
 		</div>
 	);
