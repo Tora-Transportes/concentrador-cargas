@@ -26,3 +26,10 @@
     margin-left: 5rem;
 }
 
+
+@media only screen and (max-width: 768px) {
+    .class-title-raioemp{
+        margin-left: -0.2rem;
+    }
+
+}
