@@ -288,7 +288,7 @@ export class ServiceDistanceLocations {
       "REPORTES"
     )
       .select(["ID", "DISIMEI", "LAT", "LON", "UF", "ROD", "RUA", "MOT", "MUN"])
-      .limit(10)
+      //.limit(10)
       .where("DISIMEI", query?.VEI_REFERENCIA)
       .whereBetween("DTINC", [new Date(date_inicio), new Date(date_fim)]);
 

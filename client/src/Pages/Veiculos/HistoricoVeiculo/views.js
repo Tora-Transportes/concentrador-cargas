@@ -65,7 +65,6 @@ function ViewHistoricoVeiculo({
 	}
 
 	function exportCsv() {
-		//const { UF, MUN, RUA, MOT, LAT, LON } = historicoRotas.posicao;
 		let csv = "UF;MUNICIPIO;RUA;MOTORISTA;LATITUDE;LONGITUDE\n\n";
 		for (const position of historicoRotas.posicao) {
 			csv += `${position.UF};${position.MUN};${position.RUA};${
@@ -179,13 +178,6 @@ function ViewHistoricoVeiculo({
 										>
 											<Popup>{messagePopup}</Popup>
 										</Marker>
-										{/* <Polyline
-											pathOptions={{ color: "lime" }}
-											position={[
-												position.LAT.replace(",", "."),
-												position.LON.replace(",", "."),
-											]}
-										/> */}
 									</>
 								);
 							})}
