@@ -22,6 +22,7 @@ const PaginatorTable = ({ itensPerPage, setItensPerPage, setVisibleLeft }) => {
 
 	return (
 		<Dropdown
+			id="edit-linhas-tabela"
 			className="dropLines"
 			value={selectLines}
 			options={optionsPaginate}
