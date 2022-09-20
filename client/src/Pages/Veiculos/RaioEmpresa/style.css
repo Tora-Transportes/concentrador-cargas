@@ -1,3 +1,35 @@
 .class-body-raioEmpresa{
     font-family: 'Poppins', sans-serif;
 }
+
+.class-body-viewraioemp{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: center;
+    margin-top: 1rem;
+    grid-gap: 3rem;
+}
+#style-button-pesqraioemp{
+    background: #00652e;
+    border: none;
+    width: 10rem;
+    height: 2rem;
+}
+.class-button-pesqraioemp{
+    margin-top: 2rem;
+    
+}
+.class-card-raioemp{
+    margin-top: 2rem;
+    height: 7rem;
+    width: 60rem;
+    margin-left: 5rem;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .class-title-raioemp{
+        margin-left: -0.2rem;
+    }
+
+}

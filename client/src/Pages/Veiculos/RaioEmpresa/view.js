@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Form, Button, Card } from "react-bootstrap";
 
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "../RaioEmpresa/style.css";
@@ -90,14 +90,15 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 					</p>
 				)}
 				<Row className="mb-2">
-					<h1>Veículos no raio da empresa</h1>
+					<h1 className="class-title-raioemp">Veículos no raio da empresa</h1>
 				</Row>
-				<Row>
-					<Col>
-						<Form onSubmit={handleSubmit}>
+				<div>
+					<Card className="class-card-raioemp">
+						<Form onSubmit={handleSubmit} className="class-body-viewraioemp">
 							<Form.Group controlId="formDestino">
 								<Form.Label>Empresa</Form.Label>
 								<InputCliente
+									style={{ width: "23rem", height: "3rem" }}
 									name="empresa"
 									value={fields.empresa}
 									onChange={handleChange}
@@ -108,6 +109,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 							<Form.Group controlId="formKM">
 								<Form.Label>KM</Form.Label>
 								<Form.Control
+									style={{ width: "20rem", height: "3rem" }}
 									type="number"
 									name="distancia_km"
 									value={fields.distancia_km}
@@ -118,13 +120,14 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 
 							<Button
 								type="submit"
-								style={{ background: "#00652E", border: "none" }}
+								id="style-button-pesqraio"
+								className="class-button-pesqraio"
 							>
 								Pesquisar
 							</Button>
 						</Form>
-					</Col>
-				</Row>
+					</Card>
+				</div>
 			</Container>
 		</div>
 	);
