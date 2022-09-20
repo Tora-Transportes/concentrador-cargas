@@ -211,7 +211,7 @@ function ViewRotasPendentes({
 				<Accordion className="class-acc-rel">
 					<Accordion.Item eventKey="1">
 						<Accordion.Header>
-							<b>Cargas Ativas X Desativadas</b>
+							<b>Cargas Ativas & Desativadas</b>
 						</Accordion.Header>
 						<Accordion.Body>
 							<Table>
@@ -398,7 +398,7 @@ function ViewRotasPendentes({
 					</Accordion.Item>
 					<Accordion.Item eventKey="3">
 						<Accordion.Header>
-							<b>Lotes Ativos X Desativados</b>
+							<b>Lotes Ativos & Desativados</b>
 						</Accordion.Header>
 						<Accordion.Body>
 							<Table>
