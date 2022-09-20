@@ -23,8 +23,7 @@ function TabelaCargas({
 	const [storage, setStorage] = useLocalStorage(tipoDeBuscaPorPagina, columns);
 	const [page, setPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
-	const [sortField, setSortField] = useState();
-	const [sortOrder, setSortOrder] = useState();
+	const [sortOrder, setSortOrder] = useState(-1);
 	const initialSelectColumns = columns.filter((i) =>
 		storage.find((c) => {
 			if (c.name === i.name) return c;
@@ -83,19 +82,19 @@ function TabelaCargas({
 	});
 
 	const onSort = (e) => {
-		if (e.sortOrder === 1) {
+		if (sortOrder === 1) {
 			orderby.setValues({
-				columns,
+				column: e.sortField,
 				direction: "asc",
 			});
+			setSortOrder(-1);
 		} else {
 			orderby.setValues({
-				columns,
+				column: e.sortField,
 				direction: "desc",
 			});
+			setSortOrder(1);
 		}
-		setSortField();
-		setSortOrder();
 	};
 
 	async function notify() {
@@ -107,7 +106,6 @@ function TabelaCargas({
 			},
 			page: 1,
 		};
-		columns;
 
 		//columns
 		for (const i in formik.values) {
@@ -226,10 +224,8 @@ function TabelaCargas({
 					id="Tabela-coordenadas"
 					reorderableColumns
 					onColReorder={ordernarUnidadeColunas}
-					sortField={sortField}
 					responsiveLayout="scroll"
 					scrollHeight="60vh"
-					sortOrder={sortOrder}
 					onSort={onSort}
 					className="p-datatable-responsive-grid"
 					emptyMessage="Não foram encontrado nenhum resultado nesta busca"
