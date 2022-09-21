@@ -34,7 +34,7 @@ export default function LegendaCargas(props) {
 							{situacoes.map((item) => (
 								<Col key={item.id} className="col-legenda">
 									<div className="icon-text">
-										<StatusTooltip color={item.cor} hint={null} />
+										<StatusTooltip color={item.cor} hint={false} />
 									</div>
 									<p className="card-p-descricao-legenda">{item.descricao}</p>
 								</Col>
