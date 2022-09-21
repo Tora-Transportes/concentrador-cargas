@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import {
 	Container,
 	Row,
@@ -47,8 +47,6 @@ function ViewHistoricoVeiculo({
 		date_inicio: new Date(),
 		date_fim: new Date(),
 	});
-
-	const polylineRef = useRef();
 
 	function handleChange(event) {
 		const { name, value } = event.target;
@@ -144,7 +142,6 @@ function ViewHistoricoVeiculo({
 								historicoRotas?.posicao[0].LON.replace(",", "."),
 							]}
 							zoom={11}
-							ref={polylineRef}
 							style={{ height: "80vh" }}
 						>
 							<TileLayer
