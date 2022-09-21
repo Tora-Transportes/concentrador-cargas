@@ -7,7 +7,7 @@ import StatusTooltip from "src/Pages/Components/StatusTooltip";
 import Card from "react-bootstrap/Card";
 import { Col } from "react-bootstrap";
 
-export default function DataExcelCargas(props) {
+export default function LegendaCargas(props) {
 	const [situacoes, setSituacoes] = useState([]);
 	useEffect(() => {
 		ServiceSituacoesCargas.search().then(({ data }) => {
@@ -30,17 +30,15 @@ export default function DataExcelCargas(props) {
 			<Modal.Body>
 				<>
 					<Card className="text-center">
-						<Card.Body>
-							<Card.Text>
-								{situacoes.map((item) => (
-									<Col key={item.id} className="col-legenda">
-										<div className="icon-text">
-											<StatusTooltip color={item.cor} hint={null} />
-										</div>
-										{item.descricao}
-									</Col>
-								))}
-							</Card.Text>
+						<Card.Body className="card-body-legenda">
+							{situacoes.map((item) => (
+								<Col key={item.id} className="col-legenda">
+									<div className="icon-text">
+										<StatusTooltip color={item.cor} hint={null} />
+									</div>
+									<p className="card-p-descricao-legenda">{item.descricao}</p>
+								</Col>
+							))}
 						</Card.Body>
 					</Card>
 				</>

@@ -82,18 +82,20 @@ function TabelaCargas({
 	});
 
 	const onSort = (e) => {
-		if (sortOrder === 1) {
-			orderby.setValues({
-				column: e.sortField,
-				direction: "asc",
-			});
-			setSortOrder(-1);
-		} else {
-			orderby.setValues({
-				column: e.sortField,
-				direction: "desc",
-			});
-			setSortOrder(1);
+		if (e.sortField !== "editar") {
+			if (sortOrder === 1) {
+				orderby.setValues({
+					column: e.sortField,
+					direction: "asc",
+				});
+				setSortOrder(-1);
+			} else {
+				orderby.setValues({
+					column: e.sortField,
+					direction: "desc",
+				});
+				setSortOrder(1);
+			}
 		}
 	};
 

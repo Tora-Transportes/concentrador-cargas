@@ -109,7 +109,7 @@ function ViewHistoricoVeiculo({
 									<Form.Control
 										type="date"
 										name="date_inicio"
-										value={fields.date_inicio}
+										//value={fields.date_inicio}
 										onChange={handleChange}
 										required
 									/>
@@ -122,7 +122,7 @@ function ViewHistoricoVeiculo({
 										className="input-form-date-fim-history"
 										type="date"
 										name="date_fim"
-										value={fields.date_fim}
+										//value={fields.date_fim}
 										onChange={handleChange}
 										required
 									/>
@@ -136,29 +136,29 @@ function ViewHistoricoVeiculo({
 				</Form>
 				<Row className="mt-3">
 					{historicoRotas?.posicao.length > 0 && (
-						<MapContainer
-							center={[
-								historicoRotas?.posicao[0].LAT.replace(",", "."),
-								historicoRotas?.posicao[0].LON.replace(",", "."),
-							]}
-							zoom={11}
-							style={{ height: "80vh" }}
-						>
-							<TileLayer
-								attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-								url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-							/>
+						<>
+							<MapContainer
+								center={[
+									historicoRotas?.posicao[0].LAT.replace(",", "."),
+									historicoRotas?.posicao[0].LON.replace(",", "."),
+								]}
+								zoom={11}
+								style={{ height: "80vh" }}
+							>
+								<TileLayer
+									attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+									url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+								/>
 
-							{historicoRotas.posicao.map((position, index) => {
-								const lastPosition = historicoRotas.posicao.length - 1;
-								const messagePopup =
-									index === 0
-										? " Posição inicial da busca"
-										: index === lastPosition
-										? "Posição final da busca"
-										: `UF: ${position.UF.toUpperCase()} ,Municipio: ${position.MUN.toUpperCase()} ,Rua: ${position.RUA.toUpperCase()}.`;
-								return (
-									<>
+								{historicoRotas.posicao.map((position, index) => {
+									const lastPosition = historicoRotas.posicao.length - 1;
+									const messagePopup =
+										index === 0
+											? " Posição inicial da busca"
+											: index === lastPosition
+											? "Posição final da busca"
+											: `UF: ${position.UF.toUpperCase()} ,Municipio: ${position.MUN.toUpperCase()} ,Rua: ${position.RUA.toUpperCase()}.`;
+									return (
 										<Marker
 											key={fields.placa + index}
 											position={[
@@ -175,44 +175,40 @@ function ViewHistoricoVeiculo({
 										>
 											<Popup>{messagePopup}</Popup>
 										</Marker>
-									</>
-								);
-							})}
-						</MapContainer>
-					)}
-				</Row>
-				<Row>
-					{historicoRotas?.posicao.length > 0 && (
-						<Table className="mt-5" striped bordered hover>
-							<thead>
-								<tr>
-									<th>
-										<Button variant="outline-info" onClick={exportCsv}>
-											<BsDownload />
-										</Button>
-									</th>
-									<th>UF</th>
-									<th>Municipio</th>
-									<th>Rua</th>
-									<th>Motorista</th>
-									<th>Latitude</th>
-									<th>Longitude</th>
-								</tr>
-							</thead>
-							<tbody>
-								{historicoRotas.posicao.map((position, index) => (
-									<tr key={position.index}>
-										<td>{index}</td>
-										<td>{position.UF}</td>
-										<td>{position.MUN}</td>
-										<td>{position.RUA}</td>
-										<td>{position.MOT}</td>
-										<td>{position.LAT}</td>
-										<td>{position.LON}</td>
+									);
+								})}
+							</MapContainer>
+							<Table className="mt-5" striped bordered hover>
+								<thead>
+									<tr>
+										<th>
+											<Button variant="outline-info" onClick={exportCsv}>
+												<BsDownload />
+											</Button>
+										</th>
+										<th>UF</th>
+										<th>Municipio</th>
+										<th>Rua</th>
+										<th>Motorista</th>
+										<th>Latitude</th>
+										<th>Longitude</th>
 									</tr>
-								))}
-							</tbody>
-						</Table>
+								</thead>
+								<tbody>
+									{historicoRotas.posicao.map((position, index) => (
+										<tr key={index + 1}>
+											<td>{index}</td>
+											<td>{position.UF}</td>
+											<td>{position.MUN}</td>
+											<td>{position.RUA}</td>
+											<td>{position.MOT}</td>
+											<td>{position.LAT}</td>
+											<td>{position.LON}</td>
+										</tr>
+									))}
+								</tbody>
+							</Table>
+						</>
 					)}
 				</Row>
 			</Container>

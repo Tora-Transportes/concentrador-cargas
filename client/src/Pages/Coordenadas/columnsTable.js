@@ -236,7 +236,11 @@ export const getColumns = (
 			description: "Data janela",
 			selector: (row) => (
 				<Form.Control
-					value={row.data_janela ? String(row.data_janela).split(".")[0] : ""}
+					value={
+						row.data_janela
+							? String(row.data_janela.substring(0, row.data_janela.length - 8))
+							: ""
+					}
 					type="datetime-local"
 					onChange={({ target }) => handleChangeDataJanela(row, target)}
 				/>
