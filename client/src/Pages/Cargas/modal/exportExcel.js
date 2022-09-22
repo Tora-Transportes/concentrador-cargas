@@ -48,7 +48,7 @@ export default function ModalExportExcel({
 	const footer = (
 		<div>
 			<Button variant="success" onClick={enviarDataExcel}>
-				Exportar
+				Importar
 			</Button>
 			<Button variant="secondary" onClick={onHide}>
 				Sair
@@ -59,7 +59,7 @@ export default function ModalExportExcel({
 		<>
 			<Toast ref={toast} className="w-25" position="top-center"></Toast>
 			<Dialog
-				header="Exportar excel por filtro de data."
+				header="Importar excel por filtro de data:"
 				visible={show}
 				style={{ width: "50vw" }}
 				footer={footer}

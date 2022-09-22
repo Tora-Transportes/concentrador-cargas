@@ -155,15 +155,15 @@ function Main() {
 					</div>
 				</div>
 
-				<div className="class-icons-body">
-					<div>
+				<div className="class-icons-body ">
+					<div className="class-indicador">
 						<Link to="/relatorios" className="class-link">
 							<FaChartBar
 								size={50}
 								style={{ marginLeft: "1rem", color: "#00652E" }}
 							/>
 							<br />
-							<b style={{ color: "#00652E" }}>Indicadores</b>
+							<b style={{ color: "#00652E" }}>Indicador Operacional</b>
 						</Link>
 					</div>
 					<div>

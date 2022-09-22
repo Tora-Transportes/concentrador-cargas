@@ -46,7 +46,7 @@
 }
 
 #style-p-saudacao{
-  font-size: 19px;
+  font-size: 22px;
   color: #00652E;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
@@ -83,6 +83,10 @@
   align-items: center;
   margin-top: 8rem;
   grid-gap: -5rem;
+}
+
+.class-indicador{
+  text-align: center;
 }
 
 .class-linha-jogo{

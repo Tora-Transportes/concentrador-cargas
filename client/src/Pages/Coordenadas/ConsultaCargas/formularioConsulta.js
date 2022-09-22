@@ -116,7 +116,7 @@ function FormularioConsulta({
 						<Form.Control
 							id="doc-trans"
 							name="documento_transporte"
-							value={formik.values.documento_transporte}
+							value={String(formik.values.documento_transporte)}
 							onChange={formik.handleChange}
 							onBlur={(...rest) => {
 								formik.handleBlur(...rest);

@@ -19,7 +19,7 @@ function ViewRotasPendentes({
 						id="title-monit"
 						onClick={HandleClick}
 					>
-						Monitoramento - Veículos pendentes
+						Monitoramento - Veículos Pendentes
 					</h1>
 				</Row>
 				<Row>

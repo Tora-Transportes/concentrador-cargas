@@ -28,7 +28,7 @@ const PaginatorTable = ({ itensPerPage, setItensPerPage, setVisibleLeft }) => {
 			options={optionsPaginate}
 			onChange={showOpcaoPaginatot}
 			optionLabel="name"
-			placeholder="Itens por página"
+			placeholder="Itens por Página"
 		/>
 	);
 };

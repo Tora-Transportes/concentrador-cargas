@@ -25,13 +25,13 @@ const options = {
 		{
 			element: "#edit-linhas-tabela",
 			description:
-				"<h2>Itens por página</h2><div>Nessa opção você define a quantidade de itens que serão exibidos na tabela.</div>",
+				"<h2>Itens por Página</h2><div>Nessa opção você define a quantidade de itens que serão exibidos na tabela.</div>",
 			placement: "bottom",
 		},
 		{
 			element: "#Config-campos-tabela",
 			description:
-				"<h2>Configurar tabela</h2><div>Modifica a tabela, lhe dando opção do que será exibido abaixo (por exemplo: coluna que deseja excluir e coluna que deseja manter).</div>",
+				"<h2>Configurar Tabela</h2><div>Modifica a tabela, lhe dando opção do que será exibido abaixo (por exemplo: coluna que deseja excluir e coluna que deseja manter).</div>",
 			placement: "bottom",
 		},
 		{
@@ -43,7 +43,7 @@ const options = {
 		{
 			element: "#coluna1",
 			description:
-				"<h2>Botão info</h2><div>Nesta coluna as informaações exibidas são clicavéis são botões que traz mais informações sobre a rota.</div>",
+				"<h2>Botão Info</h2><div>Nessa coluna as informações exibidas são botões que trazem mais informações sobre a rota.</div>",
 			placement: "top",
 		},
 		{

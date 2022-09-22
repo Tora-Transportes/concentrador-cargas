@@ -24,7 +24,7 @@ export default function DataExcelCargas(props) {
 		>
 			<Modal.Header closeButton className="text-center testeteste">
 				<Modal.Title id="contained-modal-title-vcenter">
-					Situação das cargas
+					Situação das Cargas
 				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>

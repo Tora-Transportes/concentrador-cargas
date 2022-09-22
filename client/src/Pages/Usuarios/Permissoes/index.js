@@ -134,7 +134,7 @@ function Permissoes() {
 			<Container className="text-center mb-4 mt-4">
 				<Row>
 					<Col>
-						<h1 className="class-title-Permissao">Permissões dos usuários</h1>
+						<h1 className="class-title-Permissao">Permissões dos Usuários</h1>
 					</Col>
 				</Row>
 				<Row>
