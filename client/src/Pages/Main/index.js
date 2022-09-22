@@ -156,17 +156,18 @@ function Main() {
 				</div>
 
 				<div className="class-icons-body">
-					<div>
+					<div className="class-icon-coor">
 						<Link to="/relatorios" className="class-link">
 							<FaChartBar
 								size={50}
 								style={{ marginLeft: "1rem", color: "#00652E" }}
+								id="style-iconn"
 							/>
 							<br />
 							<b style={{ color: "#00652E" }}>Indicadores</b>
 						</Link>
 					</div>
-					<div>
+					<div className="class-icon-coor">
 						<Link to="/veiculos/coordenadas" className="class-link">
 							<SiGooglemaps
 								size={50}
@@ -176,14 +177,14 @@ function Main() {
 							<b style={{ color: "#00652E" }}>Coordenadas</b>
 						</Link>
 					</div>
-					<div>
+					<div className="class-icon-coor">
 						<Link to="/cargas/visualizar" className="class-link">
 							<FaTruckMoving size={50} style={{ color: "#00652E" }} />
 							<br />
 							<b style={{ color: "#00652E" }}>Cargas</b>
 						</Link>
 					</div>
-					<div>
+					<div className="class-icon-coor">
 						<Link to="/lotes/visualizar" className="class-link">
 							<FaBoxes size={50} style={{ color: "#00652E" }} />
 							<br />
