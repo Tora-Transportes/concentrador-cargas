@@ -232,7 +232,7 @@ export class CargaRepository {
         String(query?.order_direction)
       );
     }
-    console.log(">>>>>teste", results.toSQL().toNative());
+
     results.orderBy("con_cargas.id", "asc");
     const rows = await results;
 

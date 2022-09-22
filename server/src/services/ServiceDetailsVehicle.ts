@@ -92,11 +92,12 @@ export default class ServiceDetailsVehicle {
         ) AS STATUS_PROP,
         (
             SELECT 
-                DISTINCT CONCAT('(' || cga_ddd || ')',cga_dsc) "telefone" 
+                CONCAT('(' || cga_ddd || ')',cga_dsc) "telefone" 
             FROM cg_agenda 
             WHERE cg_cod = cg.cg_cod
                 AND loc_cod = cg.loc_cod
                 AND ta_cod in (2,10)
+                AND rownum = 1
         ) As TELEFONE_MOTORISTA,
         (
             SELECT

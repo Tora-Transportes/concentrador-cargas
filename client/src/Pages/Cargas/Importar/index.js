@@ -122,7 +122,7 @@ function Importar() {
 						<Form.Group controlId="formFile">
 							<Form.Label></Form.Label>
 							<Form.Control
-								id="style-input-arq"
+								//id="style-input-arq"
 								type="file"
 								accept=".xlsx"
 								required
