@@ -1,6 +1,6 @@
-.class-body-main{
+.class-body-main {
   /* margin-top: 5rem; */
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 #navbar-tora {
@@ -38,45 +38,43 @@
   margin-top: 1rem;
 } */
 
-#style-title-main{
+#style-title-main {
   font-size: 37px;
-  color: #00652E;
-  font-family: 'Poppins', sans-serif;
+  color: #00652e;
+  font-family: "Poppins", sans-serif;
   font-weight: 500;
 }
 
-#style-p-saudacao{
+#style-p-saudacao {
   font-size: 22px;
-  color: #00652E;
+  color: #00652e;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
-  
 }
 
-.class-p-saudacao{
+.class-p-saudacao {
   display: flex;
   grid-template-rows: auto auto;
   justify-content: center;
   margin-top: -3rem;
 }
 
-.class-p-text{
+.class-p-text {
   margin-top: 4rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
 
-#style-p-text{
+#style-p-text {
   color: #939598;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 500;
   text-align: center;
   font-size: 16px;
 }
 
-.class-icons-body{
+.class-icons-body {
   display: grid;
   grid-template-columns: auto auto auto auto;
   justify-content: space-evenly;
@@ -85,48 +83,49 @@
   grid-gap: -5rem;
 }
 
-.class-indicador{
+.class-indicador {
   text-align: center;
 }
 
-.class-linha-jogo{
+.class-linha-jogo {
   display: grid;
   grid-template-rows: auto auto;
   justify-content: center;
   margin-bottom: 5rem;
 }
 
-#title-p-jogo{
+#title-p-jogo {
   color: #939598;
   font-weight: 500;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
-.class-button-jogue{
+.class-button-jogue {
   margin-left: 15.5rem;
 }
 
-#style-button-jogo{
-  background: #00652E;
+
+#style-button-jogo {
+  background: #00652e;
   border: none;
   width: 10rem;
 }
 
-.class-jogo{
+.class-jogo {
   display: grid;
   grid-template-columns: auto auto auto auto auto auto;
   grid-gap: 4rem;
   margin-bottom: 3rem;
 }
-.class-p-fimjogo{
+.class-p-fimjogo {
   margin-top: 4rem;
 }
 
-#style-p-fimjogo{
+#style-p-fimjogo {
   color: red;
 }
 
-.class-link{
+.class-link {
   text-decoration: none;
 }
 
@@ -134,30 +133,59 @@
   transition: all 0.9s;
   cursor: pointer;
 }
-
 .class-icon-coor:hover{
-  -webkit-transform: scale(1.3);
-  transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  transform: scale(1.1);
 }
-@media only screen and (max-width: 480px){
-  #title-p-jogo{
+
+#style-iconn-4:hover,
+#style-iconn-3:hover,
+#style-iconn-2:hover,
+#style-iconn:hover{
+  color: #048a01;
+ 
+}
+#style-iconn{
+  color: #00652E;
+  margin-left: 1rem;
+}
+/* maps */
+#style-iconn-2{
+  color: #00652E;
+  margin-left: 2.5rem;
+}
+#style-iconn-4{
+  color: #00652E;
+  margin-left: .7rem;
+}
+#style-iconn-3{
+  color: #00652E;
+  margin-left: 1rem;
+}
+
+@media only screen and (max-width: 480px) {
+  #title-p-jogo {
     color: #939598;
     font-weight: 500;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     text-align: center;
   }
-  .class-button-jogue{
+  .class-button-jogue {
     margin-left: 3rem;
   }
-  #style-button-jogo{
-    background: #00652E;
+  #style-button-jogo {
+    background: #00652e;
     border: none;
     width: 18rem;
   }
-  .class-jogo{
+  .class-jogo {
     display: grid;
     grid-template-columns: auto;
     grid-gap: 4rem;
     margin-bottom: 3rem;
   }
+
+  /* .class-icons-body{
+    display: flex;
+  } */
 }

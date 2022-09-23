@@ -6,7 +6,7 @@ import { getClaims } from "../../MicrosoftAuthentication";
 import "./index.css";
 import { Link } from "react-router-dom";
 
-import { SiGooglemaps } from "react-icons/si";
+import { IoLocationSharp } from "react-icons/io5";
 import { FaChartBar, FaTruckMoving } from "react-icons/fa";
 import { FaBoxes } from "react-icons/fa";
 import Menusuperior from "../Components/MenuSuperior/menusuperior";
@@ -155,45 +155,37 @@ function Main() {
 					</div>
 				</div>
 
-<<<<<<< HEAD
-				<div className="class-icons-body ">
-					<div className="class-indicador">
-=======
 				<div className="class-icons-body">
-					<div className="class-icon-coor">
->>>>>>> feature/Ordena
+					<div className="class-icon-coor class-indicador">
 						<Link to="/relatorios" className="class-link">
 							<FaChartBar
 								size={50}
-								style={{ marginLeft: "1rem", color: "#00652E" }}
 								id="style-iconn"
+								className="class-ico-ind"
 							/>
 							<br />
-							<b style={{ color: "#00652E" }}>Indicador Operacional</b>
+							<b id="style-iconn">Indicador Operacional</b>
 						</Link>
 					</div>
 					<div className="class-icon-coor">
 						<Link to="/veiculos/coordenadas" className="class-link">
-							<SiGooglemaps
-								size={50}
-								style={{ marginLeft: "1.5rem", color: "#00652E" }}
-							/>
+							<IoLocationSharp size={50} id="style-iconn-2" />
 							<br />
-							<b style={{ color: "#00652E" }}>Coordenadas</b>
+							<b id="style-iconn">Coordenadas</b>
 						</Link>
 					</div>
 					<div className="class-icon-coor">
 						<Link to="/cargas/visualizar" className="class-link">
-							<FaTruckMoving size={50} style={{ color: "#00652E" }} />
+							<FaTruckMoving size={50} id="style-iconn-3" />
 							<br />
-							<b style={{ color: "#00652E" }}>Cargas</b>
+							<b id="style-iconn">Cargas</b>
 						</Link>
 					</div>
 					<div className="class-icon-coor">
 						<Link to="/lotes/visualizar" className="class-link">
-							<FaBoxes size={50} style={{ color: "#00652E" }} />
+							<FaBoxes size={50} id="style-iconn-4" />
 							<br />
-							<b style={{ color: "#00652E" }}>Lotes</b>
+							<b id="style-iconn">Lotes</b>
 						</Link>
 					</div>
 				</div>

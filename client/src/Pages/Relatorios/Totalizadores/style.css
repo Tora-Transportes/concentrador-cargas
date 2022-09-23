@@ -6,8 +6,11 @@
   color: #00652e;
   font-size: 32px;
 }
-.class-p-rel {
-  margin: 4rem 65rem 0 0;
+
+.class-p-rel{
+  display: grid;
+  text-align: start;
+  margin-top: 3rem;
 }
 
 .class-grafico-relatorio{
@@ -15,7 +18,7 @@
 }
 
 .class-acc-rel{
-  margin-top: 3rem;
+  margin-top: 4rem;
 }
 @media only screen and (max-width: 480px) {
   .class-p-rel {

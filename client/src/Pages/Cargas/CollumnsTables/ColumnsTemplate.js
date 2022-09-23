@@ -64,7 +64,7 @@ export const columns = [
 				target="_blank"
 				rel="noopener"
 			>
-				<BsPencilSquare />
+				<BsPencilSquare style={{ color: "#00652E" }} size={15} />
 			</Link>
 		),
 		sortable: "sortable",
