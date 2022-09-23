@@ -106,7 +106,7 @@ function ViewHistoricoVeiculo({
 									<Form.Label>Data inicio</Form.Label>
 									<Form.Control
 										type="date"
-										name="date_inicío"
+										name="date_inicio"
 										//value={fields.date_inicio}
 										onChange={handleChange}
 										required
