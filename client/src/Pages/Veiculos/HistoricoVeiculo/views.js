@@ -63,11 +63,9 @@ function ViewHistoricoVeiculo({
 	}
 
 	function exportCsv() {
-		let csv = "UF;MUNICIPIO;RUA;MOTORISTA;LATITUDE;LONGITUDE\n\n";
+		let csv = "UF;MUNICIPIO;RUA;LATITUDE;LONGITUDE;LOCALIDADE\n\n";
 		for (const position of historicoRotas.posicao) {
-			csv += `${position.UF};${position.MUN};${position.RUA};${
-				position.MOT === null ? "" : position.MOT
-			};${position.LAT};${position.LON}\n`;
+			csv += `${position.UF};${position.MUN};${position.RUA};${position.LAT};${position.LON};${position.LOC}\n`;
 		}
 
 		const csvData = new Blob([csv], {
@@ -108,7 +106,7 @@ function ViewHistoricoVeiculo({
 									<Form.Label>Data inicio</Form.Label>
 									<Form.Control
 										type="date"
-										name="date_inicio"
+										name="date_inicío"
 										//value={fields.date_inicio}
 										onChange={handleChange}
 										required
@@ -117,7 +115,7 @@ function ViewHistoricoVeiculo({
 							</Col>
 							<Col sm={4}>
 								<Form.Group controlId="formdistancia">
-									<Form.Label>Data inicio</Form.Label>
+									<Form.Label>Data fim</Form.Label>
 									<Form.Control
 										className="input-form-date-fim-history"
 										type="date"
@@ -189,9 +187,10 @@ function ViewHistoricoVeiculo({
 										<th>UF</th>
 										<th>Municipio</th>
 										<th>Rua</th>
-										<th>Motorista</th>
+										<th>Rodovia</th>
 										<th>Latitude</th>
 										<th>Longitude</th>
+										<th>Localidade</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -201,9 +200,10 @@ function ViewHistoricoVeiculo({
 											<td>{position.UF}</td>
 											<td>{position.MUN}</td>
 											<td>{position.RUA}</td>
-											<td>{position.MOT}</td>
+											<td>{position.ROD}</td>
 											<td>{position.LAT}</td>
 											<td>{position.LON}</td>
+											<td>{position.LOC}</td>
 										</tr>
 									))}
 								</tbody>

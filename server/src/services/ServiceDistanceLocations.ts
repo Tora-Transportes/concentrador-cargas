@@ -1,4 +1,5 @@
 import axios from "axios";
+import moment from "moment";
 import oracle from "../database";
 import database, { mssql, mssqlCoordenadas } from "../database";
 import AppError from "../models/AppError";
@@ -284,13 +285,20 @@ export class ServiceDistanceLocations {
       );
     }
 
+    date_inicio = moment(date_inicio).format("YYYY-MM-DDT00:00:00");
+    if (date_fim !== moment().format("YYYY-MM-DD")) {
+      date_fim = moment(date_fim).format("YYYY-MM-DDT23:59:59");
+    } else {
+      date_fim = moment().subtract(10, "minutes").format("YYYY-MM-DDTHH:mm:ss");
+    }
+
     const historyVeicle: IHistoryTravelVehicle[] = await mssqlCoordenadas(
       "REPORTES"
     )
-      .select(["ID", "DISIMEI", "LAT", "LON", "UF", "ROD", "RUA", "MOT", "MUN"])
-      //.limit(10)
+      .select(["ID", "DISIMEI", "LAT", "LON", "UF", "ROD", "RUA", "MUN", "LOC"])
+      //.limit(100)
       .where("DISIMEI", query?.VEI_REFERENCIA)
-      .whereBetween("DTINC", [new Date(date_inicio), new Date(date_fim)]);
+      .whereBetween("DTINC", [date_inicio, date_fim]);
 
     return {
       placa: plate,
