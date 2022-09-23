@@ -1,10 +1,6 @@
 import React from "react";
-import {
-	BsCheckLg,
-	BsInfoCircle,
-	BsPencilSquare,
-	BsTrash,
-} from "react-icons/bs";
+import { BsCheckLg, BsInfoCircle, BsPencilSquare } from "react-icons/bs";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 import { Button, Form, InputGroup, FormControl } from "react-bootstrap";
 import { MdAddCircleOutline } from "react-icons/md";
 
@@ -68,8 +64,8 @@ export const opcoesTemplate = (
 							handleDelete(rowData.nome, rowData.id);
 						}}
 					>
-						<BsTrash />
-						Cancelar
+						<IoIosCloseCircleOutline className="icon-des" />
+						Desativar
 					</Button>
 				</>
 			) : (

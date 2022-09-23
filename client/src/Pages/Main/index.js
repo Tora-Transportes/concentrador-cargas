@@ -155,18 +155,24 @@ function Main() {
 					</div>
 				</div>
 
+<<<<<<< HEAD
 				<div className="class-icons-body ">
 					<div className="class-indicador">
+=======
+				<div className="class-icons-body">
+					<div className="class-icon-coor">
+>>>>>>> feature/Ordena
 						<Link to="/relatorios" className="class-link">
 							<FaChartBar
 								size={50}
 								style={{ marginLeft: "1rem", color: "#00652E" }}
+								id="style-iconn"
 							/>
 							<br />
 							<b style={{ color: "#00652E" }}>Indicador Operacional</b>
 						</Link>
 					</div>
-					<div>
+					<div className="class-icon-coor">
 						<Link to="/veiculos/coordenadas" className="class-link">
 							<SiGooglemaps
 								size={50}
@@ -176,14 +182,14 @@ function Main() {
 							<b style={{ color: "#00652E" }}>Coordenadas</b>
 						</Link>
 					</div>
-					<div>
+					<div className="class-icon-coor">
 						<Link to="/cargas/visualizar" className="class-link">
 							<FaTruckMoving size={50} style={{ color: "#00652E" }} />
 							<br />
 							<b style={{ color: "#00652E" }}>Cargas</b>
 						</Link>
 					</div>
-					<div>
+					<div className="class-icon-coor">
 						<Link to="/lotes/visualizar" className="class-link">
 							<FaBoxes size={50} style={{ color: "#00652E" }} />
 							<br />

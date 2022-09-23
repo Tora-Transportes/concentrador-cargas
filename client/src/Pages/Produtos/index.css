@@ -131,6 +131,12 @@ Botton .button-acoes-table {
   margin-right: 4px;
 }
 
+.icon-des{
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+
+
 @media only screen and (max-width: 961px) {
   .datatable-responsive-demoPermissoes
     .p-datatable.p-datatable-responsive-demoPermissoes
