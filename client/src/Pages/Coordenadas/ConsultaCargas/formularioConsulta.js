@@ -331,63 +331,7 @@ function FormularioConsulta({
 						/>
 					</FloatingLabel>
 				</Col>
-				{/* <Col sm={4} className="text-center justifi-content-center mt-2">
-					<Button
-						//style={{ background: "#00652E", border: "none", color: "#FFFFFF" }}
-						//variant="info"
-						onClick={() => setAddDestinoInterme(true)}
-					>
-						Adicionar destino intermediária
-					</Button>
-				</Col> */}
-
-				{/* {addDestinoInterme && (
-					<Col sm={12} md={4}>
-						<FloatingLabel
-							label="Destino intermediário da  carga"
-							className="mb-3"
-						>
-							<InputLocalizacao
-								keyDataList="destino_intermediario"
-								type="text"
-								placeholder=" "
-								name="destino_intermediario"
-								value={formik.values.destino_intermediario}
-								onChange={formik.handleChange}
-								onBlur={() => handleSearchDistance(formik.values)}
-								className="text-warning"
-							/>
-						</FloatingLabel>
-					</Col>
-				)} */}
 			</Row>
-
-			{/* <Row>
-				<Col sm={12} md={6}>
-					<FloatingLabel label="*Local coleta" className="mb-3">
-						<Form.Control
-							type="text"
-							placeholder=" "
-							name="local_coleta"
-							value={formik.values.local_coleta}
-							onChange={formik.handleChange}
-							required
-						/>
-					</FloatingLabel>
-				</Col>
-				<Col>
-					<FloatingLabel label="*Local entrega" className="mb-3">
-						<Form.Control
-							type="text"
-							placeholder=" "
-							name="local_entrega"
-							value={formik.values.local_entrega}
-							onChange={formik.handleChange}
-							required
-						/>
-					</FloatingLabel>
-				</Col>
-			</Row> */}
 
 			{distanciaIntermediaria && (
 				<Row>

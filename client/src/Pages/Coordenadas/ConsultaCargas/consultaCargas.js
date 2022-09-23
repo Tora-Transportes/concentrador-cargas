@@ -167,7 +167,6 @@ function Consulta() {
 	return (
 		<>
 			<LoadingScreen />
-			{/* <CabecalhoFixado>Edição de carga aberta manualmente</CabecalhoFixado> */}
 			<Menusuperior />
 			<Container className="mb-5 mt-5">
 				<p id="title-consultarCarga">Consultar carga aberta manualmente</p>

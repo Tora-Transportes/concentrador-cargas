@@ -3,9 +3,13 @@
     font-size: 32px;
 }
 
+.class-body-form{
+    color: black;
+}
+
 #title-dados-veic{
     color: #00652E;
-    margin-bottom: -50px;
+    margin-bottom: -20px;
 }
 
 .class-input-motorista{

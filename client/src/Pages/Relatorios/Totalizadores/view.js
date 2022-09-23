@@ -55,16 +55,17 @@ function ViewRotasPendentes({
 		const fk_filial = codigoFilial;
 		if (!data_inicio || !data_final || !fk_filial) {
 			const message =
-				"Data início, data fim e codigo filial são campos obrigatórios!";
-			showToastMessage(toast, "warn", message, 7000);
+				"Data início, data fim e código da filial são campos obrigatórios!";
+			showToastMessage(toast, "error", message, 7000);
 		} else if (new Date(data_inicio) > new Date(data_final)) {
-			const message = "Data início deve ser maior ou igual a data fim!";
-			showToastMessage(toast, "warn", message, 7000);
+			const message = "Data início deve ser menor ou igual a data fim!";
+			showToastMessage(toast, "error", message, 10000);
 		} else if (diffiInDays(data_inicio, data_final) > 31) {
 			const message =
 				"A diferença entre as datas início e fim não pode ser maior que 31 dias!";
-			showToastMessage(toast, "warn", message, 7000);
+			showToastMessage(toast, "error", message, 7000);
 		} else {
+			toast.current.clear();
 			reload({
 				data_inicio,
 				data_final,

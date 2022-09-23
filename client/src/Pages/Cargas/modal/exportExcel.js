@@ -24,14 +24,14 @@ export default function ModalExportExcel({
 
 	const fieldRequered = pagina === "coordenadas" ? categoria : codigoFilial;
 	const field =
-		pagina === "coordenadas" ? "categoria veículo" : "codigo filial";
+		pagina === "coordenadas" ? "categoria veículo" : "código filial";
 
 	const enviarDataExcel = () => {
 		if (!dataInicio || !dataFim || !fieldRequered) {
 			const message = `Data início, data fim e ${field} são campos obrigatórios!`;
 			showToastMessage(toast, "warn", message, 7000);
 		} else if (new Date(dataInicio) > new Date(dataFim)) {
-			const message = "Data início deve ser maior ou igual a data fim!";
+			const message = "Data início deve ser menor ou igual a data fim!";
 			showToastMessage(toast, "warn", message, 7000);
 		} else if (diffiInDays(dataInicio, dataFim) > 31) {
 			const message =

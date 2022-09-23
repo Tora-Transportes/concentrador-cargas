@@ -8,7 +8,7 @@ class ProducaoController {
   async index(req: Request, res: Response) {
     const { placa_veiculo } = req.params;
     if (!placa_veiculo) {
-      throw new AppError("O Codigo do veiculo nao é valido", 400);
+      throw new AppError("Código do veículo inválido", 400);
     }
 
     const allowGzip = req.headers["accept-encoding"]?.indexOf("gzip") !== -1;
