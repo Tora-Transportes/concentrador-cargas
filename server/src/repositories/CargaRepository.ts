@@ -110,17 +110,6 @@ export class CargaRepository {
     const results = database("con_cargas")
       .select([
         "con_cargas.*",
-        //   database.raw(
-        //     `SELECT
-        //     replace(x.cliente,'	','') as CLIENTE
-        // FROM (
-        // SELECT
-        //     rtrim(ltrim(replace("cliente", '	 ',''))) AS CLIENTE
-        // FROM "con_cargas"
-
-        // )x
-        // `
-        //   ),
         "con_situacoes_cargas.descricao as situacao.descricao",
         "con_situacoes_cargas.cor as situacao.cor",
         "FILIAL.FIL_DSC as filial.descricao",
@@ -234,9 +223,27 @@ export class CargaRepository {
     }
 
     results.orderBy("con_cargas.id", "asc");
-    const rows = await results;
+    const rows: ICarga[] = await results;
+
+    // função para retirar espaço no inicio dos nomes dos clientes{
+    function compare(a: ICarga, b: ICarga) {
+      if (a.cliente < b.cliente) return -1;
+      if (a.cliente > b.cliente) return 1;
+      return 0;
+    }
+
+    if (query?.order_direction === "asc") {
+      rows.forEach((item) => {
+        if (item.cliente) {
+          item.cliente = item.cliente.trim();
+        }
+      });
+      rows.sort(compare);
+    }
+    //}
 
     const totalRegisters = Number((await total)?.total) || 0;
+
     return {
       page: realPage,
       total_pages: Math.ceil(totalRegisters / pageSize),
