@@ -15,6 +15,10 @@
     height: 2rem;
 }
 
+#title-check-não{
+    margin-bottom: -20px;
+}
+
 #botao-deb-veiculo,
 #botao-detail-veiculo{
     background: #00652E;

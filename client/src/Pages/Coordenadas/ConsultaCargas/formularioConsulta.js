@@ -9,6 +9,8 @@ import {
 	ListGroup,
 	Card,
 	Modal,
+	Tooltip,
+	OverlayTrigger,
 } from "react-bootstrap";
 import ServiceVeiculos from "src/services/ServiceVeiculos";
 import swal from "sweetalert";
@@ -19,6 +21,8 @@ import InputCliente from "src/Pages/Components/InputCliente";
 import InputLocalizacao from "src/Pages/Components/InputLocalizacao";
 import InputPlaca from "src/Pages/Components/InputPlaca";
 import UnidadesMedida from "src/Pages/Components/UnidadesMedida";
+import "../ConsultaCargas/consultaCarga.css";
+import { IoMdHelpCircle } from "react-icons/io";
 
 function FormularioConsulta({
 	formik,
@@ -127,7 +131,7 @@ function FormularioConsulta({
 					</FloatingLabel>
 				</Col>
 			</Row>
-			{/* <Row>
+			<Row>
 				<Col>
 					<div className="class-linha-title2">
 						<hr id="style-linha-cad2"></hr>
@@ -142,7 +146,7 @@ function FormularioConsulta({
 							onChange={() => formik.setFieldValue("e_lote", true)}
 							checked={formik.values.e_lote === true}
 							inline
-							disabled={disabledFields.includes("e_lote")}
+							disabled
 						/>
 						<Form.Check
 							type="radio"
@@ -152,7 +156,7 @@ function FormularioConsulta({
 							onChange={() => formik.setFieldValue("e_lote", false)}
 							checked={formik.values.e_lote === false}
 							inline
-							disabled={disabledFields.includes("e_lote")}
+							disabled
 						/>
 						<OverlayTrigger
 							key="tooltip-overlay-lote"
@@ -176,7 +180,7 @@ function FormularioConsulta({
 						</sub>
 					</Form.Group>
 				</Col>
-			</Row> */}
+			</Row>
 			<div className="class-linha-title3">
 				<hr id="style-linha-cad3"></hr>
 			</div>
@@ -184,7 +188,7 @@ function FormularioConsulta({
 				<>
 					<Row className="mb-5">
 						<Col sm={12}>
-							<h3 id="title-check-não">Dados do veículo</h3>
+							<h3 id="title-dados-veic">Dados do veículo</h3>
 						</Col>
 					</Row>
 					<Row>
@@ -327,63 +331,7 @@ function FormularioConsulta({
 						/>
 					</FloatingLabel>
 				</Col>
-				{/* <Col sm={4} className="text-center justifi-content-center mt-2">
-					<Button
-						//style={{ background: "#00652E", border: "none", color: "#FFFFFF" }}
-						//variant="info"
-						onClick={() => setAddDestinoInterme(true)}
-					>
-						Adicionar destino intermediária
-					</Button>
-				</Col> */}
-
-				{/* {addDestinoInterme && (
-					<Col sm={12} md={4}>
-						<FloatingLabel
-							label="Destino intermediário da  carga"
-							className="mb-3"
-						>
-							<InputLocalizacao
-								keyDataList="destino_intermediario"
-								type="text"
-								placeholder=" "
-								name="destino_intermediario"
-								value={formik.values.destino_intermediario}
-								onChange={formik.handleChange}
-								onBlur={() => handleSearchDistance(formik.values)}
-								className="text-warning"
-							/>
-						</FloatingLabel>
-					</Col>
-				)} */}
 			</Row>
-
-			{/* <Row>
-				<Col sm={12} md={6}>
-					<FloatingLabel label="*Local coleta" className="mb-3">
-						<Form.Control
-							type="text"
-							placeholder=" "
-							name="local_coleta"
-							value={formik.values.local_coleta}
-							onChange={formik.handleChange}
-							required
-						/>
-					</FloatingLabel>
-				</Col>
-				<Col>
-					<FloatingLabel label="*Local entrega" className="mb-3">
-						<Form.Control
-							type="text"
-							placeholder=" "
-							name="local_entrega"
-							value={formik.values.local_entrega}
-							onChange={formik.handleChange}
-							required
-						/>
-					</FloatingLabel>
-				</Col>
-			</Row> */}
 
 			{distanciaIntermediaria && (
 				<Row>

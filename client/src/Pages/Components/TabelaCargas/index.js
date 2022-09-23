@@ -230,7 +230,7 @@ function TabelaCargas({
 					scrollHeight="60vh"
 					onSort={onSort}
 					className="p-datatable-responsive-grid"
-					emptyMessage="Não foram encontrado nenhum resultado nesta busca"
+					emptyMessage="Não foram encontrados resultados nesta busca"
 					ref={dadosTabela}
 					value={data}
 					header={headerTable}

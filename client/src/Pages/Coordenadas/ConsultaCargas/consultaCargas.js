@@ -10,6 +10,7 @@ import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { getClaims } from "src/MicrosoftAuthentication";
 import ServiceCargas from "src/services/ServiceCargas";
 import FormularioConsulta from "./formularioConsulta";
+import "../ConsultaCargas/consultaCarga.css";
 
 function Consulta() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -166,10 +167,9 @@ function Consulta() {
 	return (
 		<>
 			<LoadingScreen />
-			{/* <CabecalhoFixado>Edição de carga aberta manualmente</CabecalhoFixado> */}
 			<Menusuperior />
 			<Container className="mb-5 mt-5">
-				<p id="style-title-editorCarga">Consultar carga aberta manualmente</p>
+				<p id="title-consultarCarga">Consultar carga aberta manualmente</p>
 				<hr />
 				<Form onSubmit={formik.handleSubmit}>
 					<FormularioConsulta

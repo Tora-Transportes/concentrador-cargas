@@ -140,7 +140,7 @@ export class UseCaseAddCargaDerivada {
 
     const cargasCadastrada = await this.cargaRepository.index(carga.id);
     if (cargasCadastrada) {
-      throw new AppError("Uma carga com esse Código já foi cadastrada", 400);
+      throw new AppError(" Já foi cadastrada uma carga com esse código", 400);
     }
 
     const quantidadeRestante =

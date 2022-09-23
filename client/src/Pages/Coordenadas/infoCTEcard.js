@@ -36,7 +36,7 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 			} else {
 				const exitDialog = swal(
 					"Ops!",
-					"Não existe dados referente a esta placa no CTE",
+					"Não existem dados referentes a essa placa no CTE",
 					"warning"
 				);
 				if (exitDialog) setVisibleCardCte(false);
