@@ -155,13 +155,8 @@ function Main() {
 					</div>
 				</div>
 
-<<<<<<< HEAD
-				<div className="class-icons-body ">
-					<div className="class-indicador">
-=======
 				<div className="class-icons-body">
-					<div className="class-icon-coor">
->>>>>>> feature/Ordena
+					<div className="class-icon-coor class-indicador">
 						<Link to="/relatorios" className="class-link">
 							<FaChartBar
 								size={50}
