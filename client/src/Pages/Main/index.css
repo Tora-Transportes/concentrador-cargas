@@ -129,6 +129,16 @@
 .class-link{
   text-decoration: none;
 }
+
+.class-icon-coor{
+  transition: all 0.9s;
+  cursor: pointer;
+}
+
+.class-icon-coor:hover{
+  -webkit-transform: scale(1.3);
+  transform: scale(1.2);
+}
 @media only screen and (max-width: 480px){
   #title-p-jogo{
     color: #939598;
