@@ -15,6 +15,6 @@ export default {
 	formatDate: (value) => {
 		if (value == null) return " ";
 		const [data, time] = value?.split("T");
-		return `${data.split("-").reverse().join("-")} às ${time.split(".")[0]}`;
+		return `${data.split("-").reverse().join("-")} - ${time.split(".")[0]}`;
 	},
 };

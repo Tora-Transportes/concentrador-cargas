@@ -295,8 +295,19 @@ export class ServiceDistanceLocations {
     const historyVeicle: IHistoryTravelVehicle[] = await mssqlCoordenadas(
       "REPORTES"
     )
-      .select(["ID", "DISIMEI", "LAT", "LON", "UF", "ROD", "RUA", "MUN", "LOC"])
-      //.limit(100)
+      .select([
+        "ID",
+        "DISIMEI",
+        "LAT",
+        "LON",
+        "UF",
+        "ROD",
+        "RUA",
+        "MUN",
+        "LOC",
+        "DTINC",
+      ])
+      //.limit(10)
       .where("DISIMEI", query?.VEI_REFERENCIA)
       .whereBetween("DTINC", [date_inicio, date_fim]);
 

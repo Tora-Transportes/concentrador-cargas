@@ -135,7 +135,7 @@ function Importar() {
 						<Button
 							type="submit"
 							id="botao-process"
-							onSubmit={handleImportCarga}
+							onClick={handleImportCarga}
 						>
 							Processar
 						</Button>

@@ -41,7 +41,7 @@ function Main() {
 
 		const diferencaEmMinutos =
 			(new Date().getTime() - Number(ultimaVezJogada)) / 60000;
-		return diferencaEmMinutos >= 60;
+		return diferencaEmMinutos >= 1440;
 	}
 
 	function popularCoresAtuaisGame(quantidade) {
@@ -252,7 +252,7 @@ function Main() {
 									className="class-button-jogue"
 									onClick={iniciarGame}
 								>
-									Jogue Agora!
+									Inicie Seu Exercício Agora!
 								</Button>
 							</div>
 						</div>

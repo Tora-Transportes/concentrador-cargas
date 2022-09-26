@@ -174,7 +174,7 @@ class CoordenadasController {
 
       if (diferencaDate > 7) {
         throw new AppError(
-          "A diferença entre as datas não pode ser maior que 7 dias",
+          "O período entre as datas não pode ser maior que 07 dias.",
           400
         );
       }
