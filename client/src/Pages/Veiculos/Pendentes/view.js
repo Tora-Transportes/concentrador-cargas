@@ -2,7 +2,7 @@ import React from "react";
 import "./../styleVeiculos.css";
 import { Container, Row, Col } from "react-bootstrap";
 import TabelaCargas from "../../Components/TabelaCargas";
-import HandleClick from "./tooltipsMonitoramento";
+// import HandleClick from "./tooltipsMonitoramento";
 
 function ViewRotasPendentes({
 	columns = [],
@@ -17,7 +17,7 @@ function ViewRotasPendentes({
 					<h1
 						className="class-title-monit"
 						id="title-monit"
-						onClick={HandleClick}
+						// onClick={HandleClick}
 					>
 						Monitoramento - Veículos Pendentes
 					</h1>

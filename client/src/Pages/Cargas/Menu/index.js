@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 import { MdOutlineWavingHand } from "react-icons/md";
 import { SiGooglesheets } from "react-icons/si";
 import "../Menu/style.css";
-import HandleClick from "./tooltipsMenu";
+// import HandleClick from "./tooltipsMenu";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 
 function Main() {
@@ -15,7 +15,7 @@ function Main() {
 				<h1
 					id="titulo-selecionar-modo-carga"
 					className="class-title-coleta"
-					onClick={HandleClick}
+					// onClick={HandleClick}
 				>
 					Selecione o modo no qual a carga foi coletada:
 				</h1>

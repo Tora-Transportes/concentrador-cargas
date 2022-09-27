@@ -7,7 +7,7 @@ import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import * as xlsx from "xlsx";
 import TextUtils from "../../Utils/text";
-import HandleClick from "./tooltipsImportar";
+// import HandleClick from "./tooltipsImportar";
 import "../Importar/style.css";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 
@@ -97,9 +97,7 @@ function Importar() {
 			<div className="class-container-importar">
 				<div className="class-import">
 					<div className="title-import">
-						<h1 onClick={HandleClick} id="title-import">
-							Importação de cargas
-						</h1>
+						<h1 id="title-import">Importação de cargas</h1>
 					</div>
 					<div className="class-button-import">
 						<a

@@ -51,6 +51,7 @@ body, ul{
     transition: .5s;
 }
 
+
 .dropdown-veic,
 .dropdown-doc,
 .dropdown{
@@ -102,13 +103,14 @@ body, ul{
     color: #FFFF;
     text-decoration: none;
     font-family: sans-serif;
+    cursor: pointer;
 }
 
 #a:hover{
     background: #00a65053;
     border-radius: 30px;
     transition: 0.8s;
-}
+} 
 
 #header{
     box-sizing: border-box;

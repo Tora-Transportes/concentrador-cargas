@@ -224,6 +224,7 @@ export class CargaRepository {
     }
 
     results.orderBy("con_cargas.id", "asc");
+
     const rows: ICarga[] = await results;
 
     // função para retirar espaço no inicio dos nomes dos clientes{
