@@ -6,7 +6,6 @@ import useLoadingScreen from "../Components/LoadingScreen";
 import swal from "sweetalert";
 import { Card } from "primereact/card";
 import DateUtils from "../Utils/date";
-import moment from "moment";
 
 function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 	const [dataCTE, setDataCTE] = useState([]);
@@ -89,9 +88,7 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 										<h6>
 											Data de emissão:{" "}
 											<strong>
-												{moment(i.DT_HORA_EMISSAO)
-													.subtract(3, "hours")
-													.format("YYYY-MM-DD - HH:mm:ss")}
+												{DateUtils.formatDateTresHorasMenos(i.DT_HORA_EMISSAO)}
 											</strong>
 										</h6>
 									</li>
@@ -99,9 +96,7 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 										<h6>
 											Data de entrega:{" "}
 											<strong>
-												{moment(i.DT_ENTREGA)
-													.subtract(3, "hours")
-													.format("YYYY-MM-DD - HH:mm:ss")}
+												{DateUtils.formatDateTresHorasMenos(i.DT_ENTREGA)}
 											</strong>
 										</h6>
 									</li>
