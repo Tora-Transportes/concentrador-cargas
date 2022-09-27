@@ -231,7 +231,7 @@ function FormularioCadastroManual({
 									formik.values.fk_situacao &&
 									![1, 2, 4].includes(Number(formik.values.fk_situacao))
 								}
-								placeholder="Placa veículo"
+								placeholder="Placa Veículo"
 								disabled={formik.values.e_lote}
 								type="text"
 								name="placa_veiculo"

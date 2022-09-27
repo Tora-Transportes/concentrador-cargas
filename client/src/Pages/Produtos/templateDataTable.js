@@ -100,7 +100,7 @@ export const situacaoBodyTemplate = (rowData) => {
 	let colorSpan = "#000";
 	let situacao = "Ativo";
 	if (rowData.ativo !== 1) {
-		situacao = "Desativado";
+		situacao = "Inativo";
 		colorSpan = "red";
 	}
 	return (
