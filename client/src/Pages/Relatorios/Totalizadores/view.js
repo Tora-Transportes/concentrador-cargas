@@ -91,9 +91,8 @@ function ViewRotasPendentes({
 				<hr id="style-hr-rel" />
 				<Toast
 					ref={toast}
-					className="w-25"
 					position="top-center"
-					style={{ color: "#024c01" }}
+					style={{ color: "#024c01", width: "30vw" }}
 				></Toast>
 				<span>
 					O tempo médio de aprovação de veículos pelo GR é de{" "}

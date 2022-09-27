@@ -27,6 +27,7 @@
     "jwt-decode": "^3.1.1",
     "leaflet": "^1.8.0",
     "material-table": "^2.0.3",
+    "moment": "^2.29.4",
     "primeicons": "^5.0.0",
     "primereact": "^8.1.1",
     "prop-types": "^15.7.2",
