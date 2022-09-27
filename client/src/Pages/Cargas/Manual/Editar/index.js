@@ -225,7 +225,7 @@ function Manual() {
 				if (cargaDocumento) {
 					swal(
 						"Ops!",
-						`O documento digitado já existe na carga ${cargaDocumento.id}!`,
+						`Documento de Transporte já existente na carga ${cargaDocumento.id}.`,
 						"warning"
 					).then(() => {
 						formik.setFieldValue(
