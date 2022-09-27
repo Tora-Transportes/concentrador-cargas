@@ -66,7 +66,7 @@ export default function ListAddItens({ onChange, value, name }) {
 				className="class-button-add"
 				onClick={addItem}
 			>
-				Adicionar
+				Adicionar Parada
 			</Button>
 		</ol>
 	);
