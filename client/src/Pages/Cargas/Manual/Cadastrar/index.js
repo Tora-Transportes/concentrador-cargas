@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { MdOutlineWavingHand } from "react-icons/md";
 import "../Cadastrar/style.css";
-import HandleClick from "./tooltipsCadastro";
+// import HandleClick from "./tooltipsCadastro";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -141,7 +141,7 @@ function Manual() {
 				<p
 					id="title-cad-manual"
 					className="class-titlte-cad1"
-					onClick={HandleClick}
+					// onClick={HandleClick}
 				>
 					Cadastro de Carga - Manual
 				</p>

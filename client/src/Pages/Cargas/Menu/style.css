@@ -46,6 +46,15 @@
   margin-top: 4rem;
 }
 
+
+#import:hover,
+#hand:hover{
+  transition: .5s;
+  -webkit-transform: scale(1.2);
+  transform: scale(1.1);
+  color: #048a01;
+}
+
 @media only screen and (max-width: 480px) {
   .class-body-menu {
     padding: 0%;

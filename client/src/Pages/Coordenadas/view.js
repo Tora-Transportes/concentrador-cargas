@@ -8,7 +8,7 @@ import { ImQrcode } from "react-icons/im";
 import { Dialog } from "primereact/dialog";
 import InfoCTEcard from "./infoCTEcard";
 import bandeira from "../../assets/bandeiraBrasil.png";
-import HandleClick from "./tooltipsCoordenadas";
+// import HandleClick from "./tooltipsCoordenadas";
 import "../Coordenadas/coordenadas.css";
 import ModalDataExcel from "src/Pages/Cargas/modal/exportExcel";
 import { SideBarFuncition } from "../Utils/sideBar";
@@ -84,7 +84,7 @@ function ViewCoordenadas({
 					<h1
 						className="class-title-Coord"
 						id="title-coorde"
-						onClick={HandleClick}
+						// onClick={HandleClick}
 					>
 						Coordenadas - Veículos
 					</h1>
