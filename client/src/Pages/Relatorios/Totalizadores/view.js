@@ -62,7 +62,7 @@ function ViewRotasPendentes({
 			showToastMessage(toast, "warn", message, 10000);
 		} else if (diffiInDays(data_inicio, data_final) > 31) {
 			const message =
-				"A diferença entre as datas início e fim não pode ser maior que 31 dias!";
+				"O período entre a data de início e fim não pode ser maior que 31 dias!";
 			showToastMessage(toast, "warn", message, 7000);
 		} else {
 			toast.current.clear();
@@ -91,9 +91,8 @@ function ViewRotasPendentes({
 				<hr id="style-hr-rel" />
 				<Toast
 					ref={toast}
-					className="w-25"
 					position="top-center"
-					style={{ color: "#024c01" }}
+					style={{ color: "#024c01", width: "30vw" }}
 				></Toast>
 				<span>
 					O tempo médio de aprovação de veículos pelo GR é de{" "}

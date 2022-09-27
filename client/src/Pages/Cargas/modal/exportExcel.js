@@ -31,11 +31,11 @@ export default function ModalExportExcel({
 			const message = `Data início, data fim e ${field} são campos obrigatórios!`;
 			showToastMessage(toast, "warn", message, 7000);
 		} else if (new Date(dataInicio) > new Date(dataFim)) {
-			const message = "Data início deve ser menor ou igual a data fim!";
+			const message = "Data de início deve ser menor ou igual a data fim!";
 			showToastMessage(toast, "warn", message, 7000);
 		} else if (diffiInDays(dataInicio, dataFim) > 31) {
 			const message =
-				"A diferença entre as datas início e fim não pode ser maior que 31 dias!";
+				"O período entre a data de início e fim não pode ser maior que 31 dias!";
 			showToastMessage(toast, "warn", message, 7000);
 		} else {
 			exportExcelDate(

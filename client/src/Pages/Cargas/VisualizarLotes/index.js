@@ -76,7 +76,7 @@ function Visualizar() {
 		const response = await ServiceCargas.exportToXlsx(options);
 		if (response.status === 204) {
 			const message =
-				"A diferença entre as datas não pode ser maior que 31 dias!";
+				"O período entre a data de início e fim não pode ser maior que 31 dias!";
 			await showToastMessage(toast, "warn", message, 7000);
 			setLoading(false);
 			setModalShowExcel(true);

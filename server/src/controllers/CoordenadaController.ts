@@ -33,7 +33,7 @@ class CoordenadasController {
 
       if (diferencaDate > 31) {
         throw new AppError(
-          "A diferença entre as datas não pode ser maior que 31 dias",
+          "O período entre a data de início e fim não pode ser maior que 31 dias!",
           202
         );
       }
