@@ -34,7 +34,11 @@ function Importar() {
 				) {
 					const { data } = await ServiceCargas.importSheet({ file: files[0] });
 					setCadastrados(data.data);
-					await swal(`${data.data.length} registros inseridos`);
+					await swal(
+						"Sucesso",
+						`${data.data.length} registros inseridos.`,
+						"success"
+					);
 					inputFile.current.value = "";
 				}
 			}
