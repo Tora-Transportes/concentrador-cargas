@@ -67,7 +67,7 @@ function Produtos() {
 		if (observacao) {
 			try {
 				await ServiceProdutos.delete({ id, observacao });
-				swal("Sucesso", "Produto desabilitado", "success");
+				swal("Sucesso", "Produto desativado!", "success");
 				setProdutos((p) =>
 					p.map((i) => {
 						if (i.id !== id) return i;
