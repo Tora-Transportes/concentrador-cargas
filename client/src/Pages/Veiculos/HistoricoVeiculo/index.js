@@ -27,7 +27,7 @@ function HistoricoVeiculos() {
 			} else {
 				const message =
 					"Histórico do veículo não encontrado no período informado.";
-				showToastMessage(toast, "warn", message, 7000);
+				showToastMessage(toast, "warn", message, 8000);
 			}
 		} catch (error) {
 			setLoading(false);
@@ -43,7 +43,11 @@ function HistoricoVeiculos() {
 		<>
 			<LoadingScreen />
 			<Menusuperior />
-			<Toast ref={toast} className="w-25" position="top-center"></Toast>
+			<Toast
+				ref={toast}
+				position="top-center"
+				style={{ width: "30vw" }}
+			></Toast>
 			<ViewHistoricoVeiculo
 				historicoRotas={historicoRotas}
 				setHistoricoRotas={setHistoricoRotas}

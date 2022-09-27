@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Form, Button } from "react-bootstrap";
 import { useParams, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import useLoadingScreen from "../../../Components/LoadingScreen";
@@ -56,11 +56,7 @@ function Manual() {
 					fk_situacao: undefined,
 				});
 				formik.setFieldValue("responsavel_cadastro", String(getClaims().name));
-				swal(
-					"Sucesso",
-					`O registro de id ${data.data.id} foi atualizado`,
-					"success"
-				);
+				swal("Sucesso!", `A carga ${data.data.id} foi atualizada!`, "success");
 				await carregarCarga();
 			} catch (error) {
 				console.log(error);
@@ -287,59 +283,54 @@ function Manual() {
 							loteInicial ? ["e_lote", "unidade_medida", "quantidade"] : []
 						}
 					/>
-					<Row>
-						<Col>
-							<Button
-								variant="success"
-								type="submit"
-								className="p-3 fw-bold"
-								disabled={[3, 5, 6].includes(formik.values.fk_situacao)}
-							>
-								Gravar
-							</Button>
-						</Col>
-						<Col className="text-center">
-							<Button
-								variant="warning"
-								className="p-3 fw-bold"
-								onClick={handleCloseWindow}
-							>
-								Fechar edição
-							</Button>
-						</Col>
-						<Col className="text-end">
-							{formik.values.fk_situacao !== 3 &&
-								formik.values.fk_situacao !== 6 && (
-									<Button
-										variant="danger"
-										className="p-3 fw-bold"
-										onClick={handleExcluirCarga}
-									>
-										Excluir
-									</Button>
-								)}
-							{formik.values.fk_situacao === 3 && (
+					<div className="class-group-button">
+						<Button
+							variant="success"
+							type="submit"
+							className="p-2  botao-gravar"
+							disabled={[3, 5, 6].includes(formik.values.fk_situacao)}
+						>
+							Gravar
+						</Button>
+
+						<Button
+							variant="warning"
+							className="p-2"
+							onClick={handleCloseWindow}
+						>
+							Fechar edição
+						</Button>
+
+						{formik.values.fk_situacao !== 3 &&
+							formik.values.fk_situacao !== 6 && (
 								<Button
 									variant="danger"
-									className="p-3 fw-bold"
-									onClick={handleCancelarCarga}
+									className="p-2"
+									onClick={handleExcluirCarga}
 								>
-									Cancelar carga
+									Excluir
 								</Button>
 							)}
-						</Col>
 						{formik.values.fk_situacao === 3 && (
-							<Col className="text-end">
-								<Button
-									variant="info"
-									className="p-3 fw-bold"
-									onClick={handleEmitirDocumento}
-								>
-									Emitir documento
-								</Button>
-							</Col>
+							<Button
+								variant="danger"
+								className="p-2"
+								onClick={handleCancelarCarga}
+							>
+								Cancelar carga
+							</Button>
 						)}
-					</Row>
+
+						{formik.values.fk_situacao === 3 && (
+							<Button
+								variant="info"
+								className="p-2"
+								onClick={handleEmitirDocumento}
+							>
+								Emitir documento
+							</Button>
+						)}
+					</div>
 				</Form>
 			</Container>
 		</>

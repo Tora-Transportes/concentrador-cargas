@@ -66,7 +66,7 @@ export const headerTableFunction = (
 						placeholder="Configurar Tabela"
 						filter={true}
 						removeIcon
-						filterPlaceholder="Procurar"
+						filterPlaceholder="Filtrar por"
 						className="p-column-filter"
 					/>
 				</InputGroup>
@@ -84,7 +84,7 @@ export const footerTableFunction = (previousPage, nextPage) => {
 				id="Botao-voltar-pag"
 				onClick={previousPage}
 			>
-				<HiChevronDoubleLeft /> Voltar
+				<HiChevronDoubleLeft /> Página Anterior
 			</Button>
 			<Button
 				variant="outline-info"
@@ -92,7 +92,7 @@ export const footerTableFunction = (previousPage, nextPage) => {
 				style={{ background: "#00652E", border: "none", color: "#FFFFFF" }}
 				onClick={nextPage}
 			>
-				Próxima <HiChevronDoubleRight />
+				Página Seguinte <HiChevronDoubleRight />
 			</Button>
 		</Col>
 	);

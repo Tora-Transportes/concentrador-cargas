@@ -229,12 +229,12 @@ export class UseCaseUpdateCarga {
 
     if (!cargaCadastrada) {
       throw new AppError(
-        `Nenhuma carga foi encontrada com o código ${carga.id}`,
+        `Nenhuma carga encontrada com o código ${carga.id}.`,
         404
       );
     } else if (cargaCadastrada.ativo === 0) {
       throw new AppError(
-        `A carga foi desativada pelo usuario ${cargaCadastrada.usuario}`,
+        `A carga foi desativada pelo usuário ${cargaCadastrada.usuario}.`,
         403
       );
     }
