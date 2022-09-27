@@ -26,7 +26,7 @@ function HistoricoVeiculos() {
 				setHistoricoRotas(historico);
 			} else {
 				const message =
-					"Não foram encontrados histórico do veículo no período informado.";
+					"Histórico do veículo não encontrado no período informado.";
 				showToastMessage(toast, "warn", message, 7000);
 			}
 		} catch (error) {
