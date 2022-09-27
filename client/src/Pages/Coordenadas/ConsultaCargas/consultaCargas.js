@@ -56,11 +56,7 @@ function Consulta() {
 					fk_situacao: undefined,
 				});
 				formik.setFieldValue("responsavel_cadastro", String(getClaims().name));
-				swal(
-					"Sucesso",
-					`O registro de id ${data.data.id} foi atualizado`,
-					"success"
-				);
+				swal("Sucesso!", `A carga  ${data.data.id} foi atualizada!`, "success");
 				await carregarCarga();
 			} catch (error) {
 				console.log(error);

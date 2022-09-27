@@ -1,4 +1,18 @@
-#style-title-editorCarga{
-    color: #00652E;
-    font-size: 32px;
+#style-title-editorCarga {
+  color: #00652e;
+  font-size: 32px;
+}
+
+.class-group-button{
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    grid-gap: 3rem;
+    font-family: "Poppins", sans-serif;
+    font-weight: bold
+
+}
+
+.botao-gravar{
+  background-color: #00652e !important;
 }

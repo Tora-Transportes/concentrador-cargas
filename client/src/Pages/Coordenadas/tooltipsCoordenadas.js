@@ -49,13 +49,13 @@ const options = {
 		{
 			element: "#Botao-voltar-pag",
 			description:
-				"<h2>Botão Voltar</h2><div>Voltará para a aba anterior da tabela.</div>",
+				"<h2>Botão Página Anterior</h2><div>Voltará para a aba anterior da tabela.</div>",
 			placement: "top",
 		},
 		{
 			element: "#Botao-proxima-pag",
 			description:
-				"<h2>Botão Próxima</h2><div>Seguirá para a próxima aba da tabela.</div>",
+				"<h2>Botão Página Seguinte</h2><div>Seguirá para a próxima aba da tabela.</div>",
 			placement: "top",
 		},
 	],

@@ -60,8 +60,8 @@ function Manual() {
 					canal_comunicacao: "manual",
 				});
 				await swal(
-					"Sucesso",
-					`A carga foi cadastrada com o identificador ${data.data.id}`,
+					"Sucesso!",
+					`A carga foi cadastrada com o identificador ${data.data.id}!`,
 					"success"
 				);
 				location.reload();

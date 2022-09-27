@@ -24,6 +24,10 @@
   margin-top: -1rem;
 }
 
+#botao-cadastrar-carg{
+  background-color: #00652e !important;
+  font-family: "Poppins", sans-serif;
+}
 
 @media only screen and (max-width: 480px) {
   #title-cad-manual {
