@@ -223,8 +223,9 @@ export class CargaRepository {
     }
 
     results.orderBy("con_cargas.id", "asc");
-    const rows: ICarga[] = await results;
 
+    const rows: ICarga[] = await results;
+    console.log(">>>>>teste", results.toSQL().toNative());
     // função para retirar espaço no inicio dos nomes dos clientes{
     function compare(a: ICarga, b: ICarga) {
       if (a.cliente < b.cliente) return -1;

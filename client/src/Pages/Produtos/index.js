@@ -49,11 +49,15 @@ function Produtos() {
 		},
 	});
 
+	// swal({
+	// 	width: 490,
+	// });
+
 	async function handleDelete(nome, id) {
 		const observacao = await swal(
 			"Ops!",
-			`Tem certeza que deseja desabilitar o produto ${nome}
-			Preencha a observação abaixo`,
+			`Tem certeza que deseja DESATIVAR o produto	${nome}?
+			 Preencha a observação abaixo:`,
 			"warning",
 			{
 				content: "input",

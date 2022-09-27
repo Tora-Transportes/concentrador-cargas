@@ -482,7 +482,7 @@ function ViewRotasPendentes({
 
 				<p style={{ marginTop: "2rem", color: "black" }}>
 					Obs: A listagem de cargas transportadas por dia só vai aparecer caso o
-					filtro esteja aplicado com filial, data inicial e data final
+					filtro esteja aplicado com filial, data inicial e data final.
 				</p>
 				{dataInicial?.current?.value &&
 					dataFinal?.current?.value &&
