@@ -21,6 +21,7 @@ body, ul{
 #style-a{
     text-decoration: none;
     color: white;
+    cursor: pointer;
 }
 
 #style-a:hover{
@@ -49,6 +50,7 @@ body, ul{
     border-radius: 30px;
     transition: .5s;
 }
+
 
 .dropdown-veic,
 .dropdown-doc,
@@ -101,13 +103,14 @@ body, ul{
     color: #FFFF;
     text-decoration: none;
     font-family: sans-serif;
+    cursor: pointer;
 }
 
 #a:hover{
     background: #00a65053;
     border-radius: 30px;
     transition: 0.8s;
-}
+} 
 
 #header{
     box-sizing: border-box;
@@ -238,7 +241,7 @@ body, ul{
         overflow-y: hidden;
     }
     #nav.active #menu{
-        height: calc(50vh - 70px);
+        height: calc(55vh - 70px);
         visibility: visible;
         overflow-y: auto;
     }

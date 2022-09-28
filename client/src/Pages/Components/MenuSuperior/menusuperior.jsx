@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import Logo from "../../../assets/logotoraico.png";
 import "./style.css";
-import { NavbarBrand } from "reactstrap";
+import { NavbarBrand } from "react-bootstrap";
 import { FaSignOutAlt } from "react-icons/fa";
-// import HandleClick from "../../Cargas/Manual/Cadastrar/tooltipsCadastro";
+import { logout } from "../../../MicrosoftAuthentication";
 
-function Menusuperior({ type }) {
+function Menusuperior() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
 
-  console.log(type);
   return (
     <div id="header">
       <NavbarBrand href="/">
@@ -30,44 +29,32 @@ function Menusuperior({ type }) {
         <ul id="menu" role="menu" className="class-ul">
           <li className="class-li">
             <a id="style-a" href="/">
-              Inicio
+              Início
             </a>
           </li>
           <div className="class-dropdown">
             <div className="dropdown">
               <button id="style-button-drop" className="dropbtn">
-                Carga
+                Cargas
               </button>
               <div id="myDropdown" className="dropdown-content">
-                <a href="/cargas/menu">Cadastrar Carga</a>
+                <a href="/cargas/menu">Cadastrar Cargas</a>
                 <a href="/cargas/visualizar">Listagem de Cargas</a>
                 <a href="/lotes/visualizar">Listagem de Lotes</a>
-                <a href="/producao">Produção</a>
-              </div>
-            </div>
-
-            <div className="dropdown-doc">
-              <button id="style-button-drop" className="dropbtn-doc">
-                Documentos
-              </button>
-              <div id="myDropdown-doc" className="dropdown-content-doc">
-                <a href="/veiculos/aprovacao">Monitoramento</a>
-                <a href="/veiculos/coordenadas">Coordenadas</a>
-                <a href="/relatorios">Relatórios</a>
-              </div>
-            </div>
-
-            <div className="dropdown-veic">
-              <button id="style-button-drop" className="dropbtn-veic">
-                Veículos
-              </button>
-              <div id="myDropdown-veic" className="dropdown-content-veic">
-                <a href="/veiculos/raio">Veículos x Veículos</a>
-                <a href="/veiculos/destino">Veículos até Empresa</a>
-                <a href="/veiculos/raio/empresa">Raio Empresa</a>
+                {/* <a href="/producao">Produção</a> */}
               </div>
             </div>
           </div>
+          <li className="class-li">
+            <a id="style-a" href="/veiculos/coordenadas">
+              Coordenadas
+            </a>
+          </li>
+          <li className="class-li">
+            <a id="style-a" href="/veiculos/aprovacao">
+              Monitoramento
+            </a>
+          </li>
           <li className="class-li">
             <a id="style-a" href="/usuarios/permissoes">
               Permissões
@@ -78,13 +65,35 @@ function Menusuperior({ type }) {
               Produtos
             </a>
           </li>
+          <div className="class-dropdown">
+            <div className="dropdown-veic">
+              <button id="style-button-drop" className="dropbtn-veic">
+                Relatórios
+              </button>
+              <div id="myDropdown-veic" className="dropdown-content-veic">
+                <a href="/relatorios">Indicador Operacional</a>
+                <a href="/rotas/pendentes">Rotas Pendentes</a>
+                <a href="/veiculos/raio/empresa">Raio Empresa</a>
+                <a href="/veiculos/raio">Veículos x Veículos</a>
+                <a href="/veiculos/destino">Veículos até Empresa</a>
+                <a href="/veiculos/historico">Histórico Veículos</a>
+              </div>
+            </div>
+          </div>
           <li className="class-li">
             <a id="style-a" href="/ajuda">
               Ajuda
             </a>
           </li>
-          <li className="class-li">
-            <a id="style-a" href="/">
+          <li className="class-li" to="/">
+            <a
+              id="style-a"
+              onClick={() => {
+                setTimeout(() => {
+                  logout();
+                }, 200);
+              }}
+            >
               Sair <FaSignOutAlt />
             </a>
           </li>

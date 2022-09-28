@@ -236,7 +236,7 @@ function Formulario({ formik, produtos, distancia }) {
 			</Row>
 			<Row>
 				<Col sm={12} md={6}>
-					<FloatingLabel label="*Origem carga" className="mb-3">
+					<FloatingLabel label="*Origem da carga" className="mb-3">
 						<InputLocalizacao
 							keyDataList="origem_carga"
 							type="text"
@@ -250,7 +250,7 @@ function Formulario({ formik, produtos, distancia }) {
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="*Destino carga" className="mb-3">
+					<FloatingLabel label="*Destino da carga" className="mb-3">
 						<InputLocalizacao
 							keyDataList="destino_carga"
 							type="text"
@@ -269,13 +269,13 @@ function Formulario({ formik, produtos, distancia }) {
 				<Row>
 					<Col>
 						<FloatingLabel
-							label="Distancia entre a origem e o destino"
+							label="Distância entre a origem e o destino"
 							className="mb-3"
 						>
 							<Form.Control
 								type="text"
 								placeholder=" "
-								value={`A distancia entre ${
+								value={`A distância entre ${
 									formik.values.origem_carga.split("/")[2]
 								} e ${
 									formik.values.destino_carga.split("/")[2]
@@ -283,7 +283,7 @@ function Formulario({ formik, produtos, distancia }) {
 								readOnly
 							/>
 							<Form.Text id="passwordHelpBlock" muted>
-								O valor apresentado representa a distancia de centro a centro.
+								O valor mostrado representa a distância de centro a centro.
 							</Form.Text>
 						</FloatingLabel>
 						<hr />
@@ -292,7 +292,7 @@ function Formulario({ formik, produtos, distancia }) {
 			)}
 			<Row>
 				<Col>
-					<FloatingLabel label="Data coleta" className="mb-3">
+					<FloatingLabel label="Data da coleta" className="mb-3">
 						<Form.Control
 							type="date"
 							placeholder=" "
@@ -304,7 +304,7 @@ function Formulario({ formik, produtos, distancia }) {
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="Data entrega" className="mb-3">
+					<FloatingLabel label="Data de entrega" className="mb-3">
 						<Form.Control
 							type="date"
 							placeholder=" "
@@ -346,7 +346,7 @@ function Formulario({ formik, produtos, distancia }) {
 			)}
 			<Row>
 				<Col sm={12} md={6}>
-					<FloatingLabel label="Tipo material" className="mb-3">
+					<FloatingLabel label="Tipo de material" className="mb-3">
 						<AutocompleteInput
 							keyDataList="tipo_carga"
 							options={produtos.filter((i) => !!i.ativo).map((i) => i.nome)}

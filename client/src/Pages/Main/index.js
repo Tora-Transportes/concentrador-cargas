@@ -6,7 +6,7 @@ import { getClaims } from "../../MicrosoftAuthentication";
 import "./index.css";
 import { Link } from "react-router-dom";
 
-import { SiGooglemaps } from "react-icons/si";
+import { IoLocationSharp } from "react-icons/io5";
 import { FaChartBar, FaTruckMoving } from "react-icons/fa";
 import { FaBoxes } from "react-icons/fa";
 import Menusuperior from "../Components/MenuSuperior/menusuperior";
@@ -41,7 +41,7 @@ function Main() {
 
 		const diferencaEmMinutos =
 			(new Date().getTime() - Number(ultimaVezJogada)) / 60000;
-		return diferencaEmMinutos >= 60;
+		return diferencaEmMinutos >= 1440;
 	}
 
 	function popularCoresAtuaisGame(quantidade) {
@@ -132,85 +132,74 @@ function Main() {
 			<ToastContainer />
 			{/* <NavbarNavigator /> */}
 			<Menusuperior />
-			<Container>
+			<Container className="class-body-main">
 				<Row>
 					<Col className="text-center mt-5 mb-5">
 						<p id="style-title-main" className="class-p-title-main">
-							Seja bem vindo(a) ao Concentrador de cargas
+							Seja bem-vindo(a) ao Concentrador de Cargas
 						</p>
 					</Col>
 				</Row>
 				<div>
 					<div>
 						<p id="style-p-saudacao" className="class-p-saudacao">
-							Caro(a){userData?.nome}!
+							Caro(a) {userData?.nome}!
 						</p>
 					</div>
 					<div className="class-p-text">
 						<p id="style-p-text">
-							O concentrador de cargas lhe proporciona uma melhor visibilidade
-							de demanda, além de auxiliar sua concentração na <br /> melhor
-							tomada de decisão para à escolha de um veículo.
+							O concentrador de cargas lhe proporciona ampla visibilidade de
+							demanda, além de auxiliar sua concentração para a melhor <br />
+							tomada de decisão na escolha de um veículo.
 						</p>
 					</div>
 				</div>
 
 				<div className="class-icons-body">
-					<div>
-						<Link to="/relatorios" className="text-decoration-none icone-tora">
+					<div className="class-icon-coor class-indicador">
+						<Link to="/relatorios" className="class-link">
 							<FaChartBar
 								size={50}
-								style={{ marginLeft: "1rem", color: "#00652E" }}
+								id="style-iconn"
+								className="class-ico-ind"
 							/>
 							<br />
-							<b style={{ color: "#00652E" }}>Relatórios</b>
+							<b id="style-iconn">Indicador Operacional</b>
 						</Link>
 					</div>
-					<div>
-						<Link
-							to="/veiculos/coordenadas"
-							className="text-decoration-none icone-tora"
-						>
-							<SiGooglemaps
-								size={50}
-								style={{ marginLeft: "1.5rem", color: "#00652E" }}
-							/>
+					<div className="class-icon-coor">
+						<Link to="/veiculos/coordenadas" className="class-link">
+							<IoLocationSharp size={50} id="style-iconn-2" />
 							<br />
-							<b style={{ color: "#00652E" }}>Coordenadas</b>
+							<b id="style-iconn">Coordenadas</b>
 						</Link>
 					</div>
-					<div>
-						<Link
-							to="/cargas/visualizar"
-							className="text-decoration-none icone-tora"
-						>
-							<FaTruckMoving size={50} style={{ color: "#00652E" }} />
+					<div className="class-icon-coor">
+						<Link to="/cargas/visualizar" className="class-link">
+							<FaTruckMoving size={50} id="style-iconn-3" />
 							<br />
-							<b style={{ color: "#00652E" }}>Cargas</b>
+							<b id="style-iconn">Cargas</b>
 						</Link>
 					</div>
-					<div>
-						<Link
-							to="/lotes/visualizar"
-							className="text-decoration-none icone-tora"
-						>
-							<FaBoxes size={50} style={{ color: "#00652E" }} />
+					<div className="class-icon-coor">
+						<Link to="/lotes/visualizar" className="class-link">
+							<FaBoxes size={50} id="style-iconn-4" />
 							<br />
-							<b style={{ color: "#00652E" }}>Lotes</b>
+							<b id="style-iconn">Lotes</b>
 						</Link>
 					</div>
 				</div>
 
-				<Row
+				<div
 					className={
 						usuarioPodeJogar() ? "invisible" : "text-center h5 text-danger"
 					}
 				>
-					<Col>
+					<p className="class-p-fimjogo" id="style-p-fimjogo">
 						Você já se exercitou, agora é hora de avaliar seus melhores
 						veículos. Desejamos um excelente dia de trabalho!
-					</Col>
-				</Row>
+					</p>
+				</div>
 
 				<Row className={usuarioPodeJogar() ? "" : "invisible"}>
 					{levelGame > -1 && (
@@ -255,15 +244,15 @@ function Main() {
 							<div className="class-linha-jogo">
 								<p id="title-p-jogo">
 									{" "}
-									Exercite sua memória para garantir uma melhor tomada de
-									decisão durante seu dia de trabalho.
+									Exercite sua memória, garantindo a melhor tomada de decisão
+									durante o seu dia de trabalho.
 								</p>
 								<Button
 									id="style-button-jogo"
 									className="class-button-jogue"
 									onClick={iniciarGame}
 								>
-									Jogue Agora!
+									Inicie Seu Exercício Agora!
 								</Button>
 							</div>
 						</div>

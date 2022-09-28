@@ -76,7 +76,6 @@ function RelatoriosMain() {
 			} else {
 				const a = (await ServiceRelatorios.resumosDiarios(filters)).data.data;
 				setResumosDiarios(a);
-				console.log(a);
 			}
 			setLoading(false);
 		}, 300);
@@ -120,7 +119,7 @@ function RelatoriosMain() {
 		};
 	}, []);
 	return (
-		<>
+		<div className="class-body-relatorio">
 			<LoadingScreen />
 			{/* <NavbarNavigator /> */}
 			<Menusuperior />
@@ -131,7 +130,7 @@ function RelatoriosMain() {
 				resumosDiarios={resumosDiarios}
 				tempoMedioAprovacaoGr={tempoMedioAprovacaoGr}
 			/>
-		</>
+		</div>
 	);
 }
 

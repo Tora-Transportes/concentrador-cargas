@@ -187,7 +187,7 @@ class ServiceFinishCargas {
         const codigoATS = translate.get(String(cargaParaFinalizar));
         if (!codigoATS) {
           console.error(
-            `A carga ${cargaParaFinalizar} tem está com o codigo ATS vazio > ${codigoATS}`
+            `A carga ${cargaParaFinalizar} precisa estar com o código ATS vazio > ${codigoATS}`
           );
           continue;
         }
@@ -201,7 +201,7 @@ class ServiceFinishCargas {
         const codigoATS = translate.get(String(cargaParaFinalizar));
         if (!codigoATS) {
           console.error(
-            `A carga ${cargaParaFinalizar} tem está com o codigo ATS vazio > ${codigoATS}`
+            `A carga ${cargaParaFinalizar} precisa estar com o código ATS vazio > ${codigoATS}`
           );
           continue;
         }

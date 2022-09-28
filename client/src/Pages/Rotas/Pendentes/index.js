@@ -1,8 +1,9 @@
 import React, { useCallback } from "react";
 import useLoadingScreen from "../../Components/LoadingScreen";
-import NavbarNavigator from "../../Components/NavbarNavigator";
+// import NavbarNavigator from "../../Components/NavbarNavigator";
 import ViewRotasPendentes from "./view";
 import ServiceRotas from "../../../services/ServiceRotas";
+import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 
 function RotasPendentes() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -16,22 +17,22 @@ function RotasPendentes() {
 		},
 		{
 			name: "cidade_origem",
-			description: "Cidade Origem",
+			description: "Cidade de Origem",
 			selector: (row) => row.cidade_origem,
 		},
 		{
 			name: "estado_origem",
-			description: "Estado Origem",
+			description: "Estado de Origem",
 			selector: (row) => row.estado_origem,
 		},
 		{
 			name: "cidade_destino",
-			description: "Cidade Destino",
+			description: "Cidade de Destino",
 			selector: (row) => row.cidade_destino,
 		},
 		{
 			name: "estado_destino",
-			description: "Estado Destino",
+			description: "Estado de Destino",
 			selector: (row) => row.estado_destino,
 		},
 	];
@@ -58,7 +59,8 @@ function RotasPendentes() {
 	return (
 		<>
 			<LoadingScreen />
-			<NavbarNavigator />
+			{/* <NavbarNavigator /> */}
+			<Menusuperior />
 			<ViewRotasPendentes get_data={tableFetchData} columns={columns} />
 		</>
 	);

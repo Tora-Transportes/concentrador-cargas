@@ -7,6 +7,9 @@ export interface IPaginationResult<T> {
   total_registers: number;
   results: T[];
 }
+export interface IResultExcel<T> {
+  results: T[];
+}
 export class CargaRepository {
   async nextId(): Promise<number> {
     return Number(
@@ -36,6 +39,10 @@ export class CargaRepository {
         "con_cargas.codigo_motorista"
       )
       .leftJoin("FILIAL", "FILIAL.FIL_COD", "con_cargas.fk_filial");
+    database.raw(
+      `CASE WHEN "con_cargas"."e_lote" = 0 THEN 'Não' WHEN "con_cargas"."e_lote" = 1 THEN 'Sim' END AS "E lote"`
+    );
+
     if (!carga) return;
     const locais = (
       await database("con_locais_carga")
@@ -103,6 +110,7 @@ export class CargaRepository {
     const results = database("con_cargas")
       .select([
         "con_cargas.*",
+        //database.raw(`LTRIM("con_cargas"."cliente") AS "teste_client"`),
         "con_situacoes_cargas.descricao as situacao.descricao",
         "con_situacoes_cargas.cor as situacao.cor",
         "FILIAL.FIL_DSC as filial.descricao",
@@ -216,13 +224,107 @@ export class CargaRepository {
     }
 
     results.orderBy("con_cargas.id", "asc");
-    const rows = await results;
 
+    const rows: ICarga[] = await results;
+
+    // função para retirar espaço no inicio dos nomes dos clientes{
+    function compare(a: ICarga, b: ICarga) {
+      if (a.cliente < b.cliente) return -1;
+      if (a.cliente > b.cliente) return 1;
+      return 0;
+    }
+
+    if (query?.order_direction === "asc") {
+      rows.forEach((item) => {
+        if (item.cliente) {
+          item.cliente = item.cliente.trim();
+        }
+      });
+      rows.sort(compare);
+    }
+    //}
+    //console.log(results.toSQL().toNative());
     const totalRegisters = Number((await total)?.total) || 0;
+
     return {
       page: realPage,
       total_pages: Math.ceil(totalRegisters / pageSize),
       total_registers: totalRegisters,
+      results: rows,
+    };
+  }
+
+  async searchExcel(
+    query: Record<string, any>,
+    pageSize = 5
+  ): Promise<IResultExcel<ICarga>> {
+    const results = database("con_cargas")
+      .select([
+        "con_cargas.id AS Código da carga",
+        "con_cargas.cliente AS Cliente",
+        database.raw(
+          `CASE WHEN "con_cargas"."e_lote" = 0 THEN 'Não' WHEN "con_cargas"."e_lote" = 1 THEN 'Sim' END AS "E lote"`
+        ),
+        "con_cargas.origem_carga AS Origem Carga",
+        "con_cargas.destino_carga AS Destino Carga",
+        database.raw(
+          `to_char("con_cargas"."data_coleta", 'dd/mm/yyyy') AS "Data Coleta"`
+        ),
+        database.raw(
+          `to_char("con_cargas"."data_entrega", 'dd/mm/yyyy') AS "Data Entrega"`
+        ),
+        "con_cargas.tipo_carga AS Tipo Material",
+        "con_cargas.quantidade AS Quantidade",
+        "con_cargas.quantidade_atual AS Quantidade Atual",
+        "con_cargas.fk_lote_pai AS Lote Pai",
+        "con_situacoes_cargas.descricao AS Situação",
+        "FILIAL.FIL_DSC AS Descrição Filial",
+        "con_cargas.fk_filial AS Código Filial",
+        "con_cargas.documento_transporte AS Documento de transporte",
+        "con_cargas.unidade_medida AS UN",
+        "con_cargas.responsavel_cadastro AS Responsável Cadastro",
+        "con_cargas.canal_comunicacao AS Canal AS Comunicação",
+        "con_cargas.observacao AS Observação",
+        "con_situacoes_cargas.descricao AS Status",
+        "con_cargas.placa_veiculo AS Placa",
+        "con_cargas.observacao_gr AS Observação do GR",
+        database.raw(
+          `to_char("con_cargas"."data_cadastro", 'dd/mm/yyyy') AS "Data Cadastro"`
+        ),
+        database.raw(
+          `to_char("con_cargas"."data_atualizacao", 'dd/mm/yyyy') AS "Data Atualização"`
+        ),
+      ])
+      .where("fk_filial", query?.fk_filial)
+      .join(
+        "con_situacoes_cargas",
+        "con_situacoes_cargas.id",
+        "con_cargas.fk_situacao"
+      )
+      .leftJoin("FILIAL", "FILIAL.FIL_COD", "con_cargas.fk_filial")
+      .leftJoin(
+        "CADASTRO_GERAL",
+        "CADASTRO_GERAL.CG_COD",
+        "con_cargas.codigo_motorista"
+      )
+      .limit(pageSize)
+      .modify(function (con_cargas) {
+        if (query.date_execel_inicio && query.date_execel_fim) {
+          con_cargas.andWhereBetween("con_cargas.data_cadastro", [
+            new Date(query.date_execel_inicio + "T00:00:00"),
+            new Date(query.date_execel_fim + "T23:59:00"),
+          ]);
+        }
+      })
+      .modify(function (con_cargas) {
+        if (query.e_lote) {
+          con_cargas.where("con_cargas.e_lote", query.e_lote);
+        }
+      });
+
+    results.orderBy("con_cargas.id", "asc");
+    const rows = await results;
+    return {
       results: rows,
     };
   }

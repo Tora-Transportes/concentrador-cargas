@@ -1,0 +1,49 @@
+.class-body-destCarga{
+    font-family: 'Poppins', sans-serif;
+}
+
+.class-body-viewdest{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: center;
+    margin-top: 1rem;
+    grid-gap: 3rem;
+}
+#style-button-pesqDest{
+    background: #00652e;
+    border: none;
+    width: 10rem;
+    height: 2rem;
+}
+.class-button-pesqDest{
+    margin-top: 2.5rem;
+    
+}
+.class-card-dest{
+    margin-top: 2rem;
+    height: 7rem;
+    width: 63rem;
+    margin-left: 5rem;
+}
+
+
+
+@media only screen and (max-width: 768px) {
+    .class-title-dest{
+        margin-left: -0.2rem;
+    }
+
+    .class-body-viewdest{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+ 
+    }
+
+    .class-card-dest{
+        margin-left: .1rem;
+        width: 24rem;
+        height: 24rem;
+    }
+}
+

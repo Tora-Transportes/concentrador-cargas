@@ -1,3 +1,4 @@
+import moment from "moment";
 export default {
 	convertDateToReadableTime: (seconds) => {
 		let secs = Number(seconds);
@@ -13,8 +14,13 @@ export default {
 	},
 
 	formatDate: (value) => {
-		if (value == null) return "Sem informação";
+		if (value == null) return " ";
 		const [data, time] = value?.split("T");
-		return `${data.split("-").reverse().join("-")} às ${time.split(".")[0]}`;
+		return `${data.split("-").reverse().join("-")} - ${time.split(".")[0]}`;
+	},
+
+	formatDateTresHorasMenos: (value) => {
+		if (value == null) return " ";
+		return moment(value).format("DD/MM/YYYY - HH:mm:ss");
 	},
 };

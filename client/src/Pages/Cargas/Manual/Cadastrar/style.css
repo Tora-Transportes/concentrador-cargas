@@ -1,3 +1,6 @@
+.class-body-form{
+  font-family: 'Poppins', sans-serif;
+}
 #title-cad-manual {
   color: #00652e;
   font-family: "Poppins", sans-serif;
@@ -5,7 +8,7 @@
   font-weight: 500;
 }
 .class-titlte-cad1 {
-  margin-left: 7rem;
+  margin-left: 7.5rem;
 }
 
 .class-title-icon {
@@ -17,8 +20,13 @@
 .class-linha-title {
   display: grid;
   /* width: 70rem; */
-  margin-left: 7rem;
+  margin-left: 7.6rem;
   margin-top: -1rem;
+}
+
+#botao-cadastrar-carg{
+  background-color: #00652e !important;
+  font-family: "Poppins", sans-serif;
 }
 
 @media only screen and (max-width: 480px) {

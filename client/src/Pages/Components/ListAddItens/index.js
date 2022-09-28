@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-
+import "../ListAddItens/style.css";
 import { Button } from "react-bootstrap";
 import swal from "sweetalert";
 
 export default function ListAddItens({ onChange, value, name }) {
 	const [list, setList] = useState([]);
 	async function addItem() {
-		const item = await swal("Adicionando parada", {
+		const item = await swal("Adicionar parada", {
 			content: "input",
 		});
 		if (item) {
@@ -34,8 +34,8 @@ export default function ListAddItens({ onChange, value, name }) {
 	async function removeItem(key) {
 		if (
 			await swal(
-				"Ops",
-				"Certeza que deseja excluir a parada selecionada ?",
+				"Ops!",
+				"Você tem certeza que deseja excluir a parada selecionada?",
 				"warning",
 				{
 					buttons: ["Cancelar", "Excluir"],
@@ -52,8 +52,8 @@ export default function ListAddItens({ onChange, value, name }) {
 			{list?.map((i, index) => (
 				<li key={i + index}>
 					<Button
-						className="m-1 ml-5 w-100 text-start fw-bold"
-						variant="outline-danger"
+						id="style-add-parada"
+						className="m-1 ml-5 w-100 text-start"
 						onClick={() => removeItem(i)}
 					>
 						{i}
@@ -61,8 +61,12 @@ export default function ListAddItens({ onChange, value, name }) {
 				</li>
 			))}
 
-			<Button variant="outline-success" className="mb-3" onClick={addItem}>
-				Adicionar
+			<Button
+				id="style-botao-add"
+				className="class-button-add"
+				onClick={addItem}
+			>
+				Adicionar Parada
 			</Button>
 		</ol>
 	);

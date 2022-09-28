@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Form, Button } from "react-bootstrap";
 import { useParams, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import useLoadingScreen from "../../../Components/LoadingScreen";
@@ -8,7 +8,9 @@ import ServiceCargas from "../../../../services/ServiceCargas";
 import { getClaims } from "../../../../MicrosoftAuthentication";
 import ServiceProdutos from "src/services/ServiceProdutos";
 import FormularioCadastroManual from "src/Pages/Components/FormularioCadastroManual";
-import CabecalhoFixado from "src/Pages/Components/CabecalhoFixado";
+// import CabecalhoFixado from "src/Pages/Components/CabecalhoFixado";
+import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
+import "../Editar/style.css";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -54,11 +56,7 @@ function Manual() {
 					fk_situacao: undefined,
 				});
 				formik.setFieldValue("responsavel_cadastro", String(getClaims().name));
-				swal(
-					"Sucesso",
-					`O registro de id ${data.data.id} foi atualizado`,
-					"success"
-				);
+				swal("Sucesso!", `A carga ${data.data.id} foi atualizada!`, "success");
 				await carregarCarga();
 			} catch (error) {
 				console.log(error);
@@ -74,8 +72,8 @@ function Manual() {
 		let ok = true;
 		if (askPermission) {
 			ok = await swal(
-				"Ops !",
-				"Tem certeza que deseja fechar esta página ?",
+				"Ops!",
+				"Tem certeza que deseja fechar esta página?",
 				"warning",
 				{
 					buttons: ["Cancelar", { text: "Sim", value: true }],
@@ -146,7 +144,7 @@ function Manual() {
 		setLoading(true);
 		try {
 			const ok = await swal(
-				`Certeza que deseja emitir o documento dessa carga ?`,
+				`Certeza que deseja emitir o documento dessa carga?`,
 				{
 					dangerMode: true,
 					buttons: ["Cancelar", true],
@@ -222,8 +220,8 @@ function Manual() {
 				);
 				if (cargaDocumento) {
 					swal(
-						"Ops !",
-						`O documento digitado já existe na carga ${cargaDocumento.id}!`,
+						"Ops!",
+						`Documento de Transporte já existente na carga ${cargaDocumento.id}.`,
 						"warning"
 					).then(() => {
 						formik.setFieldValue(
@@ -267,8 +265,11 @@ function Manual() {
 	return (
 		<>
 			<LoadingScreen />
-			<CabecalhoFixado>Edição de carga aberta manualmente</CabecalhoFixado>
+			{/* <CabecalhoFixado>Edição de carga aberta manualmente</CabecalhoFixado> */}
+			<Menusuperior />
 			<Container className="mb-5 mt-5">
+				<p id="style-title-editorCarga">Editar carga aberta manualmente</p>
+				<hr />
 				<Form onSubmit={formik.handleSubmit}>
 					<FormularioCadastroManual
 						buscarCargaComDocumentoDeTransporte={
@@ -282,59 +283,54 @@ function Manual() {
 							loteInicial ? ["e_lote", "unidade_medida", "quantidade"] : []
 						}
 					/>
-					<Row>
-						<Col>
-							<Button
-								variant="success"
-								type="submit"
-								className="p-3 fw-bold"
-								disabled={[3, 5, 6].includes(formik.values.fk_situacao)}
-							>
-								Gravar
-							</Button>
-						</Col>
-						<Col className="text-center">
-							<Button
-								variant="warning"
-								className="p-3 fw-bold"
-								onClick={handleCloseWindow}
-							>
-								Fechar edição
-							</Button>
-						</Col>
-						<Col className="text-end">
-							{formik.values.fk_situacao !== 3 &&
-								formik.values.fk_situacao !== 6 && (
-									<Button
-										variant="danger"
-										className="p-3 fw-bold"
-										onClick={handleExcluirCarga}
-									>
-										Excluir
-									</Button>
-								)}
-							{formik.values.fk_situacao === 3 && (
+					<div className="class-group-button">
+						<Button
+							variant="success"
+							type="submit"
+							className="p-2  botao-gravar"
+							disabled={[3, 5, 6].includes(formik.values.fk_situacao)}
+						>
+							Gravar
+						</Button>
+
+						<Button
+							variant="warning"
+							className="p-2"
+							onClick={handleCloseWindow}
+						>
+							Fechar edição
+						</Button>
+
+						{formik.values.fk_situacao !== 3 &&
+							formik.values.fk_situacao !== 6 && (
 								<Button
 									variant="danger"
-									className="p-3 fw-bold"
-									onClick={handleCancelarCarga}
+									className="p-2"
+									onClick={handleExcluirCarga}
 								>
-									Cancelar carga
+									Excluir
 								</Button>
 							)}
-						</Col>
 						{formik.values.fk_situacao === 3 && (
-							<Col className="text-end">
-								<Button
-									variant="info"
-									className="p-3 fw-bold"
-									onClick={handleEmitirDocumento}
-								>
-									Emitir documento
-								</Button>
-							</Col>
+							<Button
+								variant="danger"
+								className="p-2"
+								onClick={handleCancelarCarga}
+							>
+								Cancelar carga
+							</Button>
 						)}
-					</Row>
+
+						{formik.values.fk_situacao === 3 && (
+							<Button
+								variant="info"
+								className="p-2"
+								onClick={handleEmitirDocumento}
+							>
+								Emitir documento
+							</Button>
+						)}
+					</div>
 				</Form>
 			</Container>
 		</>

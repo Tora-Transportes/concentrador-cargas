@@ -1,0 +1,44 @@
+.class-body-viewraio{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: center;
+    margin-top: 1rem;
+    grid-gap: 3rem;
+}
+#style-button-pesqraio{
+    background: #00652e;
+    border: none;
+    width: 10rem;
+    height: 2rem;
+}
+.class-button-pesqraio{
+    margin-top: 2.5rem;
+    
+}
+.class-card-raio{
+    margin-top: 2rem;
+    height: 7rem;
+    width: 60rem;
+    margin-left: 5rem;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .class-title-raio{
+        margin-left: -0.2rem;
+    }
+
+    .class-body-viewraio{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+ 
+    }
+
+    .class-card-raio{
+        margin-left: .1rem;
+        width: 24rem;
+        height: 22rem;
+    }
+}
+

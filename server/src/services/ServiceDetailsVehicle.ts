@@ -16,7 +16,7 @@ export default class ServiceDetailsVehicle {
         v.vei_categoria AS forca_trabalho,
         v.vei_modelo AS modelo,
         v.vei_renavam AS renavan,
-        v.vei_cert_prop AS certificado_propietario,
+        v.vei_cert_prop AS certificado_proprietario,
         nvl(v.vei_tp_assoalho, ' ') AS tipo_assoalho,
         v.sv_cod AS sv_cod,
         sv.sv_dsc AS setor_veiculo,
@@ -92,11 +92,12 @@ export default class ServiceDetailsVehicle {
         ) AS STATUS_PROP,
         (
             SELECT 
-                DISTINCT CONCAT('(' || cga_ddd || ')',cga_dsc) "telefone" 
+                CONCAT('(' || cga_ddd || ')',cga_dsc) "telefone" 
             FROM cg_agenda 
             WHERE cg_cod = cg.cg_cod
                 AND loc_cod = cg.loc_cod
                 AND ta_cod in (2,10)
+                AND rownum = 1
         ) As TELEFONE_MOTORISTA,
         (
             SELECT

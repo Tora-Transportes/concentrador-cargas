@@ -23,17 +23,14 @@ function TabelaCargas({
 	const [storage, setStorage] = useLocalStorage(tipoDeBuscaPorPagina, columns);
 	const [page, setPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
-	const [sortField, setSortField] = useState();
-	const [sortOrder, setSortOrder] = useState();
+	const [sortOrder, setSortOrder] = useState(-1);
 	const initialSelectColumns = columns.filter((i) =>
 		storage.find((c) => {
 			if (c.name === i.name) return c;
 		})
 	);
 	const [selectedColumns, setSelectedColumns] = useState(initialSelectColumns);
-	const firstDebounceRun = useRef(true);
 	const dadosTabela = useRef(null);
-	const firstRun = useRef(true);
 	const toast = useRef(null);
 
 	// functions of tables
@@ -66,11 +63,6 @@ function TabelaCargas({
 		}
 	};
 
-	const onSort = (e) => {
-		setSortField(e.sortField);
-		setSortOrder(e.sortOrder);
-	};
-
 	useEffect(() => {
 		const { total_pages, results, current_page } = values;
 		setData(results);
@@ -89,6 +81,24 @@ function TabelaCargas({
 		},
 	});
 
+	const onSort = (e) => {
+		if (e.sortField !== "editar") {
+			if (sortOrder === 1) {
+				orderby.setValues({
+					column: e.sortField,
+					direction: "asc",
+				});
+				setSortOrder(-1);
+			} else {
+				orderby.setValues({
+					column: e.sortField,
+					direction: "desc",
+				});
+				setSortOrder(1);
+			}
+		}
+	};
+
 	async function notify() {
 		const options = {
 			filters: {},
@@ -99,14 +109,14 @@ function TabelaCargas({
 			page: 1,
 		};
 
-		// columns
+		//columns
 		for (const i in formik.values) {
 			if (![undefined, null, ""].includes(formik.values[i])) {
 				options.filters[i] = formik.values[i];
 			}
 		}
 
-		// direction
+		// // direction
 		if (orderby.values.column) {
 			options.orderBy.column = orderby.values.column;
 			options.orderBy.direction = orderby.values.direction;
@@ -116,7 +126,6 @@ function TabelaCargas({
 
 		//page
 		options.page = page;
-
 		await get_data(options);
 	}
 
@@ -131,12 +140,14 @@ function TabelaCargas({
 			return v - 1 < 1 ? v : v - 1;
 		});
 	}
+
 	const colunsFiltrado = [];
 	storage.filter((i) =>
 		columns.find((c) => {
 			if (c.name === i.name) colunsFiltrado.push(c);
 		})
 	);
+
 	const setDynamicColums = colunsFiltrado.map((col) => {
 		return (
 			<Column
@@ -147,8 +158,7 @@ function TabelaCargas({
 				header={col.description}
 				body={col.selector}
 				sortable={col.sortable}
-				filter={true}
-				// id={col.id}
+				filter={col.showFilter}
 				filterElement={
 					col.Filter ? (
 						<col.Filter
@@ -170,7 +180,7 @@ function TabelaCargas({
 			/>
 		);
 	});
-
+	const firstRun = useRef(true);
 	useEffect(() => {
 		if (firstRun.current) {
 			firstRun.current = false;
@@ -178,7 +188,7 @@ function TabelaCargas({
 			notify();
 		}
 	}, [page, orderby.values, get_data]);
-
+	const firstDebounceRun = useRef(true);
 	useDebouncedFunction(
 		() => {
 			if (firstDebounceRun.current) {
@@ -216,13 +226,11 @@ function TabelaCargas({
 					id="Tabela-coordenadas"
 					reorderableColumns
 					onColReorder={ordernarUnidadeColunas}
-					sortField={sortField}
+					responsiveLayout="scroll"
 					scrollHeight="60vh"
-					sortOrder={sortOrder}
 					onSort={onSort}
 					className="p-datatable-responsive-grid"
-					responsiveLayout="scroll"
-					emptyMessage="Não foram encontrado nenhum resultado nesta busca"
+					emptyMessage="Não foram encontrados resultados nesta busca"
 					ref={dadosTabela}
 					value={data}
 					header={headerTable}

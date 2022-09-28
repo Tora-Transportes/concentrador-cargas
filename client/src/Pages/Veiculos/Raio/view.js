@@ -1,10 +1,9 @@
 import React from "react";
-import { Container, Row, Col, Form, Button, Table } from "react-bootstrap";
-
+import { Container, Row, Form, Button, Table, Card } from "react-bootstrap";
+import "./../styleVeiculos.css";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-
 import { BsDownload } from "react-icons/bs";
-
+import "../Raio/style.css";
 import L from "leaflet";
 
 const originIcon = L.icon({
@@ -63,7 +62,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 	}
 
 	return (
-		<>
+		<div className="class-body">
 			<Container className="text-center mb-5 mt-4">
 				{raio && (
 					<MapContainer
@@ -93,14 +92,15 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 					</MapContainer>
 				)}
 				<Row className="mb-2">
-					<h1>Veículos no raio de outro veículo</h1>
+					<h1 className="class-title-raio">Veículos próximos</h1>
 				</Row>
-				<Row>
-					<Col>
-						<Form onSubmit={handleSubmit}>
+				<div>
+					<Card className="class-card-raio">
+						<Form onSubmit={handleSubmit} className="class-body-viewraio">
 							<Form.Group controlId="formPlaca">
 								<Form.Label>Placa</Form.Label>
 								<Form.Control
+									style={{ width: "20rem" }}
 									type="text"
 									name="placa"
 									value={fields.placa}
@@ -110,8 +110,9 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 							</Form.Group>
 
 							<Form.Group controlId="formdistancia">
-								<Form.Label>Distancia (KM)</Form.Label>
+								<Form.Label>Distância (KM)</Form.Label>
 								<Form.Control
+									style={{ width: "20rem" }}
 									type="number"
 									min="1"
 									name="distancia_km"
@@ -121,10 +122,16 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 								/>
 							</Form.Group>
 
-							<Button type="submit">Pesquisar</Button>
+							<Button
+								type="submit"
+								id="style-button-pesqraio"
+								className="class-button-pesqraio"
+							>
+								Pesquisar
+							</Button>
 						</Form>
-					</Col>
-				</Row>
+					</Card>
+				</div>
 
 				<Row>
 					{raio && (
@@ -136,7 +143,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 											<BsDownload />
 										</Button>
 									</th>
-									<th>Distancia KM</th>
+									<th>Distância KM</th>
 									<th>Placa</th>
 									<th>Latitude</th>
 									<th>Longitude</th>
@@ -159,7 +166,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 					)}
 				</Row>
 			</Container>
-		</>
+		</div>
 	);
 }
 

@@ -30,7 +30,7 @@ function RotasPendentes() {
 	}
 
 	async function aprovarVeiculo(carga) {
-		const observacaoGr = await swal(`Observação`, {
+		const observacaoGr = await swal(`Observação:`, {
 			content: "input",
 			buttons: ["Cancelar", true],
 		});

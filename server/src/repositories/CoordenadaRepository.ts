@@ -6,8 +6,8 @@ export class CoordenadaRepository {
     traducaoNomeColuna.set("responsavel_placa", "responsavel_placa");
     traducaoNomeColuna.set("responsavel_placa_nome", "con_usuarios.nome");
     traducaoNomeColuna.set("responsavel_placa_email", "con_usuarios.email");
-    // traducaoNomeColuna.set("cpf_motorista", "CG_IDENTIFICACAO.CGI_NUM");
-    // traducaoNomeColuna.set("apelido_carreta", "APV.AV_DSC");
+    traducaoNomeColuna.set("cpf_motorista", "CG_IDENTIFICACAO.CGI_NUM");
+    traducaoNomeColuna.set("apelido_carreta", "APV.AV_DSC");
 
     const { order_column, order_direction, page } = filter;
     const {
@@ -29,10 +29,8 @@ export class CoordenadaRepository {
       responsavel_placa,
       responsavel_placa_nome,
       responsavel_placa_email,
-      // id,
-      // placa_bitrem,
-      // placa_carreta,
-      // apelido_carreta,
+      apelido_carreta,
+      cpf_motorista,
       date_execel_inicio,
       date_execel_fim,
     } = filter;
@@ -50,8 +48,8 @@ export class CoordenadaRepository {
       // "con_cargas.placa_carreta",
       // "con_cargas.placa_bitrem",
       // "con_cargas.id",
-      // "CG_IDENTIFICACAO.CGI_NUM as cpf_motorista",
-      // "APV.AV_DSC as apelido_carreta",
+      "CG_IDENTIFICACAO.CGI_NUM as cpf_motorista",
+      "APV.AV_DSC as apelido_carreta",
     ]);
     const total = database("con_coordenadas_veiculos")
       .count("placa as total")
@@ -96,54 +94,24 @@ export class CoordenadaRepository {
       }
     });
 
-    // query
-    //   .leftJoin(
-    //     "con_cargas",
-    //     "con_cargas.placa_veiculo",
-    //     "con_coordenadas_veiculos.placa"
-    //   )
-    //   .groupBy("con_cargas.id")
-    //   .max("con_cargas.id");
+    query.leftJoin(
+      "VEICULO as VEI",
+      "VEI.VEI_COD",
+      "con_coordenadas_veiculos.codigo_veiculo"
+    );
 
-    // total.leftJoin(
-    //   "con_cargas",
-    //   "con_cargas.placa_veiculo",
-    //   "con_coordenadas_veiculos.placa"
-    // );
+    query.leftJoin("APELIDO_VEICULO as APV", "APV.AV_SEQ", "VEI.AV_SEQ");
 
-    // query.leftJoin(
-    //   "CADASTRO_GERAL AS CAG",
-    //   "CAG.CG_COD",
-    //   "con_cargas.codigo_motorista"
-    // );
+    query.leftJoin("CADASTRO_GERAL AS CAG", "CAG.CG_COD", "VEI.CG_MOT");
 
-    // total.leftJoin(
-    //   "CADASTRO_GERAL AS CAG",
-    //   "CAG.CG_COD",
-    //   "con_cargas.codigo_motorista"
-    // );
-
-    // query.leftJoin("CG_IDENTIFICACAO ", function (){
-    //   this.on("CG_IDENTIFICACAO.LOC_COD", "CAG.LOC_COD").andOn(
-    //     "CG_IDENTIFICACAO.CG_COD",
-    //     "CAG.CG_COD"
-    //   );
-    // });
-
-    // query.leftJoin(
-    //   "VEICULO as VEI",
-    //   "VEI.VEI_PLACA",
-    //   "con_coordenadas_veiculos.placa"
-    // );
-
-    // total.leftJoin(
-    //   "VEICULO as VEI",
-    //   "VEI.VEI_PLACA",
-    //   "con_coordenadas_veiculos.placa"
-    // );
-
-    // query.leftJoin("APELIDO_VEICULO as APV", "APV.AV_SEQ", "VEI.AV_SEQ");
-    // total.leftJoin("APELIDO_VEICULO as APV", "APV.AV_SEQ", "VEI.AV_SEQ");
+    query
+      .innerJoin("CG_IDENTIFICACAO", function () {
+        this.on("CG_IDENTIFICACAO.LOC_COD", "CAG.LOC_COD").andOn(
+          "CG_IDENTIFICACAO.CG_COD",
+          "CAG.CG_COD"
+        );
+      })
+      .where("CG_IDENTIFICACAO.TI_COD", 2);
 
     for (const [key, value] of Object.entries({
       placa,
@@ -167,25 +135,19 @@ export class CoordenadaRepository {
       // id,
       // placa_bitrem,
       // placa_carreta,
-      // //cpf_motorista,
-      // apelido_carreta,
+      cpf_motorista,
+      apelido_carreta,
     })) {
       if (value !== undefined && key) {
         const columnName = traducaoNomeColuna.get(key) ?? key;
         if (traducaoNomeColuna.get(key)) {
           query.where(columnName, "like", `%${value}%`);
           total.where(columnName, "like", `%${value}%`);
-          //query.where("CG_IDENTIFICACAO.TI_COD", 2);
         } else {
           query.where(columnName, "like", `%${value.toUpperCase()}%`);
           total.where(columnName, "like", `%${value.toUpperCase()}%`);
-          //query.where("CG_IDENTIFICACAO.TI_COD", 2);
         }
       }
-
-      // if (key === "cpf_motorista") {
-      //   query.where("CG_IDENTIFICACAO.TI_COD", 2);
-      // }
     }
 
     if (order_column) {

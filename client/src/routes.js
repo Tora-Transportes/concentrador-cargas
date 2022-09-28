@@ -14,13 +14,15 @@ import Produtos from "./Pages/Produtos";
 import RotasPendentes from "./Pages/Rotas/Pendentes";
 import SituacaoVeiculos from "./Pages/Veiculos/Pendentes";
 import CoordenadasVeiculos from "./Pages/Coordenadas";
+import ConsultaCarga from "./Pages/Coordenadas/ConsultaCargas/consultaCargas";
 import RelatoriosMain from "./Pages/Relatorios/Totalizadores";
 import Credenciais from "./Pages/Credenciais";
-import CalendarioProducao from "./Pages/CalendarioProducao";
+// import CalendarioProducao from "./Pages/CalendarioProducao";
 import RaioVeiculos from "./Pages/Veiculos/Raio";
 import DestinoCarga from "./Pages/Veiculos/DestinoCarga";
 import RaioEmpresa from "./Pages/Veiculos/RaioEmpresa";
 import LinkCarga from "./Pages/Cargas/Manual/LinkCarga";
+import HistoricoVeiculo from "./Pages/Veiculos/HistoricoVeiculo";
 // import Menusuperior from "./Pages/Components/MenuSuperior/menusuperior";
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
@@ -62,16 +64,18 @@ export default function AllRoutes() {
 				<Route path="/veiculos/raio" exact component={RaioVeiculos} />
 				<Route path="/veiculos/destino" exact component={DestinoCarga} />
 				<Route path="/veiculos/raio/empresa" exact component={RaioEmpresa} />
+				<Route path="/veiculos/historico" exact component={HistoricoVeiculo} />
 
 				<Route
 					path="/veiculos/coordenadas"
 					exact
 					component={CoordenadasVeiculos}
 				/>
+				<Route path="/consulta/cargas/:id" exact component={ConsultaCarga} />
+
 				<Route path="/relatorios" exact component={RelatoriosMain} />
 				<Route path="/credenciais" exact component={Credenciais} />
-				<Route path="/producao" exact component={CalendarioProducao} />
-				{/* <Route path="/menu" exact component={<Menusuperior />} /> */}
+				{/* <Route path="/producao" exact component={CalendarioProducao} /> */}
 				<Route path="/ajuda" exact component={Helper} />
 			</Switch>
 		</BrowserRouter>

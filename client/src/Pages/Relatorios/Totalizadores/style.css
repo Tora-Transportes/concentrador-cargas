@@ -1,0 +1,30 @@
+.class-body-relatorios {
+  font-family: "Poppins", sans-serif;
+}
+
+#style-title-rel {
+  color: #00652e;
+  font-size: 32px;
+}
+
+.class-p-rel{
+  display: grid;
+  text-align: start;
+  margin-top: 3rem;
+}
+
+.class-grafico-relatorio{
+  margin-top: 3rem;
+}
+
+.class-acc-rel{
+  margin-top: 4rem;
+}
+@media only screen and (max-width: 480px) {
+  .class-p-rel {
+    margin: 3rem 16rem 0 0;
+  }
+  #style-hr-rel {
+    width: 24rem;
+  }
+}

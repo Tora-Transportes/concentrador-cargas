@@ -186,13 +186,13 @@ function RotasPendentes() {
 
 		if (response.status === 202) {
 			const message =
-				"A diferença entre as datas não pode ser maior que 31 dias!";
+				"O período entre a data de início e fim não pode ser maior que 31 dias!";
 			await showToastMessage(toast, "warn", message, 7000);
 			setLoading(false);
 			setModalShowExcel(true);
 		} else if (response.data.byteLength < 14493) {
 			const message =
-				"Não foram encontrado dados com estas informaçoes no filtro de data!";
+				"Não foram encontrados dados com essas informaçoes no filtro de data.";
 			await showToastMessage(toast, "warn", message, 7000);
 			setLoading(false);
 			setModalShowExcel(true);
@@ -237,7 +237,7 @@ function RotasPendentes() {
 	);
 
 	return (
-		<>
+		<div className="class-body-coordenadas">
 			<LoadingScreen />
 			<Toast ref={toast} className="w-25" position="top-center"></Toast>
 			{/* <NavbarNavigator /> */}
@@ -256,7 +256,7 @@ function RotasPendentes() {
 				modalShowExcel={modalShowExcel}
 				setModalShowExcel={setModalShowExcel}
 			/>
-		</>
+		</div>
 	);
 }
 

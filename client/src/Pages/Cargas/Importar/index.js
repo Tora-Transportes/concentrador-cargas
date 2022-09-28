@@ -1,13 +1,15 @@
 import React, { useRef, useState } from "react";
-import { Container, Row, Col, Form, Button, Table } from "react-bootstrap";
-import NavbarNavigator from "../../Components/NavbarNavigator";
+import { Form, Button, Table } from "react-bootstrap";
+// import NavbarNavigator from "../../Components/NavbarNavigator";
 import { BsDownload } from "react-icons/bs";
 import swal from "sweetalert";
 import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import * as xlsx from "xlsx";
 import TextUtils from "../../Utils/text";
-import createSequence from "tooltip-sequence";
+// import HandleClick from "./tooltipsImportar";
+import "../Importar/style.css";
+import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 
 function Importar() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -21,18 +23,22 @@ function Importar() {
 			if (inputFile.current) {
 				const files = inputFile.current.files;
 				if (files.length === 0) {
-					swal("Ops!", "Nenhum arquivo foi selecionado", "error");
+					swal("Ops!", "Nenhum arquivo foi selecionado.", "error");
 				} else if (
 					await swal(
 						"Ops!",
-						"Tem certeza que deseja importar o arquivo selecionado ?",
+						"Tem certeza que deseja importar o arquivo selecionado?",
 						"warning",
 						{ buttons: ["Não", true], dangerMode: true }
 					)
 				) {
 					const { data } = await ServiceCargas.importSheet({ file: files[0] });
 					setCadastrados(data.data);
-					await swal(`${data.data.length} registros inseridos`);
+					await swal(
+						"Sucesso",
+						`${data.data.length} registros inseridos.`,
+						"success"
+					);
 					inputFile.current.value = "";
 				}
 			}
@@ -87,160 +93,109 @@ function Importar() {
 		}
 	}
 
-	const options = {
-		backdropColor: "#6262625d",
-		sequence: [
-			{
-				element: "#title-import",
-				description:
-					"<h2>Bem-vindo</h2><div>Nesta opção realizara o cadastro por importação.</div>",
-				placement: "bottom",
-			},
-			{
-				element: "#botao-download",
-				description:
-					"<h2>Download de modelo</h2><div>Ao clicar no botão será baixado uma planilha de modelo.</div>",
-				placement: "bottom",
-			},
-			{
-				element: "#import-arq",
-				description:
-					"<h2>Escolher Arquivo</h2><div>Nesta opção você poderá carregar seu arquivo ou seja sua planilha para ser importada.</div>",
-				placement: "top",
-			},
-			{
-				element: "#botao-process",
-				description:
-					"<h2>Processar</h2><div>Clicando no botão sua planilha importada será aberta na tabela abaixo.</div>",
-				placement: "top",
-			},
-			{
-				element: "#title-tab-import-carg",
-				description:
-					"<h2>Tabela</h2><div>Esta tabela trás os resultados de sua planilha importada.</div>",
-				placement: "top",
-			},
-			{
-				element: "#Table-impot-carg",
-				description:
-					"<h2>Preview e Resultados</h2><div>Resultados da sua importação, só terá resultado na tabela se sua planilha estiver de acordo com o modelo da planilha de modelo.</div>",
-				placement: "top",
-			},
-		],
-		onComplete: function () {
-			console.log("Completed!");
-		},
-	};
-
-	function handleClick(event) {
-		event.preventDefault();
-		createSequence(options);
-	}
-
 	return (
-		<>
+		<div className="class-body-importCarga">
 			<LoadingScreen />
-			<NavbarNavigator />
-			<Container fluid className="text-center mb-5">
-				<Row className="p-5 mt-1">
-					<h1 onClick={handleClick} id="title-import">
-						Importação das cargas
-					</h1>
-				</Row>
-				<Row>
-					<a
-						href={
-							process.env.REACT_APP_STATIC_FILES_URL +
-							"/Importação de Carga em Lote.xlsx"
-						}
-						target="_blank"
-						rel="noreferrer"
-						className="text-decoration-none"
-					>
-						<Button variant="outline-primary" id="botao-download">
-							Clique aqui para fazer o download da planilha de modelo{" "}
-							<BsDownload />
-						</Button>
-					</a>
-				</Row>
-				<hr className="mt-5" />
-				<Form onSubmit={handleImportCarga} id="import-arq">
-					<Row>
-						<Col md={10} sm={12}>
-							<Form.Group controlId="formFile" className="mb-3">
-								<Form.Label></Form.Label>
-								<Form.Control
-									type="file"
-									accept=".xlsx"
-									required
-									ref={inputFile}
-									onChange={handlePreview}
-								/>
-							</Form.Group>
-						</Col>
-						<Col className="text-start">
-							<Button
-								type="submit"
-								variant="success"
-								className="mt-4"
-								id="botao-process"
-							>
-								Processar
+			{/* <NavbarNavigator /> */}
+			<Menusuperior />
+			<div className="class-container-importar">
+				<div className="class-import">
+					<div className="title-import">
+						<h1 id="title-import">Importação de cargas</h1>
+					</div>
+					<div className="class-button-import">
+						<a
+							href={
+								process.env.REACT_APP_STATIC_FILES_URL +
+								"/Importação de Carga em Lote.xlsx"
+							}
+							target="_blank"
+							rel="noreferrer"
+						>
+							<Button id="botao-download">
+								Download planilha modelo <BsDownload />
 							</Button>
-						</Col>
-					</Row>
-				</Form>
+						</a>
+					</div>
+				</div>
 
-				<h1 className="mt-5" id="title-tab-import-carg">
-					Preview e resultados
+				<div className="class-input-button" id="import-arq">
+					<div>
+						<Form.Group controlId="formFile">
+							<Form.Label></Form.Label>
+							<Form.Control
+								//id="style-input-arq"
+								type="file"
+								accept=".xlsx"
+								required
+								ref={inputFile}
+								onChange={handlePreview}
+							/>
+						</Form.Group>
+					</div>
+					<div className="class-button-submit">
+						<Button
+							type="submit"
+							id="botao-process"
+							onClick={handleImportCarga}
+						>
+							Processar
+						</Button>
+					</div>
+				</div>
+
+				<h1 id="title-tab-import-carg" className="class-title-preview">
+					Visualização e Resultados:
 				</h1>
-				<Table responsive striped bordered hover id="Table-impot-carg">
-					<thead>
-						<tr>
-							<th>Código da carga</th>
-							<th>Unidade de medida</th>
-							<th>Quantidade</th>
-							<th>Origem carga</th>
-							<th>Destino carga</th>
-							<th>Cliente</th>
-							<th>É lote ?</th>
-							<th>Observação</th>
-							<th>Destinatário</th>
-						</tr>
-					</thead>
-					<tbody>
-						{cadastrados.length === 0 &&
-							preview.map((i, index) => (
-								<tr key={index}>
-									<td></td>
-									<td>{i.unidade}</td>
+				<div className="class-table-importCarga">
+					<Table responsive striped bordered hover id="Table-impot-carg">
+						<thead>
+							<tr>
+								<th>Código da carga</th>
+								<th>Unidade de medida</th>
+								<th>Quantidade</th>
+								<th>Origem da carga</th>
+								<th>Destino da carga</th>
+								<th>Cliente</th>
+								<th>É lote?</th>
+								<th>Observações</th>
+								<th>Destinatário</th>
+							</tr>
+						</thead>
+						<tbody>
+							{cadastrados.length === 0 &&
+								preview.map((i, index) => (
+									<tr key={index}>
+										<td></td>
+										<td>{i.unidade}</td>
+										<td>{i.quantidade}</td>
+										<td>{normalizeLocation(i.origem)}</td>
+										<td>{normalizeLocation(i.destino)}</td>
+										<td>{i.cliente}</td>
+										<td>SIM</td>
+										<td>{i.observacao}</td>
+										<td>{i.destinatario}</td>
+									</tr>
+								))}
+
+							{cadastrados.map((i, index) => (
+								<tr key={i.id || index}>
+									<td>{i.id}</td>
+									<td>{i.unidade_medida}</td>
 									<td>{i.quantidade}</td>
-									<td>{normalizeLocation(i.origem)}</td>
-									<td>{normalizeLocation(i.destino)}</td>
+									<td>{i.origem_carga}</td>
+									<td>{i.destino_carga}</td>
 									<td>{i.cliente}</td>
-									<td>SIM</td>
+									<td>{i.e_lote ? "SIM" : "NÃO"}</td>
 									<td>{i.observacao}</td>
-									<td>{i.destinatario}</td>
+									<td>{i.local_coleta}</td>
 								</tr>
 							))}
-
-						{cadastrados.map((i, index) => (
-							<tr key={i.id || index}>
-								<td>{i.id}</td>
-								<td>{i.unidade_medida}</td>
-								<td>{i.quantidade}</td>
-								<td>{i.origem_carga}</td>
-								<td>{i.destino_carga}</td>
-								<td>{i.cliente}</td>
-								<td>{i.e_lote ? "SIM" : "NÃO"}</td>
-								<td>{i.observacao}</td>
-								<td>{i.local_coleta}</td>
-							</tr>
-						))}
-					</tbody>
-				</Table>
-			</Container>
-		</>
+						</tbody>
+					</Table>
+				</div>
+			</div>
+		</div>
 	);
 }
 

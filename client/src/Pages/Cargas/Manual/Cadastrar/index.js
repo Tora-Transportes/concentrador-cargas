@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { MdOutlineWavingHand } from "react-icons/md";
 import "../Cadastrar/style.css";
-import HandleClick from "./tooltipsCadastro";
+// import HandleClick from "./tooltipsCadastro";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -22,7 +22,7 @@ function Manual() {
 	const formik = useFormik({
 		initialValues: {
 			responsavel_cadastro: String(getClaims().name),
-			id: "(Vai ser auto gerado)",
+			id: "(Será autogerado)",
 			e_lote: false,
 			cliente: "",
 			destino_carga: "",
@@ -54,8 +54,8 @@ function Manual() {
 					canal_comunicacao: "manual",
 				});
 				swal(
-					"Sucesso",
-					`A carga foi cadastrada com o identificador ${data.data.id}`,
+					"Sucesso!",
+					`A carga foi cadastrada com o identificador ${data.data.id}!`,
 					"success"
 				);
 				resetForm();
@@ -80,8 +80,8 @@ function Manual() {
 				);
 				if (cargaDocumento) {
 					swal(
-						"Ops !",
-						`O documento digitado já existe na carga ${cargaDocumento.id}!`,
+						"Ops!",
+						`Documento de Transporte já existente na carga ${cargaDocumento.id}.`,
 						"warning",
 						{
 							buttons: ["Continuar cadastrando", "Editar carga"],
@@ -130,7 +130,7 @@ function Manual() {
 
 	function resetForm() {
 		formik.resetForm();
-		formik.setFieldValue("id", "(Vai ser auto gerado)");
+		formik.setFieldValue("id", "(gerado automaticamente)");
 	}
 
 	return (
@@ -141,7 +141,7 @@ function Manual() {
 				<p
 					id="title-cad-manual"
 					className="class-titlte-cad1"
-					onClick={HandleClick}
+					// onClick={HandleClick}
 				>
 					Cadastro de Carga - Manual
 				</p>
@@ -167,12 +167,7 @@ function Manual() {
 					/>
 					<Row>
 						<Col>
-							<Button
-								variant="success"
-								type="submit"
-								className="p-3 fw-bold"
-								id="botao-cadastrar-carg"
-							>
+							<Button variant="success" type="submit" id="botao-cadastrar-carg">
 								Cadastrar
 							</Button>
 						</Col>

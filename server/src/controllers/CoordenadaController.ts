@@ -33,7 +33,7 @@ class CoordenadasController {
 
       if (diferencaDate > 31) {
         throw new AppError(
-          "A diferença entre as datas não pode ser maior que 31 dias",
+          "O período entre a data de início e fim não pode ser maior que 31 dias!",
           202
         );
       }
@@ -151,6 +151,43 @@ class CoordenadasController {
     const veiculos = await service.searchRouteToEnterprise(placa, cnpj);
 
     return res.json(veiculos);
+  }
+
+  async historyTravelVeicleController(req: Request, res: Response) {
+    const { placa } = req.params;
+    const { date_inicio, date_fim } = req.query;
+
+    if (placa.length !== 7) {
+      throw new AppError("Placa inválida", 400);
+    }
+
+    if (!date_inicio || !date_fim) {
+      throw new AppError(
+        "Query param date_inicio ou date_fim não informado",
+        400
+      );
+    } else {
+      const diferencaDate = await calculateDiffDate(
+        String(date_inicio),
+        String(date_fim)
+      );
+
+      if (diferencaDate > 7) {
+        throw new AppError(
+          "O período entre as datas não pode ser maior que 07 dias.",
+          400
+        );
+      }
+    }
+
+    const service = new ServiceDistanceLocations();
+    const hitoryVeicle = await service.historyTravelVeicleService(
+      placa,
+      String(date_inicio),
+      String(date_fim)
+    );
+
+    return res.json(hitoryVeicle);
   }
 }
 

@@ -1,10 +1,6 @@
 import React from "react";
-import {
-	BsCheckLg,
-	BsInfoCircle,
-	BsPencilSquare,
-	BsTrash,
-} from "react-icons/bs";
+import { BsCheckLg, BsInfoCircle, BsPencilSquare } from "react-icons/bs";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 import { Button, Form, InputGroup, FormControl } from "react-bootstrap";
 import { MdAddCircleOutline } from "react-icons/md";
 
@@ -29,7 +25,7 @@ export const renderHeader = (formik, globalFilter, setGlobalFilter) => {
 			<div className="header-table-filter-produto">
 				<InputGroup>
 					<FormControl
-						placeholder="Fazer uma busca global"
+						placeholder="Pesquisar produtos"
 						value={globalFilter}
 						onChange={(e) => setGlobalFilter(e.target.value)}
 					/>
@@ -55,22 +51,21 @@ export const opcoesTemplate = (
 						variant="outline-warning"
 						onClick={(e) => {
 							e.preventDefault();
-							handleEditProduto(rowData.id);
+							handleEditProduto(rowData.nome, rowData.id);
 						}}
 					>
 						<BsPencilSquare className="icon-editar" />
 						Editar
 					</Button>
 					<Button
-						style={{ color: "red" }}
 						variant="outline-danger"
 						onClick={(e) => {
 							e.preventDefault();
-							handleDelete(rowData.id);
+							handleDelete(rowData.nome, rowData.id);
 						}}
 					>
-						<BsTrash />
-						Cancelar
+						<IoIosCloseCircleOutline className="icon-des" />
+						Desativar
 					</Button>
 				</>
 			) : (
@@ -93,7 +88,7 @@ export const opcoesTemplate = (
 						}}
 					>
 						<BsInfoCircle className="icon-info" />
-						Info ...
+						Info
 					</Button>
 				</>
 			)}
@@ -105,7 +100,7 @@ export const situacaoBodyTemplate = (rowData) => {
 	let colorSpan = "#000";
 	let situacao = "Ativo";
 	if (rowData.ativo !== 1) {
-		situacao = "Desativado";
+		situacao = "Inativo";
 		colorSpan = "red";
 	}
 	return (

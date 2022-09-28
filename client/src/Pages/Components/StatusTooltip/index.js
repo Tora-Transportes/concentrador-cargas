@@ -10,7 +10,7 @@ function StatusTooltip({
 	return (
 		<OverlayTrigger
 			placement={placement}
-			overlay={hint ? <Tooltip>{hint}</Tooltip> : <span />}
+			overlay={hint ? <Tooltip>{hint}</Tooltip> : <span></span>}
 		>
 			<div
 				{...props}

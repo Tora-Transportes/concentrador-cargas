@@ -34,16 +34,19 @@ export const getColumns = (
 			name: "placa",
 			description: "Placa",
 			selector: (row) => row.placa,
+			showFilter: true,
 		},
 		{
 			name: "tipo_cavalo",
 			description: "Tipo cavalo",
 			selector: (row) => row.tipo_cavalo,
+			showFilter: true,
 		},
 		{
 			name: "tipo_carreta",
 			description: "Tipo carreta",
 			selector: (row) => row.tipo_carreta,
+			showFilter: true,
 		},
 		// {
 		// 	name: "apelido_carreta",
@@ -69,7 +72,7 @@ export const getColumns = (
 		// },
 		{
 			name: "telefone_motorista",
-			description: "Telefone Motorista",
+			description: "Telefone motorista",
 			selector: (row) => {
 				if (!row.telefone_motorista) return "";
 
@@ -85,6 +88,7 @@ export const getColumns = (
 					</a>
 				);
 			},
+			showFilter: true,
 		},
 		// {
 		// 	name: "cpf_motorista",
@@ -93,12 +97,13 @@ export const getColumns = (
 		// },
 		{
 			name: "setor_veiculo",
-			description: "Setor Veículo",
+			description: "Setor veículo",
 			selector: (row) => row.setor_veiculo,
+			showFilter: true,
 		},
 		{
 			name: "data_emissao_documento",
-			description: "Emissão Doc. ultima viagem",
+			description: "Emissão Doc. última viagem",
 			selector: (row) =>
 				row.data_emissao_documento
 					?.split("T")[0]
@@ -109,19 +114,22 @@ export const getColumns = (
 		},
 		{
 			name: "ultima_viagem_origem",
-			description: "Origem ultima viagem",
+			description: "Origem última viagem",
 			selector: (row) => row.ultima_viagem_origem,
+			showFilter: true,
 		},
 		{
 			name: "ultima_viagem_destino",
-			description: "Destino ultima viagem",
+			description: "Destino última viagem",
 			selector: (row) => row.ultima_viagem_destino,
+			showFilter: true,
 		},
 		{
 			name: "distancia_prevista",
 			description: "Distância prevista rota",
 			selector: (row) =>
 				row.distancia_prevista ? `${row.distancia_prevista} KM` : "NC",
+			showFilter: true,
 		},
 		{
 			name: "distancia_ate_destino",
@@ -136,7 +144,7 @@ export const getColumns = (
 		},
 		{
 			name: "tempo_ate_destino",
-			description: "Previsão Calculada",
+			description: "Previsão calculada",
 			selector: (row) => {
 				if (!row.tempo_ate_destino) {
 					return "";
@@ -149,7 +157,7 @@ export const getColumns = (
 		},
 		{
 			name: "data_previsao_chegada",
-			description: "Previsão Real",
+			description: "Previsão real",
 			selector: (row) => {
 				if (!row.data_previsao_chegada) {
 					return "";
@@ -181,7 +189,7 @@ export const getColumns = (
 		},
 		{
 			name: "cidade_atual",
-			description: "Posição Atual",
+			description: "Posição atual",
 			selector: (row) => (
 				<a
 					href={`https://www.google.com/maps/search/${String(row.lat).replace(
@@ -221,21 +229,27 @@ export const getColumns = (
 					<option value="F">Frota</option>
 				</Form.Select>
 			),
+			showFilter: true,
 		},
 		{
 			name: "data_janela",
-			description: "Data Janela",
+			description: "Data janela",
 			selector: (row) => (
 				<Form.Control
-					value={row.data_janela ? String(row.data_janela).split(".")[0] : ""}
+					value={
+						row.data_janela
+							? String(row.data_janela.substring(0, row.data_janela.length - 8))
+							: ""
+					}
 					type="datetime-local"
 					onChange={({ target }) => handleChangeDataJanela(row, target)}
 				/>
 			),
+			showFilter: true,
 		},
 		{
 			name: "observacao",
-			description: "Observação Usuario",
+			description: "Observação usuário",
 			selector: (row) =>
 				row.observacao ? (
 					<CollapseHint
@@ -254,15 +268,17 @@ export const getColumns = (
 						Adicionar
 					</Button>
 				),
+			showFilter: true,
 		},
 		{
 			name: "documento",
 			description: "Documento",
 			selector: (row) => row.documento,
+			showFilter: true,
 		},
 		{
 			name: "tipo_documento",
-			description: "Tipo Documento",
+			description: "Tipo de documento",
 			selector: (row) => row.tipo_documento,
 			Filter: (parameters) => (
 				<Form.Select {...parameters}>
@@ -271,11 +287,13 @@ export const getColumns = (
 					<option value="RPA">RPA</option>
 				</Form.Select>
 			),
+			showFilter: true,
 		},
 		{
 			name: "nome_motorista",
 			description: "Motorista",
 			selector: (row) => row.nome_motorista,
+			showFilter: true,
 		},
 		{
 			name: "responsavel_placa_nome",
@@ -288,10 +306,11 @@ export const getColumns = (
 				/>
 			),
 			Filter: (props) => <ResponsavelCadastroSelect {...props} />,
+			showFilter: true,
 		},
 		{
 			name: "responsavel_placa_email",
-			description: "RP Email",
+			description: "RP E-mail",
 			selector: (row) => row.responsavel_placa_email,
 			static_column: true,
 		},
@@ -299,6 +318,7 @@ export const getColumns = (
 			name: "mct",
 			description: "MCT",
 			selector: (row) => row.mct,
+			showFilter: true,
 		},
 		{
 			name: "data_calculo",

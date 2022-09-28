@@ -1,0 +1,104 @@
+.puts a:hover svg {
+  transform: scale(1.1);
+}
+
+#title-ico-import,
+#title-manual {
+  color: #00652e;
+  font-family: "Poppins", sans-serif;
+  font-size: 27px;
+}
+
+#titulo-selecionar-modo-carga {
+  color: #00652e;
+  font-family: "Poppins", sans-serif;
+  font-size: 35px;
+  font-weight: 500;
+}
+
+.class-title-coleta {
+  margin-top: 4rem;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.class-button-icons {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 14rem;
+  margin-top: 5rem;
+  margin-left: 3rem;
+}
+
+#import {
+  margin-left: 4.5rem;
+  color: #00652e;
+  margin-top: 4.5rem;
+}
+
+#hand {
+  display: grid;
+  margin-left: 0.5rem;
+  color: #00652e;
+  margin-top: 4rem;
+}
+
+
+#import:hover,
+#hand:hover{
+  transition: .5s;
+  -webkit-transform: scale(1.2);
+  transform: scale(1.1);
+  color: #048a01;
+}
+
+@media only screen and (max-width: 480px) {
+  .class-body-menu {
+    padding: 0%;
+    margin: 0%;
+    overflow: none;
+  }
+  #titulo-selecionar-modo-carga {
+    color: #00652e;
+    font-family: "Poppins", sans-serif;
+    font-size: 35px;
+    font-weight: 500;
+    text-align: center;
+  }
+  .class-button-icons {
+    display: grid;
+    grid-template-rows: auto auto;
+    justify-content: center;
+    align-items: center;
+    grid-gap: 5rem;
+    margin-top: 5rem;
+    margin-left: 2rem;
+  }
+  #title-ico-import {
+    text-align: center;
+  }
+  #import {
+    margin-left: 3rem;
+    color: #00652e;
+    margin-top: 5.5rem;
+    text-align: center;
+  }
+
+  #hand {
+    display: grid;
+    margin-left: 0.5rem;
+    color: #00652e;
+    margin-top: 4rem;
+  }
+
+  .class-title-coleta {
+    margin-top: 4rem;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+  }
+}

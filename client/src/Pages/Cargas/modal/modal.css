@@ -7,9 +7,22 @@
   margin: 5px;
 }
 
+.modal-header .btn-close {
+  margin: -0.5rem -0.5rem -0.5rem !important;
+}
+
+.card-body-legenda {
+  display: flex;
+}
+
 .col-legenda {
   border-left: 2px solid #d3d3d3;
   margin: 2px;
+}
+
+.card-p-descricao-legenda{
+  font-size: 14px;
+  color: #000;
 }
 
 .icon-text {
@@ -23,10 +36,11 @@
   margin-bottom: 15px;
 }
 
-.calendar-data-inicio, .calendar-data-fim{
+.calendar-data-inicio,
+.calendar-data-fim {
   width: 99%;
 }
-.col-card-excel-fim{
+.col-card-excel-fim {
   margin: 0;
   width: 50% !important;
   text-align: end;
@@ -43,10 +57,14 @@
 }
 
 @media screen and (max-width: 575px) {
-  .row-main-excel{
+  .row-main-excel {
     display: grid !important;
   }
   .card-text:last-child {
+    display: grid;
+  }
+
+  .card-body-legenda{
     display: grid;
   }
 
@@ -60,9 +78,10 @@
     width: auto;
   }
 
-  .col-card-excel-inicio, .col-card-excel-fim {
+  .col-card-excel-inicio,
+  .col-card-excel-fim {
     margin-right: 0;
-    width: 100% !important;;
+    width: 100% !important;
   }
 
   .card-body-excel {
