@@ -28,6 +28,14 @@
   margin-left: 20px;
 }
 
+.footer-table{
+  margin-left: 15vw;
+}
+
+.footer-table-totalPages {
+  color: #0e4f26;
+}
+
 .button-input-multiselect {
   display: flex;
   justify-content: center;
@@ -58,7 +66,6 @@
 .paginator-table-col {
   display: none;
 }
-
 
 /* css nativa da tabela */
 .datatable-responsive-gridCargas
@@ -143,8 +150,7 @@
   .paginator-table-col {
     display: grid;
   }
-  .datatable-responsive-gridCargas
-  .p-datatable-header {
+  .datatable-responsive-gridCargas .p-datatable-header {
     display: none;
   }
 
@@ -165,6 +171,7 @@
 
   .footer-table {
     display: grid;
+    margin: 0;
   }
 
   .footer-table Button {
@@ -212,9 +219,7 @@
     font-weight: bold;
   }
 
-  .datatable-responsive-gridCargas
-    .p-datatable
-    table {
+  .datatable-responsive-gridCargas .p-datatable table {
     background-color: #fff;
   }
 }

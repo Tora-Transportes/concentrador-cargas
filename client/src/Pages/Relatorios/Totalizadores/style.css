@@ -20,6 +20,11 @@
 .class-acc-rel{
   margin-top: 4rem;
 }
+
+.linha-abaixo-titulo{
+  width: 100%;
+}
+
 @media only screen and (max-width: 480px) {
   .class-p-rel {
     margin: 3rem 16rem 0 0;

@@ -214,6 +214,9 @@ export class CargaRepository {
     };
 
     total.andWhere(filterDbFunction);
+    let moi: any[] = await results;
+    console.log("MMMM>>>>>>>", moi);
+    
     results.andWhere(filterDbFunction);
 
     if (isValid(query?.order_column)) {
@@ -222,7 +225,7 @@ export class CargaRepository {
         String(query?.order_direction)
       );
     }
-
+    moi = await results;
     results.orderBy("con_cargas.id", "asc");
 
     const rows: ICarga[] = await results;
@@ -243,7 +246,7 @@ export class CargaRepository {
       rows.sort(compare);
     }
     //}
-    //console.log(results.toSQL().toNative());
+   // console.log(results.toSQL().toNative());
     const totalRegisters = Number((await total)?.total) || 0;
 
     return {

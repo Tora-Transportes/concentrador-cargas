@@ -75,25 +75,37 @@ export const headerTableFunction = (
 	</Container>
 );
 
-export const footerTableFunction = (previousPage, nextPage) => {
+export const footerTableFunction = (
+	previousPage,
+	nextPage,
+	page,
+	totalPages
+) => {
 	return (
-		<Col className="footer-table">
-			<Button
-				style={{ background: "#00652E", border: "none", color: "#FFFFFF" }}
-				variant="outline-info"
-				id="Botao-voltar-pag"
-				onClick={previousPage}
-			>
-				<HiChevronDoubleLeft /> Página Anterior
-			</Button>
-			<Button
-				variant="outline-info"
-				id="Botao-proxima-pag"
-				style={{ background: "#00652E", border: "none", color: "#FFFFFF" }}
-				onClick={nextPage}
-			>
-				Página Seguinte <HiChevronDoubleRight />
-			</Button>
-		</Col>
+		<Row>
+			<Col className="footer-table">
+				<Button
+					style={{ background: "#00652E", border: "none", color: "#FFFFFF" }}
+					variant="outline-info"
+					id="Botao-voltar-pag"
+					onClick={previousPage}
+				>
+					<HiChevronDoubleLeft /> Página Anterior
+				</Button>
+				<Button
+					variant="outline-info"
+					id="Botao-proxima-pag"
+					style={{ background: "#00652E", border: "none", color: "#FFFFFF" }}
+					onClick={nextPage}
+				>
+					Página Seguinte <HiChevronDoubleRight />
+				</Button>
+			</Col>
+			<Col sm={2} className="footer-table-totalPages">
+				<h6>
+					Página {page} de {totalPages}
+				</h6>
+			</Col>
+		</Row>
 	);
 };

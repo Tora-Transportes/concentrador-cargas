@@ -216,7 +216,12 @@ function TabelaCargas({
 				onColumnToggle
 		  );
 
-	const footerTable = footerTableFunction(previousPage, nextPage);
+	const footerTable = footerTableFunction(
+		previousPage,
+		nextPage,
+		page,
+		totalPages
+	);
 
 	return (
 		<Row>
