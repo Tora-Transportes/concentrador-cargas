@@ -105,7 +105,7 @@ function ViewHistoricoVeiculo({
 							</Col>
 							<Col sm={4}>
 								<Form.Group controlId="formdistancia">
-									<Form.Label>Data inicio</Form.Label>
+									<Form.Label>Data início</Form.Label>
 									<Form.Control
 										type="date"
 										name="date_inicio"

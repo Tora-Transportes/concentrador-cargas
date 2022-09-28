@@ -122,7 +122,7 @@ function ViewRotasPendentes({
 									</FloatingLabel>
 								</Col>
 								<Col>
-									<FloatingLabel label="Final" className="mb-3">
+									<FloatingLabel label="Fim" className="mb-3">
 										<Form.Control
 											ref={dataFinal}
 											type="date"
@@ -211,7 +211,7 @@ function ViewRotasPendentes({
 				<Accordion className="class-acc-rel">
 					<Accordion.Item eventKey="1">
 						<Accordion.Header>
-							<b>Cargas Ativas & Desativadas</b>
+							<b>Cargas Ativadas & Desativadas</b>
 						</Accordion.Header>
 						<Accordion.Body>
 							<Table>
@@ -404,7 +404,7 @@ function ViewRotasPendentes({
 					</Accordion.Item>
 					<Accordion.Item eventKey="3">
 						<Accordion.Header>
-							<b>Lotes Ativos & Desativados</b>
+							<b>Lotes Ativados & Desativados</b>
 						</Accordion.Header>
 						<Accordion.Body>
 							<Table>
@@ -422,7 +422,7 @@ function ViewRotasPendentes({
 										<td>
 											<FaPowerOff size={30} className="text-success" />
 										</td>
-										<td>Lotes ativos</td>
+										<td>Lotes ativados</td>
 										<td>
 											<span className="text-danger">
 												{percentage(
@@ -450,7 +450,7 @@ function ViewRotasPendentes({
 										<td>
 											<FaPowerOff size={30} className="text-danger" />
 										</td>
-										<td>Lotes inativos</td>
+										<td>Lotes desativados</td>
 										<td>
 											<span className="text-danger">
 												{percentage(
