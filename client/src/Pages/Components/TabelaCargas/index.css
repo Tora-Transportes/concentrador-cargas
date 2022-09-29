@@ -29,11 +29,12 @@
 }
 
 .footer-table{
-  margin-left: 15vw;
+  margin-left: 17vw;
 }
 
 .footer-table-totalPages {
   color: #0e4f26;
+  padding-top: 6px;
 }
 
 .button-input-multiselect {

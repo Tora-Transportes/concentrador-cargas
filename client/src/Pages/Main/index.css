@@ -79,7 +79,7 @@
   grid-template-columns: auto auto auto auto;
   justify-content: space-evenly;
   align-items: center;
-  margin-top: 8rem;
+  margin-top: 3rem;
   grid-gap: -5rem;
 }
 
@@ -92,6 +92,7 @@
   grid-template-rows: auto auto;
   justify-content: center;
   margin-bottom: 5rem;
+  margin-top: 15vh
 }
 
 #title-p-jogo {
@@ -103,7 +104,6 @@
 .class-button-jogue {
   margin-left: 15.5rem;
 }
-
 
 #style-button-jogo {
   background: #00652e;
@@ -118,7 +118,8 @@
   margin-bottom: 3rem;
 }
 .class-p-fimjogo {
-  margin-top: 4rem;
+  margin-top: 5rem;
+  margin-left: 3vw;
 }
 
 #style-p-fimjogo {
@@ -129,37 +130,40 @@
   text-decoration: none;
 }
 
-.class-icon-coor{
+.class-icon-coor {
   transition: all 0.9s;
   cursor: pointer;
 }
-.class-icon-coor:hover{
+.class-icon-coor:hover {
   -webkit-transform: scale(1.2);
   transform: scale(1.1);
+}
+
+.class-icon-cargas{
+  padding-right: 18px;
 }
 
 #style-iconn-4:hover,
 #style-iconn-3:hover,
 #style-iconn-2:hover,
-#style-iconn:hover{
+#style-iconn:hover {
   color: #048a01;
- 
 }
-#style-iconn{
-  color: #00652E;
+#style-iconn {
+  color: #00652e;
   margin-left: 1rem;
 }
 /* maps */
-#style-iconn-2{
-  color: #00652E;
+#style-iconn-2 {
+  color: #00652e;
   margin-left: 2.5rem;
 }
-#style-iconn-4{
-  color: #00652E;
-  margin-left: .7rem;
+#style-iconn-4 {
+  color: #00652e;
+  margin-left: 0.7rem;
 }
-#style-iconn-3{
-  color: #00652E;
+#style-iconn-3 {
+  color: #00652e;
   margin-left: 1rem;
 }
 

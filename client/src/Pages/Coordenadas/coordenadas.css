@@ -102,6 +102,14 @@
   letter-spacing: 2px;
 }
 
+.class-title-Coord{
+  margin-left: -0.1rem;
+}
+#botao-detalhe-tabela{
+  background: #00652E;
+  border: none;
+}
+
 @media only screen and (max-width: 768px) {
   .dialog-cte {
     width: 95%;
@@ -115,6 +123,10 @@
     background-color: #00652e !important;
   }
 
+  .opcao-tabela{
+    margin-left: 8vw;
+  }
+
   /* .header-dialog {
     display: block;
     padding-left: 25px;
@@ -123,12 +135,4 @@
   .header-dialog h4 {
     margin-right: 5%;
   } */
-}
-
-.class-title-Coord{
-  margin-left: -0.1rem;
-}
-#botao-detalhe-tabela{
-  background: #00652E;
-  border: none;
 }

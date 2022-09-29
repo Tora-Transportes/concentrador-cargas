@@ -11,13 +11,7 @@ import {
 import iconStart from "../../../assets/start.png";
 import iconFinish from "../../../assets/finish.png";
 import "./../styleVeiculos.css";
-import {
-	MapContainer,
-	Marker,
-	//Polyline,
-	Popup,
-	TileLayer,
-} from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
 import { BsDownload } from "react-icons/bs";
 import DateUtils from "../../Utils/date";
@@ -41,6 +35,8 @@ function ViewHistoricoVeiculo({
 	buscarHistoricoVeicles,
 	historicoRotas,
 	clearHistoricoRotas,
+	LoadingScreen,
+	setLoading,
 }) {
 	const [fields, setFields] = React.useState({
 		placa: "",
@@ -63,6 +59,7 @@ function ViewHistoricoVeiculo({
 	}
 
 	function exportCsv() {
+		setLoading(true);
 		let csv = "UF;MUNICIPIO;RUA;LATITUDE;LONGITUDE;LOCALIDADE;DATA POSICAO\n\n";
 		for (const position of historicoRotas.posicao) {
 			csv += `${position.UF};${position.MUN};${position.RUA};${position.LAT};${
@@ -79,10 +76,12 @@ function ViewHistoricoVeiculo({
 		tempLink.href = csvURL;
 		tempLink.setAttribute("download", "Historico-de-Rotas.csv");
 		tempLink.click();
+		setLoading(false);
 	}
 
 	return (
 		<div className="class-body">
+			<LoadingScreen />
 			<Container className="text-center mb-5 mt-4">
 				<Row className="mb-2">
 					<h1>Histórico de rotas do veículo</h1>
@@ -109,7 +108,6 @@ function ViewHistoricoVeiculo({
 									<Form.Control
 										type="date"
 										name="date_inicio"
-										//value={fields.date_inicio}
 										onChange={handleChange}
 										required
 									/>
@@ -122,7 +120,6 @@ function ViewHistoricoVeiculo({
 										className="input-form-date-fim-history"
 										type="date"
 										name="date_fim"
-										//value={fields.date_fim}
 										onChange={handleChange}
 										required
 									/>
