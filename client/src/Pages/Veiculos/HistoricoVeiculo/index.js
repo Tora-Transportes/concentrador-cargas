@@ -38,7 +38,6 @@ function HistoricoVeiculos() {
 	function clearHistoricoRotas() {
 		setHistoricoRotas(null);
 	}
-
 	return (
 		<>
 			<LoadingScreen />
