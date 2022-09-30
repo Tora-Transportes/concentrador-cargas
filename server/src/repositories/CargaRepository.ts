@@ -110,7 +110,6 @@ export class CargaRepository {
     const results = database("con_cargas")
       .select([
         "con_cargas.*",
-        //database.raw(`LTRIM("con_cargas"."cliente") AS "teste_client"`),
         "con_situacoes_cargas.descricao as situacao.descricao",
         "con_situacoes_cargas.cor as situacao.cor",
         "FILIAL.FIL_DSC as filial.descricao",
@@ -214,6 +213,8 @@ export class CargaRepository {
     };
 
     total.andWhere(filterDbFunction);
+
+
     results.andWhere(filterDbFunction);
 
     if (isValid(query?.order_column)) {
@@ -222,7 +223,6 @@ export class CargaRepository {
         String(query?.order_direction)
       );
     }
-
     results.orderBy("con_cargas.id", "asc");
 
     const rows: ICarga[] = await results;
@@ -243,7 +243,7 @@ export class CargaRepository {
       rows.sort(compare);
     }
     //}
-    //console.log(results.toSQL().toNative());
+
     const totalRegisters = Number((await total)?.total) || 0;
 
     return {

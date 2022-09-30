@@ -141,7 +141,11 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 										<h6>
 											Data de emissão do documento:{" "}
 											<strong>
-												{DateUtils.formatDate(i.data_emissao_documento)}
+												{
+													DateUtils.formatDate(i.data_emissao_documento).split(
+														" - "
+													)[0]
+												}
 											</strong>
 										</h6>
 									</li>
