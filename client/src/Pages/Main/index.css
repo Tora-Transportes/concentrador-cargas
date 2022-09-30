@@ -133,6 +133,7 @@
 .class-icon-coor {
   transition: all 0.9s;
   cursor: pointer;
+  padding-right: 20px;
 }
 .class-icon-coor:hover {
   -webkit-transform: scale(1.2);
