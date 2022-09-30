@@ -252,7 +252,7 @@ function Main() {
 									className="class-button-jogue"
 									onClick={iniciarGame}
 								>
-									Exercitar agora!
+									Exercitar Agora!
 								</Button>
 							</div>
 						</div>
