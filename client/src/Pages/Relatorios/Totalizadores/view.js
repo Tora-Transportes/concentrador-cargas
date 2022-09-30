@@ -88,7 +88,7 @@ function ViewRotasPendentes({
 				<p id="style-title-rel" className="class-p-rel">
 					Indicador Operacional
 				</p>
-				<hr id="style-hr-rel" />
+				<hr className="linha-abaixo-titulo" id="style-hr-rel" />
 				<Toast
 					ref={toast}
 					position="top-center"

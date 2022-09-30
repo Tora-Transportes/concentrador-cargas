@@ -174,7 +174,7 @@ function Main() {
 							<b id="style-iconn">Coordenadas</b>
 						</Link>
 					</div>
-					<div className="class-icon-coor">
+					<div className="class-icon-coor class-icon-cargas">
 						<Link to="/cargas/visualizar" className="class-link">
 							<FaTruckMoving size={50} id="style-iconn-3" />
 							<br />
@@ -192,7 +192,7 @@ function Main() {
 
 				<div
 					className={
-						usuarioPodeJogar() ? "invisible" : "text-center h5 text-danger"
+						usuarioPodeJogar() ? "d-none" : "text-center h5 text-danger"
 					}
 				>
 					<p className="class-p-fimjogo" id="style-p-fimjogo">
@@ -252,7 +252,7 @@ function Main() {
 									className="class-button-jogue"
 									onClick={iniciarGame}
 								>
-									Inicie Seu Exercício Agora!
+									Exercitar Agora!
 								</Button>
 							</div>
 						</div>

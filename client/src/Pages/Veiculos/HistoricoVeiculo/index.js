@@ -38,7 +38,6 @@ function HistoricoVeiculos() {
 	function clearHistoricoRotas() {
 		setHistoricoRotas(null);
 	}
-
 	return (
 		<>
 			<LoadingScreen />
@@ -53,6 +52,8 @@ function HistoricoVeiculos() {
 				setHistoricoRotas={setHistoricoRotas}
 				buscarHistoricoVeicles={buscarHistoricoVeicles}
 				clearHistoricoRotas={clearHistoricoRotas}
+				LoadingScreen={LoadingScreen}
+				setLoading={setLoading}
 			/>
 		</>
 	);

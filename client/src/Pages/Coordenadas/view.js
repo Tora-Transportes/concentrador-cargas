@@ -90,7 +90,7 @@ function ViewCoordenadas({
 					</h1>
 				</Row>
 				<Row className="row-inicio-carga mt-3 mb-2 ">
-					<Col className="text-start">
+					<Col className="text-start opcao-tabela">
 						<ButtonReact
 							id="botao-detalhe-tabela"
 							label="Opções da Tabela"

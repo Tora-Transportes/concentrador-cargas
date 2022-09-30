@@ -67,7 +67,7 @@ function VisualizarCargas({
 					</Link>
 				</Row>
 				<Row className="row-inicio-carga mt-3 mb-2 ">
-					<Col className="text-start">
+					<Col className="text-start opcao-tabela">
 						<ButtonReact
 							label="Opções da Tabela"
 							id="style-button-detail"
