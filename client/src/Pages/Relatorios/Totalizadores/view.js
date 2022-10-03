@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import "../Totalizadores/indicador.css";
 import { useState } from "react";
 import {
 	Container,
@@ -20,7 +21,6 @@ import DateUtils from "../../Utils/date";
 import { showToastMessage } from "src/Pages/Utils/toastMessage";
 import { Toast } from "primereact/toast";
 import diffiInDays from "src/Pages/Utils/diffInDays";
-import "../Totalizadores/style.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -85,9 +85,7 @@ function ViewRotasPendentes({
 	return (
 		<div className="class-body-relatorios">
 			<Container className="text-center mb-5 mt-4">
-				<p id="style-title-rel" className="class-p-rel">
-					Indicador Operacional
-				</p>
+				<p className="style-title-rel">Indicador Operacional</p>
 				<hr className="linha-abaixo-titulo" id="style-hr-rel" />
 				<Toast
 					ref={toast}
@@ -102,11 +100,11 @@ function ViewRotasPendentes({
 					</b>
 				</span>
 
-				<Accordion>
+				<Accordion sm={6} lg={6} style={{ marginTop: "2rem" }}>
 					<Accordion.Item eventKey="0">
 						<Accordion.Header>
-							<b>
-								Filtros <GiClick size={25} />
+							<b className="accordion-busca-data">
+								Buscar por data <GiClick size={25} />
 							</b>
 						</Accordion.Header>
 						<Accordion.Body>
@@ -133,7 +131,7 @@ function ViewRotasPendentes({
 								</Col>
 							</Row>
 							<Row className="mb-3">
-								<Col>
+								<Col sm={11}>
 									<FloatingLabel label="*Código da filial" className="mb-3">
 										<FilialSelect
 											placeholder=" "
@@ -144,7 +142,7 @@ function ViewRotasPendentes({
 									</FloatingLabel>
 								</Col>
 								<Col sm={1}>
-									<Button className="p-3" onClick={applyFilter}>
+									<Button className="botao-aplicar" onClick={applyFilter}>
 										Aplicar
 									</Button>
 								</Col>
@@ -156,7 +154,7 @@ function ViewRotasPendentes({
 				<Row className="text-center mx-auto">
 					<Col lg={4} md={10} sm={12}>
 						<Doughnut
-							style={{ marginTop: "2rem" }}
+							className="class-grafico-relatorio"
 							data={{
 								labels: totalizadores.geral.map((i) => i.descricao),
 								datasets: [
@@ -211,13 +209,14 @@ function ViewRotasPendentes({
 				<Accordion className="class-acc-rel">
 					<Accordion.Item eventKey="1">
 						<Accordion.Header>
-							<b>Cargas Ativadas & Desativadas</b>
+							<b className="accordion-sub-tittle">
+								Cargas Ativadas & Desativadas
+							</b>
 						</Accordion.Header>
 						<Accordion.Body>
 							<Table>
 								<thead>
 									<tr>
-										<th>#</th>
 										<th>Situação</th>
 										<th>Percentual</th>
 										<th>Total</th>
@@ -226,10 +225,7 @@ function ViewRotasPendentes({
 								</thead>
 								<tbody>
 									<tr>
-										<td>
-											<FaPowerOff size={30} className="text-success" />
-										</td>
-										<td>Cargas ativadas</td>
+										<td style={{ color: "blue" }}>Cargas ativadas</td>
 										<td>
 											<span className="text-danger">
 												{percentage(
@@ -256,10 +252,7 @@ function ViewRotasPendentes({
 									</tr>
 
 									<tr>
-										<td>
-											<FaPowerOff size={30} className="text-danger" />
-										</td>
-										<td>Cargas desativadas</td>
+										<td style={{ color: "red" }}>Cargas desativadas</td>
 										<td>
 											<span className="text-danger">
 												{percentage(
@@ -290,7 +283,9 @@ function ViewRotasPendentes({
 					</Accordion.Item>
 					<Accordion.Item eventKey="2">
 						<Accordion.Header>
-							<b>Cargas cadastradas por origem</b>
+							<b className="accordion-sub-tittle">
+								Cargas cadastradas por origem
+							</b>
 						</Accordion.Header>
 						<Accordion.Body>
 							<Table>
@@ -404,7 +399,9 @@ function ViewRotasPendentes({
 					</Accordion.Item>
 					<Accordion.Item eventKey="3">
 						<Accordion.Header>
-							<b>Lotes Ativados & Desativados</b>
+							<b className="accordion-sub-tittle">
+								Lotes Ativados & Desativados
+							</b>
 						</Accordion.Header>
 						<Accordion.Body>
 							<Table>

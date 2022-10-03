@@ -1,20 +1,18 @@
 .class-body-relatorios {
   font-family: "Poppins", sans-serif;
+  color: #101212;
 }
 
-#style-title-rel {
+.style-title-rel {
   color: #00652e;
   font-size: 32px;
-}
-
-.class-p-rel{
   display: grid;
   text-align: start;
   margin-top: 3rem;
 }
 
 .class-grafico-relatorio{
-  margin-top: 3rem;
+  margin-top: 2.5rem !important;
 }
 
 .class-acc-rel{
@@ -25,8 +23,22 @@
   width: 100%;
 }
 
+.accordion-busca-data{
+  color: #101212;
+}
+
+.accordion-sub-tittle{
+  color: #101212;
+}
+
+.botao-aplicar{
+  background-color: #00652e !important;
+  border: none !important;
+  padding: 1.0rem !important;
+}
+
 @media only screen and (max-width: 480px) {
-  .class-p-rel {
+  .style-title-rel {
     margin: 3rem 16rem 0 0;
   }
   #style-hr-rel {
