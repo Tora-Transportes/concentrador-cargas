@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
+import "./main.css";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 // import NavbarNavigator from "../Components/NavbarNavigator";
 import { getClaims } from "../../MicrosoftAuthentication";
-import "./index.css";
 import { Link } from "react-router-dom";
-
 import { IoLocationSharp } from "react-icons/io5";
 import { FaChartBar, FaTruckMoving } from "react-icons/fa";
 import { FaBoxes } from "react-icons/fa";
@@ -247,11 +246,7 @@ function Main() {
 									Exercite sua memória, garantindo a melhor tomada de decisão
 									durante o seu dia de trabalho.
 								</p>
-								<Button
-									id="style-button-jogo"
-									className="class-button-jogue"
-									onClick={iniciarGame}
-								>
+								<Button className="style-button-jogo" onClick={iniciarGame}>
 									Exercitar Agora!
 								</Button>
 							</div>
