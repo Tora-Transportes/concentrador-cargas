@@ -1,0 +1,23 @@
+.row-views-container {
+  border-style: solid;
+  border-radius: 10px;
+  border-color: green;
+}
+
+.views-row-fieldset {
+  width: 100%;
+}
+
+.views-button {
+  margin: 3px 0 4px 4px;
+  height: 5vh;
+}
+
+@media screen and (max-width: 575px) {
+  .views-button {
+    width: 96%;
+  }
+  .views-row-buttons {
+    align-items: center;
+  }
+}

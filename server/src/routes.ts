@@ -18,8 +18,12 @@ import RelatorioController from "./controllers/RelatorioController";
 import CredenciaisController from "./controllers/CredenciaisController";
 import ProducaoController from "./controllers/ProducaoController";
 import CargaTecController from "./controllers/CargaTecController";
+import AvisosController from "./controllers/AvisosController";
 
 const routes = Router();
+
+routes.get("/avisos", AvisosController.index);
+
 
 routes.get("/credenciais", CredenciaisController.get);
 routes.post("/credenciais", CredenciaisController.post);
@@ -43,6 +47,7 @@ routes.post(
 );
 routes.get("/cargaCTE/:id", CargaTecController.indexCTE);
 routes.get("/cargas/:id", CargaController.index);
+routes.get("/cargas/placa/:plate", CargaController.indexPlate);
 routes.put("/cargas/:id", CargaController.update);
 routes.delete(
   "/cargas/:id",

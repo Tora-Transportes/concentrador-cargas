@@ -82,6 +82,12 @@ class CargaController {
     return res.json({ data: result });
   }
 
+  async indexPlate(req: Request, res: Response) {
+    const { plate } = req.params;
+    const result = await useCasesCarga.UseCaseViewCargas.indexPlate(plate);
+    return res.json({ data: result });
+  }
+
   async search(req: Request, res: Response) {
     const result = await useCasesCarga.UseCaseViewCargas.run(req.query);
     return res.json({ data: result });

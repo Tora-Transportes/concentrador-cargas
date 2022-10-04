@@ -23,6 +23,7 @@ export interface IUserRepository {
 export interface IRepositoryAddCarga {
   create(carga: ICarga): Promise<ICarga>;
   index(id: number): Promise<ICarga | undefined>;
+  indexPlate(plate: string): Promise<ICarga | undefined>;
   search(
     query: Record<string, any>,
     page?: number,
@@ -302,7 +303,8 @@ export class UseCaseUpdateCarga {
 }
 
 export class UseCaseViewCargas {
-  constructor(private cargaRepository: IRepositoryUpdateCarga) {}
+  constructor(private cargaRepository: IRepositoryAddCarga) {}
+
   async run(filter: Record<string, any>) {
     return this.cargaRepository.search(
       { ...filter, ativo: 1 },
@@ -313,6 +315,22 @@ export class UseCaseViewCargas {
 
   async index(id: number) {
     const carga = await this.cargaRepository.index(id);
+    if (!carga) {
+      throw new AppError("A carga solicitada não existe", 404);
+    }
+
+    if (carga.ativo === 0) {
+      throw new AppError(
+        `A carga solicitada foi excluída pelo usuário ${carga.usuario}`,
+        403
+      );
+    }
+
+    return carga;
+  }
+
+  async indexPlate(plate: string) {
+    const carga = await this.cargaRepository.indexPlate(plate);
     if (!carga) {
       throw new AppError("A carga solicitada não existe", 404);
     }

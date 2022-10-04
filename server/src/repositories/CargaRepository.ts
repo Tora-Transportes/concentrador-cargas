@@ -52,6 +52,38 @@ export class CargaRepository {
     return { ...carga, locais };
   }
 
+  async indexPlate(plate: string): Promise<ICarga | undefined> {
+    const carga = await database("con_cargas")
+      .select([
+        "con_cargas.*",
+        "con_situacoes_cargas.descricao as situacao.descricao",
+        "con_situacoes_cargas.cor as situacao.cor",
+        "FILIAL.FIL_DSC as filial.descricao",
+        "CADASTRO_GERAL.CG_NOME as nome_motorista",
+      ])
+      .first()
+      .where("con_cargas.placa_veiculo", plate)
+      .orderBy("con_cargas.data_cadastro", "DESC")
+      .join(
+        "con_situacoes_cargas",
+        "con_situacoes_cargas.id",
+        "con_cargas.fk_situacao"
+      )
+      .leftJoin(
+        "CADASTRO_GERAL",
+        "CADASTRO_GERAL.CG_COD",
+        "con_cargas.codigo_motorista"
+      )
+      .leftJoin("FILIAL", "FILIAL.FIL_COD", "con_cargas.fk_filial");
+    database.raw(
+      `CASE WHEN "con_cargas"."e_lote" = 0 THEN 'Não' WHEN "con_cargas"."e_lote" = 1 THEN 'Sim' END AS "E lote"`
+    );
+
+    if (!carga) return;
+
+    return carga ;
+  };
+
   async searchCET(id: string): Promise<ICargaCTE> {
     const result = await database("CARGA")
       .select(["CARGA.NUM_CAR"])
