@@ -11,9 +11,11 @@ import {
 	Button,
 	Accordion,
 } from "react-bootstrap";
-import { FaPowerOff, FaRobot, FaHandsWash } from "react-icons/fa";
+import { FaBoxes, FaRobot, FaHandsHelping } from "react-icons/fa";
 import { BsDownload } from "react-icons/bs";
-import { GiClick } from "react-icons/gi";
+import { MdEditCalendar } from "react-icons/md";
+import { GoMailRead } from "react-icons/go";
+import { RiTruckLine } from "react-icons/ri";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import FilialSelect from "src/Pages/Components/FilialSelect";
@@ -90,7 +92,7 @@ function ViewRotasPendentes({
 				<Toast
 					ref={toast}
 					position="top-center"
-					style={{ color: "#024c01", width: "30vw" }}
+					// style={{ width: "30vw" }}
 				></Toast>
 				<span>
 					O tempo médio de aprovação de veículos pelo GR é de{" "}
@@ -100,11 +102,11 @@ function ViewRotasPendentes({
 					</b>
 				</span>
 
-				<Accordion sm={6} lg={6} style={{ marginTop: "2rem" }}>
+				<Accordion sm={6} lg={6} style={{ marginTop: "1.8rem" }}>
 					<Accordion.Item eventKey="0">
 						<Accordion.Header>
-							<b className="accordion-busca-data">
-								Buscar por data <GiClick size={25} />
+							<b className="accordion-busca-data ms-2">
+								Filtrar por data <MdEditCalendar size={25} className="ms-3" />
 							</b>
 						</Accordion.Header>
 						<Accordion.Body>
@@ -177,7 +179,11 @@ function ViewRotasPendentes({
 						/>
 					</Col>
 					<Col>
-						<Table striped bordered hover style={{ marginTop: "3rem" }}>
+						<Table
+							striped
+							bordered
+							style={{ marginTop: "3rem", color: "black" }}
+						>
 							<thead>
 								<tr>
 									<th>Situação</th>
@@ -185,7 +191,7 @@ function ViewRotasPendentes({
 									<th>Porcentagem (total de cargas ativas)</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody className="cor-letras">
 								{totalizadores?.geral?.map((situacao) => {
 									return (
 										<tr key={situacao.fk_situacao} sm={12}>
@@ -209,83 +215,7 @@ function ViewRotasPendentes({
 				<Accordion className="class-acc-rel">
 					<Accordion.Item eventKey="1">
 						<Accordion.Header>
-							<b className="accordion-sub-tittle">
-								Cargas Ativadas & Desativadas
-							</b>
-						</Accordion.Header>
-						<Accordion.Body>
-							<Table>
-								<thead>
-									<tr>
-										<th>Situação</th>
-										<th>Percentual</th>
-										<th>Total</th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td style={{ color: "blue" }}>Cargas ativadas</td>
-										<td>
-											<span className="text-danger">
-												{percentage(
-													totalizadores.cargas_ativas +
-														totalizadores.cargas_desativadas,
-													totalizadores.cargas_ativas
-												)}
-												%
-											</span>
-										</td>
-										<td>
-											<b>{totalizadores.cargas_ativas}</b>
-										</td>
-										<td>
-											{codigoFilial && (
-												<Button
-													variant=""
-													onClick={() => handleExportExcel("ativas")}
-												>
-													<BsDownload />
-												</Button>
-											)}
-										</td>
-									</tr>
-
-									<tr>
-										<td style={{ color: "red" }}>Cargas desativadas</td>
-										<td>
-											<span className="text-danger">
-												{percentage(
-													totalizadores.cargas_ativas +
-														totalizadores.cargas_desativadas,
-													totalizadores.cargas_desativadas
-												)}
-												%
-											</span>
-										</td>
-										<td>
-											<b>{totalizadores.cargas_desativadas}</b>
-										</td>
-										<td>
-											{codigoFilial && (
-												<Button
-													variant=""
-													onClick={() => handleExportExcel("desativadas")}
-												>
-													<BsDownload />
-												</Button>
-											)}
-										</td>
-									</tr>
-								</tbody>
-							</Table>
-						</Accordion.Body>
-					</Accordion.Item>
-					<Accordion.Item eventKey="2">
-						<Accordion.Header>
-							<b className="accordion-sub-tittle">
-								Cargas cadastradas por origem
-							</b>
+							<b className="cor-letras">Cargas Ativadas & Desativadas</b>
 						</Accordion.Header>
 						<Accordion.Body>
 							<Table>
@@ -301,13 +231,74 @@ function ViewRotasPendentes({
 								<tbody>
 									<tr>
 										<td>
-											<FaRobot size={30} className="text-success" />
+											<RiTruckLine size={30} className="icons-success" />
+										</td>
+										<td>Cargas Ativadas</td>
+										<td>
+											<span className="span-cargas-ativadas">
+												{percentage(
+													totalizadores.cargas_ativas +
+														totalizadores.cargas_desativadas,
+													totalizadores.cargas_ativas
+												)}
+												%
+											</span>
+										</td>
+										<td>
+											<b>{totalizadores.cargas_ativas}</b>
+										</td>
+										<td></td>
+									</tr>
+
+									<tr>
+										<td>
+											<RiTruckLine size={30} className="icons-danger" />
+										</td>
+										<td>Cargas Desativadas</td>
+										<td>
+											<span className="span-cargas-desativadas">
+												{percentage(
+													totalizadores.cargas_ativas +
+														totalizadores.cargas_desativadas,
+													totalizadores.cargas_desativadas
+												)}
+												%
+											</span>
+										</td>
+										<td>
+											<b>{totalizadores.cargas_desativadas}</b>
+										</td>
+										<td></td>
+									</tr>
+								</tbody>
+							</Table>
+						</Accordion.Body>
+					</Accordion.Item>
+					<Accordion.Item eventKey="2">
+						<Accordion.Header>
+							<b className="cor-letras">Cargas Cadastradas por Origem</b>
+						</Accordion.Header>
+						<Accordion.Body className="cor-letras">
+							<Table>
+								<thead>
+									<tr>
+										<th> </th>
+										<th>Situação</th>
+										<th>Percentual</th>
+										<th>Total</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											<FaRobot size={30} className="icons-success" />
 										</td>
 										<td>
 											Cargas extraídas do <b>PORTAL</b>
 										</td>
 										<td>
-											<span className="text-danger">
+											<span className="span-cad-origem">
 												{percentage(
 													totalizadores.cadastro_manual +
 														totalizadores.cadastro_portal +
@@ -320,27 +311,18 @@ function ViewRotasPendentes({
 										<td>
 											<b>{totalizadores.cadastro_portal}</b>
 										</td>
-										<td>
-											{codigoFilial && (
-												<Button
-													variant=""
-													onClick={() => handleExportExcel("portal")}
-												>
-													<BsDownload />
-												</Button>
-											)}
-										</td>
+										<td></td>
 									</tr>
 
 									<tr>
 										<td>
-											<FaRobot size={30} className="text-success" />
+											<GoMailRead size={30} className="icons-success" />
 										</td>
 										<td>
 											Cargas extraídas do <b>E-MAIL</b>
 										</td>
 										<td>
-											<span className="text-danger">
+											<span className="span-cad-origem">
 												{percentage(
 													totalizadores.cadastro_manual +
 														totalizadores.cadastro_portal +
@@ -365,13 +347,13 @@ function ViewRotasPendentes({
 
 									<tr>
 										<td>
-											<FaHandsWash size={30} className="text-success" />
+											<FaHandsHelping size={30} className="icons-success" />
 										</td>
 										<td>
 											Cargas cadastradas <b>MANUALMENTE</b>
 										</td>
 										<td>
-											<span className="text-danger">
+											<span className="span-cad-origem">
 												{percentage(
 													totalizadores.cadastro_manual +
 														totalizadores.cadastro_portal +
@@ -389,7 +371,7 @@ function ViewRotasPendentes({
 												variant=""
 												onClick={() => handleExportExcel("manual")}
 											>
-												<BsDownload />
+												<BsDownload className="fw-bold" />
 											</Button>
 										</td>
 									</tr>
@@ -399,15 +381,13 @@ function ViewRotasPendentes({
 					</Accordion.Item>
 					<Accordion.Item eventKey="3">
 						<Accordion.Header>
-							<b className="accordion-sub-tittle">
-								Lotes Ativados & Desativados
-							</b>
+							<b className="cor-letras">Lotes Ativados & Desativados</b>
 						</Accordion.Header>
-						<Accordion.Body>
+						<Accordion.Body className="cor-letras">
 							<Table>
 								<thead>
 									<tr>
-										<th>#</th>
+										<th> </th>
 										<th>Situação</th>
 										<th>Percentual</th>
 										<th>Total</th>
@@ -417,11 +397,11 @@ function ViewRotasPendentes({
 								<tbody>
 									<tr>
 										<td>
-											<FaPowerOff size={30} className="text-success" />
+											<FaBoxes size={30} className="icons-success" />
 										</td>
-										<td>Lotes ativados</td>
+										<td>Lotes Ativados</td>
 										<td>
-											<span className="text-danger">
+											<span className="span-lotes-ativados">
 												{percentage(
 													totalizadores.lotes_ativos +
 														totalizadores.lotes_desativados,
@@ -445,11 +425,11 @@ function ViewRotasPendentes({
 
 									<tr>
 										<td>
-											<FaPowerOff size={30} className="text-danger" />
+											<FaBoxes size={30} className="icons-danger" />
 										</td>
-										<td>Lotes desativados</td>
+										<td>Lotes Desativados</td>
 										<td>
-											<span className="text-danger">
+											<span className="span-lotes-desativados">
 												{percentage(
 													totalizadores.lotes_ativos +
 														totalizadores.lotes_desativados,
