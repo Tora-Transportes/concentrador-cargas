@@ -200,7 +200,7 @@ function ViewRotasPendentes({
 												<b>{situacao.total}</b>
 											</td>
 											<td>
-												<span className="text-danger">
+												<span className="porcentagem-cargas-ativas">
 													{percentage(totalGeral, situacao.total)}%
 												</span>
 											</td>

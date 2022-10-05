@@ -42,7 +42,8 @@
 }
 .span-cargas-desativadas,
 .span-lotes-desativados,
-.icons-danger {
+.icons-danger,
+.porcentagem-cargas-ativas {
   color: rgb(160, 2, 2);
   font-weight: bold;
 }
