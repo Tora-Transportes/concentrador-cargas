@@ -33,8 +33,8 @@ export class UseCaseUpdateUsuario {
 }
 
 export class UseCaseViewUsuario {
-  async run(filter: Record<string, any>, page = 1) {
+  async run(filter: Record<string, any>) {
     const usuarioRepository = new UsuarioRepository();
-    return usuarioRepository.search(filter, page);
+    return usuarioRepository.search(filter);
   }
 }
