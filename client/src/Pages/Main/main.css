@@ -34,7 +34,7 @@
 }
 
 #style-title-main {
-  font-size: 37px;
+  font-size: 38px;
   color: #00652e;
   font-family: "Poppins", sans-serif;
   font-weight: 500;
@@ -55,8 +55,7 @@
 }
 
 .class-p-text {
-  margin-top: 4rem;
-  display: flex;
+  margin-top: 2rem;
   justify-content: center;
   align-items: center;
 }
@@ -66,7 +65,7 @@
   font-family: "Poppins", sans-serif;
   font-weight: 500;
   text-align: center;
-  font-size: 16px;
+  font-size: 17px;
 }
 
 .class-icons-body {
@@ -74,12 +73,44 @@
   grid-template-columns: auto auto auto auto;
   justify-content: space-evenly;
   align-items: center;
-  margin-top: 3rem;
-  grid-gap: -5rem;
+  margin-top: 3.5rem;
+  margin-right: 4rem;
 }
 
-.class-indicador {
+.class-link {
+  text-decoration: none;
+}
+
+.icons-efect {
+  transition: all 0.8s;
+  cursor: pointer;
   text-align: center;
+}
+.icons-efect:hover {
+  -webkit-transform: scale(1.2);
+  transform: scale(1.1);
+}
+
+#style-iconn-4:hover,
+#style-iconn-3:hover,
+#style-iconn-2:hover,
+#style-iconn:hover {
+  color: #03880c;
+}
+#style-iconn {
+  color: #00652e;
+}
+/* maps */
+#style-iconn-2 {
+  color: #00652e;
+  margin-left: 1.7rem;
+}
+#style-iconn-3 {
+  color: #00652e;
+  margin-left: 1rem;
+}
+#style-iconn-4 {
+  color: #00652e;
 }
 
 .class-linha-jogo {
@@ -87,7 +118,7 @@
   grid-template-rows: auto auto;
   justify-content: center;
   margin-bottom: 5rem;
-  margin-top: 15vh
+  margin-top: 11vh;
 }
 
 #title-p-jogo {
@@ -102,6 +133,7 @@
   width: 10rem;
   margin-top: 1rem;
   margin-left: 15.5rem;
+  margin-bottom: -4rem;
 }
 
 .class-jogo {
@@ -111,65 +143,108 @@
   margin-bottom: 3rem;
 }
 .class-p-fimjogo {
-  margin-top: 7rem;
+  margin-top: 15vh;
   margin-left: 3vw;
   color: red;
 }
 
-.class-link {
-  text-decoration: none;
-}
-
-.class-icon-coor {
-  transition: all 0.9s;
-  cursor: pointer;
-  padding-right: 20px;
-}
-.class-icon-coor:hover {
-  -webkit-transform: scale(1.2);
-  transform: scale(1.1);
-}
-
-.class-icon-cargas{
-  padding-right: 18px;
-}
-
-#style-iconn-4:hover,
-#style-iconn-3:hover,
-#style-iconn-2:hover,
-#style-iconn:hover {
-  color: #03880c;
-}
-#style-iconn {
-  color: #00652e;
-  margin-left: 1rem;
-}
-/* maps */
-#style-iconn-2 {
-  color: #00652e;
-  margin-left: 2.5rem;
-}
-#style-iconn-4 {
-  color: #00652e;
-  margin-left: 0.7rem;
-}
-#style-iconn-3 {
-  color: #00652e;
-  margin-left: 1rem;
-}
-
 @media only screen and (max-width: 480px) {
-  #title-p-jogo {
-    color: #939598;
-    font-weight: 500;
-    font-family: "Poppins", sans-serif;
+  .title-page-main {
+    font-size: 30px !important;
+  }
+  .class-p-saudacao {
+    font-size: 20px !important;
+    margin-bottom: -2rem;
+    text-align: center;
+    display: flex;
+    grid-template-rows: auto auto;
+    justify-content: center;
+    margin-top: -3rem;
+  }
+
+  #style-p-text {
+    font-size: 14px;
     text-align: center;
   }
+
+  .class-icons-body {
+    display: block;
+    text-align: center;
+    margin-top: 1.5rem;
+    margin-right: 1rem;
+  }
+
+  .icons-responsive {
+    margin-top: 2rem;
+  }
+
+  #title-p-jogo {
+    color: #939598;
+    font-size: 2.4vh;
+    font-family: "Poppins", sans-serif;
+  }
+
   .style-button-jogo {
     background: #00652e;
     border: none;
-    width: 18rem;
-    margin-left: 3rem;
+    width: 14rem;
+    margin-left: 5rem;
+    margin-right: 5rem;
+  }
+  .class-jogo {
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 4rem;
+    margin-bottom: 3rem;
+  }
+
+  .class-p-fimjogo {
+    margin-top: 7rem;
+    margin-left: 3vw;
+    color: red;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .title-page-main {
+    font-size: 34px;
+  }
+  .class-p-saudacao {
+    font-size: 22px !important;
+    margin-bottom: -2rem;
+  }
+  #style-p-text {
+    font-size: 2.4vh;
+    text-align: center;
+  }
+
+  .class-icons-body {
+    display: block;
+    text-align: center;
+    margin-top: 1.5rem;
+    margin-right: 1rem;
+  }
+
+  .icons-responsive {
+    margin-top: 2rem;
+  }
+
+  #title-p-jogo {
+    color: #939598;
+    font-size: 2vh;
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .style-button-jogo {
+    background: #00652e;
+    border: none;
+    width: 14rem;
+    margin-left: 15rem;
+    margin-right: 15rem;
   }
   .class-jogo {
     display: grid;

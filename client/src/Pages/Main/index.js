@@ -134,7 +134,7 @@ function Main() {
 			<Container className="class-body-main">
 				<Row>
 					<Col className="text-center mt-5 mb-5">
-						<p id="style-title-main" className="class-p-title-main">
+						<p id="style-title-main" className="title-page-main">
 							Seja bem-vindo(a) ao Concentrador de Cargas
 						</p>
 					</Col>
@@ -148,14 +148,14 @@ function Main() {
 					<div className="class-p-text">
 						<p id="style-p-text">
 							O concentrador de cargas lhe proporciona ampla visibilidade de
-							demanda, além de auxiliar sua concentração para a melhor <br />
+							demanda, além <br /> de auxiliar sua concentração para a melhor
 							tomada de decisão na escolha de um veículo.
 						</p>
 					</div>
 				</div>
 
 				<div className="class-icons-body">
-					<div className="class-icon-coor class-indicador">
+					<div className="icons-efect">
 						<Link to="/relatorios" className="class-link">
 							<FaChartBar
 								size={50}
@@ -166,23 +166,35 @@ function Main() {
 							<b id="style-iconn">Indicador Operacional</b>
 						</Link>
 					</div>
-					<div className="class-icon-coor">
+					<div className="icons-efect class-icons-main">
 						<Link to="/veiculos/coordenadas" className="class-link">
-							<IoLocationSharp size={50} id="style-iconn-2" />
+							<IoLocationSharp
+								size={50}
+								id="style-iconn-2"
+								className="icons-responsive me-4"
+							/>
 							<br />
 							<b id="style-iconn">Coordenadas</b>
 						</Link>
 					</div>
-					<div className="class-icon-coor class-icon-cargas">
+					<div className="icons-efect">
 						<Link to="/cargas/visualizar" className="class-link">
-							<FaTruckMoving size={50} id="style-iconn-3" />
+							<FaTruckMoving
+								size={50}
+								id="style-iconn-3"
+								className="icons-responsive"
+							/>
 							<br />
 							<b id="style-iconn">Cargas</b>
 						</Link>
 					</div>
-					<div className="class-icon-coor">
+					<div className="icons-efect icon-lotes">
 						<Link to="/lotes/visualizar" className="class-link">
-							<FaBoxes size={50} id="style-iconn-4" />
+							<FaBoxes
+								size={50}
+								id="style-iconn-4"
+								className="icons-responsive"
+							/>
 							<br />
 							<b id="style-iconn">Lotes</b>
 						</Link>
@@ -194,7 +206,7 @@ function Main() {
 						usuarioPodeJogar() ? "d-none" : "text-center h5 text-danger"
 					}
 				>
-					<p className="class-p-fimjogo" id="style-p-fimjogo">
+					<p className="class-p-fimjogo">
 						Você já se exercitou, agora é hora de avaliar seus melhores
 						veículos. Desejamos um excelente dia de trabalho!
 					</p>

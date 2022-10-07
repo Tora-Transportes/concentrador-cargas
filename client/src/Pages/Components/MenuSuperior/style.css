@@ -136,92 +136,7 @@ body, ul{
 }
 
 
-@media (max-width: 600px){
-
-    .material-icons-outlined{
-        vertical-align: middle;
-        position: relative;
-        margin-right: 5px;
-    }
-    
-    #btn-mobile{
-        display: block;
-    }
-    #menu{
-        display: block;
-        position: absolute;
-        width: 26.9rem;
-        top: 3.1rem;
-        left: -1rem;
-        background: #00652E;
-        z-index: 1000;
-        height: 60rem;
-        transition: .6s;
-        font-size: 22px;
-        visibility: hidden;
-        overflow-y: hidden;
-    }
-    #nav.active #menu{
-        height: calc(95vh - 70px);
-        visibility: visible;
-        overflow-y: auto;
-    }
-   
-
-    #menu a{
-        padding: 1rem 0;
-        margin: 1rem 1rem;
-    }
-
-    #btn-mobile{
-        display: flex;
-        padding: .5rem 1rem;
-        font-size: 1rem;
-        border: none;
-        background: none;
-        cursor: pointer;
-    }
-    
-    #hamburguer{
-        border-top: 4px solid ;
-        width: 30px;
-        color: #FFFF;
-    }
-    #hamburguer::after, #hamburguer::before{
-        content: '';
-        display: block;
-        width: 30px;
-        height: 2.5px;
-        background: currentColor;
-        margin-top: 5px;
-        transition: 0.3s;
-        position: relative;
-    }
-    #nav.active #hamburguer{
-        border-top-color: transparent;
-    }
-
-    #nav.active #hamburguer::before{
-        transform: rotate(135deg);
-    }
-
-    #nav.active #hamburguer::after{
-        transform: rotate(-135deg);
-        top: -7px;
-    }
-
-    .class-dropdown{
-        display: grid;
-        grid-template-rows: auto auto auto;
-    }
-
-    #style-button-drop{
-        font-size: 22px;
-    }
-}
-
-
-@media only screen and(max-width: 400px){
+@media only screen and (max-width: 400px){
     
     #btn-mobile{
         display: block;
@@ -231,7 +146,7 @@ body, ul{
         position: absolute;
         width: 40rem;
         top: 7rem;
-        left: 12px;
+        left: -1rem;
         background: #00652E;
         z-index: 1000;
         height: 60rem;
@@ -291,3 +206,172 @@ body, ul{
     }
 
 }
+
+@media only screen and (max-width: 600px){
+
+    .material-icons-outlined{
+        vertical-align: middle;
+        position: relative;
+        margin-right: 5px;
+    }
+    
+    #btn-mobile{
+        display: block;
+    }
+    #menu{
+        display: block;
+        position: absolute;
+        width: 26.9rem;
+        top: 3.1rem;
+        right: -1rem;
+        background: #00652E;
+        z-index: 1000;
+        height: 60rem;
+        transition: .6s;
+        font-size: 22px;
+        visibility: hidden;
+        overflow-y: hidden;
+    }
+    #nav.active #menu{
+        height: calc(95vh - 50px);
+        visibility: visible;
+        overflow-y: auto;
+    }
+   
+
+    #menu a{
+        padding: 1rem 0;
+        margin: 1rem 1rem;
+    }
+
+    #btn-mobile{
+        display: flex;
+        padding: .5rem 1rem;
+        font-size: 1rem;
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+    
+    #hamburguer{
+        border-top: 4px solid ;
+        width: 30px;
+        color: #FFFF;
+    }
+    #hamburguer::after, #hamburguer::before{
+        content: '';
+        display: block;
+        width: 30px;
+        height: 2.5px;
+        background: currentColor;
+        margin-top: 5px;
+        transition: 0.3s;
+        position: relative;
+    }
+    #nav.active #hamburguer{
+        border-top-color: transparent;
+    }
+
+    #nav.active #hamburguer::before{
+        transform: rotate(135deg);
+    }
+
+    #nav.active #hamburguer::after{
+        transform: rotate(-135deg);
+        top: -7px;
+    }
+
+    .class-dropdown{
+        display: grid;
+        grid-template-rows: auto auto auto;
+    }
+
+    #style-button-drop{
+        font-size: 22px;
+    }
+}
+
+@media only screen and (max-width: 980px){
+
+    .material-icons-outlined{
+        vertical-align: middle;
+        position: relative;
+        margin-right: 5px;
+    }
+    
+    #btn-mobile{
+        display: block;
+    }
+    #menu{
+        display: block;
+        position: absolute;
+        width: 26.9rem;
+        top: 3.1rem;
+        right: -1rem;
+        background: #00652E;
+        z-index: 1000;
+        height: 60rem;
+        transition: .6s;
+        font-size: 22px;
+        visibility: hidden;
+        overflow-y: hidden;
+    }
+    #nav.active #menu{
+        height: calc(95vh - 50px);
+        visibility: visible;
+        overflow-y: auto;
+    }
+   
+
+    #menu a{
+        padding: 1rem 0;
+        margin: 1rem 1rem;
+    }
+
+    #btn-mobile{
+        display: flex;
+        padding: .5rem 1rem;
+        font-size: 1rem;
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+    
+    #hamburguer{
+        border-top: 4px solid ;
+        width: 30px;
+        color: #FFFF;
+    }
+    #hamburguer::after, #hamburguer::before{
+        content: '';
+        display: block;
+        width: 30px;
+        height: 2.5px;
+        background: currentColor;
+        margin-top: 5px;
+        transition: 0.3s;
+        position: relative;
+    }
+    #nav.active #hamburguer{
+        border-top-color: transparent;
+    }
+
+    #nav.active #hamburguer::before{
+        transform: rotate(135deg);
+    }
+
+    #nav.active #hamburguer::after{
+        transform: rotate(-135deg);
+        top: -7px;
+    }
+
+    .class-dropdown{
+        display: grid;
+        grid-template-rows: auto auto auto;
+    }
+
+    #style-button-drop{
+        font-size: 22px;
+    }
+}
+

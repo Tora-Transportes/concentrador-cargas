@@ -1,124 +1,118 @@
-.class-body{
-    margin: 0%;
-    padding: 0%;
-    font-family: 'Poppins', sans-serif;
+.class-body {
+  margin: 0%;
+  padding: 0%;
+  font-family: "Poppins", sans-serif;
 }
 
-#style-button-accordion{
-    width: 55rem;
+#style-button-accordion {
+  width: 55rem;
 }
-#style-button-accordion:hover{
-    outline: none;
-}
-
-#style-ac-header:hover{
-    outline: none;
-    border-color: transparent;
-
+#style-button-accordion:hover {
+  outline: none;
 }
 
-#style-gif{
-    width: 45rem;
-    margin-left: 3rem;
-}
-.class-accordion{
-   display: grid;
-   justify-content: center;
-   margin-top: 5rem;
+#style-ac-header:hover {
+  outline: none;
+  border-color: transparent;
 }
 
-h1{
-    font-family: 'Poppins', sans-serif;
-    color: #00652E;
+#style-gif {
+  width: 45rem;
+  margin-left: 3rem;
+}
+.class-accordion {
+  display: grid;
+  justify-content: center;
+  margin-top: 5rem;
 }
 
-hr{
-    width: 70rem;
+h1 {
+  font-family: "Poppins", sans-serif;
+  color: #00652e;
 }
 
-.class-body-title{
-   margin-left: 7rem;
-   margin-top: 3rem;
+hr {
+  width: 70rem;
 }
 
-p{
-    font-family: 'Poppins', sans-serif;
-    color: #939598;
+.class-body-title {
+  margin-left: 7rem;
+  margin-top: 3rem;
 }
 
-.class-body-accordion{
+p {
+  font-family: "Poppins", sans-serif;
+  color: #939598;
+}
+
+.class-body-accordion {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  justify-content: center;
+  grid-gap: 2rem;
+}
+
+#style-button-acc-1 {
+  background: #00652e;
+  border: none;
+  text-align: center;
+  height: 2rem;
+}
+#style-button-acc-2 {
+  background: #00652e;
+  border: none;
+  text-align: center;
+}
+
+.class-p-nav {
+  margin-top: 1.5rem;
+}
+
+.class-button-ir {
+  display: flex;
+  justify-self: end;
+  margin-left: 1rem;
+}
+
+@media only screen and (max-width: 480px) {
+  .class-body-title {
     display: grid;
-    grid-template-rows: auto auto auto;
-    justify-content: center;
-    grid-gap: 2rem;
-}
+    margin-right: 4rem;
+  }
 
-#style-button-acc-1{
-    background: #00652E;
-    border: none;
-    text-align: center;
-    height: 2rem;
-    
-}
-#style-button-acc-2{
-    background: #00652E;
-    border: none;
-    text-align: center;    
-}
+  h1 {
+    font-family: "Poppins", sans-serif;
+    color: #00652e;
+    margin-left: -5rem;
+  }
 
+  hr {
+    width: 20rem;
+  }
 
-.class-p-nav{
-    margin-top: 1.5rem;
-}
+  .class-p-ajuda,
+  .class-hr-ajuda {
+    display: grid;
+    margin-left: -5rem;
+  }
 
-.class-button-ir{
-    display: flex;
-    justify-self: end;
+  #style-gif {
+    width: 20rem;
     margin-left: 1rem;
-    
-}
+  }
 
+  #style-button-accordion {
+    width: 25rem;
+  }
 
-@media only screen and (max-width: 480px){
-    .class-body-title{
-       display: grid;
-       margin-right: 4rem;
-    }
-    
-    h1{
-        font-family: 'Poppins', sans-serif;
-        color: #00652E;
-        margin-left: -5rem;
-    }
-    
-    hr{
-        width: 20rem;
-    }
-
-    .class-p-ajuda,
-    .class-hr-ajuda{
-        display: grid;
-        margin-left: -5rem;
-    }
-
-    #style-gif{
-        width: 20rem;
-        margin-left: 1rem;
-    }
-
-    #style-button-accordion{
-        width: 25rem;
-    }
-
-    .class-button3,
-    .class-button2,
-    .class-button1{
-        display: grid;
-        justify-self: center;
-    }
-    .class-button-ir{
-        display: flex;
-        justify-self: center;
-      
-    }
+  .class-button3,
+  .class-button2,
+  .class-button1 {
+    display: grid;
+    justify-self: center;
+  }
+  .class-button-ir {
+    display: flex;
+    justify-self: center;
+  }
 }

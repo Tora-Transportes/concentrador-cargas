@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import "./index.css";
+import "./permissoes.css";
 import { Container, Row, Col } from "react-bootstrap";
 import { useFormik } from "formik";
 import ServiceUsuarios from "../../../services/ServiceUsuarios";
