@@ -1,4 +1,5 @@
 from os import environ
+import os
 from requests import Session, post, get, put
 import time
 import json
@@ -476,16 +477,16 @@ for registro in relatorio["data"]:
     with open(f"detalhes-{id_carga}.json", "wb") as file:
         file.write(response_detalhes.content)
 
-    if response_detalhes.status_code != 200:
-        print("Erro")
-        exit(1)
-    
-    print("convertendo carga ", id_carga)
-    carga = converter_carga_para_concentrador(json.loads(normalize_text(response_detalhes.text)))
-    cargas.append(carga)
+    if response_detalhes.status_code != 200 :
+        print("[ERRO] - Não foi Possível Processar Detalhes da Carga: "+id_carga)
+        #exit(1)
+    else:
+        print("[SUCESSO] - Convertendo Carga: ", id_carga)
+        carga = converter_carga_para_concentrador(json.loads(normalize_text(response_detalhes.text)))
+        cargas.append(carga)
 
 print("Enviando cargas para API")
-print(json.dumps(cargas, indent=4))
+#print(json.dumps(cargas, indent=4))
 response = enviar_para_concentrador(cargas)
 with open("output.json", "wb") as file:
     file.write(response.content)
