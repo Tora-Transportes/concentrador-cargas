@@ -6,11 +6,10 @@ import {
 
 class UsuarioController {
   async search(req: Request, res: Response) {
-    const { q, page } = req.query;
-    const searchResult = await new UseCaseViewUsuario().run(
-      { query: String(q) },
-      Number(page)
-    );
+    const { q } = req.query;
+    const searchResult = await new UseCaseViewUsuario().run({
+      query: String(q),
+    });
 
     return res.json({ data: searchResult });
   }
