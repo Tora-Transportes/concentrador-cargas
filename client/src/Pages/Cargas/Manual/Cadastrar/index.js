@@ -34,9 +34,9 @@ function Manual() {
 					"O usuário atual não possui a permissão para Cadastrar cargas.",
 					"warning"
 				);
+				history.push("/");
 			}
 		})();
-		history.push("/");
 	});
 
 	const formik = useFormik({
