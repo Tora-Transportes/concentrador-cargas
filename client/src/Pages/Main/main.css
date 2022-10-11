@@ -45,9 +45,6 @@
   color: #00652e;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
-}
-
-.class-p-saudacao {
   display: flex;
   grid-template-rows: auto auto;
   justify-content: center;
@@ -73,7 +70,7 @@
   grid-template-columns: auto auto auto auto;
   justify-content: space-evenly;
   align-items: center;
-  margin-top: 3.5rem;
+  margin-top: 5rem;
   margin-right: 4rem;
 }
 
@@ -113,27 +110,25 @@
   color: #00652e;
 }
 
-.class-linha-jogo {
-  display: grid;
-  grid-template-rows: auto auto;
-  justify-content: center;
-  margin-bottom: 5rem;
-  margin-top: 11vh;
-}
-
 #title-p-jogo {
   color: #939598;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
+  margin-top: 5rem;
+  text-align: center;
+}
+
+.class-linha-jogo {
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-content: center;
 }
 
 .style-button-jogo {
   background: #00652e !important;
   border: none !important;
-  width: 10rem;
-  margin-top: 1rem;
-  margin-left: 15.5rem;
-  margin-bottom: -4rem;
+  width: 12rem;
+  align-items: center;
 }
 
 .class-jogo {
@@ -149,11 +144,11 @@
 }
 
 @media only screen and (max-width: 480px) {
-  .title-page-main {
-    font-size: 30px !important;
+  #style-title-main {
+    font-size: 25px !important;
   }
-  .class-p-saudacao {
-    font-size: 20px !important;
+  #style-p-saudacao {
+    font-size: 16px;
     margin-bottom: -2rem;
     text-align: center;
     display: flex;
@@ -163,6 +158,7 @@
   }
 
   #style-p-text {
+    margin-top: 3rem;
     font-size: 14px;
     text-align: center;
   }
@@ -170,18 +166,12 @@
   .class-icons-body {
     display: block;
     text-align: center;
-    margin-top: 1.5rem;
+    margin-top: 2rem;
     margin-right: 1rem;
   }
 
   .icons-responsive {
     margin-top: 2rem;
-  }
-
-  #title-p-jogo {
-    color: #939598;
-    font-size: 2.4vh;
-    font-family: "Poppins", sans-serif;
   }
 
   .style-button-jogo {
@@ -198,21 +188,13 @@
     margin-bottom: 3rem;
   }
 
-  .class-p-fimjogo {
-    margin-top: 7rem;
-    margin-left: 3vw;
-    color: red;
-  }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 768px){
   .title-page-main {
-    font-size: 34px;
+    font-size: 30px;
   }
-  .class-p-saudacao {
-    font-size: 22px !important;
-    margin-bottom: -2rem;
-  }
+  
   #style-p-text {
     font-size: 2.4vh;
     text-align: center;
@@ -221,7 +203,6 @@
   .class-icons-body {
     display: block;
     text-align: center;
-    margin-top: 1.5rem;
     margin-right: 1rem;
   }
 
@@ -231,13 +212,13 @@
 
   #title-p-jogo {
     color: #939598;
-    font-size: 2vh;
+    font-size: 2.5vh;
     font-family: "Poppins", sans-serif;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+    margin-top: 3rem;  }
 
   .style-button-jogo {
     background: #00652e;
@@ -249,7 +230,15 @@
   .class-jogo {
     display: grid;
     grid-template-columns: auto;
-    grid-gap: 4rem;
-    margin-bottom: 3rem;
+    grid-gap: 1.5rem;
+    margin-top: 1rem !important;
+    margin-bottom: 2rem;
+  }
+
+  .class-p-fimjogo {
+    font-size: 2.7vh;
+    margin-top: 4rem;
+    margin-left: 3vw;
+    color: red;
   }
 }

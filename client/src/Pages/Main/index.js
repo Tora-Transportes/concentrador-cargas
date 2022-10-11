@@ -141,14 +141,12 @@ function Main() {
 				</Row>
 				<div>
 					<div>
-						<p id="style-p-saudacao" className="class-p-saudacao">
-							Caro(a) {userData?.nome}!
-						</p>
+						<p id="style-p-saudacao">Caro(a) {userData?.nome}!</p>
 					</div>
 					<div className="class-p-text">
 						<p id="style-p-text">
 							O concentrador de cargas lhe proporciona ampla visibilidade de
-							demanda, além <br /> de auxiliar sua concentração para a melhor
+							demanda, além de auxiliar <br /> sua concentração para a melhor
 							tomada de decisão na escolha de um veículo.
 						</p>
 					</div>
@@ -251,18 +249,22 @@ function Main() {
 						</div>
 					)}
 					{levelGame === -1 && (
-						<div>
-							<div className="class-linha-jogo">
+						<>
+							<div>
 								<p id="title-p-jogo">
 									{" "}
 									Exercite sua memória, garantindo a melhor tomada de decisão
 									durante o seu dia de trabalho.
 								</p>
-								<Button className="style-button-jogo" onClick={iniciarGame}>
-									Exercitar Agora!
-								</Button>
 							</div>
-						</div>
+							<div>
+								<div className="class-linha-jogo">
+									<Button className="style-button-jogo" onClick={iniciarGame}>
+										Exercitar Agora!
+									</Button>
+								</div>
+							</div>
+						</>
 					)}
 				</Row>
 			</Container>
