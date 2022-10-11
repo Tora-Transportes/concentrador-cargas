@@ -26,10 +26,10 @@
 .class-button-icons {
   display: grid;
   grid-template-columns: auto auto;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  grid-gap: 14rem;
-  margin-top: 5rem;
+  grid-gap: -3rem;
+  margin-top: 4rem;
   margin-left: 3rem;
 }
 
@@ -46,52 +46,100 @@
   margin-top: 4rem;
 }
 
-
 #import:hover,
-#hand:hover{
-  transition: .5s;
+#hand:hover {
+  transition: 0.5s;
   -webkit-transform: scale(1.2);
   transform: scale(1.1);
   color: #048a01;
 }
-
-@media only screen and (max-width: 480px) {
-  .class-body-menu {
-    padding: 0%;
-    margin: 0%;
-    overflow: none;
-  }
+@media only screen and (max-width: 380px) {
   #titulo-selecionar-modo-carga {
-    color: #00652e;
-    font-family: "Poppins", sans-serif;
-    font-size: 35px;
-    font-weight: 500;
+    font-size: 25px !important;
     text-align: center;
   }
   .class-button-icons {
-    display: grid;
-    grid-template-rows: auto auto;
-    justify-content: center;
-    align-items: center;
-    grid-gap: 5rem;
-    margin-top: 5rem;
+    position: absolute;
+    display: block;
+    margin-top: 1rem !important;
+    margin-left: 6rem !important;
+  }
+}
+@media only screen and (max-width: 485px) {
+  .class-body-menu {
+    overflow: none;
+  }
+  #titulo-selecionar-modo-carga {
+    font-size: 30px;
+    text-align: center;
+  }
+  .class-button-icons {
+    position: absolute;
+    display: block;
+    margin-top: 1rem !important;
+    margin-left: 8rem;
+  }
+
+  #title-manual {
+    font-size: 22px;
     margin-left: 2rem;
-  }
-  #title-ico-import {
-    text-align: center;
-  }
-  #import {
-    margin-left: 3rem;
-    color: #00652e;
-    margin-top: 5.5rem;
-    text-align: center;
   }
 
   #hand {
-    display: grid;
-    margin-left: 0.5rem;
+    margin-left: 2rem;
     color: #00652e;
-    margin-top: 4rem;
+    margin-top: 3rem;
+  }
+
+  #title-ico-import {
+    font-size: 22px;
+    margin-left: -2rem;
+  }
+  #import {
+    color: #00652e;
+    margin-top: 2.5rem;
+    margin-left: 2rem;
+  }
+
+  .class-title-coleta {
+    margin-left: 1rem;
+  }
+}
+
+
+@media only screen and (max-width: 1024px) {
+  .class-body-menu {
+    overflow: none;
+  }
+  #titulo-selecionar-modo-carga {
+    margin-top: 5rem;
+    font-size: 30px;
+    text-align: center;
+  }
+  .class-button-icons {
+    margin-top: 2rem;
+    grid-gap: 2rem;
+  }
+
+  #title-manual {
+    font-size: 25px;
+    margin-left: 2rem;
+  }
+
+  #hand {
+    margin-left: 2rem;
+    color: #00652e;
+    margin-top: 3rem;
+  }
+
+  #title-ico-import {
+    font-size: 22px;
+    margin-left: -2rem;
+  }
+  #import {
+    color: #00652e;
+    margin-top: 3rem;
+    margin-left: 2rem;
   }
 
   .class-title-coleta {
