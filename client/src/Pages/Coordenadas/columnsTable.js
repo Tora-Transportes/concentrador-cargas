@@ -200,7 +200,7 @@ export const getColumns = (
 					rel="noopener noreferrer"
 					className="text-decoration-none"
 				>
-					{row.cidade_atual + " "}
+					{row.cidade_atual ? row.cidade_atual + " " : " "}
 					<SiGooglemaps />
 				</a>
 			),
