@@ -56,11 +56,10 @@
 }
 @media only screen and (max-width: 380px) {
   #titulo-selecionar-modo-carga {
-    font-size: 25px !important;
+    font-size: 23px !important;
     text-align: center;
   }
   .class-button-icons {
-    position: absolute;
     display: block;
     margin-top: 1rem !important;
     margin-left: 6rem !important;
@@ -75,31 +74,33 @@
     text-align: center;
   }
   .class-button-icons {
-    position: absolute;
+    
+    position: absolute !important;
     display: block;
     margin-top: 1rem !important;
     margin-left: 8rem;
+    margin-right: 5rem;
   }
 
   #title-manual {
     font-size: 22px;
-    margin-left: 2rem;
+    margin-left: 1rem !important;
   }
 
   #hand {
-    margin-left: 2rem;
+    margin-left: 1.5rem !important;
     color: #00652e;
     margin-top: 3rem;
   }
 
   #title-ico-import {
     font-size: 22px;
-    margin-left: -2rem;
+    margin-left: -1.5rem !important;
   }
   #import {
     color: #00652e;
     margin-top: 2.5rem;
-    margin-left: 2rem;
+    margin-left: 1.5rem !important;
   }
 
   .class-title-coleta {
@@ -134,6 +135,7 @@
   }
 
   #title-ico-import {
+    text-align: center;
     font-size: 22px;
     margin-left: -2rem;
   }
