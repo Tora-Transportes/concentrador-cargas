@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../Cadastrar/style.css";
+import "./cadastroManual.css";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useFormik } from "formik";
 import useLoadingScreen from "../../../Components/LoadingScreen";
@@ -10,12 +10,7 @@ import ServiceProdutos from "../../../../services/ServiceProdutos";
 import FormularioCadastroManual from "../../../Components/FormularioCadastroManual";
 import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
-<<<<<<< HEAD
 import "../Cadastrar/cadastroManual.css";
-import ServiceUsuarios from "src/services/ServiceUsuarios";
-=======
-import { MdOutlineWavingHand } from "react-icons/md";
->>>>>>> feature/bug-emergencial
 // import HandleClick from "./tooltipsCadastro";
 
 function Manual() {

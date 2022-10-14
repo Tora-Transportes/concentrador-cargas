@@ -1,15 +1,11 @@
 import React, { useEffect } from "react";
-import "../Menu/style.css";
 import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import swal from "sweetalert";
 import { useHistory } from "react-router-dom";
 import { MdOutlineWavingHand } from "react-icons/md";
 import { SiGooglesheets } from "react-icons/si";
-<<<<<<< HEAD
-import "../Menu/menuCargas.css";
-=======
->>>>>>> feature/bug-emergencial
+import "./menuCargas.css";
 // import HandleClick from "./tooltipsMenu";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
