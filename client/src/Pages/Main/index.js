@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
+import "./main.css";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 // import NavbarNavigator from "../Components/NavbarNavigator";
 import { getClaims } from "../../MicrosoftAuthentication";
-import "./index.css";
 import { Link } from "react-router-dom";
-
 import { IoLocationSharp } from "react-icons/io5";
 import { FaChartBar, FaTruckMoving } from "react-icons/fa";
 import { FaBoxes } from "react-icons/fa";
@@ -27,6 +26,18 @@ function Main() {
 		"danger",
 		"warning",
 	];
+
+	//Trecho que limpar cache quando ouver necessidade...
+	const limparCache = localStorage.getItem("clear_Cache");
+	if (!limparCache || limparCache !== "version_1") {
+		const horasJogo = localStorage.getItem("ultima_vez_jogada");
+		localStorage.clear();
+		if (horasJogo) {
+			localStorage.setItem("ultima_vez_jogada", horasJogo);
+		}
+		localStorage.setItem("clear_Cache", "version_1");
+		location.reload();
+	}
 
 	function salvarTimestampUltimaVezJogada() {
 		const timestamp = new Date().getTime();
@@ -135,28 +146,26 @@ function Main() {
 			<Container className="class-body-main">
 				<Row>
 					<Col className="text-center mt-5 mb-5">
-						<p id="style-title-main" className="class-p-title-main">
+						<p id="style-title-main" className="title-page-main">
 							Seja bem-vindo(a) ao Concentrador de Cargas
 						</p>
 					</Col>
 				</Row>
 				<div>
 					<div>
-						<p id="style-p-saudacao" className="class-p-saudacao">
-							Caro(a) {userData?.nome}!
-						</p>
+						<p id="style-p-saudacao">Caro(a) {userData?.nome}!</p>
 					</div>
 					<div className="class-p-text">
 						<p id="style-p-text">
 							O concentrador de cargas lhe proporciona ampla visibilidade de
-							demanda, além de auxiliar sua concentração para a melhor <br />
+							demanda, além de auxiliar <br /> sua concentração para a melhor
 							tomada de decisão na escolha de um veículo.
 						</p>
 					</div>
 				</div>
 
 				<div className="class-icons-body">
-					<div className="class-icon-coor class-indicador">
+					<div className="icons-efect">
 						<Link to="/relatorios" className="class-link">
 							<FaChartBar
 								size={50}
@@ -167,23 +176,35 @@ function Main() {
 							<b id="style-iconn">Indicador Operacional</b>
 						</Link>
 					</div>
-					<div className="class-icon-coor">
+					<div className="icons-efect class-icons-main">
 						<Link to="/veiculos/coordenadas" className="class-link">
-							<IoLocationSharp size={50} id="style-iconn-2" />
+							<IoLocationSharp
+								size={50}
+								id="style-iconn-2"
+								className="icons-responsive me-4"
+							/>
 							<br />
 							<b id="style-iconn">Coordenadas</b>
 						</Link>
 					</div>
-					<div className="class-icon-coor class-icon-cargas">
+					<div className="icons-efect">
 						<Link to="/cargas/visualizar" className="class-link">
-							<FaTruckMoving size={50} id="style-iconn-3" />
+							<FaTruckMoving
+								size={50}
+								id="style-iconn-3"
+								className="icons-responsive"
+							/>
 							<br />
 							<b id="style-iconn">Cargas</b>
 						</Link>
 					</div>
-					<div className="class-icon-coor">
+					<div className="icons-efect icon-lotes">
 						<Link to="/lotes/visualizar" className="class-link">
-							<FaBoxes size={50} id="style-iconn-4" />
+							<FaBoxes
+								size={50}
+								id="style-iconn-4"
+								className="icons-responsive"
+							/>
 							<br />
 							<b id="style-iconn">Lotes</b>
 						</Link>
@@ -195,7 +216,7 @@ function Main() {
 						usuarioPodeJogar() ? "d-none" : "text-center h5 text-danger"
 					}
 				>
-					<p className="class-p-fimjogo" id="style-p-fimjogo">
+					<p className="class-p-fimjogo">
 						Você já se exercitou, agora é hora de avaliar seus melhores
 						veículos. Desejamos um excelente dia de trabalho!
 					</p>
@@ -240,22 +261,22 @@ function Main() {
 						</div>
 					)}
 					{levelGame === -1 && (
-						<div>
-							<div className="class-linha-jogo">
+						<>
+							<div>
 								<p id="title-p-jogo">
 									{" "}
 									Exercite sua memória, garantindo a melhor tomada de decisão
 									durante o seu dia de trabalho.
 								</p>
-								<Button
-									id="style-button-jogo"
-									className="class-button-jogue"
-									onClick={iniciarGame}
-								>
-									Exercitar Agora!
-								</Button>
 							</div>
-						</div>
+							<div>
+								<div className="class-linha-jogo">
+									<Button className="style-button-jogo" onClick={iniciarGame}>
+										Exercitar Agora!
+									</Button>
+								</div>
+							</div>
+						</>
 					)}
 				</Row>
 			</Container>

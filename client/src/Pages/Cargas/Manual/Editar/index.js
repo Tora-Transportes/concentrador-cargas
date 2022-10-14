@@ -129,10 +129,10 @@ function Manual() {
 					fk_situacao: 5,
 					observacao_cancelamento: observacaoCancelamento,
 				});
-				await swal("Sucesso!", "Carga cancelada", "success");
+				await swal("Sucesso!", "Carga cancelada.", "success");
 				await carregarCarga();
 			} else {
-				await swal("Nenhuma alteração realizada");
+				await swal("Nenhuma alteração realizada.");
 			}
 		} catch (error) {
 			console.log(error);
@@ -156,10 +156,10 @@ function Manual() {
 					...formik.values,
 					fk_situacao: 6,
 				});
-				await swal("Sucesso!", "Documento emitido", "success");
+				await swal("Sucesso!", "Documento emitido.", "success");
 				await carregarCarga();
 			} else {
-				await swal("Nenhuma alteração realizada");
+				await swal("Nenhuma alteração realizada.");
 			}
 		} catch (error) {
 			console.log(error);

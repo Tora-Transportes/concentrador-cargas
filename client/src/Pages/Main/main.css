@@ -1,0 +1,243 @@
+.class-body-main {
+  font-family: "Poppins", sans-serif;
+}
+
+#navbar-tora {
+  background-color: #024c01 !important;
+  color: white !important;
+}
+#navbar-tora a {
+  color: #b8c5cb !important;
+}
+#navbar-tora .btn-toggle {
+  background-color: #024c01;
+  color: #b8c5cb;
+  border: 1px solid #b8c5cb;
+  margin-left: 4px;
+}
+
+#navbar-tora .btn-toggle:hover {
+  background-color: #b8c5cb;
+  color: #024c01;
+  border: 1px solid #024c01;
+  opacity: 0.4;
+}
+
+.icone-tora {
+  color: #024c01;
+  transition: 0.2s;
+}
+
+.icone-tora:hover {
+  color: #048a01;
+  font-size: 15pt;
+}
+
+#style-title-main {
+  font-size: 38px;
+  color: #00652e;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+}
+
+#style-p-saudacao {
+  font-size: 22px;
+  color: #00652e;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  grid-template-rows: auto auto;
+  justify-content: center;
+  margin-top: -3rem;
+}
+
+.class-p-text {
+  margin-top: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+#style-p-text {
+  color: #939598;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  text-align: center;
+  font-size: 17px;
+}
+
+.class-icons-body {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 5rem;
+  margin-right: 4rem;
+}
+
+.class-link {
+  text-decoration: none;
+}
+
+.icons-efect {
+  transition: all 0.8s;
+  cursor: pointer;
+  text-align: center;
+}
+.icons-efect:hover {
+  -webkit-transform: scale(1.2);
+  transform: scale(1.1);
+}
+
+#style-iconn-4:hover,
+#style-iconn-3:hover,
+#style-iconn-2:hover,
+#style-iconn:hover {
+  color: #03880c;
+}
+#style-iconn {
+  color: #00652e;
+}
+/* maps */
+#style-iconn-2 {
+  color: #00652e;
+  margin-left: 1.5rem;
+}
+#style-iconn-3 {
+  color: #00652e;
+}
+#style-iconn-4 {
+  color: #00652e;
+}
+
+#title-p-jogo {
+  color: #939598;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  margin-top: 5rem;
+  text-align: center;
+}
+
+.class-linha-jogo {
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-content: center;
+}
+
+.style-button-jogo {
+  background: #00652e !important;
+  border: none !important;
+  width: 12rem;
+  align-items: center;
+}
+
+.class-jogo {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto;
+  grid-gap: 4rem;
+  margin-bottom: 3rem;
+}
+.class-p-fimjogo {
+  margin-top: 15vh;
+  margin-left: 3vw;
+  color: red;
+}
+
+@media only screen and (max-width: 480px) {
+  #style-title-main {
+    font-size: 25px !important;
+  }
+  #style-p-saudacao {
+    font-size: 16px;
+    margin-bottom: -2rem;
+    text-align: center;
+    display: flex;
+    grid-template-rows: auto auto;
+    justify-content: center;
+    margin-top: -3rem;
+  }
+
+  #style-p-text {
+    margin-top: 3rem;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .class-icons-body {
+    display: block;
+    text-align: center;
+    margin-top: 2rem;
+    margin-right: 1rem;
+  }
+
+  .icons-responsive {
+    margin-top: 2rem;
+  }
+
+  .style-button-jogo {
+    background: #00652e;
+    border: none;
+    width: 14rem;
+    margin-left: 5rem;
+    margin-right: 5rem;
+  }
+  .class-jogo {
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 4rem;
+    margin-bottom: 3rem;
+  }
+
+}
+
+@media only screen and (max-width: 768px){
+  .title-page-main {
+    font-size: 30px;
+  }
+  
+  #style-p-text {
+    font-size: 2.4vh;
+    text-align: center;
+  }
+
+  .class-icons-body {
+    display: block;
+    text-align: center;
+    margin-right: 1rem;
+  }
+
+  .icons-responsive {
+    margin-top: 2rem;
+  }
+
+  #title-p-jogo {
+    color: #939598;
+    font-size: 2.5vh;
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3rem;  }
+
+  .style-button-jogo {
+    background: #00652e;
+    border: none;
+    width: 14rem;
+    margin-left: 15rem;
+    margin-right: 15rem;
+  }
+  .class-jogo {
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 1.5rem;
+    margin-top: 1rem !important;
+    margin-bottom: 2rem;
+  }
+
+  .class-p-fimjogo {
+    font-size: 2.7vh;
+    margin-top: 4rem;
+    margin-left: 3vw;
+    color: red;
+  }
+}

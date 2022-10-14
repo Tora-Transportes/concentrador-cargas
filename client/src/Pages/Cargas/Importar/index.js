@@ -101,7 +101,7 @@ function Importar() {
 			<div className="class-container-importar">
 				<div className="class-import">
 					<div className="title-import">
-						<h1 id="title-import">Importação de cargas</h1>
+						<h1 id="title-import">Importação de Cargas</h1>
 					</div>
 					<div className="class-button-import">
 						<a

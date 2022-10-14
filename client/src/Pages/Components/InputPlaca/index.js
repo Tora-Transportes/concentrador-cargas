@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { InputGroup, FormControl } from "react-bootstrap";
+import "./inputPlaca.css";
 
-import "./style.css";
 function InputPlaca(props) {
 	const placaInput = useRef(null);
 	useEffect(() => {

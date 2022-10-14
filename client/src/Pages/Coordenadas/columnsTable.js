@@ -180,20 +180,28 @@ export const getColumns = (
 		{
 			name: "cidade_atual",
 			description: "Posição atual",
-			selector: (row) => (
-				<a
-					href={`https://www.google.com/maps/search/${String(row.lat).replace(
-						",",
-						"."
-					)},+${String(row.lon).replace(",", ".")}`}
-					target="_blank"
-					rel="noopener noreferrer"
-					className="text-decoration-none"
-				>
-					{row.cidade_atual + " "}
-					<SiGooglemaps />
-				</a>
-			),
+			selector: (row) => {
+				const existeLatitude = row.lat;
+				return (
+					<>
+						{existeLatitude !== 0 ? (
+							<a
+								href={`https://www.google.com/maps/search/${String(
+									row.lat
+								).replace(",", ".")},+${String(row.lon).replace(",", ".")}`}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-decoration-none"
+							>
+								{row.cidade_atual ? row.cidade_atual + " " : " "}
+								<SiGooglemaps />
+							</a>
+						) : (
+							"Sem comunicação com rastreador"
+						)}
+					</>
+				);
+			},
 		},
 		{
 			name: "categoria_veiculo",

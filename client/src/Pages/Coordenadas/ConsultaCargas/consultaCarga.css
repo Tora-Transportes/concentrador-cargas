@@ -1,4 +1,4 @@
-.title-consultarCarga{
+#title-consultarCarga{
     color: #00652E;
     font-size: 32px;
 }
@@ -7,7 +7,7 @@
     color: black;
 }
 
-.title-dados-veic{
+#title-dados-veic{
     color: #00652E;
     margin-bottom: -20px;
 }

@@ -69,19 +69,19 @@ export class UseCaseAddCarga {
         return true;
       },
     });
-    // Regra de negócio comentada pois  não se aplica a cadastro de carga
-    // if (carga.placa_veiculo) {
-    //   // Caso o oid nao esteja definido o bot de scraping é quem está enviando as cargas
-    //   if (oid) {
-    //     const usuario = await this.userRepository.index(oid);
-    //     if (!usuario?.permissoes?.includes(EPermissions.VINCULAR_PLACA)) {
-    //       throw new AppError(
-    //         "O usuário atual não possui a permissão 'VINCULAR_PLACA'",
-    //         403
-    //       );
-    //     }
+    //Regra de negócio comentada pois  não se aplica a cadastro de carga
+    //if (carga.placa_veiculo) {
+    // Caso o oid nao esteja definido o bot de scraping é quem está enviando as cargas
+    // if (oid) {
+    //   const usuario = await this.userRepository.index(oid);
+    //   if (!usuario?.permissoes?.includes("DELETAR_CARGAS")) {
+    //     throw new AppError(
+    //       "O usuário atual não possui a permissão para Cadastrar cargas.",
+    //       403
+    //     );
     //   }
     // }
+    //}
 
     // Esse bloco funciona para a importacao de cargas
     if (carga.documento_transporte) {

@@ -1,0 +1,155 @@
+.puts a:hover svg {
+  transform: scale(1.1);
+}
+
+#titulo-selecionar-modo-carga {
+  color: #00652e;
+  font-family: "Poppins", sans-serif;
+  font-size: 40px;
+  font-weight: 500;
+}
+
+.class-title-coleta {
+  margin-top: 4rem;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#title-ico-import,
+#title-manual {
+  color: #00652e;
+  font-family: "Poppins", sans-serif;
+  font-size: 27px;
+}
+
+.class-button-icons {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-evenly;
+  align-items: center;
+  grid-gap: -3rem;
+  margin-top: 4rem;
+  margin-left: 3rem;
+}
+
+#import {
+  margin-left: 4.5rem;
+  color: #00652e;
+  margin-top: 4.5rem;
+}
+
+#hand {
+  display: grid;
+  margin-left: 0.5rem;
+  color: #00652e;
+  margin-top: 4rem;
+}
+
+#import:hover,
+#hand:hover {
+  transition: 0.5s;
+  -webkit-transform: scale(1.2);
+  transform: scale(1.1);
+  color: #048a01;
+}
+@media only screen and (max-width: 380px) {
+  #titulo-selecionar-modo-carga {
+    font-size: 23px !important;
+    text-align: center;
+  }
+  .class-button-icons {
+    display: block;
+    margin-top: 1rem !important;
+    margin-left: 6rem !important;
+  }
+}
+@media only screen and (max-width: 485px) {
+  .class-body-menu {
+    overflow: none;
+  }
+  #titulo-selecionar-modo-carga {
+    font-size: 30px;
+    text-align: center;
+  }
+  .class-button-icons {
+    
+    position: absolute !important;
+    display: block;
+    margin-top: 1rem !important;
+    margin-left: 8rem;
+    margin-right: 5rem;
+  }
+
+  #title-manual {
+    font-size: 22px;
+    margin-left: 1rem !important;
+  }
+
+  #hand {
+    margin-left: 1.5rem !important;
+    color: #00652e;
+    margin-top: 3rem;
+  }
+
+  #title-ico-import {
+    font-size: 22px;
+    margin-left: -1.5rem !important;
+  }
+  #import {
+    color: #00652e;
+    margin-top: 2.5rem;
+    margin-left: 1.5rem !important;
+  }
+
+  .class-title-coleta {
+    margin-left: 1rem;
+  }
+}
+
+
+@media only screen and (max-width: 1024px) {
+  .class-body-menu {
+    overflow: none;
+  }
+  #titulo-selecionar-modo-carga {
+    margin-top: 5rem;
+    font-size: 30px;
+    text-align: center;
+  }
+  .class-button-icons {
+    margin-top: 2rem;
+    grid-gap: 2rem;
+  }
+
+  #title-manual {
+    font-size: 25px;
+    margin-left: 2rem;
+  }
+
+  #hand {
+    margin-left: 2rem;
+    color: #00652e;
+    margin-top: 3rem;
+  }
+
+  #title-ico-import {
+    text-align: center;
+    font-size: 22px;
+    margin-left: -2rem;
+  }
+  #import {
+    color: #00652e;
+    margin-top: 3rem;
+    margin-left: 2rem;
+  }
+
+  .class-title-coleta {
+    margin-top: 4rem;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+  }
+}

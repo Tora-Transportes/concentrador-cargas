@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Logo from "../../../assets/logotoraico.png";
-import "./style.css";
+import "./menuSuperior.css";
 import { NavbarBrand } from "react-bootstrap";
 import { FaSignOutAlt } from "react-icons/fa";
 import { logout } from "../../../MicrosoftAuthentication";
