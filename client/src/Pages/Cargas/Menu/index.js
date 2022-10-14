@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { MdOutlineWavingHand } from "react-icons/md";
 import { SiGooglesheets } from "react-icons/si";
-import "../Menu/style.css";
+import "../Menu/menuCargas.css";
 // import HandleClick from "./tooltipsMenu";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 

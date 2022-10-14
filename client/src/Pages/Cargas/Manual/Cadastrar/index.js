@@ -9,8 +9,7 @@ import ServiceProdutos from "../../../../services/ServiceProdutos";
 import FormularioCadastroManual from "../../../Components/FormularioCadastroManual";
 import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
-import { MdOutlineWavingHand } from "react-icons/md";
-import "../Cadastrar/style.css";
+import "../Cadastrar/cadastroManual.css";
 import ServiceUsuarios from "src/services/ServiceUsuarios";
 // import HandleClick from "./tooltipsCadastro";
 
@@ -157,24 +156,18 @@ function Manual() {
 		<>
 			<LoadingScreen />
 			<Menusuperior />
-			<div className="class-title-icon">
+			<div>
 				<p
 					id="title-cad-manual"
-					className="class-titlte-cad1"
 					// onClick={HandleClick}
 				>
 					Cadastro de Carga - Manual
 				</p>
-				<MdOutlineWavingHand
-					size={30}
-					style={{ color: "#00652E", marginRight: "48rem", marginTop: ".5rem" }}
-					id="hand"
-				/>
 			</div>
 			<div className="class-linha-title">
 				<hr id="style-linha-cad"></hr>
 			</div>
-			<Container className="mb-5 mt-5" style={{ scrollBehavior: "none" }}>
+			<Container className="mb-5 mt-2" style={{ scrollBehavior: "none" }}>
 				<Form onSubmit={formik.handleSubmit}>
 					<FormularioCadastroManual
 						buscarCargaComDocumentoDeTransporte={

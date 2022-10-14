@@ -23,7 +23,7 @@ import FilialSelect from "../FilialSelect";
 import ServiceVeiculos from "src/services/ServiceVeiculos";
 import swal from "sweetalert";
 import ListAddItens from "../ListAddItens";
-import "../FormularioCadastroManual/style.css";
+import "../FormularioCadastroManual/formularioManual.css";
 
 function FormularioCadastroManual({
 	formik,

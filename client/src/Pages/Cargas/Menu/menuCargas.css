@@ -2,17 +2,10 @@
   transform: scale(1.1);
 }
 
-#title-ico-import,
-#title-manual {
-  color: #00652e;
-  font-family: "Poppins", sans-serif;
-  font-size: 27px;
-}
-
 #titulo-selecionar-modo-carga {
   color: #00652e;
   font-family: "Poppins", sans-serif;
-  font-size: 35px;
+  font-size: 40px;
   font-weight: 500;
 }
 
@@ -21,6 +14,14 @@
   display: grid;
   justify-content: center;
   align-items: center;
+}
+
+
+#title-ico-import,
+#title-manual {
+  color: #00652e;
+  font-family: "Poppins", sans-serif;
+  font-size: 27px;
 }
 
 .class-button-icons {

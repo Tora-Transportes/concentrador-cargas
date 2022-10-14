@@ -1,0 +1,108 @@
+.class-body-form {
+  font-family: "Poppins", sans-serif;
+}
+#title-cad-manual {
+  color: #00652e;
+  font-family: "Poppins", sans-serif;
+  font-size: 40px;
+  font-weight: 500;
+  margin-top: 3rem;
+  margin-left: 7.3rem;
+}
+
+.class-linha-title {
+  display: grid;
+  margin-left: 7.3rem;
+  margin-top: -2rem;
+}
+
+#botao-cadastrar-carg {
+  background-color: #00652e !important;
+  font-family: "Poppins", sans-serif;
+}
+
+@media only screen and (max-width: 480px) {
+  #title-cad-manual {
+    margin-left: 0.8rem !important;
+    font-size: 20px !important;
+  }
+
+  #style-linha-cad {
+    margin-top: 3rem;
+    margin-left: 0.4rem !important;
+    display: grid;
+    width: 95% !important;
+  }
+
+  .class-linha-title {
+    margin-left: 0.5rem;
+    margin-top: -4rem;
+  }
+
+  #style-linha-cad6,
+  #style-linha-cad5,
+  #style-linha-cad4,
+  #style-linha-cad3,
+  #style-linha-cad2 {
+    display: grid;
+    width: 98% !important;
+  }
+}
+
+@media only screen and (max-width: 798px) {
+  #title-cad-manual {
+    margin-top: 2rem;
+    font-size: 28px;
+  }
+
+  #style-linha-cad {
+    margin-top: 3rem;
+    margin-left: 1.9rem;
+    display: grid;
+    width: 95%;
+  }
+
+  .class-linha-title {
+    margin-left: 0.5rem;
+    margin-top: -4rem;
+  }
+
+  #style-linha-cad6,
+  #style-linha-cad5,
+  #style-linha-cad4,
+  #style-linha-cad3,
+  #style-linha-cad2 {
+    display: grid;
+    width: 95%;
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  #title-cad-manual {
+    position: relative;
+    margin-left: 2.2rem;
+    margin-top: 2rem;
+    font-size: 28px;
+  }
+
+  #style-linha-cad {
+    margin-top: 3rem;
+    margin-left: 2rem;
+    display: grid;
+    width: 95%;
+  }
+
+  .class-linha-title {
+    margin-left: 0.5rem;
+    margin-top: -4rem;
+  }
+
+  #style-linha-cad6,
+  #style-linha-cad5,
+  #style-linha-cad4,
+  #style-linha-cad3,
+  #style-linha-cad2 {
+    display: grid;
+    width: 103%;
+  }
+}
