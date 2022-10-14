@@ -5,6 +5,7 @@ import React, {
 	useCallback,
 	useRef,
 } from "react";
+import { useHistory } from "react-router-dom";
 import View from "../ViewsVisualizacao";
 import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
@@ -12,6 +13,8 @@ import factoryReducerCargas from "../../../hooks/storageCargas/factoryReducerCar
 import io from "../../../services/socket";
 import { Toast } from "primereact/toast";
 import { showToastMessage } from "src/Pages/Utils/toastMessage";
+import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
+import swal from "sweetalert";
 
 function Visualizar() {
 	const [totalRegisters, setTotalRegisters] = useState(0);
@@ -27,6 +30,21 @@ function Visualizar() {
 	const [itensPerPage, setItensPerPage] = useState(10);
 	const [modalShowExcel, setModalShowExcel] = useState(false);
 	const toast = useRef(null);
+	const history = useHistory();
+
+	useEffect(() => {
+		(async () => {
+			const userPermission = await validationPermissionUser();
+			if (!userPermission?.permissoes.includes("DELETAR_CARGAS")) {
+				await swal(
+					"OPS!",
+					"O usuário não possui permissão para acessar esta pagina.",
+					"warning"
+				);
+				history.push("/");
+			}
+		})();
+	}, []);
 
 	useEffect(() => {
 		const actionCargasCreate = (payload) => {

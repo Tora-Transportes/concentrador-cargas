@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../Cadastrar/style.css";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useFormik } from "formik";
 import useLoadingScreen from "../../../Components/LoadingScreen";
@@ -10,8 +11,6 @@ import FormularioCadastroManual from "../../../Components/FormularioCadastroManu
 import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { MdOutlineWavingHand } from "react-icons/md";
-import "../Cadastrar/style.css";
-import ServiceUsuarios from "src/services/ServiceUsuarios";
 // import HandleClick from "./tooltipsCadastro";
 
 function Manual() {
@@ -19,25 +18,6 @@ function Manual() {
 	const [produtos, setProdutos] = useState([]);
 	const [distancia, setDistancia] = useState(null);
 	const history = useHistory();
-
-	useEffect(() => {
-		(async () => {
-			const oid = getClaims().oid;
-			const userPermission = (
-				await ServiceUsuarios.index({
-					oid,
-				})
-			).data.data;
-			if (!userPermission?.permissoes.includes("DELETAR_CARGAS")) {
-				swal(
-					"OPS!",
-					"O usuário atual não possui a permissão para Cadastrar cargas.",
-					"warning"
-				);
-				history.push("/");
-			}
-		})();
-	});
 
 	const formik = useFormik({
 		initialValues: {

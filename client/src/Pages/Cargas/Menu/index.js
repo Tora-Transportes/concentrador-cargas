@@ -1,13 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
+import "../Menu/style.css";
 import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
+import swal from "sweetalert";
+import { useHistory } from "react-router-dom";
 import { MdOutlineWavingHand } from "react-icons/md";
 import { SiGooglesheets } from "react-icons/si";
-import "../Menu/style.css";
 // import HandleClick from "./tooltipsMenu";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
+import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 
 function Main() {
+	const history = useHistory();
+	useEffect(() => {
+		(async () => {
+			const userPermission = await validationPermissionUser();
+			if (!userPermission?.permissoes.includes("DELETAR_CARGAS")) {
+				await swal(
+					"OPS!",
+					"O usuário não possui permissão para acessar esta pagina.",
+					"warning"
+				);
+				history.push("/");
+			}
+		})();
+	}, []);
+
 	return (
 		<>
 			<Menusuperior type={"teste"} />

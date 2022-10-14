@@ -18,11 +18,14 @@ import { GoMailRead } from "react-icons/go";
 import { RiTruckLine } from "react-icons/ri";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { useHistory } from "react-router-dom";
+import swal from "sweetalert";
 import FilialSelect from "src/Pages/Components/FilialSelect";
 import DateUtils from "../../Utils/date";
 import { showToastMessage } from "src/Pages/Utils/toastMessage";
 import { Toast } from "primereact/toast";
 import diffiInDays from "src/Pages/Utils/diffInDays";
+import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -38,6 +41,22 @@ function ViewRotasPendentes({
 	const dataFinal = useRef(null);
 	const [codigoFilial, setCodigoFilial] = useState();
 	const toast = useRef(null);
+	const history = useHistory();
+
+	useEffect(() => {
+		(async () => {
+			const userPermission = await validationPermissionUser();
+			if (!userPermission?.permissoes.includes("DELETAR_CARGAS")) {
+				await swal(
+					"OPS!",
+					"O usuário não possui permissão para acessar esta pagina.",
+					"warning"
+				);
+				history.push("/");
+			}
+		})();
+	}, []);
+
 	function percentage(total, piece) {
 		try {
 			const value = (Number(piece) * 100) / Number(total);

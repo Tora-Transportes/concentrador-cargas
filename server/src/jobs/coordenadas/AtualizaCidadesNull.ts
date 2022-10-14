@@ -79,11 +79,6 @@ class AtualizaCidadesNull {
         }, 6000);
       });
 
-      // let HorasTotal = new Date();
-      // let hora = HorasTotal.getHours();
-      // let min = HorasTotal.getMinutes();
-      // let seg = HorasTotal.getSeconds();
-
     if (dadosCoordenadas.length > 0) {
       for (const cidade of dadosCoordenadas) {
         try {
@@ -109,10 +104,7 @@ class AtualizaCidadesNull {
         }
       }
       console.log("<<<<<<<<FIM JOB ATUALIZAR CIDADES COM VALOR NULL>>>>>>>");
-      // lembrar de retirar este else .......
     } else {
-    
-      //console.log("NÃO EXISTE CIDADES NULL>>>>>>>>", `${hora}:${min}:${seg}`);
       console.log("<<<<<<<<FIM JOB ATUALIZAR CIDADES COM VALOR NULL>>>>>>>");
     }
   }
