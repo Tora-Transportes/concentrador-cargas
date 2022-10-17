@@ -27,18 +27,16 @@ function Main() {
 		"warning",
 	];
 
-	//Trecho que limpar cache quando ouver necessidade...
+	//Função que limpar cache quando subir uma nova versão , isto se tiver necessidade...
 	const verificarAtualização = async () => {
 		const limparCache = localStorage.getItem("clear_Cache");
-		console.log("FORA DO IF -> CACHE >>>>>>>", limparCache);
-		if (limparCache == null || limparCache.toString() !== "version_1") {
-			console.log("<<<<<<<<<<ENTROU NO IF LIMPAR CACHE >>>>>>>", limparCache);
+		if (limparCache == null || limparCache.toString() !== "version_3") {
 			//const horasJogo = localStorage.getItem("ultima_vez_jogada");
 			localStorage.clear();
 			// if (horasJogo) {
 			// 	localStorage.setItem("ultima_vez_jogada", horasJogo);
 			// }
-			localStorage.setItem("clear_Cache", "version_1");
+			localStorage.setItem("clear_Cache", "version_3");
 			location.reload();
 		}
 	};

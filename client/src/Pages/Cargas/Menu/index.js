@@ -18,7 +18,7 @@ function Main() {
 			if (!userPermission?.permissoes.includes("DELETAR_CARGAS")) {
 				await swal(
 					"OPS!",
-					"O usuário não possui permissão para acessar esta pagina.",
+					"O usuário não possui permissão para acessar esta página.",
 					"warning"
 				);
 				history.push("/");
