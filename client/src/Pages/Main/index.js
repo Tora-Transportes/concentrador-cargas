@@ -28,14 +28,10 @@ function Main() {
 	];
 
 	//Função que limpar cache quando subir uma nova versão , isto se tiver necessidade...
-	const verificarAtualização = async () => {
+	const verificarAtualizacaoVersao = async () => {
 		const limparCache = localStorage.getItem("clear_Cache");
 		if (limparCache == null || limparCache.toString() !== "version_3") {
-			//const horasJogo = localStorage.getItem("ultima_vez_jogada");
 			localStorage.clear();
-			// if (horasJogo) {
-			// 	localStorage.setItem("ultima_vez_jogada", horasJogo);
-			// }
 			localStorage.setItem("clear_Cache", "version_3");
 			location.reload();
 		}
@@ -131,7 +127,7 @@ function Main() {
 	useEffect(() => {
 		const nome = getClaims().name;
 		setUserData({ nome });
-		verificarAtualização();
+		verificarAtualizacaoVersao();
 	}, []);
 
 	useEffect(() => {

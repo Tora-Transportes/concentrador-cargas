@@ -3,9 +3,13 @@ import { Knex } from "knex";
 import IUsuario from "../models/IUsuario";
 
 export class UsuarioRepository {
-  async search(filter: Record<string, any>, page = 1) {
+  async search(filter: Record<string, any>, page = 1, pageSize = 11) {
     //const total = database("con_usuarios").count("oid as total").first();
-    const results = database("con_usuarios").select("*");
+    const realPage = isNaN(page) || page < 1 ? 1 : page;
+    const results = database("con_usuarios")
+      .select("*")
+      .limit(pageSize)
+      .offset((realPage - 1) * pageSize);
     const funcToFilter = (qb: Knex.QueryBuilder) => {
       if (filter.query) {
         qb.orWhere("nome", "like", `%${filter.query}%`);
