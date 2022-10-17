@@ -30,7 +30,7 @@ function Main() {
 	//Trecho que limpar cache quando ouver necessidade...
 	const verificarAtualização = async () => {
 		const limparCache = localStorage.getItem("clear_Cache");
-		console.log("FORA DO IF -> CACHE >>>>>>>", typeof limparCache);
+		console.log("FORA DO IF -> CACHE >>>>>>>", limparCache);
 		if (limparCache == null || limparCache.toString() !== "version_1") {
 			console.log("<<<<<<<<<<ENTROU NO IF LIMPAR CACHE >>>>>>>", limparCache);
 			//const horasJogo = localStorage.getItem("ultima_vez_jogada");
