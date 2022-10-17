@@ -29,7 +29,8 @@ function Main() {
 
 	//Trecho que limpar cache quando ouver necessidade...
 	const limparCache = localStorage.getItem("clear_Cache");
-	if (!limparCache || limparCache !== "version_2") {
+	console.log("CACHE >>>>>>>", limparCache);
+	if (limparCache === null || limparCache !== "version_2") {
 		const horasJogo = localStorage.getItem("ultima_vez_jogada");
 		localStorage.clear();
 		if (horasJogo) {
