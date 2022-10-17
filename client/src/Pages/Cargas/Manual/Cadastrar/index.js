@@ -10,12 +10,7 @@ import ServiceProdutos from "../../../../services/ServiceProdutos";
 import FormularioCadastroManual from "../../../Components/FormularioCadastroManual";
 import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
-<<<<<<< HEAD
 import "./cadastroManual.css";
-import ServiceUsuarios from "src/services/ServiceUsuarios";
-=======
-import "../Cadastrar/cadastroManual.css";
->>>>>>> development
 // import HandleClick from "./tooltipsCadastro";
 
 function Manual() {
