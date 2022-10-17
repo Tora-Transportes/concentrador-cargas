@@ -27,6 +27,18 @@ function Main() {
 		"warning",
 	];
 
+	//Trecho que limpar cache quando ouver necessidade...
+	const limparCache = localStorage.getItem("clear_Cache");
+	if (!limparCache || limparCache !== "version_2") {
+		const horasJogo = localStorage.getItem("ultima_vez_jogada");
+		localStorage.clear();
+		if (horasJogo) {
+			localStorage.setItem("ultima_vez_jogada", horasJogo);
+		}
+		localStorage.setItem("clear_Cache", "version_2");
+		location.reload();
+	}
+
 	function salvarTimestampUltimaVezJogada() {
 		const timestamp = new Date().getTime();
 		localStorage.setItem("ultima_vez_jogada", timestamp);

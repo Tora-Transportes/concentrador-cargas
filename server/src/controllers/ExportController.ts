@@ -29,10 +29,11 @@ class ExportController {
       }
     }
 
-    const filename = path.resolve(
-      os.tmpdir(),
-      `RELATORIO_CARGAS-${new Date().getTime()}.xlsx`
-    );
+    const filename =
+      //path.resolve(
+      // os.tmpdir(),
+      `RELATORIO_CARGAS-${new Date().getTime()}.xlsx`;
+    //);
 
     const searchResult: IResultExcel<ICarga> =
       await new CargaRepository().searchExcel(
@@ -45,7 +46,7 @@ class ExportController {
 
     xlsx.utils.book_append_sheet(workbook, sheet);
 
-    xlsx.writeFile(workbook, filename, {
+    await xlsx.writeFile(workbook, filename, {
       bookType: "xlsx",
       type: "binary",
     });
