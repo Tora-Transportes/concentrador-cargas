@@ -30,13 +30,13 @@ function Main() {
 	//Trecho que limpar cache quando ouver necessidade...
 	const limparCache = localStorage.getItem("clear_Cache");
 	console.log("CACHE >>>>>>>", limparCache);
-	if (limparCache === null || limparCache !== "version_2") {
+	if (limparCache === null || limparCache !== "version_3") {
 		const horasJogo = localStorage.getItem("ultima_vez_jogada");
 		localStorage.clear();
 		if (horasJogo) {
 			localStorage.setItem("ultima_vez_jogada", horasJogo);
 		}
-		localStorage.setItem("clear_Cache", "version_2");
+		localStorage.setItem("clear_Cache", "version_3");
 		location.reload();
 	}
 
