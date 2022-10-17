@@ -55,7 +55,7 @@
 }
 @media only screen and (max-width: 375px) {
   #titulo-selecionar-modo-carga {
-    font-size: 23px !important;
+    font-size: 25px !important;
   }
   .class-button-icons {
     display: block;
@@ -73,25 +73,15 @@
     margin-left: 8rem !important;
   }
 
-  #title-manual {
-    font-size: 22px;
-    margin-left: 1rem !important;
-  }
 
   #hand {
-    margin-left: 1.5rem !important;
     color: #00652e;
     margin-top: 3rem;
   }
 
   #title-ico-import {
     font-size: 22px;
-    margin-left: -1.5rem !important;
-  }
-  #import {
-    color: #00652e;
-    margin-top: 2.5rem;
-    margin-left: 1.6rem !important;
+    margin-left: -1.8rem !important;
   }
 
   .class-title-coleta {
@@ -116,12 +106,13 @@
   }
 
   #title-manual {
-    font-size: 25px;
+    font-size: 22px;
     margin-left: 2rem;
   }
+  
 
   #hand {
-    margin-left: 2rem;
+    margin-left: 2.2rem;
     color: #00652e;
     margin-top: 3rem;
   }
