@@ -8,7 +8,7 @@ import useLoadingScreen from "../../Components/LoadingScreen";
 import * as xlsx from "xlsx";
 import TextUtils from "../../Utils/text";
 // import HandleClick from "./tooltipsImportar";
-import "../Importar/style.css";
+import "./importar.css";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 
 function Importar() {
@@ -99,24 +99,8 @@ function Importar() {
 			{/* <NavbarNavigator /> */}
 			<Menusuperior />
 			<div className="class-container-importar">
-				<div className="class-import">
-					<div className="title-import">
-						<h1 id="title-import">Importação de Cargas</h1>
-					</div>
-					<div className="class-button-import">
-						<a
-							href={
-								process.env.REACT_APP_STATIC_FILES_URL +
-								"/Importação de Carga em Lote.xlsx"
-							}
-							target="_blank"
-							rel="noreferrer"
-						>
-							<Button id="botao-download">
-								Download planilha modelo <BsDownload />
-							</Button>
-						</a>
-					</div>
+				<div>
+					<h1 id="title-import">Importação de Cargas</h1>
 				</div>
 
 				<div className="class-input-button" id="import-arq">
@@ -124,7 +108,6 @@ function Importar() {
 						<Form.Group controlId="formFile">
 							<Form.Label></Form.Label>
 							<Form.Control
-								//id="style-input-arq"
 								type="file"
 								accept=".xlsx"
 								required
@@ -133,7 +116,7 @@ function Importar() {
 							/>
 						</Form.Group>
 					</div>
-					<div className="class-button-submit">
+					<div>
 						<Button
 							type="submit"
 							id="botao-process"
@@ -143,12 +126,26 @@ function Importar() {
 						</Button>
 					</div>
 				</div>
+				<div className="class-input-button">
+					<a
+						href={
+							process.env.REACT_APP_STATIC_FILES_URL +
+							"/Importação de Carga em Lote.xlsx"
+						}
+						target="_blank"
+						rel="noreferrer"
+					>
+						<Button id="botao-download">
+							Download planilha modelo <BsDownload />
+						</Button>
+					</a>
+				</div>
 
 				<h1 id="title-tab-import-carg" className="class-title-preview">
 					Visualização e Resultados:
 				</h1>
 				<div className="class-table-importCarga">
-					<Table responsive striped bordered hover id="Table-impot-carg">
+					<Table responsive striped bordered hover>
 						<thead>
 							<tr>
 								<th>Código da carga</th>

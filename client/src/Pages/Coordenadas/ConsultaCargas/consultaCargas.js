@@ -10,7 +10,7 @@ import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { getClaims } from "src/MicrosoftAuthentication";
 import ServiceCargas from "src/services/ServiceCargas";
 import FormularioConsulta from "./formularioConsulta";
-import "../ConsultaCargas/consultaCarga.css";
+import "./consultaCarga.css";
 
 function Consulta() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();

@@ -146,7 +146,7 @@ function Main() {
 					<div className="class-p-text">
 						<p id="style-p-text">
 							O concentrador de cargas lhe proporciona ampla visibilidade de
-							demanda, além de auxiliar <br /> sua concentração para a melhor
+							demanda, além de <br /> auxiliar sua concentração para a melhor
 							tomada de decisão na escolha de um veículo.
 						</p>
 					</div>
@@ -194,7 +194,7 @@ function Main() {
 								className="icons-responsive"
 							/>
 							<br />
-							<b id="style-iconn">Lotes</b>
+							<b id="style-iconn-4">Lotes</b>
 						</Link>
 					</div>
 				</div>

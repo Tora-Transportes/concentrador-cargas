@@ -31,7 +31,6 @@
   align-items: center;
   grid-gap: -3rem;
   margin-top: 4rem;
-  margin-left: 3rem;
 }
 
 #import {
@@ -54,32 +53,24 @@
   transform: scale(1.1);
   color: #048a01;
 }
-@media only screen and (max-width: 380px) {
+@media only screen and (max-width: 375px) {
   #titulo-selecionar-modo-carga {
     font-size: 23px !important;
-    text-align: center;
   }
   .class-button-icons {
     display: block;
     margin-top: 1rem !important;
-    margin-left: 6rem !important;
   }
 }
 @media only screen and (max-width: 485px) {
   .class-body-menu {
     overflow: none;
   }
-  #titulo-selecionar-modo-carga {
-    font-size: 30px;
-    text-align: center;
-  }
   .class-button-icons {
-    
     position: absolute !important;
     display: block;
     margin-top: 1rem !important;
-    margin-left: 8rem;
-    margin-right: 5rem;
+    margin-left: 8rem !important;
   }
 
   #title-manual {
@@ -100,7 +91,7 @@
   #import {
     color: #00652e;
     margin-top: 2.5rem;
-    margin-left: 1.5rem !important;
+    margin-left: 1.6rem !important;
   }
 
   .class-title-coleta {
@@ -121,6 +112,7 @@
   .class-button-icons {
     margin-top: 2rem;
     grid-gap: 2rem;
+    margin-left: 2rem;
   }
 
   #title-manual {
