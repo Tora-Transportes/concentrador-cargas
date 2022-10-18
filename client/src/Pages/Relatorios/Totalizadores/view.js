@@ -151,9 +151,9 @@ function ViewRotasPendentes({
 									</FloatingLabel>
 								</Col>
 							</Row>
-							<Row className="mb-3">
-								<Col sm={11}>
-									<FloatingLabel label="*Código da filial" className="mb-3">
+							<Row>
+								<Col xl={10} lg={10} md={9} sm={8}>
+									<FloatingLabel label="*Código da filial">
 										<FilialSelect
 											placeholder=" "
 											name="fk_filial"
@@ -162,7 +162,7 @@ function ViewRotasPendentes({
 										/>
 									</FloatingLabel>
 								</Col>
-								<Col sm={1}>
+								<Col>
 									<Button className="botao-aplicar" onClick={applyFilter}>
 										Aplicar
 									</Button>
@@ -173,7 +173,7 @@ function ViewRotasPendentes({
 				</Accordion>
 
 				<Row className="text-center mx-auto">
-					<Col lg={4} md={10} sm={12}>
+					<Col lg={6} md={6} sm={10} xl={6}>
 						<Doughnut
 							className="class-grafico-relatorio"
 							data={{
@@ -301,7 +301,7 @@ function ViewRotasPendentes({
 							<Table>
 								<thead>
 									<tr>
-										<th> </th>
+										<th>#</th>
 										<th>Situação</th>
 										<th>Percentual</th>
 										<th>Total</th>
@@ -406,7 +406,7 @@ function ViewRotasPendentes({
 							<Table>
 								<thead>
 									<tr>
-										<th> </th>
+										<th>#</th>
 										<th>Situação</th>
 										<th>Percentual</th>
 										<th>Total</th>
@@ -475,7 +475,7 @@ function ViewRotasPendentes({
 					</Accordion.Item>
 				</Accordion>
 
-				<p style={{ marginTop: "2rem", color: "black" }}>
+				<p className="text-obs-listagem">
 					Obs: A listagem de cargas transportadas por dia só vai aparecer caso o
 					filtro esteja aplicado com filial, data inicial e data final.
 				</p>

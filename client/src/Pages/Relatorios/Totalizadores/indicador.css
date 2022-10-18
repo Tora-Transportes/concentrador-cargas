@@ -12,7 +12,8 @@
 }
 
 .class-grafico-relatorio {
-  margin-top: 2.5rem !important;
+  margin-top: 2.5rem;
+  margin-left: -1rem;
 }
 
 .class-acc-rel {
@@ -32,6 +33,7 @@
   background-color: #00652e !important;
   border: none !important;
   padding: 1rem !important;
+  width: 9rem !important;
 }
 
 .span-cargas-ativadas,
@@ -47,17 +49,45 @@
   color: rgb(160, 2, 2);
   font-weight: bold;
 }
+.text-obs-listagem{
+  margin-top: 2rem;
+  color: black;
+}
 
 .span-cad-origem{
   color: #0069aa;
   font-weight: bold;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 575px) {
+  .botao-aplicar{
+    margin-top: 1rem;
+  }
+  .class-grafico-relatorio{
+    margin-left: 2rem !important;
+   }
+} 
+
+@media only screen and (max-width: 770px) {
+  .class-grafico-relatorio{
+   margin-left: 5rem ;
+  }
+  .text-obs-listagem{
+    font-size: 14px;
+  }
+}
+@media only screen and (max-width: 1480px) {
+  .botao-aplicar{
+   width: 8rem !important;
+  }
+  .class-grafico-relatorio{
+    width: 10px;
+  }
   .style-title-rel {
-    margin: 3rem 16rem 0 0;
+    font-size: 30px;
   }
   #style-hr-rel {
-    width: 24rem;
+    margin-top: -1rem;
+    width: 100%;
   }
 }
