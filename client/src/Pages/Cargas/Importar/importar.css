@@ -1,0 +1,128 @@
+.class-body-importCarga{
+  font-family: 'Poppins', sans-serif;
+}
+.class-container-importar {
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-content: center;
+  align-items: center;
+  margin-left: -1rem;
+}
+
+#title-tab-import-carg{
+  font-size: 32px;
+}
+#title-import {
+  color: #00652e;
+  font-family: "Poppins", sans-serif;
+  font-size: 40px;
+  font-weight: 500;
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem;
+  margin-bottom: 1rem;
+}
+.class-input-button {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 1rem;
+  justify-content: center;
+  margin-top: 3rem;
+}
+#botao-process {
+  background: #00652e;
+  border: none;
+  width: 10rem;
+  height: 2.2rem;
+  margin-top: 1.6rem;
+}
+
+#botao-download {
+  background: #00652e;
+  border: none;
+  font-family: "Poppins", sans-serif;
+  margin-top: 1rem;
+  margin-left: 2rem;
+  width: 20rem;
+}
+
+.class-table-importCarga {
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 3.5rem 0 0 1rem;
+  
+}
+
+ /*tabela*/
+ .class-title-preview{
+  display: grid;
+  justify-content: center;
+  text-align: center;
+  margin-top: 5rem;
+  margin-bottom: -2rem;
+}
+
+@media only screen and (max-width: 480px) {
+
+  .class-container-importar{
+    margin-left: 2rem;
+  }
+  #title-import {
+    text-align: center;
+    font-size: 2rem;
+    margin-left: -1.5rem;
+  }
+
+  /*Input Escolher Arquivo*/
+  .class-input-button{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: -2rem;
+   
+  }
+  #import-arq{
+    margin-left: -1rem;
+  }
+  #botao-process{
+    margin-top: -.2rem;
+    width: 10rem;
+  }
+  #botao-download {
+    background: #00652e;
+    border: none;
+    font-family: "Poppins", sans-serif;
+    margin-left: 1rem;
+    margin-top: 2rem;
+    width: 15rem;
+  }
+
+  /*tabela*/
+  
+  #title-tab-import-carg{
+    margin-top: 4rem;
+    margin-bottom: -2rem;
+    margin-left: .5rem;
+    font-size: 1.5rem;
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .class-table-importCarga{
+    margin-left: -1rem !important;
+  }
+}
+  @media only screen and (max-width: 1025px) {
+    .class-table-importCarga{
+      margin-left: 1.8rem;
+    }
+
+  }
+  

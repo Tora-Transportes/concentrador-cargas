@@ -27,17 +27,15 @@ function Main() {
 		"warning",
 	];
 
-	//Trecho que limpar cache quando ouver necessidade...
-	const limparCache = localStorage.getItem("clear_Cache");
-	if (!limparCache || limparCache !== "version_1") {
-		const horasJogo = localStorage.getItem("ultima_vez_jogada");
-		localStorage.clear();
-		if (horasJogo) {
-			localStorage.setItem("ultima_vez_jogada", horasJogo);
+	//Função que limpar cache quando subir uma nova versão , isto se tiver necessidade...
+	const verificarAtualizacaoVersao = async () => {
+		const limparCache = localStorage.getItem("clear_Cache");
+		if (limparCache == null || limparCache.toString() !== "version_1") {
+			localStorage.clear();
+			localStorage.setItem("clear_Cache", "version_1");
+			location.reload();
 		}
-		localStorage.setItem("clear_Cache", "version_1");
-		location.reload();
-	}
+	};
 
 	function salvarTimestampUltimaVezJogada() {
 		const timestamp = new Date().getTime();
@@ -129,6 +127,7 @@ function Main() {
 	useEffect(() => {
 		const nome = getClaims().name;
 		setUserData({ nome });
+		verificarAtualizacaoVersao();
 	}, []);
 
 	useEffect(() => {
@@ -158,7 +157,7 @@ function Main() {
 					<div className="class-p-text">
 						<p id="style-p-text">
 							O concentrador de cargas lhe proporciona ampla visibilidade de
-							demanda, além de auxiliar <br /> sua concentração para a melhor
+							demanda, além de <br /> auxiliar sua concentração para a melhor
 							tomada de decisão na escolha de um veículo.
 						</p>
 					</div>
@@ -206,7 +205,7 @@ function Main() {
 								className="icons-responsive"
 							/>
 							<br />
-							<b id="style-iconn">Lotes</b>
+							<b id="style-iconn-4">Lotes</b>
 						</Link>
 					</div>
 				</div>

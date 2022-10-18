@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import ServiceCoordenadas from "src/services/ServiceCoordenadas";
 import FormularioConsulta from "./formularioConsulta";
-import "../ConsultaCargas/consultaCarga.css";
+import "./consultaCarga.css";
 
 function Consulta() {
 	//const [LoadingScreen, setLoading] = useLoadingScreen();

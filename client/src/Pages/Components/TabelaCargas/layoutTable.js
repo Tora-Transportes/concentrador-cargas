@@ -77,9 +77,9 @@ export const headerTableFunction = (
 
 export const footerTableFunction = (
 	previousPage,
-	nextPage,
-	page,
-	totalPages
+	nextPage
+	// page,
+	// totalPages
 ) => {
 	return (
 		<Row>
@@ -102,9 +102,7 @@ export const footerTableFunction = (
 				</Button>
 			</Col>
 			<Col sm={2} className="footer-table-totalPages">
-				<h6>
-					Página {page} de {totalPages}
-				</h6>
+				<h6>{/* Página {page} de {totalPages} */}</h6>
 			</Col>
 		</Row>
 	);

@@ -10,7 +10,7 @@ import ServiceProdutos from "../../../../services/ServiceProdutos";
 import FormularioCadastroManual from "../../../Components/FormularioCadastroManual";
 import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
-import "../Cadastrar/cadastroManual.css";
+import "./cadastroManual.css";
 // import HandleClick from "./tooltipsCadastro";
 
 function Manual() {
@@ -138,12 +138,7 @@ function Manual() {
 			<LoadingScreen />
 			<Menusuperior />
 			<div>
-				<p
-					id="title-cad-manual"
-					// onClick={HandleClick}
-				>
-					Cadastro de Carga - Manual
-				</p>
+				<p id="title-cad-manual">Cadastro de Carga - Manual</p>
 			</div>
 			<div className="class-linha-title">
 				<hr id="style-linha-cad"></hr>
