@@ -22,11 +22,6 @@ function formatDateAndHour(date) {
 
 export const columns = [
 	{
-		name: "",
-		description: "TESTE",
-		selector: () => "TESTE",
-	},
-	{
 		name: "fk_situacao",
 		description: "Situação da carga",
 		selector: (row) => (

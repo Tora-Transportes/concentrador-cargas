@@ -27,17 +27,15 @@ function Main() {
 		"warning",
 	];
 
-	//Trecho que limpar cache quando ouver necessidade...
-	const limparCache = localStorage.getItem("clear_Cache");
-	if (!limparCache || limparCache !== "version_2") {
-		const horasJogo = localStorage.getItem("ultima_vez_jogada");
-		localStorage.clear();
-		if (horasJogo) {
-			localStorage.setItem("ultima_vez_jogada", horasJogo);
+	//Função que limpar cache quando subir uma nova versão , isto se tiver necessidade...
+	const verificarAtualizacaoVersao = async () => {
+		const limparCache = localStorage.getItem("clear_Cache");
+		if (limparCache == null || limparCache.toString() !== "version_1") {
+			localStorage.clear();
+			localStorage.setItem("clear_Cache", "version_1");
+			location.reload();
 		}
-		localStorage.setItem("clear_Cache", "version_2");
-		location.reload();
-	}
+	};
 
 	function salvarTimestampUltimaVezJogada() {
 		const timestamp = new Date().getTime();
@@ -129,6 +127,7 @@ function Main() {
 	useEffect(() => {
 		const nome = getClaims().name;
 		setUserData({ nome });
+		verificarAtualizacaoVersao();
 	}, []);
 
 	useEffect(() => {
