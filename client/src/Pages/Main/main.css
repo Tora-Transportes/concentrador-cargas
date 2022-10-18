@@ -34,25 +34,25 @@
 }
 
 #style-title-main {
-  font-size: 38px;
+  font-size: 40px;
   color: #00652e;
   font-family: "Poppins", sans-serif;
   font-weight: 500;
 }
 
 #style-p-saudacao {
-  font-size: 22px;
+  font-size: 23px;
   color: #00652e;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
   display: flex;
   grid-template-rows: auto auto;
   justify-content: center;
-  margin-top: -3rem;
+  margin-top: -3.5rem;
 }
 
 .class-p-text {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   justify-content: center;
   align-items: center;
 }
@@ -91,8 +91,15 @@
 #style-iconn-4:hover,
 #style-iconn-3:hover,
 #style-iconn-2:hover,
-#style-iconn:hover {
+#style-iconn:hover,
+.class-ico-ind:hover {
   color: #03880c;
+}
+
+.class-ico-ind{
+  color: #00652e;
+  
+  margin-left: -.1rem;
 }
 #style-iconn {
   color: #00652e;
@@ -100,7 +107,7 @@
 /* maps */
 #style-iconn-2 {
   color: #00652e;
-  margin-left: 1.5rem;
+  margin-left: 1.2rem;
 }
 #style-iconn-3 {
   color: #00652e;
@@ -145,16 +152,7 @@
 
 @media only screen and (max-width: 480px) {
   #style-title-main {
-    font-size: 25px;
-  }
-  #style-p-saudacao {
-    font-size: 16px;
-    margin-bottom: -2rem;
-    text-align: center;
-    display: flex;
-    grid-template-rows: auto auto;
-    justify-content: center;
-    margin-top: -3rem;
+    font-size: 30px !important;
   }
 
   .class-jogo {
@@ -167,21 +165,12 @@
 }
 
 @media only screen and (max-width: 768px){
-  .title-page-main {
-    font-size: 28px;
-  }
-  
-  #style-p-text {
-    margin-top: 3rem;
-    font-size: 2.5vh;
-    text-align: center;
-  }
 
-  
   .class-icons-body {
     display: block;
     margin-top: 4rem;
     margin-right: 2rem;
+    margin-left: 2rem;
   }
 
   .icons-responsive {
@@ -191,7 +180,7 @@
 
 
   #style-iconn-4{
-    margin-left: -.5rem;
+    margin-left: -.2rem;
   }
 
   #title-p-jogo {
@@ -230,6 +219,28 @@
 }
 
 @media only screen and (max-width: 1279px){
+  
+  #style-title-main {
+    font-size: 35px;
+  }
+  
+  #style-p-saudacao {
+    font-size: 16px;
+    margin-bottom: -2rem;
+    text-align: center;
+    display: flex;
+    grid-template-rows: auto auto;
+    justify-content: center;
+    margin-top: -3rem;
+  }
+  
+  #style-p-text {
+    margin-top: 3rem;
+    font-size: 2.5vh;
+    text-align: center;
+  }
+
+
 .style-button-jogo{
   margin-bottom: 1rem !important;
   margin-left: -1rem;

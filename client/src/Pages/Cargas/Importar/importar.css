@@ -67,14 +67,14 @@
   margin-bottom: -2rem;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 555px) {
 
   .class-container-importar{
     margin-left: 2rem;
   }
-  #title-import {
+  #title-import{
+    font-size: 30px;
     text-align: center;
-    font-size: 2rem;
     margin-left: -1.5rem;
   }
 
@@ -87,7 +87,7 @@
    
   }
   #import-arq{
-    margin-left: -1rem;
+    margin-left: -2rem;
   }
   #botao-process{
     margin-top: -.2rem;
@@ -118,7 +118,7 @@
   .class-table-importCarga{
     margin-left: -1rem !important;
   }
-}
+} 
   @media only screen and (max-width: 1025px) {
     .class-table-importCarga{
       margin-left: 1.8rem;

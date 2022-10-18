@@ -7,12 +7,12 @@
   font-size: 40px;
   font-weight: 500;
   margin-top: 3rem;
-  margin-left: 7.7rem;
+  margin-left: 7rem;
 }
 
 #style-linha-cad {
   display: grid;
-  margin-left: 6rem;
+  margin-left: 5.3rem;
   margin-top: -1rem;
 }
 
@@ -25,7 +25,7 @@
 @media only screen and (max-width: 690px) {
   #title-cad-manual {
     margin-left: .8rem !important;
-    font-size: 20px !important;
+    font-size: 25px !important;
   }
 
   #style-linha-cad {
@@ -45,7 +45,7 @@
     position: -ms-page;
     margin-left: 3.5rem;
     margin-top: 2rem;
-    font-size: 25px;
+    font-size: 30px;
   }
 
   #style-linha-cad {

@@ -167,11 +167,7 @@ function Main() {
 				<div className="class-icons-body">
 					<div className="icons-efect">
 						<Link to="/relatorios" className="class-link">
-							<FaChartBar
-								size={50}
-								id="style-iconn"
-								className="class-ico-ind"
-							/>
+							<FaChartBar size={50} className="class-ico-ind" />
 							<br />
 							<b id="style-iconn">Indicador Operacional</b>
 						</Link>
@@ -184,7 +180,7 @@ function Main() {
 								className="icons-responsive me-4"
 							/>
 							<br />
-							<b id="style-iconn">Coordenadas</b>
+							<b id="style-iconn-4">Coordenadas</b>
 						</Link>
 					</div>
 					<div className="icons-efect">
@@ -195,7 +191,7 @@ function Main() {
 								className="icons-responsive"
 							/>
 							<br />
-							<b id="style-iconn">Cargas</b>
+							<b id="style-iconn-4">Cargas</b>
 						</Link>
 					</div>
 					<div className="icons-efect icon-lotes">

@@ -1,5 +1,5 @@
-.class-body-coordenadas{
-  font-family: 'Poppins', sans-serif;
+.class-body-coordenadas {
+  font-family: "Poppins", sans-serif;
 }
 .dialog-cte {
   width: 50%;
@@ -14,13 +14,13 @@
 .p-card-title {
   color: #00652e;
 }
-.p-checkbox .p-checkbox-box.p-highlight{
+.p-checkbox .p-checkbox-box.p-highlight {
   background-color: #00652e !important;
   background: #00652e !important;
 }
 
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight{
-  color:#000 !important;
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
+  color: #000 !important;
 }
 
 .ul-card-li {
@@ -64,7 +64,7 @@
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
-.col-placa-header img{
+.col-placa-header img {
   width: 20px;
   float: right;
   margin-top: 5px;
@@ -102,15 +102,25 @@
   letter-spacing: 2px;
 }
 
-.class-title-Coord{
+.class-title-Coord {
+  font-size: 40px;
   margin-left: -0.1rem;
 }
-#botao-detalhe-tabela{
-  background: #00652E;
+#botao-detalhe-tabela {
+  margin-bottom: 0.5rem;
+  height: 5vh;
+  background: #00652e;
   border: none;
 }
-
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 490px) {
+#botao-detalhe-tabela {
+  margin-left: 28%;
+}
+}
+@media only screen and (max-width: 1220px) {
+  .class-title-Coord {
+    font-size: 30px;
+  }
   .dialog-cte {
     width: 95%;
     height: auto;
@@ -123,8 +133,10 @@
     background-color: #00652e !important;
   }
 
-  .opcao-tabela{
-    margin-left: 8vw;
+  #botao-detalhe-tabela {
+    font-size: 2.5vh;
+    width: 12rem;
+    align-items: center;
   }
 
   /* .header-dialog {
