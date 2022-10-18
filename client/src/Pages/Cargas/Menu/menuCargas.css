@@ -53,12 +53,12 @@
   transform: scale(1.1);
   color: #048a01;
 }
-@media only screen and (max-width: 375px) {
+@media only screen and (max-width: 385px) {
   #titulo-selecionar-modo-carga {
     font-size: 25px !important;
   }
 }
-@media only screen and (max-width: 485px) {
+@media only screen and (max-width: 455px) {
   .class-body-menu {
     overflow: none;
   }
@@ -66,7 +66,7 @@
     position: absolute !important;
     display: block;
     margin-top: 1rem !important;
-  margin-left: 7rem !important;
+  margin-left: 8rem !important;
   }
 
 

@@ -154,6 +154,9 @@
   #style-title-main {
     font-size: 30px !important;
   }
+  #style-p-saudacao {
+    font-size: 20px !important;
+  }
 
   .class-jogo {
     display: grid;
@@ -225,7 +228,7 @@
   }
   
   #style-p-saudacao {
-    font-size: 16px;
+    font-size: 22px;
     margin-bottom: -2rem;
     text-align: center;
     display: flex;
