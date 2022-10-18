@@ -54,11 +54,13 @@ export class CoordenadaRepository {
     const total = database("con_coordenadas_veiculos")
       .count("placa as total")
       .first();
+
     query.leftJoin(
       "con_veiculos_distancia",
       "con_veiculos_distancia.fk_placa",
       "con_coordenadas_veiculos.placa"
     );
+
     query.leftJoin(
       "con_dados_coordenadas",
       "con_dados_coordenadas.fk_placa",
@@ -75,7 +77,6 @@ export class CoordenadaRepository {
       "con_usuarios.oid",
       "con_dados_coordenadas.responsavel_placa"
     );
-
     total.leftJoin(
       "con_usuarios",
       "con_usuarios.oid",
@@ -88,7 +89,7 @@ export class CoordenadaRepository {
           "con_coordenadas_veiculos.data_emissao_documento",
           [
             new Date(date_execel_inicio + "T00:00:00"),
-            new Date(date_execel_fim + "T00:00:00"),
+            new Date(date_execel_fim + "T23:59:59"),
           ]
         );
       }
@@ -100,7 +101,14 @@ export class CoordenadaRepository {
       "con_coordenadas_veiculos.codigo_veiculo"
     );
 
+    total.leftJoin(
+      "VEICULO as VEI",
+      "VEI.VEI_COD",
+      "con_coordenadas_veiculos.codigo_veiculo"
+    );
+
     query.leftJoin("APELIDO_VEICULO as APV", "APV.AV_SEQ", "VEI.AV_SEQ");
+    total.leftJoin("APELIDO_VEICULO as APV", "APV.AV_SEQ", "VEI.AV_SEQ");
 
     query.leftJoin("CADASTRO_GERAL AS CAG", "CAG.CG_COD", "VEI.CG_MOT");
 
@@ -141,8 +149,10 @@ export class CoordenadaRepository {
       if (value !== undefined && key) {
         const columnName = traducaoNomeColuna.get(key) ?? key;
         if (traducaoNomeColuna.get(key)) {
-          query.where(columnName, "like", `%${value}%`);
-          total.where(columnName, "like", `%${value}%`);
+          const validationValue: string =
+            key === "apelido_carreta" ? value.toUpperCase() : value;
+          query.where(columnName, "like", `%${validationValue}%`);
+          total.where(columnName, "like", `%${validationValue}%`);
         } else {
           query.where(columnName, "like", `%${value.toUpperCase()}%`);
           total.where(columnName, "like", `%${value.toUpperCase()}%`);

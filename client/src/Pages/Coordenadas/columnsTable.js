@@ -1,11 +1,11 @@
 import { SiGooglemaps } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
-import { GiArchiveResearch } from "react-icons/gi";
+//import { GiArchiveResearch } from "react-icons/gi";
 import DateUtils from "../Utils/date";
 import { Button, Form } from "react-bootstrap";
 import CollapseHint from "../Components/CollapseHint";
 import ResponsavelCadastroSelect from "../Components/ResponsavelCadastroSelect";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 
 export const getColumns = (
 	handleChangeDataJanela,
@@ -48,23 +48,29 @@ export const getColumns = (
 			showFilter: true,
 		},
 		{
-			name: "link",
-			description: "Link",
-			static_column: true,
-			selector: (row) => {
-				if (row?.placa) {
-					return (
-						<Link
-							to={`/cargas/consulta/${row.placa}`}
-							target="_blank"
-							rel="noopener"
-						>
-							<GiArchiveResearch className="fs-5" />
-						</Link>
-					);
-				}
-			},
+			name: "apelido_carreta",
+			description: "Apelido carreta",
+			selector: (row) => row.apelido_carreta,
+			showFilter: true,
 		},
+		// {
+		// 	name: "link",
+		// 	description: "Link",
+		// 	static_column: true,
+		// 	selector: (row) => {
+		// 		if (row?.placa) {
+		// 			return (
+		// 				<Link
+		// 					to={`/cargas/consulta/${row.placa}`}
+		// 					target="_blank"
+		// 					rel="noopener"
+		// 				>
+		// 					<GiArchiveResearch className="fs-5" />
+		// 				</Link>
+		// 			);
+		// 		}
+		// 	},
+		// },
 		{
 			name: "telefone_motorista",
 			description: "Telefone motorista",
