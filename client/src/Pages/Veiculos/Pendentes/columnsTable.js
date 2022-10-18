@@ -19,11 +19,6 @@ export const getColumns = (aprovarVeiculo, reprovarVeiculo) => {
 			showFilter: true,
 		},
 		{
-			name: "",
-			description: "TESTE",
-			selector: () => "Monitoramento",
-		},
-		{
 			name: "documento_transporte",
 			description: "Doc. Transporte",
 			selector: (row) => row.documento_transporte,
