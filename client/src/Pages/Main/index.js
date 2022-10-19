@@ -65,7 +65,7 @@ function Main() {
 		const corCorreta = queueCoresAtuais.shift();
 		if (cor !== corCorreta) {
 			salvarTimestampUltimaVezJogada();
-			toast.error(`Você falhou na rodada ${levelGame}`, { autoClose: false });
+			toast.error(`Você falhou na rodada ${levelGame}`, { autoClose: 1000 });
 			setLevelGame(-1);
 			return;
 		}
@@ -217,9 +217,9 @@ function Main() {
 					</p>
 				</div>
 
-				<Row className={usuarioPodeJogar() ? "" : "invisible"}>
+				<Row className={usuarioPodeJogar() ? "" : "d-none"}>
 					{levelGame > -1 && (
-						<Row className="mt-5">
+						<Row className="mt-4">
 							<Col>
 								<Button
 									variant=""
@@ -231,7 +231,7 @@ function Main() {
 					)}
 
 					{levelGame > -1 && (
-						<Row className="mt-5 text-end">
+						<Row className="mt-4 text-end">
 							<Col>
 								Level <b>{levelGame}</b>
 							</Col>

@@ -4,6 +4,7 @@ import { Button, Col, Container, InputGroup, Row } from "react-bootstrap";
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
 import { TbSettings } from "react-icons/tb";
 import { Dropdown } from "primereact/dropdown";
+import "./index.css";
 
 const PaginatorTable = ({ itensPerPage, setItensPerPage, setVisibleLeft }) => {
 	const selectLines = { name: itensPerPage, code: itensPerPage };

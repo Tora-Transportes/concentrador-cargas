@@ -96,10 +96,10 @@
   color: #03880c;
 }
 
-.class-ico-ind{
+.class-ico-ind {
   color: #00652e;
-  
-  margin-left: -.1rem;
+
+  margin-left: -0.1rem;
 }
 #style-iconn {
   color: #00652e;
@@ -134,17 +134,18 @@
   background: #00652e !important;
   border: none !important;
   width: 12rem;
-  margin-left: -.5rem;
+  margin-left: -0.5rem;
   align-items: center;
 }
 
 .class-jogo {
   display: grid;
   grid-template-columns: auto auto auto auto auto auto;
-  grid-gap: 4rem;
-  margin-bottom: 3rem;
+  grid-gap: 3rem;
+  margin-bottom: 2rem;
 }
 .class-p-fimjogo {
+  font-size: 16px;
   margin-top: 15vh;
   margin-left: 3vw;
   color: red;
@@ -164,11 +165,9 @@
     grid-gap: 4rem;
     margin-bottom: 3rem;
   }
-
 }
 
-@media only screen and (max-width: 768px){
-
+@media only screen and (max-width: 768px) {
   .class-icons-body {
     display: block;
     margin-top: 4rem;
@@ -179,11 +178,8 @@
   .icons-responsive {
     margin-top: 2rem;
   }
-
-
-
-  #style-iconn-4{
-    margin-left: -.2rem;
+  #style-iconn-4 {
+    margin-left: -0.2rem;
   }
 
   #title-p-jogo {
@@ -195,7 +191,8 @@
     align-items: center;
     justify-content: center;
     margin-left: -1rem;
-    margin-top: 3rem;  }
+    margin-top: 3rem;
+  }
 
   .style-button-jogo {
     background: #00652e;
@@ -212,21 +209,13 @@
     margin-top: 1rem !important;
     margin-bottom: 2rem;
   }
-
-  .class-p-fimjogo {
-    font-size: 2.7vh;
-    margin-top: 4rem;
-    margin-left: 3vw;
-    color: red;
-  }
 }
 
-@media only screen and (max-width: 1279px){
-  
+@media only screen and (max-width: 1279px) {
   #style-title-main {
     font-size: 35px;
   }
-  
+
   #style-p-saudacao {
     font-size: 22px;
     margin-bottom: -2rem;
@@ -236,16 +225,22 @@
     justify-content: center;
     margin-top: -3rem;
   }
-  
+
   #style-p-text {
     margin-top: 3rem;
     font-size: 2.5vh;
     text-align: center;
   }
 
+  .style-button-jogo {
+    margin-bottom: 1rem !important;
+    margin-left: -1rem;
+  }
 
-.style-button-jogo{
-  margin-bottom: 1rem !important;
-  margin-left: -1rem;
-}
+  .class-p-fimjogo {
+    font-size: 2.6vh;
+    margin-top: 3rem;
+    margin-left: 3vw;
+    color: red;
+  }
 }

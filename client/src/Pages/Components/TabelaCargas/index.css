@@ -154,10 +154,6 @@
   .datatable-responsive-gridCargas .p-datatable-header {
     display: none;
   }
-
-  .sidebar-button-table {
-    height: 5vh;
-  }
   .title-h1 {
     margin-right: 50px;
   }
@@ -178,6 +174,12 @@
   .footer-table Button {
     margin: 3px;
   }
+}
+
+@media only screen and (max-width: 661px) {
+#Botao-voltar-pag{
+  margin-bottom: .5rem;
+}
 }
 
 @media screen and (max-width: 50em) {
