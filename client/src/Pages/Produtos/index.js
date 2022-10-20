@@ -153,7 +153,7 @@ function Produtos() {
 			<LoadingScreen />
 			{/* <NavbarNavigator /> */}
 			<Menusuperior />
-			<Container className="text-center mb-3 mt-3">
+			<Container className="pagina-produtos">
 				<Row>
 					<h1 className="class-title-produto">Produtos</h1>
 					<div className="datatable-responsive-demoPermissoes">
