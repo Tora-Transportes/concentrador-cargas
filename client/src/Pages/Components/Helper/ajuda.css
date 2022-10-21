@@ -9,6 +9,7 @@
   margin-top: 4rem;
 }
 h1 {
+  font-size: 40px;
   font-family: "Poppins", sans-serif;
   color: #00652e;
 }
@@ -74,6 +75,9 @@ p {
 }
 
 @media only screen and (max-width: 980px) {
+  .class-p-ajuda{
+    font-size: 16px;
+  }
 .class-p-subtitle{
   margin-left: 1rem;
 }
@@ -86,12 +90,6 @@ p {
     display: flexbox;
     text-align: center;
     margin-top: 2.8rem;
-  }
-  
-  .class-p-ajuda {
-    font-size: 16px;
-    margin-top: 1rem;
-    color: #3f4245;
   }
 
   #style-gif {

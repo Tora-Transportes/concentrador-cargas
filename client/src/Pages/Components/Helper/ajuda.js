@@ -31,9 +31,7 @@ function Helper() {
 					Bem-vindo ao Ajuda, nessa página será disponibilizado o passo a passo
 					para as seguintes telas:
 					<br />
-					<strong style={{ color: "" }}>
-						Cadastro de Cargas, Coordenadas, e Monitoramento.
-					</strong>
+					<strong>Cadastro de Cargas, Coordenadas, e Monitoramento.</strong>
 				</p>
 			</div>
 			<div>
