@@ -84,7 +84,7 @@ export const footerTableFunction = (
 ) => {
 	return (
 		<Row>
-			<Col className="footer-table">
+			<Col className="footer-table mt-2 mb-2">
 				<Button
 					style={{ background: "#00652E", border: "none", color: "#FFFFFF" }}
 					variant="outline-info"

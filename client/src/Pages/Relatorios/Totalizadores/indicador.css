@@ -7,8 +7,8 @@
   color: #00652e;
   font-size: 40px;
   display: grid;
-  text-align: start;
-  margin-top: 3rem;
+  text-align: center;
+  margin-top: 1.5rem;
 }
 
 .class-grafico-relatorio {
@@ -76,7 +76,7 @@
     font-size: 14px;
   }
 }
-@media only screen and (max-width: 1480px) {
+@media only screen and (max-width: 1326px) {
   .botao-aplicar{
    width: 8rem !important;
   }
