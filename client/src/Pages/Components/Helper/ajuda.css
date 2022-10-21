@@ -3,12 +3,30 @@
   padding: 0%;
   font-family: "Poppins", sans-serif;
 }
-
-#style-button-accordion {
-  width: 55rem;
+.class-body-title {
+  display: flexbox;
+  text-align: center;
+  margin-top: 4rem;
 }
-#style-button-accordion:hover {
-  outline: none;
+h1 {
+  font-family: "Poppins", sans-serif;
+  color: #00652e;
+}
+
+.class-p-ajuda {
+  font-size: 18px;
+  margin-top: 3rem;
+  color: #00652e;
+}
+.class-p-subtitle{
+  margin-left: 4rem;
+  margin-top: 5rem;
+  color: #3f4245;
+
+}
+p {
+  font-family: "Poppins", sans-serif;
+  color: #939598;
 }
 
 #style-ac-header:hover {
@@ -21,28 +39,9 @@
   margin-left: 3rem;
 }
 .class-accordion {
-  display: grid;
-  justify-content: center;
-  margin-top: 5rem;
-}
-
-h1 {
-  font-family: "Poppins", sans-serif;
-  color: #00652e;
-}
-
-hr {
-  width: 70rem;
-}
-
-.class-body-title {
-  margin-left: 7rem;
-  margin-top: 3rem;
-}
-
-p {
-  font-family: "Poppins", sans-serif;
-  color: #939598;
+  width: 90%;
+  margin-top: 1rem;
+  margin-left: 4rem;
 }
 
 .class-body-accordion {
@@ -74,35 +73,30 @@ p {
   margin-left: 1rem;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 980px) {
+.class-p-subtitle{
+  margin-left: 1rem;
+}
+.class-accordion{
+  margin-left: 1rem;
+}
+}
+@media only screen and (max-width: 1326px) {
   .class-body-title {
-    display: grid;
-    margin-right: 4rem;
+    display: flexbox;
+    text-align: center;
+    margin-top: 2.8rem;
   }
-
-  h1 {
-    font-family: "Poppins", sans-serif;
-    color: #00652e;
-    margin-left: -5rem;
-  }
-
-  hr {
-    width: 20rem;
-  }
-
-  .class-p-ajuda,
-  .class-hr-ajuda {
-    display: grid;
-    margin-left: -5rem;
+  
+  .class-p-ajuda {
+    font-size: 16px;
+    margin-top: 1rem;
+    color: #3f4245;
   }
 
   #style-gif {
     width: 20rem;
     margin-left: 1rem;
-  }
-
-  #style-button-accordion {
-    width: 25rem;
   }
 
   .class-button3,
