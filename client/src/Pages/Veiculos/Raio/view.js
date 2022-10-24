@@ -3,7 +3,7 @@ import { Container, Row, Form, Button, Table, Card } from "react-bootstrap";
 import "./../styleVeiculos.css";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { BsDownload } from "react-icons/bs";
-import "../Raio/style.css";
+import "./style.css";
 import L from "leaflet";
 
 const originIcon = L.icon({
@@ -91,47 +91,48 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 						})}
 					</MapContainer>
 				)}
-				<Row className="mb-2">
+				<Row className="align-middle">
 					<h1 className="class-title-raio">Veículos próximos</h1>
+
+					<div>
+						<Card className="class-card-raio">
+							<Form onSubmit={handleSubmit} className="class-body-viewraio">
+								<Form.Group controlId="formPlaca">
+									<Form.Label>Placa</Form.Label>
+									<Form.Control
+										style={{ width: "20rem" }}
+										type="text"
+										name="placa"
+										value={fields.placa}
+										onChange={handleChange}
+										required
+									/>
+								</Form.Group>
+
+								<Form.Group controlId="formdistancia">
+									<Form.Label>Distância (KM)</Form.Label>
+									<Form.Control
+										style={{ width: "20rem" }}
+										type="number"
+										min="1"
+										name="distancia_km"
+										value={fields.distancia_km}
+										onChange={handleChange}
+										required
+									/>
+								</Form.Group>
+
+								<Button
+									type="submit"
+									id="style-button-pesqraio"
+									className="class-button-pesqraio"
+								>
+									Pesquisar
+								</Button>
+							</Form>
+						</Card>
+					</div>
 				</Row>
-				<div>
-					<Card className="class-card-raio">
-						<Form onSubmit={handleSubmit} className="class-body-viewraio">
-							<Form.Group controlId="formPlaca">
-								<Form.Label>Placa</Form.Label>
-								<Form.Control
-									style={{ width: "20rem" }}
-									type="text"
-									name="placa"
-									value={fields.placa}
-									onChange={handleChange}
-									required
-								/>
-							</Form.Group>
-
-							<Form.Group controlId="formdistancia">
-								<Form.Label>Distância (KM)</Form.Label>
-								<Form.Control
-									style={{ width: "20rem" }}
-									type="number"
-									min="1"
-									name="distancia_km"
-									value={fields.distancia_km}
-									onChange={handleChange}
-									required
-								/>
-							</Form.Group>
-
-							<Button
-								type="submit"
-								id="style-button-pesqraio"
-								className="class-button-pesqraio"
-							>
-								Pesquisar
-							</Button>
-						</Form>
-					</Card>
-				</div>
 
 				<Row>
 					{raio && (

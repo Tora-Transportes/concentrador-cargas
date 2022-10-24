@@ -23,9 +23,14 @@
 }
 
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1325px) {
     .class-title-raio{
-        margin-left: -0.2rem;
+        font-size: 30px;
+    }
+    .class-card-raio{
+        margin-left: 2%;
+        width: 100%;
+        height: 22rem
     }
 
     .class-body-viewraio{
@@ -35,10 +40,5 @@
  
     }
 
-    .class-card-raio{
-        margin-left: .1rem;
-        width: 24rem;
-        height: 22rem;
-    }
 }
 
