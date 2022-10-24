@@ -172,8 +172,8 @@ function ViewRotasPendentes({
 					</Accordion.Item>
 				</Accordion>
 
-				<Row className="text-center mx-auto">
-					<Col lg={6} md={6} sm={10} xl={6}>
+				<Row className="text-center">
+					<Col lg={4} md={10} sm={12}>
 						<Doughnut
 							className="class-grafico-relatorio"
 							data={{
