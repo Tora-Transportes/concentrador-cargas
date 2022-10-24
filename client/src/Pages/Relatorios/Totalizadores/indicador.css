@@ -11,10 +11,6 @@
   margin-top: 1.5rem;
 }
 
-.class-grafico-relatorio {
-  margin-top: 2.5rem;
-}
-
 .class-acc-rel {
   margin-top: 4rem;
 }
@@ -62,12 +58,31 @@
   .botao-aplicar{
     margin-top: 1rem;
   }
+
+  .col-doughnut{
+    width: 90% !important;
+  };
 } 
 
-@media only screen and (max-width: 770px) {
+@media only screen and (max-width: 991px) and (min-width: 576px) {
+  .col-doughnut{
+    margin-left: 20%
+  };
+}
+
+
+@media only screen and (max-width: 768px) {
   .text-obs-listagem{
     font-size: 14px;
   }
+
+}
+
+@media only screen and (min-width: 992px){
+  .col-doughnut {
+  margin-top: 2.5rem !important;
+}
+
 }
 @media only screen and (max-width: 1326px) {
   .botao-aplicar{

@@ -173,9 +173,8 @@ function ViewRotasPendentes({
 				</Accordion>
 
 				<Row className="text-center">
-					<Col lg={4} md={10} sm={12}>
+					<Col xl={4} lg={5} md={7} sm={8} className="col-doughnut">
 						<Doughnut
-							className="class-grafico-relatorio"
 							data={{
 								labels: totalizadores.geral.map((i) => i.descricao),
 								datasets: [
