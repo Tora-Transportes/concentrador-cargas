@@ -1,0 +1,23 @@
+#style-botao-add {
+  background: #6b8377;
+  color: #ffff;
+  border: none;
+  margin-left: -30px;
+}
+
+#style-add-parada {
+  background-color: #fff;
+  color: #000;
+  border-color: #00652e;
+}
+
+.lista-map {
+  margin-left: -12px;
+  margin-bottom: 3px;
+}
+
+.dialog-parada {
+  width: 55%;
+  height: auto;
+}
+

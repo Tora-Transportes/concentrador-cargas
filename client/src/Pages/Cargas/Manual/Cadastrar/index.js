@@ -27,6 +27,7 @@ function Manual() {
 			cliente: "",
 			destino_carga: "",
 			origem_carga: "",
+			parada_intermediaria: "",
 			data_coleta: "",
 			data_entrega: "",
 			tipo_carga: "",
@@ -35,15 +36,11 @@ function Manual() {
 			observacao: "",
 			acessorios_requisitos: "",
 			informacoes_restritivas: "",
-
 			janela_coleta: "",
 			janela_entrega: "",
-
 			local_coleta: "",
 			local_entrega: "",
-
 			placa_veiculo: "",
-
 			documento_transporte: "",
 		},
 		onSubmit: async (values) => {
@@ -68,7 +65,11 @@ function Manual() {
 
 	useEffect(() => {
 		setDistancia(null);
-	}, [formik.values.destino_carga, formik.values.origem_carga]);
+	}, [
+		formik.values.destino_carga,
+		formik.values.origem_carga,
+		formik.values.parada_intermediaria,
+	]);
 
 	function buscarCargaComDocumentoDeTransporte({ documento_transporte, id }) {
 		if (documento_transporte) {
@@ -141,7 +142,7 @@ function Manual() {
 				<p id="title-cad-manual">Cadastro de Carga - Manual</p>
 			</div>
 			<div className="class-linha-title">
-				<hr id="style-linha-cad"></hr>
+				{/* <hr id="style-linha-cad"></hr> */}
 			</div>
 			<Container className="mb-5 mt-2" style={{ scrollBehavior: "none" }}>
 				<Form onSubmit={formik.handleSubmit}>

@@ -1,14 +1,21 @@
 import React, { useEffect } from "react";
-import { Form, Row, Col, FloatingLabel, InputGroup } from "react-bootstrap";
+import "./consultaCarga.css";
+import {
+	Form,
+	Row,
+	Col,
+	FloatingLabel,
+	InputGroup,
+	Button,
+} from "react-bootstrap";
 //import AutocompleteInput from "src/Pages/Components/AutocompleteInput";
 import FilialSelect from "src/Pages/Components/FilialSelect";
 import InputCliente from "src/Pages/Components/InputCliente";
 import InputLocalizacao from "src/Pages/Components/InputLocalizacao";
 import InputPlaca from "src/Pages/Components/InputPlaca";
-import "../ConsultaCargas/consultaCarga.css";
+import { HiArrowCircleLeft } from "react-icons/hi";
 
-function FormularioConsulta({ formik }) {
-	//const [addDestinoInterme, setAddDestinoInterme] = useState(false);
+function FormularioConsulta({ formik, exitPage }) {
 	useEffect(() => {
 		if (formik.values.e_lote) {
 			formik.setFieldValue("placa_veiculo", null);
@@ -81,36 +88,13 @@ function FormularioConsulta({ formik }) {
 						/>
 					</FloatingLabel>
 				</Col>
-				{/* <Col>
-					<Form.Group className="mt-3">
-						*É Lote?{" "}
-						<Form.Check
-							type="radio"
-							label="Sim"
-							name="e_lote"
-							onChange={() => formik.setFieldValue("e_lote", true)}
-							checked={formik.values.e_lote === true}
-							inline
-							disabled
-						/>
-						<Form.Check
-							type="radio"
-							label="Não"
-							name="e_lote"
-							onChange={() => formik.setFieldValue("e_lote", false)}
-							checked={formik.values.e_lote === false}
-							inline
-							disabled
-						/>
-					</Form.Group>
-				</Col> */}
 			</Row>
 			<div className="class-linha-title3">
 				<hr className="w-100" />
 			</div>
 			{!formik.values.e_lote && (
 				<>
-					<Row className="mb-5">
+					<Row className="mb-2">
 						<Col sm={12}>
 							<h3 className="title-dados-veic">Dados do veículo</h3>
 						</Col>
@@ -391,6 +375,15 @@ function FormularioConsulta({ formik }) {
 					</Form.Group>
 				</Col>
 			</Row>
+			<Col>
+				<Button
+					variant="success"
+					className="button-footer-voltar"
+					onClick={exitPage}
+				>
+					<HiArrowCircleLeft className="fs-5 mb-1" /> Voltar
+				</Button>
+			</Col>
 		</div>
 	);
 }

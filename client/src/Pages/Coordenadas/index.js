@@ -159,7 +159,8 @@ function RotasPendentes() {
 		handleChangeDataJanela,
 		perguntarEAlterarDadosCoordenada,
 		handleChangeResponsavelPlaca,
-		showCardCTE
+		showCardCTE,
+		toast
 	);
 
 	function resetView() {

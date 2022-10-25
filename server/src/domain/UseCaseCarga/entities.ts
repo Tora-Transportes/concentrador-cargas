@@ -332,7 +332,7 @@ export class UseCaseViewCargas {
   async indexPlate(plate: string) {
     const carga = await this.cargaRepository.indexPlate(plate);
     if (!carga) {
-      throw new AppError("A carga solicitada não existe", 404);
+      throw new AppError(" ", 204);
     }
 
     if (carga.ativo === 0) {

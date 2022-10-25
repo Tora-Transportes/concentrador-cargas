@@ -29,7 +29,7 @@ function FormularioCadastroManual({
 	formik,
 	produtos,
 	distancia,
-	distanciaIntermediaria,
+	//setDistancia,
 	handleSearchDistance,
 	disabledFields = [],
 	buscarCargaComDocumentoDeTransporte,
@@ -158,7 +158,7 @@ function FormularioCadastroManual({
 			<Row>
 				<Col>
 					<div className="class-linha-title2">
-						<hr id="style-linha-cad2"></hr>
+						<hr className="w-100"></hr>
 					</div>
 					<Form.Group className="mb-3">
 						*É Lote?{" "}
@@ -206,7 +206,7 @@ function FormularioCadastroManual({
 				</Col>
 			</Row>
 			<div className="class-linha-title3">
-				<hr id="style-linha-cad3"></hr>
+				<hr className="w-100"></hr>
 			</div>
 			{!formik.values.e_lote && (
 				<>
@@ -322,7 +322,7 @@ function FormularioCadastroManual({
 							)}
 						</Col>
 						<div className="class-linha-title4">
-							<hr id="style-linha-cad4"></hr>
+							<hr className="w-100"></hr>
 						</div>
 					</Row>
 				</>
@@ -371,35 +371,6 @@ function FormularioCadastroManual({
 						/>
 					</FloatingLabel>
 				</Col>
-				{/* <Col sm={4} className="text-center justifi-content-center mt-2">
-					<Button
-						//style={{ background: "#00652E", border: "none", color: "#FFFFFF" }}
-						//variant="info"
-						onClick={() => setAddDestinoInterme(true)}
-					>
-						Adicionar destino intermediária
-					</Button>
-				</Col> */}
-
-				{/* {addDestinoInterme && (
-					<Col sm={12} md={4}>
-						<FloatingLabel
-							label="Destino intermediário da  carga"
-							className="mb-3"
-						>
-							<InputLocalizacao
-								keyDataList="destino_intermediario"
-								type="text"
-								placeholder=" "
-								name="destino_intermediario"
-								value={formik.values.destino_intermediario}
-								onChange={formik.handleChange}
-								onBlur={() => handleSearchDistance(formik.values)}
-								className="text-warning"
-							/>
-						</FloatingLabel>
-					</Col>
-				)} */}
 			</Row>
 
 			{/* <Row>
@@ -428,35 +399,6 @@ function FormularioCadastroManual({
 					</FloatingLabel>
 				</Col>
 			</Row> */}
-
-			{distanciaIntermediaria && (
-				<Row>
-					<Col>
-						<FloatingLabel
-							label="Distância entre a origem e o destino intermediário"
-							className="mb-3"
-						>
-							<Form.Control
-								type="text"
-								placeholder=" "
-								value={`A distância entre ${
-									formik.values.origem_carga.split("/")[2]
-								} e ${
-									formik.values.destino_intermediario.split("/")[2]
-								} é de ${distanciaIntermediaria} KM.`}
-								className="text-warning"
-								readOnly
-							/>
-							<Form.Text id="passwordHelpBlock" muted>
-								O valor mostrado representa a distância de centro a centro.
-							</Form.Text>
-						</FloatingLabel>
-						<div className="class-linha-title">
-							<hr id="style-linha-cad"></hr>
-						</div>
-					</Col>
-				</Row>
-			)}
 			{distancia && (
 				<Row>
 					<Col>
@@ -480,7 +422,7 @@ function FormularioCadastroManual({
 							</Form.Text>
 						</FloatingLabel>
 						<div className="class-linha-title5">
-							<hr id="style-linha-cad5"></hr>
+							<hr className="w-100"></hr>
 						</div>
 					</Col>
 				</Row>
@@ -589,7 +531,7 @@ function FormularioCadastroManual({
 			</Row>
 
 			<div className="class-linha-title6">
-				<hr id="style-linha-cad6"></hr>
+				<hr className="w-100"></hr>
 			</div>
 
 			<Row>
@@ -651,6 +593,7 @@ function FormularioCadastroManual({
 					value={formik.values.locais}
 					name="locais"
 					onChange={formik.handleChange}
+					formik={formik}
 				/>
 			</div>
 
@@ -686,7 +629,7 @@ function FormularioCadastroManual({
 					<Card>
 						{debitosVeiculo?.map((i) => (
 							<ListGroup key={i.DEC_SEQ} className="list-group-flush">
-								<hr />
+								<hr className="w-100"></hr>
 								<ListGroupItem>
 									<b>PLACA</b>: {i.VEI_PLACA}
 								</ListGroupItem>

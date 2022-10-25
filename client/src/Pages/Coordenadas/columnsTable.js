@@ -1,18 +1,33 @@
 import { SiGooglemaps } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
-//import { GiArchiveResearch } from "react-icons/gi";
+import { GiArchiveResearch } from "react-icons/gi";
 import DateUtils from "../Utils/date";
 import { Button, Form } from "react-bootstrap";
 import CollapseHint from "../Components/CollapseHint";
 import ResponsavelCadastroSelect from "../Components/ResponsavelCadastroSelect";
-//import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import ServiceCoordenadas from "src/services/ServiceCoordenadas";
+import { showToastMessage } from "../Utils/toastMessage";
 
 export const getColumns = (
 	handleChangeDataJanela,
 	perguntarEAlterarDadosCoordenada,
 	handleChangeResponsavelPlaca,
-	showCardCTE
+	showCardCTE,
+	toast
 ) => {
+	const history = useHistory();
+	const existeCarga = async (placa) => {
+		const { status } = await ServiceCoordenadas.searchByPlate(placa);
+		if (status === 200) {
+			history.push(`/cargas/consulta/${placa}`);
+		} else {
+			toast.current.clear();
+			const message = "Não existe informações da carga para esta busca!";
+			await showToastMessage(toast, "warn", message, 5000);
+		}
+	};
+
 	return [
 		{
 			id: "coluna1",
@@ -53,24 +68,25 @@ export const getColumns = (
 			selector: (row) => row.apelido_carreta,
 			showFilter: true,
 		},
-		// {
-		// 	name: "link",
-		// 	description: "Link",
-		// 	static_column: true,
-		// 	selector: (row) => {
-		// 		if (row?.placa) {
-		// 			return (
-		// 				<Link
-		// 					to={`/cargas/consulta/${row.placa}`}
-		// 					target="_blank"
-		// 					rel="noopener"
-		// 				>
-		// 					<GiArchiveResearch className="fs-5" />
-		// 				</Link>
-		// 			);
-		// 		}
-		// 	},
-		// },
+		{
+			name: "link",
+			description: "Obs cargas",
+			static_column: true,
+			selector: (row) => {
+				if (row?.placa) {
+					return (
+						<Button
+							id="coluna1"
+							variant="Link"
+							onClick={() => existeCarga(row.placa)}
+							className="text-primary"
+						>
+							<GiArchiveResearch className="fs-5" />
+						</Button>
+					);
+				}
+			},
+		},
 		{
 			name: "telefone_motorista",
 			description: "Telefone motorista",

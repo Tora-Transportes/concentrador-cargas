@@ -1,16 +1,52 @@
-import React, { useState, useEffect } from "react";
-import "../ListAddItens/style.css";
+import React, { useState, useEffect, useRef } from "react";
+import "./listAddItens.css";
 import { Button } from "react-bootstrap";
 import swal from "sweetalert";
+import { Dialog } from "primereact/dialog";
+import { calcularDistancia } from "src/Pages/Utils/calcularDistanciaKM";
+import { DetalhesDialogParadas } from "./dialog";
 
-export default function ListAddItens({ onChange, value, name }) {
+export default function ListAddItens({ onChange, value, name, formik }) {
 	const [list, setList] = useState([]);
-	async function addItem() {
-		const item = await swal("Adicionar parada", {
-			content: "input",
-		});
-		if (item) {
-			setList([...new Set([...list, item])]);
+	const [visibleDialog, setVisibleDialog] = useState(false);
+	const [ultimaParadaIntermediaria, setUltimaParadaIntermediaria] =
+		useState("");
+	const coutRef = useRef(0);
+
+	async function addItem(
+		{ parada_intemediaria },
+		{ peso, numeroCte, servico }
+	) {
+		if (
+			(formik.values.origem_carga && parada_intemediaria) ||
+			(ultimaParadaIntermediaria && parada_intemediaria)
+		) {
+			const origem_carga =
+				coutRef.current === 0
+					? formik.values.origem_carga
+					: ultimaParadaIntermediaria;
+
+			const distanciaKm = await calcularDistancia(
+				origem_carga,
+				parada_intemediaria
+			);
+
+			coutRef.current++;
+			setUltimaParadaIntermediaria(parada_intemediaria);
+
+			if (distanciaKm) {
+				const dadosParada = `Cidade: ${parada_intemediaria}; DISTÂNCIA: ${distanciaKm} km; PESO: ${peso}; SERVIÇO: ${servico}; CTE: ${numeroCte}.`;
+				setList([...new Set([...list, dadosParada])]);
+			} else {
+				const dadosParada = `CIDADE: ${parada_intemediaria}, PESO: ${peso}, SERVIÇO: ${servico}, CTE: ${numeroCte}.`;
+				setList([...new Set([...list, dadosParada])]);
+			}
+		} else if (formik.values.origem_carga.length < 3) {
+			await swal(
+				"Ops!",
+				"Antes de adicionar uma parada preencha o campo *Origem da carga.",
+				"warning"
+			);
 		}
 	}
 
@@ -47,27 +83,46 @@ export default function ListAddItens({ onChange, value, name }) {
 		}
 	}
 
-	return (
-		<ol className="border list-unstyled">
-			{list?.map((i, index) => (
-				<li key={i + index}>
-					<Button
-						id="style-add-parada"
-						className="m-1 ml-5 w-100 text-start"
-						onClick={() => removeItem(i)}
-					>
-						{i}
-					</Button>
-				</li>
-			))}
+	async function viwsInputLocalizacao() {
+		await formik.setFieldValue("parada_intemediaria", "");
+		setVisibleDialog(true);
+	}
 
-			<Button
-				id="style-botao-add"
-				className="class-button-add"
-				onClick={addItem}
-			>
-				Adicionar Parada
-			</Button>
+	return (
+		// <ol className="border list-unstyled">
+		<ol>
+			<>
+				{list?.map((i, index) => (
+					<li key={i.split("-")[0] + index} className="lista-map">
+						<Button
+							id="style-add-parada"
+							className="m-1 ml-5 w-100 text-start"
+							onClick={() => removeItem(i)}
+						>
+							{i}
+						</Button>
+					</li>
+				))}
+
+				<Dialog
+					className="dialog-parada"
+					header={"Digite as informações do serviço e local"}
+					visible={visibleDialog}
+					onHide={() => setVisibleDialog(false)}
+					// footer={footer}
+					closable={true}
+				>
+					<DetalhesDialogParadas
+						setVisibleDialog={setVisibleDialog}
+						formik={formik}
+						addItem={addItem}
+					/>
+				</Dialog>
+
+				<Button id="style-botao-add" onClick={viwsInputLocalizacao}>
+					Adicionar Parada
+				</Button>
+			</>
 		</ol>
 	);
 }
