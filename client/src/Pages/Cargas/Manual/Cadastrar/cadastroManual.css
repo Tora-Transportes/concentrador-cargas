@@ -7,7 +7,11 @@
   font-size: 40px;
   font-weight: 500;
   margin-top: 3rem;
+<<<<<<< HEAD
   margin-left: 7rem;
+=======
+  margin-left: 4.6rem;
+>>>>>>> development
 }
 
 #style-linha-cad {
@@ -20,7 +24,7 @@
 #botao-cadastrar-carg {
   background-color: #00652e !important;
   font-family: "Poppins", sans-serif;
-  width: 8rem;
+  width: 9.2rem;
 }
 
 @media only screen and (max-width: 690px) {

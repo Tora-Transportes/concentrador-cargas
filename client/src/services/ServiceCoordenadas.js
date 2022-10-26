@@ -60,6 +60,10 @@ class ServiceCoordenadas {
 		});
 	}
 
+	async searchByPlate(plate) {
+		return await api.get(`/cargas/placa/${plate}`);
+	}
+
 	async exportToXlsx({
 		order_column,
 		order_direction,

@@ -1,4 +1,4 @@
-#title-consultarCarga {
+.title-consultarCarga {
   color: #00652e;
   font-size: 32px;
 }
@@ -14,4 +14,22 @@
 
 .class-input-motorista {
   margin-bottom: 30px;
+}
+
+.row-title-button {
+  align-items: center;
+}
+
+.button-exit {
+  text-align: end;
+}
+
+.button-footer-voltar {
+  background-color: #00652e !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .button-exit {
+    display: none;
+  }
 }

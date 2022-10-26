@@ -1,19 +1,33 @@
 import { SiGooglemaps } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
-//import { GiArchiveResearch } from "react-icons/gi";
+import { GiArchiveResearch } from "react-icons/gi";
 import DateUtils from "../Utils/date";
 import { Button, Form } from "react-bootstrap";
 import CollapseHint from "../Components/CollapseHint";
 import ResponsavelCadastroSelect from "../Components/ResponsavelCadastroSelect";
-//mport swal from "sweetalert";
-//import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import ServiceCoordenadas from "src/services/ServiceCoordenadas";
+import { showToastMessage } from "../Utils/toastMessage";
 
 export const getColumns = (
 	handleChangeDataJanela,
 	perguntarEAlterarDadosCoordenada,
 	handleChangeResponsavelPlaca,
-	showCardCTE
+	showCardCTE,
+	toast
 ) => {
+	const history = useHistory();
+	const existeCarga = async (placa) => {
+		const { status } = await ServiceCoordenadas.searchByPlate(placa);
+		if (status === 200) {
+			history.push(`/cargas/consulta/${placa}`);
+		} else {
+			toast.current.clear();
+			const message = "Não existe informações da carga para esta busca!";
+			await showToastMessage(toast, "warn", message, 5000);
+		}
+	};
+
 	return [
 		{
 			id: "coluna1",
@@ -48,28 +62,31 @@ export const getColumns = (
 			selector: (row) => row.tipo_carreta,
 			showFilter: true,
 		},
-		// {
-		// 	name: "apelido_carreta",
-		// 	description: "Apelido Carreta",
-		// 	selector: (row) => row.apelido_carreta,
-		// },
-		// {
-		// 	name: "link",
-		// 	description: "Link",
-		// 	static_column: true,
-		// 	selector: (row) => {
-		// 		return (
-		// 			<Link
-		// 				to={`/cargas/manual/visualizar/${row.id}`}
-		// 				target="_blank"
-		// 				rel="noopener"
-		// 			>
-		// 				<GiArchiveResearch className="fs-5" />
-		// 			</Link>
-		// 		);
-		// 	},
-		// 	sortable: "sortable",
-		// },
+		{
+			name: "apelido_carreta",
+			description: "Apelido carreta",
+			selector: (row) => row.apelido_carreta,
+			showFilter: true,
+		},
+		{
+			name: "link",
+			description: "Obs cargas",
+			static_column: true,
+			selector: (row) => {
+				if (row?.placa) {
+					return (
+						<Button
+							id="coluna1"
+							variant="Link"
+							onClick={() => existeCarga(row.placa)}
+							className="text-primary"
+						>
+							<GiArchiveResearch className="fs-5" />
+						</Button>
+					);
+				}
+			},
+		},
 		{
 			name: "telefone_motorista",
 			description: "Telefone motorista",
@@ -90,11 +107,6 @@ export const getColumns = (
 			},
 			showFilter: true,
 		},
-		// {
-		// 	name: "cpf_motorista",
-		// 	description: "Cpf motorista",
-		// 	selector: (row) => row.cpf_motorista,
-		// },
 		{
 			name: "setor_veiculo",
 			description: "Setor veículo",

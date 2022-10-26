@@ -28,6 +28,7 @@ import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css";
 import Helper from "./Pages/Components/Helper/ajuda";
+import Avisos from "./Pages/Avisos";
 
 export default function AllRoutes() {
 	return (
@@ -41,6 +42,7 @@ export default function AllRoutes() {
 
 				<Route path="/cargas/manual" exact component={CadastrarCargaManual} />
 				<Route path="/cargas/manual/:id" exact component={EditarCargaManual} />
+				<Route path="/cargas/consulta/:id" exact component={ConsultaCarga} />
 				<Route
 					path="/cargas/manual/visualizar/:id"
 					exact
@@ -58,25 +60,25 @@ export default function AllRoutes() {
 				/>
 
 				<Route path="/produtos" exact component={Produtos} />
-				<Route path="/rotas/pendentes" exact component={RotasPendentes} />
-				<Route path="/veiculos/aprovacao" exact component={SituacaoVeiculos} />
 
+				<Route path="/rotas/pendentes" exact component={RotasPendentes} />
+
+				<Route path="/veiculos/aprovacao" exact component={SituacaoVeiculos} />
 				<Route path="/veiculos/raio" exact component={RaioVeiculos} />
 				<Route path="/veiculos/destino" exact component={DestinoCarga} />
 				<Route path="/veiculos/raio/empresa" exact component={RaioEmpresa} />
 				<Route path="/veiculos/historico" exact component={HistoricoVeiculo} />
-
 				<Route
 					path="/veiculos/coordenadas"
 					exact
 					component={CoordenadasVeiculos}
 				/>
-				<Route path="/consulta/cargas/:id" exact component={ConsultaCarga} />
 
 				<Route path="/relatorios" exact component={RelatoriosMain} />
 				<Route path="/credenciais" exact component={Credenciais} />
 				{/* <Route path="/producao" exact component={CalendarioProducao} /> */}
 				<Route path="/ajuda" exact component={Helper} />
+				<Route path="/avisos" exact component={Avisos} />
 			</Switch>
 		</BrowserRouter>
 	);
