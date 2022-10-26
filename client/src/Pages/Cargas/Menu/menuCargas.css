@@ -53,7 +53,7 @@
   transform: scale(1.1);
   color: #048a01;
 }
-@media only screen and (max-width: 385px) {
+@media only screen and (min-width: 215px) and (max-width: 385px) {
   #titulo-selecionar-modo-carga {
     font-size: 25px !important;
   }
@@ -66,7 +66,7 @@
     position: absolute !important;
     display: block;
     margin-top: 1rem !important;
-  margin-left: 8rem !important;
+    margin-left: 30% !important;
   }
 
 

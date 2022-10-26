@@ -90,7 +90,9 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 					</p>
 				)}
 				<Row className="align-middle">
-					<h1 className="class-title-raioemp">Veículos no raio da empresa</h1>
+					<h1 className="class-title-raioemp mt-4">
+						Veículos no raio da empresa
+					</h1>
 				</Row>
 				<div>
 					<Card className="class-card-raioemp">
@@ -98,7 +100,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 							<Form.Group controlId="formDestino">
 								<Form.Label>Empresa</Form.Label>
 								<InputCliente
-									style={{ width: "20rem", height: "3rem" }}
+									style={{ width: "15rem", height: "2rem" }}
 									name="empresa"
 									value={fields.empresa}
 									onChange={handleChange}
@@ -109,7 +111,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 							<Form.Group controlId="formKM">
 								<Form.Label>KM</Form.Label>
 								<Form.Control
-									style={{ width: "20rem", height: "3rem" }}
+									style={{ width: "15rem" }}
 									type="number"
 									name="distancia_km"
 									value={fields.distancia_km}

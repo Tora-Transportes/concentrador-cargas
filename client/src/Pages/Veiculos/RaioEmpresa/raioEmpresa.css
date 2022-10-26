@@ -1,44 +1,55 @@
-.class-title-raioemp{
-    font-size: 40px;
-    margin-top: 2rem !important;
+.class-body-viewraioemp {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-content: center;
+  margin-top: 1rem;
+  grid-gap: 3rem;
 }
-.class-card-raioemp{
-    align-items: center;
-    margin-top: 2rem;
-    margin-left: 4rem;
-    height: 7rem;
-    width: 60rem;
+.class-title-raioemp {
+  font-size: 40px;
+  margin-top: 2rem !important;
 }
-.class-body-viewraioemp{
-    display: grid;
-    grid-template-columns: auto auto auto auto;
+.class-card-raioemp {
+  margin-top: 2rem;
+  height: 7rem;
+  width: 60rem;
+  margin-left: 5rem;
+}
+
+#button-pesq-raioemp {
+  background: #00652e;
+  border: none;
+  margin-top: 2.1rem;
+  width: 10rem;
+  height: 2rem;
+}
+
+@media only screen and (min-width: 215px) and (max-width: 1199px) {
+  .class-title-raioemp {
+    font-size: 30px;
+    display: flex !important;
     justify-content: space-around;
-    margin-top: 1rem;
-    grid-gap: 2rem;
+  }
+  .class-card-raioemp {
+    margin-left: 8%;
+    width: 85%;
+    height: 22rem;
+  }
+
+  #button-pesq-raioemp {
+    margin-top: -1rem;
+  }
+
+  .class-body-viewraioemp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
-#button-pesq-raioemp{
-    background: #00652e;
-    border: none;
-    margin-top: 2.5rem;
-    width: 10rem;
-    height: 2rem;
-}
-
-@media only screen and (max-width: 1325px) {
-    .class-title-raioemp{
-        font-size: 30px;
-    }
-    .class-card-raioemp{
-        margin-left: 2%;
-        width: 100%;
-        height: 22rem;
-    }
-
-    .class-body-viewraioemp{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        
-    }
+@media only screen and (min-width: 1200px) and (max-width: 1825px) {
+  .class-card-raioemp {
+    margin-left: 8%;
+    width: 85%;
+  }
 }

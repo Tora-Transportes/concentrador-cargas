@@ -91,8 +91,8 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 						})}
 					</MapContainer>
 				)}
-				<Row className="align-middle">
-					<h1 className="class-title-raio">Veículos próximos</h1>
+				<Row>
+					<h1 className="class-title-raio mt-4">Veículos próximos</h1>
 
 					<div>
 						<Card className="class-card-raio">
@@ -100,7 +100,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 								<Form.Group controlId="formPlaca">
 									<Form.Label>Placa</Form.Label>
 									<Form.Control
-										style={{ width: "20rem" }}
+										style={{ width: "15rem" }}
 										type="text"
 										name="placa"
 										value={fields.placa}
@@ -112,7 +112,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 								<Form.Group controlId="formdistancia">
 									<Form.Label>Distância (KM)</Form.Label>
 									<Form.Control
-										style={{ width: "20rem" }}
+										style={{ width: "15rem" }}
 										type="number"
 										min="1"
 										name="distancia_km"
@@ -122,11 +122,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 									/>
 								</Form.Group>
 
-								<Button
-									type="submit"
-									id="style-button-pesqraio"
-									className="class-button-pesqraio"
-								>
+								<Button type="submit" id="button-pesq-raio">
 									Pesquisar
 								</Button>
 							</Form>
