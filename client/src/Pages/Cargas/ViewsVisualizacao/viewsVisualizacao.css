@@ -2,6 +2,13 @@
   font-family: "Poppins", sans-serif;
 }
 
+.img-cargas-lote{
+  width: 80px;
+  position: absolute;
+  top: 80px;
+  right: -5px;
+}
+
 #style-button-detail {
   background: #00652e;
   border: none;
@@ -12,12 +19,15 @@
   
 }
 
-@media only screen and (max-width: 576px) {
+@media only screen and (max-width: 525px) {
   .row-inicio-carga button {
     width: 100%;
   }
   .inicio-col-registros {
     margin-bottom: 5px;
+  }
+  .img-cargas-lote{
+    display: none;
   }
 
   .opcao-tabela{

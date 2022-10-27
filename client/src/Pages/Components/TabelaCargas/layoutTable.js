@@ -4,7 +4,7 @@ import { Button, Col, Container, InputGroup, Row } from "react-bootstrap";
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
 import { TbSettings } from "react-icons/tb";
 import { Dropdown } from "primereact/dropdown";
-import "./index.css";
+import "./tabelaCargas.css";
 
 const PaginatorTable = ({ itensPerPage, setItensPerPage, setVisibleLeft }) => {
 	const selectLines = { name: itensPerPage, code: itensPerPage };
@@ -44,19 +44,18 @@ export const headerTableFunction = (
 ) => (
 	<Container fluid>
 		<Row className="header-table">
-			<Col className="text-center">
+			<Col className="col-paginator-itens">
 				<PaginatorTable
 					itensPerPage={itensPerPage}
 					setItensPerPage={setItensPerPage}
 				/>
 			</Col>
 			<Col className=" text-right">
-				<InputGroup className="justify-content-center">
+				<InputGroup className="input-config-tab">
 					<button type="submit" className="button-input-multiselect">
 						<TbSettings className="header-table-icon-button" />
 					</button>
 					<MultiSelect
-						//display="chip"
 						id="Config-campos-tabela"
 						fixedPlaceholder={true}
 						dataKey="name"

@@ -2,19 +2,17 @@
   font-family: "Poppins", sans-serif;
 }
 #title-cad-manual {
-  color: #00652e;
-  font-family: "Poppins", sans-serif;
   font-size: 40px;
   font-weight: 500;
-  margin-top: 3rem;
-  margin-left: 7rem;
+  text-align: center;
+  color: #00652e;
+  margin-top: 2rem;
 }
 
 #style-linha-cad {
   display: grid;
-  margin-left: 5.3rem;
-  margin-top: -1rem;
-  width: 85%;
+  margin-left: 4.5rem;
+  width: 87%;
 }
 
 #botao-cadastrar-carg {
@@ -23,37 +21,17 @@
   width: 9.2rem;
 }
 
-@media only screen and (max-width: 690px) {
+@media only screen and (max-width: 985px) {
   #title-cad-manual {
-    margin-left: .8rem !important;
-    font-size: 25px !important;
-  }
-
-  #style-linha-cad {
-    margin-left: -1rem !important;
-    display: grid;
-    width: 100% !important;
+    font-size: 28px;
   }
 }
 
-.class-linha-title {
-  margin-left: 2rem !important;
-}
-
-
-@media only screen and (max-width: 1280px) {
-  #title-cad-manual {
-    position: -ms-page;
-    margin-left: 3.5rem;
-    margin-top: 2rem;
-    font-size: 30px;
-  }
-
+@media only screen and (max-width: 1327px) {
   #style-linha-cad {
-    margin-top: -.5rem !important;
-    margin-left: 1.6rem;
-    display: grid;
-    width: 91% ; 
+    margin-left: 3rem;
+    display: none;
+    width: 92% ; 
   }
 
   #style-linha-cad6,

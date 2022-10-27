@@ -73,14 +73,14 @@ function ViewCoordenadas({
 
 	return (
 		<>
-			<Container fluid className="text-center mb-1 mt-4">
+			<Container fluid className="container-coord-veic">
 				<ModalDataExcel
 					show={modalShowExcel}
 					exportExcelDate={exportExcelDate}
 					onHide={() => setModalShowExcel(false)}
 					pagina={"coordenadas"}
 				/>
-				<Row className="mb-1">
+				<Row className="mb-2">
 					<h1
 						className="class-title-Coord"
 						id="title-coorde"

@@ -1,6 +1,24 @@
 .class-body-coordenadas {
   font-family: "Poppins", sans-serif;
 }
+.container-coord-veic {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.class-title-Coord {
+  font-size: 40px;
+}
+
+#botao-detalhe-tabela {
+  font-size: 16px;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  width: 12rem;
+  height: 5vh;
+  background: #00652e;
+  border: none;
+}
 .dialog-cte {
   width: 50%;
   height: auto;
@@ -102,26 +120,19 @@
   letter-spacing: 2px;
 }
 
-.class-title-Coord {
-  font-size: 40px;
-  margin-left: -0.1rem;
+@media only screen and (min-width: 230px) and (max-width: 585px) {
+  #botao-detalhe-tabela {
+    margin-left: 23%;
+  }
 }
-#botao-detalhe-tabela {
-  font-size: 16px;
-  margin-bottom: 0.5rem;
-  width: 12rem;
-  height: 5vh;
-  background: #00652e;
-  border: none;
-}
-@media only screen and (max-width: 590px) {
-#botao-detalhe-tabela {
-  margin-left: 23%;
-}
-}
-@media only screen and (max-width: 1327px) {
+
+@media only screen and (min-width: 230px) and (max-width: 1325px) {
   .class-title-Coord {
     font-size: 30px;
+  }
+  #botao-detalhe-tabela {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
   }
   .dialog-cte {
     width: 95%;
@@ -133,11 +144,6 @@
     height: 5vh !important;
     width: 35% !important;
     background-color: #00652e !important;
-  }
-
-  #botao-detalhe-tabela {
-    font-size: 1rem;
-    align-items: center;
   }
 
   /* .header-dialog {

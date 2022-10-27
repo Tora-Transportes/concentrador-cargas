@@ -28,7 +28,7 @@
   margin-left: 20px;
 }
 
-.footer-table{
+.footer-table {
   margin-left: 17vw;
 }
 
@@ -36,7 +36,10 @@
   color: #0e4f26;
   padding-top: 6px;
 }
-
+.input-config-tab {
+  justify-content: center;
+  display: flex;
+}
 .button-input-multiselect {
   display: flex;
   justify-content: center;
@@ -147,11 +150,22 @@
   display: none;
 }
 
-@media only screen and (max-width: 461px) {
+@media only screen and (max-width: 345px) {
+  .button-input-multiselect {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 585px) {
   .paginator-table-col {
     display: grid;
   }
-  .datatable-responsive-gridCargas .p-datatable-header {
+  /* .datatable-responsive-gridCargas .p-datatable-header {
+    display: none;
+  } */
+
+  .col-paginator-itens {
+    text-align: center;
     display: none;
   }
   .title-h1 {
@@ -165,21 +179,23 @@
   .header-table-col-buttons {
     display: grid;
   }
+}
 
-  .footer-table {
-    display: grid;
-    margin: 0;
-  }
-
+@media only screen and (max-width: 575px) {
   .footer-table Button {
-    margin: 3px;
+    margin-left: -1.5rem !important;
   }
 }
 
 @media only screen and (max-width: 661px) {
-#Botao-voltar-pag{
-  margin-bottom: .5rem;
-}
+  .footer-table {
+    display: grid;
+  }
+
+  .footer-table Button {
+    margin: 3px;
+    width: 90%;
+  }
 }
 
 @media screen and (max-width: 50em) {
