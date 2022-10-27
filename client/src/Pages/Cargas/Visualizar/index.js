@@ -100,7 +100,7 @@ function Visualizar() {
 			setModalShowExcel(true);
 		} else if (response.data.byteLength < 14493) {
 			const message =
-				"Não foram encontrados dados com essas informaçoes no filtro de data.";
+				"Não foram encontrados dados com essas informações no filtro de data.";
 			await showToastMessage(toast, "warn", message, 7000);
 			setLoading(false);
 			setModalShowExcel(true);

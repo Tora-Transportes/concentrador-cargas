@@ -11,8 +11,8 @@
 
 #style-linha-cad {
   display: grid;
-  margin-left: 4.5rem;
-  width: 87%;
+  margin-left: 7.2rem;
+  width: 83%;
 }
 
 #botao-cadastrar-carg {
@@ -29,9 +29,7 @@
 
 @media only screen and (max-width: 1327px) {
   #style-linha-cad {
-    margin-left: 3rem;
     display: none;
-    width: 92% ; 
   }
 
   #style-linha-cad6,

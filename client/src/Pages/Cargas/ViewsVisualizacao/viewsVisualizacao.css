@@ -19,18 +19,21 @@
   
 }
 
-@media only screen and (max-width: 525px) {
+@media only screen and (min-width: 385px) and (max-width: 585px) {
   .row-inicio-carga button {
     width: 100%;
   }
   .inicio-col-registros {
     margin-bottom: 5px;
   }
-  .img-cargas-lote{
-    display: none;
-  }
 
   .opcao-tabela{
-    margin-left: 8vw;
+    margin-left: 5vw;
   }
+}
+
+@media only screen and (max-width: 585px) {
+.img-cargas-lote {
+  display: none;
+}
 }
