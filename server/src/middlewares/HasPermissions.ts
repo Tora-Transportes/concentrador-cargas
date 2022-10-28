@@ -11,7 +11,6 @@ export default function (permissao: string) {
     if (!user) {
       throw new AppError("Erro ao encontrar usuario", 500);
     }
-    console.log("Permissoes>>>>>>", permissao, {...user.permissoes});
 
     if (!user.permissoes.includes(permissao)) {
       throw new AppError(`Usuário não possui a permissão '${permissao}'`, 403);

@@ -121,6 +121,10 @@ routes.get(
   CoordenadasController.historyTravelVeicleController
 );
 routes.get(
+  "/coordenadas/:placa/ultima_posicao_veiculo",
+  CoordenadasController.searchLastPositionController
+);
+routes.get(
   "/coordenadas/:placa/empresa/:cnpj",
   CoordenadasController.searchRouteVehicles
 );

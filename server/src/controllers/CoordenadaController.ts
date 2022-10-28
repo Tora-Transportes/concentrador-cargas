@@ -189,6 +189,18 @@ class CoordenadasController {
 
     return res.json(hitoryVeicle);
   }
+
+  async searchLastPositionController(req: Request, res: Response) {
+    const { placa } = req.params;
+    const service = new ServiceDistanceLocations();
+    const lastPositionVeicle = await service.lastPositionService(String(placa));
+
+    if (!lastPositionVeicle) {
+      throw new AppError(" ", 204);
+    }
+
+    return res.json(lastPositionVeicle);
+  }
 }
 
 export default new CoordenadasController();

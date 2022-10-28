@@ -57,7 +57,6 @@ export class AvisosRepository implements IAvisosRepository {
   }
 
   async delete(id: number): Promise<string> {
-    console.log("Delete>>>>", id);
 
     return "Aviso deletado com sucesso!";
   }

@@ -106,7 +106,7 @@ export default function ListAddItens({ onChange, value, name, formik }) {
 
 				<Dialog
 					className="dialog-parada"
-					header={"Digite as informações do serviço e local"}
+					header={"Registre as informações do serviço e local:"}
 					visible={visibleDialog}
 					onHide={() => setVisibleDialog(false)}
 					// footer={footer}

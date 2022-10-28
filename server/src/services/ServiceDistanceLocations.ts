@@ -39,6 +39,18 @@ export interface IResultHistoryVeicle {
   placa: string;
   posicao: IHistoryTravelVehicle[];
 }
+
+interface ILastLocations {
+  MUN: string;
+  UF: string;
+  ROD: string;
+  RUA: string;
+  LAT: number;
+  LOT: number;
+  DISIMEI: string;
+  DTINC: string;
+  ID?: number;
+}
 export class ServiceDistanceLocations {
   async find(query: IQueryDistance): Promise<null | number> {
     const { cidade_origem, cidade_destino, estado_origem, estado_destino } =
@@ -267,7 +279,6 @@ export class ServiceDistanceLocations {
     };
   }
 
-  //a tabela da busca do  historico chama report
   async historyTravelVeicleService(
     plate: string,
     date_inicio: string,
@@ -315,5 +326,27 @@ export class ServiceDistanceLocations {
       placa: plate,
       posicao: historyVeicle,
     };
+  }
+
+  async lastPositionService(plate: string): Promise<ILastLocations> {
+    const { VEI_REFERENCIA } = await oracle("VEICULO")
+      .select(["VEI_REFERENCIA"])
+      .first()
+      .where("VEI_PLACA", plate);
+
+    if (!VEI_REFERENCIA) {
+      throw new AppError(" ", 204);
+    }
+
+    const dataAtualMenos1Minuto = moment()
+      .subtract(1, "minutes")
+      .format("YYYY-MM-DDTHH:mm:ss");
+
+    const queryBuild = await mssqlCoordenadas.raw(
+      `select top 1 DISIMEI, LAT, LON, UF, ROD, RUA, MUN, DTINC
+    from REPORTES where DISIMEI = '${VEI_REFERENCIA}' and (dtinc < '${dataAtualMenos1Minuto}') order by dtinc desc`
+    );
+
+    return queryBuild[0];
   }
 }

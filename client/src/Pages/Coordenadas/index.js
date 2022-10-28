@@ -1,6 +1,5 @@
 import React, { useCallback, useReducer, useState, useRef } from "react";
 import useLoadingScreen from "../Components/LoadingScreen";
-// import NavbarNavigator from "../Components/NavbarNavigator";
 import ViewMonitoramento from "./view";
 import ServiceCoordenadas from "src/services/ServiceCoordenadas";
 import factoryReducerCargas from "../../hooks/storageCargas/factoryReducerCargas";
@@ -22,6 +21,8 @@ function RotasPendentes() {
 	const [lastOptions, setLastOptions] = useState({});
 	const [cargas, dispatchCargas] = useReducer(cargasReducer, defaultCargas);
 	const [itensPerPage, setItensPerPage] = useState(10);
+	const [visibleLastLocation, setVisibleLastLocation] = useState(false);
+	const [dadosLastLocation, setDadosLastLocation] = useState();
 	const [visibleCardCte, setVisibleCardCte] = useState(false);
 	const [dataCTE, setDataCTE] = useState();
 	const [modalShowExcel, setModalShowExcel] = useState(false);
@@ -150,6 +151,11 @@ function RotasPendentes() {
 		}
 	}
 
+	const showCardLastLocation = (rowData) => {
+		setDadosLastLocation(rowData);
+		setVisibleLastLocation(true);
+	};
+
 	const showCardCTE = (rowData) => {
 		setDataCTE(rowData);
 		setVisibleCardCte(true);
@@ -160,6 +166,7 @@ function RotasPendentes() {
 		perguntarEAlterarDadosCoordenada,
 		handleChangeResponsavelPlaca,
 		showCardCTE,
+		showCardLastLocation,
 		toast
 	);
 
@@ -241,7 +248,6 @@ function RotasPendentes() {
 		<div className="class-body-coordenadas">
 			<LoadingScreen />
 			<Toast ref={toast} className="w-25" position="top-center"></Toast>
-			{/* <NavbarNavigator /> */}
 			<Menusuperior />
 			<ViewMonitoramento
 				get_data={tableFetchData}
@@ -256,6 +262,11 @@ function RotasPendentes() {
 				dadosCTEObjet={{ dataCTE, setDataCTE }}
 				modalShowExcel={modalShowExcel}
 				setModalShowExcel={setModalShowExcel}
+				dadosLastLocation={dadosLastLocation}
+				viewsLastLocationObject={{
+					visibleLastLocation,
+					setVisibleLastLocation,
+				}}
 			/>
 		</div>
 	);
