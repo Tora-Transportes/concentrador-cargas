@@ -14,6 +14,7 @@ export const getColumns = (
 	perguntarEAlterarDadosCoordenada,
 	handleChangeResponsavelPlaca,
 	showCardCTE,
+	showCardLastLocation,
 	toast
 ) => {
 	const history = useHistory();
@@ -106,6 +107,19 @@ export const getColumns = (
 				);
 			},
 			showFilter: true,
+		},
+		{
+			name: "lastLocation",
+			description: "Ultima localização",
+			selector: (row) => (
+				<Button
+					variant="Link"
+					onClick={() => showCardLastLocation(row?.placa)}
+					className="text-primary"
+				>
+					Localização <BsInfoCircle />
+				</Button>
+			),
 		},
 		{
 			name: "setor_veiculo",

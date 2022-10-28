@@ -6,12 +6,13 @@ import { Sidebar } from "primereact/sidebar";
 import { BiCog } from "react-icons/bi";
 import { ImQrcode } from "react-icons/im";
 import { Dialog } from "primereact/dialog";
-import InfoCTEcard from "./infoCTEcard";
 import bandeira from "../../assets/bandeiraBrasil.png";
 // import HandleClick from "./tooltipsCoordenadas";
 import "../Coordenadas/coordenadas.css";
 import ModalDataExcel from "src/Pages/Cargas/modal/exportExcel";
 import { SideBarFuncition } from "../Utils/sideBar";
+import InfoCTEcard from "./cards/infoCTEcard";
+import LastLocationVeicles from "./cards/lastLocation";
 
 function ViewCoordenadas({
 	columns,
@@ -26,9 +27,13 @@ function ViewCoordenadas({
 	dadosCTEObjet,
 	modalShowExcel,
 	setModalShowExcel,
+	viewsLastLocationObject,
+	dadosLastLocation,
 }) {
 	const [visibleLeft, setVisibleLeft] = useState(false);
 	const { visibleCardCte, setVisibleCardCte } = visibleCteCardObject;
+	const { visibleLastLocation, setVisibleLastLocation } =
+		viewsLastLocationObject;
 	const { dataCTE } = dadosCTEObjet;
 
 	React.useEffect(() => {
@@ -130,6 +135,23 @@ function ViewCoordenadas({
 							label="Voltar"
 							onClick={() => setVisibleCardCte(false)}
 							className="dialog-btn-voltar"
+						/>
+					</Dialog>
+					<Dialog
+						className="dialog-localidade"
+						header={"Dados da última localização"}
+						visible={visibleLastLocation}
+						onHide={() => onHide(setVisibleLastLocation)}
+						closable={true}
+					>
+						<LastLocationVeicles
+							placa={dadosLastLocation}
+							setVisibleLastLocation={setVisibleLastLocation}
+						/>
+						<ButtonReact
+							label="Voltar"
+							onClick={() => setVisibleLastLocation(false)}
+							className="dialog-btn-last-location"
 						/>
 					</Dialog>
 					<Sidebar

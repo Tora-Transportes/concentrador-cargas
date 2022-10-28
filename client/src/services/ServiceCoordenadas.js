@@ -132,6 +132,9 @@ class ServiceCoordenadas {
 			params: { date_inicio, date_fim },
 		});
 	}
+	async searchLastPosition(placa) {
+		return await api.get(`/coordenadas/${placa}/ultima_posicao_veiculo`);
+	}
 
 	async searchRoute({ placa, cnpj }) {
 		// return {

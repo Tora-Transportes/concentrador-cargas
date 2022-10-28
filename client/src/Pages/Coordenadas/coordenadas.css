@@ -46,6 +46,12 @@
   background-color: #00652e !important;
 }
 
+.dialog-btn-last-location {
+  height: 4.5vh !important;
+  width: auto !important;
+  background-color: #00652e !important;
+}
+
 /*css placa*/
 .row-placa {
   display: block !important;
@@ -110,6 +116,9 @@
   border: none;
 }
 
+.ul_last-location{
+  padding: 0 ;
+}
 @media only screen and (max-width: 768px) {
   .dialog-cte {
     width: 95%;
@@ -127,12 +136,4 @@
     margin-left: 8vw;
   }
 
-  /* .header-dialog {
-    display: block;
-    padding-left: 25px;
-  }
-
-  .header-dialog h4 {
-    margin-right: 5%;
-  } */
 }

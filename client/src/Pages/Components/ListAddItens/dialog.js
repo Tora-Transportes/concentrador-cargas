@@ -26,7 +26,7 @@ export const DetalhesDialogParadas = ({
 		<Container fluid className="text-center mb-5 mt-4">
 			<Row>
 				<Col sm={12} md={6}>
-					<FloatingLabel label="Digite o nome da cidade" className="mb-3">
+					<FloatingLabel label="Nome da cidade" className="mb-3">
 						<>
 							<InputLocalizacao
 								keyDataList="parada_intemediaria"
@@ -40,7 +40,7 @@ export const DetalhesDialogParadas = ({
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="Escolher o tipo de serviço" className="mb-3">
+					<FloatingLabel label="Tipo de serviço" className="mb-3">
 						<Form.Select
 							placeholder="Serviço"
 							value={formikDialog.values.servico}
