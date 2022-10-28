@@ -78,7 +78,7 @@ function ViewCoordenadas({
 
 	return (
 		<>
-			<Container fluid className="text-center mb-5 mt-4">
+			<Container fluid className="container-coord-veic">
 				<ModalDataExcel
 					show={modalShowExcel}
 					exportExcelDate={exportExcelDate}
@@ -94,14 +94,13 @@ function ViewCoordenadas({
 						Coordenadas - Veículos
 					</h1>
 				</Row>
-				<Row className="row-inicio-carga mt-3 mb-2 ">
-					<Col className="text-start opcao-tabela">
+				<Row>
+					<Col className="text-start">
 						<ButtonReact
 							id="botao-detalhe-tabela"
 							label="Opções da Tabela"
-							icon={<BiCog className="me-2" />}
+							icon={<BiCog />}
 							onClick={() => setVisibleLeft(true)}
-							className="sidebar-button-table"
 						/>
 					</Col>
 					<Col

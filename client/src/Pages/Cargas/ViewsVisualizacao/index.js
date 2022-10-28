@@ -55,15 +55,7 @@ function VisualizarCargas({
 					</Col>
 
 					<Link target="_blank" to="/relatorios">
-						<img
-							src={chartImg}
-							style={{
-								width: "80px",
-								position: "absolute",
-								right: "10px",
-								top: "80px",
-							}}
-						/>
+						<img className="img-cargas-lote" src={chartImg} />
 					</Link>
 				</Row>
 				<Row className="row-inicio-carga mt-3 mb-2 ">

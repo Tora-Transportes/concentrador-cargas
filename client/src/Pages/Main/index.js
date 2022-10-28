@@ -65,7 +65,7 @@ function Main() {
 		const corCorreta = queueCoresAtuais.shift();
 		if (cor !== corCorreta) {
 			salvarTimestampUltimaVezJogada();
-			toast.error(`Você falhou na rodada ${levelGame}`, { autoClose: false });
+			toast.error(`Você falhou na rodada ${levelGame}`, { autoClose: 1000 });
 			setLevelGame(-1);
 			return;
 		}
@@ -166,11 +166,7 @@ function Main() {
 				<div className="class-icons-body">
 					<div className="icons-efect">
 						<Link to="/relatorios" className="class-link">
-							<FaChartBar
-								size={50}
-								id="style-iconn"
-								className="class-ico-ind"
-							/>
+							<FaChartBar size={50} className="class-ico-ind" />
 							<br />
 							<b id="style-iconn">Indicador Operacional</b>
 						</Link>
@@ -183,7 +179,7 @@ function Main() {
 								className="icons-responsive me-4"
 							/>
 							<br />
-							<b id="style-iconn">Coordenadas</b>
+							<b id="style-iconn-4">Coordenadas</b>
 						</Link>
 					</div>
 					<div className="icons-efect">
@@ -194,7 +190,7 @@ function Main() {
 								className="icons-responsive"
 							/>
 							<br />
-							<b id="style-iconn">Cargas</b>
+							<b id="style-iconn-4">Cargas</b>
 						</Link>
 					</div>
 					<div className="icons-efect icon-lotes">
@@ -221,9 +217,9 @@ function Main() {
 					</p>
 				</div>
 
-				<Row className={usuarioPodeJogar() ? "" : "invisible"}>
+				<Row className={usuarioPodeJogar() ? "" : "d-none"}>
 					{levelGame > -1 && (
-						<Row className="mt-5">
+						<Row className="mt-4">
 							<Col>
 								<Button
 									variant=""
@@ -235,7 +231,7 @@ function Main() {
 					)}
 
 					{levelGame > -1 && (
-						<Row className="mt-5 text-end">
+						<Row className="mt-4 text-end">
 							<Col>
 								Level <b>{levelGame}</b>
 							</Col>

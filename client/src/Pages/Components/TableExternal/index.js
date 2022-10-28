@@ -104,90 +104,94 @@ function TableExternal({ columns, get_data }) {
 	);
 
 	return (
-		<Table striped bordered hover responsive className="table-external">
-			<thead>
-				<tr>
-					{columns.map((i) => (
-						<th key={"col-header-" + i.name} className="text-center">
-							<a
-								className="text-decoration-none text-black"
-								href="#"
-								onClick={(e) => {
-									e.preventDefault();
-									if (i.static_column === true) {
-										return;
-									}
-									const column = i.name;
-									if (
-										orderby.values.column === column &&
-										orderby.values.direction === "asc"
-									) {
-										orderby.setValues({
-											column,
-											direction: "desc",
-										});
-									} else {
-										orderby.setValues({
-											column,
-											direction: "asc",
-										});
-									}
-								}}
-							>
-								{i.description} {getOrderByIcon(i.name)}
-							</a>
-						</th>
-					))}
-				</tr>
-				<tr>
-					{columns.map((i) => (
-						<th key={"col-header-2-" + i.name} className="text-center">
-							{i.Filter && (
-								<i.Filter
-									name={i.name}
-									value={filter.getFieldProps(i.name).value || ""}
-									onChange={filter.handleChange}
-									className="w-100"
-								/>
-							)}
-							{i.static_column !== true && !i.Filter && (
-								<Form.Control
-									name={i.name}
-									onChange={filter.handleChange}
-									className="w-100"
-								/>
-							)}
-						</th>
-					))}
-				</tr>
-			</thead>
-			<tbody>
-				{data?.map((row, index) => (
-					<tr key={"row-" + index}>
-						{columns.map((col, indexCol) => (
-							<td key={"col-" + indexCol}>{col.selector(row)}</td>
+		<Container>
+			<Table striped bordered hover responsive className="table-external">
+				<thead>
+					<tr>
+						{columns.map((i) => (
+							<th key={"col-header-" + i.name} className="text-center">
+								<a
+									className="text-decoration-none text-black"
+									href="#"
+									onClick={(e) => {
+										e.preventDefault();
+										if (i.static_column === true) {
+											return;
+										}
+										const column = i.name;
+										if (
+											orderby.values.column === column &&
+											orderby.values.direction === "asc"
+										) {
+											orderby.setValues({
+												column,
+												direction: "desc",
+											});
+										} else {
+											orderby.setValues({
+												column,
+												direction: "asc",
+											});
+										}
+									}}
+								>
+									{i.description} {getOrderByIcon(i.name)}
+								</a>
+							</th>
 						))}
 					</tr>
-				))}
-			</tbody>
-			<tfoot>
-				<tr className="text-start">
-					<td colSpan={columns.length}>
-						<span className="ml-1 mr-1">
-							Página {page} de {totalPages}
-						</span>
-					</td>
-				</tr>
-				<tr>
-					<td colSpan={columns.length}>
-						<Pagination size="lg">
-							<Pagination.Prev onClick={previousPage} />
-							<Pagination.Next onClick={nextPage} />
-						</Pagination>
-					</td>
-				</tr>
-			</tfoot>
-		</Table>
+					<tr>
+						{columns.map((i) => (
+							<th key={"col-header-2-" + i.name} className="text-center">
+								{i.Filter && (
+									<i.Filter
+										name={i.name}
+										value={filter.getFieldProps(i.name).value || ""}
+										onChange={filter.handleChange}
+										className="w-100"
+									/>
+								)}
+								{i.static_column !== true && !i.Filter && (
+									<Form.Control
+										name={i.name}
+										onChange={filter.handleChange}
+										className="w-100"
+									/>
+								)}
+							</th>
+						))}
+					</tr>
+				</thead>
+				<tbody>
+					{data?.map((row, index) => (
+						<tr key={"row-" + index}>
+							{columns.map((col, indexCol) => (
+								<td key={"col-" + indexCol}>{col.selector(row)}</td>
+							))}
+						</tr>
+					))}
+				</tbody>
+			</Table>
+			<Row>
+				<div className="pagination-foot">
+					<Col>
+						<div colSpan={columns.length}>
+							<span className="ml-1 mr-1">
+								Página {page} de {totalPages}
+							</span>
+						</div>
+					</Col>
+					<Col>
+						<div colSpan={columns.length}>
+							<Pagination className="pagination">
+								<Pagination.Prev onClick={previousPage} className="me-1" />
+								<Pagination.Next onClick={nextPage} />
+							</Pagination>
+						</div>
+					</Col>
+				</div>
+			</Row>
+		</Container>
 	);
 }
 

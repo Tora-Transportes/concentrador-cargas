@@ -142,7 +142,7 @@ function Manual() {
 				<p id="title-cad-manual">Cadastro de Carga - Manual</p>
 			</div>
 			<div className="class-linha-title">
-				{/* <hr id="style-linha-cad"></hr> */}
+				<hr id="style-linha-cad"></hr>
 			</div>
 			<Container className="mb-5 mt-2" style={{ scrollBehavior: "none" }}>
 				<Form onSubmit={formik.handleSubmit}>

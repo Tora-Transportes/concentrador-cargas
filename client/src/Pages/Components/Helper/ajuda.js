@@ -1,5 +1,5 @@
 import React from "react";
-import "./style.css";
+import "./ajuda.css";
 import Menusuperior from "../MenuSuperior/menusuperior";
 import Accordion from "react-bootstrap/Accordion";
 import { Button } from "react-bootstrap";
@@ -27,15 +27,15 @@ function Helper() {
 			<Menusuperior />
 			<div className="class-body-title">
 				<h1 className="class-h1-ajuda">Ajuda</h1>
-				<hr className="class-hr-ajuda" />
 				<p className="class-p-ajuda">
 					Bem-vindo ao Ajuda, nessa página será disponibilizado o passo a passo
 					para as seguintes telas:
 					<br />
-					<strong>Coordenadas, Monitoramento e Cadastro de Cargas.</strong>
+					<strong>Cadastro de Cargas, Coordenadas, e Monitoramento.</strong>
 				</p>
-
-				<p className="class-p-ajuda">
+			</div>
+			<div>
+				<p className="class-p-subtitle">
 					Selecione uma das opções e você será redirecionado até a página que
 					dará início ao passo a passo correspondente:
 				</p>
@@ -46,7 +46,7 @@ function Helper() {
 				alwaysOpen
 				className="class-accordion"
 			>
-				<Accordion.Item eventKey="1" id="style-button-accordion">
+				<Accordion.Item eventKey="1">
 					<Accordion.Header id="style-ac-header" className="class-header-acc">
 						Cadastrar Cargas
 					</Accordion.Header>

@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Form, Button, Card } from "react-bootstrap";
 
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import "../RaioEmpresa/style.css";
+import "./raioEmpresa.css";
 import InputCliente from "../../Components/InputCliente";
 import DateUtils from "../../Utils/date";
 
@@ -89,8 +89,10 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 						{DateUtils.convertDateToReadableTime(rota.duracao_viagem_direta)}.
 					</p>
 				)}
-				<Row className="mb-2">
-					<h1 className="class-title-raioemp">Veículos no raio da empresa</h1>
+				<Row className="align-middle">
+					<h1 className="class-title-raioemp mt-4">
+						Veículos no raio da empresa
+					</h1>
 				</Row>
 				<div>
 					<Card className="class-card-raioemp">
@@ -98,7 +100,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 							<Form.Group controlId="formDestino">
 								<Form.Label>Empresa</Form.Label>
 								<InputCliente
-									style={{ width: "23rem", height: "3rem" }}
+									style={{ width: "15rem", height: "2rem" }}
 									name="empresa"
 									value={fields.empresa}
 									onChange={handleChange}
@@ -109,7 +111,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 							<Form.Group controlId="formKM">
 								<Form.Label>KM</Form.Label>
 								<Form.Control
-									style={{ width: "20rem", height: "3rem" }}
+									style={{ width: "15rem" }}
 									type="number"
 									name="distancia_km"
 									value={fields.distancia_km}
@@ -118,11 +120,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 								/>
 							</Form.Group>
 
-							<Button
-								type="submit"
-								id="style-button-pesqraio"
-								className="class-button-pesqraio"
-							>
+							<Button type="submit" id="button-pesq-raioemp">
 								Pesquisar
 							</Button>
 						</Form>

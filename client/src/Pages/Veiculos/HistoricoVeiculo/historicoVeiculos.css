@@ -1,0 +1,13 @@
+.row-input-history {
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    width: 100%;
+  }
+
+#button-pesq-history {
+    background:#00652E; 
+    border: none;
+    margin-top: 1rem;
+    width: 10rem;
+}

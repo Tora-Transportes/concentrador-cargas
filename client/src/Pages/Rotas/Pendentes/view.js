@@ -1,13 +1,14 @@
 import React from "react";
 import { Container, Row } from "react-bootstrap";
 import TableExternal from "../../Components/TableExternal";
+import "./rotas.css";
 
 function ViewRotasPendentes({ columns = [], get_data }) {
 	return (
 		<>
-			<Container className="text-center mb-5 mt-4">
-				<Row className="mb-2">
-					<h1>Rotas pendentes de cadastro</h1>
+			<Container className="class-body-rotas">
+				<Row className="title-rotas">
+					<h1 className="title-rotas2">Rotas pendentes de cadastro</h1>
 				</Row>
 				<Row>
 					<TableExternal columns={columns} get_data={get_data} />

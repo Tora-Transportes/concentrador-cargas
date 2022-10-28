@@ -28,7 +28,7 @@
   margin-left: 20px;
 }
 
-.footer-table{
+.footer-table {
   margin-left: 17vw;
 }
 
@@ -36,7 +36,10 @@
   color: #0e4f26;
   padding-top: 6px;
 }
-
+.input-config-tab {
+  justify-content: center;
+  display: flex;
+}
 .button-input-multiselect {
   display: flex;
   justify-content: center;
@@ -147,16 +150,23 @@
   display: none;
 }
 
-@media only screen and (max-width: 461px) {
+@media only screen and (max-width: 345px) {
+  .button-input-multiselect {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 585px) {
   .paginator-table-col {
     display: grid;
   }
-  .datatable-responsive-gridCargas .p-datatable-header {
+  /* .datatable-responsive-gridCargas .p-datatable-header {
     display: none;
-  }
+  } */
 
-  .sidebar-button-table {
-    height: 5vh;
+  .col-paginator-itens {
+    text-align: center;
+    display: none;
   }
   .title-h1 {
     margin-right: 50px;
@@ -169,14 +179,22 @@
   .header-table-col-buttons {
     display: grid;
   }
+}
 
+@media only screen and (max-width: 575px) {
+  .footer-table Button {
+    margin-left: -1.5rem !important;
+  }
+}
+
+@media only screen and (max-width: 661px) {
   .footer-table {
     display: grid;
-    margin: 0;
   }
 
   .footer-table Button {
     margin: 3px;
+    width: 90%;
   }
 }
 

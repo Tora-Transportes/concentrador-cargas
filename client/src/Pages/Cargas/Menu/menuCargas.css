@@ -53,16 +53,12 @@
   transform: scale(1.1);
   color: #048a01;
 }
-@media only screen and (max-width: 375px) {
+@media only screen and (min-width: 215px) and (max-width: 385px) {
   #titulo-selecionar-modo-carga {
-    font-size: 23px !important;
-  }
-  .class-button-icons {
-    display: block;
-    margin-top: 1rem !important;
+    font-size: 25px !important;
   }
 }
-@media only screen and (max-width: 485px) {
+@media only screen and (max-width: 455px) {
   .class-body-menu {
     overflow: none;
   }
@@ -70,28 +66,18 @@
     position: absolute !important;
     display: block;
     margin-top: 1rem !important;
-    margin-left: 8rem !important;
+    margin-left: 30% !important;
   }
 
-  #title-manual {
-    font-size: 22px;
-    margin-left: 1rem !important;
-  }
 
   #hand {
-    margin-left: 1.5rem !important;
     color: #00652e;
     margin-top: 3rem;
   }
 
   #title-ico-import {
     font-size: 22px;
-    margin-left: -1.5rem !important;
-  }
-  #import {
-    color: #00652e;
-    margin-top: 2.5rem;
-    margin-left: 1.6rem !important;
+    margin-left: -1.8rem !important;
   }
 
   .class-title-coleta {
@@ -116,12 +102,13 @@
   }
 
   #title-manual {
-    font-size: 25px;
+    font-size: 22px;
     margin-left: 2rem;
   }
+  
 
   #hand {
-    margin-left: 2rem;
+    margin-left: 2.2rem;
     color: #00652e;
     margin-top: 3rem;
   }

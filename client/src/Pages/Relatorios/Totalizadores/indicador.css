@@ -7,12 +7,8 @@
   color: #00652e;
   font-size: 40px;
   display: grid;
-  text-align: start;
-  margin-top: 3rem;
-}
-
-.class-grafico-relatorio {
-  margin-top: 2.5rem !important;
+  text-align: center;
+  margin-top: 1.5rem;
 }
 
 .class-acc-rel {
@@ -32,6 +28,7 @@
   background-color: #00652e !important;
   border: none !important;
   padding: 1rem !important;
+  width: 9rem !important;
 }
 
 .span-cargas-ativadas,
@@ -47,17 +44,55 @@
   color: rgb(160, 2, 2);
   font-weight: bold;
 }
+.text-obs-listagem{
+  margin-top: 2rem;
+  color: black;
+}
 
 .span-cad-origem{
   color: #0069aa;
   font-weight: bold;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 575px) {
+  .botao-aplicar{
+    margin-top: 1rem;
+  }
+
+  .col-doughnut{
+    width: 90% !important;
+  };
+} 
+
+@media only screen and (max-width: 991px) and (min-width: 576px) {
+  .col-doughnut{
+    margin-left: 20%
+  };
+}
+
+
+@media only screen and (max-width: 768px) {
+  .text-obs-listagem{
+    font-size: 14px;
+  }
+
+}
+
+@media only screen and (min-width: 992px){
+  .col-doughnut {
+  margin-top: 2.5rem !important;
+}
+
+}
+@media only screen and (max-width: 1326px) {
+  .botao-aplicar{
+   width: 8rem !important;
+  }
   .style-title-rel {
-    margin: 3rem 16rem 0 0;
+    font-size: 30px;
   }
   #style-hr-rel {
-    width: 24rem;
+    margin-top: -1rem;
+    width: 100%;
   }
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import "./index.css";
+import "./tabelaCargas.css";
 import { Form, Row } from "react-bootstrap";
 import { useFormik } from "formik";
 import useDebouncedFunction from "../useDebounceFunction";

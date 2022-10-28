@@ -5,18 +5,3 @@
   margin-left: -0.1rem;
 }
 
-/* css componente historico veiculo... */
-.row-input-history {
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.button-pesquisar-history {
-    border: none;
-    margin-top: 10px;
-    background:#00652E !important; 
-}
-
-.row-input-history .input-form-date-fim-history{
-  width: 99%;
-}

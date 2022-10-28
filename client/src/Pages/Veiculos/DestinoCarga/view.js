@@ -81,47 +81,44 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 						{DateUtils.convertDateToReadableTime(rota.duracao_viagem_direta)}.
 					</p>
 				)}
-				<Row className="mb-2">
-					<h1 className="class-title-dest">
+				<Row className="text-center">
+					<h1 className="class-title-dest mt-4">
 						Distância entre o veículo e a empresa:
 					</h1>
+
+					<div>
+						<Card className="class-card-dest">
+							<Form onSubmit={handleSubmit} className="class-body-viewdest">
+								<Form.Group controlId="formDestino">
+									<Form.Label>Empresa</Form.Label>
+									<InputCliente
+										style={{ width: "16rem", height: "2rem" }}
+										name="empresa"
+										value={fields.empresa}
+										onChange={handleChange}
+										required
+									/>
+								</Form.Group>
+
+								<Form.Group controlId="formPlaca">
+									<Form.Label>Placa</Form.Label>
+									<Form.Control
+										style={{ width: "16rem", height: "2.4rem" }}
+										type="text"
+										name="placa"
+										value={fields.placa}
+										onChange={handleChange}
+										required
+									/>
+								</Form.Group>
+
+								<Button type="submit" id="button-pesq-dest">
+									Pesquisar
+								</Button>
+							</Form>
+						</Card>
+					</div>
 				</Row>
-				<div>
-					<Card className="class-card-dest">
-						<Form onSubmit={handleSubmit} className="class-body-viewdest">
-							<Form.Group controlId="formDestino">
-								<Form.Label>Empresa</Form.Label>
-								<InputCliente
-									style={{ width: "23rem", height: "3rem" }}
-									name="empresa"
-									value={fields.empresa}
-									onChange={handleChange}
-									required
-								/>
-							</Form.Group>
-
-							<Form.Group controlId="formPlaca">
-								<Form.Label>Placa</Form.Label>
-								<Form.Control
-									style={{ width: "23rem", height: "3rem" }}
-									type="text"
-									name="placa"
-									value={fields.placa}
-									onChange={handleChange}
-									required
-								/>
-							</Form.Group>
-
-							<Button
-								type="submit"
-								id="style-button-pesqDest"
-								className="class-button-pesqDest"
-							>
-								Pesquisar
-							</Button>
-						</Form>
-					</Card>
-				</div>
 			</Container>
 		</div>
 	);

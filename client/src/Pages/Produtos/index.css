@@ -1,6 +1,16 @@
 .class-body-produtos {
   font-family: "Poppins", sans-serif;
 }
+
+.pagina-produtos {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.class-title-produto {
+  font-size: 40px;
+  margin-bottom: 1.5rem;
+}
 .title-h1 {
   color: #024c01;
   text-shadow: 3px 3px 5px #161515;
@@ -131,13 +141,24 @@ Botton .button-acoes-table {
   margin-right: 4px;
 }
 
-.icon-des{
+.icon-des {
   font-size: 17px;
   margin-bottom: 4px;
 }
 
+@media only screen and (max-width: 480px) {
+  .class-title-produto {
+    margin-left: 3%;
+    font-size: 5.8vh;
+    transition: 0.5s;
+  }
+}
 
 @media only screen and (max-width: 961px) {
+  .class-title-produto {
+    display: flex;
+    justify-content: center;
+  }
   .datatable-responsive-demoPermissoes
     .p-datatable.p-datatable-responsive-demoPermissoes
     .p-datatable-tbody
