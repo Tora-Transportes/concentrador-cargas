@@ -47,6 +47,11 @@ function Main() {
 						<SiGooglesheets size={70} id="import" />
 						<p id="title-ico-import">Importação em lote</p>
 					</Link>
+
+					<Link className="text-decoration-none" to="/cargas/cadastro/csn">
+						<MdOutlineWavingHand size={70} id="hand" />
+						<p id="title-manual">CSN</p>
+					</Link>
 				</div>
 			</Container>
 		</>
