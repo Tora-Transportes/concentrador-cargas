@@ -29,6 +29,7 @@ import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css";
 import Helper from "./Pages/Components/Helper/ajuda";
 import Avisos from "./Pages/Avisos";
+import CadastroCargaCSN from "./Pages/Cargas/CargasCSN/Cadastrar";
 
 export default function AllRoutes() {
 	return (
@@ -41,6 +42,7 @@ export default function AllRoutes() {
 				<Route path="/cargas/importar" exact component={ImportarCargas} />
 
 				<Route path="/cargas/manual" exact component={CadastrarCargaManual} />
+				<Route path="/cargas/cadastro/csn" exact component={CadastroCargaCSN} />
 				<Route path="/cargas/manual/:id" exact component={EditarCargaManual} />
 				<Route path="/cargas/consulta/:id" exact component={ConsultaCarga} />
 				<Route

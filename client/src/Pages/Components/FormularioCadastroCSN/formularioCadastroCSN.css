@@ -1,0 +1,49 @@
+.class-input-motorista{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 1rem;
+}
+
+.input-placaCav,
+.input-carreta,
+.input-bitrem,
+.class-input-moto{
+    margin-top: 1rem;
+}
+#style-ipunt-motorista{
+    width: 45rem;
+    height: 2rem;
+}
+
+#title-check-não{
+    margin-bottom: -20px;
+}
+
+#botao-deb-veiculo,
+#botao-detail-veiculo{
+    background: #00652E;
+    border: none;
+}
+.class-input-placaCav{
+    display: grid;
+    grid-template-columns: auto;
+}
+
+
+.class-botao-DetalhesV{
+    background: #00652E;
+    color: #ffff;
+    border: none;
+    margin-top: 1rem;
+}
+
+@media only screen and (max-width: 1100px){
+    .class-input-motorista{
+        display: grid;
+        position: relative;
+        grid-template-columns: auto;
+    }
+    #style-ipunt-motorista{
+        width: 100%;
+    }
+}
