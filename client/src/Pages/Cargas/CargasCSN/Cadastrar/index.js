@@ -30,7 +30,6 @@ const CadastroCargaCSN = () => {
 			previsao_coleta2: "",
 			local_coleta3: "",
 			previsao_coleta3: "",
-			parada_intermediaria: "",
 			data_coleta: "",
 			data_entrega: "",
 			tipo_carga: "",
@@ -69,7 +68,6 @@ const CadastroCargaCSN = () => {
 	// }, [
 	// 	formik.values.destino_carga,
 	// 	formik.values.origem_carga,
-	// 	formik.values.parada_intermediaria,
 	// ]);
 
 	function buscarCargaComDocumentoDeTransporte({ documento_transporte, id }) {

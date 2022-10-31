@@ -1,3 +1,6 @@
+.class-body-menu .row-main {
+  margin-top: 7rem;
+}
 .puts a:hover svg {
   transform: scale(1.1);
 }
@@ -10,12 +13,11 @@
 }
 
 .class-title-coleta {
-  margin-top: 4rem;
+  margin-top: 6rem;
   display: grid;
   justify-content: center;
   align-items: center;
 }
-
 
 #title-ico-import,
 #title-manual {
@@ -25,7 +27,7 @@
 }
 
 .class-button-icons {
-  display: grid;
+  display: flex;
   grid-template-columns: auto auto;
   justify-content: space-evenly;
   align-items: center;
@@ -42,6 +44,11 @@
 #hand {
   display: grid;
   margin-left: 0.5rem;
+  color: #00652e;
+  margin-top: 4rem;
+}
+
+#icon-csn{
   color: #00652e;
   margin-top: 4rem;
 }
@@ -69,7 +76,6 @@
     margin-left: 30% !important;
   }
 
-
   #hand {
     color: #00652e;
     margin-top: 3rem;
@@ -84,7 +90,6 @@
     margin-left: 1rem;
   }
 }
-
 
 @media only screen and (max-width: 1024px) {
   .class-body-menu {
@@ -105,7 +110,6 @@
     font-size: 22px;
     margin-left: 2rem;
   }
-  
 
   #hand {
     margin-left: 2.2rem;

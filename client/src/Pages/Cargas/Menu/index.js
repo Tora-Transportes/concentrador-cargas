@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import swal from "sweetalert";
 import { useHistory } from "react-router-dom";
-import { MdOutlineWavingHand } from "react-icons/md";
+import { MdOutlineWavingHand, MdOutlineAppRegistration } from "react-icons/md";
 import { SiGooglesheets } from "react-icons/si";
 import "./menuCargas.css";
 // import HandleClick from "./tooltipsMenu";
@@ -11,6 +11,7 @@ import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 
 function Main() {
+	const [viewsCadastrarCSN, setviewsCadastrarCSN] = useState(false);
 	const history = useHistory();
 	useEffect(() => {
 		(async () => {
@@ -23,6 +24,9 @@ function Main() {
 				);
 				history.push("/");
 			}
+
+			if (userPermission?.permissoes.includes("CARGAS_CSN"))
+				setviewsCadastrarCSN(true);
 		})();
 	}, []);
 
@@ -48,10 +52,12 @@ function Main() {
 						<p id="title-ico-import">Importação em lote</p>
 					</Link>
 
-					<Link className="text-decoration-none" to="/cargas/cadastro/csn">
-						<MdOutlineWavingHand size={70} id="hand" />
-						<p id="title-manual">CSN</p>
-					</Link>
+					{viewsCadastrarCSN && (
+						<Link className="text-decoration-none" to="/cargas/cadastro/csn">
+							<MdOutlineAppRegistration size={70} id="icon-csn" />
+							<p id="title-manual">CSN</p>
+						</Link>
+					)}
 				</div>
 			</Container>
 		</>

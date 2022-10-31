@@ -22,7 +22,7 @@ import InputPlaca from "../InputPlaca";
 import FilialSelect from "../FilialSelect";
 import ServiceVeiculos from "src/services/ServiceVeiculos";
 import swal from "sweetalert";
-import ListAddItens from "../ListAddItens";
+//import ListAddItens from "../ListAddItens";
 import "./formularioCadastroCSN.css";
 
 function FormularioCadastroCSN({
@@ -36,10 +36,10 @@ function FormularioCadastroCSN({
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
-	const [inputColeta, setInputeColeta] = useState([1]);
-	const [indexInputColeta, setIndexInputeColeta] = useState(0);
-	const [valueInputColeta, setValueInputColeta] = useState();
-	const [valueInputPrevisao, setvalueInputPrevisao] = useState();
+	const [inputColeta2, setInputeColeta2] = useState(false);
+	const [inputColeta3, setInputColeta3] = useState(false);
+	const [viewsButtonAddColeta, setViewsButtonAddColeta] = useState(true);
+	const [viewsButtonExcluir, setViewsButtonExcluir] = useState(false);
 	//const [addDestinoInterme, setAddDestinoInterme] = useState(false);
 
 	async function handleShowDetailsAboutVehicle(plate) {
@@ -98,14 +98,28 @@ function FormularioCadastroCSN({
 		}
 	}
 
-	useEffect(() => {
-		setValueInputColeta(formik.values.local_coleta);
-		setvalueInputPrevisao(formik.values.previsao_coleta);
-	}, []);
+	const viewsInputColeta = () => {
+		if (inputColeta2) {
+			setInputColeta3(true);
+			setViewsButtonAddColeta(false);
+		} else {
+			setInputeColeta2(true);
+			setViewsButtonExcluir(true);
+		}
+	};
 
-	const addInputColeta = () => {
-		setIndexInputeColeta(inputColeta.length + 1);
-		setInputeColeta([...new Set([...inputColeta, indexInputColeta])]);
+	const excluirInputColeta = () => {
+		if (inputColeta3) {
+			formik.setFieldValue("local_coleta3", "");
+			formik.setFieldValue("previsao_coleta3", "");
+			setInputColeta3(false);
+			setViewsButtonAddColeta(true);
+		} else if (inputColeta2) {
+			formik.setFieldValue("local_coleta2", "");
+			formik.setFieldValue("previsao_coleta2", "");
+			setInputeColeta2(false);
+			setViewsButtonExcluir(false);
+		}
 	};
 
 	return (
@@ -458,48 +472,114 @@ function FormularioCadastroCSN({
 					</Row>
 				</Col>
 			</Row>
-			{inputColeta.map((item) => {
-				const titleLocal = "*Local coleta" + item;
-				const titlePrevisao = "*Previsão coleta" + item;
-				return (
-					<li key={item}>
-						<Row>
-							<Col sm={12} md={6}>
-								<FloatingLabel label={titleLocal} className="mb-3">
-									<Form.Control
-										type="text"
-										placeholder=" "
-										name="local_coleta"
-										value={valueInputColeta}
-										onChange={formik.handleChange}
-										required
-									/>
-								</FloatingLabel>
-							</Col>
-							<Col sm={12} md={6}>
-								<FloatingLabel label={titlePrevisao} className="mb-3">
-									<Form.Control
-										type="datetime-local"
-										placeholder=" "
-										name="previsao_coleta"
-										value={valueInputPrevisao}
-										onChange={formik.handleChange}
-										required
-									/>
-								</FloatingLabel>
-							</Col>
-						</Row>
-					</li>
-				);
-			})}
+			{/*  ---------------------------------------------------------- ---------------------------*/}
 			<Row>
-				<Col>
-					<Button className="bg-success" onClick={() => addInputColeta()}>
-						Mais Coleta
-					</Button>
+				<Col sm={12} md={6}>
+					<FloatingLabel label="*Local coleta" className="mb-3">
+						<Form.Control
+							type="text"
+							placeholder=" "
+							name="local_coleta"
+							value={formik.values.local_coleta}
+							onChange={formik.handleChange}
+							required
+						/>
+					</FloatingLabel>
+				</Col>
+				<Col sm={12} md={6}>
+					<FloatingLabel label="*Previsão coleta" className="mb-3">
+						<Form.Control
+							type="datetime-local"
+							placeholder=" "
+							name="previsao_coleta"
+							value={formik.values.previsao_coleta}
+							onChange={formik.handleChange}
+							required
+						/>
+					</FloatingLabel>
 				</Col>
 			</Row>
+			{inputColeta2 && (
+				<Row>
+					<Col sm={12} md={6}>
+						<FloatingLabel label="Local coleta 2" className="mb-3">
+							<Form.Control
+								type="text"
+								placeholder=" "
+								name="local_coleta2"
+								value={formik.values.local_coleta2}
+								onChange={formik.handleChange}
+								//required
+							/>
+						</FloatingLabel>
+					</Col>
+					<Col sm={12} md={6}>
+						<FloatingLabel label="Previsão coleta 2" className="mb-3">
+							<Form.Control
+								type="datetime-local"
+								placeholder=" "
+								name="previsao_coleta2"
+								value={formik.values.previsao_coleta2}
+								onChange={formik.handleChange}
+								//required
+							/>
+						</FloatingLabel>
+					</Col>
+				</Row>
+			)}
+			{inputColeta3 && (
+				<Row>
+					<Col sm={12} md={6}>
+						<FloatingLabel label="Local coleta 3" className="mb-3">
+							<Form.Control
+								type="text"
+								placeholder=" "
+								name="local_coleta3"
+								value={formik.values.local_coleta3}
+								onChange={formik.handleChange}
+								//required
+							/>
+						</FloatingLabel>
+					</Col>
+					<Col sm={12} md={6}>
+						<FloatingLabel label="Previsão coleta" className="mb-3">
+							<Form.Control
+								type="datetime-local"
+								placeholder=" "
+								name="previsao_coleta3"
+								value={formik.values.previsao_coleta3}
+								onChange={formik.handleChange}
+								//required
+							/>
+						</FloatingLabel>
+					</Col>
+				</Row>
+			)}
 
+			<Row>
+				<Col>
+					{viewsButtonAddColeta && (
+						<h6
+							className="text-warning"
+							role="button"
+							onClick={() => viewsInputColeta()}
+						>
+							Para adicionar mais coletas clique aqui !
+						</h6>
+					)}
+				</Col>
+				<Col className="text-end">
+					{viewsButtonExcluir && (
+						<Button
+							className="bg-secondary ms-2 border border-white"
+							onClick={() => excluirInputColeta()}
+						>
+							Excluir dados Coleta
+						</Button>
+					)}
+				</Col>
+			</Row>
+			{/* --------------------------------------------------------------------------------------------- */}
 			<div className="class-linha-title6">
 				<hr className="w-100"></hr>
 			</div>
@@ -557,7 +637,7 @@ function FormularioCadastroCSN({
 				</Col>
 			</Row>
 
-			<div>
+			{/* <div>
 				<ListAddItens
 					id="style-botao-add"
 					value={formik.values.locais}
@@ -565,7 +645,7 @@ function FormularioCadastroCSN({
 					onChange={formik.handleChange}
 					formik={formik}
 				/>
-			</div>
+			</div> */}
 
 			<Modal show={veiculo !== null} size="lg" onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
