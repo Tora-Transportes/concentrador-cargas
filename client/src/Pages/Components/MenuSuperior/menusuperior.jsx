@@ -81,6 +81,11 @@ function Menusuperior() {
             </div>
           </div>
           <li className="class-li">
+            <a id="style-a" href="/localizacao">
+              Localização
+            </a>
+          </li>
+          <li className="class-li">
             <a id="style-a" href="/ajuda">
               Ajuda
             </a>
