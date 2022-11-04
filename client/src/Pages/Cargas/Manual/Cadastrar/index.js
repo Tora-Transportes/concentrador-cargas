@@ -26,7 +26,6 @@ function Manual() {
 			cliente: "",
 			destino_carga: "",
 			origem_carga: "",
-			parada_intermediaria: "",
 			data_coleta: "",
 			data_entrega: "",
 			tipo_carga: "",
@@ -65,11 +64,7 @@ function Manual() {
 
 	useEffect(() => {
 		setDistancia(null);
-	}, [
-		formik.values.destino_carga,
-		formik.values.origem_carga,
-		formik.values.parada_intermediaria,
-	]);
+	}, [formik.values.destino_carga, formik.values.origem_carga]);
 
 	function buscarCargaComDocumentoDeTransporte({ documento_transporte, id }) {
 		if (documento_transporte) {
