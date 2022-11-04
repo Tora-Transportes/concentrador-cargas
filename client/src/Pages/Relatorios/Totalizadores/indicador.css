@@ -5,7 +5,7 @@
 
 .style-title-rel {
   color: #00652e;
-  font-size: 40px;
+  font-size: 45px;
   display: grid;
   text-align: center;
   margin-top: 1.5rem;
@@ -23,12 +23,29 @@
 .cor-letras {
   color: #101212;
 }
+.ind-cod-filial {
+  width: 100%;
+  height: 3.6rem;
+  border-radius: 4px;
+  font-size: 14px;
+  border: 1px solid #ced4da;
+  padding-top: 5px;
+  margin-left: 12px;
+}
+.indicador-cod-filial {
+  border: none;
+  display: grid;
+  width: 100%;
+  height: 50%;
+  outline-color: black;
+}
 
-.botao-aplicar {
-  background-color: #00652e !important;
-  border: none !important;
-  padding: 1rem !important;
-  width: 9rem !important;
+#ind-botao-aplicar {
+  background-color: #00652e;
+  border: none;
+  margin-right: -2rem;
+  padding: 1rem;
+  width: 9rem;
 }
 
 .span-cargas-ativadas,
@@ -55,27 +72,23 @@
 }
 
 @media only screen and (max-width: 575px) {
-  .botao-aplicar{
-    margin-top: 1rem;
-  }
-
+  
   .col-doughnut{
     width: 90% !important;
   };
 } 
 
-@media only screen and (max-width: 991px) and (min-width: 576px) {
+@media only screen and  (min-width: 576px) and (max-width: 991px) {
   .col-doughnut{
     margin-left: 20%
   };
 }
 
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 968px) {
   .text-obs-listagem{
     font-size: 14px;
   }
-
 }
 
 @media only screen and (min-width: 992px){
@@ -85,8 +98,12 @@
 
 }
 @media only screen and (max-width: 1326px) {
-  .botao-aplicar{
-   width: 8rem !important;
+  .ind-cod-filial{
+    width: 92% !important;
+  }
+  #ind-botao-aplicar{
+   width: 7rem !important;
+   margin-left: -1rem !important;
   }
   .style-title-rel {
     font-size: 30px;

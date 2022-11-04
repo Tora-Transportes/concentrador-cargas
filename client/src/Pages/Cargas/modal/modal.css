@@ -19,7 +19,9 @@
   border-left: 2px solid #d3d3d3;
   margin: 2px;
 }
-
+.dialog-modal-import{
+  width: 50vw;
+}
 .card-p-descricao-legenda{
   font-size: 14px;
   color: #000;
@@ -46,9 +48,24 @@
   text-align: end;
   margin-bottom: 15px;
 }
+.col-modal-filial{
+  text-align: start;
+  border: 1px solid #ced4da;
+  border-radius: 7px;
+  margin-left: .6rem;
+  width: 97% !important;
+  height: 4rem;
 
+}
+.modal-input-filial{
+  border: none; 
+  display: grid;
+  outline-color: #FFF;
+  height: 2rem;
+  width: 100%;
+}
 .card-body-excel {
-  display: flex;
+  display: flexbox;
 }
 
 .card-exel-label {
@@ -87,4 +104,24 @@
   .card-body-excel {
     display: grid;
   }
+  .dialog-modal-import{
+    width: 80% !important;
+  }
+}
+
+@media screen and (min-width: 576px) and (max-width: 875px) {
+  .col-modal-filial{
+    width: 95% !important;
+  }
+
+  .dialog-modal-import{
+    width: 65%;
+  }
+}
+
+@media screen and (min-width: 876px) and (max-width: 1375px) { 
+  .dialog-modal-import{
+    width: 55%;
+  }
+
 }

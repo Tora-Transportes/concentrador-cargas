@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./cadastroManual.css";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useFormik } from "formik";
 import useLoadingScreen from "../../../Components/LoadingScreen";
@@ -46,13 +45,14 @@ function Manual() {
 		onSubmit: async (values) => {
 			setLoading(true);
 			try {
+				values.fk_filial = await values.fk_filial.split("-")[0];
 				const { data } = await ServiceCargas.create({
 					...values,
 					canal_comunicacao: "manual",
 				});
 				swal(
 					"Sucesso!",
-					`A carga foi cadastrada com o identificador ${data.data.id}!`,
+					`Carga cadastrada com o identificador ${data.data.id}!`,
 					"success"
 				);
 				resetForm();

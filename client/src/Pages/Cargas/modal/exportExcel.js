@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import "./idiomaCalendario";
-import "./modal.css";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Toast } from "primereact/toast";
@@ -10,6 +9,8 @@ import FilialSelect from "src/Pages/Components/FilialSelect";
 import diffiInDays from "src/Pages/Utils/diffInDays";
 import { Calendar } from "primereact/calendar";
 import { Dialog } from "primereact/dialog";
+import "./modal.css";
+
 export default function ModalExportExcel({
 	onHide,
 	show,
@@ -61,14 +62,14 @@ export default function ModalExportExcel({
 			<Dialog
 				header="Importar excel por filtro de data:"
 				visible={show}
-				style={{ width: "50vw" }}
+				className="dialog-modal-import"
 				footer={footer}
 				onHide={onHide}
 			>
 				<Card className="text-center">
 					<Card.Body className="card-body-excel">
 						<Row className="row-main-excel">
-							<Col md={12} className="col-card-excel-inicio">
+							<Col lg={12} sm={12} md={12} className="col-card-excel-inicio">
 								<Calendar
 									className="calendar-data-inicio"
 									dateFormat="dd/mm/yy"
@@ -83,7 +84,7 @@ export default function ModalExportExcel({
 									}}
 								/>
 							</Col>
-							<Col md={12} className="col-card-excel-fim">
+							<Col className="col-card-excel-fim">
 								<Calendar
 									className="calendar-data-fim"
 									dateFormat="dd/mm/yy"
@@ -114,15 +115,14 @@ export default function ModalExportExcel({
 									</FloatingLabel>
 								</Col>
 							) : (
-								<Col sm={12} lg={12}>
-									<FloatingLabel label="*Código da filial" className="mb-3">
-										<FilialSelect
-											placeholder=" "
-											name="fk_filial"
-											value={codigoFilial || ""}
-											onChange={(event) => setCodigoFilial(event.target.value)}
-										/>
-									</FloatingLabel>
+								<Col sm={4} md={12} className="col-modal-filial">
+									<label>*Código da filial</label>
+									<FilialSelect
+										className="modal-input-filial"
+										name="fk_filial"
+										value={codigoFilial || ""}
+										onChange={(event) => setCodigoFilial(event.target.value)}
+									/>
 								</Col>
 							)}
 						</Row>
