@@ -13,11 +13,12 @@ import { MdDeleteForever } from "react-icons/md";
 
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import TableLocalizacao from "./Tabela";
+import ServiceCsnCargas from "src/services/ServiceCsnCargas";
 let emptyLocation = {
-	id: null,
-	description: "",
-	lat: 0,
-	lot: 0,
+	ID: null,
+	OBSERVACAO: "",
+	LATITUDE: 0,
+	LONGITUDE: 0,
 };
 
 const ViewsLocalizacao = ({ dadosLocalizacao }) => {
@@ -59,35 +60,50 @@ const ViewsLocalizacao = ({ dadosLocalizacao }) => {
 		setDeleteLocationDialog(false);
 	};
 
-	const saveLocation = () => {
+	const saveLocation = async () => {
 		setSubmitted(true);
-		if (location.description?.length && location.lat && location.lot) {
-			let _locations = [...valueLocalizacao];
-			let _location = { ...location };
-			if (location.id) {
-				// parte do codigo onde sera atualizado a localização.
-				const index = findIndexById(location.id);
+		if (
+			location.OBSERVACAO?.length &&
+			location.LATITUDE &&
+			location.LONGITUDE
+		) {
+			const bodyRota = {
+				OBSERVACAO: location.OBSERVACAO,
+				LATITUDE: location.LATITUDE,
+				LONGITUDE: location.LONGITUDE,
+			};
 
-				_locations[index] = _location;
-				toast.current.show({
-					severity: "success",
-					summary: "Successful",
-					detail: "Rota atualizada com sucesso.",
-					life: 3000,
-				});
+			if (location.ID) {
+				// Atualização das rotas.
+
+				try {
+					const id = location.ID;
+					const result = await ServiceCsnCargas.update(id, bodyRota);
+					console.log("EEEEEE", result);
+					toast.current.show({
+						severity: "success",
+						summary: "Sucesso!",
+						detail: "Rota atualizada com sucesso.",
+						life: 3000,
+					});
+				} catch (error) {
+					console.error(error);
+				}
 			} else {
-				// parte do codigo onde sera add o salvamento da localização
-				_location.id = createId();
-				_locations.push(_location);
-				toast.current.show({
-					severity: "success",
-					summary: "OK !",
-					detail: "Rota criado com sucesso.",
-					life: 3000,
-				});
+				try {
+					await ServiceCsnCargas.create(bodyRota);
+					toast.current.show({
+						severity: "success",
+						summary: "Sucesso !",
+						detail: "Rota criado com sucesso.",
+						life: 3000,
+					});
+				} catch (error) {
+					console.error(error);
+				}
 			}
 
-			setValueLocalizacao(_locations);
+			//setValueLocalizacao(_locations);
 			setLocationDialog(false);
 			setLocation(emptyLocation);
 		}
@@ -112,33 +128,9 @@ const ViewsLocalizacao = ({ dadosLocalizacao }) => {
 		});
 	};
 
-	const findIndexById = (id) => {
-		let index = -1;
-		for (let i = 0; i < valueLocalizacao.length; i++) {
-			if (valueLocalizacao[i].id === id) {
-				index = i;
-				break;
-			}
-		}
-
-		return index;
-	};
-
-	const createId = () => {
-		let id = "";
-		let chars =
-			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-		for (let i = 0; i < 5; i++) {
-			id += chars.charAt(Math.floor(Math.random() * chars.length));
-		}
-		return id;
-	};
-
 	const onInputChange = (e, name) => {
 		const valuesField =
-			name === "description"
-				? (e.target && e.target.value) || ""
-				: e.value || 0;
+			name === "OBSERVACAO" ? (e.target && e.target.value) || "" : e.value || 0;
 		let _location = { ...location };
 		_location[`${name}`] = valuesField;
 
@@ -243,20 +235,20 @@ const ViewsLocalizacao = ({ dadosLocalizacao }) => {
 							onHide={hideDialog}
 						>
 							<div className="field">
-								<label htmlFor="description">Descrição</label>
+								<label htmlFor="OBSERVACAO">Descrição</label>
 								<InputTextarea
-									id="description"
-									value={location.description}
-									onChange={(e) => onInputChange(e, "description")}
+									id="OBSERVACAO"
+									value={location.OBSERVACAO}
+									onChange={(e) => onInputChange(e, "OBSERVACAO")}
 									required
 									rows={3}
 									cols={20}
 									autoFocus
 									className={classNames({
-										"p-invalid": submitted && !location.description,
+										"p-invalid": submitted && !location.OBSERVACAO,
 									})}
 								/>
-								{submitted && !location.description && (
+								{submitted && !location.OBSERVACAO && (
 									<small className="p-error">
 										Descrição é um campo obrigatório.
 									</small>
@@ -265,41 +257,41 @@ const ViewsLocalizacao = ({ dadosLocalizacao }) => {
 
 							<div className="formgrid grid">
 								<div className="field col">
-									<label htmlFor="lat">Latititude</label>
+									<label htmlFor="LATITUDE">Latititude</label>
 
 									<InputNumber
-										inputId="lat"
-										value={parseFloat(location?.lat)}
-										onChange={(e) => onInputChange(e, "lat")}
+										inputId="LATITUDE"
+										value={parseFloat(location?.LATITUDE)}
+										onChange={(e) => onInputChange(e, "LATITUDE")}
 										required
 										autoFocus
 										//mode="decimal"
 										useGrouping={false}
 										className={classNames({
-											"p-invalid": submitted && !location.lat,
+											"p-invalid": submitted && !location.LATITUDE,
 										})}
 									/>
-									{submitted && !location.lat && (
+									{submitted && !location.LATITUDE && (
 										<small className="p-error">
 											Latititude é um campo obrigatório.
 										</small>
 									)}
 								</div>
 								<div className="field col">
-									<label htmlFor="lot">Longitude</label>
+									<label htmlFor="LONGITUDE">Longitude</label>
 									<InputNumber
-										inputId="lot"
-										value={parseFloat(location.lot)}
-										onChange={(e) => onInputChange(e, "lot")}
+										inputId="LONGITUDE"
+										value={parseFloat(location.LONGITUDE)}
+										onChange={(e) => onInputChange(e, "LONGITUDE")}
 										required
 										autoFocus
 										useGrouping={false}
 										//mode="decimal"
 										className={classNames({
-											"p-invalid": submitted && !location.lot,
+											"p-invalid": submitted && !location.LONGITUDE,
 										})}
 									/>
-									{submitted && !location.lot && (
+									{submitted && !location.LONGITUDE && (
 										<small className="p-error">
 											Longitude é um campo obrigatório.
 										</small>

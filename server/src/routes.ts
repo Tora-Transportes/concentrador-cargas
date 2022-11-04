@@ -19,11 +19,11 @@ import CredenciaisController from "./controllers/CredenciaisController";
 import ProducaoController from "./controllers/ProducaoController";
 import CargaTecController from "./controllers/CargaTecController";
 import AvisosController from "./controllers/AvisosController";
+import CargasCsnController from "./controllers/CargasCsnController";
 
 const routes = Router();
 
 routes.get("/avisos", AvisosController.index);
-
 
 routes.get("/credenciais", CredenciaisController.get);
 routes.post("/credenciais", CredenciaisController.post);
@@ -54,6 +54,11 @@ routes.delete(
   HasPermission("DELETAR_CARGAS"),
   CargaController.delete
 );
+
+routes.get("/csn/cargas", CargasCsnController.search);
+routes.post("/csn/cargas", CargasCsnController.create);
+routes.put("/csn/cargas/:id", CargasCsnController.update);
+routes.delete("/csn/cargas/:id", CargasCsnController.delete);
 
 routes.get("/usuarios", UsuarioController.search);
 routes.get("/usuarios/:oid", UsuarioController.index);

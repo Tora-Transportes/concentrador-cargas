@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import ServiceCsnCargas from "src/services/ServiceCsnCargas";
 import swal from "sweetalert";
 import { validationPermissionUser } from "../Utils/validationPermissionUser";
-import dadosJsonTeste from "./testeJoson";
 import ViewsLocalizacao from "./views";
 
 const LocalizacaoCSN = () => {
@@ -19,7 +19,8 @@ const LocalizacaoCSN = () => {
 				);
 				history.push("/");
 			}
-			setDadosLocalizacao(dadosJsonTeste?.data);
+			const dadosLista = (await ServiceCsnCargas.list()).data.data;
+			setDadosLocalizacao(dadosLista?.results);
 		})();
 	}, []);
 

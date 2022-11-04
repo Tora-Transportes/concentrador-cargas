@@ -26,27 +26,27 @@ const TableLocalizacao = ({
           header={header}
           responsiveLayout="scroll"
         >
-          <Column
-            field="id"
+          {/* <Column
+            field="ID"
             header="Id"
             sortable
             //style={{ minWidth: "12rem" }}
-          ></Column>
+          ></Column> */}
           <Column
-            field="description"
+            field="OBSERVACAO"
             header="Descrição"
             sortable
             //style={{ minWidth: "12rem" }}
           ></Column>
           <Column
-            field="lat"
+            field="LATITUDE"
             header="Latitude"
             sortable
             //style={{ minWidth: "12rem" }}
           ></Column>
           <Column
-            field="lot"
-            header="Longidude"
+            field="LONGITUDE"
+            header="Longitude"
             sortable
             //style={{ minWidth: "12rem" }}
           ></Column>
