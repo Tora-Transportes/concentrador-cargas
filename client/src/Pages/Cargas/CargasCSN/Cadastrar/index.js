@@ -141,7 +141,7 @@ const CadastroCargaCSN = () => {
 				<p id="title-cad-manual">Cadastro de Carga - CSN</p>
 			</div>
 			<div className="class-linha-title">
-				<hr id="style-linha-cad"></hr>
+				<hr id="linha-cad-csn"></hr>
 			</div>
 			<Container className="mb-5 mt-2" style={{ scrollBehavior: "none" }}>
 				<Form onSubmit={formik.handleSubmit}>

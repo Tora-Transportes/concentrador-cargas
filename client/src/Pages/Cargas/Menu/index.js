@@ -54,8 +54,8 @@ function Main() {
 
 					{viewsCadastrarCSN && (
 						<Link className="text-decoration-none" to="/cargas/cadastro/csn">
-							<MdOutlineAppRegistration size={70} id="icon-csn" />
-							<p id="title-manual">CSN</p>
+							<MdOutlineAppRegistration size={75} id="icon-csn" />
+							<p id="title-CSN">CSN</p>
 						</Link>
 					)}
 				</div>

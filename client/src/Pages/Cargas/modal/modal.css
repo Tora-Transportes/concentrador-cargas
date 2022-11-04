@@ -57,11 +57,14 @@
   height: 4rem;
 
 }
+label{
+  margin-top: .2rem;
+}
 .modal-input-filial{
   border: none; 
   display: grid;
   outline-color: #FFF;
-  height: 2rem;
+  height: 1.8rem;
   width: 100%;
 }
 .card-body-excel {

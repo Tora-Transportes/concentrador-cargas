@@ -3,7 +3,7 @@
   grid-template-columns: auto auto auto;
   justify-content: center;
   margin-top: 1rem;
-  grid-gap: 3rem;
+  grid-gap: 4rem;
 }
 .class-title-raioemp {
   font-size: 40px;
@@ -19,7 +19,7 @@
 #button-pesq-raioemp {
   background: #00652e;
   border: none;
-  margin-top: 2.1rem;
+  margin-top: 2.4rem;
   width: 10rem;
   height: 2rem;
 }
@@ -37,13 +37,14 @@
   }
 
   #button-pesq-raioemp {
-    margin-top: -1rem;
+    margin-top: 1rem;
   }
 
   .class-body-viewraioemp {
     display: flex;
     flex-direction: column;
     align-items: center;
+    grid-gap: 2rem;
   }
 }
 

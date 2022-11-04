@@ -19,53 +19,67 @@
   align-items: center;
 }
 
-#title-ico-import,
-#title-manual {
-  color: #00652e;
-  font-family: "Poppins", sans-serif;
-  font-size: 27px;
-}
-
 .class-button-icons {
   display: flex;
   grid-template-columns: auto auto;
   justify-content: space-evenly;
   align-items: center;
   grid-gap: -3rem;
-  margin-top: 4rem;
+  margin-top: 3rem;
 }
 
+#title-ico-import,
+#title-manual,
+#title-CSN {
+  color: #00652e;
+  font-family: "Poppins", sans-serif;
+  font-size: 27px;
+}
+
+#title-CSN {
+  margin-left: 0.7rem;
+}
 #import {
-  margin-left: 4.5rem;
+  margin-left: 5rem;
   color: #00652e;
   margin-top: 4.5rem;
 }
 
 #hand {
   display: grid;
-  margin-left: 0.5rem;
+  margin-left: 0.7rem;
   color: #00652e;
-  margin-top: 4rem;
+  margin-top: 4.5rem;
 }
 
-#icon-csn{
+#icon-csn {
   color: #00652e;
-  margin-top: 4rem;
+  margin-top: 4.5rem;
 }
 
+#title-ico-import:hover,
 #import:hover,
-#hand:hover {
+#hand:hover,
+#title-manual:hover,
+#title-CSN:hover,
+#icon-csn:hover {
   transition: 0.5s;
   -webkit-transform: scale(1.2);
   transform: scale(1.1);
   color: #048a01;
 }
-@media only screen and (min-width: 215px) and (max-width: 385px) {
+@media only screen and (min-width: 215px) and (max-width: 390px) {
   #titulo-selecionar-modo-carga {
     font-size: 25px !important;
   }
+  .class-button-icons {
+    position: absolute !important;
+    display: block;
+    margin-top: 1rem !important;
+    margin-left: 28% !important;
+  }
 }
-@media only screen and (max-width: 455px) {
+@media only screen and (min-width: 391px) and (max-width: 505px) {
   .class-body-menu {
     overflow: none;
   }
@@ -73,7 +87,7 @@
     position: absolute !important;
     display: block;
     margin-top: 1rem !important;
-    margin-left: 30% !important;
+    margin-left: 35% !important;
   }
 
   #hand {
@@ -85,10 +99,36 @@
     font-size: 22px;
     margin-left: -1.8rem !important;
   }
+  #icon-csn {
+    color: #00652e;
+    margin-left: 1.6rem;
+  }
+  
+  #title-CSN{
+    
+    margin-left: 2rem;
+
+  }
 
   .class-title-coleta {
     margin-left: 1rem;
   }
+}
+
+@media only screen and (min-width: 506px) and (max-width: 1024px) {
+.class-button-icons {
+  margin-top: 2rem;
+  grid-gap: 3rem;
+  margin-left: 2rem;
+}
+
+#title-manual,#hand{
+  margin-left: 1rem !important;
+}
+
+#icon-csn,#title-CSN{
+  margin-left: -3rem !important;
+}
 }
 
 @media only screen and (max-width: 1024px) {
@@ -100,11 +140,7 @@
     font-size: 30px;
     text-align: center;
   }
-  .class-button-icons {
-    margin-top: 2rem;
-    grid-gap: 2rem;
-    margin-left: 2rem;
-  }
+  
 
   #title-manual {
     font-size: 22px;
@@ -126,6 +162,16 @@
     color: #00652e;
     margin-top: 3rem;
     margin-left: 2rem;
+  }
+  
+  #icon-csn{
+    
+    margin-top: 2.5rem;
+    margin-left: 1.8rem;
+  }
+  #title-CSN{
+    margin-left: 2.2rem;
+
   }
 
   .class-title-coleta {

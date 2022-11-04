@@ -65,7 +65,6 @@ function VisualizarCargas({
 							id="style-button-detail"
 							icon={<BiCog className="me-1" />}
 							onClick={() => setVisibleLeft(true)}
-							className="sidebar-button-table"
 						/>
 					</Col>
 					<Col sm={6} lg={6} className="inicio-col-registros">
