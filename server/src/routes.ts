@@ -1,7 +1,6 @@
 import express, { Router } from "express";
 import path from "path";
 import multer from "multer";
-
 import CargaController from "./controllers/CargaController";
 import UsuarioController from "./controllers/UsuarioController";
 import TokenMiddleware from "./middlewares/Token";
@@ -23,7 +22,6 @@ import AvisosController from "./controllers/AvisosController";
 const routes = Router();
 
 routes.get("/avisos", AvisosController.index);
-
 
 routes.get("/credenciais", CredenciaisController.get);
 routes.post("/credenciais", CredenciaisController.post);
