@@ -21,7 +21,7 @@ let emptyLocation = {
 	LONGITUDE: 0,
 };
 
-const ViewsLocalizacao = ({ dadosLocalizacao }) => {
+const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 	const [valueLocalizacao, setValueLocalizacao] = useState(null);
 	const [locationDialog, setLocationDialog] = useState(false);
 	const [deleteLocationDialog, setDeleteLocationDialog] = useState(false);
@@ -75,21 +75,25 @@ const ViewsLocalizacao = ({ dadosLocalizacao }) => {
 
 			if (location.ID) {
 				// Atualização das rotas.
-
 				try {
 					const id = location.ID;
-					const result = await ServiceCsnCargas.update(id, bodyRota);
-					console.log("EEEEEE", result);
+					await ServiceCsnCargas.update(id, bodyRota);
 					toast.current.show({
 						severity: "success",
 						summary: "Sucesso!",
 						detail: "Rota atualizada com sucesso.",
 						life: 3000,
 					});
+
+					setAtualizarTabela(true);
 				} catch (error) {
 					console.error(error);
+					setTimeout(() => {
+						window.location.reload();
+					}, 3000);
 				}
 			} else {
+				// salvar rotas.
 				try {
 					await ServiceCsnCargas.create(bodyRota);
 					toast.current.show({
@@ -98,6 +102,7 @@ const ViewsLocalizacao = ({ dadosLocalizacao }) => {
 						detail: "Rota criado com sucesso.",
 						life: 3000,
 					});
+					setAtualizarTabela(true);
 				} catch (error) {
 					console.error(error);
 				}
@@ -114,18 +119,23 @@ const ViewsLocalizacao = ({ dadosLocalizacao }) => {
 		setDeleteLocationDialog(true);
 	};
 
-	const deleteLocation = () => {
+	const deleteLocation = async () => {
 		//Adicionar codigo de Deleção
-		let _locations = valueLocalizacao.filter((val) => val.id !== location.id);
-		setValueLocalizacao(_locations);
-		setDeleteLocationDialog(false);
-		setLocation(emptyLocation);
-		toast.current.show({
-			severity: "success",
-			summary: "Successful",
-			detail: "Localização deletada com sucesso.",
-			life: 3000,
-		});
+		try {
+			await ServiceCsnCargas.delete(location.ID);
+			console.log("DElete", location);
+			setDeleteLocationDialog(false);
+			setLocation(emptyLocation);
+			toast.current.show({
+				severity: "success",
+				summary: "Sucesso",
+				detail: "Rota deletada com sucesso.",
+				life: 3000,
+			});
+			setAtualizarTabela(true);
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	const onInputChange = (e, name) => {
@@ -265,7 +275,7 @@ const ViewsLocalizacao = ({ dadosLocalizacao }) => {
 										onChange={(e) => onInputChange(e, "LATITUDE")}
 										required
 										autoFocus
-										//mode="decimal"
+										mode="decimal"
 										useGrouping={false}
 										className={classNames({
 											"p-invalid": submitted && !location.LATITUDE,

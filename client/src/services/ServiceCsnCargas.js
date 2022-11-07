@@ -13,11 +13,8 @@ class ServiceCsnCargas {
 		return await api.put(`/csn/cargas/${id}`, bodyRota);
 	}
 
-	async delete({ id, observacao }) {
-		return api.delete(`/produtos/${id}`, { data: { observacao } });
-	}
-	async enable({ id }) {
-		return api.put(`/produtos/${id}/ativar`);
+	async delete(id) {
+		return await api.delete(`/csn/cargas/${id}`);
 	}
 }
 

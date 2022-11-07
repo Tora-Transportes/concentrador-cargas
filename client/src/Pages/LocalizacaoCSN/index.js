@@ -7,6 +7,7 @@ import ViewsLocalizacao from "./views";
 
 const LocalizacaoCSN = () => {
 	const [dadosLocalizacao, setDadosLocalizacao] = useState();
+	const [atualizarTabela, setAtualizarTabela] = useState(false);
 	const history = useHistory();
 	useEffect(() => {
 		(async () => {
@@ -19,14 +20,22 @@ const LocalizacaoCSN = () => {
 				);
 				history.push("/");
 			}
-			const dadosLista = (await ServiceCsnCargas.list()).data.data;
-			setDadosLocalizacao(dadosLista?.results);
 		})();
 	}, []);
 
+	useEffect(() => {
+		(async () => {
+			const dadosLista = (await ServiceCsnCargas.list()).data.data;
+			setDadosLocalizacao(dadosLista?.results);
+		})();
+	}, [atualizarTabela]);
+
 	return (
 		<div className="main-localizacao">
-			<ViewsLocalizacao dadosLocalizacao={dadosLocalizacao} />
+			<ViewsLocalizacao
+				dadosLocalizacao={dadosLocalizacao}
+				setAtualizarTabela={setAtualizarTabela}
+			/>
 		</div>
 	);
 };

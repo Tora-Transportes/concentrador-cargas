@@ -32,7 +32,7 @@ export class CargaCsnRepository implements ICargaCsnRepository {
     //   !["", null, undefined, "null", "undefined"].includes(value);
 
     //const total = database("con_rotas_csn").count("ID as total").first();
-    const results = database("con_rotas_csn").select("*");
+    const results = database("con_rotas_csn").select("*").orderBy("ID", "desc");
     // .limit(pageSize)
     // .offset((realPage - 1) * pageSize);
 
