@@ -156,18 +156,18 @@ function FormularioCadastroCSN({
 				</Col>
 			</Row>
 			<Row>
-				<Col sm={12} md={6}>
-					<FloatingLabel label="* Código da filial" className="mb-3">
-						<FilialSelect
-							id="Codigo-filial"
-							placeholder=" "
-							name="fk_filial"
-							value={formik.values.fk_filial ?? ""}
-							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
-							required
-						/>
-					</FloatingLabel>
+				<Col sm={12} md={6} className="col-cod-filial2">
+					<label>*Código da filial</label>
+					<FilialSelect
+						id="Codigo-filial"
+						className="input-cod-filial2"
+						placeholder=" "
+						name="fk_filial"
+						value={formik.values.fk_filial ?? ""}
+						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
+						required
+					/>
 				</Col>
 				<Col>
 					<FloatingLabel label="Documento de transporte" className="mb-3">

@@ -6,7 +6,7 @@
   grid-template-columns: auto auto auto;
   justify-content: center;
   margin-top: 1rem;
-  grid-gap: 3rem;
+  grid-gap: 4rem;
 }
 .class-title-dest {
   font-size: 40px;
@@ -17,12 +17,12 @@
   width: 60rem;
 }
 
-#button-pesq-dest {
+#button-pesq-dist {
   background: #00652e;
   border: none;
   width: 10rem;
   height: 2rem;
-  margin-top: 2rem;
+  margin-top: 2.45rem;
 }
 
 @media only screen and (min-width: 215px) and (max-width: 865px) {
@@ -43,18 +43,19 @@
     height: 20rem;
   }
 
-  #button-pesq-dest {
-    margin-top: -1rem;
+  #button-pesq-dist {
+    margin-top: 1rem;
   }
   .class-body-viewdest {
     display: flex;
     flex-direction: column;
     align-items: center;
+    grid-gap: 2rem;
   }
 }
 @media only screen and (min-width: 1200px) and (max-width: 1825px) {
-  #button-pesq-dest {
-    margin-top: 2.2rem;
+  #button-pesq-dist {
+    margin-top: 2.45rem;
   }
 
   .class-card-dest {

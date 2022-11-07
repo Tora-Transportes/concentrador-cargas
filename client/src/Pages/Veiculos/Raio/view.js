@@ -122,7 +122,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 									/>
 								</Form.Group>
 
-								<Button type="submit" id="button-pesq-raio">
+								<Button type="submit" id="button-veic-prox">
 									Pesquisar
 								</Button>
 							</Form>

@@ -1,10 +1,9 @@
 import React from "react";
-import "./../styleVeiculos.css";
 import { Container, Row, Form, Button, Card } from "react-bootstrap";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import InputCliente from "../../Components/InputCliente";
 import DateUtils from "../../Utils/date";
-import "../DestinoCarga/style.css";
+import "./style.css";
 import L from "leaflet";
 
 const originIcon = L.icon({
@@ -112,7 +111,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 									/>
 								</Form.Group>
 
-								<Button type="submit" id="button-pesq-dest">
+								<Button type="submit" id="button-pesq-dist">
 									Pesquisar
 								</Button>
 							</Form>

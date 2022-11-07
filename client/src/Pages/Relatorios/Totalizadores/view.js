@@ -73,7 +73,7 @@ function ViewRotasPendentes({
 	function applyFilter() {
 		const data_inicio = dataInicial.current.value;
 		const data_final = dataFinal.current.value;
-		const fk_filial = codigoFilial;
+		const fk_filial = codigoFilial.split("-")[0];
 		if (!data_inicio || !data_final || !fk_filial) {
 			const message =
 				"Data início, data fim e código da filial são campos obrigatórios!";
@@ -108,11 +108,7 @@ function ViewRotasPendentes({
 			<Container className="text-center mb-5 mt-4">
 				<p className="style-title-rel">Indicador Operacional</p>
 				<hr className="linha-abaixo-titulo" id="style-hr-rel" />
-				<Toast
-					ref={toast}
-					position="top-center"
-					// style={{ width: "30vw" }}
-				></Toast>
+				<Toast ref={toast} position="top-center"></Toast>
 				<span>
 					O tempo médio de aprovação de veículos pelo GR é de{" "}
 					<b>
@@ -152,18 +148,23 @@ function ViewRotasPendentes({
 								</Col>
 							</Row>
 							<Row>
-								<Col xl={10} lg={10} md={9} sm={8}>
-									<FloatingLabel label="*Código da filial">
-										<FilialSelect
-											placeholder=" "
-											name="fk_filial"
-											value={codigoFilial || ""}
-											onChange={(event) => setCodigoFilial(event.target.value)}
-										/>
-									</FloatingLabel>
+								<Col
+									xl={10}
+									lg={10}
+									md={9}
+									sm={8}
+									className="col-cod-filial text-start"
+								>
+									<label>*Código da filial</label>
+									<FilialSelect
+										className="input-cod-filial"
+										name="fk_filial"
+										value={codigoFilial || ""}
+										onChange={(event) => setCodigoFilial(event.target.value)}
+									/>
 								</Col>
 								<Col>
-									<Button className="botao-aplicar" onClick={applyFilter}>
+									<Button id="ind-botao-aplicar" onClick={applyFilter}>
 										Aplicar
 									</Button>
 								</Col>
