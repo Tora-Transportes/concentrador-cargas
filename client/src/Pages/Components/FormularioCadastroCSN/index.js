@@ -24,6 +24,7 @@ import ServiceVeiculos from "src/services/ServiceVeiculos";
 import swal from "sweetalert";
 //import ListAddItens from "../ListAddItens";
 import "./formularioCadastroCSN.css";
+import RotasSelect from "../FilialSelect/rotasSelect";
 
 function FormularioCadastroCSN({
 	formik,
@@ -473,32 +474,35 @@ function FormularioCadastroCSN({
 				</Col>
 			</Row>
 			{/*  ---------------------------------------------------------- ---------------------------*/}
-			<Row>
-				<Col sm={12} md={6}>
-					<FloatingLabel label="*Local coleta" className="mb-3">
-						<Form.Control
-							type="text"
+			<Col>
+				<Row>
+					<Col className="col-cod-local">
+						<label>*Local</label>
+						<RotasSelect
+							className="input-cod-filial"
+							//id="Codigo-filial pb-5"
 							placeholder=" "
 							name="local_coleta"
 							value={formik.values.local_coleta}
 							onChange={formik.handleChange}
+							onBlur={formik.handleBlur}
 							required
 						/>
-					</FloatingLabel>
-				</Col>
-				<Col sm={12} md={6}>
-					<FloatingLabel label="*Previsão coleta" className="mb-3">
-						<Form.Control
-							type="datetime-local"
-							placeholder=" "
-							name="previsao_coleta"
-							value={formik.values.previsao_coleta}
-							onChange={formik.handleChange}
-							required
-						/>
-					</FloatingLabel>
-				</Col>
-			</Row>
+					</Col>
+					<Col>
+						<FloatingLabel label="*Previsão coleta" className="mb-3">
+							<Form.Control
+								type="datetime-local"
+								placeholder=" "
+								name="previsao_coleta"
+								value={formik.values.previsao_coleta}
+								onChange={formik.handleChange}
+								required
+							/>
+						</FloatingLabel>
+					</Col>
+				</Row>
+			</Col>
 			{inputColeta2 && (
 				<Row>
 					<Col sm={12} md={6}>

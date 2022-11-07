@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./localizacao.css";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Form } from "react-bootstrap";
 import { classNames } from "primereact/utils";
 import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
 import { InputTextarea } from "primereact/inputtextarea";
-import { InputNumber } from "primereact/inputnumber";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { BsPencilSquare } from "react-icons/bs";
@@ -17,8 +16,8 @@ import ServiceCsnCargas from "src/services/ServiceCsnCargas";
 let emptyLocation = {
 	ID: null,
 	OBSERVACAO: "",
-	LATITUDE: 0,
-	LONGITUDE: 0,
+	LATITUDE: "",
+	LONGITUDE: "",
 };
 
 const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
@@ -123,7 +122,6 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 		//Adicionar codigo de Deleção
 		try {
 			await ServiceCsnCargas.delete(location.ID);
-			console.log("DElete", location);
 			setDeleteLocationDialog(false);
 			setLocation(emptyLocation);
 			toast.current.show({
@@ -139,8 +137,8 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 	};
 
 	const onInputChange = (e, name) => {
-		const valuesField =
-			name === "OBSERVACAO" ? (e.target && e.target.value) || "" : e.value || 0;
+		const valuesField = e.target.value;
+		name === "OBSERVACAO" ? (e.target && e.target.value) || "" : e.value || 0;
 		let _location = { ...location };
 		_location[`${name}`] = valuesField;
 
@@ -217,6 +215,7 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 		</div>
 	);
 
+	console.log("AAAAAA", location);
 	return (
 		<>
 			<Menusuperior />
@@ -266,20 +265,20 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 							</div>
 
 							<div className="formgrid grid">
+								<label htmlFor="L">Longitude</label>
 								<div className="field col">
-									<label htmlFor="LATITUDE">Latititude</label>
-
-									<InputNumber
-										inputId="LATITUDE"
-										value={parseFloat(location?.LATITUDE)}
+									<Form.Control
+										type="number"
+										min={1}
+										step={0.01}
+										placeholder=" "
+										name="LATITUDE"
+										value={location.LATITUDE}
 										onChange={(e) => onInputChange(e, "LATITUDE")}
-										required
-										autoFocus
-										mode="decimal"
-										useGrouping={false}
 										className={classNames({
 											"p-invalid": submitted && !location.LATITUDE,
 										})}
+										required
 									/>
 									{submitted && !location.LATITUDE && (
 										<small className="p-error">
@@ -289,17 +288,18 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 								</div>
 								<div className="field col">
 									<label htmlFor="LONGITUDE">Longitude</label>
-									<InputNumber
-										inputId="LONGITUDE"
-										value={parseFloat(location.LONGITUDE)}
+									<Form.Control
+										type="number"
+										min={1}
+										step={0.01}
+										placeholder=" "
+										name="LONGITUDE"
+										value={location.LONGITUDE}
 										onChange={(e) => onInputChange(e, "LONGITUDE")}
-										required
-										autoFocus
-										useGrouping={false}
-										//mode="decimal"
 										className={classNames({
 											"p-invalid": submitted && !location.LONGITUDE,
 										})}
+										required
 									/>
 									{submitted && !location.LONGITUDE && (
 										<small className="p-error">
