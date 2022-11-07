@@ -71,7 +71,7 @@ export const getColumns = (
 		},
 		{
 			name: "link",
-			description: "Obs cargas",
+			description: "Detalhes da carga",
 			static_column: true,
 			selector: (row) => {
 				if (row?.placa) {
