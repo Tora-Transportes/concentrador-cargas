@@ -137,7 +137,7 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 	};
 
 	const onInputChange = (e, name) => {
-		const valuesField = e.target.value;
+		const valuesField = e.target.value?.toUpperCase();
 		name === "OBSERVACAO" ? (e.target && e.target.value) || "" : e.value || 0;
 		let _location = { ...location };
 		_location[`${name}`] = valuesField;

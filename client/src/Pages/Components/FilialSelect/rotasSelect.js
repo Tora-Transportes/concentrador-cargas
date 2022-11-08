@@ -6,7 +6,6 @@ function RotasSelect(props) {
 	useEffect(() => {
 		(async function () {
 			const ordenacaoFilial = (await ServiceCsnCargas.list()).data.data;
-			console.log("AAAAAAAA", ordenacaoFilial);
 			// ordenacaoFilial.sort(function (a, b) {
 			// 	return a.FIL_COD < b.FIL_COD ? -1 : a.FIL_COD > b.FIL_COD ? 1 : 0;
 			// });

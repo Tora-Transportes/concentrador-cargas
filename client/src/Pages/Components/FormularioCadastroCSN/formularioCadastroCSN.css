@@ -51,8 +51,28 @@
   grid-template-columns: auto auto auto auto;
   grid-gap: 1rem;
 }
+.row-input-coleta {
+  padding-top: 15px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  margin-left: 2px !important;
+  margin-right: 1.5px !important;
+  margin-bottom: 10px;
+  /* padding-left: 12px !important; */
+}
 .col-cod-local {
-  /* width: 100%; */
+  width: 48.2% !important;
+  margin-right: 10px;
+  height: 3.6rem;
+  border-radius: 4px;
+  font-size: 14px;
+  border: 1px solid #ced4da;
+  padding-top: 5px;
+  margin-left: 12px;
+}
+.col-cod-entrega {
+  width: 48.9% !important;
+  margin-right: 10px;
   height: 3.6rem;
   border-radius: 4px;
   font-size: 14px;
@@ -61,6 +81,13 @@
   margin-left: 12px;
 }
 
+.input-cod-local {
+  border: none;
+  display: grid;
+  width: 100%;
+  /* padding: -1rem; */
+  outline-color: #fff;
+}
 .input-cod-filial {
   border: none;
   display: grid;
@@ -124,10 +151,14 @@ label {
   border: none;
   margin-top: 1rem;
 }
-@media only screen and (max-width: 353px) {
-  .col-cod-filial2 {
+@media only screen and (max-width: 486px) {
+  .col-cod-filial2,
+  .col-cod-local {
     margin-bottom: 1rem;
     width: 92% !important;
+  }
+  .row-button-local {
+    display: grid !important;
   }
 }
 @media only screen and (min-width: 354px) and (max-width: 575px) {

@@ -13,7 +13,7 @@ import {
 	Card,
 	Modal,
 } from "react-bootstrap";
-import { IoMdHelpCircle } from "react-icons/io";
+import { IoMdHelpCircle, IoMdAdd } from "react-icons/io";
 //import InputLocalizacao from "../InputLocalizacao";
 import AutocompleteInput from "../AutocompleteInput";
 import InputCliente from "../InputCliente";
@@ -113,11 +113,15 @@ function FormularioCadastroCSN({
 		if (inputColeta3) {
 			formik.setFieldValue("local_coleta3", "");
 			formik.setFieldValue("previsao_coleta3", "");
+			formik.setFieldValue("local_entrega3", "");
+			formik.setFieldValue("previsao_entrega3", "");
 			setInputColeta3(false);
 			setViewsButtonAddColeta(true);
 		} else if (inputColeta2) {
 			formik.setFieldValue("local_coleta2", "");
 			formik.setFieldValue("previsao_coleta2", "");
+			formik.setFieldValue("local_entrega2", "");
+			formik.setFieldValue("previsao_entrega2", "");
 			setInputeColeta2(false);
 			setViewsButtonExcluir(false);
 		}
@@ -474,48 +478,67 @@ function FormularioCadastroCSN({
 				</Col>
 			</Row>
 			{/*  ---------------------------------------------------------- ---------------------------*/}
-			<Col>
-				<Row>
-					<Col className="col-cod-local">
-						<label>*Local</label>
+
+			<Row className="row-input-coleta">
+				<Col sm={12} md={6} className="col-cod-local">
+					<label>*Local coleta</label>
+					<RotasSelect
+						className="input-cod-local"
+						//id="Codigo-filial pb-5"
+						placeholder=" "
+						name="local_coleta"
+						value={formik.values.local_coleta}
+						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
+						required
+					/>
+				</Col>
+				<Col>
+					<Col>
+						<FloatingLabel label="*Coleta/Entrega" className="mb-3">
+							<Form.Select
+								name="unidade_medida"
+								value={formik.values.unidade_medida}
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+								required
+								disabled={disabledFields.includes("unidade_medida")}
+							>
+								<option value=""></option>
+								<option value="Coleta">Coleta</option>
+								<option value="Entrega">Entrega</option>
+							</Form.Select>
+						</FloatingLabel>
+					</Col>
+				</Col>
+				<Col>
+					<FloatingLabel label="*Previsão coleta" className="mb-3">
+						<Form.Control
+							type="datetime-local"
+							placeholder=" "
+							name="previsao_coleta"
+							value={formik.values.previsao_coleta}
+							onChange={formik.handleChange}
+							required
+						/>
+					</FloatingLabel>
+				</Col>
+			</Row>
+
+			{inputColeta2 && (
+				<Row className="row-input-coleta">
+					<Col sm={12} md={6} className="col-cod-local">
+						<label>*Local coleta 2</label>
 						<RotasSelect
-							className="input-cod-filial"
+							className="input-cod-local"
 							//id="Codigo-filial pb-5"
 							placeholder=" "
-							name="local_coleta"
-							value={formik.values.local_coleta}
+							name="local_coleta2"
+							value={formik.values.local_coleta2}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							required
 						/>
-					</Col>
-					<Col>
-						<FloatingLabel label="*Previsão coleta" className="mb-3">
-							<Form.Control
-								type="datetime-local"
-								placeholder=" "
-								name="previsao_coleta"
-								value={formik.values.previsao_coleta}
-								onChange={formik.handleChange}
-								required
-							/>
-						</FloatingLabel>
-					</Col>
-				</Row>
-			</Col>
-			{inputColeta2 && (
-				<Row>
-					<Col sm={12} md={6}>
-						<FloatingLabel label="Local coleta 2" className="mb-3">
-							<Form.Control
-								type="text"
-								placeholder=" "
-								name="local_coleta2"
-								value={formik.values.local_coleta2}
-								onChange={formik.handleChange}
-								//required
-							/>
-						</FloatingLabel>
 					</Col>
 					<Col sm={12} md={6}>
 						<FloatingLabel label="Previsão coleta 2" className="mb-3">
@@ -532,18 +555,19 @@ function FormularioCadastroCSN({
 				</Row>
 			)}
 			{inputColeta3 && (
-				<Row>
-					<Col sm={12} md={6}>
-						<FloatingLabel label="Local coleta 3" className="mb-3">
-							<Form.Control
-								type="text"
-								placeholder=" "
-								name="local_coleta3"
-								value={formik.values.local_coleta3}
-								onChange={formik.handleChange}
-								//required
-							/>
-						</FloatingLabel>
+				<Row className="row-input-coleta">
+					<Col sm={12} md={6} className="col-cod-local">
+						<label>*Local coleta 3</label>
+						<RotasSelect
+							className="input-cod-local"
+							//id="Codigo-filial pb-5"
+							placeholder=" "
+							name="local_coleta3"
+							value={formik.values.local_coleta3}
+							onChange={formik.handleChange}
+							onBlur={formik.handleBlur}
+							required
+						/>
 					</Col>
 					<Col sm={12} md={6}>
 						<FloatingLabel label="Previsão coleta" className="mb-3">
@@ -560,16 +584,16 @@ function FormularioCadastroCSN({
 				</Row>
 			)}
 
-			<Row>
+			<Row className="row-button-local">
 				<Col>
 					{viewsButtonAddColeta && (
-						<h6
-							className="text-warning"
-							role="button"
-							onClick={() => viewsInputColeta()}
+						<Button
+							className="bg-success border border-white"
+							onClick={viewsInputColeta}
 						>
-							Para adicionar mais coletas clique aqui !
-						</h6>
+							<IoMdAdd className="me-1" />
+							Adicionar pontos de passagem
+						</Button>
 					)}
 				</Col>
 				<Col className="text-end">
@@ -578,7 +602,7 @@ function FormularioCadastroCSN({
 							className="bg-secondary ms-2 border border-white"
 							onClick={() => excluirInputColeta()}
 						>
-							Excluir dados Coleta
+							Excluir ponto de passagem
 						</Button>
 					)}
 				</Col>
