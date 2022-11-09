@@ -5,11 +5,11 @@ import { useFormik } from "formik";
 import useLoadingScreen from "../../../Components/LoadingScreen";
 import ServiceCargas from "../../../../services/ServiceCargas";
 import swal from "sweetalert";
-import { getClaims } from "../../../../MicrosoftAuthentication";
 import ServiceProdutos from "../../../../services/ServiceProdutos";
 import FormularioCadastroCSN from "../../../Components/FormularioCadastroCSN";
 import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
+import { valueFormik } from "../management/valueFormik";
 // import HandleClick from "./tooltipsCadastro";
 
 const CadastroCargaCSN = () => {
@@ -19,46 +19,18 @@ const CadastroCargaCSN = () => {
 	const history = useHistory();
 
 	const formik = useFormik({
-		initialValues: {
-			responsavel_cadastro: String(getClaims().name),
-			id: "(Será autogerado)",
-			e_lote: false,
-			cliente: "",
-			local_coleta: "",
-			previsao_coleta: "",
-			local_coleta2: "",
-			previsao_coleta2: "",
-			local_coleta3: "",
-			previsao_coleta3: "",
-			local_entrega: "",
-			previsao_entrega: "",
-			local_entrega2: "",
-			previsao_entrega2: "",
-			local_entrega3: "",
-			previsao_entrega3: "",
-			data_coleta: "",
-			data_entrega: "",
-			tipo_carga: "",
-			quantidade: "",
-			unidade_medida: "",
-			observacao: "",
-			acessorios_requisitos: "",
-			informacoes_restritivas: "",
-			janela_coleta: "",
-			janela_entrega: "",
-			placa_veiculo: "",
-			documento_transporte: "",
-		},
+		initialValues: valueFormik,
 		onSubmit: async (values) => {
 			setLoading(true);
 			try {
-				const { data } = await ServiceCargas.create({
-					...values,
-					canal_comunicacao: "manual",
-				});
+				console.log("Values formik", values);
+				const data = "2222222"; //await ServiceCargas.create({
+				// 	...values,
+				// 	canal_comunicacao: "manual",
+				// });
 				swal(
 					"Sucesso!",
-					`A carga foi cadastrada com o identificador ${data.data.id}!`,
+					`A carga foi cadastrada com o identificador ${data}!`,
 					"success"
 				);
 				resetForm();
@@ -68,13 +40,6 @@ const CadastroCargaCSN = () => {
 			setLoading(false);
 		},
 	});
-
-	// useEffect(() => {
-	// 	setDistancia(null);
-	// }, [
-	// 	formik.values.destino_carga,
-	// 	formik.values.origem_carga,
-	// ]);
 
 	function buscarCargaComDocumentoDeTransporte({ documento_transporte, id }) {
 		if (documento_transporte) {
@@ -107,27 +72,6 @@ const CadastroCargaCSN = () => {
 		}
 	}
 
-	// async function handleSearchDistance({ destino_carga, origem_carga }) {
-	// 	if (destino_carga && origem_carga) {
-	// 		const [, estado_origem, cidade_origem] = origem_carga.split("/");
-	// 		const [, estado_destino, cidade_destino] = destino_carga.split("/");
-	// 		try {
-	// 			const { data } = await ServiceCargas.getDistance({
-	// 				cidade_origem,
-	// 				cidade_destino,
-	// 				estado_origem,
-	// 				estado_destino,
-	// 			});
-	// 			const distance = data.data;
-	// 			setDistancia(distance);
-	// 			return distance;
-	// 		} catch (error) {
-	// 			setDistancia(null);
-	// 			return 1;
-	// 		}
-	// 	}
-	// }
-
 	useEffect(() => {
 		ServiceProdutos.list().then(({ data }) => {
 			setProdutos(data.data);
@@ -155,9 +99,7 @@ const CadastroCargaCSN = () => {
 						buscarCargaComDocumentoDeTransporte={
 							buscarCargaComDocumentoDeTransporte
 						}
-						//handleSearchDistance={handleSearchDistance}
 						produtos={produtos}
-						//distancia={distancia}
 						formik={formik}
 					/>
 					<Row>
