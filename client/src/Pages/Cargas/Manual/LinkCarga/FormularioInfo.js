@@ -32,7 +32,7 @@ function Formulario({ formik, produtos, distancia }) {
 			.data;
 		setVeiculo(vehicleData);
 		if (!vehicleData) {
-			swal("Não foi encontrado nenhum veículo com esta placa");
+			swal("Não foi encontrado nenhum veículo com esta placa.");
 		}
 	}
 	useEffect(() => {
@@ -51,13 +51,14 @@ function Formulario({ formik, produtos, distancia }) {
 			return;
 		}
 		const debitos = (await ServiceVeiculos.debitos(plate)).data.data;
-		setDebitosVeiculo(debitos);
-
-		const totalDebitosVeic = await somaDebitoVeiculo(debitos);
-		setValorTotal(totalDebitosVeic);
-
 		if (debitos.length === 0) {
-			swal("Nenhum débito encontrado");
+			swal("Nenhum débito encontrado.");
+		} else {
+			const totalDebitosVeic = await somaDebitoVeiculo(debitos);
+
+			setValorTotal(totalDebitosVeic);
+
+			setDebitosVeiculo(debitos);
 		}
 	}
 

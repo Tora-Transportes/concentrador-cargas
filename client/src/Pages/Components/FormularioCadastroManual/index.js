@@ -48,7 +48,7 @@ function FormularioCadastroManual({
 			.data;
 		setVeiculo(vehicleData);
 		if (!vehicleData) {
-			swal("Não foi encontrado nenhum veículo com essa placa");
+			swal("Não foi encontrado nenhum veículo com essa placa.");
 		}
 	}
 	useEffect(() => {
@@ -74,7 +74,7 @@ function FormularioCadastroManual({
 				);
 				return;
 			} else {
-				swal("Não foi encontrado nenhum veículo com essa placa");
+				swal("Não foi encontrado nenhum veículo com essa placa.");
 			}
 		}
 		formik.setFieldValue("placa_carreta", null);
@@ -89,13 +89,15 @@ function FormularioCadastroManual({
 			return;
 		}
 		const debitos = (await ServiceVeiculos.debitos(plate)).data.data;
-		setDebitosVeiculo(debitos);
-
-		const totalDebitosVeic = await somaDebitoVeiculo(debitos);
-		setValorTotal(totalDebitosVeic);
 
 		if (debitos.length === 0) {
-			swal("Nenhum débito encontrado");
+			swal("Nenhum débito encontrado.");
+		} else {
+			const totalDebitosVeic = await somaDebitoVeiculo(debitos);
+
+			setValorTotal(totalDebitosVeic);
+
+			setDebitosVeiculo(debitos);
 		}
 	}
 
