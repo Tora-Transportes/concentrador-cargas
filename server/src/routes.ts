@@ -24,7 +24,6 @@ const routes = Router();
 
 routes.get("/avisos", AvisosController.index);
 
-
 routes.get("/credenciais", CredenciaisController.get);
 routes.post("/credenciais", CredenciaisController.post);
 routes.put("/credenciais/:portal/:user", CredenciaisController.put);

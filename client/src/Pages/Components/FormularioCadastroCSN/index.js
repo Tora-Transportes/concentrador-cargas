@@ -24,6 +24,7 @@ import ServiceVeiculos from "src/services/ServiceVeiculos";
 import swal from "sweetalert";
 //import ListAddItens from "../ListAddItens";
 import "./formularioCadastroCSN.css";
+import somaDebitoVeiculo from "src/Pages/Utils/somaDebitoVeiculo";
 
 function FormularioCadastroCSN({
 	formik,
@@ -36,6 +37,7 @@ function FormularioCadastroCSN({
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
+	const [valorTotalDebito, setValorTotal] = useState();
 	const [inputColeta2, setInputeColeta2] = useState(false);
 	const [inputColeta3, setInputColeta3] = useState(false);
 	const [viewsButtonAddColeta, setViewsButtonAddColeta] = useState(true);
@@ -93,6 +95,10 @@ function FormularioCadastroCSN({
 		}
 		const debitos = (await ServiceVeiculos.debitos(plate)).data.data;
 		setDebitosVeiculo(debitos);
+
+		const totalDebitosVeic = await somaDebitoVeiculo(debitos);
+		setValorTotal(totalDebitosVeic);
+
 		if (debitos.length === 0) {
 			swal("Nenhum débito encontrado");
 		}
@@ -677,6 +683,20 @@ function FormularioCadastroCSN({
 				</Modal.Header>
 				{debitosVeiculo && (
 					<Card>
+						<Form className="ms-3">
+							<b>VALOR RESTANTE DO DÉBITO</b>:{" "}
+							{new Intl.NumberFormat([], {
+								style: "currency",
+								currency: "BRL",
+							}).format(valorTotalDebito)}{" "}
+							<br />{" "}
+							<p className="mt-2">
+								{" "}
+								Obs: Esse valor apresenta a somatória de todas as parcelas e
+								boletos que ainda não foram pagas ou não constam baixa de
+								pagamento.
+							</p>
+						</Form>
 						{debitosVeiculo?.map((i) => (
 							<ListGroup key={i.DEC_SEQ} className="list-group-flush">
 								<hr className="w-100"></hr>
