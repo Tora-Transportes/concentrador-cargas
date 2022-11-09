@@ -1,7 +1,6 @@
 import express, { Router } from "express";
 import path from "path";
 import multer from "multer";
-
 import CargaController from "./controllers/CargaController";
 import UsuarioController from "./controllers/UsuarioController";
 import TokenMiddleware from "./middlewares/Token";

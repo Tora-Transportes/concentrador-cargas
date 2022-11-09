@@ -156,7 +156,7 @@ function ViewHistoricoVeiculo({
 											? " Posição inicial da busca"
 											: index === lastPosition
 											? "Posição final da busca"
-											: `UF: ${position.UF.toUpperCase()} ,Municipio: ${position.MUN.toUpperCase()} ,Rua: ${position.RUA.toUpperCase()}.`;
+											: `UF: ${position.UF?.toUpperCase()} ,Municipio: ${position.MUN?.toUpperCase()} ,Rua: ${position.RUA?.toUpperCase()}.`;
 									return (
 										<Marker
 											key={fields.placa + index}
