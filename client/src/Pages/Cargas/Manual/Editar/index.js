@@ -50,6 +50,7 @@ function Manual() {
 		onSubmit: async (values) => {
 			setLoading(true);
 			try {
+				values.fk_filial = values.fk_filial.split("-")[0];
 				const { data } = await ServiceCargas.update({
 					...values,
 					responsavel_cadastro: String(getClaims().name),
@@ -190,21 +191,29 @@ function Manual() {
 
 	async function carregarCarga() {
 		try {
+			let city;
 			const carga = (await ServiceCargas.index({ id })).data.data;
 			setLoteInicial(carga.e_lote);
-			for (const i in carga) {
-				const nonNullValue = carga[i] === null ? "" : carga[i];
+			for (let i in carga) {
+				let nonNullValue = carga[i] === null ? "" : carga[i];
 				if (i.indexOf("data") !== -1) {
 					formik.setFieldValue(i, nonNullValue?.split("T")[0]);
 				} else if (i === "e_lote") {
 					formik.setFieldValue("e_lote", !!nonNullValue);
 				} else {
+					if (i === "fk_filial") {
+						city = nonNullValue;
+					}
+					if (i === "filial.descricao") {
+						const cidade = `${city} - ${nonNullValue} `;
+						formik.setFieldValue("fk_filial", cidade);
+					}
 					formik.setFieldValue(i, nonNullValue);
 				}
 			}
 			handleSearchDistance(carga);
 		} catch (error) {
-			history.push("/cargas/menu");
+			history.push("");
 		}
 	}
 

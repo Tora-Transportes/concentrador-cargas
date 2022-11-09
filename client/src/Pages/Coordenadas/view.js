@@ -141,7 +141,7 @@ function ViewCoordenadas({
 						header={"Dados da última localização"}
 						visible={visibleLastLocation}
 						onHide={() => onHide(setVisibleLastLocation)}
-						closable={true}
+						closable={false}
 					>
 						<LastLocationVeicles
 							placa={dadosLastLocation}

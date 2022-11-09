@@ -88,7 +88,7 @@ function Visualizar() {
 			e_lote: 1,
 			date_execel_inicio,
 			date_execel_fim,
-			fk_filial,
+			fk_filial: fk_filial.split("-")[0],
 		};
 
 		const response = await ServiceCargas.exportToXlsx(options);
