@@ -9,7 +9,6 @@ import {
 	Button,
 } from "react-bootstrap";
 //import AutocompleteInput from "src/Pages/Components/AutocompleteInput";
-import FilialSelect from "src/Pages/Components/FilialSelect";
 import InputCliente from "src/Pages/Components/InputCliente";
 import InputLocalizacao from "src/Pages/Components/InputLocalizacao";
 import InputPlaca from "src/Pages/Components/InputPlaca";
@@ -25,7 +24,7 @@ function FormularioConsulta({ formik, exitPage }) {
 			formik.setFieldValue("nome_motorista", null);
 		}
 	}, [formik.values.e_lote]);
-
+	const detaleFilial = ` ${formik.values?.fk_filial} - ${formik.values?.filial?.descricao}`;
 	return (
 		<div className="class-body-form">
 			<Row>
@@ -37,7 +36,6 @@ function FormularioConsulta({ formik, exitPage }) {
 							name="responsavel_cadastro"
 							value={formik.values.responsavel_cadastro}
 							onChange={formik.handleChange}
-							required
 							disabled
 						/>
 					</FloatingLabel>
@@ -50,20 +48,17 @@ function FormularioConsulta({ formik, exitPage }) {
 							disabled
 							value={formik.values.id}
 							onChange={formik.handleChange}
-							required
 						/>
 					</FloatingLabel>
 				</Col>
 			</Row>
 			<Row>
 				<Col sm={12} md={4}>
-					<FloatingLabel label=" Código da filial" className="mb-3">
-						<FilialSelect
-							placeholder=" "
-							name="fk_filial"
-							value={formik.values.fk_filial ?? ""}
+					<FloatingLabel label="Código da carga" className="mb-3">
+						<Form.Control
+							name="documento_transporte"
+							value={detaleFilial}
 							onChange={formik.handleChange}
-							required
 							disabled
 						/>
 					</FloatingLabel>
@@ -183,7 +178,6 @@ function FormularioConsulta({ formik, exitPage }) {
 						name="cliente"
 						value={formik.values.cliente}
 						onChange={formik.handleChange}
-						required
 						disabled
 					/>
 				</Col>
@@ -198,7 +192,6 @@ function FormularioConsulta({ formik, exitPage }) {
 							name="origem_carga"
 							value={formik.values.origem_carga}
 							onChange={formik.handleChange}
-							required
 							disabled
 						/>
 					</FloatingLabel>
@@ -213,7 +206,6 @@ function FormularioConsulta({ formik, exitPage }) {
 							value={formik.values.destino_carga}
 							onChange={formik.handleChange}
 							className="text-primary"
-							required
 							disabled
 						/>
 					</FloatingLabel>
@@ -283,7 +275,6 @@ function FormularioConsulta({ formik, exitPage }) {
 							onChange={formik.handleChange}
 							value={formik.values.tipo_carga}
 							disabled
-							required
 						/>
 					</FloatingLabel>
 				</Col>
@@ -297,7 +288,6 @@ function FormularioConsulta({ formik, exitPage }) {
 									name="unidade_medida"
 									value={formik.values.unidade_medida}
 									onChange={formik.handleChange}
-									required
 									disabled
 								/>
 							</FloatingLabel>
@@ -313,7 +303,6 @@ function FormularioConsulta({ formik, exitPage }) {
 									value={formik.values.quantidade}
 									onChange={formik.handleChange}
 									disabled
-									required
 								/>
 							</FloatingLabel>
 						</Col>

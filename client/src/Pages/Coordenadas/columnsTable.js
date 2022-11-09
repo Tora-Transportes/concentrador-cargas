@@ -110,7 +110,7 @@ export const getColumns = (
 		},
 		{
 			name: "lastLocation",
-			description: "Ultima localização",
+			description: "Última localização",
 			selector: (row) => (
 				<Button
 					variant="Link"

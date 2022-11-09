@@ -63,9 +63,13 @@ function ViewHistoricoVeiculo({
 		setLoading(true);
 		let csv = "UF;MUNICIPIO;RUA;LATITUDE;LONGITUDE;LOCALIDADE;DATA POSICAO\n\n";
 		for (const position of historicoRotas.posicao) {
-			csv += `${position.UF};${position.MUN};${position.RUA};${position.LAT};${
-				position.LON
-			};${position.LOC};${DateUtils.formatDate(position.DTINC)}\n`;
+			const message = "sem dados";
+			const UF = position.UF == null ? message : position.UF;
+			const MUN = position.MUN == null ? message : position.MUN;
+			const RUA = position.RUA == null ? message : position.RUA;
+			csv += `${UF};${MUN};${RUA};${position.LAT};${position.LON};${
+				position.LOC
+			};${DateUtils.formatDate(position.DTINC)}\n`;
 		}
 
 		const csvData = new Blob([csv], {

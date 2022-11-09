@@ -28,8 +28,54 @@
   background-color: #00652e !important;
 }
 
+.col-cod-filial {
+  /* width: 100%; */
+  height: 3.6rem;
+  border-radius: 4px;
+  font-size: 14px;
+  border: 1px solid #ced4da;
+  padding-top: 5px;
+  margin-left: 12px;
+}
+
+.input-cod-filial {
+  border: none;
+  display: grid;
+  width: 100%;
+  padding: -1rem;
+  outline-color: #fff;
+}
+
+@media only screen and (max-width: 353px) {
+  .col-cod-filial {
+    margin-bottom: 1rem;
+    width: 92% !important;
+  }
+}
+@media only screen and (min-width: 354px) and (max-width: 770px) {
+  .col-cod-filial {
+    margin-bottom: 1rem;
+    width: 95% !important;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   .button-exit {
     display: none;
+  }
+}
+@media only screen and (max-width: 1100px) {
+  /* .col-cod-filial {
+    margin-left: 11px;
+    margin-bottom: 1rem;
+    display: grid;
+    position: relative;
+  } */
+  .input-cod-filial {
+    margin-top: 1.8rem;
+    margin-left: 0.5rem;
+    width: 95%;
+    position: absolute !important;
+    border: none;
   }
 }

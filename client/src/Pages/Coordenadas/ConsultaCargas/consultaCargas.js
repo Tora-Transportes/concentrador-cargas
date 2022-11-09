@@ -42,6 +42,7 @@ function Consulta() {
 			local_entrega: "",
 			placa_veiculo: "",
 			fk_situacao: null,
+			filial_descricao: "",
 		},
 	});
 
