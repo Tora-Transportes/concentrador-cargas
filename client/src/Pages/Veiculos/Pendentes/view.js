@@ -12,7 +12,7 @@ function ViewRotasPendentes({
 }) {
 	return (
 		<div className="class-body">
-			<Container fluid className="text-center mb-5 mt-4">
+			<Container fluid className="text-center mt-4">
 				<Row className="mb-2">
 					<h1
 						className="class-title-monit"
