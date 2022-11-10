@@ -17,10 +17,12 @@ import AutocompleteInput from "src/Pages/Components/AutocompleteInput";
 import InputCliente from "src/Pages/Components/InputCliente";
 import InputLocalizacao from "src/Pages/Components/InputLocalizacao";
 import InputPlaca from "src/Pages/Components/InputPlaca";
+import somaDebitoVeiculo from "src/Pages/Utils/somaDebitoVeiculo";
 
 function Formulario({ formik, produtos, distancia }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
+	const [valorTotalDebito, setValorTotal] = useState();
 	async function handleShowDetailsAboutVehicle(plate) {
 		if (!plate) {
 			swal("Placa inválida");
@@ -30,7 +32,7 @@ function Formulario({ formik, produtos, distancia }) {
 			.data;
 		setVeiculo(vehicleData);
 		if (!vehicleData) {
-			swal("Não foi encontrado nenhum veículo com esta placa");
+			swal("Não foi encontrado nenhum veículo com esta placa.");
 		}
 	}
 	useEffect(() => {
@@ -49,9 +51,14 @@ function Formulario({ formik, produtos, distancia }) {
 			return;
 		}
 		const debitos = (await ServiceVeiculos.debitos(plate)).data.data;
-		setDebitosVeiculo(debitos);
 		if (debitos.length === 0) {
-			swal("Nenhum débito encontrado");
+			swal("Nenhum débito encontrado.");
+		} else {
+			const totalDebitosVeic = await somaDebitoVeiculo(debitos);
+
+			setValorTotal(totalDebitosVeic);
+
+			setDebitosVeiculo(debitos);
 		}
 	}
 
@@ -420,6 +427,20 @@ function Formulario({ formik, produtos, distancia }) {
 				</Modal.Header>
 				{debitosVeiculo && (
 					<Card>
+						<Form className="ms-3">
+							<b>VALOR RESTANTE DO DÉBITO</b>:{" "}
+							{new Intl.NumberFormat([], {
+								style: "currency",
+								currency: "BRL",
+							}).format(valorTotalDebito)}{" "}
+							<br />{" "}
+							<p className="mt-2">
+								{" "}
+								Obs: Esse valor apresenta a somatória de todas as parcelas e
+								boletos que ainda não foram pagas ou não constam baixa de
+								pagamento.
+							</p>
+						</Form>
 						{debitosVeiculo?.map((i) => (
 							<ListGroup key={i.DEC_SEQ} className="list-group-flush">
 								<hr />
