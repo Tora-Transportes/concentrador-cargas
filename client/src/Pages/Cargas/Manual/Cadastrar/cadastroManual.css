@@ -11,12 +11,12 @@
   margin-bottom: 2rem;
 }
 
-#style-linha-cad {
+/* #style-linha-cad {
   display: grid;
   width: 85.5%;
   margin-left: 6.8rem;
   margin-bottom: 1.5rem;
-}
+} */
 
 #botao-cadastrar-carg {
   background-color: #00652e !important;

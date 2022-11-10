@@ -131,7 +131,7 @@ function Permissoes() {
 	return (
 		<div className="class-body-permissoes">
 			<Menusuperior />
-			<Container className="text-center mb-4 mt-4">
+			<Container className="text-center mt-4">
 				<Row>
 					<Col>
 						<h1 className="class-title-Permissao">Permissões dos Usuários</h1>

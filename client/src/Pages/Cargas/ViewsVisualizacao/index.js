@@ -39,7 +39,7 @@ function VisualizarCargas({
 		<div className="class-body-gridcarga">
 			<LoadingComponent />
 			<Menusuperior />
-			<Container fluid className="text-center mb-5">
+			<Container fluid className="text-center">
 				<ModalLegendaCargas
 					show={modalShow}
 					onHide={() => setModalShow(false)}
@@ -58,7 +58,7 @@ function VisualizarCargas({
 						<img className="img-cargas-lote" src={chartImg} />
 					</Link>
 				</Row>
-				<Row className="row-inicio-carga mt-3 mb-2 ">
+				<Row className="row-inicio-carga mt-4">
 					<Col className="text-start opcao-tabela">
 						<ButtonReact
 							label="Opções da Tabela"
