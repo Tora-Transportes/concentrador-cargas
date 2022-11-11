@@ -19,10 +19,10 @@ function RotasSelect(props) {
 				{rota.results &&
 					rota.results.length > 0 &&
 					rota.results.map((i) => {
-						const infoOfFiliais = `${i.ID} - ${i.OBSERVACAO}`;
+						const infoOfFiliais = `${i.ID} - ${i.DESCRICAO}`;
 						return (
 							<option key={i.ID} value={infoOfFiliais}>
-								{i.OBSERVACAO}
+								{i.DESCRICAO}
 							</option>
 						);
 					})}

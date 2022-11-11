@@ -1,6 +1,6 @@
 export default interface ICargasCsn {
   ID?: number;
-  OBSERVACAO: string;
+  DESCRICAO: string;
   LATITUDE: number;
   LONGITUDE: number;
   DATA_CADASTRO?: Date;

@@ -18,6 +18,12 @@ function FormularioCadastroCSN({
 	const [inputColeta4, setInputColeta4] = useState(false);
 	const [inputColeta5, setInputColeta5] = useState(false);
 	const [inputColeta6, setInputColeta6] = useState(false);
+	const [inputColeta7, setInputColeta7] = useState(false);
+	const [inputColeta8, setInputColeta8] = useState(false);
+	const [inputColeta9, setInputColeta9] = useState(false);
+	const [inputColeta10, setInputColeta10] = useState(false);
+	const [inputColeta11, setInputColeta11] = useState(false);
+	const [inputColeta12, setInputColeta12] = useState(false);
 	const [countInput, setCountInput] = useState(0);
 	const [viewsButtonAddColeta, setViewsButtonAddColeta] = useState(true);
 	const [viewsButtonExcluir, setViewsButtonExcluir] = useState(false);
@@ -35,6 +41,19 @@ function FormularioCadastroCSN({
 			swal("Não foi encontrado nenhum veículo com essa placa");
 		}
 	}
+	// const fecharInput = () => {
+	// 	setInputColeta2(false);
+	// 	setInputColeta3(false);
+	// 	setInputColeta4(false);
+	// 	setInputColeta5(false);
+	// 	setInputColeta6(false);
+	// 	setInputColeta7(false);
+	// 	setInputColeta8(false);
+	// 	setInputColeta9(false);
+	// 	setInputColeta10(false);
+	// 	setInputColeta11(false);
+	// 	setInputColeta12(false);
+	// };
 	useEffect(() => {
 		if (formik.values.e_lote) {
 			formik.setFieldValue("placa_veiculo", null);
@@ -89,7 +108,13 @@ function FormularioCadastroCSN({
 		setInputColeta3,
 		setInputColeta4,
 		setInputColeta5,
-		setInputColeta6
+		setInputColeta6,
+		setInputColeta7,
+		setInputColeta8,
+		setInputColeta9,
+		setInputColeta10,
+		setInputColeta11,
+		setInputColeta12
 	);
 	return (
 		<div className="class-body-form">
@@ -108,6 +133,12 @@ function FormularioCadastroCSN({
 				inputColeta4={inputColeta4}
 				inputColeta5={inputColeta5}
 				inputColeta6={inputColeta6}
+				inputColeta7={inputColeta7}
+				inputColeta8={inputColeta8}
+				inputColeta9={inputColeta9}
+				inputColeta10={inputColeta10}
+				inputColeta11={inputColeta11}
+				inputColeta12={inputColeta12}
 				viewsButtonAddColeta={viewsButtonAddColeta}
 				functionInputs={functionInputs}
 				viewsButtonExcluir={viewsButtonExcluir}

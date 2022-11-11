@@ -2,7 +2,7 @@ import * as yup from "yup";
 
 export function factoryCargaCsnValidator() {
   const cargaCsnValidator = yup.object({
-    OBSERVACAO: yup
+    DESCRICAO: yup
       .string()
       .required("A observão da carga csn deve ser preenchido"),
     LATITUDE: yup

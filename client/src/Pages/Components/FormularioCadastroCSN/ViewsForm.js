@@ -33,6 +33,12 @@ export default function ViewsForm({
 	inputColeta4,
 	inputColeta5,
 	inputColeta6,
+	inputColeta7,
+	inputColeta8,
+	inputColeta9,
+	inputColeta10,
+	inputColeta11,
+	inputColeta12,
 	viewsButtonAddColeta,
 	functionInputs,
 	viewsButtonExcluir,
@@ -183,7 +189,7 @@ export default function ViewsForm({
 								disabled={formik.values.e_lote}
 								type="text"
 								name="placa_veiculo"
-								value={formik.values.placa_veiculo}
+								value={formik.values.placa_veiculo || ""}
 								onChange={formik.handleChange}
 								onBlur={() => {
 									if (
@@ -398,6 +404,12 @@ export default function ViewsForm({
 				inputColeta4={inputColeta4}
 				inputColeta5={inputColeta5}
 				inputColeta6={inputColeta6}
+				inputColeta7={inputColeta7}
+				inputColeta8={inputColeta8}
+				inputColeta9={inputColeta9}
+				inputColeta10={inputColeta10}
+				inputColeta11={inputColeta11}
+				inputColeta12={inputColeta12}
 			/>
 
 			<Row className="row-button-local">

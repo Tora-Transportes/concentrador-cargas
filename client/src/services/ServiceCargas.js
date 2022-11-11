@@ -54,8 +54,17 @@ class ServiceCargas {
 			placa_bitrem,
 			locais,
 		};
-
 		return await api.post("/cargas", carga);
+	}
+
+	async createPontoParada({ ponto, previsao, tipoServico, id_carga }) {
+		const dados = {
+			ID_ROTAS_CSN: ponto?.split("-")[0],
+			ID_CON_CARGAS: id_carga,
+			PREVISAO: previsao,
+			STATUS_SERVICO: tipoServico.toUpperCase(),
+		};
+		return await api.post("/csn/ponto_parada", dados);
 	}
 
 	async createDerivada({

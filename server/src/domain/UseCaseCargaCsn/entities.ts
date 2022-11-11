@@ -3,6 +3,7 @@ import { factoryCargaCsnValidator } from "../../validations/CargaCsnValidation";
 import AppError from "../../models/AppError";
 import { IEventSocket } from "../../socketsRoutes";
 import ICargasCsn from "../../models/ICargasCsn";
+import { PontoParadaRepository } from "../../repositories/PontoParadaRepository";
 
 const dataAtual = new Date();
 
@@ -26,11 +27,9 @@ export class UseCaseAddRouter {
 }
 
 export class UseCaseSearchRouter {
-  constructor(
-    private readonly cargaCsnRepository: CargaCsnRepository
-  ) {}
+  constructor(private readonly cargaCsnRepository: CargaCsnRepository) {}
   async run() {
-  //async run(filter: Record<string, any>) {
+    //async run(filter: Record<string, any>) {
     // return await this.cargaCsnRepository.search(
     //   filter,
     //   filter.page,
@@ -63,11 +62,18 @@ export class UseCaseUpdateRouter {
 export class UseCaseDeleteRouter {
   constructor(
     private readonly cargaCsnRepository: CargaCsnRepository,
+    private readonly pontoParadaRepository: PontoParadaRepository,
     private readonly notifyAll: (event: IEventSocket) => void
   ) {}
   async run(id: number) {
     const existeRota = await this.cargaCsnRepository.index(id);
     if (!existeRota) throw new AppError("A rota informada não existe", 400);
+    const existPontoParada = await this.pontoParadaRepository.getOfIdRotasCsn(
+      Number(existeRota.ID)
+    );
+
+    if (existPontoParada) throw new AppError("", 204);
+
     await this.cargaCsnRepository.delete(id);
     return "Rota deletada com sucesso.";
   }

@@ -15,7 +15,7 @@ import TableLocalizacao from "./Tabela";
 import ServiceCsnCargas from "src/services/ServiceCsnCargas";
 let emptyLocation = {
 	ID: null,
-	OBSERVACAO: "",
+	DESCRICAO: "",
 	LATITUDE: "",
 	LONGITUDE: "",
 };
@@ -61,13 +61,9 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 
 	const saveLocation = async () => {
 		setSubmitted(true);
-		if (
-			location.OBSERVACAO?.length &&
-			location.LATITUDE &&
-			location.LONGITUDE
-		) {
+		if (location.DESCRICAO?.length && location.LATITUDE && location.LONGITUDE) {
 			const bodyRota = {
-				OBSERVACAO: location.OBSERVACAO,
+				DESCRICAO: location.DESCRICAO,
 				LATITUDE: location.LATITUDE,
 				LONGITUDE: location.LONGITUDE,
 			};
@@ -121,16 +117,27 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 	const deleteLocation = async () => {
 		//Adicionar codigo de Deleção
 		try {
-			await ServiceCsnCargas.delete(location.ID);
-			setDeleteLocationDialog(false);
-			setLocation(emptyLocation);
-			toast.current.show({
-				severity: "success",
-				summary: "Sucesso",
-				detail: "Rota deletada com sucesso.",
-				life: 3000,
-			});
-			setAtualizarTabela(true);
+			const result = await ServiceCsnCargas.delete(location.ID);
+			if (result.status === 204) {
+				setDeleteLocationDialog(false);
+				toast.current.show({
+					severity: "info",
+					summary: "OPS!",
+					detail:
+						"Esta rota não pode ser deletada, existe uma carga atrelada a ela.",
+					life: 3000,
+				});
+			} else {
+				setDeleteLocationDialog(false);
+				setLocation(emptyLocation);
+				toast.current.show({
+					severity: "success",
+					summary: "Sucesso",
+					detail: "Rota deletada com sucesso.",
+					life: 3000,
+				});
+				setAtualizarTabela(true);
+			}
 		} catch (error) {
 			console.error(error);
 		}
@@ -138,7 +145,7 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 
 	const onInputChange = (e, name) => {
 		const valuesField = e.target.value?.toUpperCase();
-		name === "OBSERVACAO" ? (e.target && e.target.value) || "" : e.value || 0;
+		name === "DESCRICAO" ? (e.target && e.target.value) || "" : e.value || 0;
 		let _location = { ...location };
 		_location[`${name}`] = valuesField;
 
@@ -215,7 +222,6 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 		</div>
 	);
 
-	console.log("AAAAAA", location);
 	return (
 		<>
 			<Menusuperior />
@@ -244,20 +250,20 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 							onHide={hideDialog}
 						>
 							<div className="field">
-								<label htmlFor="OBSERVACAO">Descrição</label>
+								<label htmlFor="DESCRICAO">Descrição</label>
 								<InputTextarea
-									id="OBSERVACAO"
-									value={location.OBSERVACAO}
-									onChange={(e) => onInputChange(e, "OBSERVACAO")}
+									id="DESCRICAO"
+									value={location.DESCRICAO}
+									onChange={(e) => onInputChange(e, "DESCRICAO")}
 									required
 									rows={3}
 									cols={20}
 									autoFocus
 									className={classNames({
-										"p-invalid": submitted && !location.OBSERVACAO,
+										"p-invalid": submitted && !location.DESCRICAO,
 									})}
 								/>
-								{submitted && !location.OBSERVACAO && (
+								{submitted && !location.DESCRICAO && (
 									<small className="p-error">
 										Descrição é um campo obrigatório.
 									</small>

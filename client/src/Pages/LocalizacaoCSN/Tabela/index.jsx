@@ -33,7 +33,7 @@ const TableLocalizacao = ({
             //style={{ minWidth: "12rem" }}
           ></Column> */}
           <Column
-            field="OBSERVACAO"
+            field="DESCRICAO"
             header="Descrição"
             sortable
             //style={{ minWidth: "12rem" }}
