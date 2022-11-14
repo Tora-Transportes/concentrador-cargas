@@ -64,8 +64,8 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 		if (location.DESCRICAO?.length && location.LATITUDE && location.LONGITUDE) {
 			const bodyRota = {
 				DESCRICAO: location.DESCRICAO,
-				LATITUDE: location.LATITUDE,
-				LONGITUDE: location.LONGITUDE,
+				LATITUDE: Number(location.LATITUDE),
+				LONGITUDE: Number(location.LONGITUDE),
 			};
 
 			if (location.ID) {
