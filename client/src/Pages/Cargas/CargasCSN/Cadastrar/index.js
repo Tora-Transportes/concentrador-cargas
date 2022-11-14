@@ -5,17 +5,15 @@ import { useFormik } from "formik";
 import useLoadingScreen from "../../../Components/LoadingScreen";
 import ServiceCargas from "../../../../services/ServiceCargas";
 import swal from "sweetalert";
-import { getClaims } from "../../../../MicrosoftAuthentication";
 import ServiceProdutos from "../../../../services/ServiceProdutos";
 import FormularioCadastroCSN from "../../../Components/FormularioCadastroCSN";
 import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
-// import HandleClick from "./tooltipsCadastro";
-
+import { getClaims } from "src/MicrosoftAuthentication";
+//import { valueFormik } from "../management/valueFormik";
 const CadastroCargaCSN = () => {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [produtos, setProdutos] = useState([]);
-	//const [distancia, setDistancia] = useState(null);
 	const history = useHistory();
 
 	const formik = useFormik({
@@ -24,35 +22,133 @@ const CadastroCargaCSN = () => {
 			id: "(Será autogerado)",
 			e_lote: false,
 			cliente: "",
-			local_coleta: "",
-			previsao_coleta: "",
-			local_coleta2: "",
-			previsao_coleta2: "",
-			local_coleta3: "",
-			previsao_coleta3: "",
 			data_coleta: "",
 			data_entrega: "",
 			tipo_carga: "",
 			quantidade: "",
 			unidade_medida: "",
-			observacao: "",
 			acessorios_requisitos: "",
 			informacoes_restritivas: "",
 			janela_coleta: "",
 			janela_entrega: "",
 			placa_veiculo: "",
 			documento_transporte: "",
+			ponto_passagem: {
+				ponto: "",
+				tipoServico: "",
+				previsao: "",
+			},
+			ponto_passagem2: {
+				ponto: "",
+				tipoServico: "",
+				previsao: "",
+			},
+			ponto_passagem3: {
+				ponto: "",
+				tipoServico: "",
+				previsao: "",
+			},
+			ponto_passagem4: {
+				ponto: "",
+				tipoServico: "",
+				previsao: "",
+			},
+			ponto_passagem5: {
+				ponto: "",
+				tipoServico: "",
+				previsao: "",
+			},
+			ponto_passagem6: {
+				ponto: "",
+				tipoServico: "",
+				previsao: "",
+			},
+			ponto_passagem7: {
+				ponto: "",
+				tipoServico: "",
+				previsao: "",
+			},
+			ponto_passagem8: {
+				ponto: "",
+				tipoServico: "",
+				previsao: "",
+			},
+			ponto_passagem9: {
+				ponto: "",
+				tipoServico: "",
+				previsao: "",
+			},
+			ponto_passagem10: {
+				ponto: "",
+				tipoServico: "",
+				previsao: "",
+			},
+			ponto_passagem11: {
+				ponto: "",
+				tipoServico: "",
+				previsao: "",
+			},
+			ponto_passagem12: {
+				ponto: "",
+				tipoServico: "",
+				previsao: "",
+			},
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
 			try {
-				const { data } = await ServiceCargas.create({
-					...values,
-					canal_comunicacao: "manual",
-				});
+				const {
+					ponto_passagem,
+					ponto_passagem2,
+					ponto_passagem3,
+					ponto_passagem4,
+					ponto_passagem5,
+					ponto_passagem6,
+					ponto_passagem7,
+					ponto_passagem8,
+					ponto_passagem9,
+					ponto_passagem10,
+					ponto_passagem11,
+					ponto_passagem12,
+				} = values;
+
+				values.fk_filial = await values.fk_filial.split("-")[0];
+				const data = (
+					await ServiceCargas.create({
+						...values,
+						canal_comunicacao: "manual",
+					})
+				).data;
+
+				if (data.data.id) {
+					for (const [key, value] of Object.entries({
+						ponto_passagem,
+						ponto_passagem2,
+						ponto_passagem3,
+						ponto_passagem4,
+						ponto_passagem5,
+						ponto_passagem6,
+						ponto_passagem7,
+						ponto_passagem8,
+						ponto_passagem9,
+						ponto_passagem10,
+						ponto_passagem11,
+						ponto_passagem12,
+					})) {
+						if (value?.ponto.length > 0) {
+							await ServiceCargas.createPontoParada({
+								...value,
+								id_carga: data.data.id,
+								key,
+							});
+						}
+					}
+				}
+
 				swal(
 					"Sucesso!",
 					`A carga foi cadastrada com o identificador ${data.data.id}!`,
+					//`A carga foi cadastrada com o identificador 5555555!`,
 					"success"
 				);
 				resetForm();
@@ -62,13 +158,6 @@ const CadastroCargaCSN = () => {
 			setLoading(false);
 		},
 	});
-
-	// useEffect(() => {
-	// 	setDistancia(null);
-	// }, [
-	// 	formik.values.destino_carga,
-	// 	formik.values.origem_carga,
-	// ]);
 
 	function buscarCargaComDocumentoDeTransporte({ documento_transporte, id }) {
 		if (documento_transporte) {
@@ -101,27 +190,6 @@ const CadastroCargaCSN = () => {
 		}
 	}
 
-	// async function handleSearchDistance({ destino_carga, origem_carga }) {
-	// 	if (destino_carga && origem_carga) {
-	// 		const [, estado_origem, cidade_origem] = origem_carga.split("/");
-	// 		const [, estado_destino, cidade_destino] = destino_carga.split("/");
-	// 		try {
-	// 			const { data } = await ServiceCargas.getDistance({
-	// 				cidade_origem,
-	// 				cidade_destino,
-	// 				estado_origem,
-	// 				estado_destino,
-	// 			});
-	// 			const distance = data.data;
-	// 			setDistancia(distance);
-	// 			return distance;
-	// 		} catch (error) {
-	// 			setDistancia(null);
-	// 			return 1;
-	// 		}
-	// 	}
-	// }
-
 	useEffect(() => {
 		ServiceProdutos.list().then(({ data }) => {
 			setProdutos(data.data);
@@ -149,9 +217,7 @@ const CadastroCargaCSN = () => {
 						buscarCargaComDocumentoDeTransporte={
 							buscarCargaComDocumentoDeTransporte
 						}
-						//handleSearchDistance={handleSearchDistance}
 						produtos={produtos}
-						//distancia={distancia}
 						formik={formik}
 					/>
 					<Row>

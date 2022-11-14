@@ -81,8 +81,8 @@ export class CargaRepository {
 
     if (!carga) return;
 
-    return carga ;
-  };
+    return carga;
+  }
 
   async searchCET(id: string): Promise<ICargaCTE> {
     const result = await database("CARGA")
@@ -245,7 +245,6 @@ export class CargaRepository {
     };
 
     total.andWhere(filterDbFunction);
-
 
     results.andWhere(filterDbFunction);
 
