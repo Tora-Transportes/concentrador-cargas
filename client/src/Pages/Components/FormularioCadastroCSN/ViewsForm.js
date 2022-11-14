@@ -45,6 +45,7 @@ export default function ViewsForm({
 	veiculo,
 	debitosVeiculo,
 	setDebitosVeiculo,
+	valorTotalDebito,
 	setVeiculo,
 }) {
 	return (
@@ -532,6 +533,20 @@ export default function ViewsForm({
 				</Modal.Header>
 				{debitosVeiculo && (
 					<Card>
+						<Form className="ms-3">
+							<b>VALOR RESTANTE DO DÉBITO</b>:{" "}
+							{new Intl.NumberFormat([], {
+								style: "currency",
+								currency: "BRL",
+							}).format(valorTotalDebito)}{" "}
+							<br />{" "}
+							<p className="mt-2">
+								{" "}
+								Obs: Esse valor apresenta a somatória de todas as parcelas e
+								boletos que ainda não foram pagas ou não constam baixa de
+								pagamento.
+							</p>
+						</Form>
 						{debitosVeiculo?.map((i) => (
 							<ListGroup key={i.DEC_SEQ} className="list-group-flush">
 								<hr className="w-100"></hr>
