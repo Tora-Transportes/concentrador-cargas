@@ -5,7 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import ServiceSituacoesCargas from "src/services/ServiceSituacoesCargas";
 import StatusTooltip from "src/Pages/Components/StatusTooltip";
 import Card from "react-bootstrap/Card";
-import { Col } from "react-bootstrap";
+// import { Col } from "react-bootstrap";
 
 export default function LegendaCargas(props) {
 	const [situacoes, setSituacoes] = useState([]);
@@ -16,35 +16,38 @@ export default function LegendaCargas(props) {
 	}, []);
 
 	return (
-		<Modal
-			{...props}
-			size="lg"
-			aria-labelledby="contained-modal-title-vcenter"
-			centered
-		>
-			<Modal.Header closeButton className="text-center testeteste">
-				<Modal.Title id="contained-modal-title-vcenter">
+		<Modal {...props} className="modal-situation-cargas">
+			<Modal.Header id="modal-header">
+				<Modal.Title className="modal-title-situ-carg">
 					Situação das Cargas
 				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				<>
-					<Card className="text-center">
-						<Card.Body className="card-body-legenda">
+					<Card className="card-sit-cargas">
+						<Card.Body className="card-body-sit-cargas">
 							{situacoes.map((item) => (
-								<Col key={item.id} className="col-legenda">
-									<div className="icon-text">
-										<StatusTooltip color={item.cor} hint={false} />
+								<div key={item.id} className="div-situação-cargas">
+									<div id="cor-legenda-cargas">
+										<td>
+											<StatusTooltip color={item.cor} hint={true} />
+										</td>
 									</div>
-									<p className="card-p-descricao-legenda">{item.descricao}</p>
-								</Col>
+									<div id="desc-legenda-cargas">
+										<td>
+											<p>{item.descricao}</p>
+										</td>
+									</div>
+								</div>
 							))}
 						</Card.Body>
 					</Card>
 				</>
 			</Modal.Body>
-			<Modal.Footer>
-				<Button onClick={props.onHide}>Sair</Button>
+			<Modal.Footer id="modal-footer">
+				<Button id="button-sair" onClick={props.onHide}>
+					Sair
+				</Button>
 			</Modal.Footer>
 		</Modal>
 	);

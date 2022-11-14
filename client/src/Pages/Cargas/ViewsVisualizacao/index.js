@@ -41,6 +41,7 @@ function VisualizarCargas({
 			<Menusuperior />
 			<Container fluid className="text-center">
 				<ModalLegendaCargas
+					id="modal-legenda-cargas"
 					show={modalShow}
 					onHide={() => setModalShow(false)}
 				/>

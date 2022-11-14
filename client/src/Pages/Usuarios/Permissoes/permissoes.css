@@ -215,10 +215,10 @@
     background-color: #ffffff !important;
   }
 
-  td {
+  /* td {
     border-right: 1px solid #c8c8c8 !important;
     border-left: 1px solid #c8c8c8 !important;
-  }
+  } */
 }
 @media only screen and (max-width: 961px) {
   .menu-header-table-permission {
