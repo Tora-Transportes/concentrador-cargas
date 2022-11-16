@@ -62,6 +62,7 @@ routes.delete("/csn/cargas/:id", CargasCsnController.delete);
 
 routes.put("/csn/ponto_parada/:id", PontoParadaController.update);
 routes.post("/csn/ponto_parada", PontoParadaController.create);
+routes.delete("/csn/ponto_parada/:id", PontoParadaController.delete);
 
 routes.get("/usuarios", UsuarioController.search);
 routes.get("/usuarios/:oid", UsuarioController.index);

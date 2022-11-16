@@ -20,11 +20,7 @@ function RotasSelect(props) {
 					rota.results.length > 0 &&
 					rota.results.map((i) => {
 						const infoOfFiliais = `${i.ID} - ${i.DESCRICAO}`;
-						return (
-							<option key={i.ID} value={infoOfFiliais}>
-								{i.DESCRICAO}
-							</option>
-						);
+						return <option key={i.ID} value={infoOfFiliais}></option>;
 					})}
 			</datalist>
 		</>

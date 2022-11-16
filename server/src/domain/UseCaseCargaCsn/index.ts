@@ -12,7 +12,7 @@ const cargasCsnrepository = new CargaCsnRepository();
 const pontoParadaRepository = new PontoParadaRepository();
 
 const modules = {
-  useCaseAddRota: new UseCaseAddRouter(cargasCsnrepository, notifyAll),
+  useCaseAddRota: new UseCaseAddRouter(cargasCsnrepository),
   useCaseSearchRouter: new UseCaseSearchRouter(cargasCsnrepository),
   useCaseUpdateRouter: new UseCaseUpdateRouter(cargasCsnrepository, notifyAll),
   useCaseDeleteRouter: new UseCaseDeleteRouter(
