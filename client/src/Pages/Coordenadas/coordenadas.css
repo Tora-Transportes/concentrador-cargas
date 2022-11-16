@@ -3,7 +3,7 @@
 }
 .container-coord-veic {
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .class-title-Coord {
@@ -135,7 +135,7 @@
 .ul_last-location{
   padding: 0 ;
 }
-@media only screen and (min-width: 230px) and (max-width: 1325px) {
+@media only screen and (min-width: 130px) and (max-width: 1325px) {
   .class-title-Coord {
     font-size: 30px;
   }
@@ -155,8 +155,5 @@
     background-color: #00652e !important;
   }
 
-  .opcao-tabela{
-    margin-left: 8vw;
-  }
 
 }

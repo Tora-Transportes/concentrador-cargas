@@ -1,11 +1,14 @@
 .class-body-gridcarga {
   font-family: "Poppins", sans-serif;
 }
-.img-cargas-lote{
+.img-cargas-lote {
   width: 80px;
   position: absolute;
   top: 80px;
   right: -5px;
+}
+.opcao-tabela {
+  margin-left: -0.1rem;
 }
 
 #style-button-detail {
@@ -15,7 +18,26 @@
   margin-bottom: 0.4rem;
   width: 13rem;
   height: 5.5vh;
-  
+}
+@media only screen and (min-width: 150px) and (max-width: 298px) {
+  .opcao-tabela {
+    margin-top: -1.8rem !important;
+    margin-left: -15vw;
+  }
+
+}
+@media only screen and (min-width: 299px) and (max-width: 500px) {
+  .opcao-tabela {
+    margin-top: -1rem !important;
+    margin-left: 3vw;
+  }
+}
+
+@media only screen and (min-width: 501px) and (max-width: 575px) {
+  .opcao-tabela {
+    margin-top: -1rem !important;
+    margin-left: 6vw;
+  }
 }
 
 @media only screen and (min-width: 385px) and (max-width: 585px) {
@@ -25,14 +47,10 @@
   .inicio-col-registros {
     margin-bottom: 5px;
   }
-
-  .opcao-tabela{
-    margin-left: 4.6vw;
-  }
 }
 
 @media only screen and (max-width: 585px) {
-.img-cargas-lote {
-  display: none;
-}
+  .img-cargas-lote {
+    display: none;
+  }
 }

@@ -28,41 +28,40 @@
   margin-bottom: 5px;
 } */
 
-
-.modal-situation-cargas{
+.modal-situation-cargas {
   width: 23% !important;
   margin-top: 8.7rem;
   margin-left: 16.5%;
   margin-bottom: 3rem;
   font-family: "Poppins", sans-serif;
 }
-#modal-header{
+#modal-header {
   width: 100%;
   margin-bottom: -1rem;
-  border: #FFF;
+  border: #fff;
 }
 
-.modal-title-situ-carg{
-  font-size: 16.5px !important;
+.modal-title-situ-carg {
+  font-size: 18px !important;
   color: #00652e;
-  margin-left: 19%;
+  margin-left: 20%;
 }
-.card-body-sit-cargas{
+.card-body-sit-cargas {
   margin-bottom: -1rem;
 }
 
-.div-situação-cargas{
+.div-situação-cargas {
   display: flex;
 }
-#desc-legenda-cargas{
+#desc-legenda-cargas {
   font-size: 13px;
   margin-left: 1rem;
 }
-#modal-footer{
+#modal-footer {
   margin-top: -1rem;
-  border: #FFF !important;
+  border: #fff !important;
 }
-#button-sair{
+#button-sair {
   font-size: 14px;
   margin-top: -2px;
   width: 16%;
@@ -89,22 +88,21 @@
   text-align: end;
   margin-bottom: 15px;
 }
-.col-modal-filial{
+.col-modal-filial {
   text-align: start;
   border: 1px solid #ced4da;
   border-radius: 7px;
-  margin-left: .6rem;
+  margin-left: 0.6rem;
   width: 97% !important;
   height: 4rem;
-
 }
-label{
-  margin-top: .2rem;
+label {
+  margin-top: 0.2rem;
 }
-.modal-input-filial{
-  border: none; 
+.modal-input-filial {
+  border: none;
   display: grid;
-  outline-color: #FFF;
+  outline-color: #fff;
   height: 1.8rem;
   width: 100%;
 }
@@ -115,6 +113,37 @@ label{
 .card-exel-label {
   color: rgb(9, 77, 24);
   font-weight: 600;
+}
+
+@media screen and (min-width: 176px) and (max-width: 329px) {
+  .modal-situation-cargas {
+    margin-top: 11rem;
+    width: 85% !important;
+    margin-left: 10%;
+  }
+  #modal-header {
+    width: 100%;
+    margin-bottom: -1rem;
+    border: #fff;
+  }
+
+  .modal-title-situ-carg {
+    font-size: 16px !important;
+    color: #00652e;
+    margin-left: 10%;
+  }
+}
+@media screen and (min-width: 330px) and (max-width: 580px) {
+  .modal-situation-cargas {
+    margin-top: 11rem;
+    width: 80% !important;
+    margin-left: 10%;
+  }
+  .modal-title-situ-carg {
+    font-size: 18px !important;
+    color: #00652e;
+    margin-left: 20%;
+  }
 }
 
 @media screen and (max-width: 575px) {
@@ -136,87 +165,120 @@ label{
   .card-body-excel {
     display: grid;
   }
-  .dialog-modal-import{
+  .dialog-modal-import {
     width: 80% !important;
   }
 }
 
-@media screen and (min-width: 576px) and (max-width: 875px) {
-  .col-modal-filial{
+@media screen and (min-width: 581px) and (max-width: 715px) {
+  .modal-situation-cargas {
+    margin-top: 11rem;
+    width: 60% !important;
+    margin-left: 15%;
+  }
+  #modal-header {
+    width: 80%;
+    margin-bottom: -1rem;
+    border: #fff;
+  }
+
+  .modal-title-situ-carg {
+    font-size: 18px !important;
+    color: #00652e;
+    margin-left: 30%;
+  }
+
+  .col-modal-filial {
     width: 95% !important;
   }
 
-  .dialog-modal-import{
+  .dialog-modal-import {
     width: 65%;
   }
 }
 
-@media screen and (min-width: 876px) and (max-width: 1375px) { 
-  .dialog-modal-import{
-    width: 55%;
-  }
-
-}
-
-@media screen and (min-width: 176px) and (max-width: 485px) {
-  .modal-situation-cargas{
-    margin-top: 15rem;
-    width: 80% !important;
-    margin-left: 10%;
-  }
-  #modal-header{
-    width: 100%;
-    margin-bottom: -1rem;
-    border: #FFF;
-  }
-  
-  .modal-title-situ-carg{
-    font-size: 14px !important;
-    color: #00652e;
-    margin-left: 15%;
-  }
-  
-}
-
-
-@media screen and (min-width: 486px) and (max-width: 715px) {
-  .modal-situation-cargas{
-    margin-top: 13rem;
-    width: 55% !important;
-    margin-left: 15%;
-  }
-  #modal-header{
-    width: 80%;
-    margin-bottom: -1rem;
-    border: #FFF;
-  }
-  
-  .modal-title-situ-carg{
-    font-size: 15px !important;
-    color: #00652e;
-    margin-left: 35%;
-  }
-  
-}
-
-@media screen and (min-width: 716px) and (max-width: 1320px) {
-  .modal-situation-cargas{
-    width: 40% !important;
-    margin-top: 12rem;
+@media screen and (min-width: 716px) and (max-width: 875px) {
+  .modal-situation-cargas {
+    margin-top: 11rem;
     margin-left: 25%;
     margin-bottom: 3rem;
     font-family: "Poppins", sans-serif;
   }
-  #modal-header{
+  #modal-header {
     width: 80%;
     margin-bottom: -1rem;
-    border: #FFF;
+    border: #fff;
   }
-  
-  .modal-title-situ-carg{
-    font-size: 15px !important;
+
+  .modal-title-situ-carg {
+    font-size: 17px !important;
     color: #00652e;
-    margin-left: 35%;
+    margin-left: 28%;
   }
-  
+  .col-modal-filial {
+    width: 95% !important;
+  }
+
+  .dialog-modal-import {
+    width: 65%;
+  }
+}
+@media screen and (min-width: 716px) and (max-width: 995px) {
+  .modal-situation-cargas {
+    width: 50% !important;
+    font-family: "Poppins", sans-serif;
+  }
+}
+@media screen and (min-width: 876px) and (max-width: 1330px) {
+  .dialog-modal-import {
+    width: 55%;
+  }
+  .modal-situation-cargas {
+    margin-top: 11rem;
+  }
+}
+
+@media screen and (min-width: 1330px) and (max-width: 1355px) {
+  .modal-situation-cargas {
+    width: 20% !important;
+    margin-top: 8.7rem;
+    margin-left: 18%;
+    margin-bottom: 3rem;
+    font-family: "Poppins", sans-serif;
+  }
+  #modal-header {
+    width: 100%;
+    margin-bottom: -1rem;
+    border: #fff;
+  }
+
+  .modal-title-situ-carg {
+    font-size: 18px !important;
+    color: #00652e;
+    margin-left: 20%;
+  }
+  .card-body-sit-cargas {
+    margin-bottom: -1rem;
+  }
+
+  .div-situação-cargas {
+    display: flex;
+  }
+  #desc-legenda-cargas {
+    font-size: 13px;
+    margin-left: 1rem;
+  }
+  #modal-footer {
+    margin-top: -1rem;
+    border: #fff !important;
+  }
+  #button-sair {
+    font-size: 14px;
+    margin-top: -2px;
+    width: 16%;
+    height: 25px;
+    padding: 1px;
+    background-color: #00652e;
+    border: none;
+  }
 }

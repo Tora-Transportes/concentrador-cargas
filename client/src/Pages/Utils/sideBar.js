@@ -3,6 +3,7 @@ import { AiFillFileExcel } from "react-icons/ai";
 import { MdRefresh, MdOutlineSubtitles } from "react-icons/md";
 import { Col, Row } from "react-bootstrap";
 import { Dropdown } from "primereact/dropdown";
+import "./util-opcoes-tabela.css";
 
 const PaginatorTable = ({ itensPerPage, setItensPerPage, setVisibleLeft }) => {
 	const selectLines = { name: itensPerPage, code: itensPerPage };
@@ -60,26 +61,26 @@ export const SideBarFuncition = ({
 				<Col lg={12} className="text-center mb-2">
 					<ButtonReact
 						label=" Legenda das Cargas "
-						icon={<MdOutlineSubtitles />}
+						icon={<MdOutlineSubtitles className="icon-leg" />}
 						onClick={() => showLegendaCarga()}
-						className=" w-100"
+						className="font-sidebar w-100"
 					/>
 				</Col>
 			)}
 			<Col lg={12} className="text-center mb-2">
 				<ButtonReact
 					label=" Importar Tabela "
-					icon={<AiFillFileExcel />}
+					icon={<AiFillFileExcel className="icon-import" />}
 					onClick={() => downloadExel()}
-					className="p-button-success w-100"
+					className="p-button-success w-100 font-sidebar"
 				/>
 			</Col>
 			<Col lg={12} className="text-center mb-2">
 				<ButtonReact
 					label=" Redefinir Tabela "
-					icon={<MdRefresh />}
+					icon={<MdRefresh className="icon-redef" />}
 					onClick={() => resetTable()}
-					className="p-button-info w-100"
+					className="p-button-info w-100 font-sidebar"
 				/>
 			</Col>
 			<Col lg={12} className="text-center mb-2 paginator-table-col">

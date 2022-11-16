@@ -1,7 +1,8 @@
 .title {
   color: #024c01;
-  margin-bottom: 0.5em;
-  font-size: 28px;
+  margin-top: 2rem;
+  margin-bottom: 1em;
+  font-size: 35px;
 }
 
 @media screen and (max-width: 576px) {
