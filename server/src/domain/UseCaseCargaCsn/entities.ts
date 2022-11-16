@@ -8,10 +8,7 @@ import { PontoParadaRepository } from "../../repositories/PontoParadaRepository"
 const dataAtual = new Date();
 
 export class UseCaseAddRouter {
-  constructor(
-    private readonly cargaCsnRepository: CargaCsnRepository,
-    private readonly notifyAll: (event: IEventSocket) => void
-  ) {}
+  constructor(private readonly cargaCsnRepository: CargaCsnRepository) {}
 
   async run(dataRota: ICargasCsn) {
     const validator = factoryCargaCsnValidator();
