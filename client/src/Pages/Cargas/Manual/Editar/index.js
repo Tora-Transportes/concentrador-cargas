@@ -55,6 +55,7 @@ function Manual() {
 					...values,
 					responsavel_cadastro: String(getClaims().name),
 					fk_situacao: undefined,
+					fk_filial: formik.values.fk_filial?.split("-")[0],
 				});
 				formik.setFieldValue("responsavel_cadastro", String(getClaims().name));
 				swal("Sucesso!", `A carga ${data.data.id} foi atualizada!`, "success");
@@ -129,6 +130,7 @@ function Manual() {
 					...formik.values,
 					fk_situacao: 5,
 					observacao_cancelamento: observacaoCancelamento,
+					fk_filial: formik.values.fk_filial?.split("-")[0],
 				});
 				await swal("Sucesso!", "Carga cancelada.", "success");
 				await carregarCarga();
@@ -156,6 +158,7 @@ function Manual() {
 				await ServiceCargas.update({
 					...formik.values,
 					fk_situacao: 6,
+					fk_filial: formik.values.fk_filial?.split("-")[0],
 				});
 				await swal("Sucesso!", "Documento emitido.", "success");
 				await carregarCarga();
