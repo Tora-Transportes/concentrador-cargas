@@ -12,6 +12,7 @@ import ProdutoController from "./controllers/ProdutoController";
 import RecomendacoesController from "./controllers/RecomendacoesController";
 import RotasController from "./controllers/RotasController";
 import SituacoesCargasController from "./controllers/SituacoesCargasController";
+import SituacoesCargasCsnController from "./controllers/csn/SituacaoCargasCsnController";
 import CoordenadasController from "./controllers/CoordenadaController";
 import RelatorioController from "./controllers/RelatorioController";
 import CredenciaisController from "./controllers/CredenciaisController";
@@ -120,6 +121,7 @@ routes.get("/recomendacoes/locais", RecomendacoesController.cidadeEstados);
 routes.get("/recomendacoes/filiais", RecomendacoesController.filiais);
 
 routes.get("/situacoes/cargas", SituacoesCargasController.search);
+routes.get("/situacoes/cargas/csn", SituacoesCargasCsnController.search);
 
 routes.get(
   "/coordenadas/:placa/range",
