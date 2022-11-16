@@ -30,6 +30,7 @@ import "primeicons/primeicons.css";
 import Helper from "./Pages/Components/Helper/ajuda";
 import Avisos from "./Pages/Avisos";
 import CadastroCargaCSN from "./Pages/Cargas/CargasCSN/Cadastrar";
+import LocalizacaoCSN from "./Pages/LocalizacaoCSN";
 
 export default function AllRoutes() {
 	return (
@@ -81,6 +82,7 @@ export default function AllRoutes() {
 				{/* <Route path="/producao" exact component={CalendarioProducao} /> */}
 				<Route path="/ajuda" exact component={Helper} />
 				<Route path="/avisos" exact component={Avisos} />
+				<Route path="/localizacao" exact component={LocalizacaoCSN} />
 			</Switch>
 		</BrowserRouter>
 	);
