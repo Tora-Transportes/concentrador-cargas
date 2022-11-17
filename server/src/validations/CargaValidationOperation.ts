@@ -154,12 +154,14 @@ export class CargaValidationOperation {
           "fk_situacao",
           "observacao_cancelamento",
         ];
-        for (const i in cargaAtual) {
-          if ({ ...cargaAnterior }[i] !== { ...cargaAtual }[i]) {
-            if (!camposPermitidosMudanca.includes(i)) {
-              throw new Error(
-                "A carga não pode ter seus dados alterados após ser aprovada"
-              );
+        if (cargaAtual.fk_situacao !== 5) {
+          for (const i in cargaAtual) {
+            if ({ ...cargaAnterior }[i] !== { ...cargaAtual }[i]) {
+              if (!camposPermitidosMudanca.includes(i)) {
+                throw new Error(
+                  "A carga não pode ter seus dados alterados após ser aprovada"
+                );
+              }
             }
           }
         }
