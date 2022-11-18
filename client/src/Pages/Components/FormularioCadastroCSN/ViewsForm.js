@@ -292,60 +292,6 @@ export default function ViewsForm({
 					/>
 				</Col>
 			</Row>
-			{/* <Row>
-				<Col>
-					<FloatingLabel label="Data da coleta" className="mb-3">
-						<Form.Control
-							type="date"
-							placeholder=" "
-							name="data_coleta"
-							value={formik.values.data_coleta}
-							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
-						/>
-					</FloatingLabel>
-				</Col>
-				<Col>
-					<FloatingLabel label="Data de entrega" className="mb-3">
-						<Form.Control
-							type="date"
-							placeholder=" "
-							name="data_entrega"
-							value={formik.values.data_entrega}
-							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
-						/>
-					</FloatingLabel>
-				</Col>
-			</Row>
-			{!formik.values.e_lote && (
-				<Row>
-					<Col>
-						<FloatingLabel label="Janela Coleta" className="mb-3">
-							<Form.Control
-								type="time"
-								placeholder=" "
-								name="janela_coleta"
-								value={formik.values.janela_coleta}
-								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
-							/>
-						</FloatingLabel>
-					</Col>
-					<Col>
-						<FloatingLabel label="Janela Entrega" className="mb-3">
-							<Form.Control
-								type="time"
-								placeholder=" "
-								name="janela_entrega"
-								value={formik.values.janela_entrega}
-								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
-							/>
-						</FloatingLabel>
-					</Col>
-				</Row>
-			)} */}
 			<Row>
 				<Col sm={12} md={6}>
 					<FloatingLabel label="Tipo de material" className="mb-3">

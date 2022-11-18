@@ -73,8 +73,7 @@ class ServiceCargas {
 			LATITUDE: latitude ? latitude : null,
 			LONGITUDE: longitude ? longitude : null,
 		};
-		console.log("SERVER json", dados);
-		//return await api.post("/csn/ponto_parada", dados);
+		return await api.post("/csn/ponto_parada", dados);
 	}
 
 	async createDerivada({

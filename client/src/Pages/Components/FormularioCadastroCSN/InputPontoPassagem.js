@@ -21,8 +21,8 @@ const InputsPontoPassagem = ({
 	const [inputPontoPassagem8, setInputPontoPassagem8] = useState(true);
 	const [inputPontoPassagem9, setInputPontoPassagem9] = useState(true);
 	const [inputPontoPassagem10, setInputPontoPassagem10] = useState(true);
-	// const [inputPontoPassagem11, setInputPontoPassagem11] = useState(true);
-	// const [inputPontoPassagem12, setInputPontoPassagem12] = useState(true);
+	const [inputPontoPassagem11, setInputPontoPassagem11] = useState(true);
+	const [inputPontoPassagem12, setInputPontoPassagem12] = useState(true);
 	useEffect(() => {
 		if (formik.values.ponto_passagem5.tipoServico === "Entrega") {
 			setInputPontoPassagem5(false);
@@ -54,6 +54,16 @@ const InputsPontoPassagem = ({
 		} else {
 			setInputPontoPassagem10(true);
 		}
+		if (formik.values.ponto_passagem11.tipoServico === "Entrega") {
+			setInputPontoPassagem11(false);
+		} else {
+			setInputPontoPassagem11(true);
+		}
+		if (formik.values.ponto_passagem12.tipoServico === "Entrega") {
+			setInputPontoPassagem12(false);
+		} else {
+			setInputPontoPassagem12(true);
+		}
 	}, [formik.values]);
 	return (
 		<>
@@ -64,10 +74,9 @@ const InputsPontoPassagem = ({
 							className="input-pontoPassagem-disabled"
 							type="text"
 							name="ponto_passagem.ponto"
-							value={formik.values.ponto_passagem.ponto}
+							value={formik.values.ponto_passagem.ponto?.split("-")[1]}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
-							required={false}
 							disabled
 						/>
 					</FloatingLabel>
@@ -75,13 +84,12 @@ const InputsPontoPassagem = ({
 				<Col>
 					<FloatingLabel label="Coleta/Entrega" className="mb-3">
 						<Form.Control
-							id="campo-aut"
+							className="input-pontoPassagem-disabled"
 							type="text"
 							disabled
 							name="ponto_passagem.tipoServico"
 							value={formik.values.ponto_passagem.tipoServico}
 							onChange={formik.handleChange}
-							required={false}
 						/>
 					</FloatingLabel>
 				</Col>
@@ -101,15 +109,15 @@ const InputsPontoPassagem = ({
 
 			<Row className="row-input-coleta">
 				<Col sm={12} md={6}>
-					<FloatingLabel label="*Ponto de passagem2" className="mb-3">
+					<FloatingLabel label="Ponto de passagem2" className="mb-3">
 						<Form.Control
-							id="campo-aut"
+							//id="campo-aut"
+							className="input-pontoPassagem-disabled"
 							type="text"
 							name="ponto_passagem2.ponto"
-							value={formik.values.ponto_passagem2.ponto}
+							value={formik.values.ponto_passagem2.ponto?.split("-")[1]}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
-							required={false}
 							disabled
 						/>
 					</FloatingLabel>
@@ -117,13 +125,12 @@ const InputsPontoPassagem = ({
 				<Col>
 					<FloatingLabel label="Coleta/Entrega 2" className="mb-3">
 						<Form.Control
-							id="campo-aut"
+							className="input-pontoPassagem-disabled"
 							type="text"
 							disabled
 							name="ponto_passagem2.tipoServico"
 							value={formik.values.ponto_passagem2.tipoServico}
 							onChange={formik.handleChange}
-							required={false}
 						/>
 					</FloatingLabel>
 				</Col>
@@ -141,15 +148,14 @@ const InputsPontoPassagem = ({
 			</Row>
 			<Row className="row-input-coleta">
 				<Col sm={12} md={6}>
-					<FloatingLabel label="*Ponto de passagem3" className="mb-3">
+					<FloatingLabel label="Ponto de passagem3" className="mb-3">
 						<Form.Control
-							id="campo-aut"
+							className="input-pontoPassagem-disabled"
 							type="text"
 							name="ponto_passagem3.ponto"
-							value={formik.values.ponto_passagem3.ponto}
+							value={formik.values.ponto_passagem3.ponto?.split("-")[1]}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
-							required={false}
 							disabled
 						/>
 					</FloatingLabel>
@@ -157,13 +163,12 @@ const InputsPontoPassagem = ({
 				<Col>
 					<FloatingLabel label="Coleta/Entrega 3" className="mb-3">
 						<Form.Control
-							id="campo-aut"
+							className="input-pontoPassagem-disabled"
 							type="text"
 							disabled
 							name="ponto_passagem3.tipoServico"
 							value={formik.values.ponto_passagem3.tipoServico}
 							onChange={formik.handleChange}
-							required={false}
 						/>
 					</FloatingLabel>
 				</Col>
@@ -197,7 +202,7 @@ const InputsPontoPassagem = ({
 				<Col>
 					<FloatingLabel label="Coleta/Entrega 4" className="mb-3">
 						<Form.Control
-							id="campo-aut"
+							className="input-pontoPassagem-disabled"
 							type="text"
 							disabled
 							name="ponto_passagem4.tipoServico"
@@ -228,7 +233,6 @@ const InputsPontoPassagem = ({
 							<label>Ponto de passagem 5</label>
 							<RotasSelect
 								className="input-cod-local"
-								//id="Codigo-filial pb-5"
 								placeholder=" "
 								name="ponto_passagem5.ponto"
 								value={formik.values.ponto_passagem5.ponto}
@@ -583,19 +587,35 @@ const InputsPontoPassagem = ({
 			)}
 			{inputColeta11 && (
 				<Row className="row-input-coleta">
-					<Col sm={12} md={6} className="col-cod-local">
-						<label>Ponto de passagem 11</label>
-						<RotasSelect
-							className="input-cod-local"
-							//id="Codigo-filial pb-5"
-							placeholder=" "
-							name="ponto_passagem11.ponto"
-							value={formik.values.ponto_passagem11.ponto}
-							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
-							required
-						/>
-					</Col>
+					{inputPontoPassagem11 ? (
+						<Col sm={12} md={6} className="col-cod-local">
+							<label>Ponto de passagem 11</label>
+							<RotasSelect
+								className="input-cod-local"
+								//id="Codigo-filial pb-5"
+								placeholder=" "
+								name="ponto_passagem11.ponto"
+								value={formik.values.ponto_passagem11.ponto}
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+								required
+							/>
+						</Col>
+					) : (
+						<Col sm={12} md={6}>
+							<InputCliente
+								type="text"
+								placeholder=" "
+								name="ponto_passagem11.client"
+								value={formik.values.ponto_passagem11.client}
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+								formikMain={formik}
+								status={11}
+								required
+							/>
+						</Col>
+					)}
 					<Col>
 						<FloatingLabel label="Coleta/Entrega 11" className="mb-3">
 							<Form.Select
@@ -627,19 +647,35 @@ const InputsPontoPassagem = ({
 			)}
 			{inputColeta12 && (
 				<Row className="row-input-coleta">
-					<Col sm={12} md={6} className="col-cod-local">
-						<label>Ponto de passagem 12</label>
-						<RotasSelect
-							className="input-cod-local"
-							//id="Codigo-filial pb-5"
-							placeholder=" "
-							name="ponto_passagem12.ponto"
-							value={formik.values.ponto_passagem12.ponto}
-							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
-							required
-						/>
-					</Col>
+					{inputPontoPassagem12 ? (
+						<Col sm={12} md={6} className="col-cod-local">
+							<label>Ponto de passagem 12</label>
+							<RotasSelect
+								className="input-cod-local"
+								//id="Codigo-filial pb-5"
+								placeholder=" "
+								name="ponto_passagem12.ponto"
+								value={formik.values.ponto_passagem12.ponto}
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+								required
+							/>
+						</Col>
+					) : (
+						<Col sm={12} md={6}>
+							<InputCliente
+								type="text"
+								placeholder=" "
+								name="ponto_passagem12.client"
+								value={formik.values.ponto_passagem12.client}
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+								formikMain={formik}
+								status={10}
+								required
+							/>
+						</Col>
+					)}
 					<Col>
 						<FloatingLabel label="Coleta/Entrega 12" className="mb-3">
 							<Form.Select
