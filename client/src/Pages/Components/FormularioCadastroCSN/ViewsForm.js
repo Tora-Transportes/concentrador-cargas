@@ -18,7 +18,7 @@ import FilialSelect from "../FilialSelect";
 import InputCliente from "../InputCliente";
 import InputPlaca from "../InputPlaca";
 import UnidadesMedida from "../UnidadesMedida";
-import InputsPontoMaterial from "./InputPontoPassagem";
+import InputsPontoPassagem from "./InputPontoPassagem";
 
 export default function ViewsForm({
 	formik,
@@ -28,9 +28,6 @@ export default function ViewsForm({
 	handleShowDetailsAboutVehicle,
 	handleShowDebitAboutVehicle,
 	produtos,
-	inputColeta2,
-	inputColeta3,
-	inputColeta4,
 	inputColeta5,
 	inputColeta6,
 	inputColeta7,
@@ -295,7 +292,7 @@ export default function ViewsForm({
 					/>
 				</Col>
 			</Row>
-			<Row>
+			{/* <Row>
 				<Col>
 					<FloatingLabel label="Data da coleta" className="mb-3">
 						<Form.Control
@@ -348,7 +345,7 @@ export default function ViewsForm({
 						</FloatingLabel>
 					</Col>
 				</Row>
-			)}
+			)} */}
 			<Row>
 				<Col sm={12} md={6}>
 					<FloatingLabel label="Tipo de material" className="mb-3">
@@ -397,11 +394,8 @@ export default function ViewsForm({
 					</Row>
 				</Col>
 			</Row>
-			<InputsPontoMaterial
+			<InputsPontoPassagem
 				formik={formik}
-				inputColeta2={inputColeta2}
-				inputColeta3={inputColeta3}
-				inputColeta4={inputColeta4}
 				inputColeta5={inputColeta5}
 				inputColeta6={inputColeta6}
 				inputColeta7={inputColeta7}
