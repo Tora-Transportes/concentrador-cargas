@@ -57,12 +57,21 @@ class ServiceCargas {
 		return await api.post("/cargas", carga);
 	}
 
-	async createPontoParada({ ponto, previsao, tipoServico, id_carga }) {
+	async createPontoParada({
+		ponto,
+		previsao,
+		tipoServico,
+		id_carga,
+		latitude,
+		longitude,
+	}) {
 		const dados = {
-			ID_ROTAS_CSN: ponto?.split("-")[0],
+			ID_ROTAS_CSN: ponto ? ponto?.split("-")[0] : null,
 			ID_CON_CARGAS: id_carga,
 			PREVISAO: previsao,
 			STATUS_SERVICO: tipoServico.toUpperCase(),
+			LATITUDE: latitude ? latitude : null,
+			LONGITUDE: longitude ? longitude : null,
 		};
 		return await api.post("/csn/ponto_parada", dados);
 	}

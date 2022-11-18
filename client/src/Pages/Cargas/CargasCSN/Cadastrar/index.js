@@ -34,64 +34,100 @@ const CadastroCargaCSN = () => {
 			placa_veiculo: "",
 			documento_transporte: "",
 			ponto_passagem: {
-				ponto: "",
-				tipoServico: "",
+				ponto: " 45 - POSTO - 30",
+				tipoServico: "Coleta",
 				previsao: "",
+				latitude: "",
+				longitude: "",
+				client: "",
 			},
 			ponto_passagem2: {
-				ponto: "",
-				tipoServico: "",
+				ponto: "47 - MUNDO - CSN",
+				tipoServico: "Coleta",
 				previsao: "",
+				latitude: "",
+				longitude: "",
+				client: "",
 			},
 			ponto_passagem3: {
-				ponto: "",
-				tipoServico: "",
+				ponto: "46 - PEACAO - CSN",
+				tipoServico: "Coleta",
 				previsao: "",
+				latitude: "",
+				longitude: "",
+				client: "",
 			},
 			ponto_passagem4: {
 				ponto: "",
-				tipoServico: "",
+				tipoServico: "Entrega",
 				previsao: "",
+				latitude: "",
+				longitude: "",
+				client: "",
 			},
 			ponto_passagem5: {
 				ponto: "",
 				tipoServico: "",
 				previsao: "",
+				latitude: "",
+				longitude: "",
+				client: "",
 			},
 			ponto_passagem6: {
 				ponto: "",
 				tipoServico: "",
 				previsao: "",
+				latitude: "",
+				longitude: "",
+				client: "",
 			},
 			ponto_passagem7: {
 				ponto: "",
 				tipoServico: "",
 				previsao: "",
+				latitude: "",
+				longitude: "",
+				client: "",
 			},
 			ponto_passagem8: {
 				ponto: "",
 				tipoServico: "",
 				previsao: "",
+				latitude: "",
+				longitude: "",
+				client: "",
 			},
 			ponto_passagem9: {
 				ponto: "",
 				tipoServico: "",
 				previsao: "",
+				latitude: "",
+				longitude: "",
+				client: "",
 			},
 			ponto_passagem10: {
 				ponto: "",
 				tipoServico: "",
 				previsao: "",
+				latitude: "",
+				longitude: "",
+				client: "",
 			},
 			ponto_passagem11: {
 				ponto: "",
 				tipoServico: "",
 				previsao: "",
+				latitude: "",
+				longitude: "",
+				client: "",
 			},
 			ponto_passagem12: {
 				ponto: "",
 				tipoServico: "",
 				previsao: "",
+				latitude: "",
+				longitude: "",
+				client: "",
 			},
 		},
 		onSubmit: async (values) => {
@@ -111,7 +147,6 @@ const CadastroCargaCSN = () => {
 					ponto_passagem11,
 					ponto_passagem12,
 				} = values;
-
 				values.fk_filial = await values.fk_filial.split("-")[0];
 				const data = (
 					await ServiceCargas.create({
@@ -121,6 +156,8 @@ const CadastroCargaCSN = () => {
 				).data;
 
 				if (data.data.id) {
+					// const apagar = true;
+					// if (apagar) {
 					for (const [key, value] of Object.entries({
 						ponto_passagem,
 						ponto_passagem2,
@@ -135,10 +172,15 @@ const CadastroCargaCSN = () => {
 						ponto_passagem11,
 						ponto_passagem12,
 					})) {
-						if (value?.ponto.length > 0) {
+						if (
+							(value?.ponto.length > 0 && value?.previsao.length > 0) ||
+							(typeof value?.latitude !== "string" &&
+								typeof value?.longitude !== "string")
+						) {
 							await ServiceCargas.createPontoParada({
 								...value,
 								id_carga: data.data.id,
+								//id_carga: 122233987,
 								key,
 							});
 						}
@@ -148,7 +190,7 @@ const CadastroCargaCSN = () => {
 				swal(
 					"Sucesso!",
 					`A carga foi cadastrada com o identificador ${data.data.id}!`,
-					//`A carga foi cadastrada com o identificador 5555555!`,
+					//"A carga foi cadastrada com o identificador 5555555!",
 					"success"
 				);
 				resetForm();

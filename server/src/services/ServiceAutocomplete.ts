@@ -25,6 +25,8 @@ class ServiceAutocomplete {
         "ORG.ORG_FANTASIA AS organizacao_fantasia",
         "PRA.PCA_DOC_FEDERAL as documento_federal",
         "PRA.PCA_END as endereco",
+        "PRA.PCA_LATITUDE as latitude",
+        "PRA.PCA_LONGITUDE as longitude",
         "CID.CID_NOM as cidade",
         "EST.UF_SIGLA as uf",
       ])
