@@ -73,6 +73,7 @@ class ServiceCargas {
 			LATITUDE: latitude ? latitude : null,
 			LONGITUDE: longitude ? longitude : null,
 		};
+		//console.log("VALUE PARA SALVAR", dados);
 		return await api.post("/csn/ponto_parada", dados);
 	}
 

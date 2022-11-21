@@ -187,13 +187,14 @@ const CadastroCargaCSN = () => {
 					}
 				}
 
-				swal(
+				const ok = await swal(
 					"Sucesso!",
 					`A carga foi cadastrada com o identificador ${data.data.id}!`,
 					//"A carga foi cadastrada com o identificador 5555555!",
 					"success"
 				);
-				resetForm();
+
+				if (ok) resetForm();
 			} catch (error) {
 				console.log(error);
 			}
@@ -239,8 +240,9 @@ const CadastroCargaCSN = () => {
 	}, []);
 
 	function resetForm() {
-		formik.resetForm();
-		formik.setFieldValue("id", "(gerado automaticamente)");
+		// formik.resetForm();
+		// formik.setFieldValue("id", "(gerado automaticamente)");
+		window.location.reload();
 	}
 
 	return (

@@ -235,7 +235,7 @@ const InputsPontoPassagem = ({
 								className="input-cod-local"
 								placeholder=" "
 								name="ponto_passagem5.ponto"
-								value={formik.values.ponto_passagem5.ponto}
+								//value={formik.values.ponto_passagem5.ponto}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
