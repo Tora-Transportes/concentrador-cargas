@@ -23,7 +23,6 @@ import InputsPontoPassagem from "./InputPontoPassagem";
 export default function ViewsForm({
 	formik,
 	buscarCargaComDocumentoDeTransporte,
-	disabledFields,
 	handleSearchVehicle,
 	handleShowDetailsAboutVehicle,
 	handleShowDebitAboutVehicle,
@@ -121,7 +120,6 @@ export default function ViewsForm({
 							onChange={() => formik.setFieldValue("e_lote", true)}
 							checked={formik.values.e_lote === true}
 							inline
-							disabled={disabledFields.includes("e_lote")}
 						/>
 						<Form.Check
 							type="radio"
@@ -131,7 +129,6 @@ export default function ViewsForm({
 							onChange={() => formik.setFieldValue("e_lote", false)}
 							checked={formik.values.e_lote === false}
 							inline
-							disabled={disabledFields.includes("e_lote")}
 						/>
 						<OverlayTrigger
 							key="tooltip-overlay-lote"
@@ -314,7 +311,6 @@ export default function ViewsForm({
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
 									required
-									disabled={disabledFields.includes("unidade_medida")}
 								>
 									<option value=""></option>
 									<UnidadesMedida />
@@ -332,7 +328,6 @@ export default function ViewsForm({
 									value={formik.values.quantidade}
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
-									disabled={disabledFields.includes("quantidade")}
 									required
 								/>
 							</FloatingLabel>

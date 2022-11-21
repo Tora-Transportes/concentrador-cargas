@@ -8,14 +8,10 @@ import ViewsForm from "./ViewsForm";
 function FormularioCadastroCSN({
 	formik,
 	produtos,
-	disabledFields = [],
 	buscarCargaComDocumentoDeTransporte,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
-	// const [inputColeta2, setInputColeta2] = useState(false);
-	// const [inputColeta3, setInputColeta3] = useState(false);
-	// const [inputColeta4, setInputColeta4] = useState(false);
 	const [inputColeta5, setInputColeta5] = useState(false);
 	const [inputColeta6, setInputColeta6] = useState(false);
 	const [inputColeta7, setInputColeta7] = useState(false);
@@ -90,9 +86,6 @@ function FormularioCadastroCSN({
 		setCountInput,
 		setViewsButtonExcluir,
 		setViewsButtonAddColeta,
-		// setInputColeta2,
-		// setInputColeta3,
-		// setInputColeta4,
 		setInputColeta5,
 		setInputColeta6,
 		setInputColeta7,
@@ -110,14 +103,10 @@ function FormularioCadastroCSN({
 				buscarCargaComDocumentoDeTransporte={
 					buscarCargaComDocumentoDeTransporte
 				}
-				disabledFields={disabledFields}
 				handleSearchVehicle={handleSearchVehicle}
 				handleShowDetailsAboutVehicle={handleShowDetailsAboutVehicle}
 				handleShowDebitAboutVehicle={handleShowDebitAboutVehicle}
 				produtos={produtos}
-				// inputColeta2={inputColeta2}
-				// inputColeta3={inputColeta3}
-				// inputColeta4={inputColeta4}
 				inputColeta5={inputColeta5}
 				inputColeta6={inputColeta6}
 				inputColeta7={inputColeta7}
