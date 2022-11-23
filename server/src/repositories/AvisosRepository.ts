@@ -1,12 +1,12 @@
 //import database from "../database";
 import IModelAvisos from "../models/Avisos";
 
-interface IAvisosRepository{
-    index(id: number): Promise<IModelAvisos> ;
-    search(): Promise<IModelAvisos[]>;
-    update(id: number, dataUpdate: IModelAvisos): Promise<IModelAvisos>;
-    delete(id: number): Promise<string>;
-};
+interface IAvisosRepository {
+  index(id: number): Promise<IModelAvisos>;
+  search(): Promise<IModelAvisos[]>;
+  update(id: number, dataUpdate: IModelAvisos): Promise<IModelAvisos>;
+  delete(id: number): Promise<string>;
+}
 
 export class AvisosRepository implements IAvisosRepository {
   async index(id: number): Promise<IModelAvisos> {
@@ -57,7 +57,6 @@ export class AvisosRepository implements IAvisosRepository {
   }
 
   async delete(id: number): Promise<string> {
-
     return "Aviso deletado com sucesso!";
   }
 }
