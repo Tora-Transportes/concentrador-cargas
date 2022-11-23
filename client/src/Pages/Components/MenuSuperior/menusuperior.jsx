@@ -45,16 +45,17 @@ function Menusuperior() {
               </div>
             </div>
           </div>
-          <li className="class-li">
-            <a id="style-a" href="/veiculos/coordenadas">
-              Coordenadas
-            </a>
-          </li>
-          <li className="class-li">
-            <a id="style-a" href="/veiculos/aprovacao">
-              Monitoramento
-            </a>
-          </li>
+          <div className="class-dropdown">
+            <div className="dropdown">
+              <button id="style-button-drop" className="dropbtn">
+                Monitoramento
+              </button>
+              <div id="myDropdown" className="dropdown-content">
+                <a href="/veiculos/aprovacao/padrao">Padrão</a>
+                <a href="/veiculos/aprovacao/csn">CSN</a>
+              </div>
+            </div>
+          </div>
           <li className="class-li">
             <a id="style-a" href="/usuarios/permissoes">
               Permissões

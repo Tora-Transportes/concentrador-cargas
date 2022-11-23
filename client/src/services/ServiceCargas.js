@@ -25,6 +25,7 @@ class ServiceCargas {
 		placa_carreta,
 		placa_bitrem,
 		locais,
+		carga_csn,
 	}) {
 		const carga = {
 			e_lote,
@@ -53,6 +54,7 @@ class ServiceCargas {
 			placa_carreta,
 			placa_bitrem,
 			locais,
+			carga_csn,
 		};
 		return await api.post("/cargas", carga);
 	}
@@ -103,6 +105,7 @@ class ServiceCargas {
 		codigo_motorista,
 		placa_carreta,
 		placa_bitrem,
+		carga_csn,
 	}) {
 		const carga = {
 			id,
@@ -131,6 +134,7 @@ class ServiceCargas {
 				codigo_motorista === undefined ? undefined : codigo_motorista || null,
 			placa_carreta,
 			placa_bitrem,
+			carga_csn,
 		};
 
 		return api.post(`/cargas/derivada/${carga.fk_lote_pai}`, carga);
@@ -165,6 +169,7 @@ class ServiceCargas {
 		placa_carreta,
 		placa_bitrem,
 		locais,
+		carga_csn,
 	}) {
 		const carga = {
 			e_lote,
@@ -196,6 +201,7 @@ class ServiceCargas {
 			placa_carreta,
 			placa_bitrem,
 			locais,
+			carga_csn,
 		};
 
 		return api.put(`/cargas/${id}`, carga);
@@ -228,6 +234,7 @@ class ServiceCargas {
 		placa_veiculo,
 		documento_transporte,
 		fk_filial,
+		carga_csn,
 	}) {
 		return api.get("/cargas", {
 			params: {
@@ -249,6 +256,7 @@ class ServiceCargas {
 				placa_veiculo,
 				documento_transporte,
 				fk_filial,
+				carga_csn,
 			},
 		});
 	}

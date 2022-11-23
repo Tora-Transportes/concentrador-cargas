@@ -9,6 +9,7 @@ import factoryReducerCargas from "../../../hooks/storageCargas/factoryReducerCar
 import io from "../../../services/socket";
 import { getColumns } from "./columnsTable";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
+import { useParams } from "react-router-dom";
 
 function RotasPendentes() {
 	const defaultCargas = {
@@ -22,6 +23,8 @@ function RotasPendentes() {
 	const [cargas, dispatchCargas] = useReducer(cargasReducer, defaultCargas);
 	const [itensPerPage, setItensPerPage] = useState(10);
 	const [totalRegisters, setTotalRegisters] = useState(0);
+	const { id } = useParams();
+	const statusCargaId = String(id) === "csn" ? 1 : 0;
 
 	async function repopularVisao() {
 		if (cargas.results.length <= 4) {
@@ -67,7 +70,9 @@ function RotasPendentes() {
 		}
 	}
 
-	const columns = getColumns(aprovarVeiculo, reprovarVeiculo);
+	const columnsResult = getColumns(aprovarVeiculo, reprovarVeiculo);
+	const columnsPadrao = columnsResult.columsMonitoramento;
+	const columnsCsn = columnsResult.columnMonitoramentoCsn;
 
 	useEffect(() => {
 		const actionCargasCreate = (payload) => {
@@ -110,6 +115,7 @@ function RotasPendentes() {
 				fk_situacao: 2,
 				order_column: column,
 				order_direction: direction,
+				carga_csn: statusCargaId,
 			});
 
 			setLoading(false);
@@ -122,6 +128,8 @@ function RotasPendentes() {
 		[setLoading, dispatchCargas]
 	);
 
+	const tipoColumns = String(id) === "csn" ? columnsCsn : columnsPadrao;
+
 	return (
 		<>
 			<LoadingScreen />
@@ -129,7 +137,7 @@ function RotasPendentes() {
 			<Menusuperior />
 			<ViewMonitoramento
 				get_data={tableFetchData}
-				columns={columns}
+				columns={tipoColumns}
 				data={cargas}
 				itensPerPage={itensPerPage}
 				setItensPerPage={setItensPerPage}

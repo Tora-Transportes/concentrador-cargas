@@ -66,7 +66,11 @@ export default function AllRoutes() {
 
 				<Route path="/rotas/pendentes" exact component={RotasPendentes} />
 
-				<Route path="/veiculos/aprovacao" exact component={SituacaoVeiculos} />
+				<Route
+					path="/veiculos/aprovacao/:id"
+					exact
+					component={SituacaoVeiculos}
+				/>
 				<Route path="/veiculos/raio" exact component={RaioVeiculos} />
 				<Route path="/veiculos/destino" exact component={DestinoCarga} />
 				<Route path="/veiculos/raio/empresa" exact component={RaioEmpresa} />

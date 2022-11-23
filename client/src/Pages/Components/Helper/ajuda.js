@@ -119,7 +119,7 @@ function Helper() {
 								Navegar até a Página de Monitoramento
 							</p> */}
 							<Button
-								href="/veiculos/aprovacao"
+								href="/veiculos/aprovacao/padrao"
 								id="style-button-acc-1"
 								className="class-button1"
 							>
