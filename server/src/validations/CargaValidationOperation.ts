@@ -83,15 +83,17 @@ export class CargaValidationOperation {
             "Não é possível aprovar veículo sem preencher a observacao_gr"
           );
         }
-        if (
-          !cargaAtual.origem_carga ||
-          !cargaAtual.destino_carga ||
-          cargaAtual.destino_carga.split("/").length !== 3 ||
-          cargaAtual.origem_carga.split("/").length !== 3
-        ) {
-          throw new Error(
-            "Não é possível aprovar veículo sem preencher origem e destino da carga corretamente"
-          );
+        if (cargaAtual.carga_csn !== 1) {
+          if (
+            !cargaAtual.origem_carga ||
+            !cargaAtual.destino_carga ||
+            cargaAtual.destino_carga.split("/").length !== 3 ||
+            cargaAtual.origem_carga.split("/").length !== 3
+          ) {
+            throw new Error(
+              "Não é possível aprovar veículo sem preencher origem e destino da carga corretamente"
+            );
+          }
         }
 
         if (

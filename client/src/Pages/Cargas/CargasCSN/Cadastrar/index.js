@@ -152,6 +152,7 @@ const CadastroCargaCSN = () => {
 					await ServiceCargas.create({
 						...values,
 						canal_comunicacao: "manual",
+						carga_csn: 1,
 					})
 				).data;
 
