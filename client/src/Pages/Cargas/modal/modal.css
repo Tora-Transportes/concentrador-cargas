@@ -30,22 +30,19 @@
 
 
 .modal-situation-cargas{
-  width: 23% !important;
-  margin-top: 8.7rem;
-  margin-left: 16.5%;
-  margin-bottom: 3rem;
   font-family: "Poppins", sans-serif;
+  margin-top: 8.7rem;
+  margin-bottom: 3rem;
 }
 #modal-header{
-  width: 100%;
   margin-bottom: -1rem;
   border: #FFF;
 }
 
 .modal-title-situ-carg{
-  font-size: 16.5px !important;
+  font-size: 16.5px;
   color: #00652e;
-  margin-left: 19%;
+  margin-left: 25%;
 }
 .card-body-sit-cargas{
   margin-bottom: -1rem;
@@ -160,7 +157,7 @@ label{
 
 @media screen and (min-width: 176px) and (max-width: 485px) {
   .modal-situation-cargas{
-    margin-top: 15rem;
+    margin-top: 12rem;
     width: 80% !important;
     margin-left: 10%;
   }
@@ -171,9 +168,9 @@ label{
   }
   
   .modal-title-situ-carg{
-    font-size: 14px !important;
+    font-size: 16px !important;
     color: #00652e;
-    margin-left: 15%;
+    margin-left: 23%;
   }
   
 }
@@ -181,28 +178,28 @@ label{
 
 @media screen and (min-width: 486px) and (max-width: 715px) {
   .modal-situation-cargas{
-    margin-top: 13rem;
-    width: 55% !important;
+    margin-top: 11rem;
+    width: 60% !important;
     margin-left: 15%;
   }
   #modal-header{
-    width: 80%;
+    width: 85%;
     margin-bottom: -1rem;
     border: #FFF;
   }
   
   .modal-title-situ-carg{
-    font-size: 15px !important;
+    font-size: 16px !important;
     color: #00652e;
-    margin-left: 35%;
+    margin-left: 25%;
   }
   
 }
 
-@media screen and (min-width: 716px) and (max-width: 1320px) {
+@media screen and (min-width: 716px) and (max-width: 845px) {
   .modal-situation-cargas{
-    width: 40% !important;
-    margin-top: 12rem;
+    width: 50% !important;
+    margin-top: 11rem;
     margin-left: 25%;
     margin-bottom: 3rem;
     font-family: "Poppins", sans-serif;
@@ -214,9 +211,29 @@ label{
   }
   
   .modal-title-situ-carg{
-    font-size: 15px !important;
+    font-size: 18px !important;
     color: #00652e;
-    margin-left: 35%;
+    margin-left: 30%;
   }
   
+}
+@media screen and (min-width: 846px) and (max-width: 1120px) {
+  .modal-situation-cargas{
+    font-family: "Poppins", sans-serif;
+    margin-top: 11rem;
+    margin-left: 25%;
+    margin-bottom: 3rem;
+    width: 40% !important;
+  }
+  #modal-header{
+    width: 80%;
+    margin-bottom: -1rem;
+    border: #FFF;
+  }
+  
+  .modal-title-situ-carg{
+    font-size: 18px !important;
+    color: #00652e;
+    margin-left: 30%;
+  }
 }
