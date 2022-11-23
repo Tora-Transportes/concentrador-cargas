@@ -48,6 +48,7 @@ function Manual() {
 				const { data } = await ServiceCargas.create({
 					...values,
 					canal_comunicacao: "manual",
+					carga_csn: 0,
 				});
 				swal(
 					"Sucesso!",

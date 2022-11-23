@@ -30,6 +30,7 @@ import "primeicons/primeicons.css";
 import Helper from "./Pages/Components/Helper/ajuda";
 import Avisos from "./Pages/Avisos";
 import CadastroCargaCSN from "./Pages/Cargas/CargasCSN/Cadastrar";
+import LocalizacaoCSN from "./Pages/LocalizacaoCSN";
 
 export default function AllRoutes() {
 	return (
@@ -65,7 +66,11 @@ export default function AllRoutes() {
 
 				<Route path="/rotas/pendentes" exact component={RotasPendentes} />
 
-				<Route path="/veiculos/aprovacao" exact component={SituacaoVeiculos} />
+				<Route
+					path="/veiculos/aprovacao/:id"
+					exact
+					component={SituacaoVeiculos}
+				/>
 				<Route path="/veiculos/raio" exact component={RaioVeiculos} />
 				<Route path="/veiculos/destino" exact component={DestinoCarga} />
 				<Route path="/veiculos/raio/empresa" exact component={RaioEmpresa} />
@@ -81,6 +86,7 @@ export default function AllRoutes() {
 				{/* <Route path="/producao" exact component={CalendarioProducao} /> */}
 				<Route path="/ajuda" exact component={Helper} />
 				<Route path="/avisos" exact component={Avisos} />
+				<Route path="/localizacao" exact component={LocalizacaoCSN} />
 			</Switch>
 		</BrowserRouter>
 	);

@@ -1,146 +1,195 @@
-.class-input-motorista{
-    display: grid;
-    grid-template-columns: auto auto auto auto;
-    grid-gap: 1rem;
+.class-input-motorista {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 1rem;
 }
 
 .input-placaCav,
 .input-carreta,
 .input-bitrem,
-.class-input-moto{
-    margin-top: 1rem;
+.class-input-moto {
+  margin-top: 1rem;
 }
-#style-ipunt-motorista{
-    width: 45rem;
-    height: 2rem;
+#style-ipunt-motorista {
+  width: 45rem;
+  height: 2rem;
 }
 
-#title-check-não{
-    margin-bottom: -20px;
+#title-check-não {
+  margin-bottom: -20px;
 }
 
 #botao-deb-veiculo,
-#botao-detail-veiculo{
-    background: #00652E;
-    border: none;
+#botao-detail-veiculo {
+  background: #00652e;
+  border: none;
 }
-.class-input-placaCav{
+.class-input-placaCav {
+  display: grid;
+  grid-template-columns: auto;
+}
+
+.class-botao-DetalhesV {
+  background: #00652e;
+  color: #ffff;
+  border: none;
+  margin-top: 1rem;
+}
+
+/* PG InputPontoPassagem.js */
+.input-pontoPassagem-disabled {
+  background-color: #fff !important;
+}
+@media only screen and (max-width: 1100px) {
+  .class-input-motorista {
     display: grid;
+    position: relative;
     grid-template-columns: auto;
-}
-
-
-.class-botao-DetalhesV{
-    background: #00652E;
-    color: #ffff;
-    border: none;
-    margin-top: 1rem;
-}
-
-@media only screen and (max-width: 1100px){
-    .class-input-motorista{
-        display: grid;
-        position: relative;
-        grid-template-columns: auto;
-    }
-    #style-ipunt-motorista{
-        width: 100%;
-    }
-}.class-input-motorista {
-    display: grid;
-    grid-template-columns: auto auto auto auto;
-    grid-gap: 1rem;
-  }
-  .col-cod-filial2 {
-    width: 100%;
-    height: 3.6rem;
-    border-radius: 4px;
-    font-size: 14px;
-    border: 1px solid #ced4da;
-    padding-top: 5px;
-    margin-left: 12px;
-  }
-  label {
-    margin-top: .5px;
-    opacity: 0.65;
-  }
-  .input-cod-filial2 {
-    border: none;
-    display: grid;
-    width: 100%;
-    padding: -1rem;
-    outline-color: #fff;
-  }
-  .sub-cagas-total {
-    font-size: 0.85rem;
-    bottom: -2px;
-  }
-  
-  .input-placaCav,
-  .input-carreta,
-  .input-bitrem,
-  .class-input-moto {
-    margin-top: 1rem;
   }
   #style-ipunt-motorista {
-    width: 45rem;
-    height: 2rem;
+    width: 100%;
   }
-  
-  #title-check-não {
-    margin-bottom: -20px;
+}
+.class-input-motorista {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 1rem;
+}
+.row-input-coleta {
+  padding-top: 15px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  margin-left: 2px !important;
+  margin-right: 1.5px !important;
+  margin-bottom: 10px;
+  /* padding-left: 12px !important; */
+}
+.col-cod-local {
+  width: 48.2% !important;
+  margin-right: 10px;
+  height: 3.6rem;
+  border-radius: 4px;
+  font-size: 14px;
+  border: 1px solid #ced4da;
+  padding-top: 5px;
+  margin-left: 12px;
+}
+.col-cod-entrega {
+  width: 48.9% !important;
+  margin-right: 10px;
+  height: 3.6rem;
+  border-radius: 4px;
+  font-size: 14px;
+  border: 1px solid #ced4da;
+  padding-top: 5px;
+  margin-left: 12px;
+}
+
+.input-cod-local {
+  border: none;
+  display: grid;
+  width: 100%;
+  /* padding: -1rem; */
+  outline-color: #fff;
+}
+.input-cod-filial {
+  border: none;
+  display: grid;
+  width: 100%;
+  padding: -1rem;
+  outline-color: #fff;
+}
+.col-cod-filial2 {
+  height: 3.6rem;
+  border-radius: 4px;
+  font-size: 14px;
+  border: 1px solid #ced4da;
+  padding-top: 5px;
+  margin-left: 12px;
+}
+label {
+  margin-top: 0.5px;
+  opacity: 0.65;
+}
+.input-cod-filial2 {
+  border: none;
+  display: grid;
+  width: 100%;
+  padding: -1rem;
+  outline-color: #fff;
+}
+.sub-cagas-total {
+  font-size: 0.85rem;
+  bottom: -2px;
+}
+
+.input-placaCav,
+.input-carreta,
+.input-bitrem,
+.class-input-moto {
+  margin-top: 1rem;
+}
+#style-ipunt-motorista {
+  width: 45rem;
+  height: 2rem;
+}
+
+#title-check-não {
+  margin-bottom: -20px;
+}
+
+#botao-deb-veiculo,
+#botao-detail-veiculo {
+  background: #00652e;
+  border: none;
+}
+.class-input-placaCav {
+  display: grid;
+  grid-template-columns: auto;
+}
+
+.class-botao-DetalhesV {
+  background: #00652e;
+  color: #ffff;
+  border: none;
+  margin-top: 1rem;
+}
+@media only screen and (max-width: 486px) {
+  .col-cod-filial2,
+  .col-cod-local {
+    margin-bottom: 1rem;
+    width: 92% !important;
   }
-  
-  #botao-deb-veiculo,
-  #botao-detail-veiculo {
-    background: #00652e;
-    border: none;
+  .row-button-local {
+    display: grid !important;
   }
-  .class-input-placaCav {
+}
+@media only screen and (min-width: 354px) and (max-width: 575px) {
+  .col-cod-filial2 {
+    margin-bottom: 1rem;
+    width: 95% !important;
+  }
+}
+@media only screen and (max-width: 1100px) {
+  .class-input-motorista {
     display: grid;
+    position: relative;
     grid-template-columns: auto;
   }
-  
-  .class-botao-DetalhesV {
-    background: #00652e;
-    color: #ffff;
+  #style-ipunt-motorista {
+    width: 100%;
+  }
+  .col-cod-filial2 {
+    margin-left: 11px;
+    margin-bottom: 1rem;
+    display: grid;
+    position: relative;
+  }
+  .input-cod-filial2 {
+    margin-top: 1.8rem;
+    margin-left: 0.5rem;
+    width: 95%;
+    position: absolute !important;
     border: none;
-    margin-top: 1rem;
   }
-  @media only screen and (max-width: 353px) {
-    .col-cod-filial2 {
-      margin-bottom: 1rem;
-      width: 92% !important;
-    }
-  
-  }
-  @media only screen and (min-width: 354px) and (max-width: 575px) {
-    .col-cod-filial2 {
-      margin-bottom: 1rem;
-      width: 95% !important;
-    }
-  }
-  @media only screen and (max-width: 1100px) {
-    .class-input-motorista {
-      display: grid;
-      position: relative;
-      grid-template-columns: auto;
-    }
-    #style-ipunt-motorista {
-      width: 100%;
-    }
-    .col-cod-filial2 {
-      margin-left: 11px;
-      margin-bottom: 1rem;
-      display: grid;
-      position: relative;
-    }
-    .input-cod-filial2 {
-      margin-top: 1.8rem;
-      margin-left: 0.5rem;
-      width: 95%;
-      position: absolute !important;
-      border: none;
-    }
-  }
-  
+}

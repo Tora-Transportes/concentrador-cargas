@@ -12,12 +12,15 @@ import ProdutoController from "./controllers/ProdutoController";
 import RecomendacoesController from "./controllers/RecomendacoesController";
 import RotasController from "./controllers/RotasController";
 import SituacoesCargasController from "./controllers/SituacoesCargasController";
+import SituacoesCargasCsnController from "./controllers/csn/SituacaoCargasCsnController";
 import CoordenadasController from "./controllers/CoordenadaController";
 import RelatorioController from "./controllers/RelatorioController";
 import CredenciaisController from "./controllers/CredenciaisController";
 import ProducaoController from "./controllers/ProducaoController";
 import CargaTecController from "./controllers/CargaTecController";
 import AvisosController from "./controllers/AvisosController";
+import CargasCsnController from "./controllers/CargasCsnController";
+import PontoParadaController from "./controllers/PontoParadaController";
 
 const routes = Router();
 
@@ -52,6 +55,15 @@ routes.delete(
   HasPermission("DELETAR_CARGAS"),
   CargaController.delete
 );
+
+routes.get("/csn/cargas", CargasCsnController.search);
+routes.post("/csn/cargas", CargasCsnController.create);
+routes.put("/csn/cargas/:id", CargasCsnController.update);
+routes.delete("/csn/cargas/:id", CargasCsnController.delete);
+
+routes.put("/csn/ponto_parada/:id", PontoParadaController.update);
+routes.post("/csn/ponto_parada", PontoParadaController.create);
+routes.delete("/csn/ponto_parada/:id", PontoParadaController.delete);
 
 routes.get("/usuarios", UsuarioController.search);
 routes.get("/usuarios/:oid", UsuarioController.index);
@@ -109,6 +121,7 @@ routes.get("/recomendacoes/locais", RecomendacoesController.cidadeEstados);
 routes.get("/recomendacoes/filiais", RecomendacoesController.filiais);
 
 routes.get("/situacoes/cargas", SituacoesCargasController.search);
+routes.get("/situacoes/cargas/csn", SituacoesCargasCsnController.search);
 
 routes.get(
   "/coordenadas/:placa/range",

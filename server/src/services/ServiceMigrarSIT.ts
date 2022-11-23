@@ -72,16 +72,19 @@ class ServiceMigrarSit implements IServiceSit {
     if (dadosVeiculo.length === 0) {
       throw new Error("Dados do veículo não encontrados por meio da consulta");
     }
+    let ibgeOrigem;
+    let ibgeDestino;
 
-    if (!carga.origem_carga || !carga.destino_carga) {
-      throw new Error("A carga não possui nenhuma origem e/ou destino.");
+    if (carga.carga_csn !== 1) {
+      if (!carga.origem_carga || !carga.destino_carga) {
+        throw new Error("A carga não possui nenhuma origem e/ou destino.");
+      }
+      const [, uf_origem, cidade_origem] = carga.origem_carga.split("/");
+      const [, uf_destino, cidade_destino] = carga.destino_carga.split("/");
+
+      ibgeOrigem = await this.consultaIBGE(uf_origem, cidade_origem);
+      ibgeDestino = await this.consultaIBGE(uf_destino, cidade_destino);
     }
-
-    const [, uf_origem, cidade_origem] = carga.origem_carga.split("/");
-    const [, uf_destino, cidade_destino] = carga.destino_carga.split("/");
-
-    const ibgeOrigem = await this.consultaIBGE(uf_origem, cidade_origem);
-    const ibgeDestino = await this.consultaIBGE(uf_destino, cidade_destino);
 
     let dataAtualizacao = new Date(carga.data_atualizacao || "");
     if (isNaN(Number(dataAtualizacao))) {

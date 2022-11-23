@@ -25,6 +25,7 @@ class ServiceCargas {
 		placa_carreta,
 		placa_bitrem,
 		locais,
+		carga_csn,
 	}) {
 		const carga = {
 			e_lote,
@@ -53,9 +54,29 @@ class ServiceCargas {
 			placa_carreta,
 			placa_bitrem,
 			locais,
+			carga_csn,
 		};
-
 		return await api.post("/cargas", carga);
+	}
+
+	async createPontoParada({
+		ponto,
+		previsao,
+		tipoServico,
+		id_carga,
+		latitude,
+		longitude,
+	}) {
+		const dados = {
+			ID_ROTAS_CSN: ponto ? ponto?.split("-")[0] : null,
+			ID_CON_CARGAS: id_carga,
+			PREVISAO: previsao,
+			STATUS_SERVICO: tipoServico.toUpperCase(),
+			LATITUDE: latitude ? latitude : null,
+			LONGITUDE: longitude ? longitude : null,
+		};
+		//console.log("VALUE PARA SALVAR", dados);
+		return await api.post("/csn/ponto_parada", dados);
 	}
 
 	async createDerivada({
@@ -84,6 +105,7 @@ class ServiceCargas {
 		codigo_motorista,
 		placa_carreta,
 		placa_bitrem,
+		carga_csn,
 	}) {
 		const carga = {
 			id,
@@ -112,6 +134,7 @@ class ServiceCargas {
 				codigo_motorista === undefined ? undefined : codigo_motorista || null,
 			placa_carreta,
 			placa_bitrem,
+			carga_csn,
 		};
 
 		return api.post(`/cargas/derivada/${carga.fk_lote_pai}`, carga);
@@ -146,6 +169,7 @@ class ServiceCargas {
 		placa_carreta,
 		placa_bitrem,
 		locais,
+		carga_csn,
 	}) {
 		const carga = {
 			e_lote,
@@ -177,6 +201,7 @@ class ServiceCargas {
 			placa_carreta,
 			placa_bitrem,
 			locais,
+			carga_csn,
 		};
 
 		return api.put(`/cargas/${id}`, carga);
@@ -209,6 +234,7 @@ class ServiceCargas {
 		placa_veiculo,
 		documento_transporte,
 		fk_filial,
+		carga_csn,
 	}) {
 		return api.get("/cargas", {
 			params: {
@@ -230,6 +256,7 @@ class ServiceCargas {
 				placa_veiculo,
 				documento_transporte,
 				fk_filial,
+				carga_csn,
 			},
 		});
 	}
