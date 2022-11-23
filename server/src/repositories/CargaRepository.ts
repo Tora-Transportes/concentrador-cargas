@@ -264,7 +264,7 @@ export class CargaRepository {
       );
     }
     results.orderBy("con_cargas.id", "asc");
-    console.log(results.toSQL().toNative());
+    // console.log(results.toSQL().toNative());
 
     const rows: ICarga[] = await results;
 
