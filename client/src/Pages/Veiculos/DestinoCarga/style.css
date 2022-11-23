@@ -9,6 +9,8 @@
   grid-gap: 4rem;
 }
 .class-title-dest {
+  font-family: "Poppins", sans-serif;
+  color: #00652e;
   font-size: 40px;
 }
 .class-card-dest {

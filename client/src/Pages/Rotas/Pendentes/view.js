@@ -8,7 +8,7 @@ function ViewRotasPendentes({ columns = [], get_data }) {
 		<>
 			<Container className="class-body-rotas">
 				<Row className="title-rotas">
-					<h1 className="title-rotas2">Rotas pendentes de cadastro</h1>
+					<h1 className="title-rotas2">Rotas Pendentes de Cadastro</h1>
 				</Row>
 				<Row>
 					<TableExternal columns={columns} get_data={get_data} />

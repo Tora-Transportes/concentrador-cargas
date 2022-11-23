@@ -6,8 +6,9 @@
   grid-gap: 4rem;
 }
 .class-title-raioemp {
+  font-family: "Poppins", sans-serif;
+  color: #00652e;
   font-size: 40px;
-  margin-top: 2rem !important;
 }
 .class-card-raioemp {
   margin-top: 2rem;

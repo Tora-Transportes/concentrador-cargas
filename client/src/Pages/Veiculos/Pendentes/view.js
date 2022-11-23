@@ -1,5 +1,5 @@
 import React from "react";
-import "./../styleVeiculos.css";
+import "./style.css";
 import { Container, Row, Col } from "react-bootstrap";
 import TabelaCargas from "../../Components/TabelaCargas";
 // import HandleClick from "./tooltipsMonitoramento";
@@ -13,9 +13,8 @@ function ViewRotasPendentes({
 	return (
 		<div className="class-body">
 			<Container fluid className="text-center mt-4">
-				<Row className="mb-2">
+				<Row className="class-title-monit">
 					<h1
-						className="class-title-monit"
 						id="title-monit"
 						// onClick={HandleClick}
 					>

@@ -2,5 +2,13 @@
     font-family: 'Poppins', sans-serif;
 }
 .class-title-monit{
-    margin-left: -0.1rem;
+  font-family: "Poppins", sans-serif;
+  color: #00652e;
+  font-size: 40px;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+#total-reg{
+    margin-bottom: 1rem;
 }

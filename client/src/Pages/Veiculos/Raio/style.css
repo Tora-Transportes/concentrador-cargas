@@ -6,6 +6,8 @@
   grid-gap: 4rem;
 }
 .class-title-raio {
+  font-family: "Poppins", sans-serif;
+  color: #00652e;
   font-size: 40px;
 }
 .class-card-raio {

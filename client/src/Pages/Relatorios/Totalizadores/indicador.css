@@ -1,14 +1,15 @@
 .class-body-relatorios {
   font-family: "Poppins", sans-serif;
   color: #101212;
+  margin-top: 2rem;
 }
 
 .style-title-rel {
+  font-family: "Poppins", sans-serif;
   color: #00652e;
-  font-size: 45px;
-  display: grid;
+  font-size: 40px;
   text-align: center;
-  margin-top: 1.5rem;
+  display: grid;
 }
 
 .class-acc-rel {

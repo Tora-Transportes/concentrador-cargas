@@ -1,8 +1,9 @@
 .title {
-  color: #024c01;
+  font-family: "Poppins", sans-serif;
+  color: #00652e;
+  font-size: 40px;
   margin-top: 2rem;
-  margin-bottom: 1em;
-  font-size: 35px;
+  margin-bottom: 2rem;
 }
 
 @media screen and (max-width: 576px) {

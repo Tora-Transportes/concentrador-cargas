@@ -206,10 +206,7 @@ const CadastroCargaCSN = () => {
 			<LoadingScreen />
 			<Menusuperior />
 			<div>
-				<p id="title-cad-manual">Cadastro de Carga - CSN</p>
-			</div>
-			<div className="class-linha-title">
-				<hr id="linha-cad-csn"></hr>
+				<p id="title-cad-CSN">Cadastro de Carga - CSN</p>
 			</div>
 			<Container className="mb-5 mt-2" style={{ scrollBehavior: "none" }}>
 				<Form onSubmit={formik.handleSubmit}>

@@ -1,11 +1,13 @@
 .class-body-permissoes{
   font-family: 'Poppins', sans-serif;
 }
-.title-h1 {
-  margin-bottom: 3vh;
-  color: #00652E;
-  margin-bottom: 0.5em;
-}
+
+.class-title-Permissao{
+  font-family: "Poppins", sans-serif;
+  color: #00652e;
+  font-size: 40px;
+  margin-top: 2rem;
+}Monitoramento
 
 /* Tabela css */
 
