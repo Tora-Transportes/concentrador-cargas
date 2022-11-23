@@ -185,8 +185,7 @@ export class CargaRepository {
       }
       if (query?.carga_csn == 1) {
         qb.andWhere("carga_csn", query.carga_csn);
-      }
-      if (query?.carga_csn != 1) {
+      } else if (query.carga_csn && query.carga_csn != 1) {
         qb.where((qB) => {
           qB.andWhere("carga_csn", "=", 0);
           qB.orWhereNull("carga_csn");
@@ -265,7 +264,7 @@ export class CargaRepository {
       );
     }
     results.orderBy("con_cargas.id", "asc");
-    //console.log(results.toSQL().toNative());
+    console.log(results.toSQL().toNative());
 
     const rows: ICarga[] = await results;
 
