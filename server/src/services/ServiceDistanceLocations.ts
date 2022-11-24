@@ -320,7 +320,8 @@ export class ServiceDistanceLocations {
       ])
       //.limit(10)
       .where("DISIMEI", query?.VEI_REFERENCIA)
-      .whereBetween("DTINC", [date_inicio, date_fim]);
+      .whereBetween("DTINC", [date_inicio, date_fim])
+      .orderBy("ID", "desc");
 
     return {
       placa: plate,

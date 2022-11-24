@@ -87,10 +87,6 @@ function TableExternal({ columns, get_data }) {
 		}
 	}, [page, orderby.values, get_data]);
 
-	useEffect(() => {
-		console.log(page);
-	}, [page]);
-
 	useDebouncedFunction(
 		() => {
 			if (page === 1) {

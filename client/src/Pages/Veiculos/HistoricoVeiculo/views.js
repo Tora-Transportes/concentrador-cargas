@@ -85,10 +85,10 @@ function ViewHistoricoVeiculo({
 	}
 
 	return (
-		<div className="class-body">
+		<div className="body-hist-veic">
 			<LoadingScreen />
-			<Container className="text-center mb-5 mt-5">
-				<Row>
+			<Container className="text-center">
+				<Row id="title-hist-veic">
 					<h1>Histórico de rotas do veículo</h1>
 				</Row>
 				<Form onSubmit={handleSubmit}>
