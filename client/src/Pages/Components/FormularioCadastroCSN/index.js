@@ -129,7 +129,7 @@ function FormularioCadastroCSN({
 				debitosVeiculo={debitosVeiculo}
 				setDebitosVeiculo={setDebitosVeiculo}
 				setVeiculo={setVeiculo}
-				setValorTotal={valorTotalDebito}
+				valorTotalDebito={valorTotalDebito}
 			/>
 		</div>
 	);
