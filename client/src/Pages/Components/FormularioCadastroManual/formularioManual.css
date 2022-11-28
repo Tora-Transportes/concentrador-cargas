@@ -47,6 +47,14 @@ label {
   background: #00652e;
   border: none;
 }
+
+.modal-debitos-veiculo{
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+}
+.list-group-flush{
+  margin-top: 2rem;
+}
 .class-input-placaCav {
   display: grid;
   grid-template-columns: auto;

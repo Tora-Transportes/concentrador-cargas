@@ -5,6 +5,7 @@ export const allTipoPermissoes = [
 	{ name: "CADASTRAR_PRODUTOS" },
 	{ name: "CARGAS_CSN" },
 	{ name: "DELETAR_CARGAS" },
+	{ name: "FINALIZAR_CARGAS_CSN" },
 	{ name: "REGISTRAR_JUSTIFICATIVA" },
 	{ name: "VINCULAR_PLACA" },
 ];

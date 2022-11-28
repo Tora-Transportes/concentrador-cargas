@@ -10,8 +10,9 @@ import {
 } from "react-bootstrap";
 import { useFormik } from "formik";
 import ServiceRecomendacoes from "../../../services/ServiceRecomendacoes";
+import swal from "sweetalert";
 
-function InputCliente({ onChange, label, ...props }) {
+function InputCliente({ onChange, label, status, formikMain, ...props }) {
 	const [recomendacoes, setRecomendacoes] = useState([]);
 	const input = useRef(null);
 	const formik = useFormik({
@@ -32,8 +33,28 @@ function InputCliente({ onChange, label, ...props }) {
 			} else {
 				input.current.value = `${value.organizacao} - ${value.documento_federal} - ${value.cidade}/${value.uf}`;
 			}
-			onChange(event);
 			formik.setFieldValue("show", false);
+			if (status) {
+				if (value?.latitude === null || value?.longitude === null) {
+					swal(
+						"Ops!",
+						`Por favor atualize os dados do cliente no SIT para continuar.`,
+						"warning"
+					);
+				} else {
+					formikMain.setFieldValue(
+						`ponto_passagem${status}.latitude`,
+						value?.latitude
+					);
+					formikMain.setFieldValue(
+						`ponto_passagem${status}.longitude`,
+						value.longitude
+					);
+					onChange(event);
+				}
+			} else {
+				onChange(event);
+			}
 		}
 	}
 

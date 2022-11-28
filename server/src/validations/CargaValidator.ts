@@ -48,6 +48,7 @@ export function factoryCargaValidator() {
     placa_bitrem: yup.string().nullable().notRequired(),
     codigo_motorista: yup.number().nullable().notRequired(),
     locais: yup.array().of(yup.string()).notRequired(),
+    carga_csn: yup.number().nullable().notRequired(),
   });
 
   return cargaValidator;

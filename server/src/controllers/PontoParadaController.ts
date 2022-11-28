@@ -21,6 +21,13 @@ class PontoParadaController implements IPontoParadaController {
     );
     return res.json({ data: result });
   }
+
+  async delete(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+
+    const result = await useCases.useCaseDeletePontoParada.run(Number(id));
+    return res.json({ data: result });
+  }
 }
 
 export default new PontoParadaController();

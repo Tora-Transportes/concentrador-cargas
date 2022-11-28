@@ -41,6 +41,7 @@ export interface ICarga {
   observacao_exclusao?: string | null;
 
   locais?: undefined | string[];
+  carga_csn?: number | null;
 }
 
 export interface ICargaCTE {

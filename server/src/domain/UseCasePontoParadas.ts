@@ -45,8 +45,22 @@ export class UseCaseUpdatePontoParada {
   }
 }
 
+export class UseCaseDeletePontoParada {
+  constructor(
+    private readonly pontoParadaRepository = new PontoParadaRepository()
+  ) {}
+  async run(id: number) {
+    const existePontoParada = await this.pontoParadaRepository.index(id);
+    if (!existePontoParada)
+      throw new AppError("A Parada informada não existe", 400);
+    await this.pontoParadaRepository.delete(id);
+    return "Ponto de parada deletada com sucesso.";
+  }
+}
+
 const instancias = {
   useCaseAddPontoParadas: new UseCaseAddPontoParadas(),
   useCaseUpdatePontoParadas: new UseCaseUpdatePontoParada(),
+  useCaseDeletePontoParada: new UseCaseDeletePontoParada(),
 };
 export default instancias;

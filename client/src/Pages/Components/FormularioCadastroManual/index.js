@@ -626,6 +626,7 @@ function FormularioCadastroManual({
 			</Modal>
 
 			<Modal
+				className="modal-debitos-veiculo"
 				size="xl"
 				show={debitosVeiculo !== null && debitosVeiculo?.length > 0}
 				onHide={() => setDebitosVeiculo(null)}
@@ -635,7 +636,7 @@ function FormularioCadastroManual({
 				</Modal.Header>
 				{debitosVeiculo && (
 					<Card>
-						<Form className="ms-3">
+						<Form className="ms-3 mt-3">
 							<b>VALOR RESTANTE DO DÉBITO</b>:{" "}
 							{new Intl.NumberFormat([], {
 								style: "currency",
@@ -649,9 +650,9 @@ function FormularioCadastroManual({
 								pagamento.
 							</p>
 						</Form>
+						<hr />
 						{debitosVeiculo?.map((i) => (
 							<ListGroup key={i.DEC_SEQ} className="list-group-flush">
-								<hr className="w-100"></hr>
 								<ListGroupItem>
 									<b>PLACA</b>: {i.VEI_PLACA}
 								</ListGroupItem>
