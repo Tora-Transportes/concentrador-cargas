@@ -1,6 +1,6 @@
-import { PontoParadaRepository } from "../../repositories/PontoParadaRepository";
-import { notifyAll } from "../../socketsRoutes";
-import { CargaCsnRepository } from "./../../repositories/CargaCsnRepository";
+import { PontoParadaRepository } from "../../../repositories/PontoParadaRepository";
+import { notifyAll } from "../../../socketsRoutes";
+import { CargaCsnRepository } from "../../../repositories/csn/CargaCsnRepository";
 import {
   UseCaseAddRouter,
   UseCaseDeleteRouter,

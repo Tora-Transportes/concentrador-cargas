@@ -307,7 +307,7 @@ export class UseCaseViewCargas {
 
   async run(filter: Record<string, any>) {
     return this.cargaRepository.search(
-      { ...filter, ativo: 1 },
+      { ...filter, ativo: 1, carga_csn: 0 },
       filter.page,
       filter.limit || 5
     );

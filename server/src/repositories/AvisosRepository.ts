@@ -10,8 +10,6 @@ interface IAvisosRepository {
 
 export class AvisosRepository implements IAvisosRepository {
   async index(id: number): Promise<IModelAvisos> {
-    console.log("Index >>>>>", id);
-
     return {
       id: 1,
       titulo: "Edição feita com sucesso",

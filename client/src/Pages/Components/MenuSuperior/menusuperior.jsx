@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../../../assets/logotoraico.png";
 import "./menuSuperior.css";
 import { NavbarBrand } from "react-bootstrap";
 import { FaSignOutAlt } from "react-icons/fa";
 import { logout } from "../../../MicrosoftAuthentication";
+import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 
 function Menusuperior() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
+  const [isPermission, setPermission] = useState(false);
+  useEffect(() => {
+    (async () => {
+      const userPermission = await validationPermissionUser();
+      if (userPermission?.permissoes.includes("CARGAS_CSN")) {
+        setPermission(true);
+      }
+    })();
+  }, []);
 
   return (
     <div id="header">
@@ -41,6 +51,9 @@ function Menusuperior() {
                 <a href="/cargas/menu">Cadastrar Cargas</a>
                 <a href="/cargas/visualizar">Listagem de Cargas</a>
                 <a href="/lotes/visualizar">Listagem de Lotes</a>
+                {isPermission && (
+                  <a href="/cargas/visualizar/csn">Listagem CSN</a>
+                )}
                 {/* <a href="/producao">Produção</a> */}
               </div>
             </div>
@@ -52,7 +65,7 @@ function Menusuperior() {
               </button>
               <div id="myDropdown" className="dropdown-content">
                 <a href="/veiculos/aprovacao/padrao">Padrão</a>
-                <a href="/veiculos/aprovacao/csn">CSN</a>
+                {isPermission && <a href="/veiculos/aprovacao/csn">CSN</a>}
               </div>
             </div>
           </div>
@@ -81,11 +94,13 @@ function Menusuperior() {
               </div>
             </div>
           </div>
-          <li className="class-li">
-            <a id="style-a" href="/localizacao">
-              Localização
-            </a>
-          </li>
+          {isPermission && (
+            <li className="class-li">
+              <a id="style-a" href="/localizacao">
+                Localização
+              </a>
+            </li>
+          )}
           <li className="class-li">
             <a id="style-a" href="/ajuda">
               Ajuda

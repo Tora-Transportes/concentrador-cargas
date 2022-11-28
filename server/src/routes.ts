@@ -19,8 +19,9 @@ import CredenciaisController from "./controllers/CredenciaisController";
 import ProducaoController from "./controllers/ProducaoController";
 import CargaTecController from "./controllers/CargaTecController";
 import AvisosController from "./controllers/AvisosController";
-import CargasCsnController from "./controllers/CargasCsnController";
+import CargasCsnController from "./controllers/csn/CargasCsnController";
 import PontoParadaController from "./controllers/PontoParadaController";
+import CargasCsnInfoController from "./controllers/csn/CargasCsnInfoController";
 
 const routes = Router();
 
@@ -60,6 +61,9 @@ routes.get("/csn/cargas", CargasCsnController.search);
 routes.post("/csn/cargas", CargasCsnController.create);
 routes.put("/csn/cargas/:id", CargasCsnController.update);
 routes.delete("/csn/cargas/:id", CargasCsnController.delete);
+
+routes.get("/csn/cargas/info", CargasCsnInfoController.search);
+routes.get("/csn/cargas/info/:id", CargasCsnInfoController.index);
 
 routes.put("/csn/ponto_parada/:id", PontoParadaController.update);
 routes.post("/csn/ponto_parada", PontoParadaController.create);
