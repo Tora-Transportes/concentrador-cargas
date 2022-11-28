@@ -349,7 +349,6 @@ const InputsPontoPassagem = ({
 							<label>Ponto de passagem 7</label>
 							<RotasSelect
 								className="input-cod-local"
-								//id="Codigo-filial pb-5"
 								placeholder=" "
 								name="ponto_passagem7.ponto"
 								value={formik.values.ponto_passagem7.ponto}

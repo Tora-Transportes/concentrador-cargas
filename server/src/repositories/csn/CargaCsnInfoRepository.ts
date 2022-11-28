@@ -18,7 +18,6 @@ export class CargaCsnInfoRepository {
     pageSize = 5
   ): Promise<IPaginationResult<ICarga>> {
     const realPage = isNaN(Number(page)) || Number(page) < 1 ? 1 : Number(page);
-    console.log("Entrou no responsitory");
 
     const total = database("con_cargas").count("id as total").first();
     const results = database("con_cargas")

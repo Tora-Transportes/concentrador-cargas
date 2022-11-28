@@ -63,6 +63,10 @@ class ServiceCargas {
 		return api.get(`/csn/cargas/info/${id}`);
 	}
 
+	async deletePontoParada({ id }) {
+		return api.delete(`/csn/ponto_parada/${id}`);
+	}
+
 	async createPontoParada({
 		previsao,
 		tipoServico,

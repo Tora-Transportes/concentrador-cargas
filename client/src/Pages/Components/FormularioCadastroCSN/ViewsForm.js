@@ -363,7 +363,7 @@ export default function ViewsForm({
 					{viewsButtonExcluir && (
 						<Button
 							className="bg-secondary ms-2 border border-white"
-							onClick={functionInputs.excluirInputColeta}
+							onClick={() => functionInputs.excluirInputColeta("delete")}
 						>
 							Excluir ponto de passagem
 						</Button>
