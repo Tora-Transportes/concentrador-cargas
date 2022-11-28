@@ -8,6 +8,7 @@ import ViewsForm from "./ViewsForm";
 function FormularioCadastroCSN({
 	formik,
 	produtos,
+	viewsInput,
 	buscarCargaComDocumentoDeTransporte,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
@@ -23,6 +24,12 @@ function FormularioCadastroCSN({
 	const [countInput, setCountInput] = useState(3);
 	const [viewsButtonAddColeta, setViewsButtonAddColeta] = useState(true);
 	const [viewsButtonExcluir, setViewsButtonExcluir] = useState(false);
+
+	useEffect(() => {
+		if (viewsInput > 4) {
+			functionInputs.viewsInputColeta();
+		}
+	}, [viewsInput]);
 
 	async function handleShowDetailsAboutVehicle(plate) {
 		if (!plate) {
