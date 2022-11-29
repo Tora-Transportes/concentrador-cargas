@@ -18,6 +18,7 @@ import ConsultaCarga from "./Pages/Coordenadas/ConsultaCargas/consultaCargas";
 import RelatoriosMain from "./Pages/Relatorios/Totalizadores";
 import Credenciais from "./Pages/Credenciais";
 // import CalendarioProducao from "./Pages/CalendarioProducao";
+import LinkRelatorios from "./Pages/Components/MenuSuperior/LinkRelatorios";
 import RaioVeiculos from "./Pages/Veiculos/Raio";
 import DestinoCarga from "./Pages/Veiculos/DestinoCarga";
 import RaioEmpresa from "./Pages/Veiculos/RaioEmpresa";
@@ -82,6 +83,7 @@ export default function AllRoutes() {
 				/>
 
 				<Route path="/relatorios" exact component={RelatoriosMain} />
+				<Route path="/relatorios/visualizar" exact component={LinkRelatorios} />
 				<Route path="/credenciais" exact component={Credenciais} />
 				{/* <Route path="/producao" exact component={CalendarioProducao} /> */}
 				<Route path="/ajuda" exact component={Helper} />
