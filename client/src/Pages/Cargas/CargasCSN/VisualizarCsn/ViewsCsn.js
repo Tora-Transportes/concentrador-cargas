@@ -49,7 +49,7 @@ function ViewsCsn({
 				/>
 				<Row className="mt-3 text-center">
 					<Col>
-						<h1 id="title-h1">{"Acomponhamento de Cargas"}</h1>
+						<h1 id="title-h1">{"Listagem de Cargas CSN"}</h1>
 					</Col>
 
 					<Link target="_blank" to="/relatorios">
@@ -102,7 +102,7 @@ function ViewsCsn({
 							itensPerPage={itensPerPage}
 							setModalShow={setModalShow}
 							setModalShowExcel={setModalShowExcel}
-							tipoDeBuscaPorPagina={"Acompanhamento de Cargas"}
+							tipoDeBuscaPorPagina={"Listagem de Cargas CSN"}
 						/>
 					</Col>
 				</Row>
