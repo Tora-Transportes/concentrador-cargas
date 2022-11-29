@@ -39,7 +39,6 @@ export class CargaCsnInfoRepository {
         "CADASTRO_GERAL.CG_COD",
         "con_cargas.codigo_motorista"
       )
-      // .leftJoin()
       .limit(pageSize)
       .offset((realPage - 1) * pageSize)
       .modify(function (con_cargas) {
@@ -88,9 +87,6 @@ export class CargaCsnInfoRepository {
           `%${query.origem_carga.toUpperCase()}%`
         );
       }
-      // if (query?.fk_situacao && !isNaN(Number(query.fk_situacao))) {
-      //   qb.andWhere("fk_situacao", Number(query.fk_situacao));
-      // }
       if (query?.data_coleta) {
         qb.andWhere("data_coleta", "=", new Date(query.data_coleta));
       }
@@ -119,6 +115,9 @@ export class CargaCsnInfoRepository {
       }
       if (isValid(String(query?.placa_veiculo))) {
         qb.andWhere("placa_veiculo", "like", `%${query.placa_veiculo}%`);
+      }
+      if (isValid(String(query?.placa_carreta))) {
+        qb.andWhere("placa_carreta", "like", `%${query.placa_carreta}%`);
       }
       if (!isNaN(Number(query?.ativo))) {
         qb.andWhere("ativo", "=", Number(query?.ativo));
