@@ -1,8 +1,8 @@
 //import moment from "moment";
-import database from "../database";
-import ICargasCsn from "../models/ICargasCsn";
+import database from "../../database";
+import ICargasCsn from "../../models/ICargasCsn";
 
-import { IPaginationResult } from "./CargaRepository";
+import { IPaginationResult } from "../CargaRepository";
 
 interface ICargaCsnRepository {
   create(dataRota: ICargasCsn): Promise<void>;

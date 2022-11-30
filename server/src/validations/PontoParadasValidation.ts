@@ -12,6 +12,7 @@ export function factoryPontoParada() {
     LONGITUDE: yup.number().nullable(),
     DATA_CADASTRO: yup.date(),
     DATA_ATUALIZACAO: yup.date(),
+    CLIENTE: yup.string(),
   });
   return cargaCsnValidator;
 }

@@ -32,6 +32,8 @@ import Helper from "./Pages/Components/Helper/ajuda";
 import Avisos from "./Pages/Avisos";
 import CadastroCargaCSN from "./Pages/Cargas/CargasCSN/Cadastrar";
 import LocalizacaoCSN from "./Pages/LocalizacaoCSN";
+import VisualizarCsn from "./Pages/Cargas/CargasCSN/VisualizarCsn";
+import EditarCargaCsn from "./Pages/Cargas/CargasCSN/Editar";
 
 export default function AllRoutes() {
 	return (
@@ -40,11 +42,15 @@ export default function AllRoutes() {
 				<Route path="/" exact component={Main} />
 				<Route path="/cargas/visualizar" exact component={VisualizarCargas} />
 				<Route path="/lotes/visualizar" exact component={VisualizarLotes} />
+				<Route path="/cargas/visualizar/csn" exact component={VisualizarCsn} />
 				<Route path="/cargas/menu" exact component={LoadMenu} />
 				<Route path="/cargas/importar" exact component={ImportarCargas} />
 
-				<Route path="/cargas/manual" exact component={CadastrarCargaManual} />
 				<Route path="/cargas/cadastro/csn" exact component={CadastroCargaCSN} />
+				<Route path="/cargas/csn/:id" exact component={EditarCargaCsn} />
+				<Route path="/localizacao" exact component={LocalizacaoCSN} />
+
+				<Route path="/cargas/manual" exact component={CadastrarCargaManual} />
 				<Route path="/cargas/manual/:id" exact component={EditarCargaManual} />
 				<Route path="/cargas/consulta/:id" exact component={ConsultaCarga} />
 				<Route
@@ -88,7 +94,6 @@ export default function AllRoutes() {
 				{/* <Route path="/producao" exact component={CalendarioProducao} /> */}
 				<Route path="/ajuda" exact component={Helper} />
 				<Route path="/avisos" exact component={Avisos} />
-				<Route path="/localizacao" exact component={LocalizacaoCSN} />
 			</Switch>
 		</BrowserRouter>
 	);

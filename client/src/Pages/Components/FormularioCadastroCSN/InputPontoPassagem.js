@@ -74,7 +74,7 @@ const InputsPontoPassagem = ({
 							className="input-pontoPassagem-disabled"
 							type="text"
 							name="ponto_passagem.ponto"
-							value={formik.values.ponto_passagem.ponto?.split("-")[1]}
+							value={formik.values.ponto_passagem.ponto}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							disabled
@@ -138,7 +138,6 @@ const InputsPontoPassagem = ({
 					<FloatingLabel label="Previsão 2" className="mb-3">
 						<Form.Control
 							type="datetime-local"
-							placeholder=" "
 							name="ponto_passagem2.previsao"
 							value={formik.values.ponto_passagem2.previsao}
 							onChange={formik.handleChange}
@@ -233,9 +232,8 @@ const InputsPontoPassagem = ({
 							<label>Ponto de passagem 5</label>
 							<RotasSelect
 								className="input-cod-local"
-								placeholder=" "
 								name="ponto_passagem5.ponto"
-								//value={formik.values.ponto_passagem5.ponto}
+								value={formik.values.ponto_passagem5.ponto}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
@@ -292,7 +290,6 @@ const InputsPontoPassagem = ({
 							<label>Ponto de passagem 6</label>
 							<RotasSelect
 								className="input-cod-local"
-								//id="Codigo-filial pb-5"
 								placeholder=" "
 								name="ponto_passagem6.ponto"
 								value={formik.values.ponto_passagem6.ponto}
@@ -352,7 +349,6 @@ const InputsPontoPassagem = ({
 							<label>Ponto de passagem 7</label>
 							<RotasSelect
 								className="input-cod-local"
-								//id="Codigo-filial pb-5"
 								placeholder=" "
 								name="ponto_passagem7.ponto"
 								value={formik.values.ponto_passagem7.ponto}

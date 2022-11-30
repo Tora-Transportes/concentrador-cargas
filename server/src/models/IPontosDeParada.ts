@@ -3,9 +3,10 @@ export default interface IPontosParada {
   ID_CON_CARGAS: number;
   ID_ROTAS_CSN?: number | null;
   STATUS_SERVICO: string;
-  PREVISAO?: Date;
+  PREVISAO?: Date | null;
   LATITUDE?: number | null;
   LONGITUDE?: number | null;
   DATA_CADASTRO?: Date;
   DATA_ATUALIZACAO?: Date;
+  CLIENTE?: string | null;
 }

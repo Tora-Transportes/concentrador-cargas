@@ -1,3 +1,4 @@
+import { IPonto_parada } from "./../services/InterfaceService";
 export interface ICarga {
   id: number;
   e_lote: boolean;
@@ -42,6 +43,7 @@ export interface ICarga {
 
   locais?: undefined | string[];
   carga_csn?: number | null;
+  ponto_parada?: IPonto_parada[] | null;
 }
 
 export interface ICargaCTE {

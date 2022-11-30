@@ -1,9 +1,9 @@
-import { CargaCsnRepository } from "./../../repositories/CargaCsnRepository";
-import { factoryCargaCsnValidator } from "../../validations/CargaCsnValidation";
-import AppError from "../../models/AppError";
-import { IEventSocket } from "../../socketsRoutes";
-import ICargasCsn from "../../models/ICargasCsn";
-import { PontoParadaRepository } from "../../repositories/PontoParadaRepository";
+import { CargaCsnRepository } from "../../../repositories/csn/CargaCsnRepository";
+import { factoryCargaCsnValidator } from "../../../validations/CargaCsnValidation";
+import AppError from "../../../models/AppError";
+import { IEventSocket } from "../../../socketsRoutes";
+import ICargasCsn from "../../../models/ICargasCsn";
+import { PontoParadaRepository } from "../../../repositories/PontoParadaRepository";
 
 const dataAtual = new Date();
 
