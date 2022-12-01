@@ -181,6 +181,11 @@ function ViewHistoricoVeiculo({
 									);
 								})}
 							</MapContainer>
+							<strong className="placa-consultada">
+								{" "}
+								Placa correspondente a consulta:
+								<span className="span-placa"> {fields.placa}</span>
+							</strong>
 							<Table className="mt-5" striped bordered hover>
 								<thead>
 									<tr>
@@ -189,6 +194,7 @@ function ViewHistoricoVeiculo({
 												<BsDownload />
 											</Button>
 										</th>
+										<th>Placa Veículo</th>
 										<th>UF</th>
 										<th>Municipio</th>
 										<th>Rua</th>
@@ -203,6 +209,7 @@ function ViewHistoricoVeiculo({
 									{historicoRotas.posicao.map((position, index) => (
 										<tr key={index + 1}>
 											<td>{index}</td>
+											<td>{fields.placa}</td>
 											<td>{position.UF}</td>
 											<td>{position.MUN}</td>
 											<td>{position.RUA}</td>
