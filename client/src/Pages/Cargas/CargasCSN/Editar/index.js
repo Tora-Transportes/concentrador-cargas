@@ -472,7 +472,7 @@ function EditarCargaCsn() {
 			{/* <CabecalhoFixado>Edição de carga aberta manualmente</CabecalhoFixado> */}
 			<Menusuperior />
 			<Container className="mb-5 mt-5">
-				<p id="style-title-editorCarga">Editar carga Csn</p>
+				<p id="style-title-editorCarga">Editar Carga CSN</p>
 				<hr />
 				<Form onSubmit={formik.handleSubmit}>
 					<FormularioCadastroCSN
