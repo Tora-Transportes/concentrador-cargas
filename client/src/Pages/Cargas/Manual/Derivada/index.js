@@ -37,7 +37,7 @@ function Manual() {
 			data_entrega: "",
 			tipo_carga: "",
 			quantidade: "",
-			unidade_medida: "",
+			unidade_medida: "KG",
 			observacao: "",
 			acessorios_requisitos: "",
 			informacoes_restritivas: "",

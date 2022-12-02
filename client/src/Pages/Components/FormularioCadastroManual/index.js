@@ -17,7 +17,7 @@ import { IoMdHelpCircle } from "react-icons/io";
 import InputLocalizacao from "../InputLocalizacao";
 import AutocompleteInput from "../AutocompleteInput";
 import InputCliente from "../InputCliente";
-import UnidadesMedida from "../UnidadesMedida";
+// import UnidadesMedida from "../UnidadesMedida";
 import InputPlaca from "../InputPlaca";
 import FilialSelect from "../FilialSelect";
 import ServiceVeiculos from "src/services/ServiceVeiculos";
@@ -504,18 +504,13 @@ function FormularioCadastroManual({
 				<Col>
 					<Row>
 						<Col>
-							<FloatingLabel label="*Unidade" className="mb-3">
-								<Form.Select
+							<FloatingLabel label="*Unidade de Medida" className="mb-3">
+								<Form.Control
+									type="text"
 									name="unidade_medida"
 									value={formik.values.unidade_medida}
-									onChange={formik.handleChange}
-									onBlur={formik.handleBlur}
-									required
-									disabled={disabledFields.includes("unidade_medida")}
-								>
-									<option value=""></option>
-									<UnidadesMedida />
-								</Form.Select>
+									readOnly
+								/>
 							</FloatingLabel>
 						</Col>
 						<Col>

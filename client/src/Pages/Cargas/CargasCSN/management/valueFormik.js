@@ -8,7 +8,7 @@ export const valueFormik = {
 	data_entrega: "",
 	tipo_carga: "",
 	quantidade: "",
-	unidade_medida: "",
+	unidade_medida: "KG",
 	acessorios_requisitos: "",
 	informacoes_restritivas: "",
 	janela_coleta: "",
