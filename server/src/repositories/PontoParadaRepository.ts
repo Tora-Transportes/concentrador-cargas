@@ -30,4 +30,8 @@ export class PontoParadaRepository implements IPontoParadaRepository {
 
     return dataParada;
   }
+
+  async delete(ID: number): Promise<void> {
+    await database("con_pontos_parada").delete().where({ ID });
+  }
 }

@@ -17,7 +17,7 @@ import { IoMdHelpCircle } from "react-icons/io";
 import InputLocalizacao from "../InputLocalizacao";
 import AutocompleteInput from "../AutocompleteInput";
 import InputCliente from "../InputCliente";
-import UnidadesMedida from "../UnidadesMedida";
+// import UnidadesMedida from "../UnidadesMedida";
 import InputPlaca from "../InputPlaca";
 import FilialSelect from "../FilialSelect";
 import ServiceVeiculos from "src/services/ServiceVeiculos";
@@ -504,18 +504,13 @@ function FormularioCadastroManual({
 				<Col>
 					<Row>
 						<Col>
-							<FloatingLabel label="*Unidade" className="mb-3">
-								<Form.Select
+							<FloatingLabel label="*Unidade de Medida" className="mb-3">
+								<Form.Control
+									type="text"
 									name="unidade_medida"
 									value={formik.values.unidade_medida}
-									onChange={formik.handleChange}
-									onBlur={formik.handleBlur}
-									required
-									disabled={disabledFields.includes("unidade_medida")}
-								>
-									<option value=""></option>
-									<UnidadesMedida />
-								</Form.Select>
+									readOnly
+								/>
 							</FloatingLabel>
 						</Col>
 						<Col>
@@ -626,6 +621,7 @@ function FormularioCadastroManual({
 			</Modal>
 
 			<Modal
+				className="modal-debitos-veiculo"
 				size="xl"
 				show={debitosVeiculo !== null && debitosVeiculo?.length > 0}
 				onHide={() => setDebitosVeiculo(null)}
@@ -635,7 +631,7 @@ function FormularioCadastroManual({
 				</Modal.Header>
 				{debitosVeiculo && (
 					<Card>
-						<Form className="ms-3">
+						<Form className="ms-3 mt-3">
 							<b>VALOR RESTANTE DO DÉBITO</b>:{" "}
 							{new Intl.NumberFormat([], {
 								style: "currency",
@@ -649,9 +645,9 @@ function FormularioCadastroManual({
 								pagamento.
 							</p>
 						</Form>
+						<hr />
 						{debitosVeiculo?.map((i) => (
 							<ListGroup key={i.DEC_SEQ} className="list-group-flush">
-								<hr className="w-100"></hr>
 								<ListGroupItem>
 									<b>PLACA</b>: {i.VEI_PLACA}
 								</ListGroupItem>

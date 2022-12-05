@@ -183,6 +183,15 @@ export class CargaRepository {
       if (query?.fk_filial) {
         qb.andWhere("fk_filial", query.fk_filial);
       }
+      if (query?.carga_csn == 1) {
+        qb.andWhere("carga_csn", query.carga_csn);
+      } else if (query.carga_csn && query.carga_csn != 1) {
+        qb.where((qB) => {
+          qB.andWhere("carga_csn", "=", 0);
+          qB.orWhereNull("carga_csn");
+        });
+      }
+
       if (query?.destino_carga) {
         qb.andWhere(
           "destino_carga",
@@ -197,9 +206,9 @@ export class CargaRepository {
           `%${query.origem_carga.toUpperCase()}%`
         );
       }
-      if (query?.fk_situacao && !isNaN(Number(query.fk_situacao))) {
-        qb.andWhere("fk_situacao", Number(query.fk_situacao));
-      }
+      // if (query?.fk_situacao && !isNaN(Number(query.fk_situacao))) {
+      //   qb.andWhere("fk_situacao", Number(query.fk_situacao));
+      // }
       if (query?.data_coleta) {
         qb.andWhere("data_coleta", "=", new Date(query.data_coleta));
       }
@@ -255,6 +264,7 @@ export class CargaRepository {
       );
     }
     results.orderBy("con_cargas.id", "asc");
+    // console.log(results.toSQL().toNative());
 
     const rows: ICarga[] = await results;
 

@@ -17,20 +17,16 @@ import AutocompleteInput from "../AutocompleteInput";
 import FilialSelect from "../FilialSelect";
 import InputCliente from "../InputCliente";
 import InputPlaca from "../InputPlaca";
-import UnidadesMedida from "../UnidadesMedida";
-import InputsPontoMaterial from "./InputPontoPassagem";
+// import UnidadesMedida from "../UnidadesMedida";
+import InputsPontoPassagem from "./InputPontoPassagem";
 
 export default function ViewsForm({
 	formik,
 	buscarCargaComDocumentoDeTransporte,
-	disabledFields,
 	handleSearchVehicle,
 	handleShowDetailsAboutVehicle,
 	handleShowDebitAboutVehicle,
 	produtos,
-	inputColeta2,
-	inputColeta3,
-	inputColeta4,
 	inputColeta5,
 	inputColeta6,
 	inputColeta7,
@@ -45,8 +41,8 @@ export default function ViewsForm({
 	veiculo,
 	debitosVeiculo,
 	setDebitosVeiculo,
-	valorTotalDebito,
 	setVeiculo,
+	valorTotalDebito,
 }) {
 	return (
 		<div className="class-body-form">
@@ -125,7 +121,6 @@ export default function ViewsForm({
 							onChange={() => formik.setFieldValue("e_lote", true)}
 							checked={formik.values.e_lote === true}
 							inline
-							disabled={disabledFields.includes("e_lote")}
 						/>
 						<Form.Check
 							type="radio"
@@ -135,7 +130,6 @@ export default function ViewsForm({
 							onChange={() => formik.setFieldValue("e_lote", false)}
 							checked={formik.values.e_lote === false}
 							inline
-							disabled={disabledFields.includes("e_lote")}
 						/>
 						<OverlayTrigger
 							key="tooltip-overlay-lote"
@@ -297,60 +291,6 @@ export default function ViewsForm({
 				</Col>
 			</Row>
 			<Row>
-				<Col>
-					<FloatingLabel label="Data da coleta" className="mb-3">
-						<Form.Control
-							type="date"
-							placeholder=" "
-							name="data_coleta"
-							value={formik.values.data_coleta}
-							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
-						/>
-					</FloatingLabel>
-				</Col>
-				<Col>
-					<FloatingLabel label="Data de entrega" className="mb-3">
-						<Form.Control
-							type="date"
-							placeholder=" "
-							name="data_entrega"
-							value={formik.values.data_entrega}
-							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
-						/>
-					</FloatingLabel>
-				</Col>
-			</Row>
-			{!formik.values.e_lote && (
-				<Row>
-					<Col>
-						<FloatingLabel label="Janela Coleta" className="mb-3">
-							<Form.Control
-								type="time"
-								placeholder=" "
-								name="janela_coleta"
-								value={formik.values.janela_coleta}
-								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
-							/>
-						</FloatingLabel>
-					</Col>
-					<Col>
-						<FloatingLabel label="Janela Entrega" className="mb-3">
-							<Form.Control
-								type="time"
-								placeholder=" "
-								name="janela_entrega"
-								value={formik.values.janela_entrega}
-								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
-							/>
-						</FloatingLabel>
-					</Col>
-				</Row>
-			)}
-			<Row>
 				<Col sm={12} md={6}>
 					<FloatingLabel label="Tipo de material" className="mb-3">
 						<AutocompleteInput
@@ -365,18 +305,13 @@ export default function ViewsForm({
 				<Col>
 					<Row>
 						<Col>
-							<FloatingLabel label="*Unidade" className="mb-3">
-								<Form.Select
+							<FloatingLabel label="*Unidade de Medida" className="mb-3">
+								<Form.Control
+									type="text"
 									name="unidade_medida"
 									value={formik.values.unidade_medida}
-									onChange={formik.handleChange}
-									onBlur={formik.handleBlur}
-									required
-									disabled={disabledFields.includes("unidade_medida")}
-								>
-									<option value=""></option>
-									<UnidadesMedida />
-								</Form.Select>
+									readOnly
+								/>
 							</FloatingLabel>
 						</Col>
 						<Col>
@@ -390,7 +325,6 @@ export default function ViewsForm({
 									value={formik.values.quantidade}
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
-									disabled={disabledFields.includes("quantidade")}
 									required
 								/>
 							</FloatingLabel>
@@ -398,11 +332,8 @@ export default function ViewsForm({
 					</Row>
 				</Col>
 			</Row>
-			<InputsPontoMaterial
+			<InputsPontoPassagem
 				formik={formik}
-				inputColeta2={inputColeta2}
-				inputColeta3={inputColeta3}
-				inputColeta4={inputColeta4}
 				inputColeta5={inputColeta5}
 				inputColeta6={inputColeta6}
 				inputColeta7={inputColeta7}
@@ -429,7 +360,7 @@ export default function ViewsForm({
 					{viewsButtonExcluir && (
 						<Button
 							className="bg-secondary ms-2 border border-white"
-							onClick={functionInputs.excluirInputColeta}
+							onClick={() => functionInputs.excluirInputColeta("delete")}
 						>
 							Excluir ponto de passagem
 						</Button>
@@ -524,6 +455,7 @@ export default function ViewsForm({
 			</Modal>
 
 			<Modal
+				className="modal-debitos-veic3"
 				size="xl"
 				show={debitosVeiculo !== null && debitosVeiculo?.length > 0}
 				onHide={() => setDebitosVeiculo(null)}
@@ -533,7 +465,7 @@ export default function ViewsForm({
 				</Modal.Header>
 				{debitosVeiculo && (
 					<Card>
-						<Form className="ms-3">
+						<Form className="ms-3 mt-3">
 							<b>VALOR RESTANTE DO DÉBITO</b>:{" "}
 							{new Intl.NumberFormat([], {
 								style: "currency",
@@ -547,9 +479,9 @@ export default function ViewsForm({
 								pagamento.
 							</p>
 						</Form>
+						<hr />
 						{debitosVeiculo?.map((i) => (
 							<ListGroup key={i.DEC_SEQ} className="list-group-flush">
-								<hr className="w-100"></hr>
 								<ListGroupItem>
 									<b>PLACA</b>: {i.VEI_PLACA}
 								</ListGroupItem>

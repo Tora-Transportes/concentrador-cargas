@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../../../assets/logotoraico.png";
 import "./menuSuperior.css";
 import { NavbarBrand } from "react-bootstrap";
 import { FaSignOutAlt } from "react-icons/fa";
 import { logout } from "../../../MicrosoftAuthentication";
+import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 
 function Menusuperior() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
+  const [isPermission, setPermission] = useState(false);
+  useEffect(() => {
+    (async () => {
+      const userPermission = await validationPermissionUser();
+      if (userPermission?.permissoes.includes("CARGAS_CSN")) {
+        setPermission(true);
+      }
+    })();
+  }, []);
 
   return (
     <div id="header">
@@ -41,20 +51,24 @@ function Menusuperior() {
                 <a href="/cargas/menu">Cadastrar Cargas</a>
                 <a href="/cargas/visualizar">Listagem de Cargas</a>
                 <a href="/lotes/visualizar">Listagem de Lotes</a>
+                {isPermission && (
+                  <a href="/cargas/visualizar/csn">Listagem CSN</a>
+                )}
                 {/* <a href="/producao">Produção</a> */}
               </div>
             </div>
           </div>
-          <li className="class-li">
-            <a id="style-a" href="/veiculos/coordenadas">
-              Coordenadas
-            </a>
-          </li>
-          <li className="class-li">
-            <a id="style-a" href="/veiculos/aprovacao">
-              Monitoramento
-            </a>
-          </li>
+          <div className="class-dropdown">
+            <div className="dropdown">
+              <button id="style-button-drop" className="dropbtn">
+                Monitoramento
+              </button>
+              <div id="myDropdown" className="dropdown-content">
+                <a href="/veiculos/aprovacao/padrao">Padrão</a>
+                {isPermission && <a href="/veiculos/aprovacao/csn">CSN</a>}
+              </div>
+            </div>
+          </div>
           <li className="class-li">
             <a id="style-a" href="/usuarios/permissoes">
               Permissões
@@ -67,24 +81,32 @@ function Menusuperior() {
           </li>
           <div className="class-dropdown">
             <div className="dropdown-veic">
-              <button id="style-button-drop" className="dropbtn-veic">
+              {/* <button id="style-button-drop" className="dropbtn-veic"> */}
+              <a
+                href="/relatorios/visualizar"
+                className="dropbtn-veic"
+                id="link-rel"
+              >
                 Relatórios
-              </button>
-              <div id="myDropdown-veic" className="dropdown-content-veic">
+              </a>
+
+              {/* <div id="myDropdown-veic" className="dropdown-content-veic">
                 <a href="/relatorios">Indicador Operacional</a>
                 <a href="/rotas/pendentes">Rotas Pendentes</a>
                 <a href="/veiculos/raio/empresa">Raio Empresa</a>
                 <a href="/veiculos/raio">Veículos x Veículos</a>
                 <a href="/veiculos/destino">Veículos até Empresa</a>
                 <a href="/veiculos/historico">Histórico Veículos</a>
-              </div>
+              </div> */}
             </div>
           </div>
-          <li className="class-li">
-            <a id="style-a" href="/localizacao">
-              Localização
-            </a>
-          </li>
+          {isPermission && (
+            <li className="class-li">
+              <a id="style-a" href="/localizacao">
+                Localização
+              </a>
+            </li>
+          )}
           <li className="class-li">
             <a id="style-a" href="/ajuda">
               Ajuda

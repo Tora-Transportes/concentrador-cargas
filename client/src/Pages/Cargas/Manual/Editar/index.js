@@ -32,7 +32,7 @@ function Manual() {
 			data_entrega: "",
 			tipo_carga: "",
 			quantidade: 0,
-			unidade_medida: "",
+			unidade_medida: "KG",
 			observacao: "",
 			acessorios_requisitos: "",
 			informacoes_restritivas: "",
@@ -56,6 +56,7 @@ function Manual() {
 					responsavel_cadastro: String(getClaims().name),
 					fk_situacao: undefined,
 					fk_filial: formik.values.fk_filial?.split("-")[0],
+					carga_csn: 0,
 				});
 				formik.setFieldValue("responsavel_cadastro", String(getClaims().name));
 				swal("Sucesso!", `A carga ${data.data.id} foi atualizada!`, "success");
@@ -131,6 +132,7 @@ function Manual() {
 					fk_situacao: 5,
 					observacao_cancelamento: observacaoCancelamento,
 					fk_filial: formik.values.fk_filial?.split("-")[0],
+					cargas_csn: 0,
 				});
 				await swal("Sucesso!", "Carga cancelada.", "success");
 				await carregarCarga();

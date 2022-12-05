@@ -41,6 +41,54 @@ ul {
   border: none;
   cursor: pointer;
 }
+#link-rel {
+  margin-top: 0.5rem;
+  color: white;
+  text-decoration: none;
+}
+.body-relatorios {
+  font-family: "Poppins", sans-serif;
+}
+
+.h1-relatorios {
+  font-size: 40px;
+  color: #00652e;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+.subtitle-relatorios {
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  color: #3f4245;
+}
+#button-relatorios {
+  border-radius: 30px;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+#button-relatorios:hover{
+  background: #03880c;
+  border-radius: 30px;
+  transition: 0.5s;
+}
+
+.dropdown-content-veic2 {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.dropdown-content-veic2 a {
+  margin-top: 1.5rem;
+  color: white;
+  padding: 1px;
+  text-decoration: none;
+  display: block;
+}
 
 .dropbtn-veic:hover,
 .dropbtn-veic:focus,
@@ -60,13 +108,11 @@ ul {
   display: inline-block;
 }
 
-.dropdown-veic:hover .dropdown-content-veic,
-.dropdown-doc:hover .dropdown-content-doc,
+.dropdown-veic:hover .dropdown-doc:hover .dropdown-content-doc,
 .dropdown:hover .dropdown-content {
   display: block;
 }
 
-.dropdown-content-veic,
 .dropdown-content-doc,
 .dropdown-content {
   display: none;
@@ -79,7 +125,6 @@ ul {
   z-index: 1;
 }
 
-.dropdown-content-veic a,
 .dropdown-content-doc a,
 .dropdown-content a {
   color: black;
@@ -88,8 +133,19 @@ ul {
   display: block;
 }
 
+.dropdown-content-veic2 a:hover {
+  color: white;
+  background-color: #00652e;
+  transition: 0.4s;
+}
+
+#button-relatorios {
+  background-color: #00652e;
+  border: none;
+  width: 20rem;
+}
+
 .dropdown-content-doc a:hover,
-.dropdown-content-veic a:hover,
 .dropdown-content a:hover {
   color: white;
   background-color: #00652e;
@@ -254,7 +310,7 @@ ul {
   }
 
   #style-button-drop {
-    font-size: 22px;
+    font-size: 16px;
   }
 }
 
@@ -277,7 +333,7 @@ ul {
     background: #00652e;
     z-index: 1000;
     height: 60rem;
-    font-size: 22px;
+    font-size: 16px;
     visibility: hidden;
     overflow-y: hidden;
   }
@@ -336,6 +392,6 @@ ul {
   }
 
   #style-button-drop {
-    font-size: 22px;
+    font-size: 16px;
   }
 }
