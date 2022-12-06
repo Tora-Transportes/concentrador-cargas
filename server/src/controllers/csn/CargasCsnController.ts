@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import useCasesCargaCsn from "../domain/UseCaseCargaCsn";
+import useCasesCargaCsn from "../../domain/csn/UseCaseCargaCsn";
 
 interface CargasCsnController {
   create(req: Request, res: Response): Promise<Response>;

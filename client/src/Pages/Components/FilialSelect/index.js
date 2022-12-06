@@ -29,11 +29,7 @@ function FilialSelect(props) {
 					filiais.length > 0 &&
 					filiais.map((i) => {
 						const infoOfFiliais = `${i.FIL_COD} - ${i.FIL_DSC}`;
-						return (
-							<option key={i.FIL_COD} value={infoOfFiliais}>
-								{i.FIL_DSC} - {i.FIL_COD}
-							</option>
-						);
+						return <option key={i.FIL_COD} value={infoOfFiliais}></option>;
 					})}
 			</datalist>
 		</>

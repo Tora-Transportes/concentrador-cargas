@@ -30,7 +30,7 @@ function Manual() {
 			data_entrega: "",
 			tipo_carga: "",
 			quantidade: "",
-			unidade_medida: "",
+			unidade_medida: "KG",
 			observacao: "",
 			acessorios_requisitos: "",
 			informacoes_restritivas: "",
@@ -48,6 +48,7 @@ function Manual() {
 				const { data } = await ServiceCargas.create({
 					...values,
 					canal_comunicacao: "manual",
+					carga_csn: 0,
 				});
 				swal(
 					"Sucesso!",

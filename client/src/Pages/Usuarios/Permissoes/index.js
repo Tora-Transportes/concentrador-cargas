@@ -54,16 +54,17 @@ function Permissoes() {
 	);
 
 	async function handleSavePermissions(rowData, apagar) {
-		const { oid, permissoes } = await rowData;
+		let { oid, permissoes } = await rowData;
 
 		if (!permissSelecionado.length && !apagar) {
 			await swal("", "Nenhuma alteração aplicada", "warning");
 		} else {
-			permissSelecionado.map((item) => {
-				if (!permissoes.includes(item.name)) {
+			if (!apagar) {
+				permissoes = [];
+				permissSelecionado.map((item) => {
 					permissoes.push(item.name);
-				}
-			});
+				});
+			}
 			const message = apagar
 				? "Certeza que deseja deletar permissão do usuário selecionado?"
 				: "Certeza que deseja aplicar essas permissões para o usuário selecionado?";
@@ -83,7 +84,6 @@ function Permissoes() {
 					})
 				);
 				swal("Sucesso", "Permissões alteradas", "success");
-				//limparPermissoes();
 			}
 		}
 	}

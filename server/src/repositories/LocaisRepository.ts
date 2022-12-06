@@ -8,4 +8,12 @@ export class LocaisRepository {
         `%${query.toUpperCase()}%`,
       ]);
   }
+
+  async searchOfState(uf: string, cidade: string) {
+    return database("con_localizacoes")
+      .select("*")
+      .where("sigla_estado", uf)
+      .andWhere("cidade", "like", `%${cidade}%`)
+      .first();
+  }
 }

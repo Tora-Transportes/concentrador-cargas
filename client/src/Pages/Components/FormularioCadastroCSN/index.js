@@ -9,27 +9,35 @@ import ViewsForm from "./ViewsForm";
 function FormularioCadastroCSN({
 	formik,
 	produtos,
-	disabledFields = [],
+	viewsInput,
 	buscarCargaComDocumentoDeTransporte,
+	inputsDinamic,
+	setInputsDinamic,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
 	const [valorTotalDebito, setValorTotal] = useState();
-	const [inputColeta2, setInputColeta2] = useState(false);
-	const [inputColeta3, setInputColeta3] = useState(false);
-	const [inputColeta4, setInputColeta4] = useState(false);
 	const [inputColeta5, setInputColeta5] = useState(false);
 	const [inputColeta6, setInputColeta6] = useState(false);
 	const [inputColeta7, setInputColeta7] = useState(false);
 	const [inputColeta8, setInputColeta8] = useState(false);
 	const [inputColeta9, setInputColeta9] = useState(false);
 	const [inputColeta10, setInputColeta10] = useState(false);
-	const [inputColeta11, setInputColeta11] = useState(false);
-	const [inputColeta12, setInputColeta12] = useState(false);
-	const [countInput, setCountInput] = useState(0);
+	const [countInput, setCountInput] = useState(3);
 	const [viewsButtonAddColeta, setViewsButtonAddColeta] = useState(true);
 	const [viewsButtonExcluir, setViewsButtonExcluir] = useState(false);
-	//const [addDestinoInterme, setAddDestinoInterme] = useState(false);
+	const fkSituacao =
+		formik.values?.fk_situacao === 1 ||
+		formik.values?.fk_situacao === 2 ||
+		formik.values?.fk_situacao === undefined
+			? false
+			: true;
+
+	useEffect(() => {
+		if (viewsInput > 4) {
+			functionInputs.viewsInputColeta();
+		}
+	}, [viewsInput]);
 
 	async function handleShowDetailsAboutVehicle(plate) {
 		if (!plate) {
@@ -43,19 +51,6 @@ function FormularioCadastroCSN({
 			swal("Não foi encontrado nenhum veículo com essa placa.");
 		}
 	}
-	// const fecharInput = () => {
-	// 	setInputColeta2(false);
-	// 	setInputColeta3(false);
-	// 	setInputColeta4(false);
-	// 	setInputColeta5(false);
-	// 	setInputColeta6(false);
-	// 	setInputColeta7(false);
-	// 	setInputColeta8(false);
-	// 	setInputColeta9(false);
-	// 	setInputColeta10(false);
-	// 	setInputColeta11(false);
-	// 	setInputColeta12(false);
-	// };
 	useEffect(() => {
 		if (formik.values.e_lote) {
 			formik.setFieldValue("placa_veiculo", null);
@@ -111,18 +106,16 @@ function FormularioCadastroCSN({
 		setCountInput,
 		setViewsButtonExcluir,
 		setViewsButtonAddColeta,
-		setInputColeta2,
-		setInputColeta3,
-		setInputColeta4,
 		setInputColeta5,
 		setInputColeta6,
 		setInputColeta7,
 		setInputColeta8,
 		setInputColeta9,
 		setInputColeta10,
-		setInputColeta11,
-		setInputColeta12
+		inputsDinamic,
+		setInputsDinamic
 	);
+
 	return (
 		<div className="class-body-form">
 			<ViewsForm
@@ -130,30 +123,26 @@ function FormularioCadastroCSN({
 				buscarCargaComDocumentoDeTransporte={
 					buscarCargaComDocumentoDeTransporte
 				}
-				disabledFields={disabledFields}
 				handleSearchVehicle={handleSearchVehicle}
 				handleShowDetailsAboutVehicle={handleShowDetailsAboutVehicle}
 				handleShowDebitAboutVehicle={handleShowDebitAboutVehicle}
 				produtos={produtos}
-				inputColeta2={inputColeta2}
-				inputColeta3={inputColeta3}
-				inputColeta4={inputColeta4}
 				inputColeta5={inputColeta5}
 				inputColeta6={inputColeta6}
 				inputColeta7={inputColeta7}
 				inputColeta8={inputColeta8}
 				inputColeta9={inputColeta9}
 				inputColeta10={inputColeta10}
-				inputColeta11={inputColeta11}
-				inputColeta12={inputColeta12}
 				viewsButtonAddColeta={viewsButtonAddColeta}
 				functionInputs={functionInputs}
 				viewsButtonExcluir={viewsButtonExcluir}
 				veiculo={veiculo}
 				debitosVeiculo={debitosVeiculo}
 				setDebitosVeiculo={setDebitosVeiculo}
-				valorTotalDebito={valorTotalDebito}
 				setVeiculo={setVeiculo}
+				valorTotalDebito={valorTotalDebito}
+				inputsDinamic={inputsDinamic}
+				fkSituacao={fkSituacao}
 			/>
 		</div>
 	);

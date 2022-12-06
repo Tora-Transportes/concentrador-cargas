@@ -45,6 +45,9 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 	};
 
 	const editLocation = (location) => {
+		const { LATITUDE, LONGITUDE } = location;
+		location.LATITUDE = Number(LATITUDE.replace(",", "."));
+		location.LONGITUDE = Number(LONGITUDE.replace(",", "."));
 		setLocation({ ...location });
 		setLocationDialog(true);
 		serTitleDialog("Editar Localização");
@@ -64,8 +67,8 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 		if (location.DESCRICAO?.length && location.LATITUDE && location.LONGITUDE) {
 			const bodyRota = {
 				DESCRICAO: location.DESCRICAO,
-				LATITUDE: Number(location.LATITUDE),
-				LONGITUDE: Number(location.LONGITUDE),
+				LATITUDE: location.LATITUDE.replace(".", ","),
+				LONGITUDE: location.LONGITUDE.replace(".", ","),
 			};
 
 			if (location.ID) {

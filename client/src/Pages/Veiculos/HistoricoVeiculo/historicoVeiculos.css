@@ -1,16 +1,44 @@
-.row-input-history {
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 30px;
-    width: 100%;
-  }
-h1 {
+.body-hist-veic {
   font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+#title-hist-veic {
+  font-size: 40px;
+  font-weight: 500;
   color: #00652e;
+  margin-top: 2rem;
+}
+.row-input-history {
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  width: 100%;
+}
+h1 {
+font-family: "Poppins", sans-serif;
+color: #00652e;
 }
 #button-pesq-history {
-    background:#00652E; 
-    border: none;
-    margin-top: 1rem;
-    width: 10rem;
+  background: #00652e;
+  border: none;
+  margin-top: 1rem;
+  width: 10rem;
+}
+
+#button-pesq-history :hover {
+  background-color: #03410b;
+  transition: 0.3ms;
+}
+
+.text-center .placa-consultada {
+  font-family: "Poppins", sans-serif;
+  text-align: left;
+  margin-top: 2rem;
+  margin-bottom: -2rem;
+  margin-left: -.8rem;
+}
+
+.span-placa {
+  color: #0069aa;
 }
