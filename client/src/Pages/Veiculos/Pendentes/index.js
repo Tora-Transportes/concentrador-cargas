@@ -133,7 +133,6 @@ function RotasPendentes() {
 	return (
 		<>
 			<LoadingScreen />
-			{/* <NavbarNavigator /> */}
 			<Menusuperior />
 			<ViewMonitoramento
 				get_data={tableFetchData}
@@ -142,6 +141,7 @@ function RotasPendentes() {
 				itensPerPage={itensPerPage}
 				setItensPerPage={setItensPerPage}
 				totalRegisters={totalRegisters}
+				tipoCarga={String(id)}
 			/>
 		</>
 	);

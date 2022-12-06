@@ -141,7 +141,6 @@ function FormularioCadastroCSN({
 				setDebitosVeiculo={setDebitosVeiculo}
 				setVeiculo={setVeiculo}
 				valorTotalDebito={valorTotalDebito}
-				inputsDinamic={inputsDinamic}
 				fkSituacao={fkSituacao}
 			/>
 		</div>
