@@ -4,96 +4,63 @@
   font-family: "Poppins", sans-serif;
 }
 .class-body-title {
-  color: #00652e;
   display: flexbox;
   text-align: center;
-  margin-top: 3rem;
+  margin-top: 4rem;
 }
-
-.h1-ajuda {
+h1 {
+  font-size: 40px;
   font-family: "Poppins", sans-serif;
-  font-size: 35px;
   color: #00652e;
 }
 
 .class-p-ajuda {
-  font-size: 16px;
+  font-size: 18px;
+  margin-top: 3rem;
   color: #00652e;
-  margin-top: 0.5rem;
 }
-
 .class-p-subtitle {
   margin-left: 4rem;
-  margin-top: 4.5rem;
-  color: #3f4346;
-}
-
-.class-obs-ajuda {
-  color: #abaeb4;
-  margin-left: 4rem;
+  margin-top: 5rem;
+  color: #3f4245;
 }
 p {
-  font-size: 16px;
+  font-family: "Poppins", sans-serif;
   color: #939598;
 }
 
-.class-body-accordion {
-  margin-top: 1rem;
-  display: grid;
-  grid-template-rows: auto auto auto;
-  justify-content: center;
-  box-sizing: border-box;
-  grid-gap: 2rem;
+#style-ac-header:hover {
+  outline: none;
+  border-color: transparent;
 }
 
 #style-gif {
   width: 45rem;
-  margin-left: 2rem;
+  margin-left: 3rem;
 }
 .class-accordion {
   width: 90%;
   margin-top: 1rem;
   margin-left: 4rem;
-  box-sizing: border-box;
 }
 
-#style-button-acc {
+.class-body-accordion {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  justify-content: center;
+  grid-gap: 2rem;
+}
+
+#style-button-acc-1 {
   background: #00652e;
   border: none;
   text-align: center;
   height: 2rem;
-  margin-right: -2rem;
 }
-
-#button-acc-veic {
-  font-size: 12px;
+#style-button-acc-2 {
   background: #00652e;
   border: none;
   text-align: center;
-  height: 2rem;
-  margin: 0.5rem;
-}
-
-#button-acc-veic2 {
-  font-size: 12px;
-  background: #00652e;
-  border: none;
-  text-align: center;
-  margin: 0.5rem;
-  height: 2rem;
-}
-
-#button-acc-veic3 {
-  font-size: 12px;
-  background: #00652e;
-  border: none;
-  text-align: center;
-  margin: 0.5rem;
-  height: 2rem;
-}
-
-.class-button1 {
-  margin-left: -15%;
 }
 
 .class-p-nav {
@@ -103,9 +70,13 @@ p {
 .class-button-ir {
   display: flex;
   justify-self: end;
+  margin-left: 1rem;
 }
 
 @media only screen and (max-width: 980px) {
+  .class-p-ajuda {
+    font-size: 16px;
+  }
   .class-p-subtitle {
     margin-left: 1rem;
   }
@@ -125,6 +96,12 @@ p {
     margin-left: 1rem;
   }
 
+  .class-button3,
+  .class-button2,
+  .class-button1 {
+    display: grid;
+    justify-self: center;
+  }
   .class-button-ir {
     display: flex;
     justify-self: center;

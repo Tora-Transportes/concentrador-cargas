@@ -61,15 +61,17 @@ function ViewHistoricoVeiculo({
 
 	function exportCsv() {
 		setLoading(true);
-		let csv = "\ufeff" + csv;
+		let csvTitle =
+			"PLACA;UF;MUNICÍPIO;RUA;LATITUDE;LONGITUDE;LOCALIDADE;DATA POSIÇÃO\n\n";
+		let csv = "\ufeff" + csvTitle;
 		for (const position of historicoRotas.posicao) {
 			const message = "sem dados";
 			const UF = position.UF == null ? message : position.UF;
 			const MUN = position.MUN == null ? message : position.MUN;
 			const RUA = position.RUA == null ? message : position.RUA;
-			csv += `${UF};${MUN};${RUA};${position.LAT};${position.LON};${
-				position.LOC
-			};${DateUtils.formatDate(position.DTINC)}\n`;
+			csv += `${fields.placa};${UF};${MUN};${RUA};${position.LAT};${
+				position.LON
+			};${position.LOC};${DateUtils.formatDate(position.DTINC)}\n`;
 		}
 
 		const csvData = new Blob([csv], {
@@ -89,7 +91,7 @@ function ViewHistoricoVeiculo({
 			<LoadingScreen />
 			<Container className="text-center">
 				<Row id="title-hist-veic">
-					<h1>Histórico de rotas do veículo</h1>
+					<h1>Histórico de Rotas do Veículo</h1>
 				</Row>
 				<Form onSubmit={handleSubmit}>
 					<Card className="mt-5">
