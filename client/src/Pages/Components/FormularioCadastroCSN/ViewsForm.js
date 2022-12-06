@@ -18,7 +18,7 @@ import FilialSelect from "../FilialSelect";
 import InputCliente from "../InputCliente";
 import InputPlaca from "../InputPlaca";
 import ListAddItens from "../ListAddItens";
-import UnidadesMedida from "../UnidadesMedida";
+//import UnidadesMedida from "../UnidadesMedida";
 import InputsPontoPassagem from "./InputPontoPassagem";
 
 export default function ViewsForm({
@@ -306,17 +306,13 @@ export default function ViewsForm({
 				<Col>
 					<Row>
 						<Col>
-							<FloatingLabel label="*Unidade" className="mb-3">
-								<Form.Select
+							<FloatingLabel label="*Unidade de Medida" className="mb-3">
+								<Form.Control
+									type="text"
 									name="unidade_medida"
 									value={formik.values.unidade_medida}
-									onChange={formik.handleChange}
-									onBlur={formik.handleBlur}
-									required
-								>
-									<option value=""></option>
-									<UnidadesMedida />
-								</Form.Select>
+									readOnly
+								/>
 							</FloatingLabel>
 						</Col>
 						<Col>

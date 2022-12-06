@@ -61,7 +61,7 @@ function ViewHistoricoVeiculo({
 
 	function exportCsv() {
 		setLoading(true);
-		let csv = "UF;MUNICIPIO;RUA;LATITUDE;LONGITUDE;LOCALIDADE;DATA POSICAO\n\n";
+		let csv = "\ufeff" + csv;
 		for (const position of historicoRotas.posicao) {
 			const message = "sem dados";
 			const UF = position.UF == null ? message : position.UF;
@@ -73,10 +73,10 @@ function ViewHistoricoVeiculo({
 		}
 
 		const csvData = new Blob([csv], {
-			type: "text/csv;charset=utf-8;",
+			type: "text/csv;charset=utf-8,/uFEFF;",
 		});
 
-		const csvURL = URL.createObjectURL(csvData);
+		const csvURL = window.URL.createObjectURL(csvData);
 		const tempLink = document.createElement("a");
 		tempLink.href = csvURL;
 		tempLink.setAttribute("download", "Historico-de-Rotas.csv");
@@ -181,6 +181,11 @@ function ViewHistoricoVeiculo({
 									);
 								})}
 							</MapContainer>
+							<strong className="placa-consultada">
+								{" "}
+								Placa correspondente a consulta:
+								<span className="span-placa"> {fields.placa}</span>
+							</strong>
 							<Table className="mt-5" striped bordered hover>
 								<thead>
 									<tr>
@@ -189,6 +194,7 @@ function ViewHistoricoVeiculo({
 												<BsDownload />
 											</Button>
 										</th>
+										<th>Placa Veículo</th>
 										<th>UF</th>
 										<th>Municipio</th>
 										<th>Rua</th>
@@ -203,6 +209,7 @@ function ViewHistoricoVeiculo({
 									{historicoRotas.posicao.map((position, index) => (
 										<tr key={index + 1}>
 											<td>{index}</td>
+											<td>{fields.placa}</td>
 											<td>{position.UF}</td>
 											<td>{position.MUN}</td>
 											<td>{position.RUA}</td>

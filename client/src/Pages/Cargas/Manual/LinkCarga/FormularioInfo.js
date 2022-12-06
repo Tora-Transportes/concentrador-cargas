@@ -368,7 +368,7 @@ function Formulario({ formik, produtos, distancia }) {
 				<Col>
 					<Row>
 						<Col>
-							<FloatingLabel label="*Unidade" className="mb-3">
+							<FloatingLabel label="*Unidade de Medida" className="mb-3">
 								<Form.Control
 									type="text"
 									name="unidade_medida"
