@@ -72,7 +72,7 @@ export const getColumns = (aprovarVeiculo, reprovarVeiculo) => {
 				<Link
 					target="_blank"
 					className="text-decoration-none"
-					to={`/cargas/manual/${row.id}`}
+					to={`/cargas/csn/${row.id}`}
 				>
 					{row.id}
 				</Link>

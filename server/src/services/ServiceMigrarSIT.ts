@@ -18,16 +18,13 @@ class ServiceMigrarSit implements IServiceSit {
       CADASTRO_GERAL.CG_NOME as "nome_motorista",
       CG_ID.CGI_NUM as "cpf_motorista",
       CG_ID_PROP.CGI_NUM as "documento_proprietario"
-
       from TIPO_VEICULO
       JOIN VEICULO ON VEICULO.TV_COD = TIPO_VEICULO.TV_COD
       LEFT JOIN VEICULO CARRETA on CARRETA.VEI_COD = VEICULO.COD_CARRETA
       LEFT JOIN VEICULO BITREM on BITREM.VEI_COD = VEICULO.COD_BITREM
       LEFT JOIN CADASTRO_GERAL on CADASTRO_GERAL.CG_COD = VEICULO.CG_MOT
-
       LEFT JOIN (SELECT * FROM CG_IDENTIFICACAO WHERE CG_IDENTIFICACAO.TI_COD = 2) CG_ID ON CG_ID.CG_COD = CADASTRO_GERAL.CG_COD
       LEFT JOIN (SELECT * FROM CG_IDENTIFICACAO WHERE CG_IDENTIFICACAO.TI_COD IN (6, 2, 5)) CG_ID_PROP ON CG_ID_PROP.CG_COD = CADASTRO_GERAL.CG_COD
-
       WHERE VEICULO.VEI_PLACA = ?
     `,
       [placa]
@@ -72,19 +69,16 @@ class ServiceMigrarSit implements IServiceSit {
     if (dadosVeiculo.length === 0) {
       throw new Error("Dados do veículo não encontrados por meio da consulta");
     }
-    let ibgeOrigem;
-    let ibgeDestino;
 
-    if (carga.carga_csn !== 1) {
-      if (!carga.origem_carga || !carga.destino_carga) {
-        throw new Error("A carga não possui nenhuma origem e/ou destino.");
-      }
-      const [, uf_origem, cidade_origem] = carga.origem_carga.split("/");
-      const [, uf_destino, cidade_destino] = carga.destino_carga.split("/");
-
-      ibgeOrigem = await this.consultaIBGE(uf_origem, cidade_origem);
-      ibgeDestino = await this.consultaIBGE(uf_destino, cidade_destino);
+    if (!carga.origem_carga || !carga.destino_carga) {
+      throw new Error("A carga não possui nenhuma origem e/ou destino.");
     }
+
+    const [, uf_origem, cidade_origem] = carga.origem_carga.split("/");
+    const [, uf_destino, cidade_destino] = carga.destino_carga.split("/");
+
+    const ibgeOrigem = await this.consultaIBGE(uf_origem, cidade_origem);
+    const ibgeDestino = await this.consultaIBGE(uf_destino, cidade_destino);
 
     let dataAtualizacao = new Date(carga.data_atualizacao || "");
     if (isNaN(Number(dataAtualizacao))) {

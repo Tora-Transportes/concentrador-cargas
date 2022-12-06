@@ -28,6 +28,7 @@ const LocalizacaoCSN = () => {
 			const dadosLista = (await ServiceCsnCargas.list()).data.data;
 			setDadosLocalizacao(dadosLista?.results);
 		})();
+		setAtualizarTabela(false);
 	}, [atualizarTabela]);
 
 	return (

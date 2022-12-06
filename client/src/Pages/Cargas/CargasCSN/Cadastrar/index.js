@@ -10,10 +10,13 @@ import FormularioCadastroCSN from "../../../Components/FormularioCadastroCSN";
 import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { getClaims } from "src/MicrosoftAuthentication";
+import ServiceRecomendacoes from "src/services/ServiceRecomendacoes";
+//import ServiceRecomendacoes from "src/services/ServiceRecomendacoes";
 //import { valueFormik } from "../management/valueFormik";
 const CadastroCargaCSN = () => {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [produtos, setProdutos] = useState([]);
+	const [inputsDinamic, setInputsDinamic] = useState([]);
 	const history = useHistory();
 
 	const formik = useFormik({
@@ -22,19 +25,24 @@ const CadastroCargaCSN = () => {
 			id: "(Será autogerado)",
 			e_lote: false,
 			cliente: "",
+			destino_carga: "",
+			origem_carga: "",
 			data_coleta: "",
 			data_entrega: "",
 			tipo_carga: "",
 			quantidade: "",
 			unidade_medida: "",
+			observacao: "",
 			acessorios_requisitos: "",
 			informacoes_restritivas: "",
 			janela_coleta: "",
 			janela_entrega: "",
+			local_coleta: "",
+			local_entrega: "",
 			placa_veiculo: "",
 			documento_transporte: "",
 			ponto_passagem: {
-				ponto: " 45 - POSTO - 30",
+				ponto: " 60 - POSTO - 30",
 				tipoServico: "Coleta",
 				previsao: "",
 				latitude: "",
@@ -42,7 +50,7 @@ const CadastroCargaCSN = () => {
 				client: "",
 			},
 			ponto_passagem2: {
-				ponto: "47 - MUNDO - CSN",
+				ponto: "51 - MUNDO - CSN",
 				tipoServico: "Coleta",
 				previsao: "",
 				latitude: "",
@@ -50,7 +58,7 @@ const CadastroCargaCSN = () => {
 				client: "",
 			},
 			ponto_passagem3: {
-				ponto: "46 - PEACAO - CSN",
+				ponto: "59 - PEACAO - CSN",
 				tipoServico: "Coleta",
 				previsao: "",
 				latitude: "",
@@ -144,15 +152,39 @@ const CadastroCargaCSN = () => {
 					ponto_passagem8,
 					ponto_passagem9,
 					ponto_passagem10,
-					ponto_passagem11,
-					ponto_passagem12,
 				} = values;
 				values.fk_filial = await values.fk_filial.split("-")[0];
+
+				const chaves = Object.keys(values);
+				const todos = chaves.map((chave) => values[chave]);
+				const filtrados = todos.filter((item) => {
+					return item?.tipoServico === "Entrega";
+				});
+				const dadosUltimoParada = filtrados[filtrados.length - 1];
+				const separandoNomeCidade = await dadosUltimoParada.client?.split(
+					"-"
+				)[2];
+				const cidadeEstado = separandoNomeCidade.split("/");
+
+				const resultLocalidade = (
+					await ServiceRecomendacoes.locaisPorUf({
+						uf: cidadeEstado[1],
+						cidade: cidadeEstado[0],
+					})
+				).data.data;
+
+				const pais = resultLocalidade ? resultLocalidade : "BRASIL";
+				const destinoCarga = `${pais}/${cidadeEstado[1]}/${cidadeEstado[0]}`;
+
 				const data = (
 					await ServiceCargas.create({
 						...values,
 						canal_comunicacao: "manual",
 						carga_csn: 1,
+						origem_carga: "BRASIL/RJ/VOLTA REDONDA",
+						destino_carga: destinoCarga.replace(" ", ""),
+						data_coleta: ponto_passagem.previsao,
+						data_entrega: dadosUltimoParada.previsao,
 					})
 				).data;
 
@@ -170,8 +202,6 @@ const CadastroCargaCSN = () => {
 						ponto_passagem8,
 						ponto_passagem9,
 						ponto_passagem10,
-						ponto_passagem11,
-						ponto_passagem12,
 					})) {
 						if (
 							(value?.ponto.length > 0 && value?.previsao.length > 0) ||
@@ -186,16 +216,16 @@ const CadastroCargaCSN = () => {
 							});
 						}
 					}
+
+					const ok = await swal(
+						"Sucesso!",
+						`A carga foi cadastrada com o identificador ${data.data.id}!`,
+						//"A carga foi cadastrada com o identificador 5555555!",
+						"success"
+					);
+
+					if (ok) resetForm();
 				}
-
-				const ok = await swal(
-					"Sucesso!",
-					`A carga foi cadastrada com o identificador ${data.data.id}!`,
-					//"A carga foi cadastrada com o identificador 5555555!",
-					"success"
-				);
-
-				if (ok) resetForm();
 			} catch (error) {
 				console.log(error);
 			}
@@ -264,6 +294,8 @@ const CadastroCargaCSN = () => {
 						}
 						produtos={produtos}
 						formik={formik}
+						inputsDinamic={inputsDinamic}
+						setInputsDinamic={setInputsDinamic}
 					/>
 					<Row>
 						<Col>

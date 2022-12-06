@@ -163,6 +163,9 @@ label {
   .row-button-local {
     display: grid !important;
   }
+  .row-input-coleta {
+    display: grid !important;
+  }
 }
 @media only screen and (min-width: 354px) and (max-width: 575px) {
   .col-cod-filial2 {

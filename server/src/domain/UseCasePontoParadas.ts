@@ -24,6 +24,15 @@ export class UseCaseAddPontoParadas {
   }
 }
 
+export class UseCaseSearchPontoParada {
+  constructor(
+    private readonly pontoParadaRepository = new PontoParadaRepository()
+  ) {}
+  async run() {
+    return await this.pontoParadaRepository.search();
+  }
+}
+
 export class UseCaseUpdatePontoParada {
   constructor(
     private readonly pontoParadaRepository = new PontoParadaRepository()
@@ -60,6 +69,7 @@ export class UseCaseDeletePontoParada {
 
 const instancias = {
   useCaseAddPontoParadas: new UseCaseAddPontoParadas(),
+  useCaseSearchPontoParada: new UseCaseSearchPontoParada(),
   useCaseUpdatePontoParadas: new UseCaseUpdatePontoParada(),
   useCaseDeletePontoParada: new UseCaseDeletePontoParada(),
 };

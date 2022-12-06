@@ -83,18 +83,18 @@ export class CargaValidationOperation {
             "Não é possível aprovar veículo sem preencher a observacao_gr"
           );
         }
-        if (cargaAtual.carga_csn !== 1) {
-          if (
-            !cargaAtual.origem_carga ||
-            !cargaAtual.destino_carga ||
-            cargaAtual.destino_carga.split("/").length !== 3 ||
-            cargaAtual.origem_carga.split("/").length !== 3
-          ) {
-            throw new Error(
-              "Não é possível aprovar veículo sem preencher origem e destino da carga corretamente"
-            );
-          }
+        //if (cargaAtual.carga_csn !== 1) {
+        if (
+          !cargaAtual.origem_carga ||
+          !cargaAtual.destino_carga ||
+          cargaAtual.destino_carga.split("/").length !== 3 ||
+          cargaAtual.origem_carga.split("/").length !== 3
+        ) {
+          throw new Error(
+            "Não é possível aprovar veículo sem preencher origem e destino da carga corretamente"
+          );
         }
+        //}
 
         if (
           !cargaAtual.cliente ||
@@ -155,9 +155,32 @@ export class CargaValidationOperation {
         const camposPermitidosMudanca = [
           "fk_situacao",
           "observacao_cancelamento",
+          "carga_csn",
+          "locais",
+          "data_atualizacao",
+          "data_entrega",
+          "data_coleta",
         ];
+        // const camposPermitidosMudanca =
+        //   cargaAtual.carga_csn === 1
+        //     ? [
+        //         "fk_situacao",
+        //         "observacao_cancelamento",
+        //         "carga_csn",
+        //         "locais",
+        //         "data_atualizacao",
+        //         "data_entrega",
+        //         "data_coleta",
+        //       ]
+        //     : [
+        //         "fk_situacao",
+        //         "observacao_cancelamento",
+        //         "carga_csn",
+        //         "locais",
+        //         "data_atualizacao",
+        //       ];
         for (const i in cargaAtual) {
-          if ({ ...cargaAnterior }[i] !== { ...cargaAtual }[i]) {
+          if ({ ...cargaAnterior }[i] != { ...cargaAtual }[i]) {
             if (!camposPermitidosMudanca.includes(i)) {
               throw new Error(
                 "A carga não pode ter seus dados alterados após ser aprovada"

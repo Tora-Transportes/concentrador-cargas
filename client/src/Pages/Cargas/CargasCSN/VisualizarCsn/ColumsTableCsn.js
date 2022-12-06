@@ -107,17 +107,45 @@ export const columns = [
 		showFilter: true,
 	},
 	{
-		name: "data_coleta",
-		description: "Data Coleta Efetiva",
-		selector: () => "Add value",
+		name: "ponto_parada[0].COLETA_EFETIVA_POSTO30",
+		description: "Coleta Efetiva - Posto 30",
+		selector: (row) =>
+			row.ponto_parada?.length
+				? formatDateAndHour(row?.ponto_parada[0]?.COLETA_EFETIVA_POSTO30)
+				: "",
 		//sortable: "sortable",
 		//showFilter: true,
 		//Filter: (props) => <Form.Control type="date" {...props} />,
 	},
 	{
-		name: "data_entrega",
-		description: "Data de Entrega Efetiva",
-		selector: () => "Add value 2",
+		name: "ponto_parada[1].COLETA_EFETIVA_MUNDO",
+		description: "Coleta Efetiva – Mundo",
+		selector: (row) =>
+			row.ponto_parada?.length
+				? formatDateAndHour(row?.ponto_parada[1]?.COLETA_EFETIVA_MUNDO)
+				: "",
+		//sortable: "sortable",
+		//showFilter: true,
+		//Filter: (props) => <Form.Control type="date" {...props} />,
+	},
+	{
+		name: "ponto_parada[2].COLETA_EFETIVA_PEACAO",
+		description: "Coleta Efetiva – Peacao",
+		selector: (row) =>
+			row.ponto_parada?.length
+				? formatDateAndHour(row?.ponto_parada[2]?.COLETA_EFETIVA_PEACAO)
+				: "",
+		//sortable: "sortable",
+		//showFilter: true,
+		//Filter: (props) => <Form.Control type="date" {...props} />,
+	},
+	{
+		name: "ponto_parada[3].ENTREGA_EFETIVA",
+		description: "Entrega Efetiva",
+		selector: (row) =>
+			row.ponto_parada?.length
+				? formatDateAndHour(row?.ponto_parada[3]?.ENTREGA_EFETIVA)
+				: "",
 		//selector: (row) => formatDate(row.data_entrega),
 		//sortable: "sortable",
 		//showFilter: true,
