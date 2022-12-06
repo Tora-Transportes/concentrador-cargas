@@ -22,6 +22,7 @@ function InputCliente({ onChange, label, status, formikMain, ...props }) {
 			cidade: "",
 			uf: "",
 			nome: "",
+			pais: "",
 		},
 	});
 
@@ -38,7 +39,7 @@ function InputCliente({ onChange, label, status, formikMain, ...props }) {
 				if (value?.latitude === null || value?.longitude === null) {
 					swal(
 						"Ops!",
-						`Por favor atualize os dados do cliente no SIT para continuar.`,
+						`Para continuar atualize os dados de latitude e longitude do cliente no SIT.`,
 						"warning"
 					);
 				} else {

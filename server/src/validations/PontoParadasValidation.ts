@@ -8,11 +8,16 @@ export function factoryPontoParada() {
       .string()
       .required("O status da carga deve ser preenchido"),
     PREVISAO: yup.date(),
-    LATITUDE: yup.number().nullable(),
-    LONGITUDE: yup.number().nullable(),
+    LATITUDE: yup.string().nullable(),
+    LONGITUDE: yup.string().nullable(),
     DATA_CADASTRO: yup.date(),
-    DATA_ATUALIZACAO: yup.date(),
-    CLIENTE: yup.string(),
+    DATA_ATUALIZACAO: yup.date().nullable(),
+    CLIENTE: yup.string().nullable(),
+    COLETA_EFETIVA: yup.date().nullable(),
+    COLETA_EFETIVA_POSTO30: yup.date().nullable(),
+    COLETA_EFETIVA_MUNDO: yup.date().nullable(),
+    COLETA_EFETIVA_PEACAO: yup.date().nullable(),
+    ENTREGA_EFETIVA: yup.date().nullable(),
   });
   return cargaCsnValidator;
 }

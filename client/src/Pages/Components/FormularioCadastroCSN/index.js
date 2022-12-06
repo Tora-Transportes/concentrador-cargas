@@ -11,6 +11,8 @@ function FormularioCadastroCSN({
 	produtos,
 	viewsInput,
 	buscarCargaComDocumentoDeTransporte,
+	inputsDinamic,
+	setInputsDinamic,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
@@ -21,11 +23,15 @@ function FormularioCadastroCSN({
 	const [inputColeta8, setInputColeta8] = useState(false);
 	const [inputColeta9, setInputColeta9] = useState(false);
 	const [inputColeta10, setInputColeta10] = useState(false);
-	const [inputColeta11, setInputColeta11] = useState(false);
-	const [inputColeta12, setInputColeta12] = useState(false);
 	const [countInput, setCountInput] = useState(3);
 	const [viewsButtonAddColeta, setViewsButtonAddColeta] = useState(true);
 	const [viewsButtonExcluir, setViewsButtonExcluir] = useState(false);
+	const fkSituacao =
+		formik.values?.fk_situacao === 1 ||
+		formik.values?.fk_situacao === 2 ||
+		formik.values?.fk_situacao === undefined
+			? false
+			: true;
 
 	useEffect(() => {
 		if (viewsInput > 4) {
@@ -106,8 +112,8 @@ function FormularioCadastroCSN({
 		setInputColeta8,
 		setInputColeta9,
 		setInputColeta10,
-		setInputColeta11,
-		setInputColeta12
+		inputsDinamic,
+		setInputsDinamic
 	);
 
 	return (
@@ -127,8 +133,6 @@ function FormularioCadastroCSN({
 				inputColeta8={inputColeta8}
 				inputColeta9={inputColeta9}
 				inputColeta10={inputColeta10}
-				inputColeta11={inputColeta11}
-				inputColeta12={inputColeta12}
 				viewsButtonAddColeta={viewsButtonAddColeta}
 				functionInputs={functionInputs}
 				viewsButtonExcluir={viewsButtonExcluir}
@@ -137,6 +141,8 @@ function FormularioCadastroCSN({
 				setDebitosVeiculo={setDebitosVeiculo}
 				setVeiculo={setVeiculo}
 				valorTotalDebito={valorTotalDebito}
+				inputsDinamic={inputsDinamic}
+				fkSituacao={fkSituacao}
 			/>
 		</div>
 	);

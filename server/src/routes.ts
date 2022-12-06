@@ -67,6 +67,7 @@ routes.get("/csn/cargas/info/:id", CargasCsnInfoController.index);
 
 routes.put("/csn/ponto_parada/:id", PontoParadaController.update);
 routes.post("/csn/ponto_parada", PontoParadaController.create);
+routes.get("/csn/ponto_parada", PontoParadaController.serach);
 routes.delete("/csn/ponto_parada/:id", PontoParadaController.delete);
 
 routes.get("/usuarios", UsuarioController.search);
@@ -123,6 +124,10 @@ routes.get("/veiculos/:placa/debitos", RotasController.debitsVehicle);
 routes.get("/recomendacoes/organizacoes", RecomendacoesController.organizacoes);
 routes.get("/recomendacoes/locais", RecomendacoesController.cidadeEstados);
 routes.get("/recomendacoes/filiais", RecomendacoesController.filiais);
+routes.get(
+  "/recomendacoes/locais/estado",
+  RecomendacoesController.localidadePorEstado
+);
 
 routes.get("/situacoes/cargas", SituacoesCargasController.search);
 routes.get("/situacoes/cargas/csn", SituacoesCargasCsnController.search);

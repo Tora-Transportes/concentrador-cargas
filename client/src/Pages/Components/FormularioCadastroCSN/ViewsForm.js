@@ -17,6 +17,7 @@ import AutocompleteInput from "../AutocompleteInput";
 import FilialSelect from "../FilialSelect";
 import InputCliente from "../InputCliente";
 import InputPlaca from "../InputPlaca";
+import ListAddItens from "../ListAddItens";
 import UnidadesMedida from "../UnidadesMedida";
 import InputsPontoPassagem from "./InputPontoPassagem";
 
@@ -33,8 +34,6 @@ export default function ViewsForm({
 	inputColeta8,
 	inputColeta9,
 	inputColeta10,
-	inputColeta11,
-	inputColeta12,
 	viewsButtonAddColeta,
 	functionInputs,
 	viewsButtonExcluir,
@@ -43,6 +42,8 @@ export default function ViewsForm({
 	setDebitosVeiculo,
 	setVeiculo,
 	valorTotalDebito,
+	inputsDinamic,
+	fkSituacao,
 }) {
 	return (
 		<div className="class-body-form">
@@ -344,8 +345,8 @@ export default function ViewsForm({
 				inputColeta8={inputColeta8}
 				inputColeta9={inputColeta9}
 				inputColeta10={inputColeta10}
-				inputColeta11={inputColeta11}
-				inputColeta12={inputColeta12}
+				inputsDinamic={inputsDinamic}
+				fkSituacao={fkSituacao}
 			/>
 
 			<Row className="row-button-local">
@@ -354,6 +355,7 @@ export default function ViewsForm({
 						<Button
 							className="bg-success border border-white"
 							onClick={functionInputs.viewsInputColeta}
+							disabled={fkSituacao}
 						>
 							<IoMdAdd className="me-1" />
 							Adicionar pontos de passagem
@@ -365,6 +367,7 @@ export default function ViewsForm({
 						<Button
 							className="bg-secondary ms-2 border border-white"
 							onClick={() => functionInputs.excluirInputColeta("delete")}
+							disabled={fkSituacao}
 						>
 							Excluir ponto de passagem
 						</Button>
@@ -428,15 +431,15 @@ export default function ViewsForm({
 				</Col>
 			</Row>
 
-			{/* <div>
-            <ListAddItens
-                id="style-botao-add"
-                value={formik.values.locais}
-                name="locais"
-                onChange={formik.handleChange}
-                formik={formik}
-            />
-        </div> */}
+			<div>
+				<ListAddItens
+					id="style-botao-add"
+					value={formik.values.locais}
+					name="locais"
+					onChange={formik.handleChange}
+					formik={formik}
+				/>
+			</div>
 
 			<Modal show={veiculo !== null} size="lg" onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
