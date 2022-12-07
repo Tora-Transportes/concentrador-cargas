@@ -239,7 +239,7 @@ const InputsPontoPassagem = ({
 							value={formik.values.ponto_passagem4.tipoServico}
 							onChange={formik.handleChange}
 							required
-							disabled={fkSituacao}
+							disabled
 						/>
 					</FloatingLabel>
 				</Col>

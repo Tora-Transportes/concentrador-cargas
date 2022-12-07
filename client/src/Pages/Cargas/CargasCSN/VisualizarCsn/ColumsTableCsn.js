@@ -113,9 +113,6 @@ export const columns = [
 			row.ponto_parada?.length
 				? formatDateAndHour(row?.ponto_parada[0]?.COLETA_EFETIVA_POSTO30)
 				: "",
-		//sortable: "sortable",
-		//showFilter: true,
-		//Filter: (props) => <Form.Control type="date" {...props} />,
 	},
 	{
 		name: "ponto_parada[1].COLETA_EFETIVA_MUNDO",
@@ -124,9 +121,6 @@ export const columns = [
 			row.ponto_parada?.length
 				? formatDateAndHour(row?.ponto_parada[1]?.COLETA_EFETIVA_MUNDO)
 				: "",
-		//sortable: "sortable",
-		//showFilter: true,
-		//Filter: (props) => <Form.Control type="date" {...props} />,
 	},
 	{
 		name: "ponto_parada[2].COLETA_EFETIVA_PEACAO",
@@ -135,21 +129,16 @@ export const columns = [
 			row.ponto_parada?.length
 				? formatDateAndHour(row?.ponto_parada[2]?.COLETA_EFETIVA_PEACAO)
 				: "",
-		//sortable: "sortable",
-		//showFilter: true,
-		//Filter: (props) => <Form.Control type="date" {...props} />,
 	},
 	{
 		name: "ponto_parada[3].ENTREGA_EFETIVA",
 		description: "Entrega Efetiva",
-		selector: (row) =>
-			row.ponto_parada?.length
+		selector: (row) => {
+			const horasEntregaEfetiva = row.ponto_parada?.length
 				? formatDateAndHour(row?.ponto_parada[3]?.ENTREGA_EFETIVA)
-				: "",
-		//selector: (row) => formatDate(row.data_entrega),
-		//sortable: "sortable",
-		//showFilter: true,
-		//Filter: (props) => <Form.Control type="date" {...props} />,
+				: "";
+			return <div>{horasEntregaEfetiva}</div>;
+		},
 	},
 	{
 		name: "unidade_medida",
