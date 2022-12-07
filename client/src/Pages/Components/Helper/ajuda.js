@@ -172,7 +172,7 @@ function Helper() {
 							</p> */}
 							<Button
 								href="/veiculos/aprovacao/padrao"
-								id="style-button-acc-1"
+								id="style-button-acc"
 								className="class-button1"
 							>
 								Navegar até Monitoramento
@@ -238,10 +238,9 @@ function Helper() {
 							Ao clicar em Relatórios, você terá várias opções de consulta
 							disponíveis na plataforma, são elas: <br /> <br /> Indicador
 							Operacional - Permite o acompanhamento das cargas e lotes,
-							apresentando de acordo com o <br /> filtro de data utilizado,
-							situação gráfica das cargas em geral, porcentagem de cargas
-							ativadas e <br /> desativadas, entre outras informações presentes
-							na página.
+							apresentando de acordo com o <br /> filtro de data utilizado, a
+							situação gráfica das cargas, porcentagem de cargas ativadas e
+							desativadas, <br /> entre outras informações presentes na página.
 						</p>
 						<img src={telaMonitoramento} id="style-gif" />
 
@@ -273,15 +272,15 @@ function Helper() {
 								id="style-button-acc"
 								className="class-button1"
 							>
-								Ir para Rotas pendentes
+								Ir para Rotas Pendentes
 							</Button>
 						</div>
-						<p>
+						<p className="ms-1">
 							As páginas que serão citadas a seguir representam funcionalidades
 							similares: <br />
-							Raio empresa - Mostra os veículos no raio da empresa. <br />{" "}
+							Raio Empresa - Mostra os veículos no raio da empresa. <br />{" "}
 							Veículos x Veículos - Mostra a distância entre veículos que
-							estejam próximos. <br /> Veículos até empresa - Mostra a distância
+							estejam próximos. <br /> Veículos até Empresa - Mostra a distância
 							entre um veículo e a empresa.
 						</p>
 						<img src={telaMonitoramento} id="style-gif" />
@@ -297,14 +296,36 @@ function Helper() {
 							{/* <p className="class-p-nav">
 								Navegar até a Página de Monitoramento
 							</p> */}
-							<Button href="/relatorios" id="button-acc-veic">
+							<Button href="/veiculos/raio/empresa" id="button-acc-veic">
 								Ir para Raio Empresa
 							</Button>
-							<Button href="/relatorios" id="button-acc-veic2">
+							<Button href="/veiculos/raio" id="button-acc-veic2">
 								Ir para Veículos x Veículos
 							</Button>{" "}
-							<Button href="/relatorios" id="button-acc-veic3">
+							<Button href="/veiculos/destino" id="button-acc-veic3">
 								Ir para Veículos até Empresa
+							</Button>
+						</div>
+						<p>
+							<br />
+							Em Histórico de Rotas do Veículo, você terá acesso a localização
+							do veículo, filtrando pela placa <br /> do veículo e data a ser
+							consultada, as informações serão mostradas no mapa disponibilizado{" "}
+							<br /> na plataforma, a tela disponibiliza também a opção de
+							download do histórico consultado via excel.
+						</p>
+						<img src={telaMonitoramento} id="style-gif" />
+
+						<div className="class-button-ir">
+							{/* <p className="class-p-nav">
+								Navegar até a Página de Monitoramento
+							</p> */}
+							<Button
+								href="/veiculos/historico"
+								id="style-button-acc"
+								className="class-button1"
+							>
+								Ir para Histórico de Rotas
 							</Button>
 						</div>
 					</Accordion.Body>

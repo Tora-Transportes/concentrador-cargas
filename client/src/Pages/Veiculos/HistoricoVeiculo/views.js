@@ -90,7 +90,7 @@ function ViewHistoricoVeiculo({
 			<LoadingScreen />
 			<Container className="text-center">
 				<Row id="title-hist-veic">
-					<h1>Histórico de rotas do veículo</h1>
+					<h1>Histórico de Rotas do Veículo</h1>
 				</Row>
 				<Form onSubmit={handleSubmit}>
 					<Card className="mt-5">
