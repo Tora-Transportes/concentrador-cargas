@@ -6,7 +6,7 @@
 .class-body-title {
   display: flexbox;
   text-align: center;
-  margin-top: 4rem;
+  margin-top: 2rem;
 }
 h1 {
   font-size: 40px;
@@ -16,7 +16,7 @@ h1 {
 
 .class-p-ajuda {
   font-size: 18px;
-  margin-top: 3rem;
+  margin-top: 1.5rem;
   color: #00652e;
 }
 .class-p-subtitle {

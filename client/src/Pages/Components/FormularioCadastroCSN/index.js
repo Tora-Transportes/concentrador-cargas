@@ -13,6 +13,7 @@ function FormularioCadastroCSN({
 	buscarCargaComDocumentoDeTransporte,
 	inputsDinamic,
 	setInputsDinamic,
+	handleEnter,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
@@ -143,6 +144,7 @@ function FormularioCadastroCSN({
 				valorTotalDebito={valorTotalDebito}
 				inputsDinamic={inputsDinamic}
 				fkSituacao={fkSituacao}
+				handleEnter={handleEnter}
 			/>
 		</div>
 	);

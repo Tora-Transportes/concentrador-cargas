@@ -231,7 +231,9 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 			<Container>
 				<Row className="mt-3 text-center">
 					<Col>
-						<h1 className="title">Gerenciamento de Rotas - CSN</h1>
+						<h1 className="title-gerenciamento">
+							Gerenciamento de Rotas - CSN
+						</h1>
 					</Col>
 					<div className="datatable-crud-demo">
 						<Toast ref={toast} />

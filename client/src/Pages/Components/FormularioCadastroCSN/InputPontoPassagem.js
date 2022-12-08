@@ -55,6 +55,15 @@ const InputsPontoPassagem = ({
 			setInputPontoPassagem10(true);
 		}
 	}, [formik.values]);
+
+	const handleEnter = (event) => {
+		if (event.key.toLowerCase() === "enter") {
+			const form = event.target.form;
+			const index = [...form].indexOf(event.target);
+			form.elements[index + 1].focus();
+			event.preventDefault();
+		}
+	};
 	return (
 		<>
 			<Row className="row-input-coleta">
@@ -65,6 +74,7 @@ const InputsPontoPassagem = ({
 							type="text"
 							name="ponto_passagem.ponto"
 							value={formik.values.ponto_passagem.ponto?.split("-")[1]}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							disabled
@@ -79,6 +89,7 @@ const InputsPontoPassagem = ({
 							disabled
 							name="ponto_passagem.tipoServico"
 							value={formik.values.ponto_passagem.tipoServico}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 						/>
 					</FloatingLabel>
@@ -90,6 +101,7 @@ const InputsPontoPassagem = ({
 							placeholder=" "
 							name="ponto_passagem.previsao"
 							value={formik.values.ponto_passagem.previsao}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							required
 							disabled={fkSituacao}
@@ -104,6 +116,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem.coletaEfetiva_posto30"
 								value={formik.values.ponto_passagem.coletaEfetiva_posto30 || ""}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								disabled={disabledValidEfetiva}
 								required
@@ -115,12 +128,13 @@ const InputsPontoPassagem = ({
 
 			<Row className="row-input-coleta">
 				<Col sm={12} md={6}>
-					<FloatingLabel label="Ponto de passagem2" className="mb-3">
+					<FloatingLabel label="Ponto de passagem 2" className="mb-3">
 						<Form.Control
 							className="input-pontoPassagem-disabled"
 							type="text"
 							name="ponto_passagem2.ponto"
 							value={formik.values.ponto_passagem2.ponto?.split("-")[1]}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							disabled
@@ -135,6 +149,7 @@ const InputsPontoPassagem = ({
 							disabled
 							name="ponto_passagem2.tipoServico"
 							value={formik.values.ponto_passagem2.tipoServico}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 						/>
 					</FloatingLabel>
@@ -145,6 +160,7 @@ const InputsPontoPassagem = ({
 							type="datetime-local"
 							name="ponto_passagem2.previsao"
 							value={formik.values.ponto_passagem2.previsao}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							required
 							disabled={fkSituacao}
@@ -159,6 +175,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem2.coletaEfetiva_mundo"
 								value={formik.values.ponto_passagem2.coletaEfetiva_mundo || ""}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								disabled={disabledValidEfetiva}
 								required
@@ -169,12 +186,13 @@ const InputsPontoPassagem = ({
 			</Row>
 			<Row className="row-input-coleta">
 				<Col sm={12} md={6}>
-					<FloatingLabel label="Ponto de passagem3" className="mb-3">
+					<FloatingLabel label="Ponto de passagem 3" className="mb-3">
 						<Form.Control
 							className="input-pontoPassagem-disabled"
 							type="text"
 							name="ponto_passagem3.ponto"
 							value={formik.values.ponto_passagem3.ponto?.split("-")[1]}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							disabled
@@ -189,6 +207,7 @@ const InputsPontoPassagem = ({
 							disabled
 							name="ponto_passagem3.tipoServico"
 							value={formik.values.ponto_passagem3.tipoServico}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 						/>
 					</FloatingLabel>
@@ -200,6 +219,7 @@ const InputsPontoPassagem = ({
 							placeholder=" "
 							name="ponto_passagem3.previsao"
 							value={formik.values.ponto_passagem3.previsao}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							required
 							disabled={fkSituacao}
@@ -214,6 +234,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem3.coletaEfetiva_peacao"
 								value={formik.values.ponto_passagem3.coletaEfetiva_peacao || ""}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								disabled={disabledValidEfetiva}
 								required
@@ -230,6 +251,7 @@ const InputsPontoPassagem = ({
 						placeholder=" "
 						name="ponto_passagem4.client"
 						value={formik.values.ponto_passagem4.client}
+						onKeyDown={handleEnter}
 						onChange={formik.handleChange}
 						onBlur={formik.handleBlur}
 						formikMain={formik}
@@ -245,6 +267,7 @@ const InputsPontoPassagem = ({
 							disabled
 							name="ponto_passagem4.tipoServico"
 							value={formik.values.ponto_passagem4.tipoServico}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							required
 						/>
@@ -257,6 +280,7 @@ const InputsPontoPassagem = ({
 							placeholder=" "
 							name="ponto_passagem4.previsao"
 							value={formik.values.ponto_passagem4.previsao}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							required
 							disabled={fkSituacao}
@@ -271,6 +295,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem4.entregaEfetiva"
 								value={formik.values.ponto_passagem4.entregaEfetiva || ""}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								disabled={disabledValidEfetiva}
 								required
@@ -289,6 +314,7 @@ const InputsPontoPassagem = ({
 								className="input-cod-local"
 								name="ponto_passagem5.ponto"
 								value={formik.values.ponto_passagem5.ponto?.split("-")[1]}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
@@ -301,6 +327,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem5.client"
 								value={formik.values.ponto_passagem5.client}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								formikMain={formik}
@@ -314,6 +341,7 @@ const InputsPontoPassagem = ({
 							<Form.Select
 								name="ponto_passagem5.tipoServico"
 								value={formik.values.ponto_passagem5.tipoServico}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
@@ -331,6 +359,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem5.previsao"
 								value={formik.values.ponto_passagem5.previsao}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								required
 								disabled={fkSituacao}
@@ -354,6 +383,7 @@ const InputsPontoPassagem = ({
 											: formik.values.ponto_passagem5.entregaEfetiva || ""
 									}
 									onChange={formik.handleChange}
+									onKeyDown={handleEnter}
 									disabled={disabledValidEfetiva}
 									required
 								/>
@@ -372,6 +402,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem6.ponto"
 								value={formik.values.ponto_passagem6.ponto?.split("-")[1] || ""}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
@@ -384,6 +415,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem6.client"
 								value={formik.values.ponto_passagem6.client}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								formikMain={formik}
@@ -397,6 +429,7 @@ const InputsPontoPassagem = ({
 							<Form.Select
 								name="ponto_passagem6.tipoServico"
 								value={formik.values.ponto_passagem6.tipoServico}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
@@ -414,6 +447,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem6.previsao"
 								value={formik.values.ponto_passagem6.previsao}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								required
 								disabled={fkSituacao}
@@ -437,6 +471,7 @@ const InputsPontoPassagem = ({
 											: formik.values.ponto_passagem6.entregaEfetiva || ""
 									}
 									onChange={formik.handleChange}
+									onKeyDown={handleEnter}
 									disabled={disabledValidEfetiva}
 									required
 								/>
@@ -455,6 +490,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem7.ponto"
 								value={formik.values.ponto_passagem7.ponto?.split("-")[1]}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
@@ -467,6 +503,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem7.client"
 								value={formik.values.ponto_passagem7.client}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								formikMain={formik}
@@ -480,12 +517,15 @@ const InputsPontoPassagem = ({
 							<Form.Select
 								name="ponto_passagem7.tipoServico"
 								value={formik.values.ponto_passagem7.tipoServico}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
 							>
 								<option value=""></option>
-								<option value="Coleta">Coleta</option>
+								<option onKeyDown={handleEnter} value="Coleta">
+									Coleta
+								</option>
 								<option value="Entrega">Entrega</option>
 							</Form.Select>
 						</FloatingLabel>
@@ -497,6 +537,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem7.previsao"
 								value={formik.values.ponto_passagem7.previsao}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								required
 								disabled={disabledValidEfetiva}
@@ -520,6 +561,7 @@ const InputsPontoPassagem = ({
 											: formik.values.ponto_passagem7.entregaEfetiva || ""
 									}
 									onChange={formik.handleChange}
+									onKeyDown={handleEnter}
 									disabled={disabledValidEfetiva}
 									required
 								/>
@@ -539,6 +581,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem8.ponto"
 								value={formik.values.ponto_passagem8.ponto?.split("-")[1]}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
@@ -551,6 +594,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem8.client"
 								value={formik.values.ponto_passagem8.client}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								formikMain={formik}
@@ -564,6 +608,7 @@ const InputsPontoPassagem = ({
 							<Form.Select
 								name="ponto_passagem8.tipoServico"
 								value={formik.values.ponto_passagem8.tipoServico}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
@@ -581,6 +626,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem8.previsao"
 								value={formik.values.ponto_passagem8.previsao}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								required
 								disabled={fkSituacao}
@@ -604,6 +650,7 @@ const InputsPontoPassagem = ({
 											: formik.values.ponto_passagem8.entregaEfetiva || ""
 									}
 									onChange={formik.handleChange}
+									onKeyDown={handleEnter}
 									disabled={disabledValidEfetiva}
 									required
 								/>
@@ -623,6 +670,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem9.ponto"
 								value={formik.values.ponto_passagem9.ponto?.split("-")[1]}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
@@ -635,6 +683,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem9.client"
 								value={formik.values.ponto_passagem9.client}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								formikMain={formik}
@@ -648,6 +697,7 @@ const InputsPontoPassagem = ({
 							<Form.Select
 								name="ponto_passagem9.tipoServico"
 								value={formik.values.ponto_passagem9.tipoServico}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
@@ -665,6 +715,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem9.previsao"
 								value={formik.values.ponto_passagem9.previsao}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								required
 								disabled={fkSituacao}
@@ -688,6 +739,7 @@ const InputsPontoPassagem = ({
 											: formik.values.ponto_passagem9.entregaEfetiva || ""
 									}
 									onChange={formik.handleChange}
+									onKeyDown={handleEnter}
 									disabled={disabledValidEfetiva}
 									required
 								/>
@@ -707,6 +759,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem10.ponto"
 								value={formik.values.ponto_passagem10.ponto?.split("-")[1]}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
@@ -719,6 +772,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem10.client"
 								value={formik.values.ponto_passagem10.client}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								formikMain={formik}
@@ -732,6 +786,7 @@ const InputsPontoPassagem = ({
 							<Form.Select
 								name="ponto_passagem10.tipoServico"
 								value={formik.values.ponto_passagem10.tipoServico}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
@@ -749,6 +804,7 @@ const InputsPontoPassagem = ({
 								placeholder=" "
 								name="ponto_passagem10.previsao"
 								value={formik.values.ponto_passagem10.previsao}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								required
 								disabled={fkSituacao}
@@ -772,6 +828,7 @@ const InputsPontoPassagem = ({
 											: formik.values.ponto_passagem10.entregaEfetiva || ""
 									}
 									onChange={formik.handleChange}
+									onKeyDown={handleEnter}
 									disabled={disabledValidEfetiva}
 									required
 								/>

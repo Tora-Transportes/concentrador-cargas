@@ -49,7 +49,7 @@ function Main() {
 
 					<Link className="text-decoration-none" to="/cargas/importar">
 						<SiGooglesheets size={70} id="import" />
-						<p id="title-ico-import">Importação em lote</p>
+						<p id="title-ico-import">Importação em Lote</p>
 					</Link>
 
 					{viewsCadastrarCSN && (

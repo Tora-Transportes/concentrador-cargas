@@ -101,6 +101,15 @@ function FormularioCadastroManual({
 		}
 	}
 
+	const handleEnter = (event) => {
+		if (event.key.toLowerCase() === "enter") {
+			const form = event.target.form;
+			const index = [...form].indexOf(event.target);
+			form.elements[index + 1].focus();
+			event.preventDefault();
+		}
+	};
+
 	return (
 		<div className="class-body-form">
 			<Row>
@@ -143,6 +152,7 @@ function FormularioCadastroManual({
 						placeholder=" "
 						name="fk_filial"
 						value={formik.values.fk_filial ?? ""}
+						onKeyDown={handleEnter}
 						onChange={formik.handleChange}
 						onBlur={formik.handleBlur}
 						required
@@ -154,6 +164,7 @@ function FormularioCadastroManual({
 							id="doc-trans"
 							name="documento_transporte"
 							value={String(formik.values.documento_transporte)}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							onBlur={(...rest) => {
 								formik.handleBlur(...rest);
@@ -175,6 +186,7 @@ function FormularioCadastroManual({
 							label="Sim"
 							name="e_lote"
 							id="e_lote_sim"
+							onKeyDown={handleEnter}
 							onChange={() => formik.setFieldValue("e_lote", true)}
 							checked={formik.values.e_lote === true}
 							inline
@@ -185,6 +197,7 @@ function FormularioCadastroManual({
 							label="Não"
 							name="e_lote"
 							id="e_lote_nao"
+							onKeyDown={handleEnter}
 							onChange={() => formik.setFieldValue("e_lote", false)}
 							checked={formik.values.e_lote === false}
 							inline
@@ -239,7 +252,7 @@ function FormularioCadastroManual({
 									formik.values.fk_situacao &&
 									![1, 2, 4].includes(Number(formik.values.fk_situacao))
 								}
-								placeholder="Placa Veículo"
+								placeholder="Placa veículo"
 								disabled={formik.values.e_lote}
 								type="text"
 								name="placa_veiculo"
@@ -262,7 +275,7 @@ function FormularioCadastroManual({
 								<InputGroup.Text>Carreta</InputGroup.Text>
 								<Form.Control
 									readOnly
-									placeholder="Placa Carreta"
+									placeholder="Placa carreta"
 									type="text"
 									value={formik.values.placa_carreta || ""}
 								/>
@@ -273,7 +286,7 @@ function FormularioCadastroManual({
 								<InputGroup.Text>Bitrem</InputGroup.Text>
 								<Form.Control
 									readOnly
-									placeholder="Placa Bitrem"
+									placeholder="Placa bitrem"
 									type="text"
 									value={formik.values.placa_bitrem || ""}
 								/>
@@ -343,6 +356,7 @@ function FormularioCadastroManual({
 						placeholder=" "
 						name="cliente"
 						value={formik.values.cliente}
+						onKeyDown={handleEnter}
 						onChange={formik.handleChange}
 						onBlur={formik.handleBlur}
 						required
@@ -358,6 +372,7 @@ function FormularioCadastroManual({
 							placeholder=" "
 							name="origem_carga"
 							value={formik.values.origem_carga}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							onBlur={() => handleSearchDistance(formik.values)}
 							required
@@ -372,6 +387,7 @@ function FormularioCadastroManual({
 							placeholder=" "
 							name="destino_carga"
 							value={formik.values.destino_carga}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							onBlur={() => handleSearchDistance(formik.values)}
 							className="text-primary"
@@ -381,32 +397,6 @@ function FormularioCadastroManual({
 				</Col>
 			</Row>
 
-			{/* <Row>
-				<Col sm={12} md={6}>
-					<FloatingLabel label="*Local coleta" className="mb-3">
-						<Form.Control
-							type="text"
-							placeholder=" "
-							name="local_coleta"
-							value={formik.values.local_coleta}
-							onChange={formik.handleChange}
-							required
-						/>
-					</FloatingLabel>
-				</Col>
-				<Col>
-					<FloatingLabel label="*Local entrega" className="mb-3">
-						<Form.Control
-							type="text"
-							placeholder=" "
-							name="local_entrega"
-							value={formik.values.local_entrega}
-							onChange={formik.handleChange}
-							required
-						/>
-					</FloatingLabel>
-				</Col>
-			</Row> */}
 			{distancia && (
 				<Row>
 					<Col>
@@ -443,6 +433,7 @@ function FormularioCadastroManual({
 							placeholder=" "
 							name="data_coleta"
 							value={formik.values.data_coleta}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 						/>
@@ -455,6 +446,7 @@ function FormularioCadastroManual({
 							placeholder=" "
 							name="data_entrega"
 							value={formik.values.data_entrega}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 						/>
@@ -464,24 +456,26 @@ function FormularioCadastroManual({
 			{!formik.values.e_lote && (
 				<Row>
 					<Col>
-						<FloatingLabel label="Janela Coleta" className="mb-3">
+						<FloatingLabel label="Janela coleta" className="mb-3">
 							<Form.Control
 								type="time"
 								placeholder=" "
 								name="janela_coleta"
 								value={formik.values.janela_coleta}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 							/>
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="Janela Entrega" className="mb-3">
+						<FloatingLabel label="Janela entrega" className="mb-3">
 							<Form.Control
 								type="time"
 								placeholder=" "
 								name="janela_entrega"
 								value={formik.values.janela_entrega}
+								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 							/>
@@ -504,7 +498,7 @@ function FormularioCadastroManual({
 				<Col>
 					<Row>
 						<Col>
-							<FloatingLabel label="*Unidade de Medida" className="mb-3">
+							<FloatingLabel label="*Unidade de medida" className="mb-3">
 								<Form.Control
 									type="text"
 									name="unidade_medida"
@@ -522,6 +516,7 @@ function FormularioCadastroManual({
 									placeholder=" "
 									name="quantidade"
 									value={formik.values.quantidade}
+									onKeyDown={handleEnter}
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
 									disabled={disabledFields.includes("quantidade")}
@@ -549,6 +544,7 @@ function FormularioCadastroManual({
 							rows={3}
 							name="acessorios_requisitos"
 							value={formik.values.acessorios_requisitos || ""}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 						/>
@@ -566,6 +562,7 @@ function FormularioCadastroManual({
 							rows={3}
 							name="informacoes_restritivas"
 							value={formik.values.informacoes_restritivas || ""}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 						/>
@@ -602,7 +599,7 @@ function FormularioCadastroManual({
 
 			<Modal show={veiculo !== null} size="lg" onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
-					<Modal.Title>Dados do veículo</Modal.Title>
+					<Modal.Title>Dados do Veículo</Modal.Title>
 				</Modal.Header>
 				{veiculo && (
 					<Card>
@@ -627,7 +624,7 @@ function FormularioCadastroManual({
 				onHide={() => setDebitosVeiculo(null)}
 			>
 				<Modal.Header closeButton>
-					<Modal.Title>Débitos do veículo</Modal.Title>
+					<Modal.Title>Débitos do Veículo</Modal.Title>
 				</Modal.Header>
 				{debitosVeiculo && (
 					<Card>

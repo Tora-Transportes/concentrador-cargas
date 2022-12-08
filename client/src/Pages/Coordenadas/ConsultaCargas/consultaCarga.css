@@ -1,6 +1,8 @@
 .title-consultarCarga {
+  font-family: "Poppins", sans-serif;
+  font-size: 40px;
   color: #00652e;
-  font-size: 32px;
+  margin-top: 1.5rem;
 }
 
 .class-body-form {
