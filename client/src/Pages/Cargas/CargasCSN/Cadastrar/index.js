@@ -292,6 +292,7 @@ const CadastroCargaCSN = () => {
 						formik={formik}
 						inputsDinamic={inputsDinamic}
 						setInputsDinamic={setInputsDinamic}
+						history={history}
 					/>
 					<Row>
 						<Col>

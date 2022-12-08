@@ -232,4 +232,19 @@ export class CargaCsnInfoRepository {
 
     return { ...carga[0], locais };
   }
+
+  async indexOfSituacaoEndPlaca(
+    placa: string
+  ): Promise<IResultExcel<ICarga> | undefined> {
+    const carga: ICarga[] = await database("con_cargas")
+      .select("*")
+      .where("con_cargas.placa_veiculo", placa)
+      .andWhere("con_cargas.carga_csn", 1)
+      .andWhere("con_cargas.e_lote", 0)
+      .andWhere("con_cargas.ativo", 1)
+      .whereIn("con_cargas.fk_situacao", [2, 3]);
+
+    if (!carga) return;
+    return { results: carga };
+  }
 }

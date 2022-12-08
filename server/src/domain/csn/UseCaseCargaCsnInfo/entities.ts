@@ -1,6 +1,9 @@
 import AppError from "../../../models/AppError";
 import { ICarga } from "../../../models/ICargas";
-import { IPaginationResult } from "../../../repositories/CargaRepository";
+import {
+  IPaginationResult,
+  IResultExcel,
+} from "../../../repositories/CargaRepository";
 export interface IRepositorySearchCsn {
   search(
     query: Record<string, any>,
@@ -8,6 +11,9 @@ export interface IRepositorySearchCsn {
     pageSize?: number
   ): Promise<IPaginationResult<ICarga>>;
   index(id: number): Promise<ICarga | undefined>;
+  indexOfSituacaoEndPlaca(
+    placa: string
+  ): Promise<IResultExcel<ICarga> | undefined>;
 }
 
 export class UseCaseViewCargasCsnInfo {
@@ -37,6 +43,12 @@ export class UseCaseViewCargasCsn {
       );
     }
 
+    return carga;
+  }
+  async indexOfSituacaoEndPlaca(placa: string) {
+    const carga = await this.cargaCsnInfoRepository.indexOfSituacaoEndPlaca(
+      placa
+    );
     return carga;
   }
 }

@@ -15,32 +15,22 @@ export const funcBodyEdit = (data, tipoServico) => {
 		coletaEfetiva:
 			data.COLETA_EFETIVA === null
 				? null
-				: moment(data.COLETA_EFETIVA)
-						.add(3, "hours")
-						.format("YYYY-MM-DDTHH:mm"),
+				: moment(data.COLETA_EFETIVA).format("YYYY-MM-DDTHH:mm"),
 		entregaEfetiva:
 			data.ENTREGA_EFETIVA === null
 				? null
-				: moment(data.ENTREGA_EFETIVA)
-						.add(3, "hours")
-						.format("YYYY-MM-DDTHH:mm"),
+				: moment(data.ENTREGA_EFETIVA).format("YYYY-MM-DDTHH:mm"),
 		coletaEfetiva_peacao:
 			data.COLETA_EFETIVA_PEACAO === null
 				? null
-				: moment(data.COLETA_EFETIVA_PEACAO)
-						.add(3, "hours")
-						.format("YYYY-MM-DDTHH:mm"),
+				: moment(data.COLETA_EFETIVA_PEACAO).format("YYYY-MM-DDTHH:mm"),
 		coletaEfetiva_mundo:
 			data.COLETA_EFETIVA_MUNDO === null
 				? null
-				: moment(data.COLETA_EFETIVA_MUNDO)
-						.add(3, "hours")
-						.format("YYYY-MM-DDTHH:mm"),
+				: moment(data.COLETA_EFETIVA_MUNDO).format("YYYY-MM-DDTHH:mm"),
 		coletaEfetiva_posto30:
 			data.COLETA_EFETIVA_POSTO30 === null
 				? null
-				: moment(data.COLETA_EFETIVA_POSTO30)
-						.add(3, "hours")
-						.format("YYYY-MM-DDTHH:mm"),
+				: moment(data.COLETA_EFETIVA_POSTO30).format("YYYY-MM-DDTHH:mm"),
 	};
 };

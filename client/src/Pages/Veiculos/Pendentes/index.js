@@ -24,7 +24,7 @@ function RotasPendentes() {
 	const [itensPerPage, setItensPerPage] = useState(10);
 	const [totalRegisters, setTotalRegisters] = useState(0);
 	const { id } = useParams();
-	const statusCargaId = String(id) === "csn" ? 1 : 0;
+	const statusCargaId = String(id) === "padrao" ? 0 : 1;
 
 	async function repopularVisao() {
 		if (cargas.results.length <= 4) {
@@ -107,8 +107,9 @@ function RotasPendentes() {
 			if (options !== lastOptions) {
 				setLastOptions(options);
 			}
-
 			const { column, direction } = options.orderBy ?? {};
+			const buscarPorIndex = id.split("-")[1];
+			if (buscarPorIndex) options.filters = { id: buscarPorIndex };
 			const { data } = await ServiceCargas.search({
 				...options.filters,
 				page: options.page,
@@ -117,7 +118,6 @@ function RotasPendentes() {
 				order_direction: direction,
 				carga_csn: statusCargaId,
 			});
-
 			setLoading(false);
 			setTotalRegisters(data.data.total_registers);
 			dispatchCargas({
@@ -128,7 +128,7 @@ function RotasPendentes() {
 		[setLoading, dispatchCargas]
 	);
 
-	const tipoColumns = String(id) === "csn" ? columnsCsn : columnsPadrao;
+	const tipoColumns = String(id) === "padrao" ? columnsPadrao : columnsCsn;
 
 	return (
 		<>
