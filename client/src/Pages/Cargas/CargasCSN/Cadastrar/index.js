@@ -172,7 +172,7 @@ const CadastroCargaCSN = () => {
 					})
 				).data.data;
 
-				const pais = resultLocalidade ? resultLocalidade : "BRASIL";
+				const pais = resultLocalidade ? resultLocalidade?.pais : "BRASIL";
 				const destinoCarga = `${pais}/${cidadeEstado[1]}/${cidadeEstado[0]}`;
 
 				const data = (
@@ -292,6 +292,7 @@ const CadastroCargaCSN = () => {
 						formik={formik}
 						inputsDinamic={inputsDinamic}
 						setInputsDinamic={setInputsDinamic}
+						history={history}
 					/>
 					<Row>
 						<Col>

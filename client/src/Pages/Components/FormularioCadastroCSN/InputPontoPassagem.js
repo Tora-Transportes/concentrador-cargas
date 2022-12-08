@@ -13,7 +13,6 @@ const InputsPontoPassagem = ({
 	inputColeta9,
 	inputColeta10,
 	fkSituacao,
-	//inputsDinamic,
 }) => {
 	const [inputPontoPassagem5, setInputPontoPassagem5] = useState(true);
 	const [inputPontoPassagem6, setInputPontoPassagem6] = useState(true);
@@ -70,7 +69,6 @@ const InputsPontoPassagem = ({
 				<Col sm={12} md={6}>
 					<FloatingLabel label="*Ponto de passagem" className="mb-3">
 						<Form.Control
-							className="input-pontoPassagem-disabled"
 							type="text"
 							name="ponto_passagem.ponto"
 							value={formik.values.ponto_passagem.ponto?.split("-")[1]}
@@ -84,7 +82,6 @@ const InputsPontoPassagem = ({
 				<Col>
 					<FloatingLabel label="Coleta/Entrega" className="mb-3">
 						<Form.Control
-							className="input-pontoPassagem-disabled"
 							type="text"
 							disabled
 							name="ponto_passagem.tipoServico"
@@ -130,7 +127,6 @@ const InputsPontoPassagem = ({
 				<Col sm={12} md={6}>
 					<FloatingLabel label="Ponto de passagem 2" className="mb-3">
 						<Form.Control
-							className="input-pontoPassagem-disabled"
 							type="text"
 							name="ponto_passagem2.ponto"
 							value={formik.values.ponto_passagem2.ponto?.split("-")[1]}
@@ -144,7 +140,6 @@ const InputsPontoPassagem = ({
 				<Col>
 					<FloatingLabel label="Coleta/Entrega 2" className="mb-3">
 						<Form.Control
-							className="input-pontoPassagem-disabled"
 							type="text"
 							disabled
 							name="ponto_passagem2.tipoServico"
@@ -188,7 +183,6 @@ const InputsPontoPassagem = ({
 				<Col sm={12} md={6}>
 					<FloatingLabel label="Ponto de passagem 3" className="mb-3">
 						<Form.Control
-							className="input-pontoPassagem-disabled"
 							type="text"
 							name="ponto_passagem3.ponto"
 							value={formik.values.ponto_passagem3.ponto?.split("-")[1]}
@@ -202,7 +196,6 @@ const InputsPontoPassagem = ({
 				<Col>
 					<FloatingLabel label="Coleta/Entrega 3" className="mb-3">
 						<Form.Control
-							className="input-pontoPassagem-disabled"
 							type="text"
 							disabled
 							name="ponto_passagem3.tipoServico"
@@ -257,19 +250,19 @@ const InputsPontoPassagem = ({
 						formikMain={formik}
 						status={4}
 						required
+						disabled={fkSituacao}
 					/>
 				</Col>
 				<Col>
 					<FloatingLabel label="Coleta/Entrega 4" className="mb-3">
 						<Form.Control
-							className="input-pontoPassagem-disabled"
 							type="text"
-							disabled
 							name="ponto_passagem4.tipoServico"
 							value={formik.values.ponto_passagem4.tipoServico}
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							required
+							disabled
 						/>
 					</FloatingLabel>
 				</Col>
@@ -308,7 +301,12 @@ const InputsPontoPassagem = ({
 			{inputColeta5 && (
 				<Row className="row-input-coleta">
 					{inputPontoPassagem5 ? (
-						<Col sm={12} md={6} className="col-cod-local">
+						<Col
+							sm={12}
+							md={6}
+							style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
+							className="col-cod-local"
+						>
 							<label>Ponto de passagem 5</label>
 							<RotasSelect
 								className="input-cod-local"
@@ -318,6 +316,7 @@ const InputsPontoPassagem = ({
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
+								disabled={fkSituacao}
 							/>
 						</Col>
 					) : (
@@ -333,6 +332,7 @@ const InputsPontoPassagem = ({
 								formikMain={formik}
 								status={5}
 								required
+								disabled={fkSituacao}
 							/>
 						</Col>
 					)}
@@ -345,6 +345,7 @@ const InputsPontoPassagem = ({
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
+								disabled={fkSituacao}
 							>
 								<option value=""></option>
 								<option value="Coleta">Coleta</option>
@@ -395,7 +396,12 @@ const InputsPontoPassagem = ({
 			{inputColeta6 && (
 				<Row className="row-input-coleta">
 					{inputPontoPassagem6 ? (
-						<Col sm={12} md={6} className="col-cod-local">
+						<Col
+							sm={12}
+							md={6}
+							style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
+							className="col-cod-local"
+						>
 							<label>Ponto de passagem 6</label>
 							<RotasSelect
 								className="input-cod-local"
@@ -405,6 +411,7 @@ const InputsPontoPassagem = ({
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
+								disabled={fkSituacao}
 								required
 							/>
 						</Col>
@@ -420,6 +427,7 @@ const InputsPontoPassagem = ({
 								onBlur={formik.handleBlur}
 								formikMain={formik}
 								status={6}
+								disabled={fkSituacao}
 								required
 							/>
 						</Col>
@@ -433,6 +441,7 @@ const InputsPontoPassagem = ({
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
+								disabled={fkSituacao}
 							>
 								<option value=""></option>
 								<option value="Coleta">Coleta</option>
@@ -483,7 +492,12 @@ const InputsPontoPassagem = ({
 			{inputColeta7 && (
 				<Row className="row-input-coleta">
 					{inputPontoPassagem7 ? (
-						<Col sm={12} md={6} className="col-cod-local">
+						<Col
+							sm={12}
+							md={6}
+							style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
+							className="col-cod-local"
+						>
 							<label>Ponto de passagem 7</label>
 							<RotasSelect
 								className="input-cod-local"
@@ -493,6 +507,7 @@ const InputsPontoPassagem = ({
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
+								disabled={fkSituacao}
 								required
 							/>
 						</Col>
@@ -508,6 +523,7 @@ const InputsPontoPassagem = ({
 								onBlur={formik.handleBlur}
 								formikMain={formik}
 								status={7}
+								disabled={fkSituacao}
 								required
 							/>
 						</Col>
@@ -521,6 +537,7 @@ const InputsPontoPassagem = ({
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
+								disabled={fkSituacao}
 							>
 								<option value=""></option>
 								<option onKeyDown={handleEnter} value="Coleta">
@@ -540,7 +557,7 @@ const InputsPontoPassagem = ({
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								required
-								disabled={disabledValidEfetiva}
+								disabled={fkSituacao}
 							/>
 						</FloatingLabel>
 					</Col>
@@ -573,11 +590,15 @@ const InputsPontoPassagem = ({
 			{inputColeta8 && (
 				<Row className="row-input-coleta">
 					{inputPontoPassagem8 ? (
-						<Col sm={12} md={6} className="col-cod-local">
+						<Col
+							sm={12}
+							md={6}
+							style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
+							className="col-cod-local"
+						>
 							<label>Ponto de passagem 8</label>
 							<RotasSelect
 								className="input-cod-local"
-								//id="Codigo-filial pb-5"
 								placeholder=" "
 								name="ponto_passagem8.ponto"
 								value={formik.values.ponto_passagem8.ponto?.split("-")[1]}
@@ -585,6 +606,7 @@ const InputsPontoPassagem = ({
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
+								disabled={fkSituacao}
 							/>
 						</Col>
 					) : (
@@ -600,6 +622,7 @@ const InputsPontoPassagem = ({
 								formikMain={formik}
 								status={8}
 								required
+								disabled={fkSituacao}
 							/>
 						</Col>
 					)}
@@ -612,6 +635,7 @@ const InputsPontoPassagem = ({
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
+								disabled={fkSituacao}
 							>
 								<option value=""></option>
 								<option value="Coleta">Coleta</option>
@@ -662,11 +686,15 @@ const InputsPontoPassagem = ({
 			{inputColeta9 && (
 				<Row className="row-input-coleta">
 					{inputPontoPassagem9 ? (
-						<Col sm={12} md={6} className="col-cod-local">
+						<Col
+							sm={12}
+							md={6}
+							style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
+							className="col-cod-local"
+						>
 							<label>Ponto de passagem 9</label>
 							<RotasSelect
 								className="input-cod-local"
-								//id="Codigo-filial pb-5"
 								placeholder=" "
 								name="ponto_passagem9.ponto"
 								value={formik.values.ponto_passagem9.ponto?.split("-")[1]}
@@ -674,6 +702,7 @@ const InputsPontoPassagem = ({
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
+								disabled={fkSituacao}
 							/>
 						</Col>
 					) : (
@@ -689,6 +718,7 @@ const InputsPontoPassagem = ({
 								formikMain={formik}
 								status={9}
 								required
+								disabled={fkSituacao}
 							/>
 						</Col>
 					)}
@@ -701,6 +731,7 @@ const InputsPontoPassagem = ({
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
+								disabled={fkSituacao}
 							>
 								<option value=""></option>
 								<option value="Coleta">Coleta</option>
@@ -751,11 +782,15 @@ const InputsPontoPassagem = ({
 			{inputColeta10 && (
 				<Row className="row-input-coleta">
 					{inputPontoPassagem10 ? (
-						<Col sm={12} md={6} className="col-cod-local">
+						<Col
+							sm={12}
+							md={6}
+							style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
+							className="col-cod-local"
+						>
 							<label>Ponto de passagem 10</label>
 							<RotasSelect
 								className="input-cod-local"
-								//id="Codigo-filial pb-5"
 								placeholder=" "
 								name="ponto_passagem10.ponto"
 								value={formik.values.ponto_passagem10.ponto?.split("-")[1]}
@@ -763,6 +798,7 @@ const InputsPontoPassagem = ({
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
+								disabled={fkSituacao}
 							/>
 						</Col>
 					) : (
@@ -778,6 +814,7 @@ const InputsPontoPassagem = ({
 								formikMain={formik}
 								status={10}
 								required
+								disabled={fkSituacao}
 							/>
 						</Col>
 					)}
@@ -790,6 +827,7 @@ const InputsPontoPassagem = ({
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								required
+								disabled={fkSituacao}
 							>
 								<option value=""></option>
 								<option value="Coleta">Coleta</option>

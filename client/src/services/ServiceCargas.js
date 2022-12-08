@@ -1,3 +1,4 @@
+import moment from "moment";
 import api from "./api";
 class ServiceCargas {
 	async create({
@@ -80,7 +81,7 @@ class ServiceCargas {
 		const carga = {
 			ID_ROTAS_CSN: ponto ? ponto?.split("-")[0] : null,
 			ID_CON_CARGAS: id_carga,
-			PREVISAO: previsao,
+			PREVISAO: moment(previsao).subtract(3, "hours"),
 			STATUS_SERVICO: tipoServico.toUpperCase(),
 			LATITUDE: latitude ? latitude : null,
 			LONGITUDE: longitude ? longitude : null,
@@ -115,19 +116,31 @@ class ServiceCargas {
 		const carga = {
 			ID_ROTAS_CSN: idRotaCsn === "" ? ponto?.split("-")[0] : idRota,
 			ID_CON_CARGAS: id_carga,
-			PREVISAO: previsao,
+			PREVISAO: moment(previsao).subtract(3, "hours"),
 			STATUS_SERVICO: tipoServico.toUpperCase(),
 			LATITUDE: latitude ? latitude : null,
 			LONGITUDE: longitude ? longitude : null,
 			CLIENTE: tipoClient,
-			COLETA_EFETIVA: coletaEfetiva === undefined ? null : coletaEfetiva,
+			COLETA_EFETIVA:
+				coletaEfetiva === undefined
+					? null
+					: moment(coletaEfetiva).subtract(3, "hours"),
 			COLETA_EFETIVA_POSTO30:
-				coletaEfetiva_posto30 === undefined ? null : coletaEfetiva_posto30,
+				coletaEfetiva_posto30 === undefined
+					? null
+					: moment(coletaEfetiva_posto30).subtract(3, "hours"),
 			COLETA_EFETIVA_MUNDO:
-				coletaEfetiva_mundo === undefined ? null : coletaEfetiva_mundo,
+				coletaEfetiva_mundo === undefined
+					? null
+					: moment(coletaEfetiva_mundo).subtract(3, "hours"),
 			COLETA_EFETIVA_PEACAO:
-				coletaEfetiva_peacao === undefined ? null : coletaEfetiva_peacao,
-			ENTREGA_EFETIVA: entregaEfetiva === undefined ? null : entregaEfetiva,
+				coletaEfetiva_peacao === undefined
+					? null
+					: moment(coletaEfetiva_peacao).subtract(3, "hours"),
+			ENTREGA_EFETIVA:
+				entregaEfetiva === undefined
+					? null
+					: moment(entregaEfetiva).subtract(3, "hours"),
 		};
 		if (typeof id === "number") {
 			//console.log("SALVANDO", carga);
@@ -141,7 +154,7 @@ class ServiceCargas {
 						? ponto?.split("-")[0]
 						: idRota,
 				ID_CON_CARGAS: id_carga,
-				PREVISAO: previsao,
+				PREVISAO: moment(previsao).subtract(3, "hours"),
 				STATUS_SERVICO: tipoServico.toUpperCase(),
 				LATITUDE: latitude ? latitude : null,
 				LONGITUDE: longitude ? longitude : null,
@@ -336,6 +349,9 @@ class ServiceCargas {
 				carga_csn,
 			},
 		});
+	}
+	async searchCsnPlacaFkSituacao({ placa }) {
+		return api.get("csn/cargas/placa", { params: { placa } });
 	}
 
 	async searchCsn({

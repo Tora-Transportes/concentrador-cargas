@@ -6,7 +6,7 @@ export const funcBodyEdit = (data, tipoServico) => {
 	return {
 		ponto: nomeCliente,
 		tipoServico,
-		previsao: moment(data.PREVISAO).format("YYYY-MM-DDThh:mm"),
+		previsao: moment(data.PREVISAO).add(3, "hours").format("YYYY-MM-DDTHH:mm"),
 		latitude: data.LATITUDE,
 		longitude: data.LONGITUDE,
 		client: nomeCliente,
@@ -15,22 +15,22 @@ export const funcBodyEdit = (data, tipoServico) => {
 		coletaEfetiva:
 			data.COLETA_EFETIVA === null
 				? null
-				: moment(data.COLETA_EFETIVA).format("YYYY-MM-DDThh:mm"),
+				: moment(data.COLETA_EFETIVA).format("YYYY-MM-DDTHH:mm"),
 		entregaEfetiva:
 			data.ENTREGA_EFETIVA === null
 				? null
-				: moment(data.ENTREGA_EFETIVA).format("YYYY-MM-DDThh:mm"),
+				: moment(data.ENTREGA_EFETIVA).format("YYYY-MM-DDTHH:mm"),
 		coletaEfetiva_peacao:
 			data.COLETA_EFETIVA_PEACAO === null
 				? null
-				: moment(data.COLETA_EFETIVA_PEACAO).format("YYYY-MM-DDThh:mm"),
+				: moment(data.COLETA_EFETIVA_PEACAO).format("YYYY-MM-DDTHH:mm"),
 		coletaEfetiva_mundo:
 			data.COLETA_EFETIVA_MUNDO === null
 				? null
-				: moment(data.COLETA_EFETIVA_MUNDO).format("YYYY-MM-DDThh:mm"),
+				: moment(data.COLETA_EFETIVA_MUNDO).format("YYYY-MM-DDTHH:mm"),
 		coletaEfetiva_posto30:
 			data.COLETA_EFETIVA_POSTO30 === null
 				? null
-				: moment(data.COLETA_EFETIVA_POSTO30).format("YYYY-MM-DDThh:mm"),
+				: moment(data.COLETA_EFETIVA_POSTO30).format("YYYY-MM-DDTHH:mm"),
 	};
 };

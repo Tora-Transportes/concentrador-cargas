@@ -10,9 +10,15 @@ import Card from "react-bootstrap/Card";
 export default function LegendaCargas(props) {
 	const [situacoes, setSituacoes] = useState([]);
 	useEffect(() => {
-		ServiceSituacoesCargas.search().then(({ data }) => {
-			setSituacoes(data.data);
-		});
+		if (props.csn === "csn") {
+			ServiceSituacoesCargas.searchCsn().then(({ data }) => {
+				setSituacoes(data.data);
+			});
+		} else {
+			ServiceSituacoesCargas.search().then(({ data }) => {
+				setSituacoes(data.data);
+			});
+		}
 	}, []);
 
 	return (
@@ -29,14 +35,10 @@ export default function LegendaCargas(props) {
 							{situacoes.map((item) => (
 								<div key={item.id} className="div-situação-cargas">
 									<div id="cor-legenda-cargas">
-										<td>
-											<StatusTooltip color={item.cor} hint={true} />
-										</td>
+										<StatusTooltip color={item.cor} hint={true} />
 									</div>
 									<div id="desc-legenda-cargas">
-										<td>
-											<p>{item.descricao}</p>
-										</td>
+										<p>{item.descricao}</p>
 									</div>
 								</div>
 							))}

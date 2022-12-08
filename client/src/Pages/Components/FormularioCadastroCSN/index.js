@@ -5,7 +5,8 @@ import "./formularioCadastroCSN.css";
 import somaDebitoVeiculo from "src/Pages/Utils/somaDebitoVeiculo";
 import { funcInputPontoParada } from "./management";
 import ViewsForm from "./ViewsForm";
-
+import ServiceCargas from "src/services/ServiceCargas";
+import Swal2 from "sweetalert2";
 function FormularioCadastroCSN({
 	formik,
 	produtos,
@@ -14,6 +15,7 @@ function FormularioCadastroCSN({
 	inputsDinamic,
 	setInputsDinamic,
 	handleEnter,
+	history,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
@@ -73,6 +75,35 @@ function FormularioCadastroCSN({
 					"codigo_motorista",
 					vehicleDetails.codigo_motorista
 				);
+				const { data } = (
+					await ServiceCargas.searchCsnPlacaFkSituacao({ placa: plate })
+				).data;
+
+				if (data.results?.length) {
+					const { id, fk_situacao } = data.results[0];
+					const myhtml = document.createElement("div");
+					myhtml.innerHTML = `Já existe uma carga aberta com a placa: ${plate} e o código: ${id}.<br><br>
+					Para continuar, finalize a carga ou adicione outra placa.`;
+
+					Swal2.fire({
+						title: "Atenção!",
+						//text: `Já existe uma carga aberta com a placa: ${plate}, código da carga: ${id}.`,
+						html: myhtml,
+						showCancelButton: true,
+						confirmButtonColor: "#00652e",
+						cancelButtonColor: "#3085d6",
+						cancelButtonText: "Adicionar outra placa",
+						confirmButtonText: "Finalizar carga",
+					}).then((result) => {
+						if (result.isConfirmed) {
+							if (fk_situacao === 2) {
+								history.push(`/veiculos/aprovacao/csn-${id}`);
+							} else {
+								history.push(`/cargas/csn/${id}`);
+							}
+						}
+					});
+				}
 				return;
 			} else {
 				swal("Não foi encontrado nenhum veículo com essa placa.");
@@ -142,7 +173,6 @@ function FormularioCadastroCSN({
 				setDebitosVeiculo={setDebitosVeiculo}
 				setVeiculo={setVeiculo}
 				valorTotalDebito={valorTotalDebito}
-				inputsDinamic={inputsDinamic}
 				fkSituacao={fkSituacao}
 				handleEnter={handleEnter}
 			/>

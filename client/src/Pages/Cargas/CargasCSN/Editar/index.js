@@ -326,31 +326,6 @@ function EditarCargaCsn() {
 		setLoading(false);
 	}
 
-	// async function handleEmitirDocumento() {
-	// 	setLoading(true);
-	// 	try {
-	// 		const ok = await swal(`Certeza que deseja finalizar a  carga?`, {
-	// 			dangerMode: true,
-	// 			buttons: ["Cancelar", true],
-	// 			icon: "warning",
-	// 		});
-	// 		if (ok) {
-	// 			await ServiceCargas.update({
-	// 				...formik.values,
-	// 				fk_situacao: 6,
-	// 				fk_filial: formik.values.fk_filial?.split("-")[0],
-	// 			});
-	// 			await swal("Sucesso!", "Carga finalizada.", "success");
-	// 			await carregarCarga();
-	// 		} else {
-	// 			await swal("Nenhuma alteração realizada.");
-	// 		}
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// 	setLoading(false);
-	// }
-
 	async function carregarCarga() {
 		try {
 			let city;
