@@ -6,12 +6,13 @@ import { useHistory } from "react-router-dom";
 import { MdOutlineWavingHand, MdOutlineAppRegistration } from "react-icons/md";
 import { SiGooglesheets } from "react-icons/si";
 import "./menuCargas.css";
-// import HandleClick from "./tooltipsMenu";
+
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 
 function Main() {
 	const [viewsCadastrarCSN, setviewsCadastrarCSN] = useState(false);
+	const [isPermissionPadrao, setPermissionPadrao] = useState(false);
 	const history = useHistory();
 	useEffect(() => {
 		(async () => {
@@ -27,6 +28,8 @@ function Main() {
 
 			if (userPermission?.permissoes.includes("CARGAS_CSN"))
 				setviewsCadastrarCSN(true);
+			if (userPermission?.permissoes.includes("CARGAS_PADRAO"))
+				setPermissionPadrao(true);
 		})();
 	}, []);
 
@@ -34,18 +37,16 @@ function Main() {
 		<>
 			<Menusuperior type={"teste"} />
 			<Container className="class-body-menu">
-				<h1
-					id="titulo-selecionar-modo-carga"
-					className="class-title-coleta"
-					// onClick={HandleClick}
-				>
+				<h1 id="titulo-selecionar-modo-carga" className="class-title-coleta">
 					Selecione o modo no qual a carga foi coletada:
 				</h1>
 				<div className="class-button-icons">
-					<Link className="text-decoration-none" to="/cargas/manual">
-						<MdOutlineWavingHand size={70} id="hand" />
-						<p id="title-manual">Manual</p>
-					</Link>
+					{isPermissionPadrao && (
+						<Link className="text-decoration-none" to="/cargas/manual">
+							<MdOutlineWavingHand size={70} id="hand" />
+							<p id="title-manual">Manual</p>
+						</Link>
+					)}
 
 					<Link className="text-decoration-none" to="/cargas/importar">
 						<SiGooglesheets size={70} id="import" />

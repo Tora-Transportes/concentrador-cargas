@@ -8,12 +8,16 @@ import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUs
 
 function Menusuperior() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
-  const [isPermission, setPermission] = useState(false);
+  const [isPermissionCsn, setPermissionCsn] = useState(false);
+  const [isPermissionPadrao, setPermissionPadrao] = useState(false);
   useEffect(() => {
     (async () => {
       const userPermission = await validationPermissionUser();
+      if (userPermission?.permissoes.includes("CARGAS_PADRAO")) {
+        setPermissionPadrao(true);
+      }
       if (userPermission?.permissoes.includes("CARGAS_CSN")) {
-        setPermission(true);
+        setPermissionCsn(true);
       }
     })();
   }, []);
@@ -49,12 +53,15 @@ function Menusuperior() {
               </button>
               <div id="myDropdown" className="dropdown-content">
                 <a href="/cargas/menu">Cadastrar Cargas</a>
-                <a href="/cargas/visualizar">Listagem de Cargas</a>
-                <a href="/lotes/visualizar">Listagem de Lotes</a>
-                {isPermission && (
+                {isPermissionPadrao && (
+                  <>
+                    <a href="/cargas/visualizar">Listagem de Cargas</a>
+                    <a href="/lotes/visualizar">Listagem de Lotes</a>
+                  </>
+                )}
+                {isPermissionCsn && (
                   <a href="/cargas/visualizar/csn">Listagem CSN</a>
                 )}
-                {/* <a href="/producao">Produção</a> */}
               </div>
             </div>
           </div>
@@ -64,11 +71,18 @@ function Menusuperior() {
                 Monitoramento
               </button>
               <div id="myDropdown" className="dropdown-content">
-                <a href="/veiculos/aprovacao/padrao">Padrão</a>
-                {isPermission && <a href="/veiculos/aprovacao/csn">CSN</a>}
+                {isPermissionPadrao && (
+                  <a href="/veiculos/aprovacao/padrao">Padrão</a>
+                )}
+                {isPermissionCsn && <a href="/veiculos/aprovacao/csn">CSN</a>}
               </div>
             </div>
           </div>
+          <li className="class-li">
+            <a id="style-a" href="/veiculos/coordenadas">
+              Coordenadas
+            </a>
+          </li>
           <li className="class-li">
             <a id="style-a" href="/usuarios/permissoes">
               Permissões
@@ -100,7 +114,7 @@ function Menusuperior() {
               </div> */}
             </div>
           </div>
-          {isPermission && (
+          {isPermissionCsn && (
             <li className="class-li">
               <a id="style-a" href="/localizacao">
                 Localização
