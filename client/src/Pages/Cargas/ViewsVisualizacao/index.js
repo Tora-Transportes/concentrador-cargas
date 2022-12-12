@@ -56,7 +56,7 @@ function VisualizarCargas({
 						<h1 id="title-h1">{tituloPag}</h1>
 					</Col>
 
-					<Link target="_blank" to="/relatorios">
+					<Link target="_blank" to="/relatorios/visualizar/padrao">
 						<img className="img-cargas-lote" src={chartImg} />
 					</Link>
 				</Row>

@@ -88,7 +88,11 @@ export default function AllRoutes() {
 					component={CoordenadasVeiculos}
 				/>
 
-				<Route path="/relatorios" exact component={RelatoriosMain} />
+				<Route
+					path="/relatorios/visualizar/:id"
+					exact
+					component={RelatoriosMain}
+				/>
 				<Route path="/relatorios/visualizar" exact component={LinkRelatorios} />
 				<Route path="/credenciais" exact component={Credenciais} />
 				{/* <Route path="/producao" exact component={CalendarioProducao} /> */}

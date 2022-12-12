@@ -32,9 +32,9 @@ function Main() {
 	//Função que limpar cache quando subir uma nova versão , isto se tiver necessidade...
 	const verificarAtualizacaoVersao = async () => {
 		const limparCache = localStorage.getItem("clear_Cache");
-		if (limparCache == null || limparCache.toString() !== "version_3") {
+		if (limparCache == null || limparCache.toString() !== "version_1") {
 			localStorage.clear();
-			localStorage.setItem("clear_Cache", "version_3");
+			localStorage.setItem("clear_Cache", "version_1");
 			location.reload();
 		}
 	};
@@ -175,7 +175,7 @@ function Main() {
 
 				<div className="class-icons-body">
 					<div className="icons-efect">
-						<Link to="/relatorios" className="class-link">
+						<Link to="/relatorios/visualizar/padrao" className="class-link">
 							<FaChartBar size={50} className="class-ico-ind" />
 							<br />
 							<b id="style-iconn">Indicador Operacional</b>

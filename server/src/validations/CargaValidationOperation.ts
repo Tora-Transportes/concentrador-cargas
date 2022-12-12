@@ -171,24 +171,6 @@ export class CargaValidationOperation {
           "data_entrega",
           "data_coleta",
         ];
-        // const camposPermitidosMudanca =
-        //   cargaAtual.carga_csn === 1
-        //     ? [
-        //         "fk_situacao",
-        //         "observacao_cancelamento",
-        //         "carga_csn",
-        //         "locais",
-        //         "data_atualizacao",
-        //         "data_entrega",
-        //         "data_coleta",
-        //       ]
-        //     : [
-        //         "fk_situacao",
-        //         "observacao_cancelamento",
-        //         "carga_csn",
-        //         "locais",
-        //         "data_atualizacao",
-        //       ];
         for (const i in cargaAtual) {
           if ({ ...cargaAnterior }[i] != { ...cargaAtual }[i]) {
             if (!camposPermitidosMudanca.includes(i)) {

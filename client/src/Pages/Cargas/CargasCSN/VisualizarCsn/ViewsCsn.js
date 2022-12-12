@@ -53,7 +53,7 @@ function ViewsCsn({
 						<h1 id="title-h1">{"Listagem de Cargas CSN"}</h1>
 					</Col>
 
-					<Link target="_blank" to="/relatorios">
+					<Link target="_blank" to="/relatorios/visualizar/csn">
 						<img className="img-cargas-lote" src={chartImg} />
 					</Link>
 				</Row>
