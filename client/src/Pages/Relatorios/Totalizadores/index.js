@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import io from "../../../services/socket";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { useParams } from "react-router-dom";
-import { situacaoCargaCSN, situacaoCargaPadrao } from "../managementRelatorio";
 
 function RelatoriosMain() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -18,7 +17,33 @@ function RelatoriosMain() {
 		cadastro_manual: 0,
 		lotes_ativos: 0,
 		lotes_desativados: 0,
-		geral: [],
+		geral: [
+			{
+				total: 0,
+				fk_situacao: 1,
+				descricao: "Aguardando Alocação (Veículo)",
+			},
+			{
+				total: 0,
+				fk_situacao: 2,
+				descricao: "Aguardando GR",
+			},
+			{
+				total: 0,
+				fk_situacao: 3,
+				descricao: "Validado pelo GR",
+			},
+			{
+				total: 0,
+				fk_situacao: 4,
+				descricao: "Veículo Reprovado",
+			},
+			{
+				total: 0,
+				fk_situacao: 5,
+				descricao: "Carga cancelada",
+			},
+		],
 	});
 	const [tempoMedioAprovacaoGr, setTempoMedioAprovacaoGr] = useState(null);
 	const [resumosDiarios, setResumosDiarios] = useState([]);
@@ -31,9 +56,6 @@ function RelatoriosMain() {
 	const { id } = useParams();
 	const interval = useRef(null);
 	const statusCargaId = String(id) === "padrao" ? 0 : 1;
-	statusCargaId === 0
-		? (totalizadores.geral = situacaoCargaPadrao)
-		: (totalizadores.geral = situacaoCargaCSN);
 	useEffect(() => {
 		reload();
 	}, [filters]);
