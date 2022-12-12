@@ -132,7 +132,7 @@ function Manual() {
 					fk_situacao: 5,
 					observacao_cancelamento: observacaoCancelamento,
 					fk_filial: formik.values.fk_filial?.split("-")[0],
-					cargas_csn: 0,
+					carga_csn: 0,
 				});
 				await swal("Sucesso!", "Carga cancelada.", "success");
 				await carregarCarga();

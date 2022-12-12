@@ -188,8 +188,6 @@ const CadastroCargaCSN = () => {
 				).data;
 
 				if (data.data.id) {
-					// const apagar = true;
-					// if (apagar) {
 					for (const [key, value] of Object.entries({
 						ponto_passagem,
 						ponto_passagem2,
@@ -210,7 +208,6 @@ const CadastroCargaCSN = () => {
 							await ServiceCargas.createPontoParada({
 								...value,
 								id_carga: data.data.id,
-								//id_carga: 122233987,
 								key,
 							});
 						}
@@ -219,7 +216,6 @@ const CadastroCargaCSN = () => {
 					const ok = await swal(
 						"Sucesso!",
 						`A carga foi cadastrada com o identificador ${data.data.id}!`,
-						//"A carga foi cadastrada com o identificador 5555555!",
 						"success"
 					);
 

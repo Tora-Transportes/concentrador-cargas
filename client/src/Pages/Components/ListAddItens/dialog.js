@@ -66,7 +66,7 @@ export const DetalhesDialogParadas = ({
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="Número CTE" className="mb-3">
+					<FloatingLabel label="DOC TRANSPORTE " className="mb-3">
 						<Form.Control
 							type="text"
 							name="numeroCte"

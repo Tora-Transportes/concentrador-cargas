@@ -315,7 +315,7 @@ function EditarCargaCsn() {
 					fk_situacao: 5,
 					observacao_cancelamento: observacaoCancelamento,
 					fk_filial: formik.values.fk_filial?.split("-")[0],
-					cargas_csn: 1,
+					carga_csn: 1,
 				});
 				await swal("Sucesso!", "Carga cancelada.", "success");
 				await carregarCarga();
