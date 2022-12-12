@@ -201,6 +201,8 @@ function EditarCargaCsn() {
 							fk_situacao: 6,
 							fk_filial: formik.values.fk_filial?.split("-")[0],
 						});
+					} else {
+						window.open("", "_self").close();
 					}
 				}
 

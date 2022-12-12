@@ -111,7 +111,7 @@ export const funcInputPontoParada = (
 			case 5:
 				if (dados === "delete") {
 					const id = await formik.values.ponto_passagem6.id;
-					if (id.length) funcDeletarParada(id);
+					if (id?.length) funcDeletarParada(id);
 				}
 				formik.setFieldValue("ponto_passagem6.ponto", "");
 				formik.setFieldValue("ponto_passagem6.tipoServico", "");
@@ -124,7 +124,7 @@ export const funcInputPontoParada = (
 			case 6:
 				if (dados === "delete") {
 					const id = await formik.values.ponto_passagem7.id;
-					if (id.length) funcDeletarParada(id);
+					if (id?.length) funcDeletarParada(id);
 				}
 				formik.setFieldValue("ponto_passagem7.ponto", "");
 				formik.setFieldValue("ponto_passagem7.tipoServico", "");
@@ -138,7 +138,7 @@ export const funcInputPontoParada = (
 			case 7:
 				if (dados === "delete") {
 					const id = await formik.values.ponto_passagem8.id;
-					if (id.length) funcDeletarParada(id);
+					if (id?.length) funcDeletarParada(id);
 				}
 				formik.setFieldValue("ponto_passagem8.ponto", "");
 				formik.setFieldValue("ponto_passagem8.tipoServico", "");
@@ -152,7 +152,7 @@ export const funcInputPontoParada = (
 			case 8:
 				if (dados === "delete") {
 					const id = await formik.values.ponto_passagem9.id;
-					if (id.length) funcDeletarParada(id);
+					if (id?.length) funcDeletarParada(id);
 				}
 				formik.setFieldValue("ponto_passagem9.ponto", "");
 				formik.setFieldValue("ponto_passagem9.tipoServico", "");
@@ -165,7 +165,7 @@ export const funcInputPontoParada = (
 			case 9:
 				if (dados === "delete") {
 					const id = await formik.values.ponto_passagem10.id;
-					if (id.length) funcDeletarParada(id);
+					if (id?.length) funcDeletarParada(id);
 				}
 				formik.setFieldValue("ponto_passagem10.ponto", "");
 				formik.setFieldValue("ponto_passagem10.tipoServico", "");

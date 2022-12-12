@@ -57,7 +57,6 @@ class ServiceCargas {
 			locais,
 			carga_csn,
 		};
-		//console.log("ENTROU NO CREAT Carga", carga);
 		return await api.post("/cargas", carga);
 	}
 
@@ -87,7 +86,6 @@ class ServiceCargas {
 			LONGITUDE: longitude ? longitude : null,
 			CLIENTE: client === "" ? ponto : client,
 		};
-		//console.log("ENTROU NO CREAT Ponto passagem", carga);
 		return await api.post("/csn/ponto_parada", carga);
 	}
 
@@ -137,7 +135,6 @@ class ServiceCargas {
 				entregaEfetiva === undefined ? null : moment(entregaEfetiva),
 		};
 		if (typeof id === "number") {
-			//console.log("SALVANDO", carga);
 			return await api.put(`/csn/ponto_parada/${id}`, carga);
 		} else {
 			const cargaSave = {
@@ -154,7 +151,6 @@ class ServiceCargas {
 				LONGITUDE: longitude ? longitude : null,
 				CLIENTE: tipoClient,
 			};
-			//console.log("PONTO PASSAGEM", cargaSave);
 			return await api.post("/csn/ponto_parada", cargaSave);
 		}
 	}
@@ -258,7 +254,7 @@ class ServiceCargas {
 			destino_carga: destino_carga === "" ? null : destino_carga,
 			data_entrega: data_entrega === "" ? null : data_entrega,
 			data_coleta: data_coleta === "" ? null : data_coleta,
-			tipo_carga,
+			tipo_carga: tipo_carga === "" ? null : tipo_carga,
 			canal_comunicacao,
 			quantidade,
 			unidade_medida,
@@ -286,7 +282,6 @@ class ServiceCargas {
 			locais,
 			carga_csn,
 		};
-		//console.log("Entrou no update", carga);
 		return api.put(`/cargas/${id}`, carga);
 	}
 
