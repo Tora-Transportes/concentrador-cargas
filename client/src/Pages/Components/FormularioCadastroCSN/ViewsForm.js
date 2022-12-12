@@ -45,11 +45,16 @@ export default function ViewsForm({
 	fkSituacao,
 }) {
 	const handleEnter = (event) => {
-		if (event.key.toLowerCase() === "enter") {
+		if (event.key === "Enter") {
 			const form = event.target.form;
 			const index = [...form].indexOf(event.target);
-			form.elements[index + 1].focus();
-			event.preventDefault();
+			if (index == 3) {
+				form.elements[index + 3].focus();
+				event.preventDefault();
+			} else {
+				form.elements[index + 1].focus();
+				event.preventDefault();
+			}
 		}
 	};
 	return (
@@ -207,7 +212,6 @@ export default function ViewsForm({
 								type="text"
 								name="placa_veiculo"
 								value={formik.values.placa_veiculo || ""}
-								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
 								onBlur={() => {
 									if (
