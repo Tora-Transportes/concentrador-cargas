@@ -6,7 +6,7 @@ export const funcBodyEdit = (data, tipoServico) => {
 	return {
 		ponto: nomeCliente,
 		tipoServico,
-		previsao: moment(data.PREVISAO).add(3, "hours").format("YYYY-MM-DDTHH:mm"),
+		previsao: moment(data.PREVISAO).format("YYYY-MM-DDTHH:mm"),
 		latitude: data.LATITUDE,
 		longitude: data.LONGITUDE,
 		client: nomeCliente,
