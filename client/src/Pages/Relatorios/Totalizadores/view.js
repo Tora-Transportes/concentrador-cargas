@@ -486,10 +486,11 @@ function ViewRotasPendentes({
 							<Row>
 								<Col>
 									<Button
-										className="w-100"
+										id="button-baixar-cargas-filter"
 										onClick={() => handleExportExcel("completo")}
 									>
-										Baixar todas cargas do filtro <BsDownload />
+										Baixar todas as cargas do filtro{" "}
+										<BsDownload className="ms-2" />
 									</Button>
 								</Col>
 							</Row>
