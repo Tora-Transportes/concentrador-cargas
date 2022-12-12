@@ -138,7 +138,17 @@ export class CargaValidationOperation {
         }
 
         if (Number(cargaAtual.fk_situacao) === 6) {
-          if (!this.hasPermission.has("APROVAR_VIAGEM")) {
+          if (
+            cargaAtual.carga_csn === 1 &&
+            !this.hasPermission.has("FINALIZAR_CARGAS_CSN")
+          ) {
+            throw new Error(
+              "Não é possível finalizar carga sem a permissão 'FINALIZAR_CARGAS_CSN'"
+            );
+          } else if (
+            cargaAtual.carga_csn !== 1 &&
+            !this.hasPermission.has("APROVAR_VIAGEM")
+          ) {
             throw new Error(
               "Não é possível mudar o status da carga para DOCUMENTO EMITIDO sem a permissão 'APROVAR_VIAGEM'"
             );

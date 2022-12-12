@@ -79,11 +79,6 @@ function Menusuperior() {
             </div>
           </div>
           <li className="class-li">
-            <a id="style-a" href="/veiculos/coordenadas">
-              Coordenadas
-            </a>
-          </li>
-          <li className="class-li">
             <a id="style-a" href="/usuarios/permissoes">
               Permissões
             </a>
