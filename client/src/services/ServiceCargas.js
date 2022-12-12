@@ -81,7 +81,7 @@ class ServiceCargas {
 		const carga = {
 			ID_ROTAS_CSN: ponto ? ponto?.split("-")[0] : null,
 			ID_CON_CARGAS: id_carga,
-			PREVISAO: moment(previsao).subtract(3, "hours"),
+			PREVISAO: moment(previsao),
 			STATUS_SERVICO: tipoServico.toUpperCase(),
 			LATITUDE: latitude ? latitude : null,
 			LONGITUDE: longitude ? longitude : null,
@@ -116,31 +116,25 @@ class ServiceCargas {
 		const carga = {
 			ID_ROTAS_CSN: idRotaCsn === "" ? ponto?.split("-")[0] : idRota,
 			ID_CON_CARGAS: id_carga,
-			PREVISAO: moment(previsao).subtract(3, "hours"),
+			PREVISAO: moment(previsao),
 			STATUS_SERVICO: tipoServico.toUpperCase(),
 			LATITUDE: latitude ? latitude : null,
 			LONGITUDE: longitude ? longitude : null,
 			CLIENTE: tipoClient,
 			COLETA_EFETIVA:
-				coletaEfetiva === undefined
-					? null
-					: moment(coletaEfetiva).subtract(3, "hours"),
+				coletaEfetiva === undefined ? null : moment(coletaEfetiva),
 			COLETA_EFETIVA_POSTO30:
 				coletaEfetiva_posto30 === undefined
 					? null
-					: moment(coletaEfetiva_posto30).subtract(3, "hours"),
+					: moment(coletaEfetiva_posto30),
 			COLETA_EFETIVA_MUNDO:
-				coletaEfetiva_mundo === undefined
-					? null
-					: moment(coletaEfetiva_mundo).subtract(3, "hours"),
+				coletaEfetiva_mundo === undefined ? null : moment(coletaEfetiva_mundo),
 			COLETA_EFETIVA_PEACAO:
 				coletaEfetiva_peacao === undefined
 					? null
-					: moment(coletaEfetiva_peacao).subtract(3, "hours"),
+					: moment(coletaEfetiva_peacao),
 			ENTREGA_EFETIVA:
-				entregaEfetiva === undefined
-					? null
-					: moment(entregaEfetiva).subtract(3, "hours"),
+				entregaEfetiva === undefined ? null : moment(entregaEfetiva),
 		};
 		if (typeof id === "number") {
 			//console.log("SALVANDO", carga);
@@ -154,7 +148,7 @@ class ServiceCargas {
 						? ponto?.split("-")[0]
 						: idRota,
 				ID_CON_CARGAS: id_carga,
-				PREVISAO: moment(previsao).subtract(3, "hours"),
+				PREVISAO: moment(previsao),
 				STATUS_SERVICO: tipoServico.toUpperCase(),
 				LATITUDE: latitude ? latitude : null,
 				LONGITUDE: longitude ? longitude : null,
