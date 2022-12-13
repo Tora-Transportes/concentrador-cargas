@@ -271,7 +271,8 @@ class ServiceCargas {
 			fk_situacao,
 			observacao_gr: observacao_gr === "" ? null : observacao_gr,
 			fk_filial,
-			documento_transporte,
+			documento_transporte:
+				documento_transporte === "" ? null : documento_transporte,
 			observacao_cancelamento:
 				observacao_cancelamento === "" ? null : observacao_cancelamento,
 			codigo_motorista:

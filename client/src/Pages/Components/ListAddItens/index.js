@@ -35,10 +35,10 @@ export default function ListAddItens({ onChange, value, name, formik }) {
 			setUltimaParadaIntermediaria(parada_intemediaria);
 
 			if (distanciaKm) {
-				const dadosParada = `Cidade: ${parada_intemediaria}; DISTÂNCIA: ${distanciaKm} km; PESO: ${peso}; SERVIÇO: ${servico}; CTE: ${numeroCte}.`;
+				const dadosParada = `Cidade: ${parada_intemediaria}; DISTÂNCIA: ${distanciaKm} km; PESO: ${peso}; SERVIÇO: ${servico}; DOC tRANSPORTE: ${numeroCte}.`;
 				setList([...new Set([...list, dadosParada])]);
 			} else {
-				const dadosParada = `CIDADE: ${parada_intemediaria}, PESO: ${peso}, SERVIÇO: ${servico}, CTE: ${numeroCte}.`;
+				const dadosParada = `CIDADE: ${parada_intemediaria}, PESO: ${peso}, SERVIÇO: ${servico}, DOC tRANSPORTE: ${numeroCte}.`;
 				setList([...new Set([...list, dadosParada])]);
 			}
 		} else if (formik.values.origem_carga.length < 3) {
@@ -89,7 +89,6 @@ export default function ListAddItens({ onChange, value, name, formik }) {
 	}
 
 	return (
-		// <ol className="border list-unstyled">
 		<ol>
 			<>
 				{list?.map((i, index) => (
@@ -109,7 +108,6 @@ export default function ListAddItens({ onChange, value, name, formik }) {
 					header={"Registre as informações do serviço e local:"}
 					visible={visibleDialog}
 					onHide={() => setVisibleDialog(false)}
-					// footer={footer}
 					closable={true}
 				>
 					<DetalhesDialogParadas
