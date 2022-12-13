@@ -46,7 +46,7 @@ class RelatorioController {
 
   async gerarResumoDiario(req: Request, res: Response) {
     const report = new ReportResumoPorDia();
-    const { fk_filial, data_inicio, data_final } = req.query;
+    const { fk_filial, data_inicio, data_final, carga_csn } = req.query;
     if (!fk_filial || !data_inicio || !data_final) {
       throw new AppError("Parametros inválidos para gerar o relatório", 400);
     }
@@ -56,6 +56,7 @@ class RelatorioController {
         fk_filial: String(fk_filial),
         data_inicio: String(data_inicio),
         data_final: String(data_final),
+        carga_csn: String(carga_csn),
       }),
     });
   }

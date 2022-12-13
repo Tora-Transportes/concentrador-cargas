@@ -30,11 +30,14 @@ export const columns = [
 				hint={row["situacao.descricao"]}
 			/>
 		),
-		Filter: (props) => (
-			<SelectStatusCarga {...props}>
-				<option></option>
-			</SelectStatusCarga>
-		),
+		Filter: (props) => {
+			const csn = 1;
+			return (
+				<SelectStatusCarga {...props} csn={csn}>
+					<option></option>
+				</SelectStatusCarga>
+			);
+		},
 		sortable: "sortable",
 		showFilter: true,
 	},

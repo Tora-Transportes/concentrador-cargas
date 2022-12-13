@@ -1,15 +1,14 @@
 import api from "./api";
 class ServiceRelatorios {
 	async totalizadores({ data_inicio, data_final, fk_filial, carga_csn } = {}) {
-		console.log("NNNNN", carga_csn);
 		return api.get("/relatorio/totalizadores", {
 			params: { data_inicio, data_final, fk_filial, carga_csn },
 		});
 	}
 
-	async resumosDiarios({ data_inicio, data_final, fk_filial } = {}) {
+	async resumosDiarios({ data_inicio, data_final, fk_filial, carga_csn } = {}) {
 		return api.get("/relatorio/resumo_diario", {
-			params: { data_inicio, data_final, fk_filial },
+			params: { data_inicio, data_final, fk_filial, carga_csn },
 		});
 	}
 
@@ -17,10 +16,16 @@ class ServiceRelatorios {
 		return api.get("/relatorio/media_aprovacao_gr");
 	}
 
-	async exportToXlsx({ data_inicio, data_final, key, fk_filial } = {}) {
+	async exportToXlsx({
+		data_inicio,
+		data_final,
+		key,
+		fk_filial,
+		carga_csn,
+	} = {}) {
 		return api.get(`/relatorio/totalizadores/${key}`, {
 			responseType: "arraybuffer",
-			params: { data_inicio, data_final, fk_filial },
+			params: { data_inicio, data_final, fk_filial, carga_csn },
 		});
 	}
 
