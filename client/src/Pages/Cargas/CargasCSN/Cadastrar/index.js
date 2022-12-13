@@ -11,8 +11,6 @@ import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { getClaims } from "src/MicrosoftAuthentication";
 import ServiceRecomendacoes from "src/services/ServiceRecomendacoes";
-//import ServiceRecomendacoes from "src/services/ServiceRecomendacoes";
-//import { valueFormik } from "../management/valueFormik";
 const CadastroCargaCSN = () => {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [produtos, setProdutos] = useState([]);
@@ -266,8 +264,6 @@ const CadastroCargaCSN = () => {
 	}, []);
 
 	function resetForm() {
-		// formik.resetForm();
-		// formik.setFieldValue("id", "(gerado automaticamente)");
 		window.location.reload();
 	}
 

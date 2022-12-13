@@ -18,7 +18,6 @@ import FilialSelect from "../FilialSelect";
 import InputCliente from "../InputCliente";
 import InputPlaca from "../InputPlaca";
 import ListAddItens from "../ListAddItens";
-//import UnidadesMedida from "../UnidadesMedida";
 import InputsPontoPassagem from "./InputPontoPassagem";
 
 export default function ViewsForm({
