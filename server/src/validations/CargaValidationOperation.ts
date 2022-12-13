@@ -162,21 +162,23 @@ export class CargaValidationOperation {
           }
         }
 
-        const camposPermitidosMudanca = [
-          "fk_situacao",
-          "observacao_cancelamento",
-          "carga_csn",
-          "locais",
-          "data_atualizacao",
-          "data_entrega",
-          "data_coleta",
-        ];
-        for (const i in cargaAtual) {
-          if ({ ...cargaAnterior }[i] != { ...cargaAtual }[i]) {
-            if (!camposPermitidosMudanca.includes(i)) {
-              throw new Error(
-                "A carga não pode ter seus dados alterados após ser aprovada"
-              );
+        if (Number(cargaAtual.fk_situacao) !== 5) {
+          const camposPermitidosMudanca = [
+            "fk_situacao",
+            "observacao_cancelamento",
+            "carga_csn",
+            "locais",
+            "data_atualizacao",
+            "data_entrega",
+            "data_coleta",
+          ];
+          for (const i in cargaAtual) {
+            if ({ ...cargaAnterior }[i] != { ...cargaAtual }[i]) {
+              if (!camposPermitidosMudanca.includes(i)) {
+                throw new Error(
+                  "A carga não pode ter seus dados alterados após ser aprovada"
+                );
+              }
             }
           }
         }

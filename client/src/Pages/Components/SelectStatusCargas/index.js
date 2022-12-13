@@ -4,16 +4,23 @@ import { Form } from "react-bootstrap";
 
 let cacheSituacoes = null;
 
-function CaptionStatusCarga({ children, ...rest }) {
+function CaptionStatusCarga({ children, csn, ...rest }) {
 	const [situacoes, setSituacoes] = useState([]);
 	useEffect(() => {
 		if (cacheSituacoes) {
 			setSituacoes(cacheSituacoes);
 		} else {
-			ServiceSituacoesCargas.search().then(({ data }) => {
-				cacheSituacoes = data.data;
-				setSituacoes(data.data);
-			});
+			if (csn === 1) {
+				ServiceSituacoesCargas.searchCsn().then(({ data }) => {
+					cacheSituacoes = data.data;
+					setSituacoes(data.data);
+				});
+			} else {
+				ServiceSituacoesCargas.search().then(({ data }) => {
+					cacheSituacoes = data.data;
+					setSituacoes(data.data);
+				});
+			}
 		}
 	}, []);
 	return (
