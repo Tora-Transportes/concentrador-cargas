@@ -48,9 +48,11 @@ function Menusuperior() {
           </li>
           <div className="class-dropdown">
             <div className="dropdown">
-              <button id="style-button-drop" className="dropbtn">
-                Cargas
-              </button>
+              {(isPermissionCsn || isPermissionPadrao) && (
+                <button id="style-button-drop" className="dropbtn">
+                  Cargas
+                </button>
+              )}
               <div id="myDropdown" className="dropdown-content">
                 <a href="/cargas/menu">Cadastrar Cargas</a>
                 {isPermissionPadrao && (

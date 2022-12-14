@@ -34,6 +34,7 @@ USU_TORA;con_cargas;data_atualizacao;Data ultima atualizacao da carga;;
 USU_TORA;con_cargas;ativo;Identifica se a carga foi exclu�da ou n�o;;
 USU_TORA;con_cargas;acessorios_requisitos;Acess�rios necess�rio para o ve�culo poder transportar a carga;;
 USU_TORA;con_cargas;usuario;Nome do usu�rio que realizou a ultima altera��o no registro;;
+USU_TORA;con_cargas;carga_csn;Status que indica se o  Usuario é CSN ou padrão;;
 ;;;;;
 USU_TORA;con_cargas_logs_aprovacao;fk_carga;Referencia da carga da carga que foi aprovada ou reprovada;;com_cargas.id
 USU_TORA;con_cargas_logs_aprovacao;segundos;Quantidade de segundos que a carga ficou em espera;;

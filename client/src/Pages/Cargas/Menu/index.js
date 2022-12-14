@@ -42,16 +42,18 @@ function Main() {
 				</h1>
 				<div className="class-button-icons">
 					{isPermissionPadrao && (
-						<Link className="text-decoration-none" to="/cargas/manual">
-							<MdOutlineWavingHand size={70} id="hand" />
-							<p id="title-manual">Manual</p>
-						</Link>
-					)}
+						<>
+							<Link className="text-decoration-none" to="/cargas/manual">
+								<MdOutlineWavingHand size={70} id="hand" />
+								<p id="title-manual">Manual</p>
+							</Link>
 
-					<Link className="text-decoration-none" to="/cargas/importar">
-						<SiGooglesheets size={70} id="import" />
-						<p id="title-ico-import">Importação em Lote</p>
-					</Link>
+							<Link className="text-decoration-none" to="/cargas/importar">
+								<SiGooglesheets size={70} id="import" />
+								<p id="title-ico-import">Importação em Lote</p>
+							</Link>
+						</>
+					)}
 
 					{viewsCadastrarCSN && (
 						<Link className="text-decoration-none" to="/cargas/cadastro/csn">
