@@ -14,7 +14,6 @@ import ServiceRecomendacoes from "src/services/ServiceRecomendacoes";
 const CadastroCargaCSN = () => {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [produtos, setProdutos] = useState([]);
-	const [inputsDinamic, setInputsDinamic] = useState([]);
 	const history = useHistory();
 
 	const formik = useFormik({
@@ -282,8 +281,6 @@ const CadastroCargaCSN = () => {
 						}
 						produtos={produtos}
 						formik={formik}
-						inputsDinamic={inputsDinamic}
-						setInputsDinamic={setInputsDinamic}
 						history={history}
 					/>
 					<Row>

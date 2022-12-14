@@ -12,8 +12,6 @@ function FormularioCadastroCSN({
 	produtos,
 	viewsInput,
 	buscarCargaComDocumentoDeTransporte,
-	inputsDinamic,
-	setInputsDinamic,
 	handleEnter,
 	history,
 }) {
@@ -143,9 +141,7 @@ function FormularioCadastroCSN({
 		setInputColeta7,
 		setInputColeta8,
 		setInputColeta9,
-		setInputColeta10,
-		inputsDinamic,
-		setInputsDinamic
+		setInputColeta10
 	);
 
 	return (
