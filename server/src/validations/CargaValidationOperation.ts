@@ -171,6 +171,7 @@ export class CargaValidationOperation {
             "data_atualizacao",
             "data_entrega",
             "data_coleta",
+            "usuario",
           ];
           for (const i in cargaAtual) {
             if ({ ...cargaAnterior }[i] != { ...cargaAtual }[i]) {

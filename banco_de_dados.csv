@@ -153,3 +153,10 @@ USU_TORA;con_pontos_parada;longitude;Longitude adicionada;;
 USU_TORA;con_situacoes_cargas_csn;id;Identificador da situacao;;
 USU_TORA;con_situacoes_cargas_csn;cor;Cor que vai ser mostrada na carga;;
 USU_TORA;con_situacoes_cargas_csn;descricao;Descri��o da situa��o;;
+
+USU_TORA;con_logs_csn;timestamp;Milisegundos desde 1970;;
+USU_TORA;con_logs_csn;token;Token do usuario enviado pelo react-adal;;
+USU_TORA;con_logs_csn;oid;Identificador do usu�rio;;con_usuarios.oid
+USU_TORA;con_logs_csn;url;url preenchida na requisicao;;
+USU_TORA;con_logs_csn;corpo;Corpo da mensagem;;
+USU_TORA;con_logs_csn;metodo;Metodo HTTP usado;;

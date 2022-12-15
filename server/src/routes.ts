@@ -36,8 +36,8 @@ routes.delete("/credenciais/:portal/:user", CredenciaisController.delete);
 routes.post("/portal/cargas", CargaController.createByImport);
 
 routes.use("/static/", express.static(path.resolve(__dirname, "..", "static")));
-routes.use(LogMiddleware);
 routes.use(TokenMiddleware);
+routes.use(LogMiddleware);
 routes.use(ConvertFieldsToDate);
 routes.get("/cargas", CargaController.search);
 routes.post("/cargas", CargaController.create);
@@ -134,7 +134,7 @@ routes.get(
 );
 
 routes.get("/situacoes/cargas", SituacoesCargasController.search);
-routes.get("/situacoes/cargas/csn", SituacoesCargasCsnController.search);
+routes.get("/csn/situacoes/cargas", SituacoesCargasCsnController.search);
 
 routes.get(
   "/coordenadas/:placa/range",

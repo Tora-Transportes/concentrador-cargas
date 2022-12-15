@@ -159,7 +159,6 @@ label {
   .row-input-coleta {
     display: grid !important;
   }
-  
 }
 @media only screen and (min-width: 354px) and (max-width: 575px) {
   .col-cod-filial2 {
@@ -167,7 +166,11 @@ label {
     width: 95% !important;
   }
 }
-
+@media only screen and (max-width: 770px) {
+  .input-ponto-passagem-coleta-entrega {
+    min-width: 30%;
+  }
+}
 @media only screen and (max-width: 1100px) {
   .class-input-motorista {
     display: grid;

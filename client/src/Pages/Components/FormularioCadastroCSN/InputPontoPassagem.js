@@ -71,7 +71,7 @@ const InputsPontoPassagem = ({
 	return (
 		<>
 			<Row className="row-input-coleta">
-				<Col sm={12} md={6}>
+				<Col sm={12} md={12} lg={12} xxl={6}>
 					<FloatingLabel label="*Ponto de passagem" className="mb-3">
 						<Form.Control
 							type="text"
@@ -84,7 +84,7 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
-				<Col>
+				<Col className="input-ponto-passagem-coleta-entrega">
 					<FloatingLabel label="Coleta/Entrega" className="mb-3">
 						<Form.Control
 							type="text"
@@ -129,7 +129,7 @@ const InputsPontoPassagem = ({
 			</Row>
 
 			<Row className="row-input-coleta">
-				<Col sm={12} md={6}>
+				<Col sm={12} md={12} lg={12} xxl={6}>
 					<FloatingLabel label="Ponto de passagem 2" className="mb-3">
 						<Form.Control
 							type="text"
@@ -142,7 +142,7 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
-				<Col>
+				<Col className="input-ponto-passagem-coleta-entrega">
 					<FloatingLabel label="Coleta/Entrega 2" className="mb-3">
 						<Form.Control
 							type="text"
@@ -185,7 +185,7 @@ const InputsPontoPassagem = ({
 				)}
 			</Row>
 			<Row className="row-input-coleta">
-				<Col sm={12} md={6}>
+				<Col sm={12} md={12} lg={12} xxl={6}>
 					<FloatingLabel label="Ponto de passagem 3" className="mb-3">
 						<Form.Control
 							type="text"
@@ -198,7 +198,7 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
-				<Col>
+				<Col className="input-ponto-passagem-coleta-entrega">
 					<FloatingLabel label="Coleta/Entrega 3" className="mb-3">
 						<Form.Control
 							type="text"
@@ -243,7 +243,7 @@ const InputsPontoPassagem = ({
 			</Row>
 
 			<Row className="row-input-coleta">
-				<Col sm={12} md={6}>
+				<Col sm={12} md={12} lg={12} xxl={6}>
 					<InputCliente
 						type="text"
 						placeholder=" "
@@ -258,7 +258,7 @@ const InputsPontoPassagem = ({
 						disabled={fkSituacao}
 					/>
 				</Col>
-				<Col>
+				<Col className="input-ponto-passagem-coleta-entrega">
 					<FloatingLabel label="Coleta/Entrega 4" className="mb-3">
 						<Form.Control
 							type="text"
@@ -325,7 +325,7 @@ const InputsPontoPassagem = ({
 							/>
 						</Col>
 					) : (
-						<Col sm={12} md={6}>
+						<Col sm={12} md={12} lg={12} xxl={6}>
 							<InputCliente
 								type="text"
 								placeholder=" "
@@ -341,7 +341,7 @@ const InputsPontoPassagem = ({
 							/>
 						</Col>
 					)}
-					<Col>
+					<Col className="input-ponto-passagem-coleta-entrega">
 						<FloatingLabel label="Coleta/Entrega 5" className="mb-3">
 							<Form.Select
 								name="ponto_passagem5.tipoServico"
@@ -421,7 +421,7 @@ const InputsPontoPassagem = ({
 							/>
 						</Col>
 					) : (
-						<Col sm={12} md={6}>
+						<Col sm={12} md={12} lg={12} xxl={6}>
 							<InputCliente
 								type="text"
 								placeholder=" "
@@ -437,7 +437,7 @@ const InputsPontoPassagem = ({
 							/>
 						</Col>
 					)}
-					<Col>
+					<Col className="input-ponto-passagem-coleta-entrega">
 						<FloatingLabel label="Coleta/Entrega 6" className="mb-3">
 							<Form.Select
 								name="ponto_passagem6.tipoServico"
@@ -517,7 +517,7 @@ const InputsPontoPassagem = ({
 							/>
 						</Col>
 					) : (
-						<Col sm={12} md={6}>
+						<Col sm={12} md={12} lg={12} xxl={6}>
 							<InputCliente
 								type="text"
 								placeholder=" "
@@ -533,7 +533,7 @@ const InputsPontoPassagem = ({
 							/>
 						</Col>
 					)}
-					<Col>
+					<Col className="input-ponto-passagem-coleta-entrega">
 						<FloatingLabel label="Coleta/Entrega 7" className="mb-3">
 							<Form.Select
 								name="ponto_passagem7.tipoServico"
@@ -615,7 +615,7 @@ const InputsPontoPassagem = ({
 							/>
 						</Col>
 					) : (
-						<Col sm={12} md={6}>
+						<Col sm={12} md={12} lg={12} xxl={6}>
 							<InputCliente
 								type="text"
 								placeholder=" "
@@ -631,7 +631,7 @@ const InputsPontoPassagem = ({
 							/>
 						</Col>
 					)}
-					<Col>
+					<Col className="input-ponto-passagem-coleta-entrega">
 						<FloatingLabel label="Coleta/Entrega 8" className="mb-3">
 							<Form.Select
 								name="ponto_passagem8.tipoServico"
@@ -711,7 +711,7 @@ const InputsPontoPassagem = ({
 							/>
 						</Col>
 					) : (
-						<Col sm={12} md={6}>
+						<Col sm={12} md={12} lg={12} xxl={6}>
 							<InputCliente
 								type="text"
 								placeholder=" "
@@ -727,7 +727,7 @@ const InputsPontoPassagem = ({
 							/>
 						</Col>
 					)}
-					<Col>
+					<Col className="input-ponto-passagem-coleta-entrega">
 						<FloatingLabel label="Coleta/Entrega 9" className="mb-3">
 							<Form.Select
 								name="ponto_passagem9.tipoServico"
@@ -807,7 +807,7 @@ const InputsPontoPassagem = ({
 							/>
 						</Col>
 					) : (
-						<Col sm={12} md={6}>
+						<Col sm={12} md={12} lg={12} xxl={6}>
 							<InputCliente
 								type="text"
 								placeholder=" "
@@ -823,7 +823,7 @@ const InputsPontoPassagem = ({
 							/>
 						</Col>
 					)}
-					<Col>
+					<Col className="input-ponto-passagem-coleta-entrega">
 						<FloatingLabel label="Coleta/Entrega 10" className="mb-3">
 							<Form.Select
 								name="ponto_passagem10.tipoServico"

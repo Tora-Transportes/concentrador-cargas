@@ -36,6 +36,7 @@ function FormularioCadastroManual({
 	buscarCargaComDocumentoDeTransporte,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
+	//const [isCarreta, setCarreta] = useState(null);
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
 	const [valorTotalDebito, setValorTotal] = useState();
 	//const [addDestinoInterme, setAddDestinoInterme] = useState(false);
@@ -46,10 +47,18 @@ function FormularioCadastroManual({
 		}
 		const vehicleData = (await ServiceVeiculos.detalhesImpedimentos(plate)).data
 			.data;
-		setVeiculo(vehicleData);
+
 		if (!vehicleData) {
 			swal("Não foi encontrado nenhum veículo com essa placa.");
 		}
+
+		// if (formik.values.placa_carreta) {
+		// 	const carretaData = (
+		// 		await ServiceVeiculos.detalhesImpedimentos(formik.values.placa_carreta)
+		// 	).data.data;
+		// 	setCarreta(carretaData);
+		// }
+		setVeiculo(vehicleData);
 	}
 	useEffect(() => {
 		if (formik.values.e_lote) {
@@ -605,21 +614,42 @@ function FormularioCadastroManual({
 
 			<Modal show={veiculo !== null} size="lg" onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
-					<Modal.Title>Dados do Veículo</Modal.Title>
+					<Modal.Title>Dados do Veículo / Dados da Carreta</Modal.Title>
 				</Modal.Header>
 				{veiculo && (
-					<Card>
-						<ListGroup className="list-group-flush">
-							{Object.keys(veiculo).map((i) => (
-								<ListGroupItem key={i}>
-									<b>{i.replace(/_/g, " ")}</b>:
-									{i.startsWith("DATA_")
-										? veiculo[i]?.split("T")[0].split("-").reverse().join("/")
-										: veiculo[i]}
-								</ListGroupItem>
-							))}
-						</ListGroup>
-					</Card>
+					// <div className="d-flex">
+					<div>
+						<Card>
+							<ListGroup className="list-group-flush">
+								{Object.keys(veiculo).map((i) => (
+									<ListGroupItem key={i}>
+										<b>{i.replace(/_/g, " ")}</b>:
+										{i.startsWith("DATA_")
+											? veiculo[i]?.split("T")[0].split("-").reverse().join("/")
+											: veiculo[i]}
+									</ListGroupItem>
+								))}
+							</ListGroup>
+						</Card>
+						{/* {isCarreta && (
+							<Card className="ms-1">
+								<ListGroup className="list-group-flush">
+									{Object.keys(isCarreta).map((i) => (
+										<ListGroupItem key={i}>
+											<b>{i.replace(/_/g, " ")}</b>:
+											{i.startsWith("DATA_")
+												? isCarreta[i]
+														?.split("T")[0]
+														.split("-")
+														.reverse()
+														.join("/")
+												: isCarreta[i]}
+										</ListGroupItem>
+									))}
+								</ListGroup>
+							</Card>
+						)} */}
+					</div>
 				)}
 			</Modal>
 
