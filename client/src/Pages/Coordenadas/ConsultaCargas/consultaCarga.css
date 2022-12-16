@@ -1,8 +1,16 @@
-.title-consultarCarga {
-  color: #00652e;
-  font-size: 32px;
+.body-consulta-cargas{
+  font-family: "Poppins", sans-serif;
+  margin-top: 1.5rem;
 }
 
+.title-consultarCarga {
+  color: #00652e;
+  font-size: 35px;
+}
+
+.row-title-button {
+  align-items: center;
+}
 .class-body-form {
   color: black;
 }
@@ -14,10 +22,6 @@
 
 .class-input-motorista {
   margin-bottom: 30px;
-}
-
-.row-title-button {
-  align-items: center;
 }
 
 .button-exit {

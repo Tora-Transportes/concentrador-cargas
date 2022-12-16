@@ -12,7 +12,7 @@
 
 .h1-ajuda {
   font-family: "Poppins", sans-serif;
-  font-size: 35px;
+  font-size: 38px;
   color: #00652e;
 }
 
@@ -33,8 +33,9 @@
   margin-left: 4rem;
 }
 p {
+  margin-left: .5rem;
   font-size: 16px;
-  color: #939598;
+  color: #6e7074;
 }
 
 .class-body-accordion {
@@ -50,6 +51,12 @@ p {
   width: 45rem;
   margin-left: 2rem;
 }
+
+#style-gif2 {
+  width: 45rem;
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
 .class-accordion {
   width: 90%;
   margin-top: 1rem;
@@ -58,13 +65,22 @@ p {
 }
 
 #style-button-acc {
+  font-size: 14px;
   background: #00652e;
   border: none;
   text-align: center;
   height: 2rem;
   margin-right: -2rem;
 }
+#button-cadastro-cargas{
+  font-size: 14px;
+  background: #00652e;
+  border: none;
+  text-align: center;
+  height: 2rem;
+  margin: 0.5rem;
 
+}
 #button-acc-veic {
   font-size: 12px;
   background: #00652e;

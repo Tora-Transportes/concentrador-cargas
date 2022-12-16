@@ -74,7 +74,7 @@ function Consulta() {
 		<>
 			<LoadingScreen />
 			<Menusuperior />
-			<Container className="mb-5 mt-3">
+			<Container className="body-consulta-cargas">
 				<Row className="row-title-button">
 					<Col lg={11}>
 						<p className="title-consultarCarga">

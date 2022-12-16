@@ -58,6 +58,11 @@ function Menusuperior() {
               </div>
             </div>
           </div>
+          <li className="class-li">
+            <a id="style-a" href="/veiculos/coordenadas">
+              Coordenadas
+            </a>
+          </li>
           <div className="class-dropdown">
             <div className="dropdown">
               <button id="style-button-drop" className="dropbtn">
