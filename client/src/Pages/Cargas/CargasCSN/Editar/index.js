@@ -36,6 +36,7 @@ function EditarCargaCsn() {
 			janela_coleta: "",
 			janela_entrega: "",
 			placa_veiculo: "",
+			rastreador: null,
 			documento_transporte: "",
 			locais: "",
 			nome_motorista: "",

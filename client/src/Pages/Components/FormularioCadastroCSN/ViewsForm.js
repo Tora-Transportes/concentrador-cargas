@@ -198,7 +198,7 @@ export default function ViewsForm({
 							realizada novamente. Lembrando que a atualização dos dados ficará
 							indisponível uma vez que o veículo for {`"Aprovado pelo GR"`}.
 						</Form.Text>
-						<Col sm={12}>
+						<Col sm={6} md={6}>
 							<InputPlaca
 								className="input-placaCav"
 								id="Plca-cavalo"
@@ -221,6 +221,17 @@ export default function ViewsForm({
 									}
 								}}
 							/>
+						</Col>
+						<Col sm={6} md={6}>
+							<InputGroup className="input-carreta mb-2">
+								<InputGroup.Text>Rastreador</InputGroup.Text>
+								<Form.Control
+									readOnly
+									placeholder="Rastreador Cavalo"
+									type="text"
+									value={formik.values.rastreador || ""}
+								/>
+							</InputGroup>
 						</Col>
 					</Row>
 					<Row>

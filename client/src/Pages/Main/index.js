@@ -10,6 +10,7 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { FaBoxes } from "react-icons/fa";
 import Menusuperior from "../Components/MenuSuperior/menusuperior";
 import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
+//import { useHistory } from "react-router-dom";
 
 const queueCoresAtuais = [];
 
@@ -28,16 +29,17 @@ function Main() {
 		"danger",
 		"warning",
 	];
-
-	//Função que limpar cache quando subir uma nova versão , isto se tiver necessidade...
-	const verificarAtualizacaoVersao = async () => {
-		const limparCache = localStorage.getItem("clear_Cache");
-		if (limparCache == null || limparCache.toString() !== "version_1") {
-			localStorage.clear();
-			localStorage.setItem("clear_Cache", "version_1");
-			location.reload();
-		}
-	};
+	// const history = useHistory();
+	// //Função que limpar cache quando subir uma nova versão , isto se tiver necessidade...
+	// const verificarAtualizacaoVersao = async () => {
+	// 	const limparCache = localStorage.getItem("clear_Cache");
+	// 	if (limparCache == null || limparCache.toString() !== "version_3") {
+	// 		localStorage.clear();
+	// 		localStorage.setItem("clear_Cache", "version_3");
+	// 		history.push("/");
+	// 		//location.reload();
+	// 	}
+	// };
 
 	function salvarTimestampUltimaVezJogada() {
 		const timestamp = new Date().getTime();
@@ -129,7 +131,7 @@ function Main() {
 	useEffect(() => {
 		const nome = getClaims().name;
 		setUserData({ nome });
-		verificarAtualizacaoVersao();
+		//verificarAtualizacaoVersao();
 		(async () => {
 			const userPermission = await validationPermissionUser();
 			if (userPermission?.permissoes.includes("CARGAS_PADRAO")) {

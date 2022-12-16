@@ -16,6 +16,7 @@ function FormularioCadastroCSN({
 	history,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
+	const [isDetalhesVeiculo, setDetalesVeiculo] = useState();
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
 	const [valorTotalDebito, setValorTotal] = useState();
 	const [inputColeta5, setInputColeta5] = useState(false);
@@ -45,13 +46,19 @@ function FormularioCadastroCSN({
 			swal("Placa inválida");
 			return;
 		}
-		const vehicleData = (await ServiceVeiculos.detalhesImpedimentos(plate)).data
-			.data;
-		setVeiculo(vehicleData);
+		let vehicleData;
+		if (isDetalhesVeiculo) {
+			vehicleData = isDetalhesVeiculo;
+		} else {
+			vehicleData = (await ServiceVeiculos.detalhesImpedimentos(plate)).data
+				.data;
+		}
 		if (!vehicleData) {
 			swal("Não foi encontrado nenhum veículo com essa placa.");
 		}
+		setVeiculo(vehicleData);
 	}
+
 	useEffect(() => {
 		if (formik.values.e_lote) {
 			formik.setFieldValue("placa_veiculo", null);
@@ -102,6 +109,18 @@ function FormularioCadastroCSN({
 						}
 					});
 				}
+
+				const detalhesVeiculos = (
+					await ServiceVeiculos.detalhesImpedimentos(plate)
+				).data.data;
+
+				if (detalhesVeiculos?.RASTREADOR?.length > 2) {
+					await formik.setFieldValue("rastreador", detalhesVeiculos.RASTREADOR);
+				} else {
+					await formik.setFieldValue("rastreador", "Sem rastreador");
+				}
+
+				setDetalesVeiculo(detalhesVeiculos);
 				return;
 			} else {
 				swal("Não foi encontrado nenhum veículo com essa placa.");

@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import Main from "./Pages/Main";
 import LoadMenu from "./Pages/Cargas/Menu";
@@ -36,6 +37,15 @@ import VisualizarCsn from "./Pages/Cargas/CargasCSN/VisualizarCsn";
 import EditarCargaCsn from "./Pages/Cargas/CargasCSN/Editar";
 
 export default function AllRoutes() {
+	const history = useHistory();
+	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
+	const limparCache = localStorage.getItem("clear_Cache");
+	if (limparCache == null || limparCache.toString() !== "version_1") {
+		localStorage.clear();
+		localStorage.setItem("clear_Cache", "version_1");
+		history.push("/");
+	}
+
 	return (
 		<BrowserRouter>
 			<Switch>
