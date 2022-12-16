@@ -45,6 +45,9 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 	};
 
 	const editLocation = (location) => {
+		const { LATITUDE, LONGITUDE } = location;
+		location.LATITUDE = Number(LATITUDE.replace(",", "."));
+		location.LONGITUDE = Number(LONGITUDE.replace(",", "."));
 		setLocation({ ...location });
 		setLocationDialog(true);
 		serTitleDialog("Editar Localização");
@@ -64,8 +67,9 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 		if (location.DESCRICAO?.length && location.LATITUDE && location.LONGITUDE) {
 			const bodyRota = {
 				DESCRICAO: location.DESCRICAO,
-				LATITUDE: Number(location.LATITUDE),
-				LONGITUDE: Number(location.LONGITUDE),
+				//LATITUDE: location.LATITUDE.replace(".", ","),
+				LATITUDE: location.LATITUDE,
+				LONGITUDE: location.LONGITUDE,
 			};
 
 			if (location.ID) {
@@ -228,7 +232,9 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 			<Container>
 				<Row className="mt-3 text-center">
 					<Col>
-						<h1 className="title">Gerenciamento de Rotas - CSN</h1>
+						<h1 className="title-gerenciamento">
+							Gerenciamento de Rotas - CSN
+						</h1>
 					</Col>
 					<div className="datatable-crud-demo">
 						<Toast ref={toast} />

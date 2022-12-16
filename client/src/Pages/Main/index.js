@@ -2,22 +2,24 @@ import React, { useState, useRef, useEffect } from "react";
 import "./main.css";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
-// import NavbarNavigator from "../Components/NavbarNavigator";
 import { getClaims } from "../../MicrosoftAuthentication";
 import { Link } from "react-router-dom";
 import { IoLocationSharp } from "react-icons/io5";
 import { FaChartBar, FaTruckMoving } from "react-icons/fa";
+import { TbTruckDelivery } from "react-icons/tb";
 import { FaBoxes } from "react-icons/fa";
 import Menusuperior from "../Components/MenuSuperior/menusuperior";
+import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 
 const queueCoresAtuais = [];
 
 function Main() {
 	const [userData, setUserData] = useState({});
-
-	const inputCorAtual = useRef(null);
+	const [isPermissionCsn, setPermissionCsn] = useState(false);
+	const [isPermissionPadrao, setPermissionPadrao] = useState(false);
 	const [visibilidadeTeclas, setVisibilidadeTeclas] = useState(false);
 	const [levelGame, setLevelGame] = useState(-1);
+	const inputCorAtual = useRef(null);
 	const coresBotoesGame = [
 		"primary",
 		"secondary",
@@ -128,6 +130,15 @@ function Main() {
 		const nome = getClaims().name;
 		setUserData({ nome });
 		verificarAtualizacaoVersao();
+		(async () => {
+			const userPermission = await validationPermissionUser();
+			if (userPermission?.permissoes.includes("CARGAS_PADRAO")) {
+				setPermissionPadrao(true);
+			}
+			if (userPermission?.permissoes.includes("CARGAS_CSN")) {
+				setPermissionCsn(true);
+			}
+		})();
 	}, []);
 
 	useEffect(() => {
@@ -140,7 +151,6 @@ function Main() {
 	return (
 		<>
 			<ToastContainer />
-			{/* <NavbarNavigator /> */}
 			<Menusuperior />
 			<Container className="class-body-main">
 				<Row>
@@ -182,17 +192,32 @@ function Main() {
 							<b id="style-iconn-4">Coordenadas</b>
 						</Link>
 					</div>
-					<div className="icons-efect">
-						<Link to="/cargas/visualizar" className="class-link">
-							<FaTruckMoving
-								size={50}
-								id="style-iconn-3"
-								className="icons-responsive"
-							/>
-							<br />
-							<b id="style-iconn-4">Cargas</b>
-						</Link>
-					</div>
+					{isPermissionPadrao && (
+						<div className="icons-efect">
+							<Link to="/cargas/visualizar" className="class-link">
+								<FaTruckMoving
+									size={50}
+									id="style-iconn-3"
+									className="icons-responsive"
+								/>
+								<br />
+								<b id="style-iconn-4">Cargas</b>
+							</Link>
+						</div>
+					)}
+					{isPermissionCsn && (
+						<div className="icons-efect">
+							<Link to="/cargas/visualizar/csn" className="class-link">
+								<TbTruckDelivery
+									size={50}
+									id="style-iconn-3"
+									className="icons-responsive"
+								/>
+								<br />
+								<b id="style-iconn-4">Cargas CSN</b>
+							</Link>
+						</div>
+					)}
 					<div className="icons-efect icon-lotes">
 						<Link to="/lotes/visualizar" className="class-link">
 							<FaBoxes

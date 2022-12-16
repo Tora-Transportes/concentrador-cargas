@@ -37,8 +37,11 @@ function EditarCargaCsn() {
 			janela_entrega: "",
 			placa_veiculo: "",
 			documento_transporte: "",
+			locais: "",
+			nome_motorista: "",
+			finalizarCarga: "",
 			ponto_passagem: {
-				ponto: " 45 - POSTO - 30",
+				ponto: " 60 - POSTO - 30",
 				tipoServico: "Coleta",
 				previsao: "",
 				latitude: "",
@@ -46,9 +49,10 @@ function EditarCargaCsn() {
 				client: "",
 				id: "",
 				idRotaCsn: "",
+				coletaEfetiva_posto30: "",
 			},
 			ponto_passagem2: {
-				ponto: "47 - MUNDO - CSN",
+				ponto: "51 - MUNDO - CSN",
 				tipoServico: "Coleta",
 				previsao: "",
 				latitude: "",
@@ -56,9 +60,10 @@ function EditarCargaCsn() {
 				client: "",
 				id: "",
 				idRotaCsn: "",
+				coletaEfetiva_mundo: "",
 			},
 			ponto_passagem3: {
-				ponto: "46 - PEACAO - CSN",
+				ponto: "59 - PEACAO - CSN",
 				tipoServico: "Coleta",
 				previsao: "",
 				latitude: "",
@@ -66,6 +71,7 @@ function EditarCargaCsn() {
 				client: "",
 				id: "",
 				idRotaCsn: "",
+				coletaEfetiva_peacao: "",
 			},
 			ponto_passagem4: {
 				ponto: "",
@@ -76,6 +82,8 @@ function EditarCargaCsn() {
 				client: "",
 				id: "",
 				idRotaCsn: "",
+				coletaEfetiva: "",
+				entregaEfetiva: "",
 			},
 			ponto_passagem5: {
 				ponto: "",
@@ -86,6 +94,8 @@ function EditarCargaCsn() {
 				client: "",
 				id: "",
 				idRotaCsn: "",
+				coletaEfetiva: "",
+				entregaEfetiva: "",
 			},
 			ponto_passagem6: {
 				ponto: "",
@@ -96,6 +106,8 @@ function EditarCargaCsn() {
 				client: "",
 				id: "",
 				idRotaCsn: "",
+				coletaEfetiva: "",
+				entregaEfetiva: "",
 			},
 			ponto_passagem7: {
 				ponto: "",
@@ -106,6 +118,8 @@ function EditarCargaCsn() {
 				client: "",
 				id: "",
 				idRotaCsn: "",
+				coletaEfetiva: "",
+				entregaEfetiva: "",
 			},
 			ponto_passagem8: {
 				ponto: "",
@@ -116,6 +130,8 @@ function EditarCargaCsn() {
 				client: "",
 				id: "",
 				idRotaCsn: "",
+				coletaEfetiva: "",
+				entregaEfetiva: "",
 			},
 			ponto_passagem9: {
 				ponto: "",
@@ -126,6 +142,8 @@ function EditarCargaCsn() {
 				client: "",
 				id: "",
 				idRotaCsn: "",
+				coletaEfetiva: "",
+				entregaEfetiva: "",
 			},
 			ponto_passagem10: {
 				ponto: "",
@@ -136,26 +154,8 @@ function EditarCargaCsn() {
 				client: "",
 				id: "",
 				idRotaCsn: "",
-			},
-			ponto_passagem11: {
-				ponto: "",
-				tipoServico: "",
-				previsao: "",
-				latitude: "",
-				longitude: "",
-				client: "",
-				id: "",
-				idRotaCsn: "",
-			},
-			ponto_passagem12: {
-				ponto: "",
-				tipoServico: "",
-				previsao: "",
-				latitude: "",
-				longitude: "",
-				client: "",
-				id: "",
-				idRotaCsn: "",
+				coletaEfetiva: "",
+				entregaEfetiva: "",
 			},
 		},
 		onSubmit: async (values) => {
@@ -171,18 +171,38 @@ function EditarCargaCsn() {
 				ponto_passagem8,
 				ponto_passagem9,
 				ponto_passagem10,
-				ponto_passagem11,
-				ponto_passagem12,
 			} = values;
 			try {
-				values.fk_filial = values.fk_filial.split("-")[0];
-				const { data } = await ServiceCargas.update({
-					...values,
-					responsavel_cadastro: String(getClaims().name),
-					fk_situacao: undefined,
-					fk_filial: formik.values.fk_filial?.split("-")[0],
-					carga_csn: 1,
-				});
+				let dadosCargasalva;
+				const finalizarCarga = formik.values.finalizarCarga;
+
+				if (finalizarCarga !== true) {
+					values.fk_filial = values.fk_filial.split("-")[0];
+					const { data } = await ServiceCargas.update({
+						...values,
+						responsavel_cadastro: String(getClaims().name),
+						fk_situacao: undefined,
+						fk_filial: formik.values.fk_filial?.split("-")[0],
+						carga_csn: 1,
+					});
+					dadosCargasalva = data;
+				} else {
+					const resultOk = await swal(
+						`Certeza que deseja finalizar a  carga?`,
+						{
+							dangerMode: true,
+							buttons: ["Cancelar", true],
+							icon: "warning",
+						}
+					);
+					if (resultOk) {
+						await ServiceCargas.update({
+							...formik.values,
+							fk_situacao: 6,
+							fk_filial: formik.values.fk_filial?.split("-")[0],
+						});
+					}
+				}
 
 				for (const [key, value] of Object.entries({
 					ponto_passagem,
@@ -195,8 +215,6 @@ function EditarCargaCsn() {
 					ponto_passagem8,
 					ponto_passagem9,
 					ponto_passagem10,
-					ponto_passagem11,
-					ponto_passagem12,
 				})) {
 					if (
 						(value?.ponto?.length > 0 && value?.previsao?.length > 0) ||
@@ -212,17 +230,18 @@ function EditarCargaCsn() {
 				}
 
 				formik.setFieldValue("responsavel_cadastro", String(getClaims().name));
-				const ok = await swal(
-					"Sucesso!",
-					`A carga ${data.data.id} foi atualizada!`,
-					"success"
-				);
+
+				const mensagemConfirmacao =
+					finalizarCarga !== true
+						? `A carga ${dadosCargasalva.data.id} foi atualizada!`
+						: "Carga finalizada.";
+
+				const ok = await swal("Sucesso!", mensagemConfirmacao, "success");
 
 				if (ok) {
 					window.location.reload();
+					//await carregarCarga();
 				}
-				//swal("Sucesso!", `A carga  foi atualizada!`, "success");
-				//await carregarCarga();
 			} catch (error) {
 				console.log(error);
 			}
@@ -307,53 +326,6 @@ function EditarCargaCsn() {
 		setLoading(false);
 	}
 
-	async function handleEmitirDocumento() {
-		setLoading(true);
-		try {
-			const ok = await swal(
-				`Certeza que deseja emitir o documento dessa carga?`,
-				{
-					dangerMode: true,
-					buttons: ["Cancelar", true],
-					icon: "warning",
-				}
-			);
-			if (ok) {
-				await ServiceCargas.update({
-					...formik.values,
-					fk_situacao: 6,
-					fk_filial: formik.values.fk_filial?.split("-")[0],
-				});
-				await swal("Sucesso!", "Documento emitido.", "success");
-				await carregarCarga();
-			} else {
-				await swal("Nenhuma alteração realizada.");
-			}
-		} catch (error) {
-			console.log(error);
-		}
-		setLoading(false);
-	}
-
-	async function handleSearchDistance({ destino_carga, origem_carga }) {
-		if (destino_carga && origem_carga) {
-			const [, estado_origem, cidade_origem] = origem_carga.split("/");
-			const [, estado_destino, cidade_destino] = destino_carga.split("/");
-			try {
-				const { data } = await ServiceCargas.getDistance({
-					cidade_origem,
-					cidade_destino,
-					estado_origem,
-					estado_destino,
-				});
-				const distance = data.data;
-				return distance;
-			} catch (error) {
-				return 1;
-			}
-		}
-	}
-
 	async function carregarCarga() {
 		try {
 			let city;
@@ -378,28 +350,42 @@ function EditarCargaCsn() {
 							nonNullValue.map(async (data, index) => {
 								switch (index) {
 									case 0:
-										if (index === 0) {
+										{
 											const body = funcBodyEdit(data, "Coleta");
 											await formik.setFieldValue("ponto_passagem", body);
 										}
 										break;
 									case 1: {
-										if (index === 1) {
-											const body1 = funcBodyEdit(data, "Entrega");
-											await formik.setFieldValue("ponto_passagem4", body1);
+										{
+											const body1 = funcBodyEdit(data, "Coleta");
+											await formik.setFieldValue("ponto_passagem2", body1);
+										}
+										break;
+									}
+									case 2: {
+										{
+											const body2 = funcBodyEdit(data, "Coleta");
+											await formik.setFieldValue("ponto_passagem3", body2);
+										}
+										break;
+									}
+									case 3: {
+										{
+											const body3 = funcBodyEdit(data, "Entrega");
+											await formik.setFieldValue("ponto_passagem4", body3);
 										}
 										break;
 									}
 									default:
 										if (index) {
-											count = index + 3;
+											count = index + 1;
 											setViewsInput(count);
 											let tipoCarga =
 												data.STATUS_SERVICO === "COLETA" ? "Coleta" : "Entrega";
-											let body2 = funcBodyEdit(data, tipoCarga);
+											let body4 = funcBodyEdit(data, tipoCarga);
 											await formik.setFieldValue(
 												"ponto_passagem" + count,
-												body2
+												body4
 											);
 										}
 										break;
@@ -410,7 +396,7 @@ function EditarCargaCsn() {
 					formik.setFieldValue(i, nonNullValue);
 				}
 			}
-			handleSearchDistance(carga);
+			//handleSearchDistance(carga);
 		} catch (error) {
 			history.push("");
 		}
@@ -479,7 +465,7 @@ function EditarCargaCsn() {
 						buscarCargaComDocumentoDeTransporte={
 							buscarCargaComDocumentoDeTransporte
 						}
-						handleSearchDistance={handleSearchDistance}
+						//handleSearchDistance={handleSearchDistance}
 						produtos={produtos}
 						formik={formik}
 						viewsInput={viewsInput}
@@ -503,6 +489,7 @@ function EditarCargaCsn() {
 						</Button>
 
 						{formik.values.fk_situacao !== 3 &&
+							formik.values.fk_situacao !== 5 &&
 							formik.values.fk_situacao !== 6 && (
 								<Button
 									variant="danger"
@@ -526,9 +513,10 @@ function EditarCargaCsn() {
 							<Button
 								variant="info"
 								className="p-2"
-								onClick={handleEmitirDocumento}
+								type="submit"
+								onClick={() => formik.setFieldValue("finalizarCarga", true)}
 							>
-								Emitir documento
+								Finalizar carga
 							</Button>
 						)}
 					</div>

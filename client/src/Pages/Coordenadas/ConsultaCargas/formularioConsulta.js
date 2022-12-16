@@ -54,7 +54,7 @@ function FormularioConsulta({ formik, exitPage }) {
 			</Row>
 			<Row>
 				<Col sm={12} md={4}>
-					<FloatingLabel label="Código da carga" className="mb-3">
+					<FloatingLabel label="Código da filial" className="mb-3">
 						<Form.Control
 							name="documento_transporte"
 							value={detaleFilial}

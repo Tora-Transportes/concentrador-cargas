@@ -161,6 +161,7 @@ function Manual() {
 					...formik.values,
 					fk_situacao: 6,
 					fk_filial: formik.values.fk_filial?.split("-")[0],
+					carga_csn: 0,
 				});
 				await swal("Sucesso!", "Documento emitido.", "success");
 				await carregarCarga();
@@ -316,6 +317,7 @@ function Manual() {
 						</Button>
 
 						{formik.values.fk_situacao !== 3 &&
+							formik.values.fk_situacao !== 5 &&
 							formik.values.fk_situacao !== 6 && (
 								<Button
 									variant="danger"

@@ -21,6 +21,10 @@ class ServiceRecomendacoes {
 	async locais({ query }) {
 		return api.get("/recomendacoes/locais", { params: { query } });
 	}
+
+	async locaisPorUf({ uf, cidade }) {
+		return api.get("/recomendacoes/locais/estado", { params: { uf, cidade } });
+	}
 }
 
 export default new ServiceRecomendacoes();

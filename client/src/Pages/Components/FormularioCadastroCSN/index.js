@@ -5,12 +5,17 @@ import "./formularioCadastroCSN.css";
 import somaDebitoVeiculo from "src/Pages/Utils/somaDebitoVeiculo";
 import { funcInputPontoParada } from "./management";
 import ViewsForm from "./ViewsForm";
-
+import ServiceCargas from "src/services/ServiceCargas";
+// import Swal2 from "sweetalert2";
 function FormularioCadastroCSN({
 	formik,
 	produtos,
 	viewsInput,
 	buscarCargaComDocumentoDeTransporte,
+	inputsDinamic,
+	setInputsDinamic,
+	handleEnter,
+	// history,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
@@ -21,11 +26,15 @@ function FormularioCadastroCSN({
 	const [inputColeta8, setInputColeta8] = useState(false);
 	const [inputColeta9, setInputColeta9] = useState(false);
 	const [inputColeta10, setInputColeta10] = useState(false);
-	const [inputColeta11, setInputColeta11] = useState(false);
-	const [inputColeta12, setInputColeta12] = useState(false);
 	const [countInput, setCountInput] = useState(3);
 	const [viewsButtonAddColeta, setViewsButtonAddColeta] = useState(true);
 	const [viewsButtonExcluir, setViewsButtonExcluir] = useState(false);
+	const fkSituacao =
+		formik.values?.fk_situacao === 1 ||
+		formik.values?.fk_situacao === 2 ||
+		formik.values?.fk_situacao === undefined
+			? false
+			: true;
 
 	useEffect(() => {
 		if (viewsInput > 4) {
@@ -66,6 +75,35 @@ function FormularioCadastroCSN({
 					"codigo_motorista",
 					vehicleDetails.codigo_motorista
 				);
+				const { data } = (
+					await ServiceCargas.searchCsnPlacaFkSituacao({ placa: plate })
+				).data;
+
+				if (data.results?.length) {
+					const { id } = data.results[0];
+					const myhtml = document.createElement("div");
+					myhtml.innerHTML = `Já existe uma carga aberta com a placa: ${plate} e o código: ${id}.<br><br>
+					Para continuar, finalize a carga ou adicione outra placa.`;
+
+					// Swal2.fire({
+					// 	title: "Atenção!",
+					// 	//text: `Já existe uma carga aberta com a placa: ${plate}, código da carga: ${id}.`,
+					// 	html: myhtml,
+					// 	showCancelButton: true,
+					// 	confirmButtonColor: "#00652e",
+					// 	cancelButtonColor: "#3085d6",
+					// 	cancelButtonText: "Adicionar outra placa",
+					// 	confirmButtonText: "Finalizar carga",
+					// }).then((result) => {
+					// 	if (result.isConfirmed) {
+					// 		if (fk_situacao === 2) {
+					// 			history.push(`/veiculos/aprovacao/csn-${id}`);
+					// 		} else {
+					// 			history.push(`/cargas/csn/${id}`);
+					// 		}
+					// 	}
+					// });
+				}
 				return;
 			} else {
 				swal("Não foi encontrado nenhum veículo com essa placa.");
@@ -106,8 +144,8 @@ function FormularioCadastroCSN({
 		setInputColeta8,
 		setInputColeta9,
 		setInputColeta10,
-		setInputColeta11,
-		setInputColeta12
+		inputsDinamic,
+		setInputsDinamic
 	);
 
 	return (
@@ -127,8 +165,6 @@ function FormularioCadastroCSN({
 				inputColeta8={inputColeta8}
 				inputColeta9={inputColeta9}
 				inputColeta10={inputColeta10}
-				inputColeta11={inputColeta11}
-				inputColeta12={inputColeta12}
 				viewsButtonAddColeta={viewsButtonAddColeta}
 				functionInputs={functionInputs}
 				viewsButtonExcluir={viewsButtonExcluir}
@@ -137,6 +173,8 @@ function FormularioCadastroCSN({
 				setDebitosVeiculo={setDebitosVeiculo}
 				setVeiculo={setVeiculo}
 				valorTotalDebito={valorTotalDebito}
+				fkSituacao={fkSituacao}
+				handleEnter={handleEnter}
 			/>
 		</div>
 	);

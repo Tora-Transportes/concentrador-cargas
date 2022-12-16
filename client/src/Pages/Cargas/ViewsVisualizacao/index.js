@@ -44,6 +44,7 @@ function VisualizarCargas({
 					id="modal-legenda-cargas"
 					show={modalShow}
 					onHide={() => setModalShow(false)}
+					csn={"padrao"}
 				/>
 				<ModalDataExcel
 					show={modalShowExcel}

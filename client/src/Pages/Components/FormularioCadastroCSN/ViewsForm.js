@@ -17,7 +17,8 @@ import AutocompleteInput from "../AutocompleteInput";
 import FilialSelect from "../FilialSelect";
 import InputCliente from "../InputCliente";
 import InputPlaca from "../InputPlaca";
-// import UnidadesMedida from "../UnidadesMedida";
+import ListAddItens from "../ListAddItens";
+//import UnidadesMedida from "../UnidadesMedida";
 import InputsPontoPassagem from "./InputPontoPassagem";
 
 export default function ViewsForm({
@@ -33,8 +34,6 @@ export default function ViewsForm({
 	inputColeta8,
 	inputColeta9,
 	inputColeta10,
-	inputColeta11,
-	inputColeta12,
 	viewsButtonAddColeta,
 	functionInputs,
 	viewsButtonExcluir,
@@ -43,7 +42,21 @@ export default function ViewsForm({
 	setDebitosVeiculo,
 	setVeiculo,
 	valorTotalDebito,
+	fkSituacao,
 }) {
+	const handleEnter = (event) => {
+		if (event.key === "Enter") {
+			const form = event.target.form;
+			const index = [...form].indexOf(event.target);
+			if (index == 3) {
+				form.elements[index + 3].focus();
+				event.preventDefault();
+			} else {
+				form.elements[index + 1].focus();
+				event.preventDefault();
+			}
+		}
+	};
 	return (
 		<div className="class-body-form">
 			<Row>
@@ -78,7 +91,12 @@ export default function ViewsForm({
 				</Col>
 			</Row>
 			<Row>
-				<Col sm={12} md={6} className="col-cod-filial2">
+				<Col
+					sm={12}
+					md={6}
+					style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
+					className="col-cod-filial2"
+				>
 					<label>*Código da filial</label>
 					<FilialSelect
 						id="Codigo-filial"
@@ -86,8 +104,10 @@ export default function ViewsForm({
 						placeholder=" "
 						name="fk_filial"
 						value={formik.values.fk_filial ?? ""}
+						onKeyDown={handleEnter}
 						onChange={formik.handleChange}
 						onBlur={formik.handleBlur}
+						disabled={fkSituacao}
 						required
 					/>
 				</Col>
@@ -97,7 +117,9 @@ export default function ViewsForm({
 							id="doc-trans"
 							name="documento_transporte"
 							value={String(formik.values.documento_transporte)}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
+							disabled={fkSituacao}
 							onBlur={(...rest) => {
 								formik.handleBlur(...rest);
 								buscarCargaComDocumentoDeTransporte(formik.values);
@@ -106,54 +128,59 @@ export default function ViewsForm({
 					</FloatingLabel>
 				</Col>
 			</Row>
-			<Row>
-				<Col>
-					<div className="class-linha-title2">
-						<hr className="w-100"></hr>
-					</div>
-					<Form.Group className="mb-3">
-						*É Lote?{" "}
-						<Form.Check
-							type="radio"
-							label="Sim"
-							name="e_lote"
-							id="e_lote_sim"
-							onChange={() => formik.setFieldValue("e_lote", true)}
-							checked={formik.values.e_lote === true}
-							inline
-						/>
-						<Form.Check
-							type="radio"
-							label="Não"
-							name="e_lote"
-							id="e_lote_nao"
-							onChange={() => formik.setFieldValue("e_lote", false)}
-							checked={formik.values.e_lote === false}
-							inline
-						/>
-						<OverlayTrigger
-							key="tooltip-overlay-lote"
-							placement="bottom"
-							overlay={
-								<Tooltip id={`tooltip-bottom`}>
-									O campo Lote sinaliza o tipo de carga. Quando o lote é Sim
-									(Representa uma quantidade expressiva de volume de cargas que
-									devem ser retiradas). Quando Lote é Não (Representa uma carga
-									com um volume único).
-								</Tooltip>
-							}
-						>
-							<span>
-								<IoMdHelpCircle size={20} />
-							</span>
-						</OverlayTrigger>
-						<br />
-						<sub>
-							Deve ser cadastrada a quantidade <strong>total</strong> da carga.
-						</sub>
-					</Form.Group>
-				</Col>
-			</Row>
+			{!fkSituacao && (
+				<Row>
+					<Col>
+						<div className="class-linha-title2">
+							<hr className="w-100"></hr>
+						</div>
+						<Form.Group className="mb-3">
+							*É Lote?{" "}
+							<Form.Check
+								type="radio"
+								label="Sim"
+								name="e_lote"
+								id="e_lote_sim"
+								onChange={() => formik.setFieldValue("e_lote", true)}
+								onKeyDown={handleEnter}
+								checked={formik.values.e_lote === true}
+								inline
+							/>
+							<Form.Check
+								type="radio"
+								label="Não"
+								name="e_lote"
+								id="e_lote_nao"
+								onChange={() => formik.setFieldValue("e_lote", false)}
+								onKeyDown={handleEnter}
+								checked={formik.values.e_lote === false}
+								inline
+							/>
+							<OverlayTrigger
+								key="tooltip-overlay-lote"
+								placement="bottom"
+								overlay={
+									<Tooltip id={`tooltip-bottom`}>
+										O campo Lote sinaliza o tipo de carga. Quando o lote é Sim
+										(Representa uma quantidade expressiva de volume de cargas
+										que devem ser retiradas). Quando Lote é Não (Representa uma
+										carga com um volume único).
+									</Tooltip>
+								}
+							>
+								<span>
+									<IoMdHelpCircle size={20} />
+								</span>
+							</OverlayTrigger>
+							<br />
+							<sub>
+								Deve ser cadastrada a quantidade <strong>total</strong> da
+								carga.
+							</sub>
+						</Form.Group>
+					</Col>
+				</Row>
+			)}
 			<div className="class-linha-title3">
 				<hr className="w-100"></hr>
 			</div>
@@ -180,7 +207,7 @@ export default function ViewsForm({
 									formik.values.fk_situacao &&
 									![1, 2, 4].includes(Number(formik.values.fk_situacao))
 								}
-								placeholder="Placa Veículo"
+								placeholder="Placa veículo"
 								disabled={formik.values.e_lote}
 								type="text"
 								name="placa_veiculo"
@@ -203,7 +230,7 @@ export default function ViewsForm({
 								<InputGroup.Text>Carreta</InputGroup.Text>
 								<Form.Control
 									readOnly
-									placeholder="Placa Carreta"
+									placeholder="Placa carreta"
 									type="text"
 									value={formik.values.placa_carreta || ""}
 								/>
@@ -214,7 +241,7 @@ export default function ViewsForm({
 								<InputGroup.Text>Bitrem</InputGroup.Text>
 								<Form.Control
 									readOnly
-									placeholder="Placa Bitrem"
+									placeholder="Placa bitrem"
 									type="text"
 									value={formik.values.placa_bitrem || ""}
 								/>
@@ -265,6 +292,7 @@ export default function ViewsForm({
 										as="textarea"
 										type="text"
 										value={formik.values.observacao_gr}
+										onKeyDown={handleEnter}
 										readOnly
 									/>
 								</FloatingLabel>
@@ -284,8 +312,10 @@ export default function ViewsForm({
 						placeholder=" "
 						name="cliente"
 						value={formik.values.cliente}
+						onKeyDown={handleEnter}
 						onChange={formik.handleChange}
 						onBlur={formik.handleBlur}
+						disabled={fkSituacao}
 						required
 					/>
 				</Col>
@@ -299,13 +329,14 @@ export default function ViewsForm({
 							onChange={formik.handleChange}
 							value={formik.values.tipo_carga}
 							name="tipo_carga"
+							disabled={fkSituacao}
 						/>
 					</FloatingLabel>
 				</Col>
 				<Col>
 					<Row>
 						<Col>
-							<FloatingLabel label="*Unidade de Medida" className="mb-3">
+							<FloatingLabel label="*Unidade de medida" className="mb-3">
 								<Form.Control
 									type="text"
 									name="unidade_medida"
@@ -323,8 +354,10 @@ export default function ViewsForm({
 									placeholder=" "
 									name="quantidade"
 									value={formik.values.quantidade}
+									onKeyDown={handleEnter}
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
+									disabled={fkSituacao}
 									required
 								/>
 							</FloatingLabel>
@@ -340,8 +373,7 @@ export default function ViewsForm({
 				inputColeta8={inputColeta8}
 				inputColeta9={inputColeta9}
 				inputColeta10={inputColeta10}
-				inputColeta11={inputColeta11}
-				inputColeta12={inputColeta12}
+				fkSituacao={fkSituacao}
 			/>
 
 			<Row className="row-button-local">
@@ -349,9 +381,11 @@ export default function ViewsForm({
 					{viewsButtonAddColeta && (
 						<Button
 							className="bg-success border border-white"
+							onKeyDown={handleEnter}
 							onClick={functionInputs.viewsInputColeta}
+							disabled={fkSituacao}
 						>
-							<IoMdAdd className="me-1" />
+							<IoMdAdd className="me-1 mb-1" />
 							Adicionar pontos de passagem
 						</Button>
 					)}
@@ -360,7 +394,9 @@ export default function ViewsForm({
 					{viewsButtonExcluir && (
 						<Button
 							className="bg-secondary ms-2 border border-white"
+							onKeyDown={handleEnter}
 							onClick={() => functionInputs.excluirInputColeta("delete")}
+							disabled={fkSituacao}
 						>
 							Excluir ponto de passagem
 						</Button>
@@ -383,8 +419,10 @@ export default function ViewsForm({
 							rows={3}
 							name="acessorios_requisitos"
 							value={formik.values.acessorios_requisitos || ""}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
+							disabled={fkSituacao}
 						/>
 					</Form.Group>
 				</Col>
@@ -400,8 +438,10 @@ export default function ViewsForm({
 							rows={3}
 							name="informacoes_restritivas"
 							value={formik.values.informacoes_restritivas || ""}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
+							disabled={fkSituacao}
 						/>
 					</Form.Group>
 				</Col>
@@ -419,24 +459,26 @@ export default function ViewsForm({
 							value={formik.values.observacao || ""}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
+							disabled={fkSituacao}
 						/>
 					</Form.Group>
 				</Col>
 			</Row>
 
-			{/* <div>
-            <ListAddItens
-                id="style-botao-add"
-                value={formik.values.locais}
-                name="locais"
-                onChange={formik.handleChange}
-                formik={formik}
-            />
-        </div> */}
+			<div>
+				<ListAddItens
+					id="style-botao-add"
+					value={formik.values.locais}
+					name="locais"
+					onChange={formik.handleChange}
+					onKeyDown={handleEnter}
+					formik={formik}
+				/>
+			</div>
 
 			<Modal show={veiculo !== null} size="lg" onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
-					<Modal.Title>Dados do veículo</Modal.Title>
+					<Modal.Title>Dados do Veículo</Modal.Title>
 				</Modal.Header>
 				{veiculo && (
 					<Card>
@@ -461,7 +503,7 @@ export default function ViewsForm({
 				onHide={() => setDebitosVeiculo(null)}
 			>
 				<Modal.Header closeButton>
-					<Modal.Title>Débitos do veículo</Modal.Title>
+					<Modal.Title>Débitos do Veículo</Modal.Title>
 				</Modal.Header>
 				{debitosVeiculo && (
 					<Card>

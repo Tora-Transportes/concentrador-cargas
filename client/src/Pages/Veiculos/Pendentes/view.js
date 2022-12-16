@@ -9,7 +9,12 @@ function ViewRotasPendentes({
 	get_data,
 	data,
 	totalRegisters = 0,
+	tipoCarga,
 }) {
+	const title =
+		tipoCarga === "csn"
+			? "Monitoramento - Veículos Pendentes CSN"
+			: "Monitoramento - Veículos Pendentes";
 	return (
 		<div className="class-body">
 			<Container fluid className="text-center mt-4">
@@ -18,7 +23,7 @@ function ViewRotasPendentes({
 						id="title-monit"
 						// onClick={HandleClick}
 					>
-						Monitoramento - Veículos Pendentes
+						{title}
 					</h1>
 				</Row>
 				<Row>

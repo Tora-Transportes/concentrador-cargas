@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import "./index.css";
+import "./produtos.css";
 import { Container, Row } from "react-bootstrap";
 import { useFormik } from "formik";
 //import NavbarNavigator from "../Components/NavbarNavigator";

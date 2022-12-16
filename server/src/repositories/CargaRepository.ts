@@ -180,12 +180,10 @@ export class CargaRepository {
           new Date(date + "T23:59:59"),
         ]);
       }
-      if (query?.fk_filial) {
+      if (query.fk_filial) {
         qb.andWhere("fk_filial", query.fk_filial);
       }
-      if (query?.carga_csn == 1) {
-        qb.andWhere("carga_csn", query.carga_csn);
-      } else if (query.carga_csn && query.carga_csn != 1) {
+      if (query.carga_csn === 0) {
         qb.where((qB) => {
           qB.andWhere("carga_csn", "=", 0);
           qB.orWhereNull("carga_csn");

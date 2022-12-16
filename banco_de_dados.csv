@@ -130,16 +130,25 @@ USU_TORA;con_veiculos_distancia;fk_placa;Referencia a placa do ve�culo;;
 USU_TORA;con_veiculos_distancia;distancia_ate_destino;Distancia do ve�culo at� o destino da ultima viagem em KM;;
 USU_TORA;con_veiculos_distancia;data_atualizacao;Data de atualizacao do registro;;
 ;;;;; 
+
+;;;; CARGAS CSN
 USU_TORA;con_rotas_csn;id;Identificador das rotas adicionadas;;
-USU_TORA;con_rotas_csn;latitude;latitude adicionada;;
-USU_TORA;con_rotas_csn;longitude;longitude adicionada;;
+USU_TORA;con_rotas_csn;escricao;Nome de onde sera a parada do veiculo;;
+USU_TORA;con_rotas_csn;latitude;Latitude adicionada;;
+USU_TORA;con_rotas_csn;longitude;Longitude adicionada;;
 USU_TORA;con_rotas_csn;data_cadastro;Data de cadastro da rota;;
-USU_TORA;con_rotas_csn;longitude;Data ultima atualizacao das rotas;;
+USU_TORA;con_rotas_csn;data_atualizacao;Data ultima atualizacao das rotas;;
 ;;;;;
 USU_TORA;con_pontos_parada;id;Identificador dos pontos de paradas adicionados;;
 USU_TORA;con_pontos_parada;id_rotas_csn;Referencia id da tabela con_rotas_csn;;con_rotas_csn.id;;
 USU_TORA;con_pontos_parada;id_con_cargas;Referencia id da tabela con_gargas;;con_cargas.id;;
-USU_TORA;con_pontos_parada;status_servico;tipo de serviço 'COLETA ou ENTREGA';;
+USU_TORA;con_pontos_parada;status_servico;Tipo de serviço 'COLETA ou ENTREGA';;
 USU_TORA;con_pontos_parada;previsao;Data planejada para chegada do veiculo no local';;
 USU_TORA;con_pontos_parada;data_cadastro;Data de cadastro da parada;;
-USU_TORA;con_pontos_parada;longitude;Data ultima atualizacao das parada;;
+USU_TORA;con_pontos_parada;data_atualizacao;Data ultima atualizacao das parada;;
+USU_TORA;con_pontos_parada;latitude;Latitude adicionada;;
+USU_TORA;con_pontos_parada;longitude;Longitude adicionada;;
+
+USU_TORA;con_situacoes_cargas_csn;id;Identificador da situacao;;
+USU_TORA;con_situacoes_cargas_csn;cor;Cor que vai ser mostrada na carga;;
+USU_TORA;con_situacoes_cargas_csn;descricao;Descri��o da situa��o;;

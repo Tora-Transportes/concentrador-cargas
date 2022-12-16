@@ -63,6 +63,19 @@ function Formulario({ formik, produtos, distancia }) {
 		}
 	}
 
+	const handleEnter = (event) => {
+		if (event.key === "Enter") {
+			const form = event.target.form;
+			const index = [...form].indexOf(event.target);
+			if (index == 3) {
+				form.elements[index + 3].focus();
+				event.preventDefault();
+			} else {
+				form.elements[index + 1].focus();
+				event.preventDefault();
+			}
+		}
+	};
 	return (
 		<>
 			<Row>
@@ -100,6 +113,7 @@ function Formulario({ formik, produtos, distancia }) {
 						<Form.Control
 							name="fk_filial"
 							value={formik.values.fk_filial ?? ""}
+							onKeyDown={handleEnter}
 							required
 							readOnly
 						/>
@@ -111,6 +125,7 @@ function Formulario({ formik, produtos, distancia }) {
 							id="doc-trans"
 							name="documento_transporte"
 							value={formik.values.documento_transporte}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							readOnly
 						/>
@@ -219,6 +234,7 @@ function Formulario({ formik, produtos, distancia }) {
 										as="textarea"
 										type="text"
 										value={formik.values.observacao_gr}
+										onKeyDown={handleEnter}
 										readOnly
 									/>
 								</FloatingLabel>
@@ -236,6 +252,7 @@ function Formulario({ formik, produtos, distancia }) {
 						placeholder=" "
 						name="cliente"
 						value={formik.values.cliente}
+						onKeyDown={handleEnter}
 						onChange={formik.handleChange}
 						required
 						readOnly
@@ -251,6 +268,7 @@ function Formulario({ formik, produtos, distancia }) {
 							placeholder=" "
 							name="origem_carga"
 							value={formik.values.origem_carga}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							required
 							readOnly
@@ -265,6 +283,7 @@ function Formulario({ formik, produtos, distancia }) {
 							placeholder=" "
 							name="destino_carga"
 							value={formik.values.destino_carga}
+							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							required
 							readOnly
@@ -307,6 +326,7 @@ function Formulario({ formik, produtos, distancia }) {
 							name="data_coleta"
 							value={formik.values.data_coleta}
 							onChange={formik.handleChange}
+							onKeyDown={handleEnter}
 							readOnly
 						/>
 					</FloatingLabel>
@@ -319,6 +339,7 @@ function Formulario({ formik, produtos, distancia }) {
 							name="data_entrega"
 							value={formik.values.data_entrega}
 							onChange={formik.handleChange}
+							onKeyDown={handleEnter}
 							readOnly
 						/>
 					</FloatingLabel>
@@ -327,25 +348,27 @@ function Formulario({ formik, produtos, distancia }) {
 			{!formik.values.e_lote && (
 				<Row>
 					<Col>
-						<FloatingLabel label="Janela Coleta" className="mb-3">
+						<FloatingLabel label="Janela coleta" className="mb-3">
 							<Form.Control
 								type="time"
 								placeholder=" "
 								name="janela_coleta"
 								value={formik.values.janela_coleta}
 								onChange={formik.handleChange}
+								onKeyDown={handleEnter}
 								readOnly
 							/>
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="Janela Entrega" className="mb-3">
+						<FloatingLabel label="Janela entrega" className="mb-3">
 							<Form.Control
 								type="time"
 								placeholder=" "
 								name="janela_entrega"
 								value={formik.values.janela_entrega}
 								onChange={formik.handleChange}
+								onKeyDown={handleEnter}
 								readOnly
 							/>
 						</FloatingLabel>
@@ -368,7 +391,7 @@ function Formulario({ formik, produtos, distancia }) {
 				<Col>
 					<Row>
 						<Col>
-							<FloatingLabel label="*Unidade de Medida" className="mb-3">
+							<FloatingLabel label="*Unidade de medida" className="mb-3">
 								<Form.Control
 									type="text"
 									name="unidade_medida"
@@ -387,6 +410,7 @@ function Formulario({ formik, produtos, distancia }) {
 									name="quantidade"
 									value={formik.values.quantidade}
 									onChange={formik.handleChange}
+									onKeyDown={handleEnter}
 									required
 									readOnly
 								/>
@@ -400,7 +424,7 @@ function Formulario({ formik, produtos, distancia }) {
 
 			<Modal show={veiculo !== null} size="lg" onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
-					<Modal.Title>Dados do veículo</Modal.Title>
+					<Modal.Title>Dados do Veículo</Modal.Title>
 				</Modal.Header>
 				{veiculo && (
 					<Card>
@@ -425,7 +449,7 @@ function Formulario({ formik, produtos, distancia }) {
 				onHide={() => setDebitosVeiculo(null)}
 			>
 				<Modal.Header closeButton>
-					<Modal.Title>Débitos do veículo</Modal.Title>
+					<Modal.Title>Débitos do Veículo</Modal.Title>
 				</Modal.Header>
 				{debitosVeiculo && (
 					<Card>

@@ -17,7 +17,7 @@ import indicadorOperacional from "../../../assets/indicadorOperacional2.gif";
 import rotasPendentes from "../../../assets/rotasPendentes.gif";
 import raioEmpresa from "../../../assets/raioEmpresa2.gif";
 import veicProximos from "../../../assets/veiculosProximos.gif";
-import veicEmpresa from "../../../assets/veiculosProximos.gif";
+import veicEmpresa from "../../../assets/veiculoEmpresa.gif";
 import historicoRota from "../../../assets/historicoVeiculos.gif";
 
 function Helper() {

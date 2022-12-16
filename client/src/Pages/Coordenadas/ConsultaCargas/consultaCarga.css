@@ -1,5 +1,10 @@
 .body-consulta-cargas{
   font-family: "Poppins", sans-serif;
+}
+.title-consultarCarga {
+  font-family: "Poppins", sans-serif;
+  font-size: 40px;
+  color: #00652e;
   margin-top: 1.5rem;
 }
 

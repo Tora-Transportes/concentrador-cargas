@@ -41,6 +41,7 @@ function ViewsCsn({
 				<ModalLegendaCargas
 					show={modalShow}
 					onHide={() => setModalShow(false)}
+					csn={"csn"}
 				/>
 				<ModalDataExcel
 					show={modalShowExcel}
