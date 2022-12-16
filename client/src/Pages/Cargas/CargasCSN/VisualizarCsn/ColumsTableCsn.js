@@ -2,10 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import StatusTooltip from "src/Pages/Components/StatusTooltip";
 import { BsPencilSquare } from "react-icons/bs";
+import { FaRegEyeSlash, FaMapMarkedAlt } from "react-icons/fa";
 import CollapseHint from "../../../Components/CollapseHint";
 import SelectStatusCarga from "../../../Components/SelectStatusCargas";
 import InputCliente from "src/Pages/Components/InputCliente";
-import { Form } from "react-bootstrap";
+import { Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ResponsavelCadastroSelect from "src/Pages/Components/ResponsavelCadastroSelect";
 
 // function formatDate(date) {
@@ -89,6 +90,33 @@ export const columns = [
 		selector: (row) => row.placa_carreta,
 		sortable: "sortable",
 		showFilter: true,
+	},
+	{
+		name: "rastreador",
+		description: "Rastreador",
+		selector: (row) => {
+			const dadosRastreador =
+				row.rastreador === "Sem rastreador" || row.rastreador === null
+					? false
+					: true;
+			return dadosRastreador ? (
+				<OverlayTrigger
+					placement="left"
+					overlay={<Tooltip>{row.rastreador}</Tooltip>}
+				>
+					<div>{<FaMapMarkedAlt size={16} color={"#363636"} />}</div>
+				</OverlayTrigger>
+			) : (
+				<OverlayTrigger
+					placement="left"
+					overlay={<Tooltip>{"Sem rastreador"}</Tooltip>}
+				>
+					<div>
+						<FaRegEyeSlash size={16} color={"#1C1C1C"} />
+					</div>
+				</OverlayTrigger>
+			);
+		},
 	},
 	{
 		name: "fk_filial",

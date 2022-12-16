@@ -248,6 +248,7 @@ class ServiceCargas {
 		placa_bitrem,
 		locais,
 		carga_csn,
+		rastreador,
 	}) {
 		const carga = {
 			e_lote,
@@ -284,6 +285,7 @@ class ServiceCargas {
 			placa_bitrem: placa_bitrem === "" ? null : placa_bitrem,
 			locais,
 			carga_csn,
+			rastreador,
 		};
 		return api.put(`/cargas/${id}`, carga);
 	}

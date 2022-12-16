@@ -10,7 +10,6 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { FaBoxes } from "react-icons/fa";
 import Menusuperior from "../Components/MenuSuperior/menusuperior";
 import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
-//import { useHistory } from "react-router-dom";
 
 const queueCoresAtuais = [];
 
@@ -29,17 +28,6 @@ function Main() {
 		"danger",
 		"warning",
 	];
-	// const history = useHistory();
-	// //Função que limpar cache quando subir uma nova versão , isto se tiver necessidade...
-	// const verificarAtualizacaoVersao = async () => {
-	// 	const limparCache = localStorage.getItem("clear_Cache");
-	// 	if (limparCache == null || limparCache.toString() !== "version_3") {
-	// 		localStorage.clear();
-	// 		localStorage.setItem("clear_Cache", "version_3");
-	// 		history.push("/");
-	// 		//location.reload();
-	// 	}
-	// };
 
 	function salvarTimestampUltimaVezJogada() {
 		const timestamp = new Date().getTime();
