@@ -16,7 +16,8 @@ function FormularioCadastroCSN({
 	history,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
-	const [isDetalhesVeiculo, setDetalesVeiculo] = useState();
+	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
+	const [isDetalhesCarreta, setDetalesCarreta] = useState(null);
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
 	const [valorTotalDebito, setValorTotal] = useState();
 	const [inputColeta5, setInputColeta5] = useState(false);
@@ -46,6 +47,7 @@ function FormularioCadastroCSN({
 			swal("Placa inválida");
 			return;
 		}
+
 		let vehicleData;
 		if (isDetalhesVeiculo) {
 			vehicleData = isDetalhesVeiculo;
@@ -56,6 +58,19 @@ function FormularioCadastroCSN({
 		if (!vehicleData) {
 			swal("Não foi encontrado nenhum veículo com essa placa.");
 		}
+
+		let placaCarreta = formik.values.placa_carreta;
+		if (isDetalhesVeiculo === null) {
+			const detailVeiculo = (await ServiceVeiculos.get(plate)).data.data;
+			setDetalesVeiculo(detailVeiculo);
+			placaCarreta = detailVeiculo?.placa_carreta;
+		}
+
+		const resultCarreta = await (
+			await ServiceVeiculos.detalhesImpedimentos(placaCarreta)
+		).data.data;
+
+		if (resultCarreta) setDetalesCarreta(resultCarreta);
 		setVeiculo(vehicleData);
 	}
 
@@ -73,6 +88,7 @@ function FormularioCadastroCSN({
 		if (plate) {
 			const vehicleDetails = (await ServiceVeiculos.get(plate)).data.data;
 			if (vehicleDetails) {
+				//setPlacaCarreta(vehicleDetails.placa_carreta);
 				formik.setFieldValue("placa_carreta", vehicleDetails.placa_carreta);
 				formik.setFieldValue("placa_bitrem", vehicleDetails.placa_bitrem);
 				formik.setFieldValue("nome_motorista", vehicleDetails.nome_motorista);
@@ -92,7 +108,6 @@ function FormularioCadastroCSN({
 
 					Swal2.fire({
 						title: "Atenção!",
-						//text: `Já existe uma carga aberta com a placa: ${plate}, código da carga: ${id}.`,
 						html: myhtml,
 						showCancelButton: true,
 						confirmButtonColor: "#00652e",
@@ -187,6 +202,8 @@ function FormularioCadastroCSN({
 				debitosVeiculo={debitosVeiculo}
 				setDebitosVeiculo={setDebitosVeiculo}
 				setVeiculo={setVeiculo}
+				isDetalhesCarreta={isDetalhesCarreta}
+				//isDetalhesVeiculo={isDetalhesVeiculo}
 				valorTotalDebito={valorTotalDebito}
 				fkSituacao={fkSituacao}
 				handleEnter={handleEnter}

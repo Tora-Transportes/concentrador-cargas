@@ -147,6 +147,9 @@ label {
   border: none;
   margin-top: 1rem;
 }
+.modal-title {
+  margin-left: 20.5%;
+}
 @media only screen and (max-width: 486px) {
   .col-cod-filial2,
   .col-cod-local {

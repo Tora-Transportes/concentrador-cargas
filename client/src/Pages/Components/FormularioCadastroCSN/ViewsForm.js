@@ -40,6 +40,7 @@ export default function ViewsForm({
 	debitosVeiculo,
 	setDebitosVeiculo,
 	setVeiculo,
+	isDetalhesCarreta,
 	valorTotalDebito,
 	fkSituacao,
 }) {
@@ -488,21 +489,51 @@ export default function ViewsForm({
 
 			<Modal show={veiculo !== null} size="lg" onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
-					<Modal.Title>Dados do Veículo</Modal.Title>
+					<Modal.Title className="modal-title">
+						Dados do Veículo / Dados Carreta
+					</Modal.Title>
 				</Modal.Header>
 				{veiculo && (
-					<Card>
-						<ListGroup className="list-group-flush">
-							{Object.keys(veiculo).map((i) => (
-								<ListGroupItem key={i}>
-									<b>{i.replace(/_/g, " ")}</b>:
-									{i.startsWith("DATA_")
-										? veiculo[i]?.split("T")[0].split("-").reverse().join("/")
-										: veiculo[i]}
-								</ListGroupItem>
-							))}
-						</ListGroup>
-					</Card>
+					<Row>
+						<Col>
+							<Card>
+								<ListGroup className="list-group-flush">
+									{Object.keys(veiculo).map((i) => (
+										<ListGroupItem key={i}>
+											<b>{i.replace(/_/g, " ")}</b>:
+											{i.startsWith("DATA_")
+												? veiculo[i]
+														?.split("T")[0]
+														.split("-")
+														.reverse()
+														.join("/")
+												: veiculo[i]}
+										</ListGroupItem>
+									))}
+								</ListGroup>
+							</Card>
+						</Col>
+						{isDetalhesCarreta && (
+							<Col>
+								<Card>
+									<ListGroup className="list-group-flush">
+										{Object.keys(isDetalhesCarreta).map((i) => (
+											<ListGroupItem key={i}>
+												<b>{i.replace(/_/g, " ")}</b>:
+												{i.startsWith("DATA_")
+													? isDetalhesCarreta[i]
+															?.split("T")[0]
+															.split("-")
+															.reverse()
+															.join("/")
+													: isDetalhesCarreta[i]}
+											</ListGroupItem>
+										))}
+									</ListGroup>
+								</Card>
+							</Col>
+						)}
+					</Row>
 				)}
 			</Modal>
 
