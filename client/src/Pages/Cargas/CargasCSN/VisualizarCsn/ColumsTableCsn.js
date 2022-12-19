@@ -119,6 +119,32 @@ export const columns = [
 		},
 	},
 	{
+		name: "categoria_veiculo",
+		description: "Categoria",
+		selector: (row) => {
+			if (!row.categoria_veiculo) return "";
+			switch (row.categoria_veiculo) {
+				case "A":
+					return "Agregado";
+				case "F":
+					return "Frota Própria";
+				case "C":
+					return "Carreteiro";
+				default:
+					return "Não reconhecido";
+			}
+		},
+		Filter: (props) => (
+			<Form.Select {...props}>
+				<option></option>
+				<option value="A">Agregado</option>
+				<option value="C">Carreteiro</option>
+				<option value="F">Frota Própria</option>
+			</Form.Select>
+		),
+		showFilter: true,
+	},
+	{
 		name: "fk_filial",
 		description: "Código da filial",
 		selector: (row) =>
