@@ -31,11 +31,11 @@
 
 .modal-situation-cargas{
   font-family: "Poppins", sans-serif;
-  margin-top: 8.7rem;
+  margin-top: 7rem;
   margin-bottom: 3rem;
 }
 #modal-header{
-  margin-bottom: -1rem;
+  margin-bottom: -1.5rem;
   border: #fff;
 }
 
@@ -52,8 +52,9 @@
   display: flex;
 }
 #desc-legenda-cargas {
-  font-size: 13px;
+  font-size: 14px;
   margin-left: 1rem;
+  margin-bottom: .2rem;
 }
 #modal-footer {
   margin-top: -1rem;

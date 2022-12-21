@@ -3,13 +3,14 @@ import "./ajuda.css";
 import Menusuperior from "../MenuSuperior/menusuperior";
 import Accordion from "react-bootstrap/Accordion";
 import { Button } from "react-bootstrap";
-import cadastroCarga from "../../../assets/cadastrarCargasPadrao.gif";
+import cadastroCarga from "../../../assets/teste.gif";
 import cadastroManual from "../../../assets/cadastroManual.gif";
 import importacaoLote from "../../../assets/importacaoLote.gif";
 import listagemCargas from "../../../assets/listagemCargas.gif";
-import listagemLote from "../../../assets/cargaLote.gif";
+import listagemLote from "../../../assets/importacaoLote2.gif";
 import configTab from "../../../assets/configurarTabela.gif";
 import opcoesTab from "../../../assets/opcaoTabela.gif";
+import itensPage from "../../../assets/itensPorPagina.gif";
 import coordenadasGif from "../../../assets/coordenadaVeiculos2.gif";
 import monitoramentoGif from "../../../assets/monitoramentoVeiculos.gif";
 import telaProdutos from "../../../assets/telaprodutos2.gif";
@@ -63,19 +64,21 @@ function Helper() {
 				<Accordion.Item eventKey="1">
 					<Accordion.Header>Cadastrar Cargas</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
-						<p>
+						<p className="p-tela-ajuda">
 							No menu Cargas, ao clicar em Cadastrar Cargas você será
 							direcionado(a) para a página de seleção, onde <br />
 							deverá escolher o modo em que deseja cadastrar a carga.
 						</p>
-						<p>Exemplo da Página de Seleção: </p>
+						<p className="p-tela-ajuda">Exemplo da Página de Seleção: </p>
 
 						<img src={cadastroCarga} id="style-gif2" />
-						<p>
-							Escolhido o modo de cadastro da carga, você será direcionado até a
-							página de cadastro correspondente.
+						<p className="p-tela-ajuda">
+							Ao escolher o modo de cadastro da carga, você será direcionado(a)
+							até a página de cadastro correspondente.
 						</p>
-						<p>Exemplo da página de Cadastro Manual: </p>
+						<p className="p-tela-ajuda">
+							Exemplo da página de Cadastro Manual:
+						</p>
 						<img src={cadastroManual} id="style-gif2" />
 						<div className="class-button-ir">
 							<Button
@@ -87,7 +90,9 @@ function Helper() {
 							</Button>
 						</div>
 
-						<p>Exemplo da página de Importação em Lote: </p>
+						<p className="p-tela-ajuda">
+							Exemplo da página de Importação de Cargas:
+						</p>
 						<img src={importacaoLote} id="style-gif" />
 						<div className="class-button-ir">
 							<Button
@@ -103,15 +108,16 @@ function Helper() {
 				<Accordion.Item eventKey="2">
 					<Accordion.Header>Listagem de Cargas</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
-						<p>
+						<p className="p-tela-ajuda">
 							Essa página lhe dará acesso ao detalhamento de informações das
 							cargas cadastradas manualmente em <br /> nossa plataforma.
 						</p>
-						<p>Exemplo da Página Listagem de Cargas: </p>
+						<p className="p-tela-ajuda">
+							Exemplo da Página Listagem de Cargas:
+						</p>
 
 						<img src={listagemCargas} id="style-gif" />
 						<div className="class-button-ir">
-							{/* <p className="class-p-nav">Navegar até a Página de Cadastro</p> */}
 							<Button
 								href="/cargas/visualizar"
 								id="style-button-acc"
@@ -125,11 +131,13 @@ function Helper() {
 				<Accordion.Item eventKey="3">
 					<Accordion.Header>Listagem de Cargas em Lote</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
-						<p>
+						<p className="p-tela-ajuda">
 							Essa página lhe dará acesso ao detalhamento de informações das
 							cargas cadastradas por importação <br /> em lote na plataforma.
 						</p>
-						<p>Exemplo da página Listagem de Cargas em Lotes: </p>
+						<p className="p-tela-ajuda">
+							Exemplo da página Listagem de Cargas em Lotes:
+						</p>
 
 						<img src={listagemLote} id="style-gif" />
 						<div className="class-button-ir">
@@ -150,7 +158,7 @@ function Helper() {
 					</Accordion.Header>
 
 					<Accordion.Body className="class-body-accordion">
-						<p>
+						<p className="p-tela-ajuda">
 							Algumas ferramentas da plataforma irão permitir configurações nas
 							páginas para que sejam apresentadas <br /> apenas as informações
 							necessárias no momento da consulta, facilitando a utilização da
@@ -158,40 +166,52 @@ function Helper() {
 							seu uso nas páginas da plataforma, dando maior <br /> conforto e
 							interação com as ferramentas disponíveis.
 							<br />
-							<br /> Veja a seguir os exemplos dessas funcionalidades: <br />{" "}
+							<br /> Veja a seguir os exemplos dessas funcionalidades: <br />
 							<br />
 							Configurar Tabela - você poderá filtrar os itens que deseja
 							visualizar na página de acordo com a sua <br /> necessidade no
 							momento da consulta.
 						</p>
-						<p className="mb-1">Exemplo do filtro Configurar Tabela: </p>
+						<p className="p-tela-ajuda mb-1">
+							Exemplo do filtro Configurar Tabela:
+						</p>
 						<img src={configTab} id="style-gif2" />
-						<p>
-							Opções da Tabela - Legenda das cargas: explica o significado de
+						<p className="p-tela-ajuda">
+							Opções da Tabela - Legenda das cargas: mostra o significado de
 							todas as possíveis situações de cargas <br /> cadastradas no
 							sistema, facilitando o entendimento das mesmas.
-							<br /> Importar tabela: oferece o download da tabela em formato
-							excel.
+							<br /> Importar tabela: Permite filtro por data e código da filial
+							e oferece o download da tabela em formato excel.
 							<br /> Redefinir tabela: possibilita a redefinição das
 							configurações feitas na página, para o formato padrão da
 							ferramenta.
 						</p>
-
-						<p className="mb-1 mt-3">Exemplo de Opções da Tabela: </p>
-
+						<p className="p-tela-ajuda mb-1 mt-3">
+							Exemplo de Opções da Tabela:{" "}
+						</p>
 						<img src={opcoesTab} id="style-gif2" />
+						<p className="p-tela-ajuda">
+							Itens por página - Permite que você veja de 10 à 500 itens nas
+							páginas de Listagem de Cargas, <br />
+							Listagem de Cargas em Lote e Coordenadas, auxiliando sua
+							utilização nas páginas mencionadas.
+						</p>
+						<p className="p-tela-ajuda mb-1 mt-3">
+							Exemplo de Itens por Página:
+						</p>
+						<img src={itensPage} id="style-gif2" />
 					</Accordion.Body>
 				</Accordion.Item>
 				<Accordion.Item eventKey="5" id="style-button-accordion">
 					<Accordion.Header>Coordenadas</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
-						<p>
+						<p className="p-tela-ajuda">
 							A página de Coordenadas disponibiliza detalhes do veículo,
 							informações de rota e localização, categoria, <br /> placa, dados
 							do motorista, dentre outras informações sobre os veículos
 							cadastrados na plataforma.
 						</p>
-						<p>Exemplo da página Coordenadas:</p>
+						<p className="p-tela-ajuda">Exemplo da página Coordenadas:</p>
 						<img src={coordenadasGif} id="style-gif" />
 
 						<div className="class-button-ir">
@@ -208,12 +228,12 @@ function Helper() {
 				<Accordion.Item eventKey="6" id="style-button-accordion">
 					<Accordion.Header>Monitoramento</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
-						<p>
+						<p className="p-tela-ajuda">
 							Nessa opção você será apresentado à página de Monitoramento, onde
 							conseguirá verificar veículos <br /> pendentes, e aprovar ou
 							reprovar veículos de acordo com a situação de cada um.
 						</p>
-						<p>Exemplo da página de Monitoramento: </p>
+						<p className="p-tela-ajuda">Exemplo da página de Monitoramento: </p>
 						<img src={monitoramentoGif} id="style-gif" />
 
 						<div className="class-button-ir">
@@ -230,14 +250,14 @@ function Helper() {
 				<Accordion.Item eventKey="8" id="style-button-accordion">
 					<Accordion.Header>Produtos</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
-						<p>
+						<p className="p-tela-ajuda">
 							Essa página possibilita visualizar, adicionar, editar e desativar
 							produtos, e apresenta a situação de cada <br /> um deles, provendo
 							melhor acompanhamento dos mesmos.
 						</p>
-						<p>Exemplo da página Produtos: </p>
+						<p className="p-tela-ajuda">Exemplo da página Produtos: </p>
 						<img src={telaProdutos} id="style-gif" />
-						<p>
+						<p className="p-tela-ajuda">
 							Lembrando que somente pessoas com permissão são aptas a adicionar,
 							editar e desativar os produtos <br /> na plataforma.
 						</p>
@@ -256,7 +276,7 @@ function Helper() {
 				<Accordion.Item eventKey="9" id="style-button-accordion">
 					<Accordion.Header>Relatórios</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
-						<p>
+						<p className="p-tela-ajuda">
 							<br />
 							Ao clicar em Relatórios, você terá várias opções de consulta
 							disponíveis na plataforma, são elas: <br /> <br /> Indicador
@@ -276,7 +296,7 @@ function Helper() {
 								Ir para Indicador Operacional
 							</Button>
 						</div>
-						<p>
+						<p className="p-tela-ajuda">
 							Rotas Pendentes de Cadastro - Disponibiliza os nomes das cidades e
 							estados de origem e destino, <br /> provendo acesso as informações
 							de rotas, para um melhor acompanhamento.
@@ -292,45 +312,43 @@ function Helper() {
 								Ir para Rotas Pendentes
 							</Button>
 						</div>
-						<p className="ms-1">
+						<p className="p-tela-ajuda ms-1">
 							As páginas que serão citadas a seguir representam funcionalidades
 							similares: <br /> <br />
 							Raio Empresa - Mostra os veículos no raio da empresa.
 						</p>
 						<img src={raioEmpresa} id="style-gif" />
-						<p className="ms-1">
+						<div className="class-button-ir">
+							<Button href="/veiculos/raio/empresa" id="style-button-acc">
+								Ir para Raio Empresa
+							</Button>
+						</div>
+						<p className="p-tela-ajuda ms-1">
 							Veículos x Veículos - Mostra a distância entre veículos que
 							estejam próximos.
 						</p>
 						<img src={veicProximos} id="style-gif" />
-						<p className="ms-1">
+						<div className="class-button-ir">
+							<Button href="/veiculos/raio" id="style-button-acc">
+								Ir para Veículos x Veículos
+							</Button>
+						</div>
+						<p className="p-tela-ajuda ms-1">
 							Veículos até Empresa - Mostra a distância entre um veículo e a
 							empresa.
 						</p>
 						<img src={veicEmpresa} id="style-gif" />
-						<p>
-							Abaixo estará disponível botões que irão te direcionar para as
-							páginas abordadas acima, para acessá-las <br /> basta clicar em
-							cada um dos botões e você será direcionado para a página
-							escolhida.
-						</p>
 
 						<div className="class-button-ir">
-							<Button href="/veiculos/raio/empresa" id="button-acc-veic">
-								Ir para Raio Empresa
-							</Button>
-							<Button href="/veiculos/raio" id="button-acc-veic2">
-								Ir para Veículos x Veículos
-							</Button>{" "}
-							<Button href="/veiculos/destino" id="button-acc-veic3">
+							<Button href="/veiculos/destino" id="style-button-acc">
 								Ir para Veículos até Empresa
 							</Button>
 						</div>
-						<p>
+						<p className="p-tela-ajuda">
 							<br />
 							Em Histórico de Rotas do Veículo, você terá acesso a localização
 							do veículo, filtrando pela placa <br /> do veículo e data a ser
-							consultada, as informações serão mostradas no mapa disponibilizado{" "}
+							consultada, as informações serão mostradas no mapa disponibilizado
 							<br /> na plataforma, a tela disponibiliza também a opção de
 							download do histórico consultado via excel.
 						</p>

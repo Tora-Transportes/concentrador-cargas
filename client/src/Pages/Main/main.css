@@ -9,14 +9,14 @@
 #navbar-tora a {
   color: #b8c5cb !important;
 }
-#navbar-tora .btn-toggle {
+#navbar-tora {
   background-color: #024c01;
   color: #b8c5cb;
   border: 1px solid #b8c5cb;
   margin-left: 4px;
 }
 
-#navbar-tora .btn-toggle:hover {
+#navbar-tora {
   background-color: #b8c5cb;
   color: #024c01;
   border: 1px solid #024c01;
@@ -94,7 +94,7 @@
 #style-iconn-2:hover,
 #style-iconn:hover,
 .class-ico-ind:hover {
-  color: #03880c;
+  color: #009c08;
 }
 
 .class-ico-ind {
