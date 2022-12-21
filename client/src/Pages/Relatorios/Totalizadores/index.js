@@ -6,8 +6,10 @@ import ServiceRelatorios from "../../../services/ServiceRelatorios";
 import { useEffect, useState } from "react";
 import io from "../../../services/socket";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
+import { useParams } from "react-router-dom";
 
 function RelatoriosMain() {
+	const { id } = useParams();
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [totalizadores, setTotalizadores] = useState({
 		cargas_ativas: 0,
@@ -51,8 +53,60 @@ function RelatoriosMain() {
 		data_final: "",
 		fk_filial: "",
 	});
-
 	const interval = useRef(null);
+
+	const statusCargaId = String(id) === "padrao" ? 0 : 1;
+	useEffect(() => {
+		if (statusCargaId === 1) {
+			setTotalizadores(() => {
+				return {
+					...totalizadores,
+					geral: [
+						{
+							total: 0,
+							fk_situacao: 1,
+							descricao: "Aguardando Alocação (Veículo)",
+						},
+						{
+							total: 0,
+							fk_situacao: 2,
+							descricao: "Aguardando Aprovação",
+						},
+						{
+							total: 0,
+							fk_situacao: 3,
+							descricao: "Iniciando Trajeto",
+						},
+						{
+							total: 0,
+							fk_situacao: 4,
+							descricao: "Em Coleta",
+						},
+						{
+							total: 0,
+							fk_situacao: 5,
+							descricao: "Reprovada",
+						},
+						{
+							total: 0,
+							fk_situacao: 6,
+							descricao: "Cancelada",
+						},
+						{
+							total: 0,
+							fk_situacao: 7,
+							descricao: "Finalizada",
+						},
+						{
+							total: 0,
+							fk_situacao: 8,
+							descricao: "EM Trânsito",
+						},
+					],
+				};
+			});
+		}
+	}, [id]);
 	useEffect(() => {
 		reload();
 	}, [filters]);
@@ -62,7 +116,12 @@ function RelatoriosMain() {
 		interval.current = setTimeout(async () => {
 			setLoading(true);
 			setTotalizadores(
-				(await ServiceRelatorios.totalizadores(filters)).data.data
+				(
+					await ServiceRelatorios.totalizadores({
+						...filters,
+						carga_csn: statusCargaId,
+					})
+				).data.data
 			);
 
 			setTempoMedioAprovacaoGr(
@@ -74,7 +133,12 @@ function RelatoriosMain() {
 			if (!filters.fk_filial || !filters.data_final || !filters.data_inicio) {
 				setResumosDiarios([]);
 			} else {
-				const a = (await ServiceRelatorios.resumosDiarios(filters)).data.data;
+				const a = (
+					await ServiceRelatorios.resumosDiarios({
+						...filters,
+						carga_csn: statusCargaId,
+					})
+				).data.data;
 				setResumosDiarios(a);
 			}
 			setLoading(false);
@@ -109,7 +173,9 @@ function RelatoriosMain() {
 		let isMounted = true;
 		(async function () {
 			if (isMounted) {
-				const total = (await ServiceRelatorios.totalizadores()).data.data;
+				const total = (
+					await ServiceRelatorios.totalizadores({ carga_csn: statusCargaId })
+				).data.data;
 				setTotalizadores(total);
 			}
 		})();
@@ -129,6 +195,7 @@ function RelatoriosMain() {
 				handleExportExcel={handleExportExcel}
 				resumosDiarios={resumosDiarios}
 				tempoMedioAprovacaoGr={tempoMedioAprovacaoGr}
+				statusCargaId={statusCargaId}
 			/>
 		</div>
 	);

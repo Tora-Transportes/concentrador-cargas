@@ -29,16 +29,6 @@ function Main() {
 		"warning",
 	];
 
-	//Função que limpar cache quando subir uma nova versão , isto se tiver necessidade...
-	const verificarAtualizacaoVersao = async () => {
-		const limparCache = localStorage.getItem("clear_Cache");
-		if (limparCache == null || limparCache.toString() !== "version_2") {
-			localStorage.clear();
-			localStorage.setItem("clear_Cache", "version_2");
-			location.reload();
-		}
-	};
-
 	function salvarTimestampUltimaVezJogada() {
 		const timestamp = new Date().getTime();
 		localStorage.setItem("ultima_vez_jogada", timestamp);
@@ -129,7 +119,7 @@ function Main() {
 	useEffect(() => {
 		const nome = getClaims().name;
 		setUserData({ nome });
-		verificarAtualizacaoVersao();
+		//verificarAtualizacaoVersao();
 		(async () => {
 			const userPermission = await validationPermissionUser();
 			if (userPermission?.permissoes.includes("CARGAS_PADRAO")) {
@@ -175,7 +165,7 @@ function Main() {
 
 				<div className="class-icons-body">
 					<div className="icons-efect">
-						<Link to="/relatorios" className="class-link">
+						<Link to="/relatorios/visualizar/padrao" className="class-link">
 							<FaChartBar size={50} className="class-ico-ind" />
 							<br />
 							<b id="style-iconn">Indicador Operacional</b>

@@ -2,10 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import StatusTooltip from "src/Pages/Components/StatusTooltip";
 import { BsPencilSquare } from "react-icons/bs";
+import { FaRegEyeSlash, FaMapMarkedAlt } from "react-icons/fa";
 import CollapseHint from "../../../Components/CollapseHint";
 import SelectStatusCarga from "../../../Components/SelectStatusCargas";
 import InputCliente from "src/Pages/Components/InputCliente";
-import { Form } from "react-bootstrap";
+import { Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ResponsavelCadastroSelect from "src/Pages/Components/ResponsavelCadastroSelect";
 
 // function formatDate(date) {
@@ -30,11 +31,14 @@ export const columns = [
 				hint={row["situacao.descricao"]}
 			/>
 		),
-		Filter: (props) => (
-			<SelectStatusCarga {...props}>
-				<option></option>
-			</SelectStatusCarga>
-		),
+		Filter: (props) => {
+			const csn = 1;
+			return (
+				<SelectStatusCarga {...props} csn={csn}>
+					<option></option>
+				</SelectStatusCarga>
+			);
+		},
 		sortable: "sortable",
 		showFilter: true,
 	},
@@ -85,6 +89,59 @@ export const columns = [
 		description: "Placa carreta",
 		selector: (row) => row.placa_carreta,
 		sortable: "sortable",
+		showFilter: true,
+	},
+	{
+		name: "rastreador",
+		description: "Rastreador",
+		selector: (row) => {
+			const dadosRastreador =
+				row.rastreador === "Sem rastreador" || row.rastreador === null
+					? false
+					: true;
+			return dadosRastreador ? (
+				<OverlayTrigger
+					placement="left"
+					overlay={<Tooltip>{row.rastreador}</Tooltip>}
+				>
+					<div>{<FaMapMarkedAlt size={16} color={"#363636"} />}</div>
+				</OverlayTrigger>
+			) : (
+				<OverlayTrigger
+					placement="left"
+					overlay={<Tooltip>{"Sem rastreador"}</Tooltip>}
+				>
+					<div>
+						<FaRegEyeSlash size={16} color={"#1C1C1C"} />
+					</div>
+				</OverlayTrigger>
+			);
+		},
+	},
+	{
+		name: "categoria_veiculo",
+		description: "Categoria",
+		selector: (row) => {
+			if (!row.categoria_veiculo) return "";
+			switch (row.categoria_veiculo) {
+				case "A":
+					return "Agregado";
+				case "F":
+					return "Frota Própria";
+				case "C":
+					return "Carreteiro";
+				default:
+					return "Não reconhecido";
+			}
+		},
+		Filter: (props) => (
+			<Form.Select {...props}>
+				<option></option>
+				<option value="A">Agregado</option>
+				<option value="C">Carreteiro</option>
+				<option value="F">Frota Própria</option>
+			</Form.Select>
+		),
 		showFilter: true,
 	},
 	{

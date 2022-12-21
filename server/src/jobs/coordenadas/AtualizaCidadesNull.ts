@@ -112,5 +112,5 @@ class AtualizaCidadesNull {
 
 export default function atualizaCidadesCoordenadas() {
   const verificarCidadesNull = new AtualizaCidadesNull();
-  cron.schedule("07,37 * * * *", verificarCidadesNull.job);
+  cron.schedule("35 * * * *", verificarCidadesNull.job);
 }

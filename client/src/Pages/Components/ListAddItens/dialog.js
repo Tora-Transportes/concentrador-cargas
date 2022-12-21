@@ -66,7 +66,7 @@ export const DetalhesDialogParadas = ({
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="Número CTE" className="mb-3">
+					<FloatingLabel label="DOC TRANSPORTE " className="mb-3">
 						<Form.Control
 							type="text"
 							name="numeroCte"
@@ -80,13 +80,13 @@ export const DetalhesDialogParadas = ({
 				<Col className="text-end">
 					<>
 						<Button
-							label="salvar"
+							label="Salvar"
 							className="p-button-raised p-button-success p-button-text me-2"
 							icon="pi pi-check"
 							onClick={valuesFormDialog}
 						/>
 						<Button
-							label="voltar"
+							label="Voltar"
 							className="p-button-raised p-button-secondary p-button-text"
 							icon="pi pi-times"
 							onClick={() => setVisibleDialog(false)}

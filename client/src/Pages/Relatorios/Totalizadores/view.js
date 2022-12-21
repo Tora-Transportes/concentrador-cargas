@@ -35,6 +35,7 @@ function ViewRotasPendentes({
 	handleExportExcel,
 	resumosDiarios,
 	tempoMedioAprovacaoGr,
+	statusCargaId,
 }) {
 	const [totalGeral, setTotalGeral] = useState(0);
 	const dataInicial = useRef(null);
@@ -103,10 +104,12 @@ function ViewRotasPendentes({
 		setTotalGeral(total);
 	}, [totalizadores]);
 
+	const titlePage =
+		statusCargaId === 0 ? "Indicador Operacional" : "Indicador Operacional CSN";
 	return (
 		<div className="class-body-relatorios">
 			<Container className="text-center mb-5 mt-4">
-				<p className="style-title-rel">Indicador Operacional</p>
+				<p className="style-title-rel">{titlePage}</p>
 				<hr className="linha-abaixo-titulo" id="style-hr-rel" />
 				<Toast ref={toast} position="top-center"></Toast>
 				<span>
@@ -190,6 +193,8 @@ function ViewRotasPendentes({
 											"rgba(247, 0, 21)",
 											"rgba(115, 1, 88)",
 											"rgba(66, 135, 245)",
+											"rgba(112,128,144)",
+											"rgba(205,92,92)",
 										],
 										borderWidth: 1,
 									},

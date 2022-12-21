@@ -49,6 +49,7 @@ export function factoryCargaValidator() {
     codigo_motorista: yup.number().nullable().notRequired(),
     locais: yup.array().of(yup.string()).notRequired(),
     carga_csn: yup.number().nullable().notRequired(),
+    rastreador: yup.string().nullable().notRequired(),
   });
 
   return cargaValidator;

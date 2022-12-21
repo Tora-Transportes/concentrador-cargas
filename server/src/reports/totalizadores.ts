@@ -4,6 +4,7 @@ export interface IFilter {
   data_inicio?: string;
   data_final?: string;
   fk_filial?: number | null;
+  carga_csn?: number | null;
 }
 
 export class ReportTotalizadores {
@@ -11,6 +12,7 @@ export class ReportTotalizadores {
     data_inicio,
     data_final,
     fk_filial,
+    carga_csn,
   }: IFilter) {
     const query = database(
       database.raw(
@@ -22,6 +24,17 @@ export class ReportTotalizadores {
       .leftJoin("con_cargas", "con_cargas.ativo", "con_vw_ativo.ativo")
       .where("e_lote", 0)
       .groupBy("con_vw_ativo.ativo");
+
+    if (carga_csn == 1) {
+      query.where("carga_csn", carga_csn);
+    }
+    if (carga_csn == 0) {
+      query.where((qB) => {
+        qB.andWhere("carga_csn", "=", 0);
+        qB.orWhereNull("carga_csn");
+      });
+    }
+
     if (data_inicio) {
       query.whereRaw(`to_char("data_cadastro", 'yyyy-mm-dd') >= ?`, [
         data_inicio,
@@ -47,6 +60,7 @@ export class ReportTotalizadores {
     data_inicio,
     data_final,
     fk_filial,
+    carga_csn,
   }: IFilter) {
     const query = database(
       database.raw(
@@ -64,6 +78,15 @@ export class ReportTotalizadores {
       .where("con_cargas.ativo", 1)
       .groupBy("con_vw_canal.canal_comunicacao")
       .orderBy("con_vw_canal.canal_comunicacao");
+    if (carga_csn == 1) {
+      query.where("carga_csn", carga_csn);
+    }
+    if (carga_csn == 0) {
+      query.where((qB) => {
+        qB.andWhere("carga_csn", "=", 0);
+        qB.orWhereNull("carga_csn");
+      });
+    }
     if (data_inicio) {
       query.whereRaw(`to_char("data_cadastro", 'yyyy-mm-dd') >= ?`, [
         data_inicio,
@@ -88,11 +111,21 @@ export class ReportTotalizadores {
     data_inicio,
     data_final,
     fk_filial,
+    carga_csn,
   }: IFilter) {
     const subquery = database("con_cargas")
       .where("con_cargas.ativo", 1)
       .where("con_cargas.e_lote", 0)
       .as("con_cargas_1");
+    if (carga_csn == 1) {
+      subquery.where("carga_csn", carga_csn);
+    }
+    if (carga_csn == 0) {
+      subquery.where((qB) => {
+        qB.andWhere("carga_csn", "=", 0);
+        qB.orWhereNull("carga_csn");
+      });
+    }
     if (data_inicio) {
       subquery.whereRaw(`to_char("data_cadastro", 'yyyy-mm-dd') >= ?`, [
         data_inicio,
@@ -106,17 +139,42 @@ export class ReportTotalizadores {
     if (fk_filial) {
       subquery.where("fk_filial", fk_filial);
     }
-    const query = database(subquery)
-      .count("con_cargas_1.id as total")
-      .select(["con_situacoes_cargas.id as fk_situacao", "descricao"])
+    let query;
+    if (carga_csn == 1) {
+      query = database(subquery)
+        .count("con_cargas_1.id as total")
+        .select(["con_situacoes_cargas_csn.id as fk_situacao", "descricao"])
 
-      .rightJoin(
-        "con_situacoes_cargas",
-        "con_situacoes_cargas.id",
-        "con_cargas_1.fk_situacao"
-      )
-      .groupBy(["fk_situacao", "descricao", "con_situacoes_cargas.id", "ativo"])
-      .orderBy("con_situacoes_cargas.id");
+        .rightJoin(
+          "con_situacoes_cargas_csn",
+          "con_situacoes_cargas_csn.id",
+          "con_cargas_1.fk_situacao"
+        )
+        .groupBy([
+          "fk_situacao",
+          "descricao",
+          "con_situacoes_cargas_csn.id",
+          "ativo",
+        ])
+        .orderBy("con_situacoes_cargas_csn.id");
+    } else {
+      query = database(subquery)
+        .count("con_cargas_1.id as total")
+        .select(["con_situacoes_cargas.id as fk_situacao", "descricao"])
+
+        .rightJoin(
+          "con_situacoes_cargas",
+          "con_situacoes_cargas.id",
+          "con_cargas_1.fk_situacao"
+        )
+        .groupBy([
+          "fk_situacao",
+          "descricao",
+          "con_situacoes_cargas.id",
+          "ativo",
+        ])
+        .orderBy("con_situacoes_cargas.id");
+    }
 
     return await query;
     // return await database.raw(`
@@ -130,11 +188,21 @@ export class ReportTotalizadores {
     data_final,
     data_inicio,
     fk_filial,
+    carga_csn,
   }: IFilter) {
     const status = database.raw(
       `(select 1 "ativo" from DUAL union select 0 "ativo" from "DUAL") "con_vw_status"`
     );
     const subquery = database("con_cargas").where("e_lote", 1);
+    if (carga_csn == 1) {
+      subquery.where("carga_csn", carga_csn);
+    }
+    if (carga_csn == 0) {
+      subquery.where((qB) => {
+        qB.andWhere("carga_csn", "=", 0);
+        qB.orWhereNull("carga_csn");
+      });
+    }
     if (data_inicio) {
       subquery.whereRaw(`to_char("data_cadastro", 'yyyy-mm-dd') >= ?`, [
         data_inicio,
