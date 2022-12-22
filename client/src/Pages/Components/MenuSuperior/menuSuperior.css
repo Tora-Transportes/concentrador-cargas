@@ -14,11 +14,13 @@ ul {
   margin-top: 1rem;
 }
 
-.class-li {
-  margin-top: 0.5rem;
-}
+/* .class-list {
+  margin-top: 0.9rem;
+} */
 
-#style-a {
+#style-a,
+#style-button-drop {
+  font-size: 16px;
   text-decoration: none;
   color: white;
   cursor: pointer;
@@ -32,17 +34,18 @@ ul {
 
 /* Botão DropDown */
 .dropbtn-veic,
-.dropbtn-doc,
+/* .dropbtn-doc, */
 .dropbtn {
-  background: none;
-  color: white;
-  padding: 16px;
   font-size: 16px;
-  border: none;
   cursor: pointer;
+  border: none;
+  color: white;
+  background: none;
+  padding: 14px;
+  margin-top: -7px;
 }
 #link-rel {
-  margin-top: 0.5rem;
+  margin-top: 0.1px;
   color: white;
   text-decoration: none;
 }
@@ -71,7 +74,7 @@ ul {
   transform: translate(-50%, -50%);
 }
 
-#button-relatorios:hover{
+#button-relatorios:hover {
   background: #03880c;
   border-radius: 30px;
   transition: 0.5s;
@@ -92,8 +95,8 @@ ul {
 
 .dropbtn-veic:hover,
 .dropbtn-veic:focus,
-.dropbtn-doc:hover,
-.dropbtn-doc:focus,
+/* .dropbtn-doc:hover,
+.dropbtn-doc:focus, */
 .dropbtn:hover,
 .dropbtn:focus {
   background: #00a65053;
@@ -304,10 +307,10 @@ ul {
     top: -7px;
   }
 
-  .class-dropdown {
+  /* .class-dropdown {
     display: grid;
     grid-template-rows: auto auto auto;
-  }
+  } */
 
   #style-button-drop {
     font-size: 16px;
@@ -386,10 +389,10 @@ ul {
     top: -7px;
   }
 
-  .class-dropdown {
+  /* .class-dropdown {
     display: grid;
     grid-template-rows: auto auto auto;
-  }
+  } */
 
   #style-button-drop {
     font-size: 16px;

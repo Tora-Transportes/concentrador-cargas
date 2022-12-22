@@ -218,7 +218,7 @@ function ViewRotasPendentes({
 							<tbody className="cor-letras">
 								{totalizadores?.geral?.map((situacao) => {
 									return (
-										<tr key={situacao.fk_situacao} sm={12}>
+										<tr key={situacao.fk_situacao}>
 											<td>{situacao.descricao}</td>
 											<td>
 												<b>{situacao.total}</b>
@@ -516,7 +516,7 @@ function ViewRotasPendentes({
 										<tbody>
 											{resumosDiarios?.map((resumo) => {
 												return (
-													<tr key={resumo.data_cadastro} sm={12}>
+													<tr key={resumo.data_cadastro}>
 														<td>{resumo.total_peso_cadastrado}</td>
 														<td>{resumo.total_peso_transportado}</td>
 														<td>{resumo.viagens_realizadas}</td>

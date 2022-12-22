@@ -6,7 +6,7 @@ import somaDebitoVeiculo from "src/Pages/Utils/somaDebitoVeiculo";
 import { funcInputPontoParada } from "./management";
 import ViewsForm from "./ViewsForm";
 import ServiceCargas from "src/services/ServiceCargas";
-import Swal2 from "sweetalert2";
+import Swal2 from "sweetalert";
 function FormularioCadastroCSN({
 	formik,
 	produtos,
