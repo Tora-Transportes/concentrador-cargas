@@ -18,7 +18,6 @@ import FilialSelect from "../FilialSelect";
 import InputCliente from "../InputCliente";
 import InputPlaca from "../InputPlaca";
 import ListAddItens from "../ListAddItens";
-//import UnidadesMedida from "../UnidadesMedida";
 import InputsPontoPassagem from "./InputPontoPassagem";
 
 export default function ViewsForm({
@@ -41,6 +40,7 @@ export default function ViewsForm({
 	debitosVeiculo,
 	setDebitosVeiculo,
 	setVeiculo,
+	isDetalhesCarreta,
 	valorTotalDebito,
 	fkSituacao,
 }) {
@@ -199,7 +199,7 @@ export default function ViewsForm({
 							realizada novamente. Lembrando que a atualização dos dados ficará
 							indisponível uma vez que o veículo for {`"Aprovado pelo GR"`}.
 						</Form.Text>
-						<Col sm={12}>
+						<Col sm={6} md={6}>
 							<InputPlaca
 								className="input-placaCav"
 								id="Plca-cavalo"
@@ -222,6 +222,17 @@ export default function ViewsForm({
 									}
 								}}
 							/>
+						</Col>
+						<Col sm={6} md={6}>
+							<InputGroup className="input-carreta mb-2">
+								<InputGroup.Text>Rastreador</InputGroup.Text>
+								<Form.Control
+									readOnly
+									placeholder="Rastreador Cavalo"
+									type="text"
+									value={formik.values.rastreador || ""}
+								/>
+							</InputGroup>
 						</Col>
 					</Row>
 					<Row>
@@ -478,21 +489,51 @@ export default function ViewsForm({
 
 			<Modal show={veiculo !== null} size="lg" onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
-					<Modal.Title>Dados do Veículo</Modal.Title>
+					<Modal.Title className="modal-title">
+						Dados do Veículo / Dados Carreta
+					</Modal.Title>
 				</Modal.Header>
 				{veiculo && (
-					<Card>
-						<ListGroup className="list-group-flush">
-							{Object.keys(veiculo).map((i) => (
-								<ListGroupItem key={i}>
-									<b>{i.replace(/_/g, " ")}</b>:
-									{i.startsWith("DATA_")
-										? veiculo[i]?.split("T")[0].split("-").reverse().join("/")
-										: veiculo[i]}
-								</ListGroupItem>
-							))}
-						</ListGroup>
-					</Card>
+					<Row>
+						<Col>
+							<Card>
+								<ListGroup className="list-group-flush">
+									{Object.keys(veiculo).map((i) => (
+										<ListGroupItem key={i}>
+											<b>{i.replace(/_/g, " ")}</b>:
+											{i.startsWith("DATA_")
+												? veiculo[i]
+														?.split("T")[0]
+														.split("-")
+														.reverse()
+														.join("/")
+												: veiculo[i]}
+										</ListGroupItem>
+									))}
+								</ListGroup>
+							</Card>
+						</Col>
+						{isDetalhesCarreta && (
+							<Col>
+								<Card>
+									<ListGroup className="list-group-flush">
+										{Object.keys(isDetalhesCarreta).map((i) => (
+											<ListGroupItem key={i}>
+												<b>{i.replace(/_/g, " ")}</b>:
+												{i.startsWith("DATA_")
+													? isDetalhesCarreta[i]
+															?.split("T")[0]
+															.split("-")
+															.reverse()
+															.join("/")
+													: isDetalhesCarreta[i]}
+											</ListGroupItem>
+										))}
+									</ListGroup>
+								</Card>
+							</Col>
+						)}
+					</Row>
 				)}
 			</Modal>
 

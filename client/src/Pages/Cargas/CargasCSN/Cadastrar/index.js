@@ -11,12 +11,9 @@ import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { getClaims } from "src/MicrosoftAuthentication";
 import ServiceRecomendacoes from "src/services/ServiceRecomendacoes";
-//import ServiceRecomendacoes from "src/services/ServiceRecomendacoes";
-//import { valueFormik } from "../management/valueFormik";
 const CadastroCargaCSN = () => {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [produtos, setProdutos] = useState([]);
-	const [inputsDinamic, setInputsDinamic] = useState([]);
 	const history = useHistory();
 
 	const formik = useFormik({
@@ -188,8 +185,6 @@ const CadastroCargaCSN = () => {
 				).data;
 
 				if (data.data.id) {
-					// const apagar = true;
-					// if (apagar) {
 					for (const [key, value] of Object.entries({
 						ponto_passagem,
 						ponto_passagem2,
@@ -210,7 +205,6 @@ const CadastroCargaCSN = () => {
 							await ServiceCargas.createPontoParada({
 								...value,
 								id_carga: data.data.id,
-								//id_carga: 122233987,
 								key,
 							});
 						}
@@ -219,7 +213,6 @@ const CadastroCargaCSN = () => {
 					const ok = await swal(
 						"Sucesso!",
 						`A carga foi cadastrada com o identificador ${data.data.id}!`,
-						//"A carga foi cadastrada com o identificador 5555555!",
 						"success"
 					);
 
@@ -270,8 +263,6 @@ const CadastroCargaCSN = () => {
 	}, []);
 
 	function resetForm() {
-		// formik.resetForm();
-		// formik.setFieldValue("id", "(gerado automaticamente)");
 		window.location.reload();
 	}
 
@@ -290,8 +281,6 @@ const CadastroCargaCSN = () => {
 						}
 						produtos={produtos}
 						formik={formik}
-						inputsDinamic={inputsDinamic}
-						setInputsDinamic={setInputsDinamic}
 						history={history}
 					/>
 					<Row>

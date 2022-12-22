@@ -4,7 +4,7 @@ import verificarCadastro from "./rotas/verificarCadastro";
 import popularCoordenadas from "./coordenadas/ServiceCoordinates";
 import limparLotes from "./cargas/limparLotes";
 import emViagemCargas from "./cargas/emViagemCargas";
-import atualizaCidadesNullCoordenadas from "./coordenadas/AtualizaCidadesNull"
+import atualizaCidadesNullCoordenadas from "./coordenadas/AtualizaCidadesNull";
 
 if (Number(process.env.RUN_JOBS) === 1) {
   console.log(`Iniciando o job "Verificar cadastro de rotas"`);
@@ -15,6 +15,8 @@ if (Number(process.env.RUN_JOBS) === 1) {
   limparLotes();
   console.log(`Iniciando o job "Em viagem cargas"`);
   emViagemCargas();
-  console.log("Iniciando o job 'Atualizar cidades valor null coordenadas veiculos'");
+  console.log(
+    "Iniciando o job 'Atualizar cidades valor null coordenadas veiculos'"
+  );
   atualizaCidadesNullCoordenadas();
 }

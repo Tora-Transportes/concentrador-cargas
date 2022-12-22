@@ -21,8 +21,15 @@ class ServiceLogsSingleton {
     } catch (error) {
       oid = null;
     }
+    const url = message.url;
+    const statusCsn = url.indexOf("/csn/") != -1;
+
     const timestamp = DateUtils.getCurrentDate().getTime();
-    await database("con_logs").insert({ ...message, timestamp, oid });
+    if (!statusCsn) {
+      await database("con_logs").insert({ ...message, timestamp, oid });
+    } else {
+      await database("con_logs_csn").insert({ ...message, timestamp, oid });
+    }
   }
 }
 

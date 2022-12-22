@@ -72,6 +72,10 @@
   color: #0069aa;
   font-weight: bold;
 }
+#button-baixar-cargas-filter{
+  background-color: #00652e;
+  border: none;
+}
 
 @media only screen and (max-width: 575px) {
   

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // import "./ajuda.css";
 import Menusuperior from "../MenuSuperior/menusuperior";
 // import Accordion from "react-bootstrap/Accordion";
@@ -8,14 +8,28 @@ import { Button } from "react-bootstrap";
 // import telaCoordenadas from "../../../assets/helperTelaCoordenadas.gif";
 // import telaMonitoramento from "../../../assets/helperTelaMonitoramento.gif";
 import "./menuSuperior.css";
+import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 function LinkRelatorios() {
-	var acc = document.getElementsByClassName("accordion");
-	var i;
+	const [isPermissionCsn, setPermissionCsn] = useState(false);
+	const [isPermissionPadrao, setPermissionPadrao] = useState(false);
+	useEffect(() => {
+		(async () => {
+			const userPermission = await validationPermissionUser();
+			if (userPermission?.permissoes.includes("CARGAS_PADRAO")) {
+				setPermissionPadrao(true);
+			}
+			if (userPermission?.permissoes.includes("CARGAS_CSN")) {
+				setPermissionCsn(true);
+			}
+		})();
+	}, []);
+	let acc = document.getElementsByClassName("accordion");
+	let i;
 
 	for (i = 0; i < acc.length; i++) {
 		acc[i].addEventListener("click", function () {
 			this.classList.toggle("active");
-			var panel = this.nextElementSibling;
+			let panel = this.nextElementSibling;
 			if (panel.style.display === "block") {
 				panel.style.display = "none";
 			} else {
@@ -35,9 +49,16 @@ function LinkRelatorios() {
 					correspondente:
 				</p>
 				<div className="dropdown-content-veic2 text-center">
-					<Button href="/relatorios" id="button-relatorios">
-						Indicador Operacional
-					</Button>
+					{isPermissionPadrao && (
+						<Button href="/relatorios/visualizar/padrao" id="button-relatorios">
+							Indicador Operacional padrão
+						</Button>
+					)}
+					{isPermissionCsn && (
+						<Button href="/relatorios/visualizar/csn" id="button-relatorios">
+							Indicador Operacional CSN
+						</Button>
+					)}
 					<Button href="/rotas/pendentes" id="button-relatorios">
 						Rotas Pendentes
 					</Button>

@@ -35,24 +35,14 @@
   border: none;
   margin-top: 1rem;
 }
-.list-group-flush{
+.list-group-flush {
   margin-top: 2rem;
 }
-.modal-debitos-veic3{
+.modal-debitos-veic3 {
   font-family: "Poppins", sans-serif;
   font-size: 14px;
 }
 
-@media only screen and (max-width: 1100px) {
-  .class-input-motorista {
-    display: grid;
-    position: relative;
-    grid-template-columns: auto;
-  }
-  #style-ipunt-motorista {
-    width: 100%;
-  }
-}
 .class-input-motorista {
   display: grid;
   grid-template-columns: auto auto auto auto;
@@ -157,6 +147,9 @@ label {
   border: none;
   margin-top: 1rem;
 }
+.modal-title {
+  margin-left: 20.5%;
+}
 @media only screen and (max-width: 486px) {
   .col-cod-filial2,
   .col-cod-local {
@@ -174,6 +167,11 @@ label {
   .col-cod-filial2 {
     margin-bottom: 1rem;
     width: 95% !important;
+  }
+}
+@media only screen and (max-width: 770px) {
+  .input-ponto-passagem-coleta-entrega {
+    min-width: 30%;
   }
 }
 @media only screen and (max-width: 1100px) {
@@ -197,5 +195,13 @@ label {
     width: 95%;
     position: absolute !important;
     border: none;
+  }
+  .class-input-motorista {
+    display: grid;
+    position: relative;
+    grid-template-columns: auto;
+  }
+  #style-ipunt-motorista {
+    width: 100%;
   }
 }

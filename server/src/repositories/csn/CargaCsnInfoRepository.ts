@@ -19,7 +19,14 @@ export class CargaCsnInfoRepository {
   ): Promise<IPaginationResult<ICarga>> {
     const realPage = isNaN(Number(page)) || Number(page) < 1 ? 1 : Number(page);
 
-    const total = database("con_cargas").count("id as total").first();
+    const total = database("con_cargas")
+      .count("id as total")
+      .leftJoin(
+        "con_coordenadas_veiculos",
+        "con_cargas.placa_veiculo",
+        "con_coordenadas_veiculos.placa"
+      )
+      .first();
     const results = database("con_cargas")
       .select([
         "con_cargas.*",
@@ -27,6 +34,7 @@ export class CargaCsnInfoRepository {
         "con_situacoes_cargas_csn.cor as situacao.cor",
         "FILIAL.FIL_DSC as filial.descricao",
         "CADASTRO_GERAL.CG_NOME as nome_motorista",
+        "con_coordenadas_veiculos.categoria_veiculo",
       ])
       .join(
         "con_situacoes_cargas_csn",
@@ -38,6 +46,11 @@ export class CargaCsnInfoRepository {
         "CADASTRO_GERAL",
         "CADASTRO_GERAL.CG_COD",
         "con_cargas.codigo_motorista"
+      )
+      .leftJoin(
+        "con_coordenadas_veiculos",
+        "con_cargas.placa_veiculo",
+        "con_coordenadas_veiculos.placa"
       )
       .limit(pageSize)
       .offset((realPage - 1) * pageSize)
@@ -131,6 +144,9 @@ export class CargaCsnInfoRepository {
           "like",
           `%${query.responsavel_cadastro}%`
         );
+      }
+      if (query?.categoria_veiculo) {
+        qb.andWhere("categoria_veiculo", "=", query.categoria_veiculo);
       }
     };
 

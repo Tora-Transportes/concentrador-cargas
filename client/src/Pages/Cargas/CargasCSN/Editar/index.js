@@ -36,6 +36,7 @@ function EditarCargaCsn() {
 			janela_coleta: "",
 			janela_entrega: "",
 			placa_veiculo: "",
+			rastreador: null,
 			documento_transporte: "",
 			locais: "",
 			nome_motorista: "",
@@ -201,6 +202,8 @@ function EditarCargaCsn() {
 							fk_situacao: 6,
 							fk_filial: formik.values.fk_filial?.split("-")[0],
 						});
+					} else {
+						window.open("", "_self").close();
 					}
 				}
 
@@ -313,7 +316,7 @@ function EditarCargaCsn() {
 					fk_situacao: 5,
 					observacao_cancelamento: observacaoCancelamento,
 					fk_filial: formik.values.fk_filial?.split("-")[0],
-					cargas_csn: 1,
+					carga_csn: 1,
 				});
 				await swal("Sucesso!", "Carga cancelada.", "success");
 				await carregarCarga();

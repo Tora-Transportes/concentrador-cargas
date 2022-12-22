@@ -138,7 +138,17 @@ export class CargaValidationOperation {
         }
 
         if (Number(cargaAtual.fk_situacao) === 6) {
-          if (!this.hasPermission.has("APROVAR_VIAGEM")) {
+          if (
+            cargaAtual.carga_csn === 1 &&
+            !this.hasPermission.has("FINALIZAR_CARGAS_CSN")
+          ) {
+            throw new Error(
+              "Não é possível finalizar carga sem a permissão 'FINALIZAR_CARGAS_CSN'"
+            );
+          } else if (
+            cargaAtual.carga_csn !== 1 &&
+            !this.hasPermission.has("APROVAR_VIAGEM")
+          ) {
             throw new Error(
               "Não é possível mudar o status da carga para DOCUMENTO EMITIDO sem a permissão 'APROVAR_VIAGEM'"
             );
@@ -152,39 +162,25 @@ export class CargaValidationOperation {
           }
         }
 
-        const camposPermitidosMudanca = [
-          "fk_situacao",
-          "observacao_cancelamento",
-          "carga_csn",
-          "locais",
-          "data_atualizacao",
-          "data_entrega",
-          "data_coleta",
-        ];
-        // const camposPermitidosMudanca =
-        //   cargaAtual.carga_csn === 1
-        //     ? [
-        //         "fk_situacao",
-        //         "observacao_cancelamento",
-        //         "carga_csn",
-        //         "locais",
-        //         "data_atualizacao",
-        //         "data_entrega",
-        //         "data_coleta",
-        //       ]
-        //     : [
-        //         "fk_situacao",
-        //         "observacao_cancelamento",
-        //         "carga_csn",
-        //         "locais",
-        //         "data_atualizacao",
-        //       ];
-        for (const i in cargaAtual) {
-          if ({ ...cargaAnterior }[i] != { ...cargaAtual }[i]) {
-            if (!camposPermitidosMudanca.includes(i)) {
-              throw new Error(
-                "A carga não pode ter seus dados alterados após ser aprovada"
-              );
+        if (Number(cargaAtual.fk_situacao) !== 5) {
+          const camposPermitidosMudanca = [
+            "fk_situacao",
+            "observacao_cancelamento",
+            "carga_csn",
+            "locais",
+            "data_atualizacao",
+            "data_entrega",
+            "data_coleta",
+            "usuario",
+            "rastreador",
+          ];
+          for (const i in cargaAtual) {
+            if ({ ...cargaAnterior }[i] != { ...cargaAtual }[i]) {
+              if (!camposPermitidosMudanca.includes(i)) {
+                throw new Error(
+                  "A carga não pode ter seus dados alterados após ser aprovada"
+                );
+              }
             }
           }
         }

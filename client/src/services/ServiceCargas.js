@@ -27,6 +27,7 @@ class ServiceCargas {
 		placa_bitrem,
 		locais,
 		carga_csn,
+		rastreador,
 	}) {
 		const carga = {
 			e_lote,
@@ -56,8 +57,8 @@ class ServiceCargas {
 			placa_bitrem,
 			locais,
 			carga_csn,
+			rastreador,
 		};
-		//console.log("ENTROU NO CREAT Carga", carga);
 		return await api.post("/cargas", carga);
 	}
 
@@ -87,7 +88,6 @@ class ServiceCargas {
 			LONGITUDE: longitude ? longitude : null,
 			CLIENTE: client === "" ? ponto : client,
 		};
-		//console.log("ENTROU NO CREAT Ponto passagem", carga);
 		return await api.post("/csn/ponto_parada", carga);
 	}
 
@@ -137,7 +137,6 @@ class ServiceCargas {
 				entregaEfetiva === undefined ? null : moment(entregaEfetiva),
 		};
 		if (typeof id === "number") {
-			//console.log("SALVANDO", carga);
 			return await api.put(`/csn/ponto_parada/${id}`, carga);
 		} else {
 			const cargaSave = {
@@ -154,7 +153,6 @@ class ServiceCargas {
 				LONGITUDE: longitude ? longitude : null,
 				CLIENTE: tipoClient,
 			};
-			//console.log("PONTO PASSAGEM", cargaSave);
 			return await api.post("/csn/ponto_parada", cargaSave);
 		}
 	}
@@ -250,6 +248,7 @@ class ServiceCargas {
 		placa_bitrem,
 		locais,
 		carga_csn,
+		rastreador,
 	}) {
 		const carga = {
 			e_lote,
@@ -258,7 +257,7 @@ class ServiceCargas {
 			destino_carga: destino_carga === "" ? null : destino_carga,
 			data_entrega: data_entrega === "" ? null : data_entrega,
 			data_coleta: data_coleta === "" ? null : data_coleta,
-			tipo_carga,
+			tipo_carga: tipo_carga === "" ? null : tipo_carga,
 			canal_comunicacao,
 			quantidade,
 			unidade_medida,
@@ -275,7 +274,8 @@ class ServiceCargas {
 			fk_situacao,
 			observacao_gr: observacao_gr === "" ? null : observacao_gr,
 			fk_filial,
-			documento_transporte,
+			documento_transporte:
+				documento_transporte === "" ? null : documento_transporte,
 			observacao_cancelamento:
 				observacao_cancelamento === "" ? null : observacao_cancelamento,
 			codigo_motorista:
@@ -285,8 +285,8 @@ class ServiceCargas {
 			placa_bitrem: placa_bitrem === "" ? null : placa_bitrem,
 			locais,
 			carga_csn,
+			rastreador,
 		};
-		//console.log("Entrou no update", carga);
 		return api.put(`/cargas/${id}`, carga);
 	}
 
@@ -369,6 +369,7 @@ class ServiceCargas {
 		documento_transporte,
 		fk_filial,
 		carga_csn,
+		categoria_veiculo,
 	}) {
 		return api.get("/csn/cargas/info", {
 			params: {
@@ -392,6 +393,7 @@ class ServiceCargas {
 				documento_transporte,
 				fk_filial,
 				carga_csn,
+				categoria_veiculo,
 			},
 		});
 	}

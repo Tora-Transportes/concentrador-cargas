@@ -16,7 +16,7 @@ function InputPlaca(props) {
 
 	return (
 		<>
-			<InputGroup className="mb-2">
+			<InputGroup className="mb-2 flex-nowrap">
 				<InputGroup.Text className="input-placaCav">
 					Placa Cavalo
 				</InputGroup.Text>

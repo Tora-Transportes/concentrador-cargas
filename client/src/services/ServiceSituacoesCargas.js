@@ -4,7 +4,7 @@ class ServiceSituacoesCargas {
 		return api.get("/situacoes/cargas");
 	}
 	async searchCsn() {
-		return api.get("/situacoes/cargas/csn");
+		return api.get("/csn/situacoes/cargas");
 	}
 }
 

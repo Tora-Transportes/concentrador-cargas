@@ -6,18 +6,18 @@ import somaDebitoVeiculo from "src/Pages/Utils/somaDebitoVeiculo";
 import { funcInputPontoParada } from "./management";
 import ViewsForm from "./ViewsForm";
 import ServiceCargas from "src/services/ServiceCargas";
-// import Swal2 from "sweetalert2";
+import Swal2 from "sweetalert";
 function FormularioCadastroCSN({
 	formik,
 	produtos,
 	viewsInput,
 	buscarCargaComDocumentoDeTransporte,
-	inputsDinamic,
-	setInputsDinamic,
 	handleEnter,
-	// history,
+	history,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
+	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
+	const [isDetalhesCarreta, setDetalesCarreta] = useState(null);
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
 	const [valorTotalDebito, setValorTotal] = useState();
 	const [inputColeta5, setInputColeta5] = useState(false);
@@ -47,13 +47,33 @@ function FormularioCadastroCSN({
 			swal("Placa inválida");
 			return;
 		}
-		const vehicleData = (await ServiceVeiculos.detalhesImpedimentos(plate)).data
-			.data;
-		setVeiculo(vehicleData);
+
+		let vehicleData;
+		if (isDetalhesVeiculo) {
+			vehicleData = isDetalhesVeiculo;
+		} else {
+			vehicleData = (await ServiceVeiculos.detalhesImpedimentos(plate)).data
+				.data;
+		}
 		if (!vehicleData) {
 			swal("Não foi encontrado nenhum veículo com essa placa.");
 		}
+
+		let placaCarreta = formik.values.placa_carreta;
+		if (isDetalhesVeiculo === null) {
+			const detailVeiculo = (await ServiceVeiculos.get(plate)).data.data;
+			setDetalesVeiculo(detailVeiculo);
+			placaCarreta = detailVeiculo?.placa_carreta;
+		}
+
+		const resultCarreta = await (
+			await ServiceVeiculos.detalhesImpedimentos(placaCarreta)
+		).data.data;
+
+		if (resultCarreta) setDetalesCarreta(resultCarreta);
+		setVeiculo(vehicleData);
 	}
+
 	useEffect(() => {
 		if (formik.values.e_lote) {
 			formik.setFieldValue("placa_veiculo", null);
@@ -68,6 +88,7 @@ function FormularioCadastroCSN({
 		if (plate) {
 			const vehicleDetails = (await ServiceVeiculos.get(plate)).data.data;
 			if (vehicleDetails) {
+				//setPlacaCarreta(vehicleDetails.placa_carreta);
 				formik.setFieldValue("placa_carreta", vehicleDetails.placa_carreta);
 				formik.setFieldValue("placa_bitrem", vehicleDetails.placa_bitrem);
 				formik.setFieldValue("nome_motorista", vehicleDetails.nome_motorista);
@@ -80,30 +101,41 @@ function FormularioCadastroCSN({
 				).data;
 
 				if (data.results?.length) {
-					const { id } = data.results[0];
+					const { id, fk_situacao } = data.results[0];
 					const myhtml = document.createElement("div");
 					myhtml.innerHTML = `Já existe uma carga aberta com a placa: ${plate} e o código: ${id}.<br><br>
 					Para continuar, finalize a carga ou adicione outra placa.`;
 
-					// Swal2.fire({
-					// 	title: "Atenção!",
-					// 	//text: `Já existe uma carga aberta com a placa: ${plate}, código da carga: ${id}.`,
-					// 	html: myhtml,
-					// 	showCancelButton: true,
-					// 	confirmButtonColor: "#00652e",
-					// 	cancelButtonColor: "#3085d6",
-					// 	cancelButtonText: "Adicionar outra placa",
-					// 	confirmButtonText: "Finalizar carga",
-					// }).then((result) => {
-					// 	if (result.isConfirmed) {
-					// 		if (fk_situacao === 2) {
-					// 			history.push(`/veiculos/aprovacao/csn-${id}`);
-					// 		} else {
-					// 			history.push(`/cargas/csn/${id}`);
-					// 		}
-					// 	}
-					// });
+					Swal2.fire({
+						title: "Atenção!",
+						html: myhtml,
+						showCancelButton: true,
+						confirmButtonColor: "#00652e",
+						cancelButtonColor: "#3085d6",
+						cancelButtonText: "Adicionar outra placa",
+						confirmButtonText: "Finalizar carga",
+					}).then((result) => {
+						if (result.isConfirmed) {
+							if (fk_situacao === 2) {
+								history.push(`/veiculos/aprovacao/csn-${id}`);
+							} else {
+								history.push(`/cargas/csn/${id}`);
+							}
+						}
+					});
 				}
+
+				const detalhesVeiculos = (
+					await ServiceVeiculos.detalhesImpedimentos(plate)
+				).data.data;
+
+				if (detalhesVeiculos?.RASTREADOR?.length > 2) {
+					await formik.setFieldValue("rastreador", detalhesVeiculos.RASTREADOR);
+				} else {
+					await formik.setFieldValue("rastreador", "Sem rastreador");
+				}
+
+				setDetalesVeiculo(detalhesVeiculos);
 				return;
 			} else {
 				swal("Não foi encontrado nenhum veículo com essa placa.");
@@ -143,9 +175,7 @@ function FormularioCadastroCSN({
 		setInputColeta7,
 		setInputColeta8,
 		setInputColeta9,
-		setInputColeta10,
-		inputsDinamic,
-		setInputsDinamic
+		setInputColeta10
 	);
 
 	return (
@@ -172,6 +202,8 @@ function FormularioCadastroCSN({
 				debitosVeiculo={debitosVeiculo}
 				setDebitosVeiculo={setDebitosVeiculo}
 				setVeiculo={setVeiculo}
+				isDetalhesCarreta={isDetalhesCarreta}
+				//isDetalhesVeiculo={isDetalhesVeiculo}
 				valorTotalDebito={valorTotalDebito}
 				fkSituacao={fkSituacao}
 				handleEnter={handleEnter}
