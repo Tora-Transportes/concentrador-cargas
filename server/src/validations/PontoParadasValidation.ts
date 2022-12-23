@@ -18,6 +18,21 @@ export function factoryPontoParada() {
     COLETA_EFETIVA_MUNDO: yup.date().nullable(),
     COLETA_EFETIVA_PEACAO: yup.date().nullable(),
     ENTREGA_EFETIVA: yup.date().nullable(),
+    SAIDA_EFETIVA: yup.date().nullable(),
+    TEMP_SERV_LOCAL: yup.string().nullable(),
+    PREVISAO_SAIDA: yup.date().nullable(),
+    SAIDA_EFETIVA_POSTO30: yup.date().nullable(),
+    TEMP_SERV_LOCAL_POSTO30: yup.string().nullable(),
+    PREVISAO_SAIDA_POSTO30: yup.date().nullable(),
+    SAIDA_EFETIVA_MUNDO: yup.date().nullable(),
+    TEMP_SERV_LOCAL_MUNDO: yup.string().nullable(),
+    PREVISAO_SAIDA_MUNDO: yup.date().nullable(),
+    SAIDA_EFETIVA_PEACAO: yup.date().nullable(),
+    TEMP_SERV_LOCAL_PEACAO: yup.string().nullable(),
+    PREVISAO_SAIDA_PEACAO: yup.date().nullable(),
+    SAIDA_EFETIVA_ENTREGA: yup.date().nullable(),
+    TEMP_SERV_LOCAL_ENTREGA: yup.string().nullable(),
+    PREVISAO_SAIDA_ENTREGA: yup.date().nullable(),
   });
   return cargaCsnValidator;
 }
