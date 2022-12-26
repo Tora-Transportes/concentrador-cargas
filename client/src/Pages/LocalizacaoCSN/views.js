@@ -18,6 +18,7 @@ let emptyLocation = {
 	DESCRICAO: "",
 	LATITUDE: "",
 	LONGITUDE: "",
+	RAIO: "",
 };
 
 const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
@@ -45,9 +46,10 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 	};
 
 	const editLocation = (location) => {
-		const { LATITUDE, LONGITUDE } = location;
+		const { LATITUDE, LONGITUDE, RAIO } = location;
 		location.LATITUDE = Number(LATITUDE.replace(",", "."));
 		location.LONGITUDE = Number(LONGITUDE.replace(",", "."));
+		location.RAIO = Number(RAIO);
 		setLocation({ ...location });
 		setLocationDialog(true);
 		serTitleDialog("Editar Localização");
@@ -64,12 +66,17 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 
 	const saveLocation = async () => {
 		setSubmitted(true);
-		if (location.DESCRICAO?.length && location.LATITUDE && location.LONGITUDE) {
+		if (
+			location.DESCRICAO?.length &&
+			location.LATITUDE &&
+			location.LONGITUDE &&
+			location.RAIO
+		) {
 			const bodyRota = {
 				DESCRICAO: location.DESCRICAO,
-				//LATITUDE: location.LATITUDE.replace(".", ","),
 				LATITUDE: location.LATITUDE,
 				LONGITUDE: location.LONGITUDE,
+				RAIO: location.RAIO,
 			};
 
 			if (location.ID) {
@@ -316,6 +323,27 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 									{submitted && !location.LONGITUDE && (
 										<small className="p-error">
 											Longitude é um campo obrigatório.
+										</small>
+									)}
+								</div>
+								<div className="field col">
+									<label htmlFor="RAIO">Raio(KM)</label>
+									<Form.Control
+										type="number"
+										min={1}
+										step={0.0}
+										placeholder=" "
+										name="RAIO"
+										value={location.RAIO}
+										onChange={(e) => onInputChange(e, "RAIO")}
+										className={classNames({
+											"p-invalid": submitted && !location.RAIO,
+										})}
+										required
+									/>
+									{submitted && !location.RAIO && (
+										<small className="p-error">
+											Raio é um campo obrigatório.
 										</small>
 									)}
 								</div>

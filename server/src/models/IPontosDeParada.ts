@@ -13,7 +13,7 @@ export default interface IPontosParada {
   COLETA_EFETIVA_POSTO30?: Date | null;
   COLETA_EFETIVA_MUNDO?: Date | null;
   COLETA_EFETIVA_PEACAO?: Date | null;
-  ENTREGA_EFETIVA?: Date | null;
+  ENTREGA_EFETIVA_COLETA?: Date | null;
   PREVISAO_SAIDA?: Date | null;
   TEMP_SERV_LOCAL?: string | null;
   SAIDA_EFETIVA?: Date | null;
@@ -43,9 +43,9 @@ export interface IPontosParadaPath {
   COLETA_EFETIVA_POSTO30?: Date | null;
   COLETA_EFETIVA_MUNDO?: Date | null;
   COLETA_EFETIVA_PEACAO?: Date | null;
-  ENTREGA_EFETIVA?: Date | null;
+  ENTREGA_EFETIVA_COLETA?: Date | null;
   PREVISAO_SAIDA?: Date | null;
-  TEMP_SERV_LOCAL?: string | null;
+  TEMP_SERV_LOCAL_COLETA?: string | null;
   SAIDA_EFETIVA?: Date | null;
   PREVISAO_SAIDA_POSTO30?: Date | null;
   TEMP_SERV_LOCAL_POSTO30?: string | null;

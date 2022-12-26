@@ -1,6 +1,6 @@
 import { CargaRepository } from "./../../repositories/CargaRepository";
 import moment from "moment";
-//import cron from "node-cron";
+import cron from "node-cron";
 import {
   IDadosUpdate,
   IInfoCarga,
@@ -9,14 +9,16 @@ import {
 } from "./interfaceCargasJob";
 import database, { mssqlCoordenadas } from "../../database";
 import oracle from "../../database";
-import DateUtils from "../../Utils/date";
-//import { notifyAll } from "../../socketsRoutes";
+import { notifyAll } from "../../socketsRoutes";
 
 class ServiceFinishCargasCsn {
-  dataAtual = DateUtils.getCurrentDate();
+  dataAtual = new Date(
+    // moment().subtract(1, "hour").format("YYYY-MM-DD HH:mm:ss")
+    moment().format("YYYY-MM-DD HH:mm:ss")
+  );
   cargaRepository = new CargaRepository();
 
-  public async getCargasAndamento(): Promise<IInfoCarga[]> {
+  public async getCargasInicioTrajeto(): Promise<IInfoCarga[]> {
     return await database("con_cargas")
       .select(["id", "placa_veiculo"])
       .where("ativo", 1)
@@ -80,7 +82,26 @@ class ServiceFinishCargasCsn {
     return rad * c;
   }
 
-  public optionSaveEfetivo(
+  public montagemObjetoSaveIntermediario(
+    statusServico: string,
+    timeServiceLocation?: string
+  ) {
+    if (statusServico === "ENTREGA") {
+      return [
+        { ENTREGA_EFETIVA: this.dataAtual },
+        { SAIDA_EFETIVA_ENTREGA: this.dataAtual },
+        //{ TEMP_SERV_LOCAL_ENTREGA: timeServiceLocation },
+      ];
+    } else {
+      return [
+        { COLETA_EFETIVA: this.dataAtual },
+        { SAIDA_EFETIVA_COLETA: this.dataAtual },
+        { TEMP_SERV_LOCAL_COLETA: timeServiceLocation },
+      ];
+    }
+  }
+
+  public montagemObjetoSave(
     tipe: string,
     statusServico: string,
     timeServiceLocation?: string
@@ -109,13 +130,13 @@ class ServiceFinishCargasCsn {
           return [
             { ENTREGA_EFETIVA: this.dataAtual },
             { SAIDA_EFETIVA_ENTREGA: this.dataAtual },
-            { TEMP_SERV_LOCAL_ENTREGA: timeServiceLocation },
+            //{ TEMP_SERV_LOCAL_ENTREGA: timeServiceLocation },
           ];
         } else {
           return [
             { COLETA_EFETIVA: this.dataAtual },
-            { SAIDA_EFETIVA: this.dataAtual },
-            { TEMP_SERV_LOCAL: timeServiceLocation },
+            { SAIDA_EFETIVA_COLETA: this.dataAtual },
+            { TEMP_SERV_LOCAL_COLETA: timeServiceLocation },
           ];
         }
     }
@@ -130,6 +151,7 @@ class ServiceFinishCargasCsn {
         "con_rotas_csn.DESCRICAO",
         "con_rotas_csn.LATITUDE AS LATITUDE_ROTA",
         "con_rotas_csn.LONGITUDE AS LONGITUDE_ROTA",
+        "con_rotas_csn.RAIO",
       ])
       .whereIn("con_pontos_parada.ID_CON_CARGAS", arrayId)
       .leftJoin(
@@ -160,6 +182,7 @@ class ServiceFinishCargasCsn {
         LONGITUDE,
         ID,
         ID_CON_CARGAS,
+        RAIO,
         STATUS_SERVICO,
         DESCRICAO,
         COLETA_EFETIVA,
@@ -170,7 +193,8 @@ class ServiceFinishCargasCsn {
         SAIDA_EFETIVA_POSTO30,
         SAIDA_EFETIVA_MUNDO,
         SAIDA_EFETIVA_PEACAO,
-        SAIDA_EFETIVA,
+        SAIDA_EFETIVA_COLETA,
+        SAIDA_EFETIVA_ENTREGA,
       } = item;
 
       let latitudeDestino: number;
@@ -187,7 +211,8 @@ class ServiceFinishCargasCsn {
 
       const validandoBaixa = async (
         statusServico: string,
-        dataServico?: Date | null
+        horasEntrada?: Date | null,
+        passagem?: string
       ) => {
         //validando posição para dar baixa efetiva
         arrayPositionCurrent.map((position) => {
@@ -195,30 +220,41 @@ class ServiceFinishCargasCsn {
           if (ID_CON_CARGAS === idCargaPosition) {
             const latAtual = LAT.replace(",", ".");
             const lonAtual = LON.replace(",", ".");
+
             const calculoDistancia = this.calculateDistancia(
               Number(latAtual),
               Number(lonAtual),
               Number(latitudeDestino),
               Number(longitudeDestino)
             );
-
+            console.log("DISTANCIA DA PARADA --------------", calculoDistancia);
+            const raioEmMetros = RAIO ? Number(RAIO) * 1000 : 2000;
             if (
-              Number(calculoDistancia.toFixed(2)) < 700 &&
+              Number(calculoDistancia.toFixed(2)) < raioEmMetros &&
               statusServico === "Entrada"
             ) {
-              const tipoEfetivoSave = this.optionSaveEfetivo(
-                DESCRICAO,
-                STATUS_SERVICO
-              );
+              let tipoEfetivoSave;
+              if (passagem === "intermediario") {
+                tipoEfetivoSave =
+                  this.montagemObjetoSaveIntermediario(STATUS_SERVICO);
+              } else {
+                tipoEfetivoSave = this.montagemObjetoSave(
+                  DESCRICAO,
+                  STATUS_SERVICO
+                );
+              }
               arrayCargaUpdate.push({
                 ...tipoEfetivoSave[0],
                 ID,
                 ID_CON_CARGAS,
+                STATUS_SERVICO,
               });
-            } else if (Number(calculoDistancia.toFixed(2)) > 100) {
+            } else if (
+              Number(calculoDistancia.toFixed(2)) > raioEmMetros &&
+              statusServico === "Saida"
+            ) {
               //Somando tempo de carregamento ou entrega na empresa
-              console.log("DATAAAAAA", dataServico);
-              const startTime = moment(dataServico);
+              const startTime = moment(horasEntrada);
               const endTime = moment().subtract(1, "hour");
               const horasPermanenciaLocal = moment
                 .utc(
@@ -228,86 +264,82 @@ class ServiceFinishCargasCsn {
                 )
                 .format("HH:mm:ss");
               //seleciona o tipo de coluna que será dado a baixa
-              const tipoEfetivoSave = this.optionSaveEfetivo(
-                DESCRICAO,
-                STATUS_SERVICO,
-                horasPermanenciaLocal
-              );
+              let tipoEfetivoSave;
+              if (passagem === "intermediario") {
+                tipoEfetivoSave = this.montagemObjetoSaveIntermediario(
+                  STATUS_SERVICO,
+                  horasPermanenciaLocal
+                );
+              } else {
+                tipoEfetivoSave = this.montagemObjetoSave(
+                  DESCRICAO,
+                  STATUS_SERVICO,
+                  horasPermanenciaLocal
+                );
+              }
+
               arrayCargaUpdate.push({
                 ...tipoEfetivoSave[1],
                 ...tipoEfetivoSave[2],
                 ID,
                 ID_CON_CARGAS,
+                STATUS_SERVICO,
               });
             }
           }
         });
       };
-
+      //If que separa cada ponto de passagem de acordo com as regras
+      const tipeServicoSaida = "Saida";
+      const tipeServicoEntrada = "Entrada";
+      const tipoPassagem = "intermediario";
       if (
         DESCRICAO?.trim() === "POSTO - 30" &&
         COLETA_EFETIVA_POSTO30 === null
       ) {
-        const tipeServico = "Entrada";
-        validandoBaixa(tipeServico);
+        validandoBaixa(tipeServicoEntrada);
       } else if (
-        SAIDA_EFETIVA_POSTO30 === null &&
-        DESCRICAO?.trim() === "POSTO - 30"
+        DESCRICAO?.trim() === "POSTO - 30" &&
+        SAIDA_EFETIVA_POSTO30 === null
       ) {
-        const tipeServico = "Saida";
-        validandoBaixa(tipeServico, COLETA_EFETIVA_POSTO30);
-      }
-
-      if (
+        validandoBaixa(tipeServicoSaida, COLETA_EFETIVA_POSTO30);
+      } else if (
         DESCRICAO?.trim() === "MUNDO - CSN" &&
         COLETA_EFETIVA_MUNDO === null
       ) {
-        const tipeServico = "Entrada";
-        validandoBaixa(tipeServico);
+        validandoBaixa(tipeServicoEntrada);
       } else if (
-        SAIDA_EFETIVA_MUNDO === null &&
-        DESCRICAO?.trim() === "MUNDO - CSN"
+        DESCRICAO?.trim() === "MUNDO - CSN" &&
+        SAIDA_EFETIVA_MUNDO === null
       ) {
-        const tipeServico = "Saida";
-        validandoBaixa(tipeServico, COLETA_EFETIVA_MUNDO);
-      }
-
-      if (
+        validandoBaixa(tipeServicoSaida, COLETA_EFETIVA_MUNDO);
+      } else if (
         DESCRICAO?.trim() === "PEACAO - CSN" &&
         COLETA_EFETIVA_PEACAO === null
       ) {
-        const tipeServico = "Entrada";
-        validandoBaixa(tipeServico);
+        validandoBaixa(tipeServicoEntrada);
       } else if (
-        SAIDA_EFETIVA_PEACAO === null &&
-        DESCRICAO?.trim() === "PEACAO - CSN"
+        DESCRICAO?.trim() === "PEACAO - CSN" &&
+        SAIDA_EFETIVA_PEACAO === null
       ) {
-        const tipeServico = "Saida";
-        validandoBaixa(tipeServico, COLETA_EFETIVA_PEACAO);
+        validandoBaixa(tipeServicoSaida, COLETA_EFETIVA_PEACAO);
+      } else if (STATUS_SERVICO === "COLETA" && COLETA_EFETIVA === null) {
+        validandoBaixa(tipeServicoEntrada, null, tipoPassagem);
+      } else if (STATUS_SERVICO === "COLETA" && SAIDA_EFETIVA_COLETA === null) {
+        validandoBaixa(tipeServicoSaida, COLETA_EFETIVA, tipoPassagem);
+      } else if (STATUS_SERVICO === "ENTREGA" && ENTREGA_EFETIVA === null) {
+        validandoBaixa(tipeServicoEntrada, null, tipoPassagem);
+      } else if (
+        STATUS_SERVICO === "ENTREGA" &&
+        SAIDA_EFETIVA_ENTREGA === null
+      ) {
+        validandoBaixa(tipeServicoSaida, ENTREGA_EFETIVA, tipoPassagem);
       }
-
-      if (COLETA_EFETIVA === null) {
-        const tipeServico = "Entrada";
-        validandoBaixa(tipeServico);
-      } else if (SAIDA_EFETIVA === null) {
-        const tipeServico = "Saida";
-        validandoBaixa(tipeServico, COLETA_EFETIVA);
-      }
-
-      // if (ENTREGA_EFETIVA === null) {
-      //   const tipeServico = "Entrada";
-      //   validandoBaixa(tipeServico);
-      // } else if(SAIDA_EFETIVA_ENTREGA === null){
-      //   const tipeServico = "Saida";
-      //   validandoBaixa(tipeServico, ENTREGA_EFETIVA);
-      // }
     }
     return arrayCargaUpdate;
   }
 
   public async updatePontoParada({ ID, ...valuePontoParada }: IDadosUpdate) {
-    console.log("DATA update Ponto parada", valuePontoParada, { ID });
-
     await database("con_pontos_parada")
       .update({
         ...valuePontoParada,
@@ -317,20 +349,18 @@ class ServiceFinishCargasCsn {
   }
 
   public async updateCargas(id: number) {
-    console.log("DATA carga update", id);
-    //   await database("con_cargas")
-    //     .update({
-    //       fk_situacao: 6,
-    //       data_atualizacao: new Date(),
-    //     })
-    //     .where("id", id);
+    await database("con_cargas")
+      .update({
+        fk_situacao: 6,
+        data_atualizacao: new Date(),
+      })
+      .where("id", id);
 
-    //   const cargaAtualizada = await this.cargaRepository.index(id);
-    //   notifyAll({
-    //     name: "@carga-update",
-    //     details: cargaAtualizada,
-    //   });
-    // }
+    const cargaAtualizada = await this.cargaRepository.index(id);
+    notifyAll({
+      name: "@carga-update",
+      details: cargaAtualizada,
+    });
   }
 }
 
@@ -341,16 +371,18 @@ export default async function run() {
     );
     try {
       const serviceFinishCargas = new ServiceFinishCargasCsn();
-      const idsCargas = await serviceFinishCargas.getCargasAndamento();
+      const idsCargas = await serviceFinishCargas.getCargasInicioTrajeto();
       if (idsCargas.length) {
         const dadosAtualizar =
           await serviceFinishCargas.validateLoadToFinalization(idsCargas);
 
         if (dadosAtualizar.length) {
           dadosAtualizar.forEach((itemAtualizar) => {
-            const { ID_CON_CARGAS, ...dataPontoPassagem } = itemAtualizar;
+            const { ID_CON_CARGAS, STATUS_SERVICO, ...dataPontoPassagem } =
+              itemAtualizar;
             serviceFinishCargas.updatePontoParada(dataPontoPassagem);
-            serviceFinishCargas.updateCargas(Number(ID_CON_CARGAS));
+            if (STATUS_SERVICO === "ENTREGA")
+              serviceFinishCargas.updateCargas(Number(ID_CON_CARGAS));
           });
         }
       }
@@ -361,6 +393,6 @@ export default async function run() {
       "|-----------------FIM JOB CARGA CSN EM VIAGEM-------------------|"
     );
   }
-  // cron.schedule(" * * * * * ", job);
-  job();
+  cron.schedule(" * * * * * ", job);
+  //job();
 }
