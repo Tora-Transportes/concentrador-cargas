@@ -5,4 +5,5 @@ export interface IRotas_csn {
   LONGITUDE: string;
   DATA_CADASTRO: Date;
   DATA_ATUALIZACAO: Date | null;
+  RAIO: string | null;
 }

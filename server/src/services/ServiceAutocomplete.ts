@@ -30,7 +30,6 @@ class ServiceAutocomplete {
         "PRA.PCA_LONGITUDE as longitude",
         "CID.CID_NOM as cidade",
         "EST.UF_SIGLA as uf",
-        //"LOC.pais as pais",
       ])
       .limit(20);
 
