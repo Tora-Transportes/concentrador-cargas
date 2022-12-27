@@ -26,30 +26,10 @@ const TableLocalizacao = ({
           header={header}
           responsiveLayout="scroll"
         >
-          {/* <Column
-            field="ID"
-            header="Id"
-            sortable
-            //style={{ minWidth: "12rem" }}
-          ></Column> */}
-          <Column
-            field="DESCRICAO"
-            header="Descrição"
-            sortable
-            //style={{ minWidth: "12rem" }}
-          ></Column>
-          <Column
-            field="LATITUDE"
-            header="Latitude"
-            sortable
-            //style={{ minWidth: "12rem" }}
-          ></Column>
-          <Column
-            field="LONGITUDE"
-            header="Longitude"
-            sortable
-            //style={{ minWidth: "12rem" }}
-          ></Column>
+          <Column field="DESCRICAO" header="Descrição" sortable></Column>
+          <Column field="LATITUDE" header="Latitude" sortable></Column>
+          <Column field="LONGITUDE" header="Longitude" sortable></Column>
+          <Column field="RAIO" header="Raio(KM)" sortable></Column>
           <Column
             header="Editar/Excluir"
             body={actionBodyTemplate}

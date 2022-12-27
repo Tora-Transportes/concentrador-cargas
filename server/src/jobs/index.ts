@@ -5,6 +5,7 @@ import popularCoordenadas from "./coordenadas/ServiceCoordinates";
 import limparLotes from "./cargas/limparLotes";
 import emViagemCargas from "./cargas/emViagemCargas";
 import atualizaCidadesNullCoordenadas from "./coordenadas/AtualizaCidadesNull";
+import finalizarCargaCsn from "./cargas/finalizarCargaCsn";
 
 if (Number(process.env.RUN_JOBS) === 1) {
   console.log(`Iniciando o job "Verificar cadastro de rotas"`);
@@ -20,3 +21,5 @@ if (Number(process.env.RUN_JOBS) === 1) {
   );
   atualizaCidadesNullCoordenadas();
 }
+console.log("Inicio job finalização carga csn");
+finalizarCargaCsn();
