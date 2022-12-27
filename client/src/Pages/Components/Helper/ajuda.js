@@ -333,7 +333,7 @@ function Helper() {
 							Operacional - Permite o acompanhamento das cargas e lotes,
 							apresentando de acordo com o <br /> filtro de data utilizado, a
 							situação gráfica das cargas pelo gráfico, porcentagem de cargas
-							ativadas e desativadas, <br /> entre outras informações presentes
+							ativadas e <br /> desativadas, entre outras informações presentes
 							na página.
 						</p>
 						<img src={indicadorOperacional} id="style-gif2" />
