@@ -1,25 +1,27 @@
-import React from "react";
+// import React, { useEffect } from "react";
 import "./ajuda.css";
 import Menusuperior from "../MenuSuperior/menusuperior";
 import Accordion from "react-bootstrap/Accordion";
 import { Button } from "react-bootstrap";
-import cadastroCarga from "../../../assets/teste.gif";
-import cadastroManual from "../../../assets/cadastroManual.gif";
-import importacaoLote from "../../../assets/importacaoLote.gif";
-import listagemCargas from "../../../assets/listagemCargas.gif";
-import listagemLote from "../../../assets/importacaoLote2.gif";
-import configTab from "../../../assets/configurarTabela.gif";
-import opcoesTab from "../../../assets/opcaoTabela.gif";
-import itensPage from "../../../assets/itensPorPagina.gif";
-import coordenadasGif from "../../../assets/coordenadaVeiculos2.gif";
-import monitoramentoGif from "../../../assets/monitoramentoVeiculos.gif";
-import telaProdutos from "../../../assets/telaprodutos2.gif";
-import indicadorOperacional from "../../../assets/indicadorOperacional2.gif";
-import rotasPendentes from "../../../assets/rotasPendentes.gif";
-import raioEmpresa from "../../../assets/raioEmpresa2.gif";
-import veicProximos from "../../../assets/veiculosProximos.gif";
-import veicEmpresa from "../../../assets/veiculoEmpresa.gif";
-import historicoRota from "../../../assets/historicoVeiculos.gif";
+import cadastroCarga from "../../../Gif/cadastrarCargasPadrao.gif";
+import cadastroManual from "../../../Gif/cadastro-manual.gif";
+import importacaoLote from "../../../Gif/importacaoLote.gif";
+import listagemCargas from "../../../Gif/listagem-cargas.gif";
+import listagemLote from "../../../Gif/listagem-cargas-lote.gif";
+import edicaoCargas from "../../../Gif/editarCargas.gif";
+import configTab from "../../../Gif/configurarTabela.gif";
+import opcoesTab from "../../../Gif/opcoesTabela.gif";
+import itensPage from "../../../Gif/itensPorPagina.gif";
+import coordenadasGif from "../../../Gif/coordenadasVeiculos.gif";
+import consultaCargas from "../../../Gif/consultarCargas.gif";
+import monitoramentoGif from "../../../Gif/monitoramentoVeiculos.gif";
+import telaProdutos from "../../../Gif/telaProdutos.gif";
+import indicadorOperacional from "../../../Gif/indicadorOperacional.gif";
+import rotasPendentes from "../../../Gif/rotasPendentes.gif";
+import raioEmpresa from "../../../Gif/raioEmpresa.gif";
+import veicProximos from "../../../Gif/veiculosProximos.gif";
+import veicEmpresa from "../../../Gif/veiculoEmpresa.gif";
+import historicoRota from "../../../Gif/historicoVeiculos.gif";
 
 function Helper() {
 	var acc = document.getElementsByClassName("accordion");
@@ -36,6 +38,11 @@ function Helper() {
 			}
 		});
 	}
+
+	// function gifRepeat() {
+	// 	const [timeRepeat, setTimeRepeat] = useEffect();
+	// }
+
 	return (
 		<div className="class-body mb-4">
 			<Menusuperior />
@@ -141,7 +148,6 @@ function Helper() {
 
 						<img src={listagemLote} id="style-gif" />
 						<div className="class-button-ir">
-							{/* <p className="class-p-nav">Navegar até a Página de Cadastro</p> */}
 							<Button
 								href="/lotes/visualizar"
 								id="style-button-acc"
@@ -152,10 +158,33 @@ function Helper() {
 						</div>
 					</Accordion.Body>
 				</Accordion.Item>
-				<Accordion.Item eventKey="4" id="style-button-accordion">
-					<Accordion.Header>
-						Configurar Tabela e Opções da Tabela
-					</Accordion.Header>
+				<Accordion.Item eventKey="4">
+					<Accordion.Header>Edição de Cargas</Accordion.Header>
+					<Accordion.Body className="class-body-accordion">
+						<p className="p-tela-ajuda">
+							Ao acessar a página você terá acesso a editar/corrigir as
+							informações das cargas, sendo possivel editar <br /> uma carga por
+							vez e dessa forma manter as informações atualizadas em nossa
+							plataforma, a carga é <br /> controlada pelo código e você terá
+							acesso a essa ferramenta através das telas de Listagem de Cargas
+							<br /> e Cargas em Lotes. Segue abaixo o exemplo da página Editar
+							Cargas:
+						</p>
+
+						<img src={edicaoCargas} id="style-gif" />
+						<div className="class-button-ir">
+							<Button
+								href="/lotes/visualizar"
+								id="style-button-acc"
+								className="class-button1"
+							>
+								Navegar até Edição de Cargas
+							</Button>
+						</div>
+					</Accordion.Body>
+				</Accordion.Item>
+				<Accordion.Item eventKey="5" id="style-button-accordion">
+					<Accordion.Header>Ferramentas da Plataforma</Accordion.Header>
 
 					<Accordion.Body className="class-body-accordion">
 						<p className="p-tela-ajuda">
@@ -191,10 +220,9 @@ function Helper() {
 						</p>
 						<img src={opcoesTab} id="style-gif2" />
 						<p className="p-tela-ajuda">
-							Itens por página - Permite que você veja de 10 à 500 itens nas
-							páginas de Listagem de Cargas, <br />
-							Listagem de Cargas em Lote e Coordenadas, auxiliando sua
-							utilização nas páginas mencionadas.
+							Itens por página - Permite que você visualize de 10 à 500 itens
+							nas páginas de Listagem de Cargas, <br />
+							Listagem de Cargas em Lote e Coordenadas.
 						</p>
 						<p className="p-tela-ajuda mb-1 mt-3">
 							Exemplo de Itens por Página:
@@ -202,7 +230,7 @@ function Helper() {
 						<img src={itensPage} id="style-gif2" />
 					</Accordion.Body>
 				</Accordion.Item>
-				<Accordion.Item eventKey="5" id="style-button-accordion">
+				<Accordion.Item eventKey="6" id="style-button-accordion">
 					<Accordion.Header>Coordenadas</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
 						<p className="p-tela-ajuda">
@@ -225,7 +253,29 @@ function Helper() {
 						</div>
 					</Accordion.Body>
 				</Accordion.Item>
-				<Accordion.Item eventKey="6" id="style-button-accordion">
+				<Accordion.Item eventKey="7" id="style-button-accordion">
+					<Accordion.Header>Consulta de Cargas</Accordion.Header>
+					<Accordion.Body className="class-body-accordion">
+						<p className="p-tela-ajuda">
+							Ao acessar a tela de Consulta de Cargas (presente na página de
+							Coordenadas), você poderá visualizar <br /> informações de cargas
+							abertas manualmente em nossa plataforma. <br /> Exemplo da página
+							Consulta:
+						</p>
+						<img src={consultaCargas} id="style-gif" />
+
+						<div className="class-button-ir">
+							<Button
+								href="/veiculos/coordenadas"
+								id="style-button-acc"
+								className="class-button1"
+							>
+								Navegar até Cosulta de Cargas
+							</Button>
+						</div>
+					</Accordion.Body>
+				</Accordion.Item>
+				<Accordion.Item eventKey="8" id="style-button-accordion">
 					<Accordion.Header>Monitoramento</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
 						<p className="p-tela-ajuda">
@@ -247,7 +297,7 @@ function Helper() {
 						</div>
 					</Accordion.Body>
 				</Accordion.Item>
-				<Accordion.Item eventKey="8" id="style-button-accordion">
+				<Accordion.Item eventKey="9" id="style-button-accordion">
 					<Accordion.Header>Produtos</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
 						<p className="p-tela-ajuda">
@@ -273,7 +323,7 @@ function Helper() {
 						</div>
 					</Accordion.Body>
 				</Accordion.Item>
-				<Accordion.Item eventKey="9" id="style-button-accordion">
+				<Accordion.Item eventKey="10" id="style-button-accordion">
 					<Accordion.Header>Relatórios</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
 						<p className="p-tela-ajuda">
@@ -282,8 +332,9 @@ function Helper() {
 							disponíveis na plataforma, são elas: <br /> <br /> Indicador
 							Operacional - Permite o acompanhamento das cargas e lotes,
 							apresentando de acordo com o <br /> filtro de data utilizado, a
-							situação gráfica das cargas, porcentagem de cargas ativadas e
-							desativadas, <br /> entre outras informações presentes na página.
+							situação gráfica das cargas pelo gráfico, porcentagem de cargas
+							ativadas e desativadas, <br /> entre outras informações presentes
+							na página.
 						</p>
 						<img src={indicadorOperacional} id="style-gif2" />
 
@@ -299,7 +350,8 @@ function Helper() {
 						<p className="p-tela-ajuda">
 							Rotas Pendentes de Cadastro - Disponibiliza os nomes das cidades e
 							estados de origem e destino, <br /> provendo acesso as informações
-							de rotas, para um melhor acompanhamento.
+							de rotas, e permite também que você busque uma cidade ou estado
+							<br /> específico, para melhor acompanhamento.
 						</p>
 						<img src={rotasPendentes} id="style-gif" />
 
@@ -314,7 +366,7 @@ function Helper() {
 						</div>
 						<p className="p-tela-ajuda ms-1">
 							As páginas que serão citadas a seguir representam funcionalidades
-							similares: <br /> <br />
+							similares, são elas: <br /> <br />
 							Raio Empresa - Mostra os veículos no raio da empresa.
 						</p>
 						<img src={raioEmpresa} id="style-gif" />
@@ -349,8 +401,8 @@ function Helper() {
 							Em Histórico de Rotas do Veículo, você terá acesso a localização
 							do veículo, filtrando pela placa <br /> do veículo e data a ser
 							consultada, as informações serão mostradas no mapa disponibilizado
-							<br /> na plataforma, a tela disponibiliza também a opção de
-							download do histórico consultado via excel.
+							<br /> na plataforma, a tela oferece também a opção de download do
+							histórico consultado (via excel).
 						</p>
 						<img src={historicoRota} id="style-gif" />
 
