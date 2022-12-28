@@ -78,16 +78,19 @@ class ServiceCargas {
 		longitude,
 		client,
 		ponto,
+		previsaoSaida,
 	}) {
 		const carga = {
 			ID_ROTAS_CSN: ponto ? ponto?.split("-")[0] : null,
 			ID_CON_CARGAS: id_carga,
-			PREVISAO: moment(previsao),
+			PREVISAO: previsao,
 			STATUS_SERVICO: tipoServico.toUpperCase(),
 			LATITUDE: latitude ? latitude : null,
 			LONGITUDE: longitude ? longitude : null,
 			CLIENTE: client === "" ? ponto : client,
+			PREVISAO_SAIDA: previsaoSaida,
 		};
+		console.log("Ponto parada", carga);
 		return await api.post("/csn/ponto_parada", carga);
 	}
 
@@ -96,16 +99,19 @@ class ServiceCargas {
 		ponto,
 		idRotaCsn,
 		previsao,
+		previsaoSaida,
 		tipoServico,
 		id_carga,
 		latitude,
 		longitude,
 		client,
 		coletaEfetiva,
-		coletaEfetiva_posto30,
-		coletaEfetiva_mundo,
-		coletaEfetiva_peacao,
+		// coletaEfetiva_posto30,
+		// coletaEfetiva_mundo,
+		// coletaEfetiva_peacao,
 		entregaEfetiva,
+		tempServicoLocal,
+		coletaEfetivaSaida,
 	}) {
 		let idRota = idRotaCsn;
 		let tipoClient = client === "" ? ponto : client;
@@ -117,25 +123,29 @@ class ServiceCargas {
 			ID_ROTAS_CSN: idRotaCsn === "" ? ponto?.split("-")[0] : idRota,
 			ID_CON_CARGAS: id_carga,
 			PREVISAO: moment(previsao),
+			PREVISAO_SAIDA: previsaoSaida,
 			STATUS_SERVICO: tipoServico.toUpperCase(),
 			LATITUDE: latitude ? latitude : null,
 			LONGITUDE: longitude ? longitude : null,
 			CLIENTE: tipoClient,
 			COLETA_EFETIVA:
 				coletaEfetiva === undefined ? null : moment(coletaEfetiva),
-			COLETA_EFETIVA_POSTO30:
-				coletaEfetiva_posto30 === undefined
-					? null
-					: moment(coletaEfetiva_posto30),
-			COLETA_EFETIVA_MUNDO:
-				coletaEfetiva_mundo === undefined ? null : moment(coletaEfetiva_mundo),
-			COLETA_EFETIVA_PEACAO:
-				coletaEfetiva_peacao === undefined
-					? null
-					: moment(coletaEfetiva_peacao),
+			// COLETA_EFETIVA_POSTO30:
+			// 	coletaEfetiva_posto30 === undefined
+			// 		? null
+			// 		: moment(coletaEfetiva_posto30),
+			// COLETA_EFETIVA_MUNDO:
+			// 	coletaEfetiva_mundo === undefined ? null : moment(coletaEfetiva_mundo),
+			// COLETA_EFETIVA_PEACAO:
+			// 	coletaEfetiva_peacao === undefined
+			// 		? null
+			// 		: moment(coletaEfetiva_peacao),
 			ENTREGA_EFETIVA:
 				entregaEfetiva === undefined ? null : moment(entregaEfetiva),
+			TEMP_SERV_LOCAL_COLETA: tempServicoLocal,
+			SAIDA_EFETIVA_COLETA: moment(coletaEfetivaSaida),
 		};
+
 		if (typeof id === "number") {
 			return await api.put(`/csn/ponto_parada/${id}`, carga);
 		} else {
@@ -148,6 +158,7 @@ class ServiceCargas {
 						: idRota,
 				ID_CON_CARGAS: id_carga,
 				PREVISAO: moment(previsao),
+				PREVISAO_SAIDA: previsaoSaida,
 				STATUS_SERVICO: tipoServico.toUpperCase(),
 				LATITUDE: latitude ? latitude : null,
 				LONGITUDE: longitude ? longitude : null,

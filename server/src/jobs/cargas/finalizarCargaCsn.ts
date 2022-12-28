@@ -2,6 +2,7 @@ import { CargaRepository } from "./../../repositories/CargaRepository";
 import moment from "moment";
 import cron from "node-cron";
 import {
+  //IdadosEntrega,
   IDadosUpdate,
   IInfoCarga,
   ILastLocations,
@@ -110,20 +111,20 @@ class ServiceFinishCargasCsn {
       case "POSTO - 30":
         return [
           { COLETA_EFETIVA_POSTO30: this.dataAtual },
-          { SAIDA_EFETIVA_POSTO30: this.dataAtual },
-          { TEMP_SERV_LOCAL_POSTO30: timeServiceLocation },
+          { SAIDA_EFETIVA_COLETA: this.dataAtual },
+          { TEMP_SERV_LOCAL_COLETA: timeServiceLocation },
         ];
       case "MUNDO - CSN":
         return [
           { COLETA_EFETIVA_MUNDO: this.dataAtual },
-          { SAIDA_EFETIVA_MUNDO: this.dataAtual },
-          { TEMP_SERV_LOCAL_MUNDO: timeServiceLocation },
+          { SAIDA_EFETIVA_COLETA: this.dataAtual },
+          { TEMP_SERV_LOCAL_COLETA: timeServiceLocation },
         ];
       case "PEACAO - CSN":
         return [
           { COLETA_EFETIVA_PEACAO: this.dataAtual },
-          { SAIDA_EFETIVA_PEACAO: this.dataAtual },
-          { TEMP_SERV_LOCAL_PEACAO: timeServiceLocation },
+          { SAIDA_EFETIVA_COLETA: this.dataAtual },
+          { TEMP_SERV_LOCAL_COLETA: timeServiceLocation },
         ];
       default:
         if (statusServico === "ENTREGA") {
@@ -173,6 +174,7 @@ class ServiceFinishCargasCsn {
         });
       }
     }
+
     //for para decidir qual carga será finalizada
     for (const item of dadosPontoParada) {
       const {
@@ -190,9 +192,9 @@ class ServiceFinishCargasCsn {
         COLETA_EFETIVA_PEACAO,
         COLETA_EFETIVA_MUNDO,
         COLETA_EFETIVA_POSTO30,
-        SAIDA_EFETIVA_POSTO30,
-        SAIDA_EFETIVA_MUNDO,
-        SAIDA_EFETIVA_PEACAO,
+        // SAIDA_EFETIVA_POSTO30,
+        // SAIDA_EFETIVA_MUNDO,
+        // SAIDA_EFETIVA_PEACAO,
         SAIDA_EFETIVA_COLETA,
         SAIDA_EFETIVA_ENTREGA,
       } = item;
@@ -201,7 +203,9 @@ class ServiceFinishCargasCsn {
       let longitudeDestino: number;
 
       // identificando qual é a latitude e longitude a ser
+      //const dadosDeEntrega: IdadosEntrega[] = [];
       if (STATUS_SERVICO === "ENTREGA") {
+        //dadosDeEntrega.push({ ID, ID_CON_CARGAS });
         latitudeDestino = LATITUDE.replace(",", ".");
         longitudeDestino = LONGITUDE.replace(",", ".");
       } else {
@@ -212,7 +216,7 @@ class ServiceFinishCargasCsn {
       const validandoBaixa = async (
         statusServico: string,
         horasEntrada?: Date | null,
-        passagem?: string
+        tipoPassagem?: string
       ) => {
         //validando posição para dar baixa efetiva
         arrayPositionCurrent.map((position) => {
@@ -227,14 +231,15 @@ class ServiceFinishCargasCsn {
               Number(latitudeDestino),
               Number(longitudeDestino)
             );
-            console.log("DISTANCIA DA PARADA --------------", calculoDistancia);
-            const raioEmMetros = RAIO ? Number(RAIO) * 1000 : 2000;
+            //console.log("DISTANCIA DA PARADA --------------", calculoDistancia);
+            const raioEmMetros = RAIO ? Number(RAIO) * 1000 : 1000;
             if (
               Number(calculoDistancia.toFixed(2)) < raioEmMetros &&
+              // Number(calculoDistancia.toFixed(2)) < 1500 &&
               statusServico === "Entrada"
             ) {
               let tipoEfetivoSave;
-              if (passagem === "intermediario") {
+              if (tipoPassagem === "intermediario") {
                 tipoEfetivoSave =
                   this.montagemObjetoSaveIntermediario(STATUS_SERVICO);
               } else {
@@ -243,6 +248,7 @@ class ServiceFinishCargasCsn {
                   STATUS_SERVICO
                 );
               }
+
               arrayCargaUpdate.push({
                 ...tipoEfetivoSave[0],
                 ID,
@@ -251,11 +257,13 @@ class ServiceFinishCargasCsn {
               });
             } else if (
               Number(calculoDistancia.toFixed(2)) > raioEmMetros &&
+              //Number(calculoDistancia.toFixed(2)) > 400 &&
               statusServico === "Saida"
             ) {
               //Somando tempo de carregamento ou entrega na empresa
               const startTime = moment(horasEntrada);
-              const endTime = moment().subtract(1, "hour");
+              // const endTime = moment().subtract(1, "hour");
+              const endTime = moment();
               const horasPermanenciaLocal = moment
                 .utc(
                   moment(endTime, "HH:mm:ss").diff(
@@ -263,9 +271,11 @@ class ServiceFinishCargasCsn {
                   )
                 )
                 .format("HH:mm:ss");
+
               //seleciona o tipo de coluna que será dado a baixa
               let tipoEfetivoSave;
-              if (passagem === "intermediario") {
+
+              if (tipoPassagem === "intermediario") {
                 tipoEfetivoSave = this.montagemObjetoSaveIntermediario(
                   STATUS_SERVICO,
                   horasPermanenciaLocal
@@ -300,7 +310,7 @@ class ServiceFinishCargasCsn {
         validandoBaixa(tipeServicoEntrada);
       } else if (
         DESCRICAO?.trim() === "POSTO - 30" &&
-        SAIDA_EFETIVA_POSTO30 === null
+        SAIDA_EFETIVA_COLETA === null
       ) {
         validandoBaixa(tipeServicoSaida, COLETA_EFETIVA_POSTO30);
       } else if (
@@ -310,7 +320,7 @@ class ServiceFinishCargasCsn {
         validandoBaixa(tipeServicoEntrada);
       } else if (
         DESCRICAO?.trim() === "MUNDO - CSN" &&
-        SAIDA_EFETIVA_MUNDO === null
+        SAIDA_EFETIVA_COLETA === null
       ) {
         validandoBaixa(tipeServicoSaida, COLETA_EFETIVA_MUNDO);
       } else if (
@@ -320,7 +330,7 @@ class ServiceFinishCargasCsn {
         validandoBaixa(tipeServicoEntrada);
       } else if (
         DESCRICAO?.trim() === "PEACAO - CSN" &&
-        SAIDA_EFETIVA_PEACAO === null
+        SAIDA_EFETIVA_COLETA === null
       ) {
         validandoBaixa(tipeServicoSaida, COLETA_EFETIVA_PEACAO);
       } else if (STATUS_SERVICO === "COLETA" && COLETA_EFETIVA === null) {
@@ -328,12 +338,12 @@ class ServiceFinishCargasCsn {
       } else if (STATUS_SERVICO === "COLETA" && SAIDA_EFETIVA_COLETA === null) {
         validandoBaixa(tipeServicoSaida, COLETA_EFETIVA, tipoPassagem);
       } else if (STATUS_SERVICO === "ENTREGA" && ENTREGA_EFETIVA === null) {
-        validandoBaixa(tipeServicoEntrada, null, tipoPassagem);
+        validandoBaixa(tipeServicoEntrada, COLETA_EFETIVA, tipoPassagem);
       } else if (
         STATUS_SERVICO === "ENTREGA" &&
         SAIDA_EFETIVA_ENTREGA === null
       ) {
-        validandoBaixa(tipeServicoSaida, ENTREGA_EFETIVA, tipoPassagem);
+        validandoBaixa(tipeServicoSaida, COLETA_EFETIVA, tipoPassagem);
       }
     }
     return arrayCargaUpdate;
@@ -393,6 +403,6 @@ export default async function run() {
       "|-----------------FIM JOB CARGA CSN EM VIAGEM-------------------|"
     );
   }
-  cron.schedule(" * * * * * ", job);
+  cron.schedule(" */2 * * * * ", job);
   //job();
 }

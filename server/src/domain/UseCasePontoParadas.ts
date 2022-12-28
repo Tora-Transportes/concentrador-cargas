@@ -16,8 +16,8 @@ export class UseCaseAddPontoParadas {
       stripUnknown: true,
     });
     const dadosParada = { ...dataParada, DATA_CADASTRO: dataAtual };
-    const previsao = dadosParada.PREVISAO;
-    dadosParada.PREVISAO = new Date(String(previsao));
+    dadosParada.PREVISAO = new Date(String(dadosParada.PREVISAO));
+    dadosParada.PREVISAO_SAIDA = new Date(String(dadosParada.PREVISAO_SAIDA));
     await this.pontoParadaRepository.create(dadosParada);
 
     return pontoParada;

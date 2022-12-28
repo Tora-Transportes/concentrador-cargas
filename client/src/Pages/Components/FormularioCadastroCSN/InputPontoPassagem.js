@@ -3,6 +3,7 @@ import "./formularioCadastroCSN.css";
 import { Col, FloatingLabel, Form, Row } from "react-bootstrap";
 import RotasSelect from "../FilialSelect/rotasSelect";
 import InputCliente from "../InputCliente";
+import { funcDuracaoProcesso } from "./management";
 
 const InputsPontoPassagem = ({
 	formik,
@@ -68,6 +69,7 @@ const InputsPontoPassagem = ({
 			}
 		}
 	};
+
 	return (
 		<>
 			<Row className="row-input-coleta">
@@ -97,7 +99,7 @@ const InputsPontoPassagem = ({
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="*Previsão" className="mb-3">
+					<FloatingLabel label="*Previsão inicio" className="mb-3">
 						<Form.Control
 							type="datetime-local"
 							placeholder=" "
@@ -110,21 +112,75 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
+				<Col>
+					<FloatingLabel label="*Previsão fim" className="mb-3">
+						<Form.Control
+							type="datetime-local"
+							placeholder=" "
+							name="ponto_passagem.previsaoSaida"
+							value={formik.values.ponto_passagem.previsaoSaida}
+							onKeyDown={handleEnter}
+							onChange={formik.handleChange}
+							required
+							disabled={fkSituacao}
+						/>
+					</FloatingLabel>
+				</Col>
 				{fkSituacao && (
-					<Col>
-						<FloatingLabel label="Data Coleta Efetiva" className="mb-3">
-							<Form.Control
-								type="datetime-local"
-								placeholder=" "
-								name="ponto_passagem.coletaEfetiva_posto30"
-								value={formik.values.ponto_passagem.coletaEfetiva_posto30 || ""}
-								onKeyDown={handleEnter}
-								onChange={formik.handleChange}
-								disabled={disabledValidEfetiva}
-								required
-							/>
-						</FloatingLabel>
-					</Col>
+					<>
+						<Col>
+							<FloatingLabel
+								label="Data Coleta Efetiva inicio"
+								className="mb-3"
+							>
+								<Form.Control
+									type="datetime-local"
+									placeholder=" "
+									name="ponto_passagem.coletaEfetiva_posto30"
+									value={
+										formik.values.ponto_passagem.coletaEfetiva_posto30 || ""
+									}
+									onKeyDown={handleEnter}
+									onChange={formik.handleChange}
+									disabled={disabledValidEfetiva}
+									required
+								/>
+							</FloatingLabel>
+						</Col>
+						<Col>
+							<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+								<Form.Control
+									type="datetime-local"
+									placeholder=" "
+									name="ponto_passagem.coletaEfetivaSaida"
+									value={formik.values.ponto_passagem.coletaEfetivaSaida || ""}
+									onKeyDown={handleEnter}
+									onChange={formik.handleChange}
+									onBlur={() =>
+										funcDuracaoProcesso(
+											formik,
+											1,
+											formik.values.ponto_passagem.coletaEfetivaSaida
+										)
+									}
+									disabled={disabledValidEfetiva}
+									required
+								/>
+							</FloatingLabel>
+						</Col>
+						<Col>
+							<FloatingLabel label="Duração processo" className="mb-3">
+								<Form.Control
+									type="text"
+									disabled={true}
+									name="ponto_passagem.tempServicoLocal"
+									value={formik.values.ponto_passagem.tempServicoLocal || ""}
+									onKeyDown={handleEnter}
+									onChange={formik.handleChange}
+								/>
+							</FloatingLabel>
+						</Col>
+					</>
 				)}
 			</Row>
 
@@ -155,7 +211,7 @@ const InputsPontoPassagem = ({
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="Previsão 2" className="mb-3">
+					<FloatingLabel label="Previsão inicio 2" className="mb-3">
 						<Form.Control
 							type="datetime-local"
 							name="ponto_passagem2.previsao"
@@ -167,21 +223,75 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
+				<Col>
+					<FloatingLabel label="*Previsão fim 2" className="mb-3">
+						<Form.Control
+							type="datetime-local"
+							placeholder=" "
+							name="ponto_passagem2.previsaoSaida"
+							value={formik.values.ponto_passagem2.previsaoSaida}
+							onKeyDown={handleEnter}
+							onChange={formik.handleChange}
+							required
+							disabled={fkSituacao}
+						/>
+					</FloatingLabel>
+				</Col>
 				{fkSituacao && (
-					<Col>
-						<FloatingLabel label="Data Coleta Efetiva" className="mb-3">
-							<Form.Control
-								type="datetime-local"
-								placeholder=" "
-								name="ponto_passagem2.coletaEfetiva_mundo"
-								value={formik.values.ponto_passagem2.coletaEfetiva_mundo || ""}
-								onKeyDown={handleEnter}
-								onChange={formik.handleChange}
-								disabled={disabledValidEfetiva}
-								required
-							/>
-						</FloatingLabel>
-					</Col>
+					<>
+						<Col>
+							<FloatingLabel
+								label="Data Coleta Efetiva inicio"
+								className="mb-3"
+							>
+								<Form.Control
+									type="datetime-local"
+									placeholder=" "
+									name="ponto_passagem2.coletaEfetiva_mundo"
+									value={
+										formik.values.ponto_passagem2.coletaEfetiva_mundo || ""
+									}
+									onKeyDown={handleEnter}
+									onChange={formik.handleChange}
+									disabled={disabledValidEfetiva}
+									required
+								/>
+							</FloatingLabel>
+						</Col>
+						<Col>
+							<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+								<Form.Control
+									type="datetime-local"
+									placeholder=" "
+									name="ponto_passagem2.coletaEfetivaSaida"
+									value={formik.values.ponto_passagem2.coletaEfetivaSaida || ""}
+									onKeyDown={handleEnter}
+									onChange={formik.handleChange}
+									onBlur={() =>
+										funcDuracaoProcesso(
+											formik,
+											2,
+											formik.values.ponto_passagem2.coletaEfetivaSaida
+										)
+									}
+									disabled={disabledValidEfetiva}
+									required
+								/>
+							</FloatingLabel>
+						</Col>
+						<Col>
+							<FloatingLabel label="Duração processo" className="mb-3">
+								<Form.Control
+									type="text"
+									disabled={true}
+									name="ponto_passagem2.tempServicoLocal"
+									value={formik.values.ponto_passagem2.tempServicoLocal || ""}
+									onKeyDown={handleEnter}
+									onChange={formik.handleChange}
+								/>
+							</FloatingLabel>
+						</Col>
+					</>
 				)}
 			</Row>
 			<Row className="row-input-coleta">
@@ -211,7 +321,7 @@ const InputsPontoPassagem = ({
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="Previsão 3" className="mb-3">
+					<FloatingLabel label="Previsão inicio 3" className="mb-3">
 						<Form.Control
 							type="datetime-local"
 							placeholder=" "
@@ -224,21 +334,75 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
+				<Col>
+					<FloatingLabel label="*Previsão fim 3" className="mb-3">
+						<Form.Control
+							type="datetime-local"
+							placeholder=" "
+							name="ponto_passagem3.previsaoSaida"
+							value={formik.values.ponto_passagem3.previsaoSaida}
+							onKeyDown={handleEnter}
+							onChange={formik.handleChange}
+							required
+							disabled={fkSituacao}
+						/>
+					</FloatingLabel>
+				</Col>
 				{fkSituacao && (
-					<Col>
-						<FloatingLabel label="Data Coleta Efetiva" className="mb-3">
-							<Form.Control
-								type="datetime-local"
-								placeholder=" "
-								name="ponto_passagem3.coletaEfetiva_peacao"
-								value={formik.values.ponto_passagem3.coletaEfetiva_peacao || ""}
-								onKeyDown={handleEnter}
-								onChange={formik.handleChange}
-								disabled={disabledValidEfetiva}
-								required
-							/>
-						</FloatingLabel>
-					</Col>
+					<>
+						<Col>
+							<FloatingLabel
+								label="Data Coleta Efetiva inicio"
+								className="mb-3"
+							>
+								<Form.Control
+									type="datetime-local"
+									placeholder=" "
+									name="ponto_passagem3.coletaEfetiva_peacao"
+									value={
+										formik.values.ponto_passagem3.coletaEfetiva_peacao || ""
+									}
+									onKeyDown={handleEnter}
+									onChange={formik.handleChange}
+									disabled={disabledValidEfetiva}
+									required
+								/>
+							</FloatingLabel>
+						</Col>
+						<Col>
+							<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+								<Form.Control
+									type="datetime-local"
+									placeholder=" "
+									name="ponto_passagem3.coletaEfetivaSaida"
+									value={formik.values.ponto_passagem3.coletaEfetivaSaida || ""}
+									onKeyDown={handleEnter}
+									onChange={formik.handleChange}
+									onBlur={() =>
+										funcDuracaoProcesso(
+											formik,
+											3,
+											formik.values.ponto_passagem3.coletaEfetivaSaida
+										)
+									}
+									disabled={disabledValidEfetiva}
+									required
+								/>
+							</FloatingLabel>
+						</Col>
+						<Col>
+							<FloatingLabel label="Duração processo" className="mb-3">
+								<Form.Control
+									type="text"
+									disabled={true}
+									name="ponto_passagem3.tempServicoLocal"
+									value={formik.values.ponto_passagem3.tempServicoLocal || ""}
+									onKeyDown={handleEnter}
+									onChange={formik.handleChange}
+								/>
+							</FloatingLabel>
+						</Col>
+					</>
 				)}
 			</Row>
 
@@ -272,7 +436,7 @@ const InputsPontoPassagem = ({
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="*Previsão 4" className="mb-3">
+					<FloatingLabel label="*Previsão inicio 4" className="mb-3">
 						<Form.Control
 							type="datetime-local"
 							placeholder=" "
@@ -285,21 +449,70 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
+				<Col>
+					<FloatingLabel label="*Previsão fim 4" className="mb-3">
+						<Form.Control
+							type="datetime-local"
+							placeholder=" "
+							name="ponto_passagem4.previsaoSaida"
+							value={formik.values.ponto_passagem4.previsaoSaida}
+							onKeyDown={handleEnter}
+							onChange={formik.handleChange}
+							required
+							disabled={fkSituacao}
+						/>
+					</FloatingLabel>
+				</Col>
 				{fkSituacao && (
-					<Col>
-						<FloatingLabel label="Data Entrega Efetiva" className="mb-3">
-							<Form.Control
-								type="datetime-local"
-								placeholder=" "
-								name="ponto_passagem4.entregaEfetiva"
-								value={formik.values.ponto_passagem4.entregaEfetiva || ""}
-								onKeyDown={handleEnter}
-								onChange={formik.handleChange}
-								disabled={disabledValidEfetiva}
-								required
-							/>
-						</FloatingLabel>
-					</Col>
+					<>
+						<Col>
+							<FloatingLabel label="Data Entrega Efetiva" className="mb-3">
+								<Form.Control
+									type="datetime-local"
+									placeholder=" "
+									name="ponto_passagem4.entregaEfetiva"
+									value={formik.values.ponto_passagem4.entregaEfetiva || ""}
+									onKeyDown={handleEnter}
+									onChange={formik.handleChange}
+									disabled={disabledValidEfetiva}
+									required
+								/>
+							</FloatingLabel>
+						</Col>
+						<Col>
+							<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+								<Form.Control
+									type="datetime-local"
+									placeholder=" "
+									name="ponto_passagem4.coletaEfetivaSaida"
+									value={formik.values.ponto_passagem4.coletaEfetivaSaida || ""}
+									onKeyDown={handleEnter}
+									onChange={formik.handleChange}
+									onBlur={() =>
+										funcDuracaoProcesso(
+											formik,
+											4,
+											formik.values.ponto_passagem4.coletaEfetivaSaida
+										)
+									}
+									disabled={disabledValidEfetiva}
+									//required
+								/>
+							</FloatingLabel>
+						</Col>
+						<Col>
+							<FloatingLabel label="Duração processo" className="mb-3">
+								<Form.Control
+									type="text"
+									disabled={true}
+									name="ponto_passagem4.tempServicoLocal"
+									value={formik.values.ponto_passagem4.tempServicoLocal || ""}
+									onKeyDown={handleEnter}
+									onChange={formik.handleChange}
+								/>
+							</FloatingLabel>
+						</Col>
+					</>
 				)}
 			</Row>
 
@@ -359,7 +572,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="Previsão 5" className="mb-3">
+						<FloatingLabel label="Previsão inicio 5" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -372,29 +585,80 @@ const InputsPontoPassagem = ({
 							/>
 						</FloatingLabel>
 					</Col>
+					<Col>
+						<FloatingLabel label="*Previsão fim 5" className="mb-3">
+							<Form.Control
+								type="datetime-local"
+								placeholder=" "
+								name="ponto_passagem5.previsaoSaida"
+								value={formik.values.ponto_passagem5.previsaoSaida}
+								onKeyDown={handleEnter}
+								onChange={formik.handleChange}
+								required
+								disabled={fkSituacao}
+							/>
+						</FloatingLabel>
+					</Col>
 					{fkSituacao && (
-						<Col>
-							<FloatingLabel label="Data Entrega Efetiva" className="mb-3">
-								<Form.Control
-									type="datetime-local"
-									placeholder=" "
-									name={
-										inputPontoPassagem5
-											? "ponto_passagem5.coletaEfetiva"
-											: "ponto_passagem5.entregaEfetiva"
-									}
-									value={
-										inputPontoPassagem5
-											? formik.values.ponto_passagem5.coletaEfetiva || ""
-											: formik.values.ponto_passagem5.entregaEfetiva || ""
-									}
-									onChange={formik.handleChange}
-									onKeyDown={handleEnter}
-									disabled={disabledValidEfetiva}
-									required
-								/>
-							</FloatingLabel>
-						</Col>
+						<>
+							<Col>
+								<FloatingLabel label="Data Entrega Efetiva" className="mb-3">
+									<Form.Control
+										type="datetime-local"
+										placeholder=" "
+										name={
+											inputPontoPassagem5
+												? "ponto_passagem5.coletaEfetiva"
+												: "ponto_passagem5.entregaEfetiva"
+										}
+										value={
+											inputPontoPassagem5
+												? formik.values.ponto_passagem5.coletaEfetiva || ""
+												: formik.values.ponto_passagem5.entregaEfetiva || ""
+										}
+										onChange={formik.handleChange}
+										onKeyDown={handleEnter}
+										disabled={disabledValidEfetiva}
+										required
+									/>
+								</FloatingLabel>
+							</Col>
+							<Col>
+								<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+									<Form.Control
+										type="datetime-local"
+										placeholder=" "
+										name="ponto_passagem5.coletaEfetivaSaida"
+										value={
+											formik.values.ponto_passagem5.coletaEfetivaSaida || ""
+										}
+										onKeyDown={handleEnter}
+										onChange={formik.handleChange}
+										onBlur={() =>
+											funcDuracaoProcesso(
+												formik,
+												5,
+												formik.values.ponto_passagem5.coletaEfetivaSaida
+											)
+										}
+										disabled={disabledValidEfetiva}
+										required
+									/>
+								</FloatingLabel>
+							</Col>
+							<Col>
+								<FloatingLabel label="Duração processo" className="mb-3">
+									<Form.Control
+										type="text"
+										disabled={true}
+										name="ponto_passagem5.tempServicoLocal"
+										value={formik.values.ponto_passagem5.tempServicoLocal || ""}
+										onKeyDown={handleEnter}
+										onChange={formik.handleChange}
+									/>
+								</FloatingLabel>
+							</Col>
+						</>
 					)}
 				</Row>
 			)}
@@ -455,7 +719,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="Previsão 6" className="mb-3">
+						<FloatingLabel label="Previsão inicio 6" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -468,29 +732,80 @@ const InputsPontoPassagem = ({
 							/>
 						</FloatingLabel>
 					</Col>
+					<Col>
+						<FloatingLabel label="*Previsão fim 6" className="mb-3">
+							<Form.Control
+								type="datetime-local"
+								placeholder=" "
+								name="ponto_passagem6.previsaoSaida"
+								value={formik.values.ponto_passagem6.previsaoSaida}
+								onKeyDown={handleEnter}
+								onChange={formik.handleChange}
+								required
+								disabled={fkSituacao}
+							/>
+						</FloatingLabel>
+					</Col>
 					{fkSituacao && (
-						<Col>
-							<FloatingLabel label="Data Entrega Efetiva" className="mb-3">
-								<Form.Control
-									type="datetime-local"
-									placeholder=" "
-									name={
-										inputPontoPassagem6
-											? "ponto_passagem6.coletaEfetiva"
-											: "ponto_passagem6.entregaEfetiva"
-									}
-									value={
-										inputPontoPassagem6
-											? formik.values.ponto_passagem6.coletaEfetiva || ""
-											: formik.values.ponto_passagem6.entregaEfetiva || ""
-									}
-									onChange={formik.handleChange}
-									onKeyDown={handleEnter}
-									disabled={disabledValidEfetiva}
-									required
-								/>
-							</FloatingLabel>
-						</Col>
+						<>
+							<Col>
+								<FloatingLabel label="Data Entrega Efetiva" className="mb-3">
+									<Form.Control
+										type="datetime-local"
+										placeholder=" "
+										name={
+											inputPontoPassagem6
+												? "ponto_passagem6.coletaEfetiva"
+												: "ponto_passagem6.entregaEfetiva"
+										}
+										value={
+											inputPontoPassagem6
+												? formik.values.ponto_passagem6.coletaEfetiva || ""
+												: formik.values.ponto_passagem6.entregaEfetiva || ""
+										}
+										onChange={formik.handleChange}
+										onKeyDown={handleEnter}
+										disabled={disabledValidEfetiva}
+										required
+									/>
+								</FloatingLabel>
+							</Col>
+							<Col>
+								<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+									<Form.Control
+										type="datetime-local"
+										placeholder=" "
+										name="ponto_passagem6.coletaEfetivaSaida"
+										value={
+											formik.values.ponto_passagem6.coletaEfetivaSaida || ""
+										}
+										onKeyDown={handleEnter}
+										onChange={formik.handleChange}
+										onBlur={() =>
+											funcDuracaoProcesso(
+												formik,
+												6,
+												formik.values.ponto_passagem6.coletaEfetivaSaida
+											)
+										}
+										disabled={disabledValidEfetiva}
+										required
+									/>
+								</FloatingLabel>
+							</Col>
+							<Col>
+								<FloatingLabel label="Duração processo" className="mb-3">
+									<Form.Control
+										type="text"
+										disabled={true}
+										name="ponto_passagem6.tempServicoLocal"
+										value={formik.values.ponto_passagem6.tempServicoLocal || ""}
+										onKeyDown={handleEnter}
+										onChange={formik.handleChange}
+									/>
+								</FloatingLabel>
+							</Col>
+						</>
 					)}
 				</Row>
 			)}
@@ -553,7 +868,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="Previsão 7" className="mb-3">
+						<FloatingLabel label="Previsão inicio 7" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -566,29 +881,80 @@ const InputsPontoPassagem = ({
 							/>
 						</FloatingLabel>
 					</Col>
+					<Col>
+						<FloatingLabel label="*Previsão fim 7" className="mb-3">
+							<Form.Control
+								type="datetime-local"
+								placeholder=" "
+								name="ponto_passagem7.previsaoSaida"
+								value={formik.values.ponto_passagem7.previsaoSaida}
+								onKeyDown={handleEnter}
+								onChange={formik.handleChange}
+								required
+								disabled={fkSituacao}
+							/>
+						</FloatingLabel>
+					</Col>
 					{fkSituacao && (
-						<Col>
-							<FloatingLabel label="Data Entrega Efetiva" className="mb-3">
-								<Form.Control
-									type="datetime-local"
-									placeholder=" "
-									name={
-										inputPontoPassagem7
-											? "ponto_passagem7.coletaEfetiva"
-											: "ponto_passagem7.entregaEfetiva"
-									}
-									value={
-										inputPontoPassagem7
-											? formik.values.ponto_passagem7.coletaEfetiva || ""
-											: formik.values.ponto_passagem7.entregaEfetiva || ""
-									}
-									onChange={formik.handleChange}
-									onKeyDown={handleEnter}
-									disabled={disabledValidEfetiva}
-									required
-								/>
-							</FloatingLabel>
-						</Col>
+						<>
+							<Col>
+								<FloatingLabel label="Data Entrega Efetiva" className="mb-3">
+									<Form.Control
+										type="datetime-local"
+										placeholder=" "
+										name={
+											inputPontoPassagem7
+												? "ponto_passagem7.coletaEfetiva"
+												: "ponto_passagem7.entregaEfetiva"
+										}
+										value={
+											inputPontoPassagem7
+												? formik.values.ponto_passagem7.coletaEfetiva || ""
+												: formik.values.ponto_passagem7.entregaEfetiva || ""
+										}
+										onChange={formik.handleChange}
+										onKeyDown={handleEnter}
+										disabled={disabledValidEfetiva}
+										required
+									/>
+								</FloatingLabel>
+							</Col>
+							<Col>
+								<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+									<Form.Control
+										type="datetime-local"
+										placeholder=" "
+										name="ponto_passagem7.coletaEfetivaSaida"
+										value={
+											formik.values.ponto_passagem7.coletaEfetivaSaida || ""
+										}
+										onKeyDown={handleEnter}
+										onChange={formik.handleChange}
+										onBlur={() =>
+											funcDuracaoProcesso(
+												formik,
+												7,
+												formik.values.ponto_passagem7.coletaEfetivaSaida
+											)
+										}
+										disabled={disabledValidEfetiva}
+										required
+									/>
+								</FloatingLabel>
+							</Col>
+							<Col>
+								<FloatingLabel label="Duração processo" className="mb-3">
+									<Form.Control
+										type="text"
+										disabled={true}
+										name="ponto_passagem7.tempServicoLocal"
+										value={formik.values.ponto_passagem7.tempServicoLocal || ""}
+										onKeyDown={handleEnter}
+										onChange={formik.handleChange}
+									/>
+								</FloatingLabel>
+							</Col>
+						</>
 					)}
 				</Row>
 			)}
@@ -649,7 +1015,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="Previsão 8" className="mb-3">
+						<FloatingLabel label="Previsão inicio 8" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -662,29 +1028,80 @@ const InputsPontoPassagem = ({
 							/>
 						</FloatingLabel>
 					</Col>
+					<Col>
+						<FloatingLabel label="*Previsão fim 8" className="mb-3">
+							<Form.Control
+								type="datetime-local"
+								placeholder=" "
+								name="ponto_passagem8.previsaoSaida"
+								value={formik.values.ponto_passagem8.previsaoSaida}
+								onKeyDown={handleEnter}
+								onChange={formik.handleChange}
+								required
+								disabled={fkSituacao}
+							/>
+						</FloatingLabel>
+					</Col>
 					{fkSituacao && (
-						<Col>
-							<FloatingLabel label="Data Entrega Efetiva" className="mb-3">
-								<Form.Control
-									type="datetime-local"
-									placeholder=" "
-									name={
-										inputPontoPassagem8
-											? "ponto_passagem8.coletaEfetiva"
-											: "ponto_passagem8.entregaEfetiva"
-									}
-									value={
-										inputPontoPassagem8
-											? formik.values.ponto_passagem8.coletaEfetiva || ""
-											: formik.values.ponto_passagem8.entregaEfetiva || ""
-									}
-									onChange={formik.handleChange}
-									onKeyDown={handleEnter}
-									disabled={disabledValidEfetiva}
-									required
-								/>
-							</FloatingLabel>
-						</Col>
+						<>
+							<Col>
+								<FloatingLabel label="Data Entrega Efetiva" className="mb-3">
+									<Form.Control
+										type="datetime-local"
+										placeholder=" "
+										name={
+											inputPontoPassagem8
+												? "ponto_passagem8.coletaEfetiva"
+												: "ponto_passagem8.entregaEfetiva"
+										}
+										value={
+											inputPontoPassagem8
+												? formik.values.ponto_passagem8.coletaEfetiva || ""
+												: formik.values.ponto_passagem8.entregaEfetiva || ""
+										}
+										onChange={formik.handleChange}
+										onKeyDown={handleEnter}
+										disabled={disabledValidEfetiva}
+										required
+									/>
+								</FloatingLabel>
+							</Col>
+							<Col>
+								<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+									<Form.Control
+										type="datetime-local"
+										placeholder=" "
+										name="ponto_passagem8.coletaEfetivaSaida"
+										value={
+											formik.values.ponto_passagem8.coletaEfetivaSaida || ""
+										}
+										onKeyDown={handleEnter}
+										onChange={formik.handleChange}
+										onBlur={() =>
+											funcDuracaoProcesso(
+												formik,
+												8,
+												formik.values.ponto_passagem8.coletaEfetivaSaida
+											)
+										}
+										disabled={disabledValidEfetiva}
+										required
+									/>
+								</FloatingLabel>
+							</Col>
+							<Col>
+								<FloatingLabel label="Duração processo" className="mb-3">
+									<Form.Control
+										type="text"
+										disabled={true}
+										name="ponto_passagem8.tempServicoLocal"
+										value={formik.values.ponto_passagem8.tempServicoLocal || ""}
+										onKeyDown={handleEnter}
+										onChange={formik.handleChange}
+									/>
+								</FloatingLabel>
+							</Col>
+						</>
 					)}
 				</Row>
 			)}
@@ -745,7 +1162,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="Previsão 9" className="mb-3">
+						<FloatingLabel label="Previsão inicio 9" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -758,29 +1175,94 @@ const InputsPontoPassagem = ({
 							/>
 						</FloatingLabel>
 					</Col>
+					<Col>
+						<FloatingLabel label="*Previsão fim 9" className="mb-3">
+							<Form.Control
+								type="datetime-local"
+								placeholder=" "
+								name="ponto_passagem9.previsaoSaida"
+								value={formik.values.ponto_passagem9.previsaoSaida}
+								onKeyDown={handleEnter}
+								onChange={formik.handleChange}
+								required
+								disabled={fkSituacao}
+							/>
+						</FloatingLabel>
+					</Col>
+					<Col>
+						<FloatingLabel label="*Previsão fim 9" className="mb-3">
+							<Form.Control
+								type="datetime-local"
+								placeholder=" "
+								name="ponto_passagem9.previsaoSaida"
+								value={formik.values.ponto_passagem9.previsaoSaida}
+								onKeyDown={handleEnter}
+								onChange={formik.handleChange}
+								required
+								disabled={fkSituacao}
+							/>
+						</FloatingLabel>
+					</Col>
 					{fkSituacao && (
-						<Col>
-							<FloatingLabel label="Data Entrega Efetiva" className="mb-3">
-								<Form.Control
-									type="datetime-local"
-									placeholder=" "
-									name={
-										inputPontoPassagem9
-											? "ponto_passagem9.coletaEfetiva"
-											: "ponto_passagem9.entregaEfetiva"
-									}
-									value={
-										inputPontoPassagem9
-											? formik.values.ponto_passagem9.coletaEfetiva || ""
-											: formik.values.ponto_passagem9.entregaEfetiva || ""
-									}
-									onChange={formik.handleChange}
-									onKeyDown={handleEnter}
-									disabled={disabledValidEfetiva}
-									required
-								/>
-							</FloatingLabel>
-						</Col>
+						<>
+							<Col>
+								<FloatingLabel label="Data Entrega Efetiva" className="mb-3">
+									<Form.Control
+										type="datetime-local"
+										placeholder=" "
+										name={
+											inputPontoPassagem9
+												? "ponto_passagem9.coletaEfetiva"
+												: "ponto_passagem9.entregaEfetiva"
+										}
+										value={
+											inputPontoPassagem9
+												? formik.values.ponto_passagem9.coletaEfetiva || ""
+												: formik.values.ponto_passagem9.entregaEfetiva || ""
+										}
+										onChange={formik.handleChange}
+										onKeyDown={handleEnter}
+										disabled={disabledValidEfetiva}
+										required
+									/>
+								</FloatingLabel>
+							</Col>
+							<Col>
+								<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+									<Form.Control
+										type="datetime-local"
+										placeholder=" "
+										name="ponto_passagem9.coletaEfetivaSaida"
+										value={
+											formik.values.ponto_passagem9.coletaEfetivaSaida || ""
+										}
+										onKeyDown={handleEnter}
+										onChange={formik.handleChange}
+										onBlur={() =>
+											funcDuracaoProcesso(
+												formik,
+												9,
+												formik.values.ponto_passagem9.coletaEfetivaSaida
+											)
+										}
+										disabled={disabledValidEfetiva}
+										required
+									/>
+								</FloatingLabel>
+							</Col>
+							<Col>
+								<FloatingLabel label="Duração processo" className="mb-3">
+									<Form.Control
+										type="text"
+										disabled={true}
+										name="ponto_passagem9.tempServicoLocal"
+										value={formik.values.ponto_passagem9.tempServicoLocal || ""}
+										onKeyDown={handleEnter}
+										onChange={formik.handleChange}
+									/>
+								</FloatingLabel>
+							</Col>
+						</>
 					)}
 				</Row>
 			)}
@@ -841,7 +1323,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="Previsão 10" className="mb-3">
+						<FloatingLabel label="Previsão inicio 10" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -854,29 +1336,82 @@ const InputsPontoPassagem = ({
 							/>
 						</FloatingLabel>
 					</Col>
+					<Col>
+						<FloatingLabel label="*Previsão fim 10" className="mb-3">
+							<Form.Control
+								type="datetime-local"
+								placeholder=" "
+								name="ponto_passagem10.previsaoSaida"
+								value={formik.values.ponto_passagem10.previsaoSaida}
+								onKeyDown={handleEnter}
+								onChange={formik.handleChange}
+								required
+								disabled={fkSituacao}
+							/>
+						</FloatingLabel>
+					</Col>
 					{fkSituacao && (
-						<Col>
-							<FloatingLabel label="Data Entrega Efetiva" className="mb-3">
-								<Form.Control
-									type="datetime-local"
-									placeholder=" "
-									name={
-										inputPontoPassagem10
-											? "ponto_passagem10.coletaEfetiva"
-											: "ponto_passagem10.entregaEfetiva"
-									}
-									value={
-										inputPontoPassagem10
-											? formik.values.ponto_passagem10.coletaEfetiva || ""
-											: formik.values.ponto_passagem10.entregaEfetiva || ""
-									}
-									onChange={formik.handleChange}
-									onKeyDown={handleEnter}
-									disabled={disabledValidEfetiva}
-									required
-								/>
-							</FloatingLabel>
-						</Col>
+						<>
+							<Col>
+								<FloatingLabel label="Data Entrega Efetiva" className="mb-3">
+									<Form.Control
+										type="datetime-local"
+										placeholder=" "
+										name={
+											inputPontoPassagem10
+												? "ponto_passagem10.coletaEfetiva"
+												: "ponto_passagem10.entregaEfetiva"
+										}
+										value={
+											inputPontoPassagem10
+												? formik.values.ponto_passagem10.coletaEfetiva || ""
+												: formik.values.ponto_passagem10.entregaEfetiva || ""
+										}
+										onChange={formik.handleChange}
+										onKeyDown={handleEnter}
+										disabled={disabledValidEfetiva}
+										required
+									/>
+								</FloatingLabel>
+							</Col>
+							<Col>
+								<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+									<Form.Control
+										type="datetime-local"
+										placeholder=" "
+										name="ponto_passagem10.coletaEfetivaSaida"
+										value={
+											formik.values.ponto_passagem10.coletaEfetivaSaida || ""
+										}
+										onKeyDown={handleEnter}
+										onChange={formik.handleChange}
+										onBlur={() =>
+											funcDuracaoProcesso(
+												formik,
+												10,
+												formik.values.ponto_passagem10.coletaEfetivaSaida
+											)
+										}
+										disabled={disabledValidEfetiva}
+										required
+									/>
+								</FloatingLabel>
+							</Col>
+							<Col>
+								<FloatingLabel label="Duração processo" className="mb-3">
+									<Form.Control
+										type="text"
+										disabled={true}
+										name="ponto_passagem10.tempServicoLocal"
+										value={
+											formik.values.ponto_passagem10.tempServicoLocal || ""
+										}
+										onKeyDown={handleEnter}
+										onChange={formik.handleChange}
+									/>
+								</FloatingLabel>
+							</Col>
+						</>
 					)}
 				</Row>
 			)}

@@ -2,11 +2,15 @@ import moment from "moment";
 
 export const funcBodyEdit = (data, tipoServico) => {
 	const nomeCliente = data.CLIENTE !== null ? data.CLIENTE : data.DESCRICAO;
-
 	return {
 		ponto: nomeCliente,
 		tipoServico,
 		previsao: moment(data.PREVISAO).format("YYYY-MM-DDTHH:mm"),
+		previsaoSaida: moment(data.PREVISAO_SAIDA).format("YYYY-MM-DDTHH:mm"),
+		tempServicoLocal: data.TEMP_SERV_LOCAL_COLETA,
+		coletaEfetivaSaida: moment(data.SAIDA_EFETIVA_COLETA).format(
+			"YYYY-MM-DDTHH:mm"
+		),
 		latitude: data.LATITUDE,
 		longitude: data.LONGITUDE,
 		client: nomeCliente,
