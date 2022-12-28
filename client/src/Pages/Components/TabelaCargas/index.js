@@ -232,7 +232,7 @@ function TabelaCargas({
 					reorderableColumns
 					onColReorder={ordernarUnidadeColunas}
 					responsiveLayout="scroll"
-					scrollHeight="60vh"
+					scrollHeight="70vh"
 					onSort={onSort}
 					className="p-datatable-responsive-grid"
 					emptyMessage="Não foram encontrados resultados nesta busca"

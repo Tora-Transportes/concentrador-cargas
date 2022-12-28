@@ -1,5 +1,5 @@
 import React from "react";
-import "./style.css";
+import "./monitoramento.css";
 import { Container, Row, Col } from "react-bootstrap";
 import TabelaCargas from "../../Components/TabelaCargas";
 // import HandleClick from "./tooltipsMonitoramento";
