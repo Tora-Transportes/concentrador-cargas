@@ -44,6 +44,7 @@ const CadastroCargaCSN = () => {
 				latitude: "",
 				longitude: "",
 				client: "",
+				previsaoSaida: "",
 			},
 			ponto_passagem2: {
 				ponto: "51 - MUNDO - CSN",
@@ -52,6 +53,7 @@ const CadastroCargaCSN = () => {
 				latitude: "",
 				longitude: "",
 				client: "",
+				previsaoSaida: "",
 			},
 			ponto_passagem3: {
 				ponto: "59 - PEACAO - CSN",
@@ -60,6 +62,7 @@ const CadastroCargaCSN = () => {
 				latitude: "",
 				longitude: "",
 				client: "",
+				previsaoSaida: "",
 			},
 			ponto_passagem4: {
 				ponto: "",
@@ -68,6 +71,7 @@ const CadastroCargaCSN = () => {
 				latitude: "",
 				longitude: "",
 				client: "",
+				previsaoSaida: "",
 			},
 			ponto_passagem5: {
 				ponto: "",
@@ -76,6 +80,7 @@ const CadastroCargaCSN = () => {
 				latitude: "",
 				longitude: "",
 				client: "",
+				previsaoSaida: "",
 			},
 			ponto_passagem6: {
 				ponto: "",
@@ -84,6 +89,7 @@ const CadastroCargaCSN = () => {
 				latitude: "",
 				longitude: "",
 				client: "",
+				previsaoSaida: "",
 			},
 			ponto_passagem7: {
 				ponto: "",
@@ -92,6 +98,7 @@ const CadastroCargaCSN = () => {
 				latitude: "",
 				longitude: "",
 				client: "",
+				previsaoSaida: "",
 			},
 			ponto_passagem8: {
 				ponto: "",
@@ -100,6 +107,7 @@ const CadastroCargaCSN = () => {
 				latitude: "",
 				longitude: "",
 				client: "",
+				previsaoSaida: "",
 			},
 			ponto_passagem9: {
 				ponto: "",
@@ -108,6 +116,7 @@ const CadastroCargaCSN = () => {
 				latitude: "",
 				longitude: "",
 				client: "",
+				previsaoSaida: "",
 			},
 			ponto_passagem10: {
 				ponto: "",
@@ -116,6 +125,7 @@ const CadastroCargaCSN = () => {
 				latitude: "",
 				longitude: "",
 				client: "",
+				previsaoSaida: "",
 			},
 			ponto_passagem11: {
 				ponto: "",
@@ -124,6 +134,7 @@ const CadastroCargaCSN = () => {
 				latitude: "",
 				longitude: "",
 				client: "",
+				previsaoSaida: "",
 			},
 			ponto_passagem12: {
 				ponto: "",
@@ -132,6 +143,7 @@ const CadastroCargaCSN = () => {
 				latitude: "",
 				longitude: "",
 				client: "",
+				previsaoSaida: "",
 			},
 		},
 		onSubmit: async (values) => {

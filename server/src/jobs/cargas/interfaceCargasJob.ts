@@ -26,3 +26,8 @@ export interface IDadosUpdate {
   COLETA_EFETIVA_POSTO30?: Date;
   STATUS_SERVICO?: string;
 }
+
+export interface IdadosEntrega {
+  ID: number;
+  ID_CON_CARGAS: number;
+}

@@ -13,20 +13,10 @@ export default interface IPontosParada {
   COLETA_EFETIVA_POSTO30?: Date | null;
   COLETA_EFETIVA_MUNDO?: Date | null;
   COLETA_EFETIVA_PEACAO?: Date | null;
-  ENTREGA_EFETIVA_COLETA?: Date | null;
+  ENTREGA_EFETIVA?: Date | null;
   PREVISAO_SAIDA?: Date | null;
-  TEMP_SERV_LOCAL?: string | null;
-  SAIDA_EFETIVA?: Date | null;
-  PREVISAO_SAIDA_POSTO30?: Date | null;
-  TEMP_SERV_LOCAL_POSTO30?: string | null;
-  SAIDA_EFETIVA_POSTO30?: Date | null;
-  PREVISAO_SAIDA_MUNDO?: Date | null;
-  TEMP_SERV_LOCAL_MUNDO?: string | null;
-  SAIDA_EFETIVA_MUNDO?: Date | null;
-  PREVISAO_SAIDA_PEACAO?: Date | null;
-  TEMP_SERV_LOCAL_PEACAO?: string | null;
-  SAIDA_EFETIVA_PEACAO?: Date | null;
-  PREVISAO_SAIDA_ENTREGA?: Date | null;
+  TEMP_SERV_LOCAL_COLETA?: string | null;
+  SAIDA_EFETIVA_COLETA?: Date | null;
   TEMP_SERV_LOCAL_ENTREGA?: string | null;
   SAIDA_EFETIVA_ENTREGA?: Date | null;
 }
@@ -43,20 +33,10 @@ export interface IPontosParadaPath {
   COLETA_EFETIVA_POSTO30?: Date | null;
   COLETA_EFETIVA_MUNDO?: Date | null;
   COLETA_EFETIVA_PEACAO?: Date | null;
-  ENTREGA_EFETIVA_COLETA?: Date | null;
+  ENTREGA_EFETIVA?: Date | null;
   PREVISAO_SAIDA?: Date | null;
   TEMP_SERV_LOCAL_COLETA?: string | null;
-  SAIDA_EFETIVA?: Date | null;
-  PREVISAO_SAIDA_POSTO30?: Date | null;
-  TEMP_SERV_LOCAL_POSTO30?: string | null;
-  SAIDA_EFETIVA_POSTO30?: Date | null;
-  PREVISAO_SAIDA_MUNDO?: Date | null;
-  TEMP_SERV_LOCAL_MUNDO?: string | null;
-  SAIDA_EFETIVA_MUNDO?: Date | null;
-  PREVISAO_SAIDA_PEACAO?: Date | null;
-  TEMP_SERV_LOCAL_PEACAO?: string | null;
-  SAIDA_EFETIVA_PEACAO?: Date | null;
-  PREVISAO_SAIDA_ENTREGA?: Date | null;
+  SAIDA_EFETIVA_COLETA?: Date | null;
   TEMP_SERV_LOCAL_ENTREGA?: string | null;
   SAIDA_EFETIVA_ENTREGA?: Date | null;
 }

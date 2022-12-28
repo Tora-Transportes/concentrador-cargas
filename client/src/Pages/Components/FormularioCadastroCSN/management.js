@@ -1,3 +1,4 @@
+import moment from "moment";
 import ServiceCargas from "src/services/ServiceCargas";
 
 export const funcInputPontoParada = (
@@ -61,6 +62,7 @@ export const funcInputPontoParada = (
 				formik.setFieldValue("ponto_passagem5.previsao", "");
 				formik.setFieldValue("ponto_passagem5.latitude", "");
 				formik.setFieldValue("ponto_passagem5.longitude", "");
+				formik.setFieldValue("ponto_passagem5.previsaoSaida", "");
 				setCountInput(countInput - 1);
 				setInputColeta5(false);
 				setViewsButtonExcluir(false);
@@ -76,6 +78,7 @@ export const funcInputPontoParada = (
 				formik.setFieldValue("ponto_passagem6.previsao", "");
 				formik.setFieldValue("ponto_passagem.latitude", "");
 				formik.setFieldValue("ponto_passagem6.longitude", "");
+				formik.setFieldValue("ponto_passagem6.previsaoSaida", "");
 				setCountInput(countInput - 1);
 				setInputColeta6(false);
 				break;
@@ -89,6 +92,7 @@ export const funcInputPontoParada = (
 				formik.setFieldValue("ponto_passagem7.previsao", "");
 				formik.setFieldValue("ponto_passagem7.latitude", "");
 				formik.setFieldValue("ponto_passagem7.longitude", "");
+				formik.setFieldValue("ponto_passagem7.previsaoSaida", "");
 				setCountInput(countInput - 1);
 				setInputColeta7(false);
 				setViewsButtonAddColeta(true);
@@ -103,6 +107,7 @@ export const funcInputPontoParada = (
 				formik.setFieldValue("ponto_passagem8.previsao", "");
 				formik.setFieldValue("ponto_passagem8.latitude", "");
 				formik.setFieldValue("ponto_passagem8.longitude", "");
+				formik.setFieldValue("ponto_passagem8.previsaoSaida", "");
 				setCountInput(countInput - 1);
 				setInputColeta8(false);
 				setViewsButtonAddColeta(true);
@@ -117,6 +122,7 @@ export const funcInputPontoParada = (
 				formik.setFieldValue("ponto_passagem9.previsao", "");
 				formik.setFieldValue("ponto_passagem9.latitude", "");
 				formik.setFieldValue("ponto_passagem9.longitude", "");
+				formik.setFieldValue("ponto_passagem9.previsaoSaida", "");
 				setCountInput(countInput - 1);
 				setInputColeta9(false);
 				break;
@@ -130,6 +136,7 @@ export const funcInputPontoParada = (
 				formik.setFieldValue("ponto_passagem10.previsao", "");
 				formik.setFieldValue("ponto_passagem10.latitude", "");
 				formik.setFieldValue("ponto_passagem10.longitude", "");
+				formik.setFieldValue("ponto_passagem10.previsaoSaida", "");
 				setCountInput(countInput - 1);
 				setInputColeta10(false);
 				break;
@@ -137,6 +144,93 @@ export const funcInputPontoParada = (
 				return;
 		}
 	};
-
 	return { viewsInputColeta, excluirInputColeta };
+};
+
+export const funcDuracaoProcesso = async (formik, status, coletafim) => {
+	const somarHoras = (coletaInicio, nomeCampoformik) => {
+		if (coletaInicio && coletafim) {
+			const startTime = moment(coletaInicio);
+			const endTime = moment(coletafim);
+			const horasPermanenciaLocal = moment
+				.utc(moment(endTime, "HH:mm:ss").diff(moment(startTime, "HH:mm:ss")))
+				.format("HH:mm:ss");
+			formik.setFieldValue(nomeCampoformik, `${horasPermanenciaLocal} h`);
+		}
+	};
+
+	switch (status) {
+		case 1:
+			somarHoras(
+				formik.values.ponto_passagem.coletaEfetiva,
+				"ponto_passagem.tempServicoLocal"
+			);
+
+			break;
+		case 2:
+			somarHoras(
+				formik.values.ponto_passagem2.coletaEfetiva,
+				"ponto_passagem2.tempServicoLocal"
+			);
+			break;
+		case 3:
+			somarHoras(
+				formik.values.ponto_passagem3.coletaEfetiva,
+				"ponto_passagem3.tempServicoLocal"
+			);
+			break;
+		case 4:
+			somarHoras(
+				formik.values.ponto_passagem4.coletaEfetiva,
+				"ponto_passagem4.tempServicoLocal"
+			);
+			break;
+		case 5:
+			somarHoras(
+				formik.values.ponto_passagem5.coletaEfetiva,
+				"ponto_passagem5.tempServicoLocal"
+			);
+			break;
+		case 6:
+			somarHoras(
+				formik.values.ponto_passagem6.coletaEfetiva,
+				"ponto_passagem6.tempServicoLocal"
+			);
+			break;
+		case 7:
+			somarHoras(
+				formik.values.ponto_passagem7.coletaEfetiva,
+				"ponto_passagem7.tempServicoLocal"
+			);
+			break;
+		case 8:
+			somarHoras(
+				formik.values.ponto_passagem8.coletaEfetiva,
+				"ponto_passagem8.tempServicoLocal"
+			);
+			break;
+		case 9:
+			somarHoras(
+				formik.values.ponto_passagem9.coletaEfetiva,
+				"ponto_passagem9.tempServicoLocal"
+			);
+			break;
+		case 10:
+			somarHoras(
+				formik.values.ponto_passagem10.coletaEfetiva,
+				"ponto_passagem10.tempServicoLocal"
+			);
+			break;
+		default:
+			break;
+	}
+	// if (formik.values.coletaEfetiva && coletafim) {
+	// 	const startTime = moment(formik.values.coletaEfetiva);
+	// 	const endTime = moment(formik.values.coletaEfetivaSaida);
+	// 	const horasPermanenciaLocal = moment
+	// 		.utc(moment(endTime, "HH:mm:ss").diff(moment(startTime, "HH:mm:ss")))
+	// 		.format("HH:mm:ss");
+	// 	console.log("horas sss", horasPermanenciaLocal);
+	// 	//formik.setFieldValue("tempServicoLocal", horasPermanenciaLocal);
+	// }
 };
