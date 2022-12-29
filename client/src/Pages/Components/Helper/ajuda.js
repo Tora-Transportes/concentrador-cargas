@@ -330,11 +330,11 @@ function Helper() {
 							<br />
 							Ao clicar em Relatórios, você terá várias opções de consulta
 							disponíveis na plataforma, são elas: <br /> <br /> Indicador
-							Operacional - Permite o acompanhamento das cargas e lotes,
-							apresentando de acordo com o <br /> filtro de data utilizado, a
-							situação gráfica das cargas pelo gráfico, porcentagem de cargas
-							ativadas e <br /> desativadas, entre outras informações presentes
-							na página.
+							Operacional - Mostra a situação e permite acompanhamento e das
+							cargas já cadastradas na <br /> platafoma, essas informações serão
+							apresentadas de acordo com o preechimento do filtro de data, a
+							<br /> página conta também com gráfico e tabela,cargas ativadas e
+							desativadas, entre outras informações.
 						</p>
 						<img src={indicadorOperacional} id="style-gif2" />
 
@@ -365,8 +365,6 @@ function Helper() {
 							</Button>
 						</div>
 						<p className="p-tela-ajuda ms-1">
-							As páginas que serão citadas a seguir representam funcionalidades
-							similares, são elas: <br /> <br />
 							Raio Empresa - Mostra os veículos no raio da empresa.
 						</p>
 						<img src={raioEmpresa} id="style-gif" />
@@ -376,8 +374,7 @@ function Helper() {
 							</Button>
 						</div>
 						<p className="p-tela-ajuda ms-1">
-							Veículos x Veículos - Mostra a distância entre veículos que
-							estejam próximos.
+							Veículos x Veículos - Mostra a distância entre veículos próximos.
 						</p>
 						<img src={veicProximos} id="style-gif" />
 						<div className="class-button-ir">
@@ -398,10 +395,10 @@ function Helper() {
 						</div>
 						<p className="p-tela-ajuda">
 							<br />
-							Em Histórico de Rotas do Veículo, você terá acesso a localização
-							do veículo, filtrando pela placa <br /> do veículo e data a ser
-							consultada, as informações serão mostradas no mapa disponibilizado
-							<br /> na plataforma, a tela oferece também a opção de download do
+							Em Histórico de Rotas do Veículo, você terá acesso ao histórico de
+							localização do veículo, busque pela <br /> placa do veículo e
+							datas de início e fim e as informações serão mostradas no mapa da
+							plataforma, a tela <br /> oferece também a opção de download do
 							histórico consultado (via excel).
 						</p>
 						<img src={historicoRota} id="style-gif" />
