@@ -1,6 +1,6 @@
 import { CargaRepository } from "./../../repositories/CargaRepository";
 import moment from "moment";
-import cron from "node-cron";
+//import cron from "node-cron";
 import {
   //IdadosEntrega,
   IDadosUpdate,
@@ -41,9 +41,13 @@ class ServiceFinishCargasCsn {
         .subtract(1, "minutes")
         .format("YYYY-MM-DDTHH:mm:ss");
 
+      // const queryBuild = await mssqlCoordenadas.raw(
+      //   `select top 1 LAT, LON
+      // from REPORTES where DISIMEI = '${VEI_REFERENCIA}' and (dtinc < '${dataAtualMenos1Minuto}') order by dtinc desc`
+      // );
       const queryBuild = await mssqlCoordenadas.raw(
         `select top 1 LAT, LON
-      from REPORTES where DISIMEI = '${VEI_REFERENCIA}' and (dtinc < '${dataAtualMenos1Minuto}') order by dtinc desc`
+      from REPORTES where DISIMEI = '1643029' and (dtinc < '${dataAtualMenos1Minuto}') order by dtinc desc`
       );
 
       return queryBuild[0];
@@ -230,6 +234,15 @@ class ServiceFinishCargasCsn {
             );
             //console.log("DISTANCIA DA PARADA --------------", calculoDistancia);
             const raioEmMetros = RAIO ? Number(RAIO) * 1000 : 1000;
+            console.log(
+              "distancia veiculo =>",
+              calculoDistancia.toFixed(2),
+              "Raio da empresa ->",
+              raioEmMetros,
+              "ID_ponto_parada:",
+              ID
+            );
+
             DESCRICAO;
             if (
               Number(calculoDistancia.toFixed(2)) < raioEmMetros &&
@@ -408,6 +421,6 @@ export default async function run() {
       "|-----------------FIM JOB CARGA CSN EM VIAGEM-------------------|"
     );
   }
-  cron.schedule(" */2 * * * * ", job);
-  //job();
+  //cron.schedule(" */2 * * * * ", job);
+  job();
 }
