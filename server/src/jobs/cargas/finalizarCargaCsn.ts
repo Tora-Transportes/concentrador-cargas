@@ -91,7 +91,7 @@ class ServiceFinishCargasCsn {
       return [
         { ENTREGA_EFETIVA: this.dataAtual },
         { SAIDA_EFETIVA_ENTREGA: this.dataAtual },
-        //{ TEMP_SERV_LOCAL_ENTREGA: timeServiceLocation },
+        { TEMP_SERV_LOCAL_ENTREGA: timeServiceLocation },
       ];
     } else {
       return [
@@ -192,20 +192,17 @@ class ServiceFinishCargasCsn {
         COLETA_EFETIVA_PEACAO,
         COLETA_EFETIVA_MUNDO,
         COLETA_EFETIVA_POSTO30,
-        // SAIDA_EFETIVA_POSTO30,
-        // SAIDA_EFETIVA_MUNDO,
-        // SAIDA_EFETIVA_PEACAO,
         SAIDA_EFETIVA_COLETA,
         SAIDA_EFETIVA_ENTREGA,
+        ENTREGA_FINAL,
       } = item;
 
       let latitudeDestino: number;
       let longitudeDestino: number;
 
       // identificando qual é a latitude e longitude a ser
-      //const dadosDeEntrega: IdadosEntrega[] = [];
+
       if (STATUS_SERVICO === "ENTREGA") {
-        //dadosDeEntrega.push({ ID, ID_CON_CARGAS });
         latitudeDestino = LATITUDE.replace(",", ".");
         longitudeDestino = LONGITUDE.replace(",", ".");
       } else {
@@ -233,9 +230,10 @@ class ServiceFinishCargasCsn {
             );
             //console.log("DISTANCIA DA PARADA --------------", calculoDistancia);
             const raioEmMetros = RAIO ? Number(RAIO) * 1000 : 1000;
+            DESCRICAO;
             if (
               Number(calculoDistancia.toFixed(2)) < raioEmMetros &&
-              // Number(calculoDistancia.toFixed(2)) < 1500 &&
+              //Number(calculoDistancia.toFixed(2)) < 6800 &&
               statusServico === "Entrada"
             ) {
               let tipoEfetivoSave;
@@ -254,6 +252,7 @@ class ServiceFinishCargasCsn {
                 ID,
                 ID_CON_CARGAS,
                 STATUS_SERVICO,
+                ENTREGA_FINAL,
               });
             } else if (
               Number(calculoDistancia.toFixed(2)) > raioEmMetros &&
@@ -338,12 +337,12 @@ class ServiceFinishCargasCsn {
       } else if (STATUS_SERVICO === "COLETA" && SAIDA_EFETIVA_COLETA === null) {
         validandoBaixa(tipeServicoSaida, COLETA_EFETIVA, tipoPassagem);
       } else if (STATUS_SERVICO === "ENTREGA" && ENTREGA_EFETIVA === null) {
-        validandoBaixa(tipeServicoEntrada, COLETA_EFETIVA, tipoPassagem);
+        validandoBaixa(tipeServicoEntrada, null, tipoPassagem);
       } else if (
         STATUS_SERVICO === "ENTREGA" &&
         SAIDA_EFETIVA_ENTREGA === null
       ) {
-        validandoBaixa(tipeServicoSaida, COLETA_EFETIVA, tipoPassagem);
+        validandoBaixa(tipeServicoSaida, ENTREGA_EFETIVA, tipoPassagem);
       }
     }
     return arrayCargaUpdate;
@@ -388,10 +387,16 @@ export default async function run() {
 
         if (dadosAtualizar.length) {
           dadosAtualizar.forEach((itemAtualizar) => {
-            const { ID_CON_CARGAS, STATUS_SERVICO, ...dataPontoPassagem } =
-              itemAtualizar;
+            const {
+              ID_CON_CARGAS,
+              STATUS_SERVICO,
+              ENTREGA_FINAL,
+              ...dataPontoPassagem
+            } = itemAtualizar;
+            //const { ID_CON_CARGAS, STATUS_SERVICO, ...dataPontoPassagem } =
             serviceFinishCargas.updatePontoParada(dataPontoPassagem);
-            if (STATUS_SERVICO === "ENTREGA")
+            if (STATUS_SERVICO === "ENTREGA" && ENTREGA_FINAL === 1)
+              //if (STATUS_SERVICO === "ENTREGA")
               serviceFinishCargas.updateCargas(Number(ID_CON_CARGAS));
           });
         }

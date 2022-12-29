@@ -23,6 +23,7 @@ export function factoryPontoParada() {
     PREVISAO_SAIDA: yup.date().nullable(),
     SAIDA_EFETIVA_ENTREGA: yup.date().nullable(),
     TEMP_SERV_LOCAL_ENTREGA: yup.string().nullable(),
+    ENTREGA_FINAL: yup.number().nullable(),
   });
   return cargaCsnValidator;
 }

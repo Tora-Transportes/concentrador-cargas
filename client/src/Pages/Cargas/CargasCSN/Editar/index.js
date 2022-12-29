@@ -114,7 +114,9 @@ function EditarCargaCsn() {
 				coletaEfetiva: "",
 				coletaEfetivaSaida: "",
 				tempServicoLocal: "",
+				tempServicoLocalEntrega: "",
 				entregaEfetiva: "",
+				entregaEfetivaSaida: "",
 			},
 			ponto_passagem6: {
 				ponto: "",
@@ -129,7 +131,9 @@ function EditarCargaCsn() {
 				coletaEfetiva: "",
 				coletaEfetivaSaida: "",
 				tempServicoLocal: "",
+				tempServicoLocalEntrega: "",
 				entregaEfetiva: "",
+				entregaEfetivaSaida: "",
 			},
 			ponto_passagem7: {
 				ponto: "",
@@ -144,7 +148,9 @@ function EditarCargaCsn() {
 				coletaEfetiva: "",
 				coletaEfetivaSaida: "",
 				tempServicoLocal: "",
+				tempServicoLocalEntrega: "",
 				entregaEfetiva: "",
+				entregaEfetivaSaida: "",
 			},
 			ponto_passagem8: {
 				ponto: "",
@@ -159,7 +165,9 @@ function EditarCargaCsn() {
 				coletaEfetiva: "",
 				coletaEfetivaSaida: "",
 				tempServicoLocal: "",
+				tempServicoLocalEntrega: "",
 				entregaEfetiva: "",
+				entregaEfetivaSaida: "",
 			},
 			ponto_passagem9: {
 				ponto: "",
@@ -174,7 +182,9 @@ function EditarCargaCsn() {
 				coletaEfetiva: "",
 				coletaEfetivaSaida: "",
 				tempServicoLocal: "",
+				tempServicoLocalEntrega: "",
 				entregaEfetiva: "",
+				entregaEfetivaSaida: "",
 			},
 			ponto_passagem10: {
 				ponto: "",
@@ -189,7 +199,9 @@ function EditarCargaCsn() {
 				coletaEfetiva: "",
 				coletaEfetivaSaida: "",
 				tempServicoLocal: "",
+				tempServicoLocalEntrega: "",
 				entregaEfetiva: "",
+				entregaEfetivaSaida: "",
 			},
 		},
 		onSubmit: async (values) => {
