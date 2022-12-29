@@ -1,4 +1,3 @@
-import { number } from "yup";
 import IPontosParada from "../../models/IPontosDeParada";
 
 export interface IInfoCarga {
@@ -25,6 +24,7 @@ export interface IDadosUpdate {
   COLETA_EFETIVA_MUNDO?: Date;
   COLETA_EFETIVA_POSTO30?: Date;
   STATUS_SERVICO?: string;
+  ENTREGA_FINAL?: number | null;
 }
 
 export interface IdadosEntrega {

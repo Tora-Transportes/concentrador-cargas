@@ -8,7 +8,11 @@ export const funcBodyEdit = (data, tipoServico) => {
 		previsao: moment(data.PREVISAO).format("YYYY-MM-DDTHH:mm"),
 		previsaoSaida: moment(data.PREVISAO_SAIDA).format("YYYY-MM-DDTHH:mm"),
 		tempServicoLocal: data.TEMP_SERV_LOCAL_COLETA,
+		tempServicoLocalEntrega: data?.TEMP_SERV_LOCAL_ENTREGA,
 		coletaEfetivaSaida: moment(data.SAIDA_EFETIVA_COLETA).format(
+			"YYYY-MM-DDTHH:mm"
+		),
+		entregaEfetivaSaida: moment(data?.SAIDA_EFETIVA_ENTREGA).format(
 			"YYYY-MM-DDTHH:mm"
 		),
 		latitude: data.LATITUDE,

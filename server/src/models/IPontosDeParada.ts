@@ -19,6 +19,7 @@ export default interface IPontosParada {
   SAIDA_EFETIVA_COLETA?: Date | null;
   TEMP_SERV_LOCAL_ENTREGA?: string | null;
   SAIDA_EFETIVA_ENTREGA?: Date | null;
+  ENTREGA_FINAL?: number | null;
 }
 export interface IPontosParadaPath {
   ID?: number;
@@ -39,4 +40,5 @@ export interface IPontosParadaPath {
   SAIDA_EFETIVA_COLETA?: Date | null;
   TEMP_SERV_LOCAL_ENTREGA?: string | null;
   SAIDA_EFETIVA_ENTREGA?: Date | null;
+  ENTREGA_FINAL?: number | null;
 }
