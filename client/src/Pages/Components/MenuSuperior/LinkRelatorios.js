@@ -45,7 +45,7 @@ function LinkRelatorios() {
 			</div>
 			<div>
 				<p className="subtitle-relatorios">
-					Selecione uma das opções e você será redirecionado até a página
+					Selecione uma das opções e você será direcionado até a página
 					correspondente:
 				</p>
 				<div className="dropdown-content-veic2 text-center">
