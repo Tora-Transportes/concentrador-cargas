@@ -1,0 +1,14 @@
+.class-body-monito {
+  font-family: "Poppins", sans-serif;
+}
+.class-title-monit {
+  font-family: "Poppins", sans-serif;
+  color: #00652e;
+  font-size: 40px;
+  margin-top: 1.5rem;
+  margin-bottom: 2px;
+}
+
+#total-reg {
+  margin-bottom: -1px;
+}

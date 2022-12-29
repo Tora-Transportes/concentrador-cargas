@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 //import { Form } from "react-bootstrap";
 import ServiceFiliais from "../../../services/ServiceFiliais";
+import "../../Cargas/Manual/Cadastrar/cadastroManual.css";
 
 function FilialSelect(props) {
 	const [filiais, setFiliais] = useState([]);

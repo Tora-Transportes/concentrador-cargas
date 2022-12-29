@@ -70,7 +70,9 @@
 .paginator-table-col {
   display: none;
 }
-
+#Tabela-coordenadas{
+  margin-right: -2rem;
+}
 /* css nativa da tabela */
 .datatable-responsive-gridCargas
   .p-datatable-responsive-grid
