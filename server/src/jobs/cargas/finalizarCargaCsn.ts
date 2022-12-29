@@ -1,6 +1,6 @@
 import { CargaRepository } from "./../../repositories/CargaRepository";
 import moment from "moment";
-//import cron from "node-cron";
+import cron from "node-cron";
 import {
   //IdadosEntrega,
   IDadosUpdate,
@@ -421,6 +421,6 @@ export default async function run() {
       "|-----------------FIM JOB CARGA CSN EM VIAGEM-------------------|"
     );
   }
-  //cron.schedule(" */2 * * * * ", job);
-  job();
+  cron.schedule(" */2 * * * * ", job);
+  //job();
 }
