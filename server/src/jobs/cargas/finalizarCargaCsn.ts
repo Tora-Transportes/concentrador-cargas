@@ -2,14 +2,12 @@ import { CargaRepository } from "./../../repositories/CargaRepository";
 import moment from "moment";
 import cron from "node-cron";
 import {
-  //IdadosEntrega,
   IDadosUpdate,
   IInfoCarga,
   ILastLocations,
   IPosicaoAtual,
 } from "./interfaceCargasJob";
 import database, { mssqlCoordenadas } from "../../database";
-import oracle from "../../database";
 import { notifyAll } from "../../socketsRoutes";
 
 class ServiceFinishCargasCsn {
@@ -21,29 +19,28 @@ class ServiceFinishCargasCsn {
 
   public async getCargasInicioTrajeto(): Promise<IInfoCarga[]> {
     return await database("con_cargas")
-      .select(["id", "placa_veiculo"])
+      .select(["con_cargas.id", "VEICULO.VEI_REFERENCIA"])
+      .join("VEICULO", "VEICULO.VEI_PLACA", "con_cargas.placa_veiculo")
       .where("ativo", 1)
       .where("e_lote", 0)
+      .andWhere("carga_csn", 1)
+      .whereNotNull("VEICULO.VEI_REFERENCIA")
       .where("fk_situacao", 3)
-      .andWhere("carga_csn", 1);
+      .orWhere("fk_situacao", 7)
+      .orWhere("fk_situacao", 8);
   }
 
   public async lastPositionVeicle(
-    plate: string
+    veiReferencia: string
   ): Promise<ILastLocations | undefined> {
-    const { VEI_REFERENCIA } = await oracle("VEICULO")
-      .select(["VEI_REFERENCIA"])
-      .first()
-      .where("VEI_PLACA", plate);
-
-    if (VEI_REFERENCIA) {
+    if (veiReferencia) {
       const dataAtualMenos1Minuto = moment()
         .subtract(1, "minutes")
         .format("YYYY-MM-DDTHH:mm:ss");
 
       const queryBuild = await mssqlCoordenadas.raw(
         `select top 1 LAT, LON
-      from REPORTES where DISIMEI = '${VEI_REFERENCIA}' and (dtinc < '${dataAtualMenos1Minuto}') order by dtinc desc`
+      from REPORTES where DISIMEI = '${veiReferencia}' and (dtinc < '${dataAtualMenos1Minuto}') order by dtinc desc`
       );
       // const queryBuild = await mssqlCoordenadas.raw(
       //   `select top 1 LAT, LON
@@ -107,29 +104,37 @@ class ServiceFinishCargasCsn {
   }
 
   public montagemObjetoSave(
-    tipe: string,
+    client: string,
     statusServico: string,
+    entradaSaida?: string,
     timeServiceLocation?: string
   ) {
-    switch (tipe?.trim()) {
-      case "POSTO - 30":
-        return [
+    switch (client?.trim()) {
+      case "POSTO - 30": {
+        const bodyPosto: any[] = [
           { COLETA_EFETIVA_POSTO30: this.dataAtual },
           { SAIDA_EFETIVA_COLETA: this.dataAtual },
           { TEMP_SERV_LOCAL_COLETA: timeServiceLocation },
         ];
-      case "MUNDO - CSN":
-        return [
+        if (entradaSaida === "Saida") bodyPosto.push({ fk_situacao: 7 });
+        return bodyPosto;
+      }
+      case "MUNDO - CSN": {
+        const bodyMundo: any[] = [
           { COLETA_EFETIVA_MUNDO: this.dataAtual },
           { SAIDA_EFETIVA_COLETA: this.dataAtual },
           { TEMP_SERV_LOCAL_COLETA: timeServiceLocation },
         ];
-      case "PEACAO - CSN":
+        if (entradaSaida === "Saida") bodyMundo.push({ fk_situacao: 8 });
+        return bodyMundo;
+      }
+      case "PEACAO - CSN": {
         return [
           { COLETA_EFETIVA_PEACAO: this.dataAtual },
           { SAIDA_EFETIVA_COLETA: this.dataAtual },
           { TEMP_SERV_LOCAL_COLETA: timeServiceLocation },
         ];
+      }
       default:
         if (statusServico === "ENTREGA") {
           return [
@@ -170,7 +175,9 @@ class ServiceFinishCargasCsn {
     const arrayCargaUpdate: IDadosUpdate[] = [];
     //  Buscar ultima posição do veiculo
     for (const item of infoCargas) {
-      const posicaoAtual = await this.lastPositionVeicle(item.placa_veiculo);
+      const posicaoAtual = await this.lastPositionVeicle(
+        String(item.VEI_REFERENCIA)
+      );
       if (posicaoAtual) {
         arrayPositionCurrent.push({
           ...posicaoAtual,
@@ -215,7 +222,7 @@ class ServiceFinishCargasCsn {
       }
 
       const validandoBaixa = async (
-        statusServico: string,
+        entradaOrSaida: string,
         horasEntrada?: Date | null,
         tipoPassagem?: string
       ) => {
@@ -246,8 +253,8 @@ class ServiceFinishCargasCsn {
             DESCRICAO;
             if (
               Number(calculoDistancia.toFixed(3)) < raioEmMetros &&
-              //Number(calculoDistancia.toFixed(2)) < 6800 &&
-              statusServico === "Entrada"
+              //Number(calculoDistancia.toFixed(3)) < 1350 &&
+              entradaOrSaida === "Entrada"
             ) {
               let tipoEfetivoSave;
               if (tipoPassagem === "intermediario") {
@@ -256,7 +263,8 @@ class ServiceFinishCargasCsn {
               } else {
                 tipoEfetivoSave = this.montagemObjetoSave(
                   DESCRICAO,
-                  STATUS_SERVICO
+                  STATUS_SERVICO,
+                  entradaOrSaida
                 );
               }
 
@@ -269,8 +277,8 @@ class ServiceFinishCargasCsn {
               });
             } else if (
               Number(calculoDistancia.toFixed(3)) > raioEmMetros &&
-              //Number(calculoDistancia.toFixed(2)) > 400 &&
-              statusServico === "Saida"
+              //Number(calculoDistancia.toFixed(3)) > 1200 &&
+              entradaOrSaida === "Saida"
             ) {
               //Somando tempo de carregamento ou entrega na empresa
               const startTime = moment(horasEntrada);
@@ -296,6 +304,7 @@ class ServiceFinishCargasCsn {
                 tipoEfetivoSave = this.montagemObjetoSave(
                   DESCRICAO,
                   STATUS_SERVICO,
+                  entradaOrSaida,
                   horasPermanenciaLocal
                 );
               }
@@ -303,6 +312,7 @@ class ServiceFinishCargasCsn {
               arrayCargaUpdate.push({
                 ...tipoEfetivoSave[1],
                 ...tipoEfetivoSave[2],
+                ...tipoEfetivoSave[3],
                 ID,
                 ID_CON_CARGAS,
                 STATUS_SERVICO,
@@ -370,10 +380,10 @@ class ServiceFinishCargasCsn {
       .where("ID", ID);
   }
 
-  public async updateCargas(id: number) {
+  public async updateCargas(id: number, fk_situacao: number) {
     await database("con_cargas")
       .update({
-        fk_situacao: 6,
+        fk_situacao,
         data_atualizacao: new Date(),
       })
       .where("id", id);
@@ -404,13 +414,19 @@ export default async function run() {
               ID_CON_CARGAS,
               STATUS_SERVICO,
               ENTREGA_FINAL,
+              fk_situacao,
               ...dataPontoPassagem
             } = itemAtualizar;
-            //const { ID_CON_CARGAS, STATUS_SERVICO, ...dataPontoPassagem } =
+
             serviceFinishCargas.updatePontoParada(dataPontoPassagem);
-            if (STATUS_SERVICO === "ENTREGA" && ENTREGA_FINAL === 1)
-              //if (STATUS_SERVICO === "ENTREGA")
-              serviceFinishCargas.updateCargas(Number(ID_CON_CARGAS));
+            if (STATUS_SERVICO === "ENTREGA" && ENTREGA_FINAL === 1) {
+              serviceFinishCargas.updateCargas(Number(ID_CON_CARGAS), 6);
+            } else if (fk_situacao === 7 || fk_situacao === 8) {
+              serviceFinishCargas.updateCargas(
+                Number(ID_CON_CARGAS),
+                fk_situacao
+              );
+            }
           });
         }
       }
