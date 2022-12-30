@@ -232,11 +232,11 @@ class ServiceFinishCargasCsn {
               Number(latitudeDestino),
               Number(longitudeDestino)
             );
-            //console.log("DISTANCIA DA PARADA --------------", calculoDistancia);
-            const raioEmMetros = RAIO ? Number(RAIO) * 1000 : 1000;
+
+            const raioEmMetros = RAIO ? Number(RAIO) : 1;
             console.log(
               "distancia veiculo =>",
-              calculoDistancia.toFixed(2),
+              calculoDistancia.toFixed(3),
               "Raio da empresa ->",
               raioEmMetros,
               "ID_ponto_parada:",
@@ -245,7 +245,7 @@ class ServiceFinishCargasCsn {
 
             DESCRICAO;
             if (
-              Number(calculoDistancia.toFixed(2)) < raioEmMetros &&
+              Number(calculoDistancia.toFixed(3)) < raioEmMetros &&
               //Number(calculoDistancia.toFixed(2)) < 6800 &&
               statusServico === "Entrada"
             ) {
@@ -268,7 +268,7 @@ class ServiceFinishCargasCsn {
                 ENTREGA_FINAL,
               });
             } else if (
-              Number(calculoDistancia.toFixed(2)) > raioEmMetros &&
+              Number(calculoDistancia.toFixed(3)) > raioEmMetros &&
               //Number(calculoDistancia.toFixed(2)) > 400 &&
               statusServico === "Saida"
             ) {
