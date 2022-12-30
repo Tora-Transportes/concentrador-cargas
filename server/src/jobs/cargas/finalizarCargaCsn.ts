@@ -47,7 +47,7 @@ class ServiceFinishCargasCsn {
       // );
       const queryBuild = await mssqlCoordenadas.raw(
         `select top 1 LAT, LON
-      from REPORTES where DISIMEI = '1643029' and (dtinc < '${dataAtualMenos1Minuto}') order by dtinc desc`
+      from REPORTES where DISIMEI = '1643027' and (dtinc < '${dataAtualMenos1Minuto}') order by dtinc desc`
       );
 
       return queryBuild[0];
