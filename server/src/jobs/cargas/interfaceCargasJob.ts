@@ -3,6 +3,7 @@ import IPontosParada from "../../models/IPontosDeParada";
 export interface IInfoCarga {
   id: number;
   placa_veiculo: string;
+  VEI_REFERENCIA: number;
   ponto_parada?: IPontosParada[];
 }
 
@@ -25,6 +26,7 @@ export interface IDadosUpdate {
   COLETA_EFETIVA_POSTO30?: Date;
   STATUS_SERVICO?: string;
   ENTREGA_FINAL?: number | null;
+  fk_situacao?: number;
 }
 
 export interface IdadosEntrega {
