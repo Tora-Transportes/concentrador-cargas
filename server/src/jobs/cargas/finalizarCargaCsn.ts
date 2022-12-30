@@ -1,6 +1,6 @@
 import { CargaRepository } from "./../../repositories/CargaRepository";
 import moment from "moment";
-//import cron from "node-cron";
+import cron from "node-cron";
 import {
   //IdadosEntrega,
   IDadosUpdate,
