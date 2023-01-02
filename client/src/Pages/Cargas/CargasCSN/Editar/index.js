@@ -536,16 +536,16 @@ function EditarCargaCsn() {
 							Fechar edição
 						</Button>
 
-						{formik.values.fk_situacao === 1 &&
-							formik.values.fk_situacao === 2 && (
-								<Button
-									variant="danger"
-									className="p-2"
-									onClick={handleExcluirCarga}
-								>
-									Excluir
-								</Button>
-							)}
+						{(formik.values.fk_situacao === 1 ||
+							formik.values.fk_situacao === 2) && (
+							<Button
+								variant="danger"
+								className="p-2"
+								onClick={handleExcluirCarga}
+							>
+								Excluir
+							</Button>
+						)}
 						{formik.values.fk_situacao === 3 && (
 							<Button
 								variant="danger"
@@ -556,17 +556,16 @@ function EditarCargaCsn() {
 							</Button>
 						)}
 
-						{formik.values.fk_situacao === 3 ||
-							(formik.values.fk_situacao === 8 && (
-								<Button
-									variant="info"
-									className="p-2"
-									type="submit"
-									onClick={() => formik.setFieldValue("finalizarCarga", true)}
-								>
-									Finalizar carga
-								</Button>
-							))}
+						{[3, 7, 8].includes(formik.values.fk_situacao) && (
+							<Button
+								variant="info"
+								className="p-2"
+								type="submit"
+								onClick={() => formik.setFieldValue("finalizarCarga", true)}
+							>
+								Finalizar carga
+							</Button>
+						)}
 					</div>
 				</Form>
 			</Container>

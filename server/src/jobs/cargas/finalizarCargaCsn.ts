@@ -250,7 +250,7 @@ class ServiceFinishCargasCsn {
               ID
             );
 
-            DESCRICAO;
+            //DESCRICAO;
             if (
               Number(calculoDistancia.toFixed(3)) < raioEmMetros &&
               //Number(calculoDistancia.toFixed(3)) < 1350 &&
