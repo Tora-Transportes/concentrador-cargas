@@ -79,6 +79,7 @@ class ServiceCargas {
 		client,
 		ponto,
 		previsaoSaida,
+		entregaFinal,
 	}) {
 		const carga = {
 			ID_ROTAS_CSN: ponto ? ponto?.split("-")[0] : null,
@@ -89,8 +90,9 @@ class ServiceCargas {
 			LONGITUDE: longitude ? longitude : null,
 			CLIENTE: client === "" ? ponto : client,
 			PREVISAO_SAIDA: previsaoSaida,
+			ENTREGA_FINAL: entregaFinal ? entregaFinal : 0,
 		};
-		console.log("Ponto parada", carga);
+		//console.log("Ponto parada", carga);
 		return await api.post("/csn/ponto_parada", carga);
 	}
 
@@ -130,16 +132,6 @@ class ServiceCargas {
 			CLIENTE: tipoClient,
 			COLETA_EFETIVA:
 				coletaEfetiva === undefined ? null : moment(coletaEfetiva),
-			// COLETA_EFETIVA_POSTO30:
-			// 	coletaEfetiva_posto30 === undefined
-			// 		? null
-			// 		: moment(coletaEfetiva_posto30),
-			// COLETA_EFETIVA_MUNDO:
-			// 	coletaEfetiva_mundo === undefined ? null : moment(coletaEfetiva_mundo),
-			// COLETA_EFETIVA_PEACAO:
-			// 	coletaEfetiva_peacao === undefined
-			// 		? null
-			// 		: moment(coletaEfetiva_peacao),
 			ENTREGA_EFETIVA:
 				entregaEfetiva === undefined ? null : moment(entregaEfetiva),
 			TEMP_SERV_LOCAL_COLETA: tempServicoLocal,

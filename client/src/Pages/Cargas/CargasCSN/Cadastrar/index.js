@@ -72,6 +72,7 @@ const CadastroCargaCSN = () => {
 				longitude: "",
 				client: "",
 				previsaoSaida: "",
+				entregaFinal: 0,
 			},
 			ponto_passagem5: {
 				ponto: "",

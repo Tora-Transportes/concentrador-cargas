@@ -114,7 +114,9 @@ function EditarCargaCsn() {
 				coletaEfetiva: "",
 				coletaEfetivaSaida: "",
 				tempServicoLocal: "",
+				tempServicoLocalEntrega: "",
 				entregaEfetiva: "",
+				entregaEfetivaSaida: "",
 			},
 			ponto_passagem6: {
 				ponto: "",
@@ -129,7 +131,9 @@ function EditarCargaCsn() {
 				coletaEfetiva: "",
 				coletaEfetivaSaida: "",
 				tempServicoLocal: "",
+				tempServicoLocalEntrega: "",
 				entregaEfetiva: "",
+				entregaEfetivaSaida: "",
 			},
 			ponto_passagem7: {
 				ponto: "",
@@ -144,7 +148,9 @@ function EditarCargaCsn() {
 				coletaEfetiva: "",
 				coletaEfetivaSaida: "",
 				tempServicoLocal: "",
+				tempServicoLocalEntrega: "",
 				entregaEfetiva: "",
+				entregaEfetivaSaida: "",
 			},
 			ponto_passagem8: {
 				ponto: "",
@@ -159,7 +165,9 @@ function EditarCargaCsn() {
 				coletaEfetiva: "",
 				coletaEfetivaSaida: "",
 				tempServicoLocal: "",
+				tempServicoLocalEntrega: "",
 				entregaEfetiva: "",
+				entregaEfetivaSaida: "",
 			},
 			ponto_passagem9: {
 				ponto: "",
@@ -174,7 +182,9 @@ function EditarCargaCsn() {
 				coletaEfetiva: "",
 				coletaEfetivaSaida: "",
 				tempServicoLocal: "",
+				tempServicoLocalEntrega: "",
 				entregaEfetiva: "",
+				entregaEfetivaSaida: "",
 			},
 			ponto_passagem10: {
 				ponto: "",
@@ -189,7 +199,9 @@ function EditarCargaCsn() {
 				coletaEfetiva: "",
 				coletaEfetivaSaida: "",
 				tempServicoLocal: "",
+				tempServicoLocalEntrega: "",
 				entregaEfetiva: "",
+				entregaEfetivaSaida: "",
 			},
 		},
 		onSubmit: async (values) => {
@@ -511,7 +523,7 @@ function EditarCargaCsn() {
 							variant="success"
 							type="submit"
 							className="p-2  botao-gravar"
-							disabled={[3, 5, 6].includes(formik.values.fk_situacao)}
+							disabled={[3, 5, 6, 7, 8].includes(formik.values.fk_situacao)}
 						>
 							Gravar
 						</Button>
@@ -524,17 +536,16 @@ function EditarCargaCsn() {
 							Fechar edição
 						</Button>
 
-						{formik.values.fk_situacao !== 3 &&
-							formik.values.fk_situacao !== 5 &&
-							formik.values.fk_situacao !== 6 && (
-								<Button
-									variant="danger"
-									className="p-2"
-									onClick={handleExcluirCarga}
-								>
-									Excluir
-								</Button>
-							)}
+						{(formik.values.fk_situacao === 1 ||
+							formik.values.fk_situacao === 2) && (
+							<Button
+								variant="danger"
+								className="p-2"
+								onClick={handleExcluirCarga}
+							>
+								Excluir
+							</Button>
+						)}
 						{formik.values.fk_situacao === 3 && (
 							<Button
 								variant="danger"
@@ -545,7 +556,7 @@ function EditarCargaCsn() {
 							</Button>
 						)}
 
-						{formik.values.fk_situacao === 3 && (
+						{[3, 7, 8].includes(formik.values.fk_situacao) && (
 							<Button
 								variant="info"
 								className="p-2"

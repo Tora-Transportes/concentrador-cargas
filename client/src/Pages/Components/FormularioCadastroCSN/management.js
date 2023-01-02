@@ -155,7 +155,7 @@ export const funcDuracaoProcesso = async (formik, status, coletafim) => {
 			const horasPermanenciaLocal = moment
 				.utc(moment(endTime, "HH:mm:ss").diff(moment(startTime, "HH:mm:ss")))
 				.format("HH:mm:ss");
-			formik.setFieldValue(nomeCampoformik, `${horasPermanenciaLocal} h`);
+			formik.setFieldValue(nomeCampoformik, horasPermanenciaLocal);
 		}
 	};
 
@@ -222,16 +222,11 @@ export const funcDuracaoProcesso = async (formik, status, coletafim) => {
 				"ponto_passagem10.tempServicoLocal"
 			);
 			break;
+		case 11:
+			formik.setFieldValue("ponto_passagem4.entregaFinal", 1);
+
+			break;
 		default:
 			break;
 	}
-	// if (formik.values.coletaEfetiva && coletafim) {
-	// 	const startTime = moment(formik.values.coletaEfetiva);
-	// 	const endTime = moment(formik.values.coletaEfetivaSaida);
-	// 	const horasPermanenciaLocal = moment
-	// 		.utc(moment(endTime, "HH:mm:ss").diff(moment(startTime, "HH:mm:ss")))
-	// 		.format("HH:mm:ss");
-	// 	console.log("horas sss", horasPermanenciaLocal);
-	// 	//formik.setFieldValue("tempServicoLocal", horasPermanenciaLocal);
-	// }
 };
