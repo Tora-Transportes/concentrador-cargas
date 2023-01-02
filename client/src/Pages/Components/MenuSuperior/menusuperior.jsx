@@ -123,11 +123,36 @@ function Menusuperior() {
               </a>
             </li>
           )}
-          <li className="class-li">
-            <a id="style-a" href="/ajuda">
-              Ajuda
-            </a>
-          </li>
+          {isPermissionPadrao && isPermissionCsn ? (
+            <div className="class-dropdown">
+              <div className="dropdown">
+                <button id="style-button-drop" className="dropbtn">
+                  Ajuda
+                </button>
+                <div id="myDropdown" className="dropdown-content">
+                  <>
+                    <a href="/ajuda">Ajuda Padrão</a>
+                    <a href="/ajuda/CSN">Ajuda CSN</a>
+                  </>
+                </div>
+              </div>
+            </div>
+          ) : isPermissionCsn ? (
+            <li className="class-li">
+              <a id="style-a" href="/ajuda/CSN">
+                Ajuda CSN
+              </a>
+            </li>
+          ) : (
+            isPermissionPadrao && (
+              <li className="class-li">
+                <a id="style-a" href="/ajuda">
+                  Ajuda
+                </a>
+              </li>
+            )
+          )}
+
           <li className="class-li" to="/">
             <a
               id="style-a"
