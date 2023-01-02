@@ -11,11 +11,6 @@ export interface ILastLocations {
   LAT: string;
   LON: string;
 }
-
-export interface IPosicaoAtual extends ILastLocations {
-  id: number;
-}
-
 export interface IDadosUpdate {
   ID: number;
   ID_CON_CARGAS?: string;
