@@ -19,6 +19,7 @@ export interface IDadosUpdate {
   COLETA_EFETIVA_PEACAO?: Date;
   COLETA_EFETIVA_MUNDO?: Date;
   COLETA_EFETIVA_POSTO30?: Date;
+  SAIDA_EFETIVA_ENTREGA?: Date | undefined;
   STATUS_SERVICO?: string;
   ENTREGA_FINAL?: number | null;
   fk_situacao?: number;

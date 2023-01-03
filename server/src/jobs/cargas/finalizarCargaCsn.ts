@@ -136,7 +136,7 @@ class ServiceFinishCargasCsn {
           return [
             { ENTREGA_EFETIVA: this.dataAtual },
             { SAIDA_EFETIVA_ENTREGA: this.dataAtual },
-            //{ TEMP_SERV_LOCAL_ENTREGA: timeServiceLocation },
+            { TEMP_SERV_LOCAL_ENTREGA: timeServiceLocation },
           ];
         } else {
           return [
@@ -242,7 +242,7 @@ class ServiceFinishCargasCsn {
             DESCRICAO;
             if (
               Number(calculoDistancia.toFixed(3)) < raioEmMetros &&
-              //Number(calculoDistancia.toFixed(3)) < 7070 &&
+              //Number(calculoDistancia.toFixed(3)) < 1106.7 &&
               entradaOrSaida === "Entrada"
             ) {
               let tipoEfetivoSave;
@@ -262,7 +262,7 @@ class ServiceFinishCargasCsn {
                 ID,
                 ID_CON_CARGAS,
                 STATUS_SERVICO,
-                ENTREGA_FINAL,
+                //ENTREGA_FINAL,
               });
             } else if (
               Number(calculoDistancia.toFixed(3)) > raioEmMetros &&
@@ -305,6 +305,7 @@ class ServiceFinishCargasCsn {
                 ID,
                 ID_CON_CARGAS,
                 STATUS_SERVICO,
+                ENTREGA_FINAL,
               });
             }
           };
@@ -462,6 +463,7 @@ export default async function run() {
     );
     try {
       const serviceFinishCargas = new ServiceFinishCargasCsn();
+
       const idsCargas = await serviceFinishCargas.getCargasInicioTrajeto();
       if (idsCargas.length) {
         const dadosAtualizar =
@@ -478,7 +480,11 @@ export default async function run() {
             } = itemAtualizar;
 
             serviceFinishCargas.updatePontoParada(dataPontoPassagem);
-            if (STATUS_SERVICO === "ENTREGA" && ENTREGA_FINAL === 1) {
+            if (
+              STATUS_SERVICO === "ENTREGA" &&
+              ENTREGA_FINAL === 1 &&
+              dataPontoPassagem.SAIDA_EFETIVA_ENTREGA
+            ) {
               serviceFinishCargas.updateCargas(Number(ID_CON_CARGAS), 6);
             } else if (fk_situacao === 7 || fk_situacao === 8) {
               serviceFinishCargas.updateCargas(
