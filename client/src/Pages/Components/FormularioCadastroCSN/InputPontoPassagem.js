@@ -211,7 +211,7 @@ const InputsPontoPassagem = ({
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="Previsão inicio 2" className="mb-3">
+					<FloatingLabel label="*Previsão inicio 2" className="mb-3">
 						<Form.Control
 							type="datetime-local"
 							name="ponto_passagem2.previsao"
@@ -321,7 +321,7 @@ const InputsPontoPassagem = ({
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="Previsão inicio 3" className="mb-3">
+					<FloatingLabel label="*Previsão inicio 3" className="mb-3">
 						<Form.Control
 							type="datetime-local"
 							placeholder=" "
@@ -461,7 +461,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="Previsão inicio 5" className="mb-3">
+						<FloatingLabel label="*Previsão inicio 5" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -619,7 +619,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="Previsão inicio 6" className="mb-3">
+						<FloatingLabel label="*Previsão inicio 6" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -782,7 +782,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="Previsão inicio 7" className="mb-3">
+						<FloatingLabel label="*Previsão inicio 7" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -943,7 +943,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="Previsão inicio 8" className="mb-3">
+						<FloatingLabel label="*Previsão inicio 8" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -1104,7 +1104,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="Previsão inicio 9" className="mb-3">
+						<FloatingLabel label="*Previsão inicio 9" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -1276,7 +1276,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="Previsão inicio 10" className="mb-3">
+						<FloatingLabel label="*Previsão inicio 10" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "

@@ -117,6 +117,7 @@ export const columns = [
 				</OverlayTrigger>
 			);
 		},
+		showFilter: true,
 	},
 	{
 		name: "categoria_veiculo",

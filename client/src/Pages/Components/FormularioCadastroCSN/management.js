@@ -1,4 +1,5 @@
 import moment from "moment";
+import Swal2 from "sweetalert2";
 import ServiceCargas from "src/services/ServiceCargas";
 
 export const funcInputPontoParada = (
@@ -229,4 +230,31 @@ export const funcDuracaoProcesso = async (formik, status, coletafim) => {
 		default:
 			break;
 	}
+};
+
+export const mensagemPlacaEmUso = (id, fk_situacao, plate, history, formik) => {
+	const myhtml = document.createElement("div");
+	myhtml.innerHTML = `Já existe uma carga aberta com a placa: ${plate} e o código: ${id}.<br><br>
+	Para continuar, finalize a carga ou adicione outra placa.`;
+
+	Swal2.fire({
+		title: "Atenção!",
+		html: myhtml,
+		showCancelButton: true,
+		confirmButtonColor: "#00652e",
+		cancelButtonColor: "#3085d6",
+		cancelButtonText: "Adicionar outra placa",
+		confirmButtonText: "Finalizar carga",
+		allowOutsideClick: false,
+	}).then((result) => {
+		if (result.isConfirmed) {
+			if (fk_situacao === 2) {
+				history.push(`/veiculos/aprovacao/csn-${id}`);
+			} else {
+				history.push(`/cargas/csn/${id}`);
+			}
+		} else {
+			formik.setFieldValue("placa_veiculo", "");
+		}
+	});
 };
