@@ -373,6 +373,7 @@ class ServiceCargas {
 		fk_filial,
 		carga_csn,
 		categoria_veiculo,
+		rastreador,
 	}) {
 		return api.get("/csn/cargas/info", {
 			params: {
@@ -397,6 +398,7 @@ class ServiceCargas {
 				fk_filial,
 				carga_csn,
 				categoria_veiculo,
+				rastreador,
 			},
 		});
 	}

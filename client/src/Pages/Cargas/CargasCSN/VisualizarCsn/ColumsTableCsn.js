@@ -8,6 +8,7 @@ import SelectStatusCarga from "../../../Components/SelectStatusCargas";
 import InputCliente from "src/Pages/Components/InputCliente";
 import { Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ResponsavelCadastroSelect from "src/Pages/Components/ResponsavelCadastroSelect";
+import DateUtils from "../../../Utils/date";
 
 // function formatDate(date) {
 // 	return date?.split("T")[0].split("-").reverse().join("/");
@@ -117,6 +118,7 @@ export const columns = [
 				</OverlayTrigger>
 			);
 		},
+		showFilter: true,
 	},
 	{
 		name: "categoria_veiculo",
@@ -168,7 +170,9 @@ export const columns = [
 		description: "Coleta Efetiva - Posto 30",
 		selector: (row) =>
 			row.ponto_parada?.length
-				? formatDateAndHour(row?.ponto_parada[0]?.COLETA_EFETIVA_POSTO30)
+				? DateUtils.formatDateTresHorasMenos(
+						row?.ponto_parada[0]?.COLETA_EFETIVA_POSTO30
+				  )
 				: "",
 	},
 	{
@@ -176,7 +180,9 @@ export const columns = [
 		description: "Coleta Efetiva – Mundo",
 		selector: (row) =>
 			row.ponto_parada?.length
-				? formatDateAndHour(row?.ponto_parada[1]?.COLETA_EFETIVA_MUNDO)
+				? DateUtils.formatDateTresHorasMenos(
+						row?.ponto_parada[1]?.COLETA_EFETIVA_MUNDO
+				  )
 				: "",
 	},
 	{
@@ -184,7 +190,9 @@ export const columns = [
 		description: "Coleta Efetiva – Peacao",
 		selector: (row) =>
 			row.ponto_parada?.length
-				? formatDateAndHour(row?.ponto_parada[2]?.COLETA_EFETIVA_PEACAO)
+				? DateUtils.formatDateTresHorasMenos(
+						row?.ponto_parada[2]?.COLETA_EFETIVA_PEACAO
+				  )
 				: "",
 	},
 	{
@@ -192,7 +200,9 @@ export const columns = [
 		description: "Entrega Efetiva",
 		selector: (row) => {
 			const horasEntregaEfetiva = row.ponto_parada?.length
-				? formatDateAndHour(row?.ponto_parada[3]?.ENTREGA_EFETIVA)
+				? DateUtils.formatDateTresHorasMenos(
+						row?.ponto_parada[3]?.ENTREGA_EFETIVA
+				  )
 				: "";
 			return <div>{horasEntregaEfetiva}</div>;
 		},

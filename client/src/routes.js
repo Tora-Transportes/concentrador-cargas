@@ -38,9 +38,9 @@ import EditarCargaCsn from "./Pages/Cargas/CargasCSN/Editar";
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
 	const limparCache = localStorage.getItem("clear_Cache");
-	if (limparCache == null || limparCache.toString() !== "version_2") {
+	if (limparCache == null || limparCache.toString() !== "version_1") {
 		localStorage.clear();
-		localStorage.setItem("clear_Cache", "version_2");
+		localStorage.setItem("clear_Cache", "version_1");
 		window.location.reload(true);
 	}
 
@@ -107,7 +107,7 @@ export default function AllRoutes() {
 				<Route path="/ajuda" exact component={Helper} />
 				<Route path="/ajuda/CSN" exact component={HelperCSN} />
 				<Route path="/avisos" exact component={Avisos} />
-				<Route path="*" component={Main} />
+				<Route path="*" exact component={Main} />
 			</Switch>
 		</BrowserRouter>
 	);

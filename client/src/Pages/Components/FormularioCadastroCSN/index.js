@@ -3,10 +3,10 @@ import ServiceVeiculos from "src/services/ServiceVeiculos";
 import swal from "sweetalert";
 import "./formularioCadastroCSN.css";
 import somaDebitoVeiculo from "src/Pages/Utils/somaDebitoVeiculo";
-import { funcInputPontoParada } from "./management";
+import { funcInputPontoParada, mensagemPlacaEmUso } from "./management";
 import ViewsForm from "./ViewsForm";
 import ServiceCargas from "src/services/ServiceCargas";
-import Swal2 from "sweetalert2";
+//import Swal2 from "sweetalert2";
 function FormularioCadastroCSN({
 	formik,
 	produtos,
@@ -88,7 +88,6 @@ function FormularioCadastroCSN({
 		if (plate) {
 			const vehicleDetails = (await ServiceVeiculos.get(plate)).data.data;
 			if (vehicleDetails) {
-				//setPlacaCarreta(vehicleDetails.placa_carreta);
 				formik.setFieldValue("placa_carreta", vehicleDetails.placa_carreta);
 				formik.setFieldValue("placa_bitrem", vehicleDetails.placa_bitrem);
 				formik.setFieldValue("nome_motorista", vehicleDetails.nome_motorista);
@@ -102,27 +101,7 @@ function FormularioCadastroCSN({
 
 				if (data.results?.length) {
 					const { id, fk_situacao } = data.results[0];
-					const myhtml = document.createElement("div");
-					myhtml.innerHTML = `Já existe uma carga aberta com a placa: ${plate} e o código: ${id}.<br><br>
-					Para continuar, finalize a carga ou adicione outra placa.`;
-
-					Swal2.fire({
-						title: "Atenção!",
-						html: myhtml,
-						showCancelButton: true,
-						confirmButtonColor: "#00652e",
-						cancelButtonColor: "#3085d6",
-						cancelButtonText: "Adicionar outra placa",
-						confirmButtonText: "Finalizar carga",
-					}).then((result) => {
-						if (result.isConfirmed) {
-							if (fk_situacao === 2) {
-								history.push(`/veiculos/aprovacao/csn-${id}`);
-							} else {
-								history.push(`/cargas/csn/${id}`);
-							}
-						}
-					});
+					mensagemPlacaEmUso(id, fk_situacao, plate, history, formik);
 				}
 
 				const detalhesVeiculos = (

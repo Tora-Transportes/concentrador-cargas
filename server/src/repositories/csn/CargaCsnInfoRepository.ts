@@ -148,6 +148,9 @@ export class CargaCsnInfoRepository {
       if (query?.categoria_veiculo) {
         qb.andWhere("categoria_veiculo", "=", query.categoria_veiculo);
       }
+      if (query?.rastreador) {
+        qb.andWhere("rastreador", query.rastreador);
+      }
     };
 
     total.andWhere(filterDbFunction);
@@ -258,7 +261,7 @@ export class CargaCsnInfoRepository {
       .andWhere("con_cargas.carga_csn", 1)
       .andWhere("con_cargas.e_lote", 0)
       .andWhere("con_cargas.ativo", 1)
-      .whereIn("con_cargas.fk_situacao", [2, 3]);
+      .whereIn("con_cargas.fk_situacao", [2, 3, 7, 8]);
 
     if (!carga) return;
     return { results: carga };
