@@ -358,15 +358,15 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 							footer={deleteLocationDialogFooter}
 							onHide={hideDeleteLocationDialog}
 						>
+							<i
+								className="pi pi-exclamation-triangle"
+								style={{ fontSize: "2rem", marginLeft: "42%" }}
+							/>
 							<div className="confirmation-content">
-								<i
-									className="pi pi-exclamation-triangle mr-2"
-									style={{ fontSize: "2rem" }}
-								/>
 								{location && (
-									<span>
-										{" "}
-										Deseja deletar a rota de <b>{location.description}</b>?
+									<span className="span-delete">
+										Essa ação irá deletar os dados da rota selecionada.{" "}
+										<b className="span-b-delete">Deseja continuar?</b>
 									</span>
 								)}
 							</div>

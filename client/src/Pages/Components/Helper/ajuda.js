@@ -63,11 +63,7 @@ function Helper() {
 				</p>
 			</div>
 
-			<Accordion
-				defaultActiveKey={["0"]}
-				alwaysOpen
-				className="class-accordion"
-			>
+			<Accordion defaultActiveKey={["0"]} className="class-accordion">
 				<Accordion.Item eventKey="1">
 					<Accordion.Header>Cadastrar Cargas</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
@@ -307,9 +303,9 @@ function Helper() {
 						</p>
 						<p className="p-tela-ajuda">Exemplo da página Produtos: </p>
 						<img src={telaProdutos} id="style-gif" />
-						<p className="p-tela-ajuda">
-							Lembrando que somente pessoas com permissão são aptas a adicionar,
-							editar e desativar os produtos <br /> na plataforma.
+						<p className="ajuda-csn-p">
+							Somente pessoas com permissão são aptas a adicionar, editar e
+							desativar os produtos <br /> na plataforma.
 						</p>
 
 						<div className="class-button-ir">
@@ -330,7 +326,7 @@ function Helper() {
 							<br />
 							Ao clicar em Relatórios, você terá várias opções de consulta
 							disponíveis na plataforma, são elas: <br /> <br /> Indicador
-							Operacional - Mostra a situação e permite acompanhamento e das
+							Operacional - Mostra a situação e permite acompanhamento das
 							cargas já cadastradas na <br /> platafoma, essas informações serão
 							apresentadas de acordo com o preechimento do filtro de data, a
 							<br /> página conta também com gráfico e tabela,cargas ativadas e

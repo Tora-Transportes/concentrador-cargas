@@ -5,6 +5,12 @@
   margin-top: 0.5rem;
   margin-bottom: 2rem;
 }
+.confirmation-content{
+  font-family: "Poppins", sans-serif;
+}
+.confirmation-content .span-b-delete{
+  margin-left: 8rem;
+}
 
 @media screen and (max-width: 576px) {
   .header-table-div {

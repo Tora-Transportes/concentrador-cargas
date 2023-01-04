@@ -27,11 +27,14 @@ h1 .h1-ajuda {
   margin-top: 4.5rem;
   color: #3f4346;
 }
-
+.ajuda-csn-p{
+  color: #96948e;
+  font-family: "Poppins", sans-serif;
+}
 p .p-tela-ajuda {
   margin-left: 0.5rem;
   font-size: 16px;
-  color: #6e7074;
+  color: #96948e;
 }
 .class-accordion {
   width: 90%;

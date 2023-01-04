@@ -3,22 +3,23 @@ import "./ajuda.css";
 import Menusuperior from "../MenuSuperior/menusuperior";
 import Accordion from "react-bootstrap/Accordion";
 import { Button } from "react-bootstrap";
-import cadastroCSN from "../../../Gif/cadastrarCargasPadrao.gif";
-import listagemCSN from "../../../Gif/listagem-cargas.gif";
-import edicaoCargas from "../../../Gif/editarCargas.gif";
+import cadastroCSN from "../../../Gif CSN/cadastro-CSN.gif";
+import listagemCSN from "../../../Gif CSN/listagemCSN.gif";
+import edicaoCSN from "../../../Gif CSN/edicaoCSN.gif";
 import configTab from "../../../Gif/configurarTabela.gif";
 import opcoesTab from "../../../Gif/opcoesTabela.gif";
 import itensPage from "../../../Gif/itensPorPagina.gif";
 import coordenadasGif from "../../../Gif/coordenadasVeiculos.gif";
 import consultaCargas from "../../../Gif/consultarCargas.gif";
-import monitoramentoGif from "../../../Gif/monitoramentoVeiculos.gif";
+import monitoramentoCSN from "../../../Gif CSN/monitoramentoCsn.gif";
 import telaProdutos from "../../../Gif/telaProdutos.gif";
-import indicadorOperacional from "../../../Gif/indicadorOperacional.gif";
+import indicadorOperacional from "../../../Gif CSN/indicadorOperacionalCSN.gif";
 import rotasPendentes from "../../../Gif/rotasPendentes.gif";
 import raioEmpresa from "../../../Gif/raioEmpresa.gif";
 import veicProximos from "../../../Gif/veiculosProximos.gif";
 import veicEmpresa from "../../../Gif/veiculoEmpresa.gif";
 import historicoRota from "../../../Gif/historicoVeiculos.gif";
+import localicaoCSN from "../../../Gif CSN/localizacaoCSN.gif";
 
 function HelperCSN() {
 	var acc = document.getElementsByClassName("accordion");
@@ -44,13 +45,13 @@ function HelperCSN() {
 		<div className="class-body mb-4">
 			<Menusuperior />
 			<div className="class-body-title">
-				<h1 className="h1-ajuda">Bem-vindo(a) ao Ajuda!!</h1>
+				<h1 className="h1-ajuda">Bem-vindo(a) ao Ajuda CSN!!</h1>
 				<p className="class-p-ajuda">
 					<br />
 					O menu ajuda disponibiliza o passo a passo detalhado das
-					funcionalidades do Concentrador de Cargas, <br /> facilitando a sua
-					navegação na plataforma e melhorando o seu desempenho no ambiente de
-					trabalho.
+					funcionalidades das Cargas CSN no Concentrador de Cargas, <br />
+					facilitando a sua navegação na plataforma e melhorando o seu
+					desempenho no ambiente de trabalho.
 				</p>
 			</div>
 			<div>
@@ -59,21 +60,24 @@ function HelperCSN() {
 					correspondente:
 				</p>
 			</div>
-
-			<Accordion
-				defaultActiveKey={["0"]}
-				alwaysOpen
-				className="class-accordion"
-			>
+			<Accordion defaultActiveKey={["0"]} className="class-accordion">
 				<Accordion.Item eventKey="1">
 					<Accordion.Header>Cadastrar Cargas CSN</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
 						<p className="p-tela-ajuda">
-							No menu Cargas, ao clicar em Cadastrar Cargas você será
-							direcionado(a) para a página de Cadastro CSN.
+							No menu Cargas, ao clicar em Cadastrar Cargas você terá acesso a
+							página de Cadastro CSN.
 						</p>
 						<p className="p-tela-ajuda">Exemplo da página de Cadastro CSN:</p>
 						<img src={cadastroCSN} id="style-gif2" />
+						<p className="ajuda-csn-p">
+							É importante ressaltar que não é permitido cadastrar cargas com
+							placas de veículos que já possuam <br /> alguma carga vínculada em
+							nossa plataforma. Para que seja possível o cadastramento, se faz{" "}
+							<br /> necessária a análise para finalizar a carga que esteja
+							vínculada a placa, ou, se será preciso <br /> adicionar outra
+							placa de veículo que esteja disponível no momento do cadastro.
+						</p>
 						<div className="class-button-ir">
 							<Button
 								href="/cargas/cadastro/csn"
@@ -89,7 +93,7 @@ function HelperCSN() {
 					<Accordion.Header>Listagem CSN</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
 						<p className="p-tela-ajuda">
-							Essa página lhe dará acesso ao detalhamento de informações das
+							Essa página lhe dará acesso ao detalhamento de informações das já
 							cargas cadastradas em <br /> nossa plataforma.
 						</p>
 						<p className="p-tela-ajuda">Exemplo da Página Listagem CSN:</p>
@@ -106,19 +110,19 @@ function HelperCSN() {
 						</div>
 					</Accordion.Body>
 				</Accordion.Item>
-				<Accordion.Item eventKey="4">
+				<Accordion.Item eventKey="3">
 					<Accordion.Header>Edição de Carga CSN</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
 						<p className="p-tela-ajuda">
-							Ao acessar a página você terá acesso a editar/corrigir as
-							informações das cargas, sendo possivel acessar <br /> uma carga
-							por vez e dessa forma manter as informações atualizadas em nossa
-							plataforma, a carga é <br /> controlada pelo código e você terá
-							acesso a essa ferramenta através da tela de Listagem de Cargas
-							CSN. <br /> Segue abaixo o exemplo da página Edição CSN:
+							Nessa página você terá acesso para editar/corrigir as informações
+							das cargas, sendo possivel acessar <br /> uma carga por vez e
+							dessa forma manter as informações atualizadas em nossa plataforma,
+							a carga é <br /> controlada pelo código, e você terá acesso a essa
+							ferramenta através da tela de Listagem de Cargas CSN. <br /> Segue
+							abaixo o exemplo da página Edição CSN:
 						</p>
 
-						<img src={edicaoCargas} id="style-gif" />
+						<img src={edicaoCSN} id="style-gif" />
 						<div className="class-button-ir">
 							<Button
 								href="/cargas/csn/:id"
@@ -130,7 +134,7 @@ function HelperCSN() {
 						</div>
 					</Accordion.Body>
 				</Accordion.Item>
-				<Accordion.Item eventKey="5" id="style-button-accordion">
+				<Accordion.Item eventKey="4" id="style-button-accordion">
 					<Accordion.Header>Ferramentas da Plataforma</Accordion.Header>
 
 					<Accordion.Body className="class-body-accordion">
@@ -158,9 +162,8 @@ function HelperCSN() {
 							sistema, facilitando o entendimento das mesmas.
 							<br /> Importar tabela: Permite filtro por data e código da filial
 							e oferece o download da tabela em formato excel.
-							<br /> Redefinir tabela: possibilita a redefinição das
-							configurações feitas na página, para o formato padrão da
-							ferramenta.
+							<br /> Redefinir tabela: Possibilita redefinir as configurações
+							feitas na página, para o formato padrão da ferramenta.
 						</p>
 						<p className="p-tela-ajuda mb-1 mt-3">
 							Exemplo de Opções da Tabela:{" "}
@@ -168,8 +171,7 @@ function HelperCSN() {
 						<img src={opcoesTab} id="style-gif2" />
 						<p className="p-tela-ajuda">
 							Itens por página - Permite que você visualize de 10 à 500 itens
-							nas páginas de Listagem de Cargas, <br />
-							Listagem de Cargas em Lote e Coordenadas.
+							nas páginas de Listagem de Cargas <br /> e Coordenadas.
 						</p>
 						<p className="p-tela-ajuda mb-1 mt-3">
 							Exemplo de Itens por Página:
@@ -177,7 +179,7 @@ function HelperCSN() {
 						<img src={itensPage} id="style-gif2" />
 					</Accordion.Body>
 				</Accordion.Item>
-				<Accordion.Item eventKey="6" id="style-button-accordion">
+				<Accordion.Item eventKey="5" id="style-button-accordion">
 					<Accordion.Header>Coordenadas</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
 						<p className="p-tela-ajuda">
@@ -200,14 +202,13 @@ function HelperCSN() {
 						</div>
 					</Accordion.Body>
 				</Accordion.Item>
-				<Accordion.Item eventKey="7" id="style-button-accordion">
+				<Accordion.Item eventKey="6" id="style-button-accordion">
 					<Accordion.Header>Consulta de Cargas</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
 						<p className="p-tela-ajuda">
 							Ao acessar a tela de Consulta de Cargas (presente na página de
 							Coordenadas), você poderá visualizar <br /> informações de cargas
-							abertas manualmente em nossa plataforma. <br /> Exemplo da página
-							Consulta:
+							abertas em nossa plataforma. <br /> Exemplo da página Consulta:
 						</p>
 						<img src={consultaCargas} id="style-gif" />
 
@@ -222,16 +223,16 @@ function HelperCSN() {
 						</div>
 					</Accordion.Body>
 				</Accordion.Item>
-				<Accordion.Item eventKey="8" id="style-button-accordion">
-					<Accordion.Header>Monitoramento</Accordion.Header>
+				<Accordion.Item eventKey="7" id="style-button-accordion">
+					<Accordion.Header>Monitoramento CSN</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
 						<p className="p-tela-ajuda">
-							Nessa opção você será apresentado à página de Monitoramento, onde
-							conseguirá verificar veículos <br /> pendentes, e aprovar ou
+							Nessa opção você será apresentado à página de Monitoramento CSN,
+							onde conseguirá verificar veículos <br /> pendentes, e aprovar ou
 							reprovar veículos de acordo com a situação de cada um.
 						</p>
 						<p className="p-tela-ajuda">Exemplo da página de Monitoramento: </p>
-						<img src={monitoramentoGif} id="style-gif" />
+						<img src={monitoramentoCSN} id="style-gif" />
 
 						<div className="class-button-ir">
 							<Button
@@ -239,12 +240,12 @@ function HelperCSN() {
 								id="style-button-acc"
 								className="class-button1"
 							>
-								Navegar até Monitoramento
+								Navegar até Monitoramento CSN
 							</Button>
 						</div>
 					</Accordion.Body>
 				</Accordion.Item>
-				<Accordion.Item eventKey="9" id="style-button-accordion">
+				<Accordion.Item eventKey="8" id="style-button-accordion">
 					<Accordion.Header>Produtos</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
 						<p className="p-tela-ajuda">
@@ -254,9 +255,9 @@ function HelperCSN() {
 						</p>
 						<p className="p-tela-ajuda">Exemplo da página Produtos: </p>
 						<img src={telaProdutos} id="style-gif" />
-						<p className="p-tela-ajuda">
-							Lembrando que somente pessoas com permissão são aptas a adicionar,
-							editar e desativar os produtos <br /> na plataforma.
+						<p className="ajuda-csn-p">
+							Somente pessoas com permissão são aptas a adicionar, editar e
+							desativar os produtos na plataforma.
 						</p>
 
 						<div className="class-button-ir">
@@ -270,18 +271,18 @@ function HelperCSN() {
 						</div>
 					</Accordion.Body>
 				</Accordion.Item>
-				<Accordion.Item eventKey="10" id="style-button-accordion">
+				<Accordion.Item eventKey="9" id="style-button-accordion">
 					<Accordion.Header>Relatórios</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
 						<p className="p-tela-ajuda">
 							<br />
 							Ao clicar em Relatórios, você terá várias opções de consulta
 							disponíveis na plataforma, são elas: <br /> <br /> Indicador
-							Operacional - Mostra a situação e permite acompanhamento e das
-							cargas já cadastradas na <br /> platafoma, essas informações serão
-							apresentadas de acordo com o preechimento do filtro de data, a
-							<br /> página conta também com gráfico e tabela,cargas ativadas e
-							desativadas, entre outras informações.
+							Operacional CSN - Mostra a situação e permite acompanhamento das
+							cargas já cadastradas <br /> na platafoma, essas informações serão
+							apresentadas de acordo com o preechimento do filtro de data.
+							<br /> A página conta também com gráfico e tabela, download do
+							filtro de data, entre outras informações.
 						</p>
 						<img src={indicadorOperacional} id="style-gif2" />
 
@@ -296,7 +297,7 @@ function HelperCSN() {
 						</div>
 						<p className="p-tela-ajuda">
 							Rotas Pendentes de Cadastro - Disponibiliza os nomes das cidades e
-							estados de origem e destino, <br /> provendo acesso as informações
+							estados de origem e destino, <br /> provendo acesso a informações
 							de rotas, e permite também que você busque uma cidade ou estado
 							<br /> específico, para melhor acompanhamento.
 						</p>
@@ -357,6 +358,32 @@ function HelperCSN() {
 								className="class-button1"
 							>
 								Ir para Histórico de Rotas
+							</Button>
+						</div>
+					</Accordion.Body>
+				</Accordion.Item>
+				<Accordion.Item eventKey="10" id="style-button-accordion">
+					<Accordion.Header>Localização</Accordion.Header>
+					<Accordion.Body className="class-body-accordion">
+						<p className="p-tela-ajuda">
+							Essa página possibilita visualizar, adicionar, editar e remover
+							rotas, e apresenta também descrição, <br /> latitude, longitude,
+							raio em km, provendo melhoria no gerenciamento das rotas CSN.
+						</p>
+						<p className="p-tela-ajuda">Exemplo da página:</p>
+						<img src={localicaoCSN} id="style-gif" />
+						<p className="ajuda-csn-p">
+							Somente pessoas com permissão são aptas a adicionar, editar e
+							remover rotas na plataforma.
+						</p>
+
+						<div className="class-button-ir">
+							<Button
+								href="/localizacao"
+								id="style-button-acc"
+								className="class-button1"
+							>
+								Navegar até Localização
 							</Button>
 						</div>
 					</Accordion.Body>
