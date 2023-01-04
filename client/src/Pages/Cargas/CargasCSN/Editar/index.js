@@ -100,6 +100,7 @@ function EditarCargaCsn() {
 				coletaEfetivaSaida: "",
 				tempServicoLocal: "",
 				entregaEfetiva: "",
+				entregaEfetivaSaida: "",
 			},
 			ponto_passagem5: {
 				ponto: "",
@@ -500,13 +501,21 @@ function EditarCargaCsn() {
 		});
 	}, []);
 
+	const showInfoTitle =
+		formik.values?.fk_situacao === 6 ? "info-tilte" : "d-none";
+
 	return (
 		<>
 			<LoadingScreen />
 			{/* <CabecalhoFixado>Edição de carga aberta manualmente</CabecalhoFixado> */}
 			<Menusuperior />
 			<Container className="mb-5 mt-5">
-				<p id="style-title-editorCarga">Editar Carga CSN</p>
+				<div className="div-title">
+					<p className="mb-1" id="style-title-editorCarga">
+						Editar Carga CSN
+					</p>
+					<h6 className={showInfoTitle}>carga finalizada!</h6>
+				</div>
 				<hr />
 				<Form onSubmit={formik.handleSubmit}>
 					<FormularioCadastroCSN
@@ -523,7 +532,7 @@ function EditarCargaCsn() {
 							variant="success"
 							type="submit"
 							className="p-2  botao-gravar"
-							disabled={[3, 5, 6, 7, 8].includes(formik.values.fk_situacao)}
+							//disabled={[3, 5, 6, 7, 8].includes(formik.values.fk_situacao)}
 						>
 							Gravar
 						</Button>

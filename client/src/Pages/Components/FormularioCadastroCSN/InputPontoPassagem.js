@@ -22,7 +22,10 @@ const InputsPontoPassagem = ({
 	const [inputPontoPassagem9, setInputPontoPassagem9] = useState(true);
 	const [inputPontoPassagem10, setInputPontoPassagem10] = useState(true);
 
-	const disabledValidEfetiva = formik.values?.fk_situacao === 6 ? true : false;
+	//const disabledValidEfetiva = formik.values?.fk_situacao === 6 ? true : false;
+	const nameStyleInputEfetivo =
+		formik.values?.fk_situacao === 6 ? "input-efetivo" : "";
+
 	useEffect(() => {
 		if (formik.values.ponto_passagem5.tipoServico === "Entrega") {
 			setInputPontoPassagem5(false);
@@ -130,10 +133,11 @@ const InputsPontoPassagem = ({
 					<>
 						<Col>
 							<FloatingLabel
-								label="Data Coleta Efetiva inicio"
+								label="*Data Coleta Efetiva inicio"
 								className="mb-3"
 							>
 								<Form.Control
+									className={nameStyleInputEfetivo}
 									type="datetime-local"
 									placeholder=" "
 									name="ponto_passagem.coletaEfetiva_posto30"
@@ -142,14 +146,15 @@ const InputsPontoPassagem = ({
 									}
 									onKeyDown={handleEnter}
 									onChange={formik.handleChange}
-									disabled={disabledValidEfetiva}
+									//disabled={disabledValidEfetiva}
 									required
 								/>
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+							<FloatingLabel label="*Data Coleta Efetiva fim" className="mb-3">
 								<Form.Control
+									className={nameStyleInputEfetivo}
 									type="datetime-local"
 									placeholder=" "
 									name="ponto_passagem.coletaEfetivaSaida"
@@ -163,7 +168,7 @@ const InputsPontoPassagem = ({
 											formik.values.ponto_passagem.coletaEfetivaSaida
 										)
 									}
-									disabled={disabledValidEfetiva}
+									//disabled={disabledValidEfetiva}
 									required
 								/>
 							</FloatingLabel>
@@ -241,10 +246,11 @@ const InputsPontoPassagem = ({
 					<>
 						<Col>
 							<FloatingLabel
-								label="Data Coleta Efetiva inicio"
+								label="*Data Coleta Efetiva inicio"
 								className="mb-3"
 							>
 								<Form.Control
+									className={nameStyleInputEfetivo}
 									type="datetime-local"
 									placeholder=" "
 									name="ponto_passagem2.coletaEfetiva_mundo"
@@ -253,14 +259,15 @@ const InputsPontoPassagem = ({
 									}
 									onKeyDown={handleEnter}
 									onChange={formik.handleChange}
-									disabled={disabledValidEfetiva}
+									//disabled={disabledValidEfetiva}
 									required
 								/>
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+							<FloatingLabel label="*Data Coleta Efetiva fim" className="mb-3">
 								<Form.Control
+									className={nameStyleInputEfetivo}
 									type="datetime-local"
 									placeholder=" "
 									name="ponto_passagem2.coletaEfetivaSaida"
@@ -274,7 +281,7 @@ const InputsPontoPassagem = ({
 											formik.values.ponto_passagem2.coletaEfetivaSaida
 										)
 									}
-									disabled={disabledValidEfetiva}
+									//disabled={disabledValidEfetiva}
 									required
 								/>
 							</FloatingLabel>
@@ -352,10 +359,11 @@ const InputsPontoPassagem = ({
 					<>
 						<Col>
 							<FloatingLabel
-								label="Data Coleta Efetiva inicio"
+								label="*Data Coleta Efetiva inicio"
 								className="mb-3"
 							>
 								<Form.Control
+									className={nameStyleInputEfetivo}
 									type="datetime-local"
 									placeholder=" "
 									name="ponto_passagem3.coletaEfetiva_peacao"
@@ -364,14 +372,15 @@ const InputsPontoPassagem = ({
 									}
 									onKeyDown={handleEnter}
 									onChange={formik.handleChange}
-									disabled={disabledValidEfetiva}
+									//disabled={disabledValidEfetiva}
 									required
 								/>
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+							<FloatingLabel label="*Data Coleta Efetiva fim" className="mb-3">
 								<Form.Control
+									className={nameStyleInputEfetivo}
 									type="datetime-local"
 									placeholder=" "
 									name="ponto_passagem3.coletaEfetivaSaida"
@@ -385,7 +394,7 @@ const InputsPontoPassagem = ({
 											formik.values.ponto_passagem3.coletaEfetivaSaida
 										)
 									}
-									disabled={disabledValidEfetiva}
+									//disabled={disabledValidEfetiva}
 									required
 								/>
 							</FloatingLabel>
@@ -496,6 +505,7 @@ const InputsPontoPassagem = ({
 									className="mb-3"
 								>
 									<Form.Control
+										className={nameStyleInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name={
@@ -510,14 +520,18 @@ const InputsPontoPassagem = ({
 										}
 										onChange={formik.handleChange}
 										onKeyDown={handleEnter}
-										disabled={disabledValidEfetiva}
+										//disabled={disabledValidEfetiva}
 										required
 									/>
 								</FloatingLabel>
 							</Col>
 							<Col>
-								<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+								<FloatingLabel
+									label="*Data Coleta Efetiva fim"
+									className="mb-3"
+								>
 									<Form.Control
+										className={nameStyleInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name="ponto_passagem5.coletaEfetivaSaida"
@@ -536,7 +550,7 @@ const InputsPontoPassagem = ({
 												formik.values.ponto_passagem5.coletaEfetivaSaida
 											)
 										}
-										disabled={disabledValidEfetiva}
+										//disabled={disabledValidEfetiva}
 										required
 									/>
 								</FloatingLabel>
@@ -654,6 +668,7 @@ const InputsPontoPassagem = ({
 									className="mb-3"
 								>
 									<Form.Control
+										className={nameStyleInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name={
@@ -668,7 +683,7 @@ const InputsPontoPassagem = ({
 										}
 										onChange={formik.handleChange}
 										onKeyDown={handleEnter}
-										disabled={disabledValidEfetiva}
+										//disabled={disabledValidEfetiva}
 										required
 									/>
 								</FloatingLabel>
@@ -679,6 +694,7 @@ const InputsPontoPassagem = ({
 									className="mb-3"
 								>
 									<Form.Control
+										className={nameStyleInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name="ponto_passagem6.entregaEfetivaSaida"
@@ -697,7 +713,7 @@ const InputsPontoPassagem = ({
 												formik.values.ponto_passagem6.coletaEfetiva
 											)
 										}
-										disabled={disabledValidEfetiva}
+										//disabled={disabledValidEfetiva}
 										required
 									/>
 								</FloatingLabel>
@@ -817,6 +833,7 @@ const InputsPontoPassagem = ({
 									className="mb-3"
 								>
 									<Form.Control
+										className={nameStyleInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name={
@@ -831,7 +848,7 @@ const InputsPontoPassagem = ({
 										}
 										onChange={formik.handleChange}
 										onKeyDown={handleEnter}
-										disabled={disabledValidEfetiva}
+										//disabled={disabledValidEfetiva}
 										required
 									/>
 								</FloatingLabel>
@@ -842,6 +859,7 @@ const InputsPontoPassagem = ({
 									className="mb-3"
 								>
 									<Form.Control
+										className={nameStyleInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name="ponto_passagem7.coletaEfetivaSaida"
@@ -860,7 +878,7 @@ const InputsPontoPassagem = ({
 												formik.values.ponto_passagem7.coletaEfetivaSaida
 											)
 										}
-										disabled={disabledValidEfetiva}
+										//disabled={disabledValidEfetiva}
 										required
 									/>
 								</FloatingLabel>
@@ -978,6 +996,7 @@ const InputsPontoPassagem = ({
 									className="mb-3"
 								>
 									<Form.Control
+										className={nameStyleInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name={
@@ -992,7 +1011,7 @@ const InputsPontoPassagem = ({
 										}
 										onChange={formik.handleChange}
 										onKeyDown={handleEnter}
-										disabled={disabledValidEfetiva}
+										//disabled={disabledValidEfetiva}
 										required
 									/>
 								</FloatingLabel>
@@ -1003,6 +1022,7 @@ const InputsPontoPassagem = ({
 									className="mb-3"
 								>
 									<Form.Control
+										className={nameStyleInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name="ponto_passagem8.coletaEfetivaSaida"
@@ -1021,7 +1041,7 @@ const InputsPontoPassagem = ({
 												formik.values.ponto_passagem8.coletaEfetivaSaida
 											)
 										}
-										disabled={disabledValidEfetiva}
+										//disabled={disabledValidEfetiva}
 										required
 									/>
 								</FloatingLabel>
@@ -1153,6 +1173,7 @@ const InputsPontoPassagem = ({
 									className="mb-3"
 								>
 									<Form.Control
+										className={nameStyleInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name={
@@ -1167,14 +1188,18 @@ const InputsPontoPassagem = ({
 										}
 										onChange={formik.handleChange}
 										onKeyDown={handleEnter}
-										disabled={disabledValidEfetiva}
+										//disabled={disabledValidEfetiva}
 										required
 									/>
 								</FloatingLabel>
 							</Col>
 							<Col>
-								<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+								<FloatingLabel
+									label="*Data Coleta Efetiva fim"
+									className="mb-3"
+								>
 									<Form.Control
+										className={nameStyleInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name="ponto_passagem9.coletaEfetivaSaida"
@@ -1193,7 +1218,7 @@ const InputsPontoPassagem = ({
 												formik.values.ponto_passagem9.coletaEfetivaSaida
 											)
 										}
-										disabled={disabledValidEfetiva}
+										//disabled={disabledValidEfetiva}
 										required
 									/>
 								</FloatingLabel>
@@ -1311,6 +1336,7 @@ const InputsPontoPassagem = ({
 									className="mb-3"
 								>
 									<Form.Control
+										className={nameStyleInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name={
@@ -1325,17 +1351,18 @@ const InputsPontoPassagem = ({
 										}
 										onChange={formik.handleChange}
 										onKeyDown={handleEnter}
-										disabled={disabledValidEfetiva}
+										//disabled={disabledValidEfetiva}
 										required
 									/>
 								</FloatingLabel>
 							</Col>
 							<Col>
 								<FloatingLabel
-									label="Data Entrega Efetiva fim"
+									label="*Data Entrega Efetiva fim"
 									className="mb-3"
 								>
 									<Form.Control
+										className={nameStyleInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name="ponto_passagem10.coletaEfetivaSaida"
@@ -1355,7 +1382,7 @@ const InputsPontoPassagem = ({
 												formik.values.ponto_passagem10.coletaEfetivaSaida
 											)
 										}
-										disabled={disabledValidEfetiva}
+										//disabled={disabledValidEfetiva}
 										required
 									/>
 								</FloatingLabel>
@@ -1449,30 +1476,39 @@ const InputsPontoPassagem = ({
 								className="mb-3"
 							>
 								<Form.Control
+									className={nameStyleInputEfetivo}
 									type="datetime-local"
 									placeholder=" "
 									name="ponto_passagem4.entregaEfetiva"
 									value={formik.values.ponto_passagem4.entregaEfetiva || ""}
 									onKeyDown={handleEnter}
 									onChange={formik.handleChange}
-									disabled={disabledValidEfetiva}
+									//disabled={disabledValidEfetiva}
 									required
 								/>
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="Data Entrega Efetiva fim" className="mb-3">
+							<FloatingLabel label="*Data Entrega Efetiva fim" className="mb-3">
 								<Form.Control
+									className={nameStyleInputEfetivo}
 									type="datetime-local"
 									placeholder=" "
-									name="ponto_passagem4.coletaEfetivaSaida"
+									name="ponto_passagem4.entregaEfetivaSaida"
 									value={
 										formik.values.ponto_passagem4.entregaEfetivaSaida || ""
 									}
 									onKeyDown={handleEnter}
 									onChange={formik.handleChange}
-									disabled={disabledValidEfetiva}
-									//required
+									onBlur={() =>
+										funcDuracaoProcesso(
+											formik,
+											4,
+											formik.values.ponto_passagem4.entregaEfetivaSaida
+										)
+									}
+									//disabled={disabledValidEfetiva}
+									required
 								/>
 							</FloatingLabel>
 						</Col>
@@ -1485,7 +1521,7 @@ const InputsPontoPassagem = ({
 									value={
 										formik.values.ponto_passagem4.tempServicoLocalEntrega || ""
 									}
-									//onKeyDown={handleEnter}
+									onKeyDown={handleEnter}
 									onChange={formik.handleChange}
 								/>
 							</FloatingLabel>

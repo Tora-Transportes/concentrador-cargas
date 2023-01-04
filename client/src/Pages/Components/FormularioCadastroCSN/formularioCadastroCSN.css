@@ -151,6 +151,11 @@ label {
 .modal-title {
   margin-left: 20.5%;
 }
+
+.input-efetivo{
+  /* background-color: #c8f8bc !important; */
+  background-color: #D8BFD8 !important;
+}
 @media only screen and (max-width: 486px) {
   .col-cod-filial2,
   .col-cod-local {

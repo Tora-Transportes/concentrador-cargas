@@ -108,12 +108,11 @@ class ServiceCargas {
 		longitude,
 		client,
 		coletaEfetiva,
-		// coletaEfetiva_posto30,
-		// coletaEfetiva_mundo,
-		// coletaEfetiva_peacao,
 		entregaEfetiva,
 		tempServicoLocal,
 		coletaEfetivaSaida,
+		entregaEfetivaSaida,
+		tempServicoLocalEntrega,
 	}) {
 		let idRota = idRotaCsn;
 		let tipoClient = client === "" ? ponto : client;
@@ -136,6 +135,8 @@ class ServiceCargas {
 				entregaEfetiva === undefined ? null : moment(entregaEfetiva),
 			TEMP_SERV_LOCAL_COLETA: tempServicoLocal,
 			SAIDA_EFETIVA_COLETA: moment(coletaEfetivaSaida),
+			SAIDA_EFETIVA_ENTREGA: moment(entregaEfetivaSaida),
+			TEMP_SERV_LOCAL_ENTREGA: tempServicoLocalEntrega,
 		};
 
 		if (typeof id === "number") {
