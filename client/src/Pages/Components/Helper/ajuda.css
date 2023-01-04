@@ -1,12 +1,12 @@
 .class-body {
+  font-family: "Poppins", sans-serif;
   margin: 0%;
   padding: 0%;
-  font-family: "Poppins", sans-serif;
 }
 .class-body-title {
+  text-align: center;
   color: #00652e;
   display: flexbox;
-  text-align: center;
   margin-top: 3rem;
 }
 
@@ -23,24 +23,29 @@ h1 .h1-ajuda {
 }
 
 .class-p-subtitle {
-  margin-left: 4rem;
-  margin-top: 4.5rem;
   color: #3f4346;
+  margin-left: 4rem;
+  margin-top: 3.5rem;
 }
 .ajuda-csn-p{
-  color: #96948e;
   font-family: "Poppins", sans-serif;
+  color: #96948e;
+}
+.ajuda-csn-p-fim{
+  font-family: "Poppins", sans-serif;
+  color: #cc2931;
+  margin: 20px 15px;
 }
 p .p-tela-ajuda {
-  margin-left: 0.5rem;
   font-size: 16px;
   color: #96948e;
+  margin-left: 0.5rem;
 }
 .class-accordion {
-  width: 90%;
   margin-top: 1rem;
   margin-left: 4rem;
   box-sizing: border-box;
+  width: 90%;
 }
 
 .class-body-accordion {
@@ -74,9 +79,9 @@ p .p-tela-ajuda {
 
 #style-button-acc {
   font-size: 14px;
+  text-align: center;
   background: #00652e;
   border: none;
-  text-align: center;
   height: 2rem;
   margin-right: -2rem;
 }

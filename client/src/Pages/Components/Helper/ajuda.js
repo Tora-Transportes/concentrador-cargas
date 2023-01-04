@@ -255,8 +255,8 @@ function Helper() {
 						<p className="p-tela-ajuda">
 							Ao acessar a tela de Consulta de Cargas (presente na página de
 							Coordenadas), você poderá visualizar <br /> informações de cargas
-							abertas manualmente em nossa plataforma. <br /> Exemplo da página
-							Consulta:
+							abertas manualmente em nossa plataforma.
+							<p className="p-tela-ajuda">Exemplo da página de Consulta:</p>
 						</p>
 						<img src={consultaCargas} id="style-gif" />
 
@@ -301,7 +301,7 @@ function Helper() {
 							produtos, e apresenta a situação de cada <br /> um deles, provendo
 							melhor acompanhamento dos mesmos.
 						</p>
-						<p className="p-tela-ajuda">Exemplo da página Produtos: </p>
+						<p className="p-tela-ajuda">Exemplo da página de Produtos: </p>
 						<img src={telaProdutos} id="style-gif" />
 						<p className="ajuda-csn-p">
 							Somente pessoas com permissão são aptas a adicionar, editar e
@@ -410,6 +410,18 @@ function Helper() {
 						</div>
 					</Accordion.Body>
 				</Accordion.Item>
+				<div>
+					<p className="ajuda-csn-p-fim">
+						Recado Importante: Todas as informações presentes na página podem
+						sofrer alterações sem aviso prévio, os gifs disponibilizados são
+						apenas exemplos para facilitar a utilização da página, sendo que
+						podem apresentar diferenças mínimas da ferramenta dependendo da
+						versão, e que as mudanças que acontecerem futuramente, visam
+						melhorar cada vez mais o tutorial de uso da nossa plataforma,
+						auxiliando e garantindo melhor desempenho durante a jornada de
+						trabalho.
+					</p>
+				</div>
 			</Accordion>
 		</div>
 	);

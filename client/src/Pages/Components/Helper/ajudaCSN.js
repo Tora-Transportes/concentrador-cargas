@@ -118,8 +118,8 @@ function HelperCSN() {
 							das cargas, sendo possivel acessar <br /> uma carga por vez e
 							dessa forma manter as informações atualizadas em nossa plataforma,
 							a carga é <br /> controlada pelo código, e você terá acesso a essa
-							ferramenta através da tela de Listagem de Cargas CSN. <br /> Segue
-							abaixo o exemplo da página Edição CSN:
+							ferramenta através da tela de Listagem de Cargas CSN. <br />
+							<br /> Segue abaixo o exemplo da página Edição CSN:
 						</p>
 
 						<img src={edicaoCSN} id="style-gif" />
@@ -208,8 +208,9 @@ function HelperCSN() {
 						<p className="p-tela-ajuda">
 							Ao acessar a tela de Consulta de Cargas (presente na página de
 							Coordenadas), você poderá visualizar <br /> informações de cargas
-							abertas em nossa plataforma. <br /> Exemplo da página Consulta:
+							abertas em nossa plataforma.
 						</p>
+						<p className="p-tela-ajuda">Exemplo da página de Consulta:</p>
 						<img src={consultaCargas} id="style-gif" />
 
 						<div className="class-button-ir">
@@ -370,7 +371,9 @@ function HelperCSN() {
 							rotas, e apresenta também descrição, <br /> latitude, longitude,
 							raio em km, provendo melhoria no gerenciamento das rotas CSN.
 						</p>
-						<p className="p-tela-ajuda">Exemplo da página:</p>
+						<p className="p-tela-ajuda">
+							Exemplo da página de Gerenciamento de Rotas:
+						</p>
 						<img src={localicaoCSN} id="style-gif" />
 						<p className="ajuda-csn-p">
 							Somente pessoas com permissão são aptas a adicionar, editar e
@@ -388,6 +391,18 @@ function HelperCSN() {
 						</div>
 					</Accordion.Body>
 				</Accordion.Item>
+				<div>
+					<p className="ajuda-csn-p-fim">
+						Recado Importante: Todas as informações presentes na página podem
+						sofrer alterações sem aviso prévio, os gifs disponibilizados são
+						apenas exemplos para facilitar a utilização da página, sendo que
+						podem apresentar diferenças mínimas da ferramenta dependendo da
+						versão, as mudanças que acontecerem futuramente, terão objetivo de
+						melhorar cada vez mais o tutorial de uso da nossa plataforma,
+						auxiliando e garantindo melhor desempenho durante a jornada de
+						trabalho.
+					</p>
+				</div>
 			</Accordion>
 		</div>
 	);
