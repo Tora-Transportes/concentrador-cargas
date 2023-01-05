@@ -87,6 +87,8 @@ function FormularioCadastroCSN({
 
 	async function handleSearchVehicle(plate) {
 		if (plate) {
+			setDetalesVeiculo(null);
+			setDetalesCarreta(null);
 			const vehicleDetails = (await ServiceVeiculos.get(plate)).data.data;
 			if (vehicleDetails) {
 				formik.setFieldValue("placa_carreta", vehicleDetails.placa_carreta);

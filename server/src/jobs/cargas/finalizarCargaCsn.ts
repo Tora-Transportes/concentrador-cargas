@@ -237,7 +237,10 @@ class ServiceFinishCargasCsn {
               "Raio da empresa ->",
               raioEmMetros,
               "ID_ponto_parada:",
-              ID
+              ID,
+              "Carga:",
+              ID_CON_CARGAS,
+              "---------------------"
             );
 
             DESCRICAO;
@@ -503,6 +506,6 @@ export default async function run() {
       "|-----------------FIM JOB CARGA CSN EM VIAGEM-------------------|"
     );
   }
-  cron.schedule(" */1 * * * * ", job);
+  cron.schedule(" */2 * * * * ", job);
   //job();
 }

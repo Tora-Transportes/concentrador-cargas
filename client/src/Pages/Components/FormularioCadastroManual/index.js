@@ -36,7 +36,8 @@ function FormularioCadastroManual({
 	buscarCargaComDocumentoDeTransporte,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
-	//const [isCarreta, setCarreta] = useState(null);
+	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
+	const [isDetalhesCarreta, setDetalesCarreta] = useState(null);
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
 	const [valorTotalDebito, setValorTotal] = useState();
 	//const [addDestinoInterme, setAddDestinoInterme] = useState(false);
@@ -45,21 +46,35 @@ function FormularioCadastroManual({
 			swal("Placa inválida");
 			return;
 		}
-		const vehicleData = (await ServiceVeiculos.detalhesImpedimentos(plate)).data
-			.data;
+
+		let vehicleData;
+		if (isDetalhesVeiculo) {
+			vehicleData = isDetalhesVeiculo;
+		} else {
+			vehicleData = (await ServiceVeiculos.detalhesImpedimentos(plate)).data
+				.data;
+		}
 
 		if (!vehicleData) {
 			swal("Não foi encontrado nenhum veículo com essa placa.");
 		}
 
-		// if (formik.values.placa_carreta) {
-		// 	const carretaData = (
-		// 		await ServiceVeiculos.detalhesImpedimentos(formik.values.placa_carreta)
-		// 	).data.data;
-		// 	setCarreta(carretaData);
-		// }
+		let placaCarreta = formik.values.placa_carreta;
+		if (isDetalhesVeiculo === null) {
+			const detailVeiculo = (await ServiceVeiculos.get(plate)).data.data;
+			setDetalesVeiculo(detailVeiculo);
+			placaCarreta = detailVeiculo?.placa_carreta;
+		}
+
+		const resultCarreta = await (
+			await ServiceVeiculos.detalhesImpedimentos(placaCarreta)
+		).data.data;
+
+		if (resultCarreta) setDetalesCarreta(resultCarreta);
+
 		setVeiculo(vehicleData);
 	}
+
 	useEffect(() => {
 		if (formik.values.e_lote) {
 			formik.setFieldValue("placa_veiculo", null);
@@ -72,6 +87,8 @@ function FormularioCadastroManual({
 
 	async function handleSearchVehicle(plate) {
 		if (plate) {
+			setDetalesVeiculo(null);
+			setDetalesCarreta(null);
 			const vehicleDetails = (await ServiceVeiculos.get(plate)).data.data;
 			if (vehicleDetails) {
 				formik.setFieldValue("placa_carreta", vehicleDetails.placa_carreta);
@@ -81,6 +98,12 @@ function FormularioCadastroManual({
 					"codigo_motorista",
 					vehicleDetails.codigo_motorista
 				);
+
+				const detalhesVeiculos = (
+					await ServiceVeiculos.detalhesImpedimentos(plate)
+				).data.data;
+				setDetalesVeiculo(detalhesVeiculos);
+
 				return;
 			} else {
 				swal("Não foi encontrado nenhum veículo com essa placa.");
@@ -123,6 +146,10 @@ function FormularioCadastroManual({
 			}
 		}
 	};
+
+	const titleInfoPlaca = isDetalhesCarreta
+		? "Dados do Veículo / Dados Carreta"
+		: "Dados do Veículo";
 
 	return (
 		<div className="class-body-form">
@@ -614,42 +641,49 @@ function FormularioCadastroManual({
 
 			<Modal show={veiculo !== null} size="lg" onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
-					<Modal.Title>Dados do Veículo / Dados da Carreta</Modal.Title>
+					<Modal.Title>{titleInfoPlaca}</Modal.Title>
 				</Modal.Header>
 				{veiculo && (
-					// <div className="d-flex">
-					<div>
-						<Card>
-							<ListGroup className="list-group-flush">
-								{Object.keys(veiculo).map((i) => (
-									<ListGroupItem key={i}>
-										<b>{i.replace(/_/g, " ")}</b>:
-										{i.startsWith("DATA_")
-											? veiculo[i]?.split("T")[0].split("-").reverse().join("/")
-											: veiculo[i]}
-									</ListGroupItem>
-								))}
-							</ListGroup>
-						</Card>
-						{/* {isCarreta && (
-							<Card className="ms-1">
+					<Row>
+						<Col>
+							<Card>
 								<ListGroup className="list-group-flush">
-									{Object.keys(isCarreta).map((i) => (
+									{Object.keys(veiculo).map((i) => (
 										<ListGroupItem key={i}>
 											<b>{i.replace(/_/g, " ")}</b>:
 											{i.startsWith("DATA_")
-												? isCarreta[i]
+												? veiculo[i]
 														?.split("T")[0]
 														.split("-")
 														.reverse()
 														.join("/")
-												: isCarreta[i]}
+												: veiculo[i]}
 										</ListGroupItem>
 									))}
 								</ListGroup>
 							</Card>
-						)} */}
-					</div>
+						</Col>
+						{isDetalhesCarreta && (
+							<Col>
+								<Card>
+									<ListGroup className="list-group-flush">
+										{Object.keys(isDetalhesCarreta).map((i) => (
+											<ListGroupItem key={i}>
+												<b>{i.replace(/_/g, " ")}</b>:
+												{i.startsWith("DATA_")
+													? isDetalhesCarreta[i]
+															?.split("T")[0]
+															.split("-")
+															.reverse()
+															.join("/")
+													: isDetalhesCarreta[i]}
+											</ListGroupItem>
+										))}
+									</ListGroup>
+								</Card>
+							</Col>
+						)}
+					</Row>
 				)}
 			</Modal>
 

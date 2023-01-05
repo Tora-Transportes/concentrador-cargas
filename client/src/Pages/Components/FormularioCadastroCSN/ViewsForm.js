@@ -58,6 +58,10 @@ export default function ViewsForm({
 			}
 		}
 	};
+
+	const titleInfoPlaca = isDetalhesCarreta
+		? "Dados do Veículo / Dados Carreta"
+		: "Dados do Veículo";
 	return (
 		<div className="class-body-form">
 			<Row>
@@ -491,9 +495,7 @@ export default function ViewsForm({
 
 			<Modal show={veiculo !== null} size="lg" onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
-					<Modal.Title className="modal-title">
-						Dados do Veículo / Dados Carreta
-					</Modal.Title>
+					<Modal.Title className="modal-title">{titleInfoPlaca}</Modal.Title>
 				</Modal.Header>
 				{veiculo && (
 					<Row>
