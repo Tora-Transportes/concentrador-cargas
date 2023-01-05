@@ -3,11 +3,10 @@ import { createContext, useState } from "react";
 export const ContextUseDefault = createContext();
 
 export const DefaultUserProvider = ({ children }) => {
-	const [valuePagCargaCTE, setValuePagCargaCTE] = useState();
+	const [isPermissionUser, setPermissionUser] = useState("");
+	console.log("Context", isPermissionUser);
 	return (
-		<ContextUseDefault.Provider
-			value={{ valuePagCargaCTE, setValuePagCargaCTE }}
-		>
+		<ContextUseDefault.Provider value={{ isPermissionUser, setPermissionUser }}>
 			{children}
 		</ContextUseDefault.Provider>
 	);

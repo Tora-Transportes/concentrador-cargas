@@ -184,7 +184,7 @@ export const funcDuracaoProcesso = async (formik, status, coletafim) => {
 		case 4:
 			somarHoras(
 				formik.values.ponto_passagem4.entregaEfetiva,
-				"ponto_passagem4.tempServicoLocal"
+				"ponto_passagem4.tempServicoLocalEntrega"
 			);
 			break;
 		case 5:

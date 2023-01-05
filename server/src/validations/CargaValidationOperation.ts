@@ -15,9 +15,12 @@ export class CargaValidationOperation {
 
     if (
       cargaAtual.placa_veiculo &&
+      cargaAnterior?.carga_csn !== 1 &&
       (cargaAtual.fk_situacao == 1 || !cargaAtual.fk_situacao)
     ) {
       cargaSaida.fk_situacao = 2;
+    } else if (cargaAnterior?.fk_situacao === 6) {
+      cargaSaida.fk_situacao = 9;
     }
 
     if (cargaAnterior === null && cargaAtual.placa_veiculo) {
@@ -43,7 +46,7 @@ export class CargaValidationOperation {
         );
       }
 
-      if (cargaAnterior.fk_situacao === 6) {
+      if (cargaAnterior.fk_situacao === 6 && cargaAnterior.carga_csn !== 1) {
         throw new Error(
           "Não é possível movimentar a carga após o documento ser emitido"
         );

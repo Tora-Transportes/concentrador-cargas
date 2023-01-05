@@ -12,6 +12,7 @@ import { getClaims } from "src/MicrosoftAuthentication";
 import ServiceCargas from "src/services/ServiceCargas";
 import FormularioCadastroCSN from "src/Pages/Components/FormularioCadastroCSN";
 import { funcBodyEdit } from "./menagemente";
+import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 
 function EditarCargaCsn() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -19,6 +20,7 @@ function EditarCargaCsn() {
 	const history = useHistory();
 	const [produtos, setProdutos] = useState([]);
 	const [viewsInput, setViewsInput] = useState(0);
+	const [isPermissionUser, setPermissionUser] = useState(true);
 
 	const formik = useFormik({
 		initialValues: {
@@ -100,6 +102,7 @@ function EditarCargaCsn() {
 				coletaEfetivaSaida: "",
 				tempServicoLocal: "",
 				entregaEfetiva: "",
+				entregaEfetivaSaida: "",
 			},
 			ponto_passagem5: {
 				ponto: "",
@@ -485,6 +488,20 @@ function EditarCargaCsn() {
 				setLoading(false);
 			}
 		});
+
+		ServiceProdutos.list().then(({ data }) => {
+			setProdutos(data.data);
+		});
+
+		(async () => {
+			const userPermission = await validationPermissionUser();
+			if (
+				userPermission?.permissoes.includes("MANUTENCAO_TRAJETO_FINALIZADO")
+			) {
+				setPermissionUser(false);
+			}
+		})();
+
 		return () => {
 			isMounted = false;
 		};
@@ -494,11 +511,24 @@ function EditarCargaCsn() {
 		formik.setFieldValue("placa_veiculo", "");
 	}, [formik.values.e_lote]);
 
-	useEffect(() => {
-		ServiceProdutos.list().then(({ data }) => {
-			setProdutos(data.data);
-		});
-	}, []);
+	// useEffect(() => {
+	// 	ServiceProdutos.list().then(({ data }) => {
+	// 		setProdutos(data.data);
+	// 	});
+
+	// 	(async () => {
+	// 		const userPermission = await validationPermissionUser();
+	// 		if (
+	// 			userPermission?.permissoes.includes("MANUTENCAO_TRAJETO_FINALIZADO")
+	// 		) {
+	// 			setPermissionUser(true);
+	// 		}
+	// 	})();
+	// }, []);
+
+	const showInfoTitle = [6, 9].includes(formik.values?.fk_situacao)
+		? "info-tilte"
+		: "d-none";
 
 	return (
 		<>
@@ -506,7 +536,12 @@ function EditarCargaCsn() {
 			{/* <CabecalhoFixado>Edição de carga aberta manualmente</CabecalhoFixado> */}
 			<Menusuperior />
 			<Container className="mb-5 mt-5">
-				<p id="style-title-editorCarga">Editar Carga CSN</p>
+				<div className="div-title">
+					<p className="mb-1" id="style-title-editorCarga">
+						Editar Carga CSN
+					</p>
+					<h6 className={showInfoTitle}>carga finalizada!</h6>
+				</div>
 				<hr />
 				<Form onSubmit={formik.handleSubmit}>
 					<FormularioCadastroCSN
@@ -517,13 +552,18 @@ function EditarCargaCsn() {
 						produtos={produtos}
 						formik={formik}
 						viewsInput={viewsInput}
+						isPermissionUser={isPermissionUser}
 					/>
 					<div className="class-group-button">
 						<Button
 							variant="success"
 							type="submit"
 							className="p-2  botao-gravar"
-							disabled={[3, 5, 6, 7, 8].includes(formik.values.fk_situacao)}
+							disabled={
+								[3, 5].includes(formik.values.fk_situacao) ||
+								([6, 7, 8, 9].includes(formik.values.fk_situacao) &&
+									isPermissionUser)
+							}
 						>
 							Gravar
 						</Button>

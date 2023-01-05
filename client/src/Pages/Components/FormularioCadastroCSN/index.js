@@ -14,6 +14,7 @@ function FormularioCadastroCSN({
 	buscarCargaComDocumentoDeTransporte,
 	handleEnter,
 	history,
+	isPermissionUser,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
@@ -186,6 +187,7 @@ function FormularioCadastroCSN({
 				valorTotalDebito={valorTotalDebito}
 				fkSituacao={fkSituacao}
 				handleEnter={handleEnter}
+				isPermissionUser={isPermissionUser}
 			/>
 		</div>
 	);

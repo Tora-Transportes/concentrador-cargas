@@ -43,6 +43,7 @@ export default function ViewsForm({
 	isDetalhesCarreta,
 	valorTotalDebito,
 	fkSituacao,
+	isPermissionUser,
 }) {
 	const handleEnter = (event) => {
 		if (event.key === "Enter") {
@@ -385,6 +386,7 @@ export default function ViewsForm({
 				inputColeta9={inputColeta9}
 				inputColeta10={inputColeta10}
 				fkSituacao={fkSituacao}
+				isPermissionUser={isPermissionUser}
 			/>
 
 			<Row className="row-button-local">

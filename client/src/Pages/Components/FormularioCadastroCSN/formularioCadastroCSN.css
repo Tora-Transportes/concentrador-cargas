@@ -151,6 +151,18 @@ label {
 .modal-title {
   margin-left: 20.5%;
 }
+
+.input-efetivo {
+  background-color: #d8bfd8 !important;
+}
+
+.col-temp-servic-local {
+  margin-right: 41px;
+}
+
+.floatingLabel-temp-servic-local {
+  width: 110%;
+}
 @media only screen and (max-width: 486px) {
   .col-cod-filial2,
   .col-cod-local {
@@ -203,6 +215,14 @@ label {
     grid-template-columns: auto;
   }
   #style-ipunt-motorista {
+    width: 100%;
+  }
+
+  .col-temp-servic-local {
+    margin-right: 0;
+  }
+
+  .floatingLabel-temp-servic-local {
     width: 100%;
   }
 }

@@ -14,6 +14,7 @@ const InputsPontoPassagem = ({
 	inputColeta9,
 	inputColeta10,
 	fkSituacao,
+	isPermissionUser,
 }) => {
 	const [inputPontoPassagem5, setInputPontoPassagem5] = useState(true);
 	const [inputPontoPassagem6, setInputPontoPassagem6] = useState(true);
@@ -22,7 +23,14 @@ const InputsPontoPassagem = ({
 	const [inputPontoPassagem9, setInputPontoPassagem9] = useState(true);
 	const [inputPontoPassagem10, setInputPontoPassagem10] = useState(true);
 
-	const disabledValidEfetiva = formik.values?.fk_situacao === 6 ? true : false;
+	const disabledValidEfetiva =
+		[6, 9].includes(formik.values?.fk_situacao) && isPermissionUser
+			? true
+			: false;
+	const colorInputEfetivo = [6, 9].includes(formik.values?.fk_situacao)
+		? "input-efetivo"
+		: "";
+
 	useEffect(() => {
 		if (formik.values.ponto_passagem5.tipoServico === "Entrega") {
 			setInputPontoPassagem5(false);
@@ -130,10 +138,11 @@ const InputsPontoPassagem = ({
 					<>
 						<Col>
 							<FloatingLabel
-								label="Data Coleta Efetiva inicio"
+								label="*Data Coleta Efetiva inicio"
 								className="mb-3"
 							>
 								<Form.Control
+									className={colorInputEfetivo}
 									type="datetime-local"
 									placeholder=" "
 									name="ponto_passagem.coletaEfetiva_posto30"
@@ -148,8 +157,9 @@ const InputsPontoPassagem = ({
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+							<FloatingLabel label="*Data Coleta Efetiva fim" className="mb-3">
 								<Form.Control
+									className={colorInputEfetivo}
 									type="datetime-local"
 									placeholder=" "
 									name="ponto_passagem.coletaEfetivaSaida"
@@ -168,8 +178,11 @@ const InputsPontoPassagem = ({
 								/>
 							</FloatingLabel>
 						</Col>
-						<Col>
-							<FloatingLabel label="Duração processo" className="mb-3">
+						<Col className="col-temp-servic-local">
+							<FloatingLabel
+								label="Duração processo"
+								className="mb-3 floatingLabel-temp-servic-local"
+							>
 								<Form.Control
 									type="text"
 									disabled={true}
@@ -241,10 +254,11 @@ const InputsPontoPassagem = ({
 					<>
 						<Col>
 							<FloatingLabel
-								label="Data Coleta Efetiva inicio"
+								label="*Data Coleta Efetiva inicio"
 								className="mb-3"
 							>
 								<Form.Control
+									className={colorInputEfetivo}
 									type="datetime-local"
 									placeholder=" "
 									name="ponto_passagem2.coletaEfetiva_mundo"
@@ -259,8 +273,9 @@ const InputsPontoPassagem = ({
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+							<FloatingLabel label="*Data Coleta Efetiva fim" className="mb-3">
 								<Form.Control
+									className={colorInputEfetivo}
 									type="datetime-local"
 									placeholder=" "
 									name="ponto_passagem2.coletaEfetivaSaida"
@@ -279,8 +294,11 @@ const InputsPontoPassagem = ({
 								/>
 							</FloatingLabel>
 						</Col>
-						<Col>
-							<FloatingLabel label="Duração processo" className="mb-3">
+						<Col className="col-temp-servic-local">
+							<FloatingLabel
+								label="Duração processo"
+								className="mb-3 floatingLabel-temp-servic-local"
+							>
 								<Form.Control
 									type="text"
 									disabled={true}
@@ -352,10 +370,11 @@ const InputsPontoPassagem = ({
 					<>
 						<Col>
 							<FloatingLabel
-								label="Data Coleta Efetiva inicio"
+								label="*Data Coleta Efetiva inicio"
 								className="mb-3"
 							>
 								<Form.Control
+									className={colorInputEfetivo}
 									type="datetime-local"
 									placeholder=" "
 									name="ponto_passagem3.coletaEfetiva_peacao"
@@ -370,8 +389,9 @@ const InputsPontoPassagem = ({
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+							<FloatingLabel label="*Data Coleta Efetiva fim" className="mb-3">
 								<Form.Control
+									className={colorInputEfetivo}
 									type="datetime-local"
 									placeholder=" "
 									name="ponto_passagem3.coletaEfetivaSaida"
@@ -390,8 +410,11 @@ const InputsPontoPassagem = ({
 								/>
 							</FloatingLabel>
 						</Col>
-						<Col>
-							<FloatingLabel label="Duração processo" className="mb-3">
+						<Col className="col-temp-servic-local">
+							<FloatingLabel
+								label="Duração processo"
+								className="mb-3 floatingLabel-temp-servic-local"
+							>
 								<Form.Control
 									type="text"
 									disabled={true}
@@ -496,6 +519,7 @@ const InputsPontoPassagem = ({
 									className="mb-3"
 								>
 									<Form.Control
+										className={colorInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name={
@@ -516,8 +540,12 @@ const InputsPontoPassagem = ({
 								</FloatingLabel>
 							</Col>
 							<Col>
-								<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+								<FloatingLabel
+									label="*Data Coleta Efetiva fim"
+									className="mb-3"
+								>
 									<Form.Control
+										className={colorInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name="ponto_passagem5.coletaEfetivaSaida"
@@ -541,8 +569,11 @@ const InputsPontoPassagem = ({
 									/>
 								</FloatingLabel>
 							</Col>
-							<Col>
-								<FloatingLabel label="Duração processo" className="mb-3">
+							<Col className="col-temp-servic-local">
+								<FloatingLabel
+									label="Duração processo"
+									className="mb-3 floatingLabel-temp-servic-local"
+								>
 									<Form.Control
 										type="text"
 										disabled={true}
@@ -654,6 +685,7 @@ const InputsPontoPassagem = ({
 									className="mb-3"
 								>
 									<Form.Control
+										className={colorInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name={
@@ -679,6 +711,7 @@ const InputsPontoPassagem = ({
 									className="mb-3"
 								>
 									<Form.Control
+										className={colorInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name="ponto_passagem6.entregaEfetivaSaida"
@@ -702,8 +735,11 @@ const InputsPontoPassagem = ({
 									/>
 								</FloatingLabel>
 							</Col>
-							<Col>
-								<FloatingLabel label="Duração processo" className="mb-3">
+							<Col className="col-temp-servic-local">
+								<FloatingLabel
+									label="Duração processo"
+									className="mb-3 floatingLabel-temp-servic-local"
+								>
 									<Form.Control
 										type="text"
 										disabled={true}
@@ -817,6 +853,7 @@ const InputsPontoPassagem = ({
 									className="mb-3"
 								>
 									<Form.Control
+										className={colorInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name={
@@ -842,6 +879,7 @@ const InputsPontoPassagem = ({
 									className="mb-3"
 								>
 									<Form.Control
+										className={colorInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name="ponto_passagem7.coletaEfetivaSaida"
@@ -865,8 +903,11 @@ const InputsPontoPassagem = ({
 									/>
 								</FloatingLabel>
 							</Col>
-							<Col>
-								<FloatingLabel label="Duração processo" className="mb-3">
+							<Col className="col-temp-servic-local">
+								<FloatingLabel
+									label="Duração processo"
+									className="mb-3 floatingLabel-temp-servic-local"
+								>
 									<Form.Control
 										type="text"
 										disabled={true}
@@ -978,6 +1019,7 @@ const InputsPontoPassagem = ({
 									className="mb-3"
 								>
 									<Form.Control
+										className={colorInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name={
@@ -1003,6 +1045,7 @@ const InputsPontoPassagem = ({
 									className="mb-3"
 								>
 									<Form.Control
+										className={colorInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name="ponto_passagem8.coletaEfetivaSaida"
@@ -1026,8 +1069,11 @@ const InputsPontoPassagem = ({
 									/>
 								</FloatingLabel>
 							</Col>
-							<Col>
-								<FloatingLabel label="Duração processo" className="mb-3">
+							<Col className="col-temp-servic-local">
+								<FloatingLabel
+									label="Duração processo"
+									className="mb-3 floatingLabel-temp-servic-local"
+								>
 									<Form.Control
 										type="text"
 										disabled={true}
@@ -1153,6 +1199,7 @@ const InputsPontoPassagem = ({
 									className="mb-3"
 								>
 									<Form.Control
+										className={colorInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name={
@@ -1173,8 +1220,12 @@ const InputsPontoPassagem = ({
 								</FloatingLabel>
 							</Col>
 							<Col>
-								<FloatingLabel label="Data Coleta Efetiva fim" className="mb-3">
+								<FloatingLabel
+									label="*Data Coleta Efetiva fim"
+									className="mb-3"
+								>
 									<Form.Control
+										className={colorInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name="ponto_passagem9.coletaEfetivaSaida"
@@ -1198,8 +1249,11 @@ const InputsPontoPassagem = ({
 									/>
 								</FloatingLabel>
 							</Col>
-							<Col>
-								<FloatingLabel label="Duração processo" className="mb-3">
+							<Col className="col-temp-servic-local">
+								<FloatingLabel
+									label="Duração processo"
+									className="mb-3 floatingLabel-temp-servic-local"
+								>
 									<Form.Control
 										type="text"
 										disabled={true}
@@ -1311,6 +1365,7 @@ const InputsPontoPassagem = ({
 									className="mb-3"
 								>
 									<Form.Control
+										className={colorInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name={
@@ -1332,10 +1387,11 @@ const InputsPontoPassagem = ({
 							</Col>
 							<Col>
 								<FloatingLabel
-									label="Data Entrega Efetiva fim"
+									label="*Data Entrega Efetiva fim"
 									className="mb-3"
 								>
 									<Form.Control
+										className={colorInputEfetivo}
 										type="datetime-local"
 										placeholder=" "
 										name="ponto_passagem10.coletaEfetivaSaida"
@@ -1360,8 +1416,11 @@ const InputsPontoPassagem = ({
 									/>
 								</FloatingLabel>
 							</Col>
-							<Col>
-								<FloatingLabel label="Duração processo" className="mb-3">
+							<Col className="col-temp-servic-local">
+								<FloatingLabel
+									label="Duração processo"
+									className="mb-3 floatingLabel-temp-servic-local"
+								>
 									<Form.Control
 										type="text"
 										disabled={true}
@@ -1401,7 +1460,7 @@ const InputsPontoPassagem = ({
 					/>
 				</Col>
 				<Col className="input-ponto-passagem-coleta-entrega">
-					<FloatingLabel label="Coleta/Entrega 4" className="mb-3">
+					<FloatingLabel label="Coleta/Entrega 4  " className="mb-3">
 						<Form.Control
 							type="text"
 							name="ponto_passagem4.tipoServico"
@@ -1449,6 +1508,7 @@ const InputsPontoPassagem = ({
 								className="mb-3"
 							>
 								<Form.Control
+									className={colorInputEfetivo}
 									type="datetime-local"
 									placeholder=" "
 									name="ponto_passagem4.entregaEfetiva"
@@ -1461,23 +1521,34 @@ const InputsPontoPassagem = ({
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="Data Entrega Efetiva fim" className="mb-3">
+							<FloatingLabel label="*Data Entrega Efetiva fim" className="mb-3">
 								<Form.Control
+									className={colorInputEfetivo}
 									type="datetime-local"
 									placeholder=" "
-									name="ponto_passagem4.coletaEfetivaSaida"
+									name="ponto_passagem4.entregaEfetivaSaida"
 									value={
 										formik.values.ponto_passagem4.entregaEfetivaSaida || ""
 									}
 									onKeyDown={handleEnter}
 									onChange={formik.handleChange}
+									onBlur={() =>
+										funcDuracaoProcesso(
+											formik,
+											4,
+											formik.values.ponto_passagem4.entregaEfetivaSaida
+										)
+									}
 									disabled={disabledValidEfetiva}
-									//required
+									required
 								/>
 							</FloatingLabel>
 						</Col>
-						<Col>
-							<FloatingLabel label="Duração processo" className="mb-3">
+						<Col className="col-temp-servic-local">
+							<FloatingLabel
+								label="Duração processo"
+								className="mb-3 floatingLabel-temp-servic-local"
+							>
 								<Form.Control
 									type="text"
 									disabled={true}
@@ -1485,7 +1556,7 @@ const InputsPontoPassagem = ({
 									value={
 										formik.values.ponto_passagem4.tempServicoLocalEntrega || ""
 									}
-									//onKeyDown={handleEnter}
+									onKeyDown={handleEnter}
 									onChange={formik.handleChange}
 								/>
 							</FloatingLabel>
