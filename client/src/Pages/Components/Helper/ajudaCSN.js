@@ -93,8 +93,8 @@ function HelperCSN() {
 					<Accordion.Header>Listagem CSN</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
 						<p className="p-tela-ajuda">
-							Essa página lhe dará acesso ao detalhamento de informações das já
-							cargas cadastradas em <br /> nossa plataforma.
+							Essa página lhe dará acesso ao detalhamento de informações das
+							cargas já cadastradas em <br /> nossa plataforma.
 						</p>
 						<p className="p-tela-ajuda">Exemplo da Página Listagem CSN:</p>
 
@@ -139,27 +139,28 @@ function HelperCSN() {
 
 					<Accordion.Body className="class-body-accordion">
 						<p className="p-tela-ajuda">
-							Algumas ferramentas da plataforma irão permitir configurações nas
-							páginas para que sejam apresentadas <br /> apenas as informações
-							necessárias no momento da consulta, facilitando a utilização da
-							plataforma. <br /> Essas funcionalidades buscam ajudar e otimizar
-							seu uso nas páginas da plataforma, dando maior <br /> conforto e
-							interação com as ferramentas disponíveis.
+							Algumas ferramentas permitem configurações nas páginas para que
+							sejam apresentadas <br /> apenas as informações necessárias no
+							momento da consulta, facilitando sua utilização da plataforma.
+							<br /> Essas funcionalidades buscam ajudar e otimizar sua jornada,
+							dando maior <br /> conforto e interação com os recursos
+							disponíveis.
 							<br />
 							<br /> Veja a seguir os exemplos dessas funcionalidades: <br />
 							<br />
-							Configurar Tabela - você poderá filtrar os itens que deseja
-							visualizar na página de acordo com a sua <br /> necessidade no
-							momento da consulta.
+							<b className="style-b-ajuda">Configurar Tabela - </b> Utilizada
+							para filtrar os itens na página de acordo com a sua <br />{" "}
+							necessidade no momento da consulta.
 						</p>
 						<p className="p-tela-ajuda mb-1">
 							Exemplo do filtro Configurar Tabela:
 						</p>
 						<img src={configTab} id="style-gif2" />
 						<p className="p-tela-ajuda">
-							Opções da Tabela - Legenda das cargas: mostra o significado de
-							todas as possíveis situações de cargas <br /> cadastradas no
-							sistema, facilitando o entendimento das mesmas.
+							<b className="style-b-ajuda">Opções da Tabela</b> - Legenda das
+							cargas: mostra o significado de todas as possíveis situações de
+							cargas <br /> cadastradas no sistema, facilitando o entendimento
+							das mesmas.
 							<br /> Importar tabela: Permite filtro por data e código da filial
 							e oferece o download da tabela em formato excel.
 							<br /> Redefinir tabela: Possibilita redefinir as configurações
@@ -170,8 +171,9 @@ function HelperCSN() {
 						</p>
 						<img src={opcoesTab} id="style-gif2" />
 						<p className="p-tela-ajuda">
-							Itens por página - Permite que você visualize de 10 à 500 itens
-							nas páginas de Listagem de Cargas <br /> e Coordenadas.
+							<b className="style-b-ajuda">Itens por página - </b> Permite que
+							você visualize de 10 à 500 itens nas páginas de Listagem de Cargas{" "}
+							<br /> e Coordenadas.
 						</p>
 						<p className="p-tela-ajuda mb-1 mt-3">
 							Exemplo de Itens por Página:
@@ -278,9 +280,10 @@ function HelperCSN() {
 						<p className="p-tela-ajuda">
 							<br />
 							Ao clicar em Relatórios, você terá várias opções de consulta
-							disponíveis na plataforma, são elas: <br /> <br /> Indicador
-							Operacional CSN - Mostra a situação e permite acompanhamento das
-							cargas já cadastradas <br /> na platafoma, essas informações serão
+							disponíveis na plataforma, são elas: <br /> <br />{" "}
+							<b className="style-b-ajuda"> Indicador Operacional CSN - </b>
+							Mostra a situação e permite acompanhamento das cargas já
+							cadastradas <br /> na platafoma, essas informações serão
 							apresentadas de acordo com o preechimento do filtro de data.
 							<br /> A página conta também com gráfico e tabela, download do
 							filtro de data, entre outras informações.
@@ -297,9 +300,10 @@ function HelperCSN() {
 							</Button>
 						</div>
 						<p className="p-tela-ajuda">
-							Rotas Pendentes de Cadastro - Disponibiliza os nomes das cidades e
-							estados de origem e destino, <br /> provendo acesso a informações
-							de rotas, e permite também que você busque uma cidade ou estado
+							<b className="style-b-ajuda"> Rotas Pendentes de Cadastro - </b>
+							Disponibiliza os nomes das cidades e estados de origem e destino,
+							<br /> provendo acesso a informações de rotas, e permite também
+							que você busque uma cidade ou estado
 							<br /> específico, para melhor acompanhamento.
 						</p>
 						<img src={rotasPendentes} id="style-gif" />
@@ -314,7 +318,8 @@ function HelperCSN() {
 							</Button>
 						</div>
 						<p className="p-tela-ajuda ms-1">
-							Raio Empresa - Mostra os veículos no raio da empresa.
+							<b className="style-b-ajuda">Raio Empresa - </b> Mostra os
+							veículos no raio da empresa.
 						</p>
 						<img src={raioEmpresa} id="style-gif" />
 						<div className="class-button-ir">
@@ -323,7 +328,8 @@ function HelperCSN() {
 							</Button>
 						</div>
 						<p className="p-tela-ajuda ms-1">
-							Veículos x Veículos - Mostra a distância entre veículos próximos.
+							<b className="style-b-ajuda"> Veículos x Veículos - </b> Mostra a
+							distância entre veículos próximos.
 						</p>
 						<img src={veicProximos} id="style-gif" />
 						<div className="class-button-ir">
@@ -332,8 +338,8 @@ function HelperCSN() {
 							</Button>
 						</div>
 						<p className="p-tela-ajuda ms-1">
-							Veículos até Empresa - Mostra a distância entre um veículo e a
-							empresa.
+							<b className="style-b-ajuda"> Veículos até Empresa - </b> Mostra a
+							distância entre um veículo e a empresa.
 						</p>
 						<img src={veicEmpresa} id="style-gif" />
 
@@ -344,11 +350,12 @@ function HelperCSN() {
 						</div>
 						<p className="p-tela-ajuda">
 							<br />
-							Em Histórico de Rotas do Veículo, você terá acesso ao histórico de
-							localização do veículo, busque pela <br /> placa do veículo e
-							datas de início e fim e as informações serão mostradas no mapa da
-							plataforma, a tela <br /> oferece também a opção de download do
-							histórico consultado (via excel).
+							Em <b className="style-b-ajuda">Histórico de Rotas do Veículo</b>,
+							você terá acesso ao histórico de localização do veículo, busque
+							pela <br /> placa do veículo e datas de início e fim e as
+							informações serão mostradas no mapa da plataforma, a tela <br />{" "}
+							oferece também a opção de download do histórico consultado (via
+							excel).
 						</p>
 						<img src={historicoRota} id="style-gif" />
 
@@ -375,10 +382,10 @@ function HelperCSN() {
 							Exemplo da página de Gerenciamento de Rotas:
 						</p>
 						<img src={localicaoCSN} id="style-gif" />
-						<p className="ajuda-csn-p">
+						{/* <p className="ajuda-csn-p">
 							Somente pessoas com permissão são aptas a adicionar, editar e
 							remover rotas na plataforma.
-						</p>
+						</p> */}
 
 						<div className="class-button-ir">
 							<Button

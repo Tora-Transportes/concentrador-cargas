@@ -186,29 +186,31 @@ function Helper() {
 						<p className="p-tela-ajuda">
 							Algumas ferramentas da plataforma irão permitir configurações nas
 							páginas para que sejam apresentadas <br /> apenas as informações
-							necessárias no momento da consulta, facilitando a utilização da
+							necessárias no momento da consulta, facilitando sua utilização da
 							plataforma. <br /> Essas funcionalidades buscam ajudar e otimizar
 							seu uso nas páginas da plataforma, dando maior <br /> conforto e
 							interação com as ferramentas disponíveis.
 							<br />
 							<br /> Veja a seguir os exemplos dessas funcionalidades: <br />
 							<br />
-							Configurar Tabela - você poderá filtrar os itens que deseja
-							visualizar na página de acordo com a sua <br /> necessidade no
-							momento da consulta.
+							<b className="style-b-ajuda">Configurar Tabela - </b>você poderá
+							filtrar os itens que deseja visualizar na página de acordo com a
+							sua <br /> necessidade no momento da consulta.
 						</p>
 						<p className="p-tela-ajuda mb-1">
 							Exemplo do filtro Configurar Tabela:
 						</p>
 						<img src={configTab} id="style-gif2" />
 						<p className="p-tela-ajuda">
-							Opções da Tabela - Legenda das cargas: mostra o significado de
-							todas as possíveis situações de cargas <br /> cadastradas no
-							sistema, facilitando o entendimento das mesmas.
-							<br /> Importar tabela: Permite filtro por data e código da filial
-							e oferece o download da tabela em formato excel.
-							<br /> Redefinir tabela: possibilita a redefinição das
-							configurações feitas na página, para o formato padrão da
+							<b className="style-b-ajuda">Opções da Tabela - </b>{" "}
+							<b>Legenda das cargas:</b> Mostra o significado de todas as
+							possíveis situações de cargas <br /> cadastradas no sistema,
+							facilitando o entendimento das mesmas.
+							<br />
+							<br /> <b>Importar tabela:</b> Permite filtro por data e código da
+							filial e oferece o download da tabela em formato excel.
+							<br /> <br /> <b>Redefinir tabela:</b> Possibilita a redefinição
+							das configurações feitas na página, para o formato padrão da
 							ferramenta.
 						</p>
 						<p className="p-tela-ajuda mb-1 mt-3">
@@ -216,8 +218,9 @@ function Helper() {
 						</p>
 						<img src={opcoesTab} id="style-gif2" />
 						<p className="p-tela-ajuda">
-							Itens por página - Permite que você visualize de 10 à 500 itens
-							nas páginas de Listagem de Cargas, <br />
+							<b className="style-b-ajuda">Itens por página - </b> Permite que
+							você visualize de 10 à 500 itens nas páginas de Listagem de
+							Cargas, <br />
 							Listagem de Cargas em Lote e Coordenadas.
 						</p>
 						<p className="p-tela-ajuda mb-1 mt-3">
@@ -256,8 +259,8 @@ function Helper() {
 							Ao acessar a tela de Consulta de Cargas (presente na página de
 							Coordenadas), você poderá visualizar <br /> informações de cargas
 							abertas manualmente em nossa plataforma.
-							<p className="p-tela-ajuda">Exemplo da página de Consulta:</p>
 						</p>
+						<p className="p-tela-ajuda">Exemplo da página de Consulta:</p>
 						<img src={consultaCargas} id="style-gif" />
 
 						<div className="class-button-ir">
@@ -325,10 +328,11 @@ function Helper() {
 						<p className="p-tela-ajuda">
 							<br />
 							Ao clicar em Relatórios, você terá várias opções de consulta
-							disponíveis na plataforma, são elas: <br /> <br /> Indicador
-							Operacional - Mostra a situação e permite acompanhamento das
-							cargas já cadastradas na <br /> platafoma, essas informações serão
-							apresentadas de acordo com o preechimento do filtro de data, a
+							disponíveis na plataforma, são elas: <br /> <br />{" "}
+							<b className="style-b-ajuda">Indicador Operacional - </b>Mostra a
+							situação e permite acompanhamento das cargas já cadastradas na{" "}
+							<br /> platafoma, essas informações serão apresentadas de acordo
+							com o preechimento do filtro de data, a
 							<br /> página conta também com gráfico e tabela,cargas ativadas e
 							desativadas, entre outras informações.
 						</p>
@@ -344,9 +348,10 @@ function Helper() {
 							</Button>
 						</div>
 						<p className="p-tela-ajuda">
-							Rotas Pendentes de Cadastro - Disponibiliza os nomes das cidades e
-							estados de origem e destino, <br /> provendo acesso as informações
-							de rotas, e permite também que você busque uma cidade ou estado
+							<b className="style-b-ajuda">Rotas Pendentes de Cadastro - </b>{" "}
+							Disponibiliza os nomes das cidades e estados de origem e destino,{" "}
+							<br /> provendo acesso as informações de rotas, e permite também
+							que você busque uma cidade ou estado
 							<br /> específico, para melhor acompanhamento.
 						</p>
 						<img src={rotasPendentes} id="style-gif" />
@@ -361,7 +366,8 @@ function Helper() {
 							</Button>
 						</div>
 						<p className="p-tela-ajuda ms-1">
-							Raio Empresa - Mostra os veículos no raio da empresa.
+							<b className="style-b-ajuda">Raio Empresa - </b> Mostra os
+							veículos no raio da empresa.
 						</p>
 						<img src={raioEmpresa} id="style-gif" />
 						<div className="class-button-ir">
@@ -370,7 +376,8 @@ function Helper() {
 							</Button>
 						</div>
 						<p className="p-tela-ajuda ms-1">
-							Veículos x Veículos - Mostra a distância entre veículos próximos.
+							<b className="style-b-ajuda">Veículos x Veículos - </b> Mostra a
+							distância entre veículos próximos.
 						</p>
 						<img src={veicProximos} id="style-gif" />
 						<div className="class-button-ir">
@@ -379,8 +386,8 @@ function Helper() {
 							</Button>
 						</div>
 						<p className="p-tela-ajuda ms-1">
-							Veículos até Empresa - Mostra a distância entre um veículo e a
-							empresa.
+							<b className="style-b-ajuda">Veículos até Empresa - </b> Mostra a
+							distância entre um veículo e a empresa.
 						</p>
 						<img src={veicEmpresa} id="style-gif" />
 
@@ -391,11 +398,12 @@ function Helper() {
 						</div>
 						<p className="p-tela-ajuda">
 							<br />
-							Em Histórico de Rotas do Veículo, você terá acesso ao histórico de
-							localização do veículo, busque pela <br /> placa do veículo e
-							datas de início e fim e as informações serão mostradas no mapa da
-							plataforma, a tela <br /> oferece também a opção de download do
-							histórico consultado (via excel).
+							Em <b className="style-b-ajuda">Histórico de Rotas do Veículo </b>
+							, você terá acesso ao histórico de localização do veículo, busque
+							pela <br /> placa do veículo e datas de início e fim e as
+							informações serão mostradas no mapa da plataforma, a tela <br />{" "}
+							oferece também a opção de download do histórico consultado (via
+							excel).
 						</p>
 						<img src={historicoRota} id="style-gif" />
 

@@ -27,6 +27,10 @@ h1 .h1-ajuda {
   margin-left: 4rem;
   margin-top: 3.5rem;
 }
+.style-b-ajuda{
+  font-family: "Poppins", sans-serif;
+  color: #00652e;
+}
 .ajuda-csn-p{
   font-family: "Poppins", sans-serif;
   color: #96948e;
