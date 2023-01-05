@@ -108,6 +108,9 @@ class ServiceCargas {
 		longitude,
 		client,
 		coletaEfetiva,
+		coletaEfetiva_posto30,
+		coletaEfetiva_mundo,
+		coletaEfetiva_peacao,
 		entregaEfetiva,
 		tempServicoLocal,
 		coletaEfetivaSaida,
@@ -131,6 +134,16 @@ class ServiceCargas {
 			CLIENTE: tipoClient,
 			COLETA_EFETIVA:
 				coletaEfetiva === undefined ? null : moment(coletaEfetiva),
+			COLETA_EFETIVA_POSTO30:
+				coletaEfetiva_posto30 === undefined
+					? null
+					: moment(coletaEfetiva_posto30),
+			COLETA_EFETIVA_MUNDO:
+				coletaEfetiva_mundo === undefined ? null : moment(coletaEfetiva_mundo),
+			COLETA_EFETIVA_PEACAO:
+				coletaEfetiva_peacao === undefined
+					? null
+					: moment(coletaEfetiva_peacao),
 			ENTREGA_EFETIVA:
 				entregaEfetiva === undefined ? null : moment(entregaEfetiva),
 			TEMP_SERV_LOCAL_COLETA: tempServicoLocal,

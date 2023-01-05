@@ -19,8 +19,8 @@ export class CargaValidationOperation {
       (cargaAtual.fk_situacao == 1 || !cargaAtual.fk_situacao)
     ) {
       cargaSaida.fk_situacao = 2;
-    } else {
-      cargaSaida.fk_situacao = cargaAnterior?.fk_situacao;
+    } else if (cargaAnterior?.fk_situacao === 6) {
+      cargaSaida.fk_situacao = 9;
     }
 
     if (cargaAnterior === null && cargaAtual.placa_veiculo) {

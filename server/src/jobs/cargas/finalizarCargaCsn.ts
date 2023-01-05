@@ -231,6 +231,8 @@ class ServiceFinishCargasCsn {
 
             const raioEmMetros = RAIO ? Number(RAIO) : 1;
             console.log(
+              "descricao:",
+              DESCRICAO,
               "distancia veiculo =>",
               calculoDistancia.toFixed(3),
               "Raio da empresa ->",
@@ -502,6 +504,6 @@ export default async function run() {
       "|-----------------FIM JOB CARGA CSN EM VIAGEM-------------------|"
     );
   }
-  cron.schedule(" */2 * * * * ", job);
+  cron.schedule(" */1 * * * * ", job);
   //job();
 }

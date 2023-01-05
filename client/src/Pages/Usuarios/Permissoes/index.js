@@ -1,14 +1,14 @@
 import React, { useState, useRef } from "react";
 import "./permissoes.css";
 import { Container, Row, Col } from "react-bootstrap";
-import { useFormik } from "formik";
-import ServiceUsuarios from "../../../services/ServiceUsuarios";
-import useDebouncedFunction from "../../Components/useDebounceFunction";
 import swal from "sweetalert";
+import { useFormik } from "formik";
 import { MultiSelect } from "primereact/multiselect";
+import { Column } from "primereact/column";
 import { MdDeleteForever } from "react-icons/md";
 import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
+import ServiceUsuarios from "../../../services/ServiceUsuarios";
+import useDebouncedFunction from "../../Components/useDebounceFunction";
 import { allTipoPermissoes } from "../../Utils/permissionUser";
 import {
 	actionBodyTemplate,
