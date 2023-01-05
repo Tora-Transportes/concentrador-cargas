@@ -27,9 +27,7 @@ const InputsPontoPassagem = ({
 		[6, 9].includes(formik.values?.fk_situacao) && isPermissionUser
 			? true
 			: false;
-	const colorInputEfetivo = [6, 9].includes(formik.values?.fk_situacao)
-		? "input-efetivo"
-		: "";
+	const colorInputEfetivo = disabledValidEfetiva ? "input-efetivo" : "";
 
 	useEffect(() => {
 		if (formik.values.ponto_passagem5.tipoServico === "Entrega") {
