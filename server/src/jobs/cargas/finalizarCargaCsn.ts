@@ -231,7 +231,6 @@ class ServiceFinishCargasCsn {
 
             const raioEmMetros = RAIO ? Number(RAIO) : 1;
             console.log(
-              "descricao:",
               DESCRICAO,
               "distancia veiculo =>",
               calculoDistancia.toFixed(3),

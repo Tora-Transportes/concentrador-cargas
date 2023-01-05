@@ -3,11 +3,10 @@ import "./main.css";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import { getClaims } from "../../MicrosoftAuthentication";
+import { TbTruckDelivery } from "react-icons/tb";
+import { FaChartBar, FaTruckMoving, FaBoxes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { IoLocationSharp } from "react-icons/io5";
-import { FaChartBar, FaTruckMoving } from "react-icons/fa";
-import { TbTruckDelivery } from "react-icons/tb";
-import { FaBoxes } from "react-icons/fa";
 import Menusuperior from "../Components/MenuSuperior/menusuperior";
 import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 
@@ -28,6 +27,7 @@ function Main() {
 		"danger",
 		"warning",
 	];
+	window.history.replaceState(null, null, "/");
 
 	function salvarTimestampUltimaVezJogada() {
 		const timestamp = new Date().getTime();
