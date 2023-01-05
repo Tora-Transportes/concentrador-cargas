@@ -24,7 +24,7 @@ const InputsPontoPassagem = ({
 	const [inputPontoPassagem10, setInputPontoPassagem10] = useState(true);
 
 	const disabledValidEfetiva =
-		[6, 7, 8, 9].includes(formik.values?.fk_situacao) && isPermissionUser
+		[6, 9].includes(formik.values?.fk_situacao) && isPermissionUser
 			? true
 			: false;
 	const colorInputEfetivo = [6, 9].includes(formik.values?.fk_situacao)
