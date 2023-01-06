@@ -30,13 +30,13 @@ class ServiceFinishCargasCsn {
     veiReferencia: string
   ): Promise<ILastLocations | undefined> {
     if (veiReferencia) {
-      const dataAtualMenos1Minuto = moment()
-        .subtract(1, "minutes")
+      const dataAtualMenos2Minuto = moment()
+        .subtract(62, "minutes")
         .format("YYYY-MM-DDTHH:mm:ss");
 
       const queryBuild = await mssqlCoordenadas.raw(
-        `select top 1 LAT, LON
-      from REPORTES where DISIMEI = '${veiReferencia}' and (dtinc < '${dataAtualMenos1Minuto}') order by dtinc desc`
+        `select TOP 1 LAT, LON
+      from REPORTES where DISIMEI = '${veiReferencia}' and (dtinc < '${dataAtualMenos2Minuto}') order by dtinc desc`
       );
       return queryBuild[0];
     }

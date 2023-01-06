@@ -24,7 +24,7 @@ export interface ISearchVehicleRange {
   latitude_origem: number;
   longitude_origem: number;
 }
-export interface IHistoryTravelVehicle {
+interface IHistoryTravelVehicle {
   mun: string;
   uf: string;
   rod: string;
@@ -33,6 +33,7 @@ export interface IHistoryTravelVehicle {
   lat: number;
   lon: number;
   disimei: number;
+  ID: number;
 }
 
 export interface IResultHistoryVeicle {
@@ -300,7 +301,7 @@ export class ServiceDistanceLocations {
     if (date_fim !== moment().format("YYYY-MM-DD")) {
       date_fim = moment(date_fim).format("YYYY-MM-DDT23:59:59");
     } else {
-      date_fim = moment().subtract(10, "minutes").format("YYYY-MM-DDTHH:mm:ss");
+      date_fim = moment().subtract(63, "minutes").format("YYYY-MM-DDTHH:mm:ss");
     }
 
     const historyVeicle: IHistoryTravelVehicle[] = await mssqlCoordenadas(
@@ -318,10 +319,17 @@ export class ServiceDistanceLocations {
         "LOC",
         "DTINC",
       ])
-      //.limit(10)
       .where("DISIMEI", query?.VEI_REFERENCIA)
-      .whereBetween("DTINC", [date_inicio, date_fim])
-      .orderBy("ID", "desc");
+      .andWhere("DTINC", ">=", date_inicio)
+      .andWhere("DTINC", "<=", date_fim);
+
+    //ordenação de historyVeicle (se ordernar na query fica muito lento a busca);
+    function compare(a: IHistoryTravelVehicle, b: IHistoryTravelVehicle) {
+      if (a.ID > b.ID) return -1;
+      if (a.ID < b.ID) return 1;
+      return 0;
+    }
+    historyVeicle.sort(compare);
 
     return {
       placa: plate,
@@ -345,7 +353,7 @@ export class ServiceDistanceLocations {
 
     const queryBuild = await mssqlCoordenadas.raw(
       `select top 1 DISIMEI, LAT, LON, UF, ROD, RUA, MUN, DTINC
-    from REPORTES where DISIMEI = '${VEI_REFERENCIA}' and (dtinc < '${dataAtualMenos1Minuto}') order by dtinc desc`
+    from cd where DISIMEI = '${VEI_REFERENCIA}' and (dtinc < '${dataAtualMenos1Minuto}') order by dtinc desc`
     );
 
     return queryBuild[0];
