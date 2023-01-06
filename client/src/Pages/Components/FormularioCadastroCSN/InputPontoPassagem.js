@@ -82,7 +82,7 @@ const InputsPontoPassagem = ({
 		<>
 			<Row className="row-input-coleta">
 				<Col sm={12} md={12} lg={12} xxl={6}>
-					<FloatingLabel label="*Ponto de passagem" className="mb-3">
+					<FloatingLabel label="*Ponto de Passagem" className="mb-3">
 						<Form.Control
 							type="text"
 							name="ponto_passagem.ponto"
@@ -107,7 +107,7 @@ const InputsPontoPassagem = ({
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="*Previsão inicio" className="mb-3">
+					<FloatingLabel label="*Previsão Início" className="mb-3">
 						<Form.Control
 							type="datetime-local"
 							placeholder=" "
@@ -121,7 +121,7 @@ const InputsPontoPassagem = ({
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="*Previsão fim" className="mb-3">
+					<FloatingLabel label="*Previsão Fim" className="mb-3">
 						<Form.Control
 							type="datetime-local"
 							placeholder=" "
@@ -138,7 +138,7 @@ const InputsPontoPassagem = ({
 					<>
 						<Col>
 							<FloatingLabel
-								label="*Data Coleta Efetivo inicio"
+								label="*Data Coleta Efetivo Início"
 								className="mb-3"
 							>
 								<Form.Control
@@ -157,7 +157,7 @@ const InputsPontoPassagem = ({
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="*Data Coleta Efetivo fim" className="mb-3">
+							<FloatingLabel label="*Data Coleta Efetivo Fim" className="mb-3">
 								<Form.Control
 									className={colorInputEfetivo}
 									type="datetime-local"
@@ -199,7 +199,7 @@ const InputsPontoPassagem = ({
 
 			<Row className="row-input-coleta">
 				<Col sm={12} md={12} lg={12} xxl={6}>
-					<FloatingLabel label="Ponto de passagem 2" className="mb-3">
+					<FloatingLabel label="Ponto de Passagem 2" className="mb-3">
 						<Form.Control
 							type="text"
 							name="ponto_passagem2.ponto"
@@ -224,7 +224,7 @@ const InputsPontoPassagem = ({
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="*Previsão inicio 2" className="mb-3">
+					<FloatingLabel label="*Previsão Início 2" className="mb-3">
 						<Form.Control
 							type="datetime-local"
 							name="ponto_passagem2.previsao"
@@ -237,7 +237,7 @@ const InputsPontoPassagem = ({
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="*Previsão fim 2" className="mb-3">
+					<FloatingLabel label="*Previsão Fim 2" className="mb-3">
 						<Form.Control
 							type="datetime-local"
 							placeholder=" "
@@ -254,7 +254,7 @@ const InputsPontoPassagem = ({
 					<>
 						<Col>
 							<FloatingLabel
-								label="*Data Coleta Efetivo inicio"
+								label="*Data Coleta Efetivo Início"
 								className="mb-3"
 							>
 								<Form.Control
@@ -273,7 +273,7 @@ const InputsPontoPassagem = ({
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="*Data Coleta Efetivo fim" className="mb-3">
+							<FloatingLabel label="*Data Coleta Efetivo Fim" className="mb-3">
 								<Form.Control
 									className={colorInputEfetivo}
 									type="datetime-local"
@@ -314,7 +314,7 @@ const InputsPontoPassagem = ({
 			</Row>
 			<Row className="row-input-coleta">
 				<Col sm={12} md={12} lg={12} xxl={6}>
-					<FloatingLabel label="Ponto de passagem 3" className="mb-3">
+					<FloatingLabel label="Ponto de Passagem 3" className="mb-3">
 						<Form.Control
 							type="text"
 							name="ponto_passagem3.ponto"
@@ -339,7 +339,7 @@ const InputsPontoPassagem = ({
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="*Previsão inicio 3" className="mb-3">
+					<FloatingLabel label="*Previsão Início 3" className="mb-3">
 						<Form.Control
 							type="datetime-local"
 							placeholder=" "
@@ -353,7 +353,7 @@ const InputsPontoPassagem = ({
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="*Previsão fim 3" className="mb-3">
+					<FloatingLabel label="*Previsão Fim 3" className="mb-3">
 						<Form.Control
 							type="datetime-local"
 							placeholder=" "
@@ -370,7 +370,7 @@ const InputsPontoPassagem = ({
 					<>
 						<Col>
 							<FloatingLabel
-								label="*Data Coleta Efetivo inicio"
+								label="*Data Coleta Efetivo Início"
 								className="mb-3"
 							>
 								<Form.Control
@@ -389,7 +389,7 @@ const InputsPontoPassagem = ({
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="*Data Coleta Efetivo fim" className="mb-3">
+							<FloatingLabel label="*Data Coleta Efetivo Fim" className="mb-3">
 								<Form.Control
 									className={colorInputEfetivo}
 									type="datetime-local"
@@ -437,7 +437,7 @@ const InputsPontoPassagem = ({
 							style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
 							className="col-cod-local"
 						>
-							<label>Ponto de passagem 5</label>
+							<label>Ponto de Passagem 5</label>
 							<RotasSelect
 								className="input-cod-local"
 								name="ponto_passagem5.ponto"
@@ -484,7 +484,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="*Previsão inicio 5" className="mb-3">
+						<FloatingLabel label="*Previsão Início 5" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -498,7 +498,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="*Previsão fim 5" className="mb-3">
+						<FloatingLabel label="*Previsão Fim 5" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -541,7 +541,7 @@ const InputsPontoPassagem = ({
 							</Col>
 							<Col>
 								<FloatingLabel
-									label="*Data Coleta Efetivo fim"
+									label="*Data Coleta Efetivo Fim"
 									className="mb-3"
 								>
 									<Form.Control
@@ -602,7 +602,7 @@ const InputsPontoPassagem = ({
 							style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
 							className="col-cod-local"
 						>
-							<label>Ponto de passagem 6</label>
+							<label>Ponto de Passagem 6</label>
 							<RotasSelect
 								className="input-cod-local"
 								placeholder=" "
@@ -650,7 +650,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="*Previsão inicio 6" className="mb-3">
+						<FloatingLabel label="*Previsão Início 6" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -664,7 +664,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="*Previsão fim 6" className="mb-3">
+						<FloatingLabel label="*Previsão Fim 6" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -707,7 +707,7 @@ const InputsPontoPassagem = ({
 							</Col>
 							<Col>
 								<FloatingLabel
-									label="Data Coleta/Entrega Efetivo fim"
+									label="Data Coleta/Entrega Efetivo Fim"
 									className="mb-3"
 								>
 									<Form.Control
@@ -768,7 +768,7 @@ const InputsPontoPassagem = ({
 							style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
 							className="col-cod-local"
 						>
-							<label>Ponto de passagem 7</label>
+							<label>Ponto de Passagem 7</label>
 							<RotasSelect
 								className="input-cod-local"
 								placeholder=" "
@@ -818,7 +818,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="*Previsão inicio 7" className="mb-3">
+						<FloatingLabel label="*Previsão Início 7" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -832,7 +832,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="*Previsão fim 7" className="mb-3">
+						<FloatingLabel label="*Previsão Fim 7" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -875,7 +875,7 @@ const InputsPontoPassagem = ({
 							</Col>
 							<Col>
 								<FloatingLabel
-									label="Data Coleta/Entrega Efetivo fim"
+									label="Data Coleta/Entrega Efetivo Fim"
 									className="mb-3"
 								>
 									<Form.Control
@@ -936,7 +936,7 @@ const InputsPontoPassagem = ({
 							style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
 							className="col-cod-local"
 						>
-							<label>Ponto de passagem 8</label>
+							<label>Ponto de Passagem 8</label>
 							<RotasSelect
 								className="input-cod-local"
 								placeholder=" "
@@ -984,7 +984,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="*Previsão inicio 8" className="mb-3">
+						<FloatingLabel label="*Previsão Início 8" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -998,7 +998,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="*Previsão fim 8" className="mb-3">
+						<FloatingLabel label="*Previsão Fim 8" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -1041,7 +1041,7 @@ const InputsPontoPassagem = ({
 							</Col>
 							<Col>
 								<FloatingLabel
-									label="Data Coleta/Entrega Efetivo fim"
+									label="Data Coleta/Entrega Efetivo Fim"
 									className="mb-3"
 								>
 									<Form.Control
@@ -1102,7 +1102,7 @@ const InputsPontoPassagem = ({
 							style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
 							className="col-cod-local"
 						>
-							<label>Ponto de passagem 9</label>
+							<label>Ponto de Passagem 9</label>
 							<RotasSelect
 								className="input-cod-local"
 								placeholder=" "
@@ -1150,7 +1150,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="*Previsão inicio 9" className="mb-3">
+						<FloatingLabel label="*Previsão Início 9" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -1164,7 +1164,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="*Previsão fim 9" className="mb-3">
+						<FloatingLabel label="*Previsão Fim 9" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -1178,7 +1178,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="*Previsão fim 9" className="mb-3">
+						<FloatingLabel label="*Previsão Fim 9" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -1221,7 +1221,7 @@ const InputsPontoPassagem = ({
 							</Col>
 							<Col>
 								<FloatingLabel
-									label="*Data Coleta Efetivo fim"
+									label="*Data Coleta Efetivo Fim"
 									className="mb-3"
 								>
 									<Form.Control
@@ -1282,7 +1282,7 @@ const InputsPontoPassagem = ({
 							style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
 							className="col-cod-local"
 						>
-							<label>Ponto de passagem 10</label>
+							<label>Ponto de Passagem 10</label>
 							<RotasSelect
 								className="input-cod-local"
 								placeholder=" "
@@ -1330,7 +1330,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="*Previsão inicio 10" className="mb-3">
+						<FloatingLabel label="*Previsão Início 10" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -1344,7 +1344,7 @@ const InputsPontoPassagem = ({
 						</FloatingLabel>
 					</Col>
 					<Col>
-						<FloatingLabel label="*Previsão fim 10" className="mb-3">
+						<FloatingLabel label="*Previsão Fim 10" className="mb-3">
 							<Form.Control
 								type="datetime-local"
 								placeholder=" "
@@ -1387,7 +1387,7 @@ const InputsPontoPassagem = ({
 							</Col>
 							<Col>
 								<FloatingLabel
-									label="*Data Entrega Efetivo fim"
+									label="*Data Entrega Efetivo Fim"
 									className="mb-3"
 								>
 									<Form.Control
@@ -1473,7 +1473,7 @@ const InputsPontoPassagem = ({
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="*Previsão inicio 4" className="mb-3">
+					<FloatingLabel label="*Previsão Início 4" className="mb-3">
 						<Form.Control
 							type="datetime-local"
 							placeholder=" "
@@ -1487,7 +1487,7 @@ const InputsPontoPassagem = ({
 					</FloatingLabel>
 				</Col>
 				<Col>
-					<FloatingLabel label="*Previsão fim 4" className="mb-3">
+					<FloatingLabel label="*Previsão Fim 4" className="mb-3">
 						<Form.Control
 							type="datetime-local"
 							placeholder=" "
@@ -1504,7 +1504,7 @@ const InputsPontoPassagem = ({
 					<>
 						<Col md={4} lg={4}>
 							<FloatingLabel
-								label="*Data Entrega Efetivo inicio"
+								label="*Data Entrega Efetivo Início"
 								className="mb-3"
 							>
 								<Form.Control
@@ -1521,7 +1521,7 @@ const InputsPontoPassagem = ({
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="*Data Entrega Efetivo fim" className="mb-3">
+							<FloatingLabel label="*Data Entrega Efetivo Fim" className="mb-3">
 								<Form.Control
 									className={colorInputEfetivo}
 									type="datetime-local"

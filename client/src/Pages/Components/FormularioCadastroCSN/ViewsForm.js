@@ -66,7 +66,7 @@ export default function ViewsForm({
 		<div className="class-body-form">
 			<Row>
 				<Col>
-					<FloatingLabel label="*Responsável pelo cadastro" className="mb-3">
+					<FloatingLabel label="*Responsável pelo Cadastro" className="mb-3">
 						<Form.Control
 							id="campo-aut"
 							type="text"
@@ -81,7 +81,7 @@ export default function ViewsForm({
 					</FloatingLabel>
 				</Col>
 				<Col md={4} sm={12}>
-					<FloatingLabel label="*Código da carga" className="mb-3">
+					<FloatingLabel label="*Código da Carga" className="mb-3">
 						<Form.Control
 							type="text"
 							placeholder=" "
@@ -102,7 +102,7 @@ export default function ViewsForm({
 					style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
 					className="col-cod-filial2"
 				>
-					<label>*Código da filial</label>
+					<label>*Código da Filial</label>
 					<FilialSelect
 						id="Codigo-filial"
 						className="input-cod-filial2"
@@ -117,7 +117,7 @@ export default function ViewsForm({
 					/>
 				</Col>
 				<Col>
-					<FloatingLabel label="Documento de transporte" className="mb-3">
+					<FloatingLabel label="Documento de Transporte" className="mb-3">
 						<Form.Control
 							id="doc-trans"
 							name="documento_transporte"
@@ -212,7 +212,7 @@ export default function ViewsForm({
 									formik.values.fk_situacao &&
 									![1, 2, 4].includes(Number(formik.values.fk_situacao))
 								}
-								placeholder="Placa veículo"
+								placeholder="Placa Veículo"
 								disabled={formik.values.e_lote}
 								type="text"
 								name="placa_veiculo"
@@ -246,7 +246,7 @@ export default function ViewsForm({
 								<InputGroup.Text>Carreta</InputGroup.Text>
 								<Form.Control
 									readOnly
-									placeholder="Placa carreta"
+									placeholder="Placa Carreta"
 									type="text"
 									value={formik.values.placa_carreta || ""}
 								/>
@@ -257,7 +257,7 @@ export default function ViewsForm({
 								<InputGroup.Text>Bitrem</InputGroup.Text>
 								<Form.Control
 									readOnly
-									placeholder="Placa bitrem"
+									placeholder="Placa Bitrem"
 									type="text"
 									value={formik.values.placa_bitrem || ""}
 								/>
@@ -338,7 +338,7 @@ export default function ViewsForm({
 			</Row>
 			<Row>
 				<Col sm={12} md={6}>
-					<FloatingLabel label="Tipo de material" className="mb-3">
+					<FloatingLabel label="Tipo de Material" className="mb-3">
 						<AutocompleteInput
 							keyDataList="tipo_carga"
 							options={produtos.filter((i) => !!i.ativo).map((i) => i.nome)}
@@ -352,7 +352,7 @@ export default function ViewsForm({
 				<Col>
 					<Row>
 						<Col>
-							<FloatingLabel label="*Unidade de medida" className="mb-3">
+							<FloatingLabel label="*Unidade de Medida" className="mb-3">
 								<Form.Control
 									type="text"
 									name="unidade_medida"
