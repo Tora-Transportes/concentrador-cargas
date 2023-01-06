@@ -138,7 +138,7 @@ const InputsPontoPassagem = ({
 					<>
 						<Col>
 							<FloatingLabel
-								label="*Data Coleta Efetiva inicio"
+								label="*Data Coleta Efetivo inicio"
 								className="mb-3"
 							>
 								<Form.Control
@@ -157,7 +157,7 @@ const InputsPontoPassagem = ({
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="*Data Coleta Efetiva fim" className="mb-3">
+							<FloatingLabel label="*Data Coleta Efetivo fim" className="mb-3">
 								<Form.Control
 									className={colorInputEfetivo}
 									type="datetime-local"
@@ -254,7 +254,7 @@ const InputsPontoPassagem = ({
 					<>
 						<Col>
 							<FloatingLabel
-								label="*Data Coleta Efetiva inicio"
+								label="*Data Coleta Efetivo inicio"
 								className="mb-3"
 							>
 								<Form.Control
@@ -273,7 +273,7 @@ const InputsPontoPassagem = ({
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="*Data Coleta Efetiva fim" className="mb-3">
+							<FloatingLabel label="*Data Coleta Efetivo fim" className="mb-3">
 								<Form.Control
 									className={colorInputEfetivo}
 									type="datetime-local"
@@ -370,7 +370,7 @@ const InputsPontoPassagem = ({
 					<>
 						<Col>
 							<FloatingLabel
-								label="*Data Coleta Efetiva inicio"
+								label="*Data Coleta Efetivo inicio"
 								className="mb-3"
 							>
 								<Form.Control
@@ -389,7 +389,7 @@ const InputsPontoPassagem = ({
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="*Data Coleta Efetiva fim" className="mb-3">
+							<FloatingLabel label="*Data Coleta Efetivo fim" className="mb-3">
 								<Form.Control
 									className={colorInputEfetivo}
 									type="datetime-local"
@@ -515,7 +515,7 @@ const InputsPontoPassagem = ({
 						<>
 							<Col>
 								<FloatingLabel
-									label="Data Coleta/Entrega Efetiva"
+									label="Data Coleta/Entrega Efetivo"
 									className="mb-3"
 								>
 									<Form.Control
@@ -541,7 +541,7 @@ const InputsPontoPassagem = ({
 							</Col>
 							<Col>
 								<FloatingLabel
-									label="*Data Coleta Efetiva fim"
+									label="*Data Coleta Efetivo fim"
 									className="mb-3"
 								>
 									<Form.Control
@@ -681,7 +681,7 @@ const InputsPontoPassagem = ({
 						<>
 							<Col>
 								<FloatingLabel
-									label="Data Coleta/Entrega Efetiva"
+									label="Data Coleta/Entrega Efetivo"
 									className="mb-3"
 								>
 									<Form.Control
@@ -707,7 +707,7 @@ const InputsPontoPassagem = ({
 							</Col>
 							<Col>
 								<FloatingLabel
-									label="Data Coleta/Entrega Efetiva fim"
+									label="Data Coleta/Entrega Efetivo fim"
 									className="mb-3"
 								>
 									<Form.Control
@@ -849,7 +849,7 @@ const InputsPontoPassagem = ({
 						<>
 							<Col>
 								<FloatingLabel
-									label="Data Coleta/Entrega Efetiva"
+									label="Data Coleta/Entrega Efetivo"
 									className="mb-3"
 								>
 									<Form.Control
@@ -875,7 +875,7 @@ const InputsPontoPassagem = ({
 							</Col>
 							<Col>
 								<FloatingLabel
-									label="Data Coleta/Entrega Efetiva fim"
+									label="Data Coleta/Entrega Efetivo fim"
 									className="mb-3"
 								>
 									<Form.Control
@@ -1015,7 +1015,7 @@ const InputsPontoPassagem = ({
 						<>
 							<Col>
 								<FloatingLabel
-									label="Data Coleta/Entrega Efetiva"
+									label="Data Coleta/Entrega Efetivo"
 									className="mb-3"
 								>
 									<Form.Control
@@ -1041,7 +1041,7 @@ const InputsPontoPassagem = ({
 							</Col>
 							<Col>
 								<FloatingLabel
-									label="Data Coleta/Entrega Efetiva fim"
+									label="Data Coleta/Entrega Efetivo fim"
 									className="mb-3"
 								>
 									<Form.Control
@@ -1195,7 +1195,7 @@ const InputsPontoPassagem = ({
 						<>
 							<Col>
 								<FloatingLabel
-									label="Data Coleta/Entrega Efetiva"
+									label="Data Coleta/Entrega Efetivo"
 									className="mb-3"
 								>
 									<Form.Control
@@ -1221,7 +1221,7 @@ const InputsPontoPassagem = ({
 							</Col>
 							<Col>
 								<FloatingLabel
-									label="*Data Coleta Efetiva fim"
+									label="*Data Coleta Efetivo fim"
 									className="mb-3"
 								>
 									<Form.Control
@@ -1361,7 +1361,7 @@ const InputsPontoPassagem = ({
 						<>
 							<Col>
 								<FloatingLabel
-									label="*Data Coleta/Entrega Efetiva"
+									label="*Data Coleta/Entrega Efetivo"
 									className="mb-3"
 								>
 									<Form.Control
@@ -1387,7 +1387,7 @@ const InputsPontoPassagem = ({
 							</Col>
 							<Col>
 								<FloatingLabel
-									label="*Data Entrega Efetiva fim"
+									label="*Data Entrega Efetivo fim"
 									className="mb-3"
 								>
 									<Form.Control
@@ -1504,7 +1504,7 @@ const InputsPontoPassagem = ({
 					<>
 						<Col md={4} lg={4}>
 							<FloatingLabel
-								label="*Data Entrega Efetiva inicio"
+								label="*Data Entrega Efetivo inicio"
 								className="mb-3"
 							>
 								<Form.Control
@@ -1521,7 +1521,7 @@ const InputsPontoPassagem = ({
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="*Data Entrega Efetiva fim" className="mb-3">
+							<FloatingLabel label="*Data Entrega Efetivo fim" className="mb-3">
 								<Form.Control
 									className={colorInputEfetivo}
 									type="datetime-local"

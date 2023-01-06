@@ -167,7 +167,7 @@ export const columns = [
 	},
 	{
 		name: "ponto_parada[0].COLETA_EFETIVA_POSTO30",
-		description: "Coleta Efetiva - Posto 30",
+		description: "Inicio Efetivo Posto 30",
 		selector: (row) =>
 			row.ponto_parada?.length
 				? DateUtils.formatDateTresHorasMenos(
@@ -176,8 +176,18 @@ export const columns = [
 				: "",
 	},
 	{
+		name: "ponto_parada[0].SAIDA_EFETIVA_COLETA",
+		description: "Fim Efetivo Posto 30",
+		selector: (row) =>
+			row.ponto_parada?.length
+				? DateUtils.formatDateTresHorasMenos(
+						row?.ponto_parada[0]?.SAIDA_EFETIVA_COLETA
+				  )
+				: "",
+	},
+	{
 		name: "ponto_parada[1].COLETA_EFETIVA_MUNDO",
-		description: "Coleta Efetiva – Mundo",
+		description: "Inicio Efetivo Mundo",
 		selector: (row) =>
 			row.ponto_parada?.length
 				? DateUtils.formatDateTresHorasMenos(
@@ -186,8 +196,18 @@ export const columns = [
 				: "",
 	},
 	{
+		name: "ponto_parada[1].SAIDA_EFETIVA_COLETA",
+		description: "Fim Efetivo Mundo",
+		selector: (row) =>
+			row.ponto_parada?.length
+				? DateUtils.formatDateTresHorasMenos(
+						row?.ponto_parada[1]?.SAIDA_EFETIVA_COLETA
+				  )
+				: "",
+	},
+	{
 		name: "ponto_parada[2].COLETA_EFETIVA_PEACAO",
-		description: "Coleta Efetiva – Peacao",
+		description: "Inicio Efetivo Peacao",
 		selector: (row) =>
 			row.ponto_parada?.length
 				? DateUtils.formatDateTresHorasMenos(
@@ -196,12 +216,34 @@ export const columns = [
 				: "",
 	},
 	{
+		name: "ponto_parada[2].SAIDA_EFETIVA_COLETA",
+		description: "Fim Efetivo Peacao",
+		selector: (row) =>
+			row.ponto_parada?.length
+				? DateUtils.formatDateTresHorasMenos(
+						row?.ponto_parada[2]?.SAIDA_EFETIVA_COLETA
+				  )
+				: "",
+	},
+	{
 		name: "ponto_parada[3].ENTREGA_EFETIVA",
-		description: "Entrega Efetiva",
+		description: "Inicio Efetivo Entrega",
 		selector: (row) => {
 			const horasEntregaEfetiva = row.ponto_parada?.length
 				? DateUtils.formatDateTresHorasMenos(
 						row?.ponto_parada[3]?.ENTREGA_EFETIVA
+				  )
+				: "";
+			return <div>{horasEntregaEfetiva}</div>;
+		},
+	},
+	{
+		name: "ponto_parada[3].SAIDA_EFETIVA_ENTREGA",
+		description: "Fim Efetivo Entrega",
+		selector: (row) => {
+			const horasEntregaEfetiva = row.ponto_parada?.length
+				? DateUtils.formatDateTresHorasMenos(
+						row?.ponto_parada[3]?.SAIDA_EFETIVA_ENTREGA
 				  )
 				: "";
 			return <div>{horasEntregaEfetiva}</div>;
