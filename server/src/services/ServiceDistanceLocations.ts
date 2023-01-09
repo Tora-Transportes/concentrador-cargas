@@ -25,14 +25,14 @@ export interface ISearchVehicleRange {
   longitude_origem: number;
 }
 interface IHistoryTravelVehicle {
-  mun: string;
-  uf: string;
-  rod: string;
-  rua: string;
-  mot: string;
-  lat: number;
-  lon: number;
-  disimei: number;
+  MUN: string;
+  UF: string;
+  ROD: string;
+  RUA: string;
+  MOT: string;
+  LAT: number;
+  LON: number;
+  DISIMEI: number;
   ID: number;
 }
 
@@ -323,17 +323,29 @@ export class ServiceDistanceLocations {
       .andWhere("DTINC", ">=", date_inicio)
       .andWhere("DTINC", "<=", date_fim);
 
+    //retirando duplicidades do array
+    const setHistoryVeicle = new Set();
+    const historicosSemDuplicidade = historyVeicle.filter(
+      (position: IHistoryTravelVehicle) => {
+        const duplicatedPerson = setHistoryVeicle.has(
+          position.LAT && position.LON
+        );
+        setHistoryVeicle.add(position.LAT && position.LON);
+        return !duplicatedPerson;
+      }
+    );
+
     //ordenação de historyVeicle (se ordernar na query fica muito lento a busca);
     function compare(a: IHistoryTravelVehicle, b: IHistoryTravelVehicle) {
       if (a.ID > b.ID) return -1;
       if (a.ID < b.ID) return 1;
       return 0;
     }
-    historyVeicle.sort(compare);
+    historicosSemDuplicidade.sort(compare);
 
     return {
       placa: plate,
-      posicao: historyVeicle,
+      posicao: historicosSemDuplicidade,
     };
   }
 

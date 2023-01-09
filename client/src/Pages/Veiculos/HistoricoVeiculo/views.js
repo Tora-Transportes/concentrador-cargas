@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	Container,
 	Row,
@@ -8,8 +8,8 @@ import {
 	Table,
 	Card,
 } from "react-bootstrap";
-import iconStart from "../../../assets/start.png";
-import iconFinish from "../../../assets/finish.png";
+// import iconStart from "../../../assets/start.png";
+// import iconFinish from "../../../assets/finish.png";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
 import { BsDownload } from "react-icons/bs";
@@ -22,15 +22,15 @@ const truckIcon = L.icon({
 	iconSize: new L.Point(40, 40),
 });
 
-const startIcons = L.icon({
-	iconUrl: iconStart,
-	iconSize: new L.Point(52, 52),
-});
+// const startIcons = L.icon({
+// 	iconUrl: iconStart,
+// 	iconSize: new L.Point(52, 52),
+// });
 
-const finishIcons = L.icon({
-	iconUrl: iconFinish,
-	iconSize: new L.Point(52, 52),
-});
+// const finishIcons = L.icon({
+// 	iconUrl: iconFinish,
+// 	iconSize: new L.Point(52, 52),
+// });
 
 function ViewHistoricoVeiculo({
 	buscarHistoricoVeicles,
@@ -39,11 +39,23 @@ function ViewHistoricoVeiculo({
 	LoadingScreen,
 	setLoading,
 }) {
-	const [fields, setFields] = React.useState({
+	const [fields, setFields] = useState({
 		placa: "",
 		date_inicio: new Date(),
 		date_fim: new Date(),
 	});
+
+	const [isLatitude, setLatitude] = useState();
+	const [isLongitude, setLongitude] = useState();
+
+	React.useEffect(() => {
+		if (historicoRotas?.posicao.length) {
+			setLatitude(historicoRotas?.posicao[0].LAT.replace(",", "."));
+			setLongitude(historicoRotas?.posicao[0].LON.replace(",", "."));
+		}
+	}, [historicoRotas]);
+
+	console.log("TTTTTT", isLatitude, isLongitude);
 
 	function handleChange(event) {
 		const { name, value } = event.target;
@@ -142,6 +154,8 @@ function ViewHistoricoVeiculo({
 				<Row className="mt-3">
 					{historicoRotas?.posicao.length > 0 && (
 						<>
+							{/* {setLatitude(historicoRotas?.posicao[0].LAT.replace(",", "."))}
+							{setLongitude(historicoRotas?.posicao[0].LON.replace(",", "."))} */}
 							<MapContainer
 								center={[
 									historicoRotas?.posicao[0].LAT.replace(",", "."),
@@ -167,15 +181,18 @@ function ViewHistoricoVeiculo({
 										<Marker
 											key={fields.placa + index}
 											position={[
-												position.LAT.replace(",", "."),
-												position.LON.replace(",", "."),
+												// position.LAT.replace(",", "."),
+												// position.LON.replace(",", "."),
+												isLatitude,
+												isLongitude,
 											]}
 											icon={
-												index === 0
-													? startIcons
-													: index === lastPosition
-													? finishIcons
-													: truckIcon
+												// index === 0
+												// 	? startIcons
+												// 	: index === lastPosition
+												// 	? finishIcons
+												// 	: truckIcon
+												truckIcon
 											}
 										>
 											<Popup>{messagePopup}</Popup>
@@ -210,7 +227,18 @@ function ViewHistoricoVeiculo({
 								<tbody>
 									{historicoRotas.posicao.map((position, index) => (
 										<tr key={index + 1}>
-											<td>{index}</td>
+											<td>
+												{" "}
+												<Button
+													variant="link"
+													onClick={() => {
+														setLatitude(position.LAT.replace(",", "."));
+														setLongitude(position.LON.replace(",", "."));
+													}}
+												>
+													{index}
+												</Button>
+											</td>
 											<td>{fields.placa}</td>
 											<td>{position.UF}</td>
 											<td>{position.MUN}</td>
