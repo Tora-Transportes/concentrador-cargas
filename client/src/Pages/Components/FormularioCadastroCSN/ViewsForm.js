@@ -495,7 +495,9 @@ export default function ViewsForm({
 
 			<Modal show={veiculo !== null} size="lg" onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
-					<Modal.Title className="modal-title">{titleInfoPlaca}</Modal.Title>
+					<Modal.Title className="modal-title-csn">
+						{titleInfoPlaca}
+					</Modal.Title>
 				</Modal.Header>
 				{veiculo && (
 					<Row>

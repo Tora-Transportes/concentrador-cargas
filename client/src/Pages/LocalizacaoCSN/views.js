@@ -284,7 +284,7 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 							</div>
 
 							<div className="formgrid grid">
-								<label htmlFor="L">Longitude</label>
+								<label htmlFor="L">Latitude</label>
 								<div className="field col">
 									<Form.Control
 										type="number"

@@ -349,10 +349,10 @@ function Helper() {
 						</div>
 						<p className="p-tela-ajuda">
 							<b className="style-b-ajuda">Rotas Pendentes de Cadastro - </b>{" "}
-							Disponibiliza os nomes das cidades e estados de origem e destino,{" "}
-							<br /> provendo acesso as informações de rotas, e permite também
-							que você busque uma cidade ou estado
-							<br /> específico, para melhor acompanhamento.
+							Disponibiliza os nomes das cidades e dos estados de origem e
+							<br /> destino, provendo acesso á informações de rotas, e permite
+							também que você busque uma cidade ou estado <br /> específico,
+							para melhor acompanhamento.
 						</p>
 						<img src={rotasPendentes} id="style-gif" />
 
