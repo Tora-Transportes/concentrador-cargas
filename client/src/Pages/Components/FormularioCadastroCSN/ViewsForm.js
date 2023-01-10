@@ -17,7 +17,7 @@ import AutocompleteInput from "../AutocompleteInput";
 import FilialSelect from "../FilialSelect";
 import InputCliente from "../InputCliente";
 import InputPlaca from "../InputPlaca";
-import ListAddItens from "../ListAddItens";
+// import ListAddItens from "../ListAddItens";
 import InputsPontoPassagem from "./InputPontoPassagem";
 
 export default function ViewsForm({
@@ -482,7 +482,7 @@ export default function ViewsForm({
 				</Col>
 			</Row>
 
-			<div>
+			{/* <div>
 				<ListAddItens
 					id="style-botao-add"
 					value={formik.values.locais}
@@ -491,7 +491,7 @@ export default function ViewsForm({
 					onKeyDown={handleEnter}
 					formik={formik}
 				/>
-			</div>
+			</div> */}
 
 			<Modal show={veiculo !== null} size="lg" onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
