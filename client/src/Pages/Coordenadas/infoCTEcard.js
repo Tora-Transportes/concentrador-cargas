@@ -76,7 +76,7 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 									</li>
 									<li className="ul-card-li">
 										<h6>
-											Números CTE: <strong>{i.DOC_ID}</strong>
+											Número CTE: <strong>{i.DOC_ID}</strong>
 										</h6>
 									</li>
 									<li className="ul-card-li">

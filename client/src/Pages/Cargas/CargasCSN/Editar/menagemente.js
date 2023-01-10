@@ -1,12 +1,14 @@
 import moment from "moment";
+import { formatDateAddHours } from "src/Pages/Utils/formatDate";
 
 export const funcBodyEdit = (data, tipoServico) => {
 	const nomeCliente = data.CLIENTE !== null ? data.CLIENTE : data.DESCRICAO;
+	console.log("AAAAAAAAAAAAAAAAAAAAA");
 	return {
 		ponto: nomeCliente,
 		tipoServico,
-		previsao: moment(data.PREVISAO).format("YYYY-MM-DDTHH:mm"),
-		previsaoSaida: moment(data.PREVISAO_SAIDA).format("YYYY-MM-DDTHH:mm"),
+		previsao: formatDateAddHours(data.PREVISAO, 1),
+		previsaoSaida: formatDateAddHours(data.PREVISAO_SAIDA, 1),
 		tempServicoLocal: data.TEMP_SERV_LOCAL_COLETA,
 		tempServicoLocalEntrega: data?.TEMP_SERV_LOCAL_ENTREGA,
 		coletaEfetivaSaida: moment(data.SAIDA_EFETIVA_COLETA).format(
