@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	Container,
 	Row,
@@ -8,9 +8,15 @@ import {
 	Table,
 	Card,
 } from "react-bootstrap";
-// import iconStart from "../../../assets/start.png";
-// import iconFinish from "../../../assets/finish.png";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import iconStart from "../../../assets/start.png";
+import iconFinish from "../../../assets/finish.png";
+import {
+	MapContainer,
+	Marker,
+	Polyline,
+	Popup,
+	TileLayer,
+} from "react-leaflet";
 import L from "leaflet";
 import { BsDownload } from "react-icons/bs";
 import DateUtils from "../../Utils/date";
@@ -22,15 +28,15 @@ const truckIcon = L.icon({
 	iconSize: new L.Point(40, 40),
 });
 
-// const startIcons = L.icon({
-// 	iconUrl: iconStart,
-// 	iconSize: new L.Point(52, 52),
-// });
+const startIcons = L.icon({
+	iconUrl: iconStart,
+	iconSize: new L.Point(52, 52),
+});
 
-// const finishIcons = L.icon({
-// 	iconUrl: iconFinish,
-// 	iconSize: new L.Point(52, 52),
-// });
+const finishIcons = L.icon({
+	iconUrl: iconFinish,
+	iconSize: new L.Point(52, 52),
+});
 
 function ViewHistoricoVeiculo({
 	buscarHistoricoVeicles,
@@ -38,6 +44,7 @@ function ViewHistoricoVeiculo({
 	clearHistoricoRotas,
 	LoadingScreen,
 	setLoading,
+	isArrayLatLon,
 }) {
 	const [fields, setFields] = useState({
 		placa: "",
@@ -47,22 +54,55 @@ function ViewHistoricoVeiculo({
 
 	const [isLatitude, setLatitude] = useState();
 	const [isLongitude, setLongitude] = useState();
-
-	React.useEffect(() => {
+	const [isCountPosition, setCountPosition] = useState(0);
+	const [isLastPosition, setLastPosition] = useState(0);
+	const colorLineMap = { color: "#87CEFA", opacity: 2 };
+	useEffect(() => {
 		if (historicoRotas?.posicao.length) {
 			setLatitude(historicoRotas?.posicao[0].LAT.replace(",", "."));
 			setLongitude(historicoRotas?.posicao[0].LON.replace(",", "."));
+			setLastPosition(historicoRotas?.posicao.length - 1);
 		}
 	}, [historicoRotas]);
+	const moverPosicao = (sentidoDaPosicao) => {
+		if (historicoRotas?.posicao.length) {
+			let indexPosition;
+			if (sentidoDaPosicao === "Seguinte") {
+				indexPosition =
+					isCountPosition === isLastPosition
+						? isLastPosition
+						: isCountPosition + 1;
+				setCountPosition(indexPosition);
+			} else {
+				indexPosition = isCountPosition > 0 ? isCountPosition - 1 : 0;
+				setCountPosition(indexPosition);
+			}
+			const { LAT, LON } = historicoRotas.posicao[indexPosition];
+			setLatitude(LAT.replace(",", "."));
+			setLongitude(LON.replace(",", "."));
+		}
+	};
 
-	console.log("TTTTTT", isLatitude, isLongitude);
+	const handlePositionMap = (event) => {
+		if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+			if (historicoRotas?.posicao.length) {
+				if (event.key === "ArrowUp") {
+					moverPosicao("Seguinte");
+					event.preventDefault();
+				} else {
+					moverPosicao("Anterior");
+					event.preventDefault();
+				}
+			}
+		}
+	};
 
 	function handleChange(event) {
 		const { name, value } = event.target;
 		setFields((prevState) => ({ ...prevState, [name]: value }));
 	}
 
-	React.useEffect(() => {
+	useEffect(() => {
 		clearHistoricoRotas();
 	}, [fields.placa, fields.date_inicio, fields.date_fim]);
 
@@ -154,8 +194,6 @@ function ViewHistoricoVeiculo({
 				<Row className="mt-3">
 					{historicoRotas?.posicao.length > 0 && (
 						<>
-							{/* {setLatitude(historicoRotas?.posicao[0].LAT.replace(",", "."))}
-							{setLongitude(historicoRotas?.posicao[0].LON.replace(",", "."))} */}
 							<MapContainer
 								center={[
 									historicoRotas?.posicao[0].LAT.replace(",", "."),
@@ -168,44 +206,104 @@ function ViewHistoricoVeiculo({
 									attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 									url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 								/>
+								{/* {historicoRotas.posicao.map((position) => { */}
+								{/* position;
+									//index === 0
+									// ? " Posição inicial da busca"
+									// : index === isLastPosition
+									// ? "Posição final da busca"
+									// : `UF: ${position.UF?.toUpperCase()} ,Municipio: ${position.MUN?.toUpperCase()} ,Rua: ${position.RUA?.toUpperCase()}.`;
+									//const iconType = index === 0 ? startIcons : truckIcon;
+									return ( */}
+								<>
+									<Marker
+										//key={fields.placa + index}
+										position={[
+											historicoRotas?.posicao[0].LAT.replace(",", "."),
+											historicoRotas?.posicao[0].LON.replace(",", "."),
+										]}
+										icon={startIcons}
+									>
+										<Popup>{"Inicio da busca"}</Popup>
+									</Marker>
+									<Marker
+										//key={fields.placa}
+										position={[isLatitude, isLongitude]}
+										icon={truckIcon}
+									>
+										<Popup>{`UF: MG,Municipio: BH ,Rua: AA.`}</Popup>
+									</Marker>
+									<Marker
+										//key={fields.placa + position.LAT}
+										position={[
+											historicoRotas?.posicao[isLastPosition].LAT.replace(
+												",",
+												"."
+											),
+											historicoRotas?.posicao[isLastPosition].LON.replace(
+												",",
+												"."
+											),
+										]}
+										icon={finishIcons}
+									>
+										<Popup>{"Cavalo"}</Popup>
+									</Marker>
+									<Polyline
+										//key={position.LON}
+										pathOptions={colorLineMap}
+										// positions={[
+										// 	[-22.5274363, -44.1998475],
+										// 	[-22.5273671, -44.1998318],
+										// 	[-22.558198, -44.1339091],
+										// 	[-22.5854151, -44.053947],
+										// 	[-22.6643616, -43.8839703],
+										// ]}
 
-								{historicoRotas.posicao.map((position, index) => {
-									const lastPosition = historicoRotas.posicao.length - 1;
-									const messagePopup =
-										index === 0
-											? " Posição inicial da busca"
-											: index === lastPosition
-											? "Posição final da busca"
-											: `UF: ${position.UF?.toUpperCase()} ,Municipio: ${position.MUN?.toUpperCase()} ,Rua: ${position.RUA?.toUpperCase()}.`;
-									return (
-										<Marker
-											key={fields.placa + index}
-											position={[
-												// position.LAT.replace(",", "."),
-												// position.LON.replace(",", "."),
-												isLatitude,
-												isLongitude,
-											]}
-											icon={
-												// index === 0
-												// 	? startIcons
-												// 	: index === lastPosition
-												// 	? finishIcons
-												// 	: truckIcon
-												truckIcon
-											}
-										>
-											<Popup>{messagePopup}</Popup>
-										</Marker>
-									);
-								})}
+										positions={isArrayLatLon}
+									/>
+								</>
+								);
+								{/* })} */}
 							</MapContainer>
-							<strong className="placa-consultada">
-								{" "}
-								Placa correspondente a consulta:
-								<span className="span-placa"> {fields.placa}</span>
-							</strong>
-							<Table className="mt-5" striped bordered hover>
+							<div className="placa-botao mt-3">
+								<div className="mb-3">
+									<strong className="placa-consultada">
+										{" "}
+										Placa correspondente a consulta:
+										<span className="span-placa"> {fields.placa}</span>, índice:{" "}
+										<span className="span-placa"> {isCountPosition}</span>
+									</strong>
+								</div>
+								<div className="mt- 3">
+									<Button
+										style={{
+											background: "#00652E",
+											border: "none",
+											color: "#FFFFFF",
+											marginRight: 5,
+										}}
+										variant="outline-info"
+										onClick={() => moverPosicao("Anterior")}
+										onKeyDown={handlePositionMap}
+									>
+										Posição Anterior
+									</Button>
+									<Button
+										variant="outline-info"
+										style={{
+											background: "#00652E",
+											border: "none",
+											color: "#FFFFFF",
+										}}
+										onClick={() => moverPosicao("Seguinte")}
+										onKeyDown={handlePositionMap}
+									>
+										Posição Seguinte
+									</Button>
+								</div>
+							</div>
+							<Table className="mt-4" striped bordered hover>
 								<thead>
 									<tr>
 										<th>
@@ -226,14 +324,16 @@ function ViewHistoricoVeiculo({
 								</thead>
 								<tbody>
 									{historicoRotas.posicao.map((position, index) => (
-										<tr key={index + 1}>
+										<tr key={position.ID}>
 											<td>
 												{" "}
 												<Button
 													variant="link"
+													onKeyDown={handlePositionMap}
 													onClick={() => {
 														setLatitude(position.LAT.replace(",", "."));
 														setLongitude(position.LON.replace(",", "."));
+														setCountPosition(index);
 													}}
 												>
 													{index}

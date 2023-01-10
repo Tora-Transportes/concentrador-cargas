@@ -33,10 +33,10 @@ color: #00652e;
 
 .text-center .placa-consultada {
   font-family: "Poppins", sans-serif;
-  text-align: left;
+  /* text-align: left;
   margin-top: 2rem;
   margin-bottom: -2rem;
-  margin-left: -0.8rem;
+  margin-left: -0.8rem; */
 }
 
 .span-placa {

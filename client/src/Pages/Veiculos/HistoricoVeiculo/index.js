@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import ViewHistoricoVeiculo from "./views";
 import ServiceCoordenadas from "src/services/ServiceCoordenadas";
@@ -9,6 +9,7 @@ import { Toast } from "primereact/toast";
 function HistoricoVeiculos() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [historicoRotas, setHistoricoRotas] = useState();
+	const [isArrayLatLon, setArrayLatLon] = useState([]);
 	const toast = useRef(null);
 
 	async function buscarHistoricoVeicles(placa, date_inicio, date_fim) {
@@ -21,7 +22,6 @@ function HistoricoVeiculos() {
 					date_fim,
 				})
 			).data;
-
 			if (historico?.posicao?.length > 0) {
 				setHistoricoRotas(historico);
 			} else {
@@ -38,6 +38,16 @@ function HistoricoVeiculos() {
 	function clearHistoricoRotas() {
 		setHistoricoRotas(null);
 	}
+
+	useEffect(() => {
+		if (historicoRotas?.posicao?.length > 0) {
+			const arrayPosition = historicoRotas.posicao.map((position) => [
+				Number(position.LAT.replace(",", ".")),
+				Number(position.LON.replace(",", ".")),
+			]);
+			setArrayLatLon(arrayPosition);
+		}
+	}, [historicoRotas]);
 	return (
 		<>
 			<LoadingScreen />
@@ -54,6 +64,7 @@ function HistoricoVeiculos() {
 				clearHistoricoRotas={clearHistoricoRotas}
 				LoadingScreen={LoadingScreen}
 				setLoading={setLoading}
+				isArrayLatLon={isArrayLatLon}
 			/>
 		</>
 	);

@@ -33,6 +33,7 @@ interface IHistoryTravelVehicle {
   LAT: number;
   LON: number;
   DISIMEI: number;
+  DTINC: Date;
   ID: number;
 }
 
@@ -324,28 +325,29 @@ export class ServiceDistanceLocations {
       .andWhere("DTINC", "<=", date_fim);
 
     //retirando duplicidades do array
-    const setHistoryVeicle = new Set();
-    const historicosSemDuplicidade = historyVeicle.filter(
-      (position: IHistoryTravelVehicle) => {
-        const duplicatedPerson = setHistoryVeicle.has(
-          position.LAT && position.LON
-        );
-        setHistoryVeicle.add(position.LAT && position.LON);
-        return !duplicatedPerson;
-      }
-    );
+    // const setHistoryVeicle = new Set();
+    // const historicosSemDuplicidade = historyVeicle.filter(
+    //   (position: IHistoryTravelVehicle) => {
+    //     const horasDtinc = moment(position.DTINC).format("YYYY-MM-DD HH:mm");
+    //     const duplicatedPerson = setHistoryVeicle.has(
+    //       position.LAT && position.LON && horasDtinc
+    //     );
+    //     setHistoryVeicle.add(position.LAT && position.LON && horasDtinc);
+    //     return !duplicatedPerson;
+    //   }
+    // );
 
-    //ordenação de historyVeicle (se ordernar na query fica muito lento a busca);
+    //ordenação de historyVeicle DESC (se ordernar na query fica muito lento a busca);
     function compare(a: IHistoryTravelVehicle, b: IHistoryTravelVehicle) {
       if (a.ID > b.ID) return -1;
       if (a.ID < b.ID) return 1;
       return 0;
     }
-    historicosSemDuplicidade.sort(compare);
+    historyVeicle.sort(compare);
 
     return {
       placa: plate,
-      posicao: historicosSemDuplicidade,
+      posicao: historyVeicle,
     };
   }
 
