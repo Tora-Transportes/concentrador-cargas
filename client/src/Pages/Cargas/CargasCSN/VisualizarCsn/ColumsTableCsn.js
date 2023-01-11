@@ -118,7 +118,15 @@ export const columns = [
 				</OverlayTrigger>
 			);
 		},
+		Filter: (props) => (
+			<Form.Select {...props}>
+				<option></option>
+				<option value="true">Com Rastreador</option>
+				<option value="null">Sem Rastreador</option>
+			</Form.Select>
+		),
 		showFilter: true,
+		//sortable: "sortable",
 	},
 	{
 		name: "categoria_veiculo",
