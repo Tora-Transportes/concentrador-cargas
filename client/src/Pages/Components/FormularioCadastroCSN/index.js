@@ -6,7 +6,7 @@ import somaDebitoVeiculo from "src/Pages/Utils/somaDebitoVeiculo";
 import { funcInputPontoParada, mensagemPlacaEmUso } from "./management";
 import ViewsForm from "./ViewsForm";
 import ServiceCargas from "src/services/ServiceCargas";
-//import Swal2 from "sweetalert2";
+import Swal2 from "sweetalert2";
 function FormularioCadastroCSN({
 	formik,
 	produtos,
@@ -115,6 +115,11 @@ function FormularioCadastroCSN({
 					await formik.setFieldValue("rastreador", detalhesVeiculos.RASTREADOR);
 				} else {
 					await formik.setFieldValue("rastreador", "Sem rastreador");
+					Swal2.fire({
+						icon: "info",
+						title: "Oops...",
+						text: "“Veículo sem Rastreador, o processo de verificação de polígonos não será aplicado”.",
+					});
 				}
 
 				setDetalesVeiculo(detalhesVeiculos);

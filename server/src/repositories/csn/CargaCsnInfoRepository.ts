@@ -149,7 +149,15 @@ export class CargaCsnInfoRepository {
         qb.andWhere("categoria_veiculo", "=", query.categoria_veiculo);
       }
       if (query?.rastreador) {
-        qb.andWhere("rastreador", query.rastreador);
+        if (query.rastreador === "null") {
+          qb.andWhere("rastreador", null);
+        } else {
+          qb.whereNotNull("rastreador").andWhere(
+            "rastreador",
+            "<>",
+            "Sem rastreador"
+          );
+        }
       }
     };
 
