@@ -84,12 +84,12 @@ class ServiceCargas {
 		const carga = {
 			ID_ROTAS_CSN: ponto ? ponto?.split("-")[0] : null,
 			ID_CON_CARGAS: id_carga,
-			PREVISAO: moment(previsao).subtract(3, "hours"),
+			PREVISAO: moment(previsao).subtract(2, "hours"),
 			STATUS_SERVICO: tipoServico.toUpperCase(),
 			LATITUDE: latitude ? latitude : null,
 			LONGITUDE: longitude ? longitude : null,
 			CLIENTE: client === "" ? ponto : client,
-			PREVISAO_SAIDA: moment(previsaoSaida).subtract(3, "hours"),
+			PREVISAO_SAIDA: moment(previsaoSaida).subtract(2, "hours"),
 			ENTREGA_FINAL: entregaFinal ? entregaFinal : 0,
 		};
 		//console.log("Ponto parada", carga);
