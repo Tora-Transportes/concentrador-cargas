@@ -21,7 +21,7 @@ import L from "leaflet";
 import { BsDownload } from "react-icons/bs";
 import DateUtils from "../../Utils/date";
 import "./historicoVeiculos.css";
-import { formatDateAtual } from "src/Pages/Utils/formatDate";
+import { formatDateAtual3HorasMais } from "src/Pages/Utils/formatDate";
 
 const truckIcon = L.icon({
 	iconUrl:
@@ -210,22 +210,6 @@ function ViewHistoricoVeiculo({
 								<>
 									<Marker
 										position={[
-											historicoRotas?.posicao[0].LAT.replace(",", "."),
-											historicoRotas?.posicao[0].LON.replace(",", "."),
-										]}
-										icon={startIcons}
-									>
-										<Popup>{"Inicio da busca"}</Popup>
-									</Marker>
-									<Marker position={[isLatitude, isLongitude]} icon={truckIcon}>
-										<Popup>{`Placa: ${
-											fields.placa
-										}; Data/Hora:${formatDateAtual(
-											historicoRotas?.posicao[isCountPosition].DTINC
-										)}; Posição: ${isCountPosition}.`}</Popup>
-									</Marker>
-									<Marker
-										position={[
 											historicoRotas?.posicao[isLastPosition].LAT.replace(
 												",",
 												"."
@@ -234,6 +218,22 @@ function ViewHistoricoVeiculo({
 												",",
 												"."
 											),
+										]}
+										icon={startIcons}
+									>
+										<Popup>{"Inicio da busca"}</Popup>
+									</Marker>
+									<Marker position={[isLatitude, isLongitude]} icon={truckIcon}>
+										<Popup>{`Placa: ${
+											fields.placa
+										}; Data/Hora:${formatDateAtual3HorasMais(
+											historicoRotas?.posicao[isCountPosition].DTINC
+										)}; Posição: ${isCountPosition}.`}</Popup>
+									</Marker>
+									<Marker
+										position={[
+											historicoRotas?.posicao[0].LAT.replace(",", "."),
+											historicoRotas?.posicao[0].LON.replace(",", "."),
 										]}
 										icon={finishIcons}
 									>
