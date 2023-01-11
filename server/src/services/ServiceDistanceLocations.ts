@@ -337,8 +337,8 @@ export class ServiceDistanceLocations {
 
     //ordenação de historyVeicle DESC (se ordernar na query fica muito lento a busca);
     function compare(a: IHistoryTravelVehicle, b: IHistoryTravelVehicle) {
-      if (a.ID > b.ID) return -1;
-      if (a.ID < b.ID) return 1;
+      if (a.ID < b.ID) return -1;
+      if (a.ID > b.ID) return 1;
       return 0;
     }
     historyVeicle.sort(compare);

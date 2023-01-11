@@ -33,6 +33,7 @@ function FormularioCadastroCSN({
 	const fkSituacao =
 		formik.values?.fk_situacao === 1 ||
 		formik.values?.fk_situacao === 2 ||
+		formik.values?.fk_situacao === 4 ||
 		formik.values?.fk_situacao === undefined
 			? false
 			: true;
@@ -84,7 +85,6 @@ function FormularioCadastroCSN({
 			formik.setFieldValue("nome_motorista", null);
 		}
 	}, [formik.values.e_lote]);
-
 	async function handleSearchVehicle(plate) {
 		if (plate) {
 			setDetalesVeiculo(null);
@@ -98,14 +98,6 @@ function FormularioCadastroCSN({
 					"codigo_motorista",
 					vehicleDetails.codigo_motorista
 				);
-				const { data } = (
-					await ServiceCargas.searchCsnPlacaFkSituacao({ placa: plate })
-				).data;
-
-				if (data.results?.length) {
-					const { id, fk_situacao } = data.results[0];
-					mensagemPlacaEmUso(id, fk_situacao, plate, history, formik);
-				}
 
 				const detalhesVeiculos = (
 					await ServiceVeiculos.detalhesImpedimentos(plate)
@@ -115,11 +107,20 @@ function FormularioCadastroCSN({
 					await formik.setFieldValue("rastreador", detalhesVeiculos.RASTREADOR);
 				} else {
 					await formik.setFieldValue("rastreador", "Sem rastreador");
-					Swal2.fire({
+					await Swal2.fire({
 						icon: "info",
 						title: "Oops...",
 						text: "“Veículo sem Rastreador, o processo de verificação de polígonos não será aplicado”.",
 					});
+				}
+
+				const { data } = (
+					await ServiceCargas.searchCsnPlacaFkSituacao({ placa: plate })
+				).data;
+
+				if (data.results?.length) {
+					const { id, fk_situacao } = data.results[0];
+					mensagemPlacaEmUso(id, fk_situacao, plate, history, formik);
 				}
 
 				setDetalesVeiculo(detalhesVeiculos);

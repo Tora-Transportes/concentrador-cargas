@@ -19,5 +19,5 @@ export const formatDateAddHours = (dataValor, addHour) => {
 };
 
 export const formatDateAtual = (dataValor) => {
-	return moment(dataValor).format("DD/MM/YYYY");
+	return moment(dataValor).format("DD/MM/YYYY HH:mm:ss");
 };
