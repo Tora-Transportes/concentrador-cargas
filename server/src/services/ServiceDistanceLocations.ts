@@ -305,9 +305,7 @@ export class ServiceDistanceLocations {
       date_fim = moment().subtract(63, "minutes").format("YYYY-MM-DDTHH:mm:ss");
     }
 
-    const historyVeicle: IHistoryTravelVehicle[] = await mssqlCoordenadas(
-      "REPORTES"
-    )
+    const historyVeicle = await mssqlCoordenadas("REPORTES")
       .select([
         "ID",
         "DISIMEI",

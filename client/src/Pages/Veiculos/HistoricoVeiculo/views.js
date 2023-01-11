@@ -21,6 +21,7 @@ import L from "leaflet";
 import { BsDownload } from "react-icons/bs";
 import DateUtils from "../../Utils/date";
 import "./historicoVeiculos.css";
+import { formatDateAtual } from "src/Pages/Utils/formatDate";
 
 const truckIcon = L.icon({
 	iconUrl:
@@ -56,7 +57,7 @@ function ViewHistoricoVeiculo({
 	const [isLongitude, setLongitude] = useState();
 	const [isCountPosition, setCountPosition] = useState(0);
 	const [isLastPosition, setLastPosition] = useState(0);
-	const colorLineMap = { color: "#87CEFA", opacity: 2 };
+	const colorLineMap = { color: "red", opacity: 2 };
 	useEffect(() => {
 		if (historicoRotas?.posicao.length) {
 			setLatitude(historicoRotas?.posicao[0].LAT.replace(",", "."));
@@ -206,18 +207,8 @@ function ViewHistoricoVeiculo({
 									attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 									url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 								/>
-								{/* {historicoRotas.posicao.map((position) => { */}
-								{/* position;
-									//index === 0
-									// ? " Posição inicial da busca"
-									// : index === isLastPosition
-									// ? "Posição final da busca"
-									// : `UF: ${position.UF?.toUpperCase()} ,Municipio: ${position.MUN?.toUpperCase()} ,Rua: ${position.RUA?.toUpperCase()}.`;
-									//const iconType = index === 0 ? startIcons : truckIcon;
-									return ( */}
 								<>
 									<Marker
-										//key={fields.placa + index}
 										position={[
 											historicoRotas?.posicao[0].LAT.replace(",", "."),
 											historicoRotas?.posicao[0].LON.replace(",", "."),
@@ -226,15 +217,12 @@ function ViewHistoricoVeiculo({
 									>
 										<Popup>{"Inicio da busca"}</Popup>
 									</Marker>
-									<Marker
-										//key={fields.placa}
-										position={[isLatitude, isLongitude]}
-										icon={truckIcon}
-									>
-										<Popup>{`UF: MG,Municipio: BH ,Rua: AA.`}</Popup>
+									<Marker position={[isLatitude, isLongitude]} icon={truckIcon}>
+										<Popup>{`Placa: ${fields.placa}; Data:${formatDateAtual(
+											historicoRotas?.posicao[isCountPosition].DTINC
+										)}; Posição: ${isCountPosition}.`}</Popup>
 									</Marker>
 									<Marker
-										//key={fields.placa + position.LAT}
 										position={[
 											historicoRotas?.posicao[isLastPosition].LAT.replace(
 												",",
@@ -247,31 +235,22 @@ function ViewHistoricoVeiculo({
 										]}
 										icon={finishIcons}
 									>
-										<Popup>{"Cavalo"}</Popup>
+										<Popup>{"Fim da busca"}</Popup>
 									</Marker>
 									<Polyline
-										//key={position.LON}
 										pathOptions={colorLineMap}
-										// positions={[
-										// 	[-22.5274363, -44.1998475],
-										// 	[-22.5273671, -44.1998318],
-										// 	[-22.558198, -44.1339091],
-										// 	[-22.5854151, -44.053947],
-										// 	[-22.6643616, -43.8839703],
-										// ]}
-
 										positions={isArrayLatLon}
 									/>
 								</>
 								);
-								{/* })} */}
 							</MapContainer>
 							<div className="placa-botao mt-3">
 								<div className="mb-3">
 									<strong className="placa-consultada">
 										{" "}
 										Placa correspondente a consulta:
-										<span className="span-placa"> {fields.placa}</span>, índice:{" "}
+										<span className="span-placa"> {fields.placa}</span>,
+										posição:{" "}
 										<span className="span-placa"> {isCountPosition}</span>
 									</strong>
 								</div>

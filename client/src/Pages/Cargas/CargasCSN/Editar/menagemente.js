@@ -3,12 +3,12 @@ import { formatDateAddHours } from "src/Pages/Utils/formatDate";
 
 export const funcBodyEdit = (data, tipoServico) => {
 	const nomeCliente = data.CLIENTE !== null ? data.CLIENTE : data.DESCRICAO;
-	console.log("AAAAAAAAAAAAAAAAAAAAA");
+
 	return {
 		ponto: nomeCliente,
 		tipoServico,
-		previsao: formatDateAddHours(data.PREVISAO, 1),
-		previsaoSaida: formatDateAddHours(data.PREVISAO_SAIDA, 1),
+		previsao: formatDateAddHours(data.PREVISAO, 2),
+		previsaoSaida: formatDateAddHours(data.PREVISAO_SAIDA, 2),
 		tempServicoLocal: data.TEMP_SERV_LOCAL_COLETA,
 		tempServicoLocalEntrega: data?.TEMP_SERV_LOCAL_ENTREGA,
 		coletaEfetivaSaida: moment(data.SAIDA_EFETIVA_COLETA).format(

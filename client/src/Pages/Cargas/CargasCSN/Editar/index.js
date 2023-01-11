@@ -511,21 +511,6 @@ function EditarCargaCsn() {
 		formik.setFieldValue("placa_veiculo", "");
 	}, [formik.values.e_lote]);
 
-	// useEffect(() => {
-	// 	ServiceProdutos.list().then(({ data }) => {
-	// 		setProdutos(data.data);
-	// 	});
-
-	// 	(async () => {
-	// 		const userPermission = await validationPermissionUser();
-	// 		if (
-	// 			userPermission?.permissoes.includes("MANUTENCAO_TRAJETO_FINALIZADO")
-	// 		) {
-	// 			setPermissionUser(true);
-	// 		}
-	// 	})();
-	// }, []);
-
 	const showInfoTitle = [6, 9].includes(formik.values?.fk_situacao)
 		? "info-tilte"
 		: "d-none";
