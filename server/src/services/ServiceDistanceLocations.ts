@@ -359,13 +359,13 @@ export class ServiceDistanceLocations {
       throw new AppError(" ", 204);
     }
 
-    const dataAtualMenos1Minuto = moment()
-      .subtract(1, "minutes")
+    const dataAtualMenos2Minuto = moment()
+      .subtract(2, "minutes")
       .format("YYYY-MM-DDTHH:mm:ss");
 
     const queryBuild = await mssqlCoordenadas.raw(
       `select top 1 DISIMEI, LAT, LON, UF, ROD, RUA, MUN, DTINC
-    from cd where DISIMEI = '${VEI_REFERENCIA}' and (dtinc < '${dataAtualMenos1Minuto}') order by dtinc desc`
+      from REPORTES where DISIMEI = '${VEI_REFERENCIA}' and (dtinc < '${dataAtualMenos2Minuto}') order by dtinc desc`
     );
 
     return queryBuild[0];

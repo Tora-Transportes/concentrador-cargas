@@ -43,9 +43,7 @@ function LastLocationVeicles({ placa, setVisibleLastLocation }) {
 									<h6>
 										Data:{" "}
 										<strong>
-											{DateUtils.formatDateTresHorasMenos(
-												dadosLastLocation?.DTINC
-											)}
+											{DateUtils.formatDate(dadosLastLocation?.DTINC)}
 										</strong>
 									</h6>
 								</li>
@@ -66,8 +64,7 @@ function LastLocationVeicles({ placa, setVisibleLastLocation }) {
 								</li>
 								<li className="ul-card-li-last-location">
 									<h6>
-										Longitude:
-										<strong>{dadosLastLocation?.LON}</strong>
+										Longitude: <strong>{dadosLastLocation?.LON}</strong>
 									</h6>
 								</li>
 								{/* <li className="ul-card-li-last-location">

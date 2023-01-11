@@ -21,7 +21,8 @@ const CadastroCargaCSN = () => {
 			responsavel_cadastro: String(getClaims().name),
 			id: "(Será autogerado)",
 			e_lote: false,
-			cliente: "",
+			cliente:
+				"COMPANHIA SIDERURGICA NACIONAL - 33042730001771 - VOLTA REDONDA/RJ",
 			destino_carga: "",
 			origem_carga: "",
 			data_coleta: "",
@@ -37,6 +38,7 @@ const CadastroCargaCSN = () => {
 			local_entrega: "",
 			placa_veiculo: "",
 			documento_transporte: "",
+			fk_filial: "128 - VOLTA REDONDA",
 			ponto_passagem: {
 				ponto: " 60 - POSTO - 30",
 				tipoServico: "Coleta",
