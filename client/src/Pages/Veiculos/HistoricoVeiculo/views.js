@@ -218,7 +218,9 @@ function ViewHistoricoVeiculo({
 										<Popup>{"Inicio da busca"}</Popup>
 									</Marker>
 									<Marker position={[isLatitude, isLongitude]} icon={truckIcon}>
-										<Popup>{`Placa: ${fields.placa}; Data:${formatDateAtual(
+										<Popup>{`Placa: ${
+											fields.placa
+										}; Data/Hora:${formatDateAtual(
 											historicoRotas?.posicao[isCountPosition].DTINC
 										)}; Posição: ${isCountPosition}.`}</Popup>
 									</Marker>
