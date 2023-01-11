@@ -18,6 +18,6 @@ export const formatDateAddHours = (dataValor, addHour) => {
 	return data2.toISOString().replace(/\.\d{3}Z$/, "");
 };
 
-export const formatDateAtual = (dataValor) => {
-	return moment(dataValor).format("DD/MM/YYYY HH:mm:ss");
+export const formatDateAtual3HorasMais = (dataValor) => {
+	return moment(dataValor).add(3, "hour").format("DD/MM/YYYY HH:mm:ss");
 };
