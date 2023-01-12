@@ -19,7 +19,10 @@ export class CargaValidationOperation {
       (cargaAtual.fk_situacao == 1 || !cargaAtual.fk_situacao)
     ) {
       cargaSaida.fk_situacao = 2;
-    } else if (cargaAnterior?.fk_situacao === 6) {
+    } else if (
+      cargaAnterior?.fk_situacao === 6 &&
+      cargaAtual.fk_situacao !== 5
+    ) {
       cargaSaida.fk_situacao = 9;
     }
 

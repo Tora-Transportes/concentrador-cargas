@@ -571,7 +571,7 @@ function EditarCargaCsn() {
 								Excluir
 							</Button>
 						)}
-						{formik.values.fk_situacao === 3 && (
+						{[3, 6, 7, 8, 9].includes(formik.values.fk_situacao) && (
 							<Button
 								variant="danger"
 								className="p-2"
