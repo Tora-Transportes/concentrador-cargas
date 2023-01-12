@@ -225,18 +225,18 @@ class ServiceFinishCargasCsn {
             );
 
             const raioEmMetros = RAIO ? Number(RAIO) : 1;
-            console.log(
-              DESCRICAO,
-              "distancia veiculo =>",
-              calculoDistancia.toFixed(3),
-              "Raio da empresa ->",
-              raioEmMetros,
-              "ID_ponto_parada:",
-              ID,
-              "Carga:",
-              ID_CON_CARGAS,
-              "---------------------"
-            );
+            // console.log(
+            //   DESCRICAO,
+            //   "distancia veiculo =>",
+            //   calculoDistancia.toFixed(3),
+            //   "Raio da empresa ->",
+            //   raioEmMetros,
+            //   "ID_ponto_parada:",
+            //   ID,
+            //   "Carga:",
+            //   ID_CON_CARGAS,
+            //   "---------------------"
+            // );
 
             DESCRICAO;
             if (
@@ -501,6 +501,6 @@ export default async function run() {
       "|-----------------FIM JOB CARGA CSN EM VIAGEM-------------------|"
     );
   }
-  cron.schedule(" */2 * * * * ", job);
+  cron.schedule(" */1 * * * * ", job);
   //job();
 }
