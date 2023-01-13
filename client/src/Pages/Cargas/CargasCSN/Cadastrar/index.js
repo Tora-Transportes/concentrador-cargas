@@ -164,17 +164,9 @@ const CadastroCargaCSN = () => {
 					ponto_passagem9,
 					ponto_passagem10,
 				} = values;
-				values.fk_filial = await values.fk_filial.split("-")[0];
+				values.fk_filial = values.fk_filial.split("-")[0];
 
-				const chaves = Object.keys(values);
-				const todos = chaves.map((chave) => values[chave]);
-				const filtrados = todos.filter((item) => {
-					return item?.tipoServico === "Entrega";
-				});
-				const dadosUltimoParada = filtrados[filtrados.length - 1];
-				const separandoNomeCidade = await dadosUltimoParada.client?.split(
-					"-"
-				)[2];
+				const separandoNomeCidade = ponto_passagem4.client?.split("-")[2];
 				const cidadeEstado = separandoNomeCidade.split("/");
 
 				const resultLocalidade = (
@@ -195,7 +187,7 @@ const CadastroCargaCSN = () => {
 						origem_carga: "BRASIL/RJ/VOLTA REDONDA",
 						destino_carga: destinoCarga.replace(" ", ""),
 						data_coleta: ponto_passagem.previsao,
-						data_entrega: dadosUltimoParada.previsao,
+						data_entrega: ponto_passagem4.previsao,
 					})
 				).data;
 

@@ -63,14 +63,14 @@ function VisualizarCsn() {
 				dispatchCargas({ type: "DELETE_CARGA", payload });
 			}
 		};
-		io.on("@carga-create", actionCargasCreate);
-		io.on("@carga-update", actionCargasUpdate);
-		io.on("@carga-delete", actionCargasDelete);
+		io.on("@carga-create-csn", actionCargasCreate);
+		io.on("@carga-update-csn", actionCargasUpdate);
+		io.on("@carga-delete-csn", actionCargasDelete);
 
 		return () => {
-			io.off("@carga-create", actionCargasCreate);
-			io.off("@carga-update", actionCargasUpdate);
-			io.off("@carga-delete", actionCargasDelete);
+			io.off("@carga-create-csn", actionCargasCreate);
+			io.off("@carga-update-csn", actionCargasUpdate);
+			io.off("@carga-delete-csn", actionCargasDelete);
 		};
 	}, [io]);
 

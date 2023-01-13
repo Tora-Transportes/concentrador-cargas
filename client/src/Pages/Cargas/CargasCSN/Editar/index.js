@@ -222,7 +222,7 @@ function EditarCargaCsn() {
 				ponto_passagem10,
 			} = values;
 			try {
-				let dadosCargasalva;
+				let dadosCargaSalva;
 				const finalizarCarga = formik.values.finalizarCarga;
 
 				if (finalizarCarga !== true) {
@@ -234,7 +234,7 @@ function EditarCargaCsn() {
 						fk_filial: formik.values.fk_filial?.split("-")[0],
 						carga_csn: 1,
 					});
-					dadosCargasalva = data;
+					dadosCargaSalva = data;
 				} else {
 					const resultOk = await swal(
 						`Certeza que deseja finalizar a  carga?`,
@@ -284,14 +284,13 @@ function EditarCargaCsn() {
 
 				const mensagemConfirmacao =
 					finalizarCarga !== true
-						? `A carga ${dadosCargasalva.data.id} foi atualizada!`
+						? `A carga ${dadosCargaSalva.data.id} foi atualizada!`
 						: "Carga finalizada.";
 
 				const ok = await swal("Sucesso!", mensagemConfirmacao, "success");
 
 				if (ok) {
 					window.location.reload();
-					//await carregarCarga();
 				}
 			} catch (error) {
 				console.log(error);

@@ -208,16 +208,16 @@ export class CargaCsnInfoRepository {
     const carga: ICarga[] = await database("con_cargas")
       .select([
         "con_cargas.*",
-        "con_situacoes_cargas.descricao as situacao.descricao",
-        "con_situacoes_cargas.cor as situacao.cor",
+        "con_situacoes_cargas_csn.descricao as situacao.descricao",
+        "con_situacoes_cargas_csn.cor as situacao.cor",
         "FILIAL.FIL_DSC as filial.descricao",
         "CADASTRO_GERAL.CG_NOME as nome_motorista",
       ])
       //.first()
       .where("con_cargas.id", id)
       .join(
-        "con_situacoes_cargas",
-        "con_situacoes_cargas.id",
+        "con_situacoes_cargas_csn",
+        "con_situacoes_cargas_csn.id",
         "con_cargas.fk_situacao"
       )
       .leftJoin(

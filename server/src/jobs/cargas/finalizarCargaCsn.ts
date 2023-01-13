@@ -238,7 +238,6 @@ class ServiceFinishCargasCsn {
               "---------------------"
             );
 
-            DESCRICAO;
             if (
               Number(calculoDistancia.toFixed(3)) < raioEmMetros &&
               //Number(calculoDistancia.toFixed(3)) < 1106.7 &&
