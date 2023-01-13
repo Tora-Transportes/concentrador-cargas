@@ -1,3 +1,4 @@
+import { CargaCsnInfoRepository } from "./../../repositories/csn/CargaCsnInfoRepository";
 import { UsuarioRepository } from "../../repositories/UsuarioRepository";
 import { notifyAll } from "../../socketsRoutes";
 
@@ -21,13 +22,15 @@ const userRepository = new UsuarioRepository();
 const cargaRepository = new CargaRepository();
 const clientRepository = new ClientRepository();
 const paradaRepository = new ParadasRepository();
+const cargaCsnInfoRepository = new CargaCsnInfoRepository();
 
 const modules = {
   UseCaseAddCarga: new UseCaseAddCarga(
     cargaRepository,
     notifyAll,
     userRepository,
-    paradaRepository
+    paradaRepository,
+    cargaCsnInfoRepository
   ),
   UseCaseAddCargaDerivada: new UseCaseAddCargaDerivada(
     cargaRepository,
@@ -40,7 +43,8 @@ const modules = {
     notifyAll,
     ServiceMigrarSIT,
     ServiceLogTime,
-    paradaRepository
+    paradaRepository,
+    cargaCsnInfoRepository
   ),
   UseCaseViewCargas: new UseCaseViewCargas(cargaRepository),
   UseCaseDeleteCarga: new UseCaseDeleteCarga(cargaRepository, notifyAll),

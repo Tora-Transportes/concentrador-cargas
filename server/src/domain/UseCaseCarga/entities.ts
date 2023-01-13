@@ -32,12 +32,17 @@ export interface IRepositoryAddCarga {
   bulkCreate(cargas: ICarga[]): Promise<any>;
   nextId(): Promise<number>;
 }
+
+export interface IRepositoryCargaCsnInfoRepository {
+  index(id: number): Promise<ICarga | undefined>;
+}
 export class UseCaseAddCarga {
   constructor(
     private cargaRepository: IRepositoryAddCarga,
     private notifyAll: (event: IEventSocket) => void,
     private userRepository: IUserRepository,
-    private locaisRepository: IParadasRepository
+    private locaisRepository: IParadasRepository,
+    private cargaCsnInfoRepository: IRepositoryCargaCsnInfoRepository
   ) {}
   async run(
     cargaDTO: Record<string, any>,
@@ -103,10 +108,17 @@ export class UseCaseAddCarga {
     const cargaOficial = operation.validate(null, carga);
 
     await this.cargaRepository.create(cargaOficial);
-    this.notifyAll({
-      name: "@carga-create",
-      details: await this.cargaRepository.index(cargaOficial.id),
-    });
+    if (cargaOficial.carga_csn !== 1) {
+      this.notifyAll({
+        name: "@carga-create",
+        details: await this.cargaRepository.index(cargaOficial.id),
+      });
+    } else {
+      this.notifyAll({
+        name: "@carga-create-csn",
+        details: await this.cargaCsnInfoRepository.index(cargaOficial.id),
+      });
+    }
     return carga;
   }
 }
@@ -199,7 +211,8 @@ export class UseCaseUpdateCarga {
     private notifyAll: (event: IEventSocket) => void,
     private serviceSit: IServiceSit,
     private serviceLogTime: IServiceLogTime,
-    private locaisRepository: IParadasRepository
+    private locaisRepository: IParadasRepository,
+    private cargaCsnInfoRepository: IRepositoryCargaCsnInfoRepository
   ) {}
   async run(cargaDTO: Record<string, any>, oid: string) {
     const validator = factoryCargaValidator();
@@ -294,10 +307,18 @@ export class UseCaseUpdateCarga {
       ...cargaOficial,
       data_atualizacao: currentDate,
     });
-    this.notifyAll({
-      name: "@carga-update",
-      details: await this.cargaRepository.index(carga.id),
-    });
+
+    if (cargaOficial.carga_csn !== 1) {
+      this.notifyAll({
+        name: "@carga-update",
+        details: await this.cargaRepository.index(carga.id),
+      });
+    } else {
+      this.notifyAll({
+        name: "@carga-update-csn",
+        details: await this.cargaCsnInfoRepository.index(carga.id),
+      });
+    }
     return cargaOficial;
   }
 }
@@ -390,10 +411,17 @@ export class UseCaseDeleteCarga {
     };
 
     await this.cargaRepository.update(carga.id, cargaAtualizada as ICarga);
-    this.notifyAll({
-      name: "@carga-delete",
-      details: { id },
-    });
+    if (cargaAtualizada.carga_csn !== 1) {
+      this.notifyAll({
+        name: "@carga-delete-csn",
+        details: { id },
+      });
+    } else {
+      this.notifyAll({
+        name: "@carga-delete-csn",
+        details: { id },
+      });
+    }
     return cargaAtualizada;
   }
 }
