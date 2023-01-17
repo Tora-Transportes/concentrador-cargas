@@ -5,6 +5,7 @@ import { IDadosUpdate, IInfoCarga, ILastLocations } from "./interfaceCargasJob";
 import database, { mssqlCoordenadas } from "../../database";
 import { notifyAll } from "../../socketsRoutes";
 import DateUtils from "../../Utils/date";
+import ICsnLogs from "../../models/ICsnLogs";
 
 class ServiceFinishCargasCsn {
   dataAtual = new Date(
@@ -180,6 +181,7 @@ class ServiceFinishCargasCsn {
             LONGITUDE,
             ID,
             ID_CON_CARGAS,
+            ID_ROTAS_CSN,
             RAIO,
             STATUS_SERVICO,
             DESCRICAO,
@@ -260,7 +262,8 @@ class ServiceFinishCargasCsn {
                 ID,
                 ID_CON_CARGAS,
                 STATUS_SERVICO,
-                //ENTREGA_FINAL,
+                ID_ROTAS_CSN,
+                CALCULO_DISTANCIA: calculoDistancia.toFixed(3),
               });
             } else if (
               Number(calculoDistancia.toFixed(3)) > raioEmMetros &&
@@ -304,6 +307,8 @@ class ServiceFinishCargasCsn {
                 ID_CON_CARGAS,
                 STATUS_SERVICO,
                 ENTREGA_FINAL,
+                ID_ROTAS_CSN,
+                CALCULO_DISTANCIA: calculoDistancia.toFixed(3),
               });
             }
           };
@@ -367,9 +372,7 @@ class ServiceFinishCargasCsn {
             SAIDA_EFETIVA_COLETA !== null
           ) {
             carregamentoIntermediarioLiberado = true;
-          }
-
-          if (
+          } else if (
             carregamentoIntermediarioLiberado &&
             STATUS_SERVICO === "COLETA" &&
             COLETA_EFETIVA === null
@@ -413,13 +416,15 @@ class ServiceFinishCargasCsn {
       })
       .where("ID", ID);
 
-    const log = {
-      oid: "robô",
-      url: `/con_pontos_parada/${ID}`,
-      metodo: "PUT",
-      timestamp: DateUtils.getCurrentDate().getTime(),
-      token: moment().format("YYYY-MM-DD"),
-      corpo: `{ COLETA/ENTREGA: ${DATA_ATUALIZACAO}, DATA_ATUALIZACAO: ${DATA_ATUALIZACAO}}`,
+    const log: ICsnLogs = {
+      ID_CARGA: Number(valuePontoParada.ID_CON_CARGAS),
+      ID_ROTAS_CSN: Number(valuePontoParada.ID_ROTAS_CSN),
+      OID: "robô",
+      URL: `/con_pontos_parada/${ID}`,
+      METODO: "PUT",
+      DATA_CADASTRO: this.dataAtual,
+      CALCULO_DISTANCIA: String(valuePontoParada.CALCULO_DISTANCIA) || null,
+      STATUS_SERVICO: valuePontoParada.STATUS_SERVICO || null,
     };
 
     await database("con_logs_csn").insert(log);
@@ -500,6 +505,6 @@ export default async function run() {
       "|-----------------FIM JOB CARGA CSN EM VIAGEM-------------------|"
     );
   }
-  cron.schedule(" */1 * * * * ", job);
-  //job();
+  //cron.schedule(" */1 * * * * ", job);
+  job();
 }

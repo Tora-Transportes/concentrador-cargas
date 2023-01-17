@@ -13,6 +13,8 @@ import iconFinish from "../../../assets/finish.png";
 import {
 	MapContainer,
 	Marker,
+	//ZoomControl,
+	LayersControl,
 	Polyline,
 	Popup,
 	TileLayer,
@@ -65,6 +67,7 @@ function ViewHistoricoVeiculo({
 			setLastPosition(historicoRotas?.posicao.length - 1);
 		}
 	}, [historicoRotas]);
+
 	const moverPosicao = (sentidoDaPosicao) => {
 		if (historicoRotas?.posicao.length) {
 			let indexPosition;
@@ -139,6 +142,14 @@ function ViewHistoricoVeiculo({
 		setLoading(false);
 	}
 
+	const directScreenTop = () => {
+		window.scrollTo({
+			top: 330,
+			left: 330,
+			behavior: "smooth",
+		});
+	};
+
 	return (
 		<div className="body-hist-veic">
 			<LoadingScreen />
@@ -200,51 +211,66 @@ function ViewHistoricoVeiculo({
 									historicoRotas?.posicao[0].LAT.replace(",", "."),
 									historicoRotas?.posicao[0].LON.replace(",", "."),
 								]}
-								zoom={11}
+								zoom={10}
+								maxZoom={17}
 								style={{ height: "80vh" }}
 							>
-								<TileLayer
-									attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-									url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-								/>
-								<>
-									<Marker
-										position={[
-											historicoRotas?.posicao[isLastPosition].LAT.replace(
-												",",
-												"."
-											),
-											historicoRotas?.posicao[isLastPosition].LON.replace(
-												",",
-												"."
-											),
-										]}
-										icon={startIcons}
-									>
-										<Popup>{"Inicio da busca"}</Popup>
-									</Marker>
-									<Marker position={[isLatitude, isLongitude]} icon={truckIcon}>
-										<Popup>{`Placa: ${
-											fields.placa
-										}; Data/Hora:${formatDateAtual3HorasMais(
-											historicoRotas?.posicao[isCountPosition].DTINC
-										)}; Posição: ${isCountPosition}.`}</Popup>
-									</Marker>
-									<Marker
-										position={[
-											historicoRotas?.posicao[0].LAT.replace(",", "."),
-											historicoRotas?.posicao[0].LON.replace(",", "."),
-										]}
-										icon={finishIcons}
-									>
-										<Popup>{"Fim da busca"}</Popup>
-									</Marker>
-									<Polyline
-										pathOptions={colorLineMap}
-										positions={isArrayLatLon}
-									/>
-								</>
-								);
+								<LayersControl position="topright">
+									<>
+										<Marker
+											position={[
+												historicoRotas?.posicao[isLastPosition].LAT.replace(
+													",",
+													"."
+												),
+												historicoRotas?.posicao[isLastPosition].LON.replace(
+													",",
+													"."
+												),
+											]}
+											icon={startIcons}
+										>
+											<Popup>{"Inicio da busca"}</Popup>
+										</Marker>
+										<Marker
+											position={[isLatitude, isLongitude]}
+											icon={truckIcon}
+										>
+											<Popup>{`Placa: ${
+												fields.placa
+											}; Data/Hora:${formatDateAtual3HorasMais(
+												historicoRotas?.posicao[isCountPosition].DTINC
+											)}; Posição: ${isCountPosition}.`}</Popup>
+										</Marker>
+										<Marker
+											position={[
+												historicoRotas?.posicao[0].LAT.replace(",", "."),
+												historicoRotas?.posicao[0].LON.replace(",", "."),
+											]}
+											icon={finishIcons}
+										>
+											<Popup>{"Fim da busca"}</Popup>
+										</Marker>
+										<Polyline
+											pathOptions={colorLineMap}
+											positions={isArrayLatLon}
+										/>
+									</>
+									<LayersControl.BaseLayer checked name="Mapa Básico">
+										<TileLayer
+											attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+											url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+										/>
+									</LayersControl.BaseLayer>
+									<LayersControl.BaseLayer name="Mapa satélite">
+										<TileLayer
+											attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+											//url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+											url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+										/>
+									</LayersControl.BaseLayer>
+								</LayersControl>
+								{/* <ZoomControl position="topleft" /> */}
 							</MapContainer>
 							<div className="placa-botao mt-3">
 								<div className="mb-3">
@@ -315,6 +341,7 @@ function ViewHistoricoVeiculo({
 														setLatitude(position.LAT.replace(",", "."));
 														setLongitude(position.LON.replace(",", "."));
 														setCountPosition(index);
+														directScreenTop();
 													}}
 												>
 													{index}

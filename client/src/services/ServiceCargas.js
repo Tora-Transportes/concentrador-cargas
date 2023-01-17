@@ -92,7 +92,7 @@ class ServiceCargas {
 			PREVISAO_SAIDA: moment(previsaoSaida).subtract(2, "hours"),
 			ENTREGA_FINAL: entregaFinal ? entregaFinal : 0,
 		};
-		//console.log("Ponto parada", carga);
+
 		return await api.post("/csn/ponto_parada", carga);
 	}
 
