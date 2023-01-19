@@ -15,6 +15,8 @@ function FormularioCadastroCSN({
 	handleEnter,
 	history,
 	isPermissionUser,
+	isDateErrorInput,
+	setDateErrorInput,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
@@ -196,6 +198,8 @@ function FormularioCadastroCSN({
 				fkSituacao={fkSituacao}
 				handleEnter={handleEnter}
 				isPermissionUser={isPermissionUser}
+				setDateErrorInput={setDateErrorInput}
+				isDateErrorInput={isDateErrorInput}
 			/>
 		</div>
 	);

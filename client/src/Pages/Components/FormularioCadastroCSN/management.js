@@ -258,3 +258,18 @@ export const mensagemPlacaEmUso = (id, fk_situacao, plate, history, formik) => {
 		}
 	});
 };
+
+export const InputReferencError = [
+	{ inputError: false },
+	{ inputError1: false },
+	{ inputError2: false },
+	{ inputError3: false },
+	{ inputError4: false },
+	{ inputError5: false },
+	{ inputError6: false },
+	{ inputError7: false },
+	{ inputError8: false },
+	{ inputError9: false },
+	{ inputError10: false },
+	{ inputError11: false },
+];
