@@ -9,4 +9,7 @@ export default interface ICsnLogs {
   METODO: string;
   CALCULO_DISTANCIA: string | null;
   TOKEN?: string | null;
+  HORAS_ENTRADA?: Date | null;
+  HORAS_SAIDA?: Date | null;
+  DESCRICAO?: string | null;
 }
