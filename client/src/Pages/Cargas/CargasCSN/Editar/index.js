@@ -21,6 +21,7 @@ function EditarCargaCsn() {
 	const [produtos, setProdutos] = useState([]);
 	const [viewsInput, setViewsInput] = useState(0);
 	const [isPermissionUser, setPermissionUser] = useState(true);
+	const [isDateErrorInput, setDateErrorInput] = useState(false);
 
 	const formik = useFormik({
 		initialValues: {
@@ -209,53 +210,14 @@ function EditarCargaCsn() {
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
-			const {
-				ponto_passagem,
-				ponto_passagem2,
-				ponto_passagem3,
-				ponto_passagem4,
-				ponto_passagem5,
-				ponto_passagem6,
-				ponto_passagem7,
-				ponto_passagem8,
-				ponto_passagem9,
-				ponto_passagem10,
-			} = values;
-			try {
-				let dadosCargaSalva;
-				const finalizarCarga = formik.values.finalizarCarga;
-
-				if (finalizarCarga !== true) {
-					values.fk_filial = values.fk_filial.split("-")[0];
-					const { data } = await ServiceCargas.update({
-						...values,
-						responsavel_cadastro: String(getClaims().name),
-						fk_situacao: undefined,
-						fk_filial: formik.values.fk_filial?.split("-")[0],
-						carga_csn: 1,
-					});
-					dadosCargaSalva = data;
-				} else {
-					const resultOk = await swal(
-						`Certeza que deseja finalizar a  carga?`,
-						{
-							dangerMode: true,
-							buttons: ["Cancelar", true],
-							icon: "warning",
-						}
-					);
-					if (resultOk) {
-						await ServiceCargas.update({
-							...formik.values,
-							fk_situacao: 6,
-							fk_filial: formik.values.fk_filial?.split("-")[0],
-						});
-					} else {
-						window.open("", "_self").close();
-					}
-				}
-
-				for (const [key, value] of Object.entries({
+			if (isDateErrorInput) {
+				swal(
+					"Atenção",
+					"Não foi possível registrar as informações, verifique os campos de data antes de continuar.!",
+					"info"
+				);
+			} else {
+				const {
 					ponto_passagem,
 					ponto_passagem2,
 					ponto_passagem3,
@@ -266,34 +228,84 @@ function EditarCargaCsn() {
 					ponto_passagem8,
 					ponto_passagem9,
 					ponto_passagem10,
-				})) {
-					if (
-						(value?.ponto?.length > 0 && value?.previsao?.length > 0) ||
-						(typeof value?.latitude !== "string" &&
-							typeof value?.longitude !== "string")
-					) {
-						await ServiceCargas.updatePontoParada({
-							...value,
-							id_carga: values.id,
-							key,
+				} = values;
+				try {
+					let dadosCargaSalva;
+					const finalizarCarga = formik.values.finalizarCarga;
+
+					if (finalizarCarga !== true) {
+						values.fk_filial = values.fk_filial.split("-")[0];
+						const { data } = await ServiceCargas.update({
+							...values,
+							responsavel_cadastro: String(getClaims().name),
+							fk_situacao: undefined,
+							fk_filial: formik.values.fk_filial?.split("-")[0],
+							carga_csn: 1,
 						});
+						dadosCargaSalva = data;
+					} else {
+						const resultOk = await swal(
+							`Certeza que deseja finalizar a  carga?`,
+							{
+								dangerMode: true,
+								buttons: ["Cancelar", true],
+								icon: "warning",
+							}
+						);
+						if (resultOk) {
+							await ServiceCargas.update({
+								...formik.values,
+								fk_situacao: 6,
+								fk_filial: formik.values.fk_filial?.split("-")[0],
+							});
+						} else {
+							window.open("", "_self").close();
+						}
 					}
+
+					for (const [key, value] of Object.entries({
+						ponto_passagem,
+						ponto_passagem2,
+						ponto_passagem3,
+						ponto_passagem4,
+						ponto_passagem5,
+						ponto_passagem6,
+						ponto_passagem7,
+						ponto_passagem8,
+						ponto_passagem9,
+						ponto_passagem10,
+					})) {
+						if (
+							(value?.ponto?.length > 0 && value?.previsao?.length > 0) ||
+							(typeof value?.latitude !== "string" &&
+								typeof value?.longitude !== "string")
+						) {
+							await ServiceCargas.updatePontoParada({
+								...value,
+								id_carga: values.id,
+								key,
+							});
+						}
+					}
+
+					formik.setFieldValue(
+						"responsavel_cadastro",
+						String(getClaims().name)
+					);
+
+					const mensagemConfirmacao =
+						finalizarCarga !== true
+							? `A carga ${dadosCargaSalva.data.id} foi atualizada!`
+							: "Carga finalizada.";
+
+					const ok = await swal("Sucesso!", mensagemConfirmacao, "success");
+
+					if (ok) {
+						window.location.reload();
+					}
+				} catch (error) {
+					console.log(error);
 				}
-
-				formik.setFieldValue("responsavel_cadastro", String(getClaims().name));
-
-				const mensagemConfirmacao =
-					finalizarCarga !== true
-						? `A carga ${dadosCargaSalva.data.id} foi atualizada!`
-						: "Carga finalizada.";
-
-				const ok = await swal("Sucesso!", mensagemConfirmacao, "success");
-
-				if (ok) {
-					window.location.reload();
-				}
-			} catch (error) {
-				console.log(error);
 			}
 			setLoading(false);
 		},
@@ -537,6 +549,8 @@ function EditarCargaCsn() {
 						formik={formik}
 						viewsInput={viewsInput}
 						isPermissionUser={isPermissionUser}
+						setDateErrorInput={setDateErrorInput}
+						isDateErrorInput={isDateErrorInput}
 					/>
 					<div className="class-group-button">
 						<Button

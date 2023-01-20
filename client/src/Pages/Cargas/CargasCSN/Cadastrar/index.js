@@ -11,11 +11,18 @@ import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { getClaims } from "src/MicrosoftAuthentication";
 import ServiceRecomendacoes from "src/services/ServiceRecomendacoes";
+import {
+	formatDateAddHours,
+	formatDateAddminutes,
+} from "src/Pages/Utils/formatDate";
 const CadastroCargaCSN = () => {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [produtos, setProdutos] = useState([]);
+	const [isDateErrorInput, setDateErrorInput] = useState(false);
 	const history = useHistory();
+	const dataAtual = new Date();
 
+	const dataMais40minutos = formatDateAddminutes(dataAtual, 40);
 	const formik = useFormik({
 		initialValues: {
 			responsavel_cadastro: String(getClaims().name),
@@ -42,29 +49,29 @@ const CadastroCargaCSN = () => {
 			ponto_passagem: {
 				ponto: " 60 - POSTO - 30",
 				tipoServico: "Coleta",
-				previsao: "",
+				previsao: formatDateAddminutes(dataAtual, 5),
 				latitude: "",
 				longitude: "",
 				client: "",
-				previsaoSaida: "",
+				previsaoSaida: formatDateAddminutes(dataAtual, 35),
 			},
 			ponto_passagem2: {
 				ponto: "51 - MUNDO - CSN",
 				tipoServico: "Coleta",
-				previsao: "",
+				previsao: dataMais40minutos,
 				latitude: "",
 				longitude: "",
 				client: "",
-				previsaoSaida: "",
+				previsaoSaida: formatDateAddHours(dataMais40minutos, 3),
 			},
 			ponto_passagem3: {
 				ponto: "59 - PEACAO - CSN",
 				tipoServico: "Coleta",
-				previsao: "",
+				previsao: formatDateAddHours(dataAtual, 4),
 				latitude: "",
 				longitude: "",
 				client: "",
-				previsaoSaida: "",
+				previsaoSaida: formatDateAddHours(dataAtual, 5),
 			},
 			ponto_passagem4: {
 				ponto: "",
@@ -151,48 +158,15 @@ const CadastroCargaCSN = () => {
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
-			try {
-				const {
-					ponto_passagem,
-					ponto_passagem2,
-					ponto_passagem3,
-					ponto_passagem4,
-					ponto_passagem5,
-					ponto_passagem6,
-					ponto_passagem7,
-					ponto_passagem8,
-					ponto_passagem9,
-					ponto_passagem10,
-				} = values;
-				values.fk_filial = values.fk_filial.split("-")[0];
-
-				const separandoNomeCidade = ponto_passagem4.client?.split("-")[2];
-				const cidadeEstado = separandoNomeCidade.split("/");
-
-				const resultLocalidade = (
-					await ServiceRecomendacoes.locaisPorUf({
-						uf: cidadeEstado[1],
-						cidade: cidadeEstado[0],
-					})
-				).data.data;
-
-				const pais = resultLocalidade ? resultLocalidade?.pais : "BRASIL";
-				const destinoCarga = `${pais}/${cidadeEstado[1]}/${cidadeEstado[0]}`;
-
-				const data = (
-					await ServiceCargas.create({
-						...values,
-						canal_comunicacao: "manual",
-						carga_csn: 1,
-						origem_carga: "BRASIL/RJ/VOLTA REDONDA",
-						destino_carga: destinoCarga.replace(" ", ""),
-						data_coleta: ponto_passagem.previsao,
-						data_entrega: ponto_passagem4.previsao,
-					})
-				).data;
-
-				if (data.data.id) {
-					for (const [key, value] of Object.entries({
+			if (isDateErrorInput) {
+				swal(
+					"Atenção",
+					"Não foi possível registrar as informações, verifique os campos de data antes de continuar.!",
+					"info"
+				);
+			} else {
+				try {
+					const {
 						ponto_passagem,
 						ponto_passagem2,
 						ponto_passagem3,
@@ -203,30 +177,71 @@ const CadastroCargaCSN = () => {
 						ponto_passagem8,
 						ponto_passagem9,
 						ponto_passagem10,
-					})) {
-						if (
-							(value?.ponto.length > 0 && value?.previsao.length > 0) ||
-							(typeof value?.latitude !== "string" &&
-								typeof value?.longitude !== "string")
-						) {
-							await ServiceCargas.createPontoParada({
-								...value,
-								id_carga: data.data.id,
-								key,
-							});
+					} = values;
+					values.fk_filial = values.fk_filial.split("-")[0];
+
+					const separandoNomeCidade = ponto_passagem4.client?.split("-")[2];
+					const cidadeEstado = separandoNomeCidade.split("/");
+
+					const resultLocalidade = (
+						await ServiceRecomendacoes.locaisPorUf({
+							uf: cidadeEstado[1],
+							cidade: cidadeEstado[0],
+						})
+					).data.data;
+
+					const pais = resultLocalidade ? resultLocalidade?.pais : "BRASIL";
+					const destinoCarga = `${pais}/${cidadeEstado[1]}/${cidadeEstado[0]}`;
+
+					const data = (
+						await ServiceCargas.create({
+							...values,
+							canal_comunicacao: "manual",
+							carga_csn: 1,
+							origem_carga: "BRASIL/RJ/VOLTA REDONDA",
+							destino_carga: destinoCarga.replace(" ", ""),
+							data_coleta: ponto_passagem.previsao,
+							data_entrega: ponto_passagem4.previsao,
+						})
+					).data;
+
+					if (data.data.id) {
+						for (const [key, value] of Object.entries({
+							ponto_passagem,
+							ponto_passagem2,
+							ponto_passagem3,
+							ponto_passagem4,
+							ponto_passagem5,
+							ponto_passagem6,
+							ponto_passagem7,
+							ponto_passagem8,
+							ponto_passagem9,
+							ponto_passagem10,
+						})) {
+							if (
+								(value?.ponto.length > 0 && value?.previsao.length > 0) ||
+								(typeof value?.latitude !== "string" &&
+									typeof value?.longitude !== "string")
+							) {
+								await ServiceCargas.createPontoParada({
+									...value,
+									id_carga: data.data.id,
+									key,
+								});
+							}
 						}
+
+						const ok = await swal(
+							"Sucesso!",
+							`A carga foi cadastrada com o identificador ${data.data.id}!`,
+							"success"
+						);
+
+						if (ok) resetForm();
 					}
-
-					const ok = await swal(
-						"Sucesso!",
-						`A carga foi cadastrada com o identificador ${data.data.id}!`,
-						"success"
-					);
-
-					if (ok) resetForm();
+				} catch (error) {
+					console.log(error);
 				}
-			} catch (error) {
-				console.log(error);
 			}
 			setLoading(false);
 		},
@@ -289,6 +304,8 @@ const CadastroCargaCSN = () => {
 						produtos={produtos}
 						formik={formik}
 						history={history}
+						setDateErrorInput={setDateErrorInput}
+						isDateErrorInput={isDateErrorInput}
 					/>
 					<Row>
 						<Col>

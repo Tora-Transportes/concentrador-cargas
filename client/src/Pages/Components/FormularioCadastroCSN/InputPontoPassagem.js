@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./formularioCadastroCSN.css";
 import { Col, FloatingLabel, Form, Row } from "react-bootstrap";
 import RotasSelect from "../FilialSelect/rotasSelect";
 import InputCliente from "../InputCliente";
 import { funcDuracaoProcesso } from "./management";
+import {
+	funcCompareDateOneYear,
+	//funcValidInputDate,
+} from "src/Pages/Utils/formatDate";
+import swal from "sweetalert";
+import { formatDate } from "src/Pages/Utils/formatDate";
 
 const InputsPontoPassagem = ({
 	formik,
@@ -15,6 +21,8 @@ const InputsPontoPassagem = ({
 	inputColeta10,
 	fkSituacao,
 	isPermissionUser,
+	//isDateErrorInput,
+	setDateErrorInput,
 }) => {
 	const [inputPontoPassagem5, setInputPontoPassagem5] = useState(true);
 	const [inputPontoPassagem6, setInputPontoPassagem6] = useState(true);
@@ -23,8 +31,11 @@ const InputsPontoPassagem = ({
 	const [inputPontoPassagem9, setInputPontoPassagem9] = useState(true);
 	const [inputPontoPassagem10, setInputPontoPassagem10] = useState(true);
 
+	//const [isConuntDigitoData, setConuntDigitoData] = useState(0);
+	const conuntDigitoDataRef = useRef(0);
+
 	const disabledValidEfetiva =
-		[6, 9].includes(formik.values?.fk_situacao) && isPermissionUser
+		[6, 9].includes(formik.values.fk_situacao) && isPermissionUser
 			? true
 			: false;
 	const colorInputEfetivo = ![6, 9].includes(formik.values?.fk_situacao)
@@ -34,7 +45,7 @@ const InputsPontoPassagem = ({
 		: "";
 
 	useEffect(() => {
-		if (formik.values.ponto_passagem5.tipoServico === "Entrega") {
+		if (formik.values?.ponto_passagem5.tipoServico === "Entrega") {
 			setInputPontoPassagem5(false);
 		} else {
 			setInputPontoPassagem5(true);
@@ -80,6 +91,36 @@ const InputsPontoPassagem = ({
 		}
 	};
 
+	const validarDatas = (date, valueFormik) => {
+		valueFormik;
+		const resultValidation = funcCompareDateOneYear(date);
+		if (resultValidation?.error) {
+			setDateErrorInput(true);
+			swal("", resultValidation.message, "info");
+		} else {
+			setDateErrorInput(false);
+		}
+	};
+
+	const validarDigitoInputData = (e, valueFormik) => {
+		if (
+			["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(e.key) ||
+			e.key === "ArrowRight"
+		) {
+			conuntDigitoDataRef.current++;
+		}
+
+		if (conuntDigitoDataRef.current === 9 && e.key !== "ArrowRight") {
+			formik.setFieldValue(valueFormik, formatDate(new Date()));
+
+			swal("Data inválido!");
+			swal("", "Data inválido!", "info");
+			conuntDigitoDataRef.current = 0;
+			setDateErrorInput(false);
+			//e.preventDefault();
+		}
+	};
+
 	return (
 		<>
 			<Row className="row-input-coleta">
@@ -114,9 +155,19 @@ const InputsPontoPassagem = ({
 							type="datetime-local"
 							placeholder=" "
 							name="ponto_passagem.previsao"
-							value={formik.values.ponto_passagem.previsao}
+							value={formik.values.ponto_passagem.previsao || ""}
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
+							//isInvalid={isDateErrorInput}
+							onKeyUp={(e) =>
+								validarDigitoInputData(e, "ponto_passagem.previsao")
+							}
+							onBlur={() => {
+								validarDatas(
+									formik.values.ponto_passagem.previsao,
+									"formik.values.ponto_passagem.previsao"
+								);
+							}}
 							required
 							disabled={fkSituacao}
 						/>
@@ -128,9 +179,18 @@ const InputsPontoPassagem = ({
 							type="datetime-local"
 							placeholder=" "
 							name="ponto_passagem.previsaoSaida"
-							value={formik.values.ponto_passagem.previsaoSaida}
+							value={formik.values.ponto_passagem.previsaoSaida || ""}
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
+							onKeyUp={(e) =>
+								validarDigitoInputData(e, "ponto_passagem.previsaoSaida")
+							}
+							onBlur={() => {
+								validarDatas(
+									formik.values.ponto_passagem.previsaoSaida,
+									"formik.values.ponto_passagem.previsaoSaida"
+								);
+							}}
 							required
 							disabled={fkSituacao}
 						/>
@@ -153,6 +213,19 @@ const InputsPontoPassagem = ({
 									}
 									onKeyDown={handleEnter}
 									onChange={formik.handleChange}
+									//isInvalid={isDateErrorInput}
+									onKeyUp={(e) =>
+										validarDigitoInputData(
+											e,
+											"ponto_passagem.coletaEfetiva_posto30"
+										)
+									}
+									onBlur={() => {
+										validarDatas(
+											formik.values.ponto_passagem.coletaEfetiva_posto30,
+											"formik.values.ponto_passagem.coletaEfetiva_posto30"
+										);
+									}}
 									disabled={disabledValidEfetiva}
 									required
 								/>
@@ -168,13 +241,24 @@ const InputsPontoPassagem = ({
 									value={formik.values.ponto_passagem.coletaEfetivaSaida || ""}
 									onKeyDown={handleEnter}
 									onChange={formik.handleChange}
-									onBlur={() =>
+									//isInvalid={isDateErrorInput}
+									onKeyUp={(e) =>
+										validarDigitoInputData(
+											e,
+											"ponto_passagem.coletaEfetivaSaida"
+										)
+									}
+									onBlur={() => {
 										funcDuracaoProcesso(
 											formik,
 											1,
 											formik.values.ponto_passagem.coletaEfetivaSaida
-										)
-									}
+										);
+										validarDatas(
+											formik.values.ponto_passagem.coletaEfetivaSaida,
+											"formik.values.ponto_passagem.coletaEfetivaSaida"
+										);
+									}}
 									disabled={disabledValidEfetiva}
 									required
 								/>
@@ -214,7 +298,7 @@ const InputsPontoPassagem = ({
 					</FloatingLabel>
 				</Col>
 				<Col className="input-ponto-passagem-coleta-entrega">
-					<FloatingLabel label="Coleta/Entrega 2" className="mb-3">
+					<FloatingLabel label="Coleta/Entrega" className="mb-3">
 						<Form.Control
 							type="text"
 							disabled
@@ -233,6 +317,16 @@ const InputsPontoPassagem = ({
 							value={formik.values.ponto_passagem2.previsao}
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
+							//isInvalid={isDateErrorInput}
+							onKeyUp={(e) =>
+								validarDigitoInputData(e, "ponto_passagem2.previsao")
+							}
+							onBlur={() => {
+								validarDatas(
+									formik.values.ponto_passagem2.previsao,
+									"formik.values.ponto_passagem2.previsao"
+								);
+							}}
 							required
 							disabled={fkSituacao}
 						/>
@@ -247,6 +341,16 @@ const InputsPontoPassagem = ({
 							value={formik.values.ponto_passagem2.previsaoSaida}
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
+							//isInvalid={isDateErrorInput}
+							onKeyUp={(e) =>
+								validarDigitoInputData(e, "ponto_passagem2.previsaoSaida")
+							}
+							onBlur={() => {
+								validarDatas(
+									formik.values.ponto_passagem2.previsaoSaida,
+									"formik.values.ponto_passagem2.previsaoSaida"
+								);
+							}}
 							required
 							disabled={fkSituacao}
 						/>
@@ -269,6 +373,18 @@ const InputsPontoPassagem = ({
 									}
 									onKeyDown={handleEnter}
 									onChange={formik.handleChange}
+									onKeyUp={(e) =>
+										validarDigitoInputData(
+											e,
+											"ponto_passagem2.coletaEfetiva_mundo"
+										)
+									}
+									onBlur={() => {
+										validarDatas(
+											formik.values.ponto_passagem2.coletaEfetiva_mundo,
+											"formik.values.ponto_passagem2.coletaEfetiva_mundo"
+										);
+									}}
 									disabled={disabledValidEfetiva}
 									required
 								/>
@@ -284,13 +400,23 @@ const InputsPontoPassagem = ({
 									value={formik.values.ponto_passagem2.coletaEfetivaSaida || ""}
 									onKeyDown={handleEnter}
 									onChange={formik.handleChange}
-									onBlur={() =>
+									onKeyUp={(e) =>
+										validarDigitoInputData(
+											e,
+											"ponto_passagem2.coletaEfetivaSaida"
+										)
+									}
+									onBlur={() => {
 										funcDuracaoProcesso(
 											formik,
 											2,
 											formik.values.ponto_passagem2.coletaEfetivaSaida
-										)
-									}
+										);
+										validarDatas(
+											formik.values.ponto_passagem2.coletaEfetivaSaida,
+											"formik.values.ponto_passagem2.coletaEfetivaSaida"
+										);
+									}}
 									disabled={disabledValidEfetiva}
 									required
 								/>
@@ -329,7 +455,7 @@ const InputsPontoPassagem = ({
 					</FloatingLabel>
 				</Col>
 				<Col className="input-ponto-passagem-coleta-entrega">
-					<FloatingLabel label="Coleta/Entrega 3" className="mb-3">
+					<FloatingLabel label="Coleta/Entrega" className="mb-3">
 						<Form.Control
 							type="text"
 							disabled
@@ -349,6 +475,16 @@ const InputsPontoPassagem = ({
 							value={formik.values.ponto_passagem3.previsao}
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
+							//isInvalid={isDateErrorInput}
+							onKeyUp={(e) =>
+								validarDigitoInputData(e, "ponto_passagem3.previsao")
+							}
+							onBlur={() => {
+								validarDatas(
+									formik.values.ponto_passagem3.previsao,
+									"formik.values.ponto_passagem3.previsao"
+								);
+							}}
 							required
 							disabled={fkSituacao}
 						/>
@@ -363,6 +499,16 @@ const InputsPontoPassagem = ({
 							value={formik.values.ponto_passagem3.previsaoSaida}
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
+							//isInvalid={isDateErrorInput}
+							onKeyUp={(e) =>
+								validarDigitoInputData(e, "ponto_passagem3.previsaoSaida")
+							}
+							onBlur={() => {
+								validarDatas(
+									formik.values.ponto_passagem3.previsaoSaida,
+									"formik.values.ponto_passagem3.previsaoSaida"
+								);
+							}}
 							required
 							disabled={fkSituacao}
 						/>
@@ -385,6 +531,18 @@ const InputsPontoPassagem = ({
 									}
 									onKeyDown={handleEnter}
 									onChange={formik.handleChange}
+									onKeyUp={(e) =>
+										validarDigitoInputData(
+											e,
+											"ponto_passagem3.coletaEfetiva_peacao "
+										)
+									}
+									onBlur={() => {
+										validarDatas(
+											formik.values.ponto_passagem3.coletaEfetiva_peacao,
+											"formik.values.ponto_passagem3.coletaEfetiva_peacao "
+										);
+									}}
 									disabled={disabledValidEfetiva}
 									required
 								/>
@@ -400,13 +558,23 @@ const InputsPontoPassagem = ({
 									value={formik.values.ponto_passagem3.coletaEfetivaSaida || ""}
 									onKeyDown={handleEnter}
 									onChange={formik.handleChange}
-									onBlur={() =>
+									onKeyUp={(e) =>
+										validarDigitoInputData(
+											e,
+											"ponto_passagem3.coletaEfetivaSaida"
+										)
+									}
+									onBlur={() => {
 										funcDuracaoProcesso(
 											formik,
 											3,
 											formik.values.ponto_passagem3.coletaEfetivaSaida
-										)
-									}
+										);
+										validarDatas(
+											formik.values.ponto_passagem3.coletaEfetivaSaida,
+											"formik.values.ponto_passagem3.coletaEfetivaSaida"
+										);
+									}}
 									disabled={disabledValidEfetiva}
 									required
 								/>
@@ -469,7 +637,7 @@ const InputsPontoPassagem = ({
 						</Col>
 					)}
 					<Col className="input-ponto-passagem-coleta-entrega">
-						<FloatingLabel label="Coleta/Entrega 5" className="mb-3">
+						<FloatingLabel label="Coleta/Entrega" className="mb-3">
 							<Form.Select
 								name="ponto_passagem5.tipoServico"
 								value={formik.values.ponto_passagem5.tipoServico}
@@ -494,6 +662,16 @@ const InputsPontoPassagem = ({
 								value={formik.values.ponto_passagem5.previsao}
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
+								//isInvalid={isDateErrorInput}
+								onKeyUp={(e) =>
+									validarDigitoInputData(e, "ponto_passagem5.previsao")
+								}
+								onBlur={() => {
+									validarDatas(
+										formik.values.ponto_passagem5.previsao,
+										"formik.values.ponto_passagem5.previsao"
+									);
+								}}
 								required
 								disabled={fkSituacao}
 							/>
@@ -508,6 +686,16 @@ const InputsPontoPassagem = ({
 								value={formik.values.ponto_passagem5.previsaoSaida}
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
+								//isInvalid={isDateErrorInput}
+								onKeyUp={(e) =>
+									validarDigitoInputData(e, "ponto_passagem5.previsao")
+								}
+								onBlur={() => {
+									validarDatas(
+										formik.values.ponto_passagem5.previsaoSaida,
+										"formik.values.ponto_passagem5.previsaoSaida"
+									);
+								}}
 								required
 								disabled={fkSituacao}
 							/>
@@ -559,13 +747,23 @@ const InputsPontoPassagem = ({
 										}
 										onKeyDown={handleEnter}
 										onChange={formik.handleChange}
-										onBlur={() =>
+										onKeyUp={(e) =>
+											validarDigitoInputData(
+												e,
+												"ponto_passagem5.entregaEfetivaSaida"
+											)
+										}
+										onBlur={() => {
 											funcDuracaoProcesso(
 												formik,
 												5,
 												formik.values.ponto_passagem5.coletaEfetivaSaida
-											)
-										}
+											);
+											validarDatas(
+												formik.values.ponto_passagem5.coletaEfetivaSaida,
+												"formik.values.ponto_passagem5.coletaEfetivaSaida"
+											);
+										}}
 										disabled={disabledValidEfetiva}
 										required
 									/>
@@ -635,7 +833,7 @@ const InputsPontoPassagem = ({
 						</Col>
 					)}
 					<Col className="input-ponto-passagem-coleta-entrega">
-						<FloatingLabel label="Coleta/Entrega 6" className="mb-3">
+						<FloatingLabel label="Coleta/Entrega" className="mb-3">
 							<Form.Select
 								name="ponto_passagem6.tipoServico"
 								value={formik.values.ponto_passagem6.tipoServico}
@@ -660,6 +858,16 @@ const InputsPontoPassagem = ({
 								value={formik.values.ponto_passagem6.previsao}
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
+								//isInvalid={isDateErrorInput}
+								onKeyUp={(e) =>
+									validarDigitoInputData(e, "ponto_passagem6.previsao")
+								}
+								onBlur={() => {
+									validarDatas(
+										formik.values.ponto_passagem6.previsao,
+										"formik.values.ponto_passagem6.previsao"
+									);
+								}}
 								required
 								disabled={fkSituacao}
 							/>
@@ -674,6 +882,16 @@ const InputsPontoPassagem = ({
 								value={formik.values.ponto_passagem6.previsaoSaida}
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
+								//isInvalid={isDateErrorInput}
+								onKeyUp={(e) =>
+									validarDigitoInputData(e, "ponto_passagem6.previsaoSaida")
+								}
+								onBlur={() => {
+									validarDatas(
+										formik.values.ponto_passagem6.previsaoSaida,
+										"formik.values.ponto_passagem6.previsaoSaida"
+									);
+								}}
 								required
 								disabled={fkSituacao}
 							/>
@@ -701,6 +919,16 @@ const InputsPontoPassagem = ({
 												: formik.values.ponto_passagem6.entregaEfetiva || ""
 										}
 										onChange={formik.handleChange}
+										//isInvalid={isDateErrorInput}
+										onKeyUp={(e) =>
+											validarDigitoInputData(e, "ponto_passagem6.coletaEfetiva")
+										}
+										onBlur={() => {
+											validarDatas(
+												formik.values.ponto_passagem6.coletaEfetiva,
+												"formik.values.ponto_passagem6.coletaEfetiva"
+											);
+										}}
 										onKeyDown={handleEnter}
 										disabled={disabledValidEfetiva}
 										required
@@ -725,13 +953,23 @@ const InputsPontoPassagem = ({
 										}
 										onKeyDown={handleEnter}
 										onChange={formik.handleChange}
-										onBlur={() =>
+										onKeyUp={(e) =>
+											validarDigitoInputData(
+												e,
+												"values.ponto_passagem6.entregaEfetivaSaida"
+											)
+										}
+										onBlur={() => {
 											funcDuracaoProcesso(
 												formik,
 												6,
 												formik.values.ponto_passagem6.coletaEfetiva
-											)
-										}
+											);
+											validarDatas(
+												formik.values.ponto_passagem6.entregaEfetivaSaida,
+												"formik.values.ponto_passagem6.entregaEfetivaSaida"
+											);
+										}}
 										disabled={disabledValidEfetiva}
 										required
 									/>
@@ -801,7 +1039,7 @@ const InputsPontoPassagem = ({
 						</Col>
 					)}
 					<Col className="input-ponto-passagem-coleta-entrega">
-						<FloatingLabel label="Coleta/Entrega 7" className="mb-3">
+						<FloatingLabel label="Coleta/Entrega" className="mb-3">
 							<Form.Select
 								name="ponto_passagem7.tipoServico"
 								value={formik.values.ponto_passagem7.tipoServico}
@@ -828,6 +1066,16 @@ const InputsPontoPassagem = ({
 								value={formik.values.ponto_passagem7.previsao}
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
+								//isInvalid={isDateErrorInput}
+								onKeyUp={(e) =>
+									validarDigitoInputData(e, "ponto_passagem7.previsao")
+								}
+								onBlur={() => {
+									validarDatas(
+										formik.values.ponto_passagem7.previsao,
+										"formik.values.ponto_passagem7.previsao"
+									);
+								}}
 								required
 								disabled={fkSituacao}
 							/>
@@ -842,6 +1090,16 @@ const InputsPontoPassagem = ({
 								value={formik.values.ponto_passagem7.previsaoSaida}
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
+								//isInvalid={isDateErrorInput}
+								onKeyUp={(e) =>
+									validarDigitoInputData(e, "ponto_passagem7.previsaoSaida")
+								}
+								onBlur={() => {
+									validarDatas(
+										formik.values.ponto_passagem7.previsaoSaida,
+										"formik.values.ponto_passagem7.previsaoSaida"
+									);
+								}}
 								required
 								disabled={fkSituacao}
 							/>
@@ -969,7 +1227,7 @@ const InputsPontoPassagem = ({
 						</Col>
 					)}
 					<Col className="input-ponto-passagem-coleta-entrega">
-						<FloatingLabel label="Coleta/Entrega 8" className="mb-3">
+						<FloatingLabel label="Coleta/Entrega" className="mb-3">
 							<Form.Select
 								name="ponto_passagem8.tipoServico"
 								value={formik.values.ponto_passagem8.tipoServico}
@@ -994,6 +1252,16 @@ const InputsPontoPassagem = ({
 								value={formik.values.ponto_passagem8.previsao}
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
+								//isInvalid={isDateErrorInput}
+								onKeyUp={(e) =>
+									validarDigitoInputData(e, "ponto_passagem8.previsao")
+								}
+								onBlur={() => {
+									validarDatas(
+										formik.values.ponto_passagem8.previsao,
+										"formik.values.ponto_passagem8.previsao"
+									);
+								}}
 								required
 								disabled={fkSituacao}
 							/>
@@ -1008,6 +1276,16 @@ const InputsPontoPassagem = ({
 								value={formik.values.ponto_passagem8.previsaoSaida}
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
+								//isInvalid={isDateErrorInput}
+								onKeyUp={(e) =>
+									validarDigitoInputData(e, "ponto_passagem8.previsaoSaida")
+								}
+								onBlur={() => {
+									validarDatas(
+										formik.values.ponto_passagem8.previsaoSaida,
+										"formik.values.ponto_passagem8.previsaoSaida"
+									);
+								}}
 								required
 								disabled={fkSituacao}
 							/>
@@ -1135,7 +1413,7 @@ const InputsPontoPassagem = ({
 						</Col>
 					)}
 					<Col className="input-ponto-passagem-coleta-entrega">
-						<FloatingLabel label="Coleta/Entrega 9" className="mb-3">
+						<FloatingLabel label="Coleta/Entrega" className="mb-3">
 							<Form.Select
 								name="ponto_passagem9.tipoServico"
 								value={formik.values.ponto_passagem9.tipoServico}
@@ -1160,6 +1438,16 @@ const InputsPontoPassagem = ({
 								value={formik.values.ponto_passagem9.previsao}
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
+								//isInvalid={isDateErrorInput}
+								onKeyUp={(e) =>
+									validarDigitoInputData(e, "ponto_passagem9.previsao")
+								}
+								onBlur={() => {
+									validarDatas(
+										formik.values.ponto_passagem9.previsao,
+										"formik.values.ponto_passagem9.previsao"
+									);
+								}}
 								required
 								disabled={fkSituacao}
 							/>
@@ -1174,6 +1462,16 @@ const InputsPontoPassagem = ({
 								value={formik.values.ponto_passagem9.previsaoSaida}
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
+								//isInvalid={isDateErrorInput}
+								onKeyUp={(e) =>
+									validarDigitoInputData(e, "ponto_passagem9.previsaoSaida")
+								}
+								onBlur={() => {
+									validarDatas(
+										formik.values.ponto_passagem9.previsaoSaida,
+										"formik.values.ponto_passagem9.previsaoSaida"
+									);
+								}}
 								required
 								disabled={fkSituacao}
 							/>
@@ -1239,13 +1537,23 @@ const InputsPontoPassagem = ({
 										}
 										onKeyDown={handleEnter}
 										onChange={formik.handleChange}
-										onBlur={() =>
+										onKeyUp={(e) =>
+											validarDigitoInputData(
+												e,
+												"ponto_passagem9.entregaEfetivaSaida"
+											)
+										}
+										onBlur={() => {
 											funcDuracaoProcesso(
 												formik,
 												9,
 												formik.values.ponto_passagem9.coletaEfetivaSaida
-											)
-										}
+											);
+											validarDatas(
+												formik.values.ponto_passagem9.coletaEfetivaSaida,
+												"formik.values.ponto_passagem9.coletaEfetivaSaida"
+											);
+										}}
 										disabled={disabledValidEfetiva}
 										required
 									/>
@@ -1315,7 +1623,7 @@ const InputsPontoPassagem = ({
 						</Col>
 					)}
 					<Col className="input-ponto-passagem-coleta-entrega">
-						<FloatingLabel label="Coleta/Entrega 10" className="mb-3">
+						<FloatingLabel label="Coleta/Entrega" className="mb-3">
 							<Form.Select
 								name="ponto_passagem10.tipoServico"
 								value={formik.values.ponto_passagem10.tipoServico}
@@ -1340,6 +1648,16 @@ const InputsPontoPassagem = ({
 								value={formik.values.ponto_passagem10.previsao}
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
+								//isInvalid={isDateErrorInput}
+								onKeyUp={(e) =>
+									validarDigitoInputData(e, "ponto_passagem10.previsao")
+								}
+								onBlur={() => {
+									validarDatas(
+										formik.values.ponto_passagem10.previsao,
+										"formik.values.ponto_passagem10.previsao"
+									);
+								}}
 								required
 								disabled={fkSituacao}
 							/>
@@ -1354,6 +1672,16 @@ const InputsPontoPassagem = ({
 								value={formik.values.ponto_passagem10.previsaoSaida}
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
+								//isInvalid={isDateErrorInput}
+								onKeyUp={(e) =>
+									validarDigitoInputData(e, "ponto_passagem10.previsaoSaida")
+								}
+								onBlur={() => {
+									validarDatas(
+										formik.values.ponto_passagem10.previsaoSaida,
+										"formik.values.ponto_passagem10.previsaoSaida"
+									);
+								}}
 								required
 								disabled={fkSituacao}
 							/>
@@ -1462,7 +1790,7 @@ const InputsPontoPassagem = ({
 					/>
 				</Col>
 				<Col className="input-ponto-passagem-coleta-entrega">
-					<FloatingLabel label="Coleta/Entrega 4  " className="mb-3">
+					<FloatingLabel label="Coleta/Entrega" className="mb-3">
 						<Form.Control
 							type="text"
 							name="ponto_passagem4.tipoServico"
@@ -1483,6 +1811,16 @@ const InputsPontoPassagem = ({
 							value={formik.values.ponto_passagem4.previsao}
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
+							//isInvalid={isDateErrorInput}
+							onKeyUp={(e) =>
+								validarDigitoInputData(e, "ponto_passagem4.previsao")
+							}
+							onBlur={() => {
+								validarDatas(
+									formik.values.ponto_passagem4.previsao,
+									"formik.values.ponto_passagem4.previsao"
+								);
+							}}
 							required
 							disabled={fkSituacao}
 						/>
@@ -1497,6 +1835,16 @@ const InputsPontoPassagem = ({
 							value={formik.values.ponto_passagem4.previsaoSaida}
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
+							//isInvalid={isDateErrorInput}
+							onKeyUp={(e) =>
+								validarDigitoInputData(e, "ponto_passagem4.previsaoSaida")
+							}
+							onBlur={() => {
+								validarDatas(
+									formik.values.ponto_passagem4.previsaoSaida,
+									"formik.values.ponto_passagem4.previsaoSaida"
+								);
+							}}
 							required
 							disabled={fkSituacao}
 						/>
@@ -1517,6 +1865,16 @@ const InputsPontoPassagem = ({
 									value={formik.values.ponto_passagem4.entregaEfetiva || ""}
 									onKeyDown={handleEnter}
 									onChange={formik.handleChange}
+									//isInvalid={isDateErrorInput}
+									onKeyUp={(e) =>
+										validarDigitoInputData(e, "ponto_passagem4.entregaEfetiva")
+									}
+									onBlur={() => {
+										validarDatas(
+											formik.values.ponto_passagem4.entregaEfetiva,
+											"formik.values.ponto_passagem4.entregaEfetiva"
+										);
+									}}
 									disabled={disabledValidEfetiva}
 									required
 								/>
@@ -1534,13 +1892,23 @@ const InputsPontoPassagem = ({
 									}
 									onKeyDown={handleEnter}
 									onChange={formik.handleChange}
-									onBlur={() =>
+									onKeyUp={(e) =>
+										validarDigitoInputData(
+											e,
+											"ponto_passagem4.entregaEfetivaSaida"
+										)
+									}
+									onBlur={() => {
 										funcDuracaoProcesso(
 											formik,
 											4,
 											formik.values.ponto_passagem4.entregaEfetivaSaida
-										)
-									}
+										);
+										validarDatas(
+											formik.values.ponto_passagem4.entregaEfetivaSaida,
+											"formik.values.ponto_passagem4.entregaEfetivaSaida"
+										);
+									}}
 									disabled={disabledValidEfetiva}
 									required
 								/>

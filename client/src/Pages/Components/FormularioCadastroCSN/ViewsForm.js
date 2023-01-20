@@ -44,6 +44,8 @@ export default function ViewsForm({
 	valorTotalDebito,
 	fkSituacao,
 	isPermissionUser,
+	isDateErrorInput,
+	setDateErrorInput,
 }) {
 	const handleEnter = (event) => {
 		if (event.key === "Enter") {
@@ -391,6 +393,8 @@ export default function ViewsForm({
 				inputColeta10={inputColeta10}
 				fkSituacao={fkSituacao}
 				isPermissionUser={isPermissionUser}
+				setDateErrorInput={setDateErrorInput}
+				isDateErrorInput={isDateErrorInput}
 			/>
 
 			<Row className="row-button-local">
