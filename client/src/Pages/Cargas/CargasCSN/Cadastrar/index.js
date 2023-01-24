@@ -251,6 +251,14 @@ const CadastroCargaCSN = () => {
 		},
 	});
 
+	const directScreenTop = () => {
+		window.scrollTo({
+			top: 330,
+			left: 330,
+			behavior: "smooth",
+		});
+	};
+
 	function buscarCargaComDocumentoDeTransporte({ documento_transporte, id }) {
 		if (documento_transporte) {
 			ServiceCargas.search({
@@ -290,6 +298,7 @@ const CadastroCargaCSN = () => {
 
 	function resetForm() {
 		window.location.reload();
+		directScreenTop();
 	}
 
 	return (
