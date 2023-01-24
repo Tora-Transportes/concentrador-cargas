@@ -90,3 +90,11 @@ export const funcValidInputDate = (e, quantidadedigito, capiturarDigito) => {
 //const mes = String(hoje.getMonth() + 1).padStart(2,'0')
 //const ano = hoje.getFullYear()
 //const dataAtual = `${dia}/${mes}/${ano}`
+
+export const formatDateADD1HoraObject = (dataValues) => {
+	if (dataValues) {
+		const dateFormate = new Date(dataValues);
+		//dateFormate.setHours(dateFormate.getHours() + 1);
+		return dateFormate;
+	}
+};

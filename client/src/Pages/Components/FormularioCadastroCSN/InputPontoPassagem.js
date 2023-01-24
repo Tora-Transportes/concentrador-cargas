@@ -16,9 +16,9 @@ const InputsPontoPassagem = ({
 	inputColeta5,
 	inputColeta6,
 	inputColeta7,
-	inputColeta8,
-	inputColeta9,
-	inputColeta10,
+	// inputColeta8,
+	// inputColeta9,
+	// inputColeta10,
 	fkSituacao,
 	isPermissionUser,
 	//isDateErrorInput,
@@ -27,9 +27,9 @@ const InputsPontoPassagem = ({
 	const [inputPontoPassagem5, setInputPontoPassagem5] = useState(true);
 	const [inputPontoPassagem6, setInputPontoPassagem6] = useState(true);
 	const [inputPontoPassagem7, setInputPontoPassagem7] = useState(true);
-	const [inputPontoPassagem8, setInputPontoPassagem8] = useState(true);
-	const [inputPontoPassagem9, setInputPontoPassagem9] = useState(true);
-	const [inputPontoPassagem10, setInputPontoPassagem10] = useState(true);
+	// const [inputPontoPassagem8, setInputPontoPassagem8] = useState(true);
+	// const [inputPontoPassagem9, setInputPontoPassagem9] = useState(true);
+	// const [inputPontoPassagem10, setInputPontoPassagem10] = useState(true);
 
 	//const [isConuntDigitoData, setConuntDigitoData] = useState(0);
 	const conuntDigitoDataRef = useRef(0);
@@ -60,21 +60,21 @@ const InputsPontoPassagem = ({
 		} else {
 			setInputPontoPassagem7(true);
 		}
-		if (formik.values.ponto_passagem8.tipoServico === "Entrega") {
-			setInputPontoPassagem8(false);
-		} else {
-			setInputPontoPassagem8(true);
-		}
-		if (formik.values.ponto_passagem9.tipoServico === "Entrega") {
-			setInputPontoPassagem9(false);
-		} else {
-			setInputPontoPassagem9(true);
-		}
-		if (formik.values.ponto_passagem10.tipoServico === "Entrega") {
-			setInputPontoPassagem10(false);
-		} else {
-			setInputPontoPassagem10(true);
-		}
+		// if (formik.values.ponto_passagem8.tipoServico === "Entrega") {
+		// 	setInputPontoPassagem8(false);
+		// } else {
+		// 	setInputPontoPassagem8(true);
+		// }
+		// if (formik.values.ponto_passagem9.tipoServico === "Entrega") {
+		// 	setInputPontoPassagem9(false);
+		// } else {
+		// 	setInputPontoPassagem9(true);
+		// }
+		// if (formik.values.ponto_passagem10.tipoServico === "Entrega") {
+		// 	setInputPontoPassagem10(false);
+		// } else {
+		// 	setInputPontoPassagem10(true);
+		// }
 	}, [formik.values]);
 
 	const handleEnter = (event) => {
@@ -91,8 +91,7 @@ const InputsPontoPassagem = ({
 		}
 	};
 
-	const validarDatas = (date, valueFormik) => {
-		valueFormik;
+	const validarDatas = (date) => {
 		const resultValidation = funcCompareDateOneYear(date);
 		if (resultValidation?.error) {
 			setDateErrorInput(true);
@@ -163,10 +162,7 @@ const InputsPontoPassagem = ({
 								validarDigitoInputData(e, "ponto_passagem.previsao")
 							}
 							onBlur={() => {
-								validarDatas(
-									formik.values.ponto_passagem.previsao,
-									"formik.values.ponto_passagem.previsao"
-								);
+								validarDatas(formik.values.ponto_passagem.previsao);
 							}}
 							required
 							disabled={fkSituacao}
@@ -186,10 +182,7 @@ const InputsPontoPassagem = ({
 								validarDigitoInputData(e, "ponto_passagem.previsaoSaida")
 							}
 							onBlur={() => {
-								validarDatas(
-									formik.values.ponto_passagem.previsaoSaida,
-									"formik.values.ponto_passagem.previsaoSaida"
-								);
+								validarDatas(formik.values.ponto_passagem.previsaoSaida);
 							}}
 							required
 							disabled={fkSituacao}
@@ -222,8 +215,7 @@ const InputsPontoPassagem = ({
 									}
 									onBlur={() => {
 										validarDatas(
-											formik.values.ponto_passagem.coletaEfetiva_posto30,
-											"formik.values.ponto_passagem.coletaEfetiva_posto30"
+											formik.values.ponto_passagem.coletaEfetiva_posto30
 										);
 									}}
 									disabled={disabledValidEfetiva}
@@ -255,8 +247,7 @@ const InputsPontoPassagem = ({
 											formik.values.ponto_passagem.coletaEfetivaSaida
 										);
 										validarDatas(
-											formik.values.ponto_passagem.coletaEfetivaSaida,
-											"formik.values.ponto_passagem.coletaEfetivaSaida"
+											formik.values.ponto_passagem.coletaEfetivaSaida
 										);
 									}}
 									disabled={disabledValidEfetiva}
@@ -322,10 +313,7 @@ const InputsPontoPassagem = ({
 								validarDigitoInputData(e, "ponto_passagem2.previsao")
 							}
 							onBlur={() => {
-								validarDatas(
-									formik.values.ponto_passagem2.previsao,
-									"formik.values.ponto_passagem2.previsao"
-								);
+								validarDatas(formik.values.ponto_passagem2.previsao);
 							}}
 							required
 							disabled={fkSituacao}
@@ -346,10 +334,7 @@ const InputsPontoPassagem = ({
 								validarDigitoInputData(e, "ponto_passagem2.previsaoSaida")
 							}
 							onBlur={() => {
-								validarDatas(
-									formik.values.ponto_passagem2.previsaoSaida,
-									"formik.values.ponto_passagem2.previsaoSaida"
-								);
+								validarDatas(formik.values.ponto_passagem2.previsaoSaida);
 							}}
 							required
 							disabled={fkSituacao}
@@ -381,8 +366,7 @@ const InputsPontoPassagem = ({
 									}
 									onBlur={() => {
 										validarDatas(
-											formik.values.ponto_passagem2.coletaEfetiva_mundo,
-											"formik.values.ponto_passagem2.coletaEfetiva_mundo"
+											formik.values.ponto_passagem2.coletaEfetiva_mundo
 										);
 									}}
 									disabled={disabledValidEfetiva}
@@ -413,8 +397,7 @@ const InputsPontoPassagem = ({
 											formik.values.ponto_passagem2.coletaEfetivaSaida
 										);
 										validarDatas(
-											formik.values.ponto_passagem2.coletaEfetivaSaida,
-											"formik.values.ponto_passagem2.coletaEfetivaSaida"
+											formik.values.ponto_passagem2.coletaEfetivaSaida
 										);
 									}}
 									disabled={disabledValidEfetiva}
@@ -480,10 +463,7 @@ const InputsPontoPassagem = ({
 								validarDigitoInputData(e, "ponto_passagem3.previsao")
 							}
 							onBlur={() => {
-								validarDatas(
-									formik.values.ponto_passagem3.previsao,
-									"formik.values.ponto_passagem3.previsao"
-								);
+								validarDatas(formik.values.ponto_passagem3.previsao);
 							}}
 							required
 							disabled={fkSituacao}
@@ -504,10 +484,7 @@ const InputsPontoPassagem = ({
 								validarDigitoInputData(e, "ponto_passagem3.previsaoSaida")
 							}
 							onBlur={() => {
-								validarDatas(
-									formik.values.ponto_passagem3.previsaoSaida,
-									"formik.values.ponto_passagem3.previsaoSaida"
-								);
+								validarDatas(formik.values.ponto_passagem3.previsaoSaida);
 							}}
 							required
 							disabled={fkSituacao}
@@ -539,8 +516,7 @@ const InputsPontoPassagem = ({
 									}
 									onBlur={() => {
 										validarDatas(
-											formik.values.ponto_passagem3.coletaEfetiva_peacao,
-											"formik.values.ponto_passagem3.coletaEfetiva_peacao "
+											formik.values.ponto_passagem3.coletaEfetiva_peacao
 										);
 									}}
 									disabled={disabledValidEfetiva}
@@ -571,8 +547,7 @@ const InputsPontoPassagem = ({
 											formik.values.ponto_passagem3.coletaEfetivaSaida
 										);
 										validarDatas(
-											formik.values.ponto_passagem3.coletaEfetivaSaida,
-											"formik.values.ponto_passagem3.coletaEfetivaSaida"
+											formik.values.ponto_passagem3.coletaEfetivaSaida
 										);
 									}}
 									disabled={disabledValidEfetiva}
@@ -667,10 +642,7 @@ const InputsPontoPassagem = ({
 									validarDigitoInputData(e, "ponto_passagem5.previsao")
 								}
 								onBlur={() => {
-									validarDatas(
-										formik.values.ponto_passagem5.previsao,
-										"formik.values.ponto_passagem5.previsao"
-									);
+									validarDatas(formik.values.ponto_passagem5.previsao);
 								}}
 								required
 								disabled={fkSituacao}
@@ -691,10 +663,7 @@ const InputsPontoPassagem = ({
 									validarDigitoInputData(e, "ponto_passagem5.previsao")
 								}
 								onBlur={() => {
-									validarDatas(
-										formik.values.ponto_passagem5.previsaoSaida,
-										"formik.values.ponto_passagem5.previsaoSaida"
-									);
+									validarDatas(formik.values.ponto_passagem5.previsaoSaida);
 								}}
 								required
 								disabled={fkSituacao}
@@ -760,8 +729,7 @@ const InputsPontoPassagem = ({
 												formik.values.ponto_passagem5.coletaEfetivaSaida
 											);
 											validarDatas(
-												formik.values.ponto_passagem5.coletaEfetivaSaida,
-												"formik.values.ponto_passagem5.coletaEfetivaSaida"
+												formik.values.ponto_passagem5.coletaEfetivaSaida
 											);
 										}}
 										disabled={disabledValidEfetiva}
@@ -863,10 +831,7 @@ const InputsPontoPassagem = ({
 									validarDigitoInputData(e, "ponto_passagem6.previsao")
 								}
 								onBlur={() => {
-									validarDatas(
-										formik.values.ponto_passagem6.previsao,
-										"formik.values.ponto_passagem6.previsao"
-									);
+									validarDatas(formik.values.ponto_passagem6.previsao);
 								}}
 								required
 								disabled={fkSituacao}
@@ -887,10 +852,7 @@ const InputsPontoPassagem = ({
 									validarDigitoInputData(e, "ponto_passagem6.previsaoSaida")
 								}
 								onBlur={() => {
-									validarDatas(
-										formik.values.ponto_passagem6.previsaoSaida,
-										"formik.values.ponto_passagem6.previsaoSaida"
-									);
+									validarDatas(formik.values.ponto_passagem6.previsaoSaida);
 								}}
 								required
 								disabled={fkSituacao}
@@ -924,10 +886,7 @@ const InputsPontoPassagem = ({
 											validarDigitoInputData(e, "ponto_passagem6.coletaEfetiva")
 										}
 										onBlur={() => {
-											validarDatas(
-												formik.values.ponto_passagem6.coletaEfetiva,
-												"formik.values.ponto_passagem6.coletaEfetiva"
-											);
+											validarDatas(formik.values.ponto_passagem6.coletaEfetiva);
 										}}
 										onKeyDown={handleEnter}
 										disabled={disabledValidEfetiva}
@@ -966,8 +925,7 @@ const InputsPontoPassagem = ({
 												formik.values.ponto_passagem6.coletaEfetiva
 											);
 											validarDatas(
-												formik.values.ponto_passagem6.entregaEfetivaSaida,
-												"formik.values.ponto_passagem6.entregaEfetivaSaida"
+												formik.values.ponto_passagem6.entregaEfetivaSaida
 											);
 										}}
 										disabled={disabledValidEfetiva}
@@ -1071,10 +1029,7 @@ const InputsPontoPassagem = ({
 									validarDigitoInputData(e, "ponto_passagem7.previsao")
 								}
 								onBlur={() => {
-									validarDatas(
-										formik.values.ponto_passagem7.previsao,
-										"formik.values.ponto_passagem7.previsao"
-									);
+									validarDatas(formik.values.ponto_passagem7.previsao);
 								}}
 								required
 								disabled={fkSituacao}
@@ -1095,10 +1050,7 @@ const InputsPontoPassagem = ({
 									validarDigitoInputData(e, "ponto_passagem7.previsaoSaida")
 								}
 								onBlur={() => {
-									validarDatas(
-										formik.values.ponto_passagem7.previsaoSaida,
-										"formik.values.ponto_passagem7.previsaoSaida"
-									);
+									validarDatas(formik.values.ponto_passagem7.previsaoSaida);
 								}}
 								required
 								disabled={fkSituacao}
@@ -1187,7 +1139,7 @@ const InputsPontoPassagem = ({
 					)}
 				</Row>
 			)}
-			{inputColeta8 && (
+			{/* {inputColeta8 && (
 				<Row className="row-input-coleta">
 					{inputPontoPassagem8 ? (
 						<Col
@@ -1258,9 +1210,7 @@ const InputsPontoPassagem = ({
 								}
 								onBlur={() => {
 									validarDatas(
-										formik.values.ponto_passagem8.previsao,
-										"formik.values.ponto_passagem8.previsao"
-									);
+										formik.values.ponto_passagem8.previsao									);
 								}}
 								required
 								disabled={fkSituacao}
@@ -1282,9 +1232,7 @@ const InputsPontoPassagem = ({
 								}
 								onBlur={() => {
 									validarDatas(
-										formik.values.ponto_passagem8.previsaoSaida,
-										"formik.values.ponto_passagem8.previsaoSaida"
-									);
+										formik.values.ponto_passagem8.previsaoSaida									);
 								}}
 								required
 								disabled={fkSituacao}
@@ -1444,9 +1392,7 @@ const InputsPontoPassagem = ({
 								}
 								onBlur={() => {
 									validarDatas(
-										formik.values.ponto_passagem9.previsao,
-										"formik.values.ponto_passagem9.previsao"
-									);
+										formik.values.ponto_passagem9.previsao									);
 								}}
 								required
 								disabled={fkSituacao}
@@ -1468,9 +1414,7 @@ const InputsPontoPassagem = ({
 								}
 								onBlur={() => {
 									validarDatas(
-										formik.values.ponto_passagem9.previsaoSaida,
-										"formik.values.ponto_passagem9.previsaoSaida"
-									);
+										formik.values.ponto_passagem9.previsaoSaida									);
 								}}
 								required
 								disabled={fkSituacao}
@@ -1550,9 +1494,7 @@ const InputsPontoPassagem = ({
 												formik.values.ponto_passagem9.coletaEfetivaSaida
 											);
 											validarDatas(
-												formik.values.ponto_passagem9.coletaEfetivaSaida,
-												"formik.values.ponto_passagem9.coletaEfetivaSaida"
-											);
+												formik.values.ponto_passagem9.coletaEfetivaSaida											);
 										}}
 										disabled={disabledValidEfetiva}
 										required
@@ -1654,9 +1596,7 @@ const InputsPontoPassagem = ({
 								}
 								onBlur={() => {
 									validarDatas(
-										formik.values.ponto_passagem10.previsao,
-										"formik.values.ponto_passagem10.previsao"
-									);
+										formik.values.ponto_passagem10.previsao									);
 								}}
 								required
 								disabled={fkSituacao}
@@ -1678,9 +1618,7 @@ const InputsPontoPassagem = ({
 								}
 								onBlur={() => {
 									validarDatas(
-										formik.values.ponto_passagem10.previsaoSaida,
-										"formik.values.ponto_passagem10.previsaoSaida"
-									);
+										formik.values.ponto_passagem10.previsaoSaida									);
 								}}
 								required
 								disabled={fkSituacao}
@@ -1769,7 +1707,7 @@ const InputsPontoPassagem = ({
 						</>
 					)}
 				</Row>
-			)}
+			)} */}
 			<Row className="row-input-coleta">
 				<Col sm={12} md={12} lg={12} xxl={6}>
 					<InputCliente
@@ -1816,10 +1754,7 @@ const InputsPontoPassagem = ({
 								validarDigitoInputData(e, "ponto_passagem4.previsao")
 							}
 							onBlur={() => {
-								validarDatas(
-									formik.values.ponto_passagem4.previsao,
-									"formik.values.ponto_passagem4.previsao"
-								);
+								validarDatas(formik.values.ponto_passagem4.previsao);
 							}}
 							required
 							disabled={fkSituacao}
@@ -1840,10 +1775,7 @@ const InputsPontoPassagem = ({
 								validarDigitoInputData(e, "ponto_passagem4.previsaoSaida")
 							}
 							onBlur={() => {
-								validarDatas(
-									formik.values.ponto_passagem4.previsaoSaida,
-									"formik.values.ponto_passagem4.previsaoSaida"
-								);
+								validarDatas(formik.values.ponto_passagem4.previsaoSaida);
 							}}
 							required
 							disabled={fkSituacao}
@@ -1870,10 +1802,7 @@ const InputsPontoPassagem = ({
 										validarDigitoInputData(e, "ponto_passagem4.entregaEfetiva")
 									}
 									onBlur={() => {
-										validarDatas(
-											formik.values.ponto_passagem4.entregaEfetiva,
-											"formik.values.ponto_passagem4.entregaEfetiva"
-										);
+										validarDatas(formik.values.ponto_passagem4.entregaEfetiva);
 									}}
 									disabled={disabledValidEfetiva}
 									required
@@ -1905,8 +1834,7 @@ const InputsPontoPassagem = ({
 											formik.values.ponto_passagem4.entregaEfetivaSaida
 										);
 										validarDatas(
-											formik.values.ponto_passagem4.entregaEfetivaSaida,
-											"formik.values.ponto_passagem4.entregaEfetivaSaida"
+											formik.values.ponto_passagem4.entregaEfetivaSaida
 										);
 									}}
 									disabled={disabledValidEfetiva}

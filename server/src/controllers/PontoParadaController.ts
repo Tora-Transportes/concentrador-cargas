@@ -23,7 +23,7 @@ class PontoParadaController implements IPontoParadaController {
   async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
-    const result = await useCases.useCaseUpdatePontoParadas.run(
+    const result = await useCases.useCaseUpdatePontoParadasRota.run(
       Number(id),
       req.body
     );

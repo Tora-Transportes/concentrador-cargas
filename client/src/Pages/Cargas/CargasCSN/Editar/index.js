@@ -156,57 +156,57 @@ function EditarCargaCsn() {
 				entregaEfetiva: "",
 				entregaEfetivaSaida: "",
 			},
-			ponto_passagem8: {
-				ponto: "",
-				tipoServico: "",
-				previsao: "",
-				previsaoSaida: "",
-				latitude: "",
-				longitude: "",
-				client: "",
-				id: "",
-				idRotaCsn: "",
-				coletaEfetiva: "",
-				coletaEfetivaSaida: "",
-				tempServicoLocal: "",
-				tempServicoLocalEntrega: "",
-				entregaEfetiva: "",
-				entregaEfetivaSaida: "",
-			},
-			ponto_passagem9: {
-				ponto: "",
-				tipoServico: "",
-				previsao: "",
-				previsaoSaida: "",
-				latitude: "",
-				longitude: "",
-				client: "",
-				id: "",
-				idRotaCsn: "",
-				coletaEfetiva: "",
-				coletaEfetivaSaida: "",
-				tempServicoLocal: "",
-				tempServicoLocalEntrega: "",
-				entregaEfetiva: "",
-				entregaEfetivaSaida: "",
-			},
-			ponto_passagem10: {
-				ponto: "",
-				tipoServico: "",
-				previsao: "",
-				previsaoSaida: "",
-				latitude: "",
-				longitude: "",
-				client: "",
-				id: "",
-				idRotaCsn: "",
-				coletaEfetiva: "",
-				coletaEfetivaSaida: "",
-				tempServicoLocal: "",
-				tempServicoLocalEntrega: "",
-				entregaEfetiva: "",
-				entregaEfetivaSaida: "",
-			},
+			// ponto_passagem8: {
+			// 	ponto: "",
+			// 	tipoServico: "",
+			// 	previsao: "",
+			// 	previsaoSaida: "",
+			// 	latitude: "",
+			// 	longitude: "",
+			// 	client: "",
+			// 	id: "",
+			// 	idRotaCsn: "",
+			// 	coletaEfetiva: "",
+			// 	coletaEfetivaSaida: "",
+			// 	tempServicoLocal: "",
+			// 	tempServicoLocalEntrega: "",
+			// 	entregaEfetiva: "",
+			// 	entregaEfetivaSaida: "",
+			// },
+			// ponto_passagem9: {
+			// 	ponto: "",
+			// 	tipoServico: "",
+			// 	previsao: "",
+			// 	previsaoSaida: "",
+			// 	latitude: "",
+			// 	longitude: "",
+			// 	client: "",
+			// 	id: "",
+			// 	idRotaCsn: "",
+			// 	coletaEfetiva: "",
+			// 	coletaEfetivaSaida: "",
+			// 	tempServicoLocal: "",
+			// 	tempServicoLocalEntrega: "",
+			// 	entregaEfetiva: "",
+			// 	entregaEfetivaSaida: "",
+			// },
+			// ponto_passagem10: {
+			// 	ponto: "",
+			// 	tipoServico: "",
+			// 	previsao: "",
+			// 	previsaoSaida: "",
+			// 	latitude: "",
+			// 	longitude: "",
+			// 	client: "",
+			// 	id: "",
+			// 	idRotaCsn: "",
+			// 	coletaEfetiva: "",
+			// 	coletaEfetivaSaida: "",
+			// 	tempServicoLocal: "",
+			// 	tempServicoLocalEntrega: "",
+			// 	entregaEfetiva: "",
+			// 	entregaEfetivaSaida: "",
+			// },
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -225,18 +225,29 @@ function EditarCargaCsn() {
 					ponto_passagem5,
 					ponto_passagem6,
 					ponto_passagem7,
-					ponto_passagem8,
-					ponto_passagem9,
-					ponto_passagem10,
+					// ponto_passagem8,
+					// ponto_passagem9,
+					// ponto_passagem10,
 				} = values;
+
+				const dadosPontoPassagem = {
+					ponto_passagem,
+					ponto_passagem2,
+					ponto_passagem3,
+					ponto_passagem4,
+					ponto_passagem5,
+					ponto_passagem6,
+					ponto_passagem7,
+				};
 				try {
 					let dadosCargaSalva;
 					const finalizarCarga = formik.values.finalizarCarga;
 
 					if (finalizarCarga !== true) {
 						values.fk_filial = values.fk_filial.split("-")[0];
-						const { data } = await ServiceCargas.update({
+						const { data } = await ServiceCargas.updateCSN({
 							...values,
+							info_passagem: dadosPontoPassagem,
 							responsavel_cadastro: String(getClaims().name),
 							fk_situacao: undefined,
 							fk_filial: formik.values.fk_filial?.split("-")[0],
@@ -253,8 +264,9 @@ function EditarCargaCsn() {
 							}
 						);
 						if (resultOk) {
-							await ServiceCargas.update({
+							await ServiceCargas.updateCSN({
 								...formik.values,
+								info_passagem: dadosPontoPassagem,
 								fk_situacao: 6,
 								fk_filial: formik.values.fk_filial?.split("-")[0],
 							});
@@ -263,30 +275,30 @@ function EditarCargaCsn() {
 						}
 					}
 
-					for (const [key, value] of Object.entries({
-						ponto_passagem,
-						ponto_passagem2,
-						ponto_passagem3,
-						ponto_passagem4,
-						ponto_passagem5,
-						ponto_passagem6,
-						ponto_passagem7,
-						ponto_passagem8,
-						ponto_passagem9,
-						ponto_passagem10,
-					})) {
-						if (
-							(value?.ponto?.length > 0 && value?.previsao?.length > 0) ||
-							(typeof value?.latitude !== "string" &&
-								typeof value?.longitude !== "string")
-						) {
-							await ServiceCargas.updatePontoParada({
-								...value,
-								id_carga: values.id,
-								key,
-							});
-						}
-					}
+					// for (const [key, value] of Object.entries({
+					// 	ponto_passagem,
+					// 	ponto_passagem2,
+					// 	ponto_passagem3,
+					// 	ponto_passagem4,
+					// 	ponto_passagem5,
+					// 	ponto_passagem6,
+					// 	ponto_passagem7,
+					// 	// ponto_passagem8,
+					// 	// ponto_passagem9,
+					// 	// ponto_passagem10,
+					// })) {
+					// 	if (
+					// 		(value?.ponto?.length > 0 && value?.previsao?.length > 0) ||
+					// 		(typeof value?.latitude !== "string" &&
+					// 			typeof value?.longitude !== "string")
+					// 	) {
+					// 		await ServiceCargas.updatePontoParada({
+					// 			...value,
+					// 			id_carga: values.id,
+					// 			key,
+					// 		});
+					// 	}
+					// }
 
 					formik.setFieldValue(
 						"responsavel_cadastro",

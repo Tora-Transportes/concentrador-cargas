@@ -1,4 +1,5 @@
-import moment from "moment";
+//import moment from "moment";
+import { formatDateADD1HoraObject } from "src/Pages/Utils/formatDate";
 import api from "./api";
 class ServiceCargas {
 	async create({
@@ -84,95 +85,95 @@ class ServiceCargas {
 		const carga = {
 			ID_ROTAS_CSN: ponto ? ponto?.split("-")[0] : null,
 			ID_CON_CARGAS: id_carga,
-			PREVISAO: moment(previsao).subtract(2, "hours"),
+			PREVISAO: formatDateADD1HoraObject(previsao),
 			STATUS_SERVICO: tipoServico.toUpperCase(),
 			LATITUDE: latitude ? latitude : null,
 			LONGITUDE: longitude ? longitude : null,
 			CLIENTE: client === "" ? ponto : client,
-			PREVISAO_SAIDA: moment(previsaoSaida).subtract(2, "hours"),
+			PREVISAO_SAIDA: formatDateADD1HoraObject(previsaoSaida),
 			ENTREGA_FINAL: entregaFinal ? entregaFinal : 0,
 		};
 		//console.log("Ponto parada", carga);
 		return await api.post("/csn/ponto_parada", carga);
 	}
 
-	async updatePontoParada({
-		id,
-		ponto,
-		idRotaCsn,
-		previsao,
-		previsaoSaida,
-		tipoServico,
-		id_carga,
-		latitude,
-		longitude,
-		client,
-		coletaEfetiva,
-		coletaEfetiva_posto30,
-		coletaEfetiva_mundo,
-		coletaEfetiva_peacao,
-		entregaEfetiva,
-		tempServicoLocal,
-		coletaEfetivaSaida,
-		entregaEfetivaSaida,
-		tempServicoLocalEntrega,
-	}) {
-		let idRota = idRotaCsn;
-		let tipoClient = client === "" ? ponto : client;
-		if (tipoServico === "Coleta") {
-			idRota = idRotaCsn === "" ? null : idRotaCsn;
-			tipoClient = ponto === "" ? client : ponto;
-		}
-		const carga = {
-			ID_ROTAS_CSN: idRotaCsn === "" ? ponto?.split("-")[0] : idRota,
-			ID_CON_CARGAS: id_carga,
-			PREVISAO: moment(previsao).subtract(2, "hours"),
-			PREVISAO_SAIDA: moment(previsaoSaida).subtract(2, "hours"),
-			STATUS_SERVICO: tipoServico.toUpperCase(),
-			LATITUDE: latitude ? latitude : null,
-			LONGITUDE: longitude ? longitude : null,
-			CLIENTE: tipoClient,
-			COLETA_EFETIVA:
-				coletaEfetiva === undefined ? null : moment(coletaEfetiva),
-			COLETA_EFETIVA_POSTO30:
-				coletaEfetiva_posto30 === undefined
-					? null
-					: moment(coletaEfetiva_posto30),
-			COLETA_EFETIVA_MUNDO:
-				coletaEfetiva_mundo === undefined ? null : moment(coletaEfetiva_mundo),
-			COLETA_EFETIVA_PEACAO:
-				coletaEfetiva_peacao === undefined
-					? null
-					: moment(coletaEfetiva_peacao),
-			ENTREGA_EFETIVA:
-				entregaEfetiva === undefined ? null : moment(entregaEfetiva),
-			TEMP_SERV_LOCAL_COLETA: tempServicoLocal,
-			SAIDA_EFETIVA_COLETA: moment(coletaEfetivaSaida),
-			SAIDA_EFETIVA_ENTREGA: moment(entregaEfetivaSaida),
-			TEMP_SERV_LOCAL_ENTREGA: tempServicoLocalEntrega,
-		};
+	// async updatePontoParada({
+	// 	id,
+	// 	ponto,
+	// 	idRotaCsn,
+	// 	previsao,
+	// 	previsaoSaida,
+	// 	tipoServico,
+	// 	id_carga,
+	// 	latitude,
+	// 	longitude,
+	// 	client,
+	// 	coletaEfetiva,
+	// 	coletaEfetiva_posto30,
+	// 	coletaEfetiva_mundo,
+	// 	coletaEfetiva_peacao,
+	// 	entregaEfetiva,
+	// 	tempServicoLocal,
+	// 	coletaEfetivaSaida,
+	// 	entregaEfetivaSaida,
+	// 	tempServicoLocalEntrega,
+	// }) {
+	// 	let idRota = idRotaCsn;
+	// 	let tipoClient = client === "" ? ponto : client;
+	// 	if (tipoServico === "Coleta") {
+	// 		idRota = idRotaCsn === "" ? null : idRotaCsn;
+	// 		tipoClient = ponto === "" ? client : ponto;
+	// 	}
+	// 	const carga = {
+	// 		ID_ROTAS_CSN: idRotaCsn === "" ? ponto?.split("-")[0] : idRota,
+	// 		ID_CON_CARGAS: id_carga,
+	// 		PREVISAO: moment(previsao).subtract(2, "hours"),
+	// 		PREVISAO_SAIDA: moment(previsaoSaida).subtract(2, "hours"),
+	// 		STATUS_SERVICO: tipoServico.toUpperCase(),
+	// 		LATITUDE: latitude ? latitude : null,
+	// 		LONGITUDE: longitude ? longitude : null,
+	// 		CLIENTE: tipoClient,
+	// 		COLETA_EFETIVA:
+	// 			coletaEfetiva === undefined ? null : moment(coletaEfetiva),
+	// 		COLETA_EFETIVA_POSTO30:
+	// 			coletaEfetiva_posto30 === undefined
+	// 				? null
+	// 				: moment(coletaEfetiva_posto30),
+	// 		COLETA_EFETIVA_MUNDO:
+	// 			coletaEfetiva_mundo === undefined ? null : moment(coletaEfetiva_mundo),
+	// 		COLETA_EFETIVA_PEACAO:
+	// 			coletaEfetiva_peacao === undefined
+	// 				? null
+	// 				: moment(coletaEfetiva_peacao),
+	// 		ENTREGA_EFETIVA:
+	// 			entregaEfetiva === undefined ? null : moment(entregaEfetiva),
+	// 		TEMP_SERV_LOCAL_COLETA: tempServicoLocal,
+	// 		SAIDA_EFETIVA_COLETA: moment(coletaEfetivaSaida),
+	// 		SAIDA_EFETIVA_ENTREGA: moment(entregaEfetivaSaida),
+	// 		TEMP_SERV_LOCAL_ENTREGA: tempServicoLocalEntrega,
+	// 	};
 
-		if (typeof id === "number") {
-			return await api.put(`/csn/ponto_parada/${id}`, carga);
-		} else {
-			const cargaSave = {
-				ID_ROTAS_CSN:
-					tipoServico === "Entrega"
-						? null
-						: idRotaCsn === ""
-						? ponto?.split("-")[0]
-						: idRota,
-				ID_CON_CARGAS: id_carga,
-				PREVISAO: moment(previsao).subtract(2, "hours"),
-				PREVISAO_SAIDA: moment(previsao).subtract(2, "hours"),
-				STATUS_SERVICO: tipoServico.toUpperCase(),
-				LATITUDE: latitude ? latitude : null,
-				LONGITUDE: longitude ? longitude : null,
-				CLIENTE: tipoClient,
-			};
-			return await api.post("/csn/ponto_parada", cargaSave);
-		}
-	}
+	// 	if (typeof id === "number") {
+	// 		return await api.put(`/csn/ponto_parada/${id}`, carga);
+	// 	} else {
+	// 		const cargaSave = {
+	// 			ID_ROTAS_CSN:
+	// 				tipoServico === "Entrega"
+	// 					? null
+	// 					: idRotaCsn === ""
+	// 					? ponto?.split("-")[0]
+	// 					: idRota,
+	// 			ID_CON_CARGAS: id_carga,
+	// 			PREVISAO: moment(previsao).subtract(2, "hours"),
+	// 			PREVISAO_SAIDA: moment(previsao).subtract(2, "hours"),
+	// 			STATUS_SERVICO: tipoServico.toUpperCase(),
+	// 			LATITUDE: latitude ? latitude : null,
+	// 			LONGITUDE: longitude ? longitude : null,
+	// 			CLIENTE: tipoClient,
+	// 		};
+	// 		return await api.post("/csn/ponto_parada", cargaSave);
+	// 	}
+	// }
 
 	async createDerivada({
 		id,
@@ -266,6 +267,7 @@ class ServiceCargas {
 		locais,
 		carga_csn,
 		rastreador,
+		info_passagem,
 	}) {
 		const carga = {
 			e_lote,
@@ -303,8 +305,85 @@ class ServiceCargas {
 			locais,
 			carga_csn,
 			rastreador,
+			info_passagem,
 		};
+		carga;
 		return api.put(`/cargas/${id}`, carga);
+	}
+
+	async updateCSN({
+		id,
+		e_lote,
+		cliente,
+		origem_carga,
+		destino_carga,
+		data_entrega,
+		data_coleta,
+		tipo_carga,
+		canal_comunicacao,
+		quantidade,
+		unidade_medida,
+		solicitante,
+		observacao,
+		responsavel_cadastro,
+		acessorios_requisitos,
+		informacoes_restritivas,
+		janela_entrega,
+		janela_coleta,
+		placa_veiculo,
+		fk_situacao,
+		observacao_gr,
+		fk_filial,
+		documento_transporte,
+		observacao_cancelamento,
+		codigo_motorista,
+		placa_carreta,
+		placa_bitrem,
+		locais,
+		carga_csn,
+		rastreador,
+		info_passagem,
+	}) {
+		const carga = {
+			e_lote,
+			cliente,
+			origem_carga,
+			destino_carga: destino_carga === "" ? null : destino_carga,
+			data_entrega: data_entrega === "" ? null : data_entrega,
+			data_coleta: data_coleta === "" ? null : data_coleta,
+			tipo_carga: tipo_carga === "" ? null : tipo_carga,
+			canal_comunicacao,
+			quantidade,
+			unidade_medida,
+			solicitante: solicitante === "" ? null : solicitante,
+			observacao: observacao === "" ? null : observacao,
+			responsavel_cadastro,
+			acessorios_requisitos:
+				acessorios_requisitos === "" ? null : acessorios_requisitos,
+			informacoes_restritivas:
+				informacoes_restritivas === "" ? null : informacoes_restritivas,
+			janela_entrega: janela_entrega === "" ? null : janela_entrega,
+			janela_coleta: janela_coleta === "" ? null : janela_coleta,
+			placa_veiculo,
+			fk_situacao,
+			observacao_gr: observacao_gr === "" ? null : observacao_gr,
+			fk_filial,
+			documento_transporte:
+				documento_transporte === "" ? null : documento_transporte,
+			observacao_cancelamento:
+				observacao_cancelamento === "" ? null : observacao_cancelamento,
+			codigo_motorista:
+				codigo_motorista === undefined ? undefined : codigo_motorista || null,
+
+			placa_carreta: placa_carreta === "" ? null : placa_carreta,
+			placa_bitrem: placa_bitrem === "" ? null : placa_bitrem,
+			locais,
+			carga_csn,
+			rastreador,
+			info_passagem,
+		};
+		carga;
+		return api.put(`/csn/cargas/info/${id}`, carga);
 	}
 
 	async delete({ id, observacao_exclusao }) {

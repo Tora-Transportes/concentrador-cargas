@@ -20,7 +20,7 @@ export const formatDateString = (dataValues: Date | null | undefined) => {
 export const formatDateObject = (dataValues: Date | null | undefined) => {
   if (dataValues) {
     const dateFormate = new Date(dataValues);
-    dateFormate.setHours(dateFormate.getHours() - 2);
+    dateFormate.setHours(dateFormate.getHours() + 1);
     return dateFormate;
   }
 };
