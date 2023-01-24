@@ -241,7 +241,10 @@ const CadastroCargaCSN = () => {
 							"success"
 						);
 
-						if (ok) resetForm();
+						if (ok) {
+							directScreenTop();
+							resetForm();
+						}
 					}
 				} catch (error) {
 					console.log(error);
@@ -298,7 +301,6 @@ const CadastroCargaCSN = () => {
 
 	function resetForm() {
 		window.location.reload();
-		directScreenTop();
 	}
 
 	return (
