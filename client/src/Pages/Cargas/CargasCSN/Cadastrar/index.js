@@ -256,8 +256,8 @@ const CadastroCargaCSN = () => {
 
 	const directScreenTop = () => {
 		window.scrollTo({
-			top: 330,
-			left: 330,
+			top: 0,
+			left: 0,
 			behavior: "smooth",
 		});
 	};
