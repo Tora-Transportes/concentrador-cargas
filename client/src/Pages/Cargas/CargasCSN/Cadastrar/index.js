@@ -15,10 +15,11 @@ import {
 	formatDateAddHours,
 	formatDateAddminutes,
 } from "src/Pages/Utils/formatDate";
+import { InputReferencError } from "src/Pages/Components/FormularioCadastroCSN/management";
 const CadastroCargaCSN = () => {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [produtos, setProdutos] = useState([]);
-	const [isDateErrorInput, setDateErrorInput] = useState(false);
+	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
 	const history = useHistory();
 	const dataAtual = new Date();
 
@@ -158,7 +159,10 @@ const CadastroCargaCSN = () => {
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
-			if (isDateErrorInput) {
+			const existInputErrado = isDateErrorInput.find(
+				(item) => item.error === true
+			);
+			if (existInputErrado?.error) {
 				swal(
 					"Atenção",
 					"Não foi possível registrar as informações, verifique os campos de data antes de continuar.!",

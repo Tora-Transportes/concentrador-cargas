@@ -13,6 +13,7 @@ import ServiceCargas from "src/services/ServiceCargas";
 import FormularioCadastroCSN from "src/Pages/Components/FormularioCadastroCSN";
 import { funcBodyEdit } from "./menagemente";
 import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
+import { InputReferencError } from "src/Pages/Components/FormularioCadastroCSN/management";
 
 function EditarCargaCsn() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -21,7 +22,7 @@ function EditarCargaCsn() {
 	const [produtos, setProdutos] = useState([]);
 	const [viewsInput, setViewsInput] = useState(0);
 	const [isPermissionUser, setPermissionUser] = useState(true);
-	const [isDateErrorInput, setDateErrorInput] = useState(false);
+	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
 
 	const formik = useFormik({
 		initialValues: {
@@ -210,7 +211,10 @@ function EditarCargaCsn() {
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
-			if (isDateErrorInput) {
+			const existInputErrado = isDateErrorInput.find(
+				(item) => item.error === true
+			);
+			if (existInputErrado?.error) {
 				swal(
 					"Atenção",
 					"Não foi possível registrar as informações, verifique os campos de data antes de continuar.!",
