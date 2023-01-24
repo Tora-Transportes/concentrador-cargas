@@ -242,7 +242,6 @@ const CadastroCargaCSN = () => {
 						);
 
 						if (ok) {
-							directScreenTop();
 							resetForm();
 						}
 					}
@@ -256,8 +255,8 @@ const CadastroCargaCSN = () => {
 
 	const directScreenTop = () => {
 		window.scrollTo({
-			top: 0,
-			left: 0,
+			top: 2,
+			left: 2,
 			behavior: "smooth",
 		});
 	};
@@ -297,6 +296,7 @@ const CadastroCargaCSN = () => {
 		ServiceProdutos.list().then(({ data }) => {
 			setProdutos(data.data);
 		});
+		directScreenTop();
 	}, []);
 
 	function resetForm() {
