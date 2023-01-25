@@ -323,17 +323,20 @@ export class ServiceDistanceLocations {
       .andWhere("DTINC", "<=", date_fim);
 
     //retirando duplicidades do array
-    // const setHistoryVeicle = new Set();
-    // const historicosSemDuplicidade = historyVeicle.filter(
-    //   (position: IHistoryTravelVehicle) => {
-    //     const horasDtinc = moment(position.DTINC).format("YYYY-MM-DD HH:mm");
-    //     const duplicatedPerson = setHistoryVeicle.has(
-    //       position.LAT && position.LON && horasDtinc
-    //     );
-    //     setHistoryVeicle.add(position.LAT && position.LON && horasDtinc);
-    //     return !duplicatedPerson;
-    //   }
-    // );
+    const historicosSemDuplicidade: IHistoryTravelVehicle[] = [];
+    historyVeicle.forEach((elem, index, arrayHistorico) => {
+      if (index > 0) {
+        const indexMenosUm = index - 1;
+        const latitudeArr = arrayHistorico[indexMenosUm].LAT;
+        const longitudeArr = arrayHistorico[indexMenosUm].LON;
+
+        if (elem.LAT !== latitudeArr || elem.LON !== longitudeArr) {
+          historicosSemDuplicidade.push(elem);
+        }
+      } else {
+        historicosSemDuplicidade.push(elem);
+      }
+    });
 
     //ordenação de historyVeicle DESC (se ordernar na query fica muito lento a busca);
     function compare(a: IHistoryTravelVehicle, b: IHistoryTravelVehicle) {
@@ -341,11 +344,11 @@ export class ServiceDistanceLocations {
       if (a.ID < b.ID) return 1;
       return 0;
     }
-    historyVeicle.sort(compare);
+    historicosSemDuplicidade.sort(compare);
 
     return {
       placa: plate,
-      posicao: historyVeicle,
+      posicao: historicosSemDuplicidade,
     };
   }
 

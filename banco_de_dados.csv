@@ -160,3 +160,18 @@ USU_TORA;con_logs_csn;oid;Identificador do usu�rio;;con_usuarios.oid
 USU_TORA;con_logs_csn;url;url preenchida na requisicao;;
 USU_TORA;con_logs_csn;corpo;Corpo da mensagem;;
 USU_TORA;con_logs_csn;metodo;Metodo HTTP usado;;
+
+
+USU_TORA;csn_logs_rotina;id;Identificador log adicionados;;
+USU_TORA;csn_logs_rotina;token;Token do usuario enviado pelo react-adal;;
+USU_TORA;csn_logs_rotina;oid;Identificador do usu�rio;;con_usuarios.oid
+USU_TORA;csn_logs_rotina;url;url preenchida na requisicao;;
+USU_TORA;csn_logs_rotina;calculo_distancia ;distancia que falta para chegar no alvo;;
+USU_TORA;csn_logs_rotina;metodo;Metodo HTTP usado;;
+USU_TORA;csn_logs_rotina;hora_entrada ;hora da entrada do veiculo no cliente;;
+USU_TORA;csn_logs_rotina;hora_saida;hora da saida do veiculo no cliente;;
+USU_TORA;csn_logs_rotina;descricao ;nome de cliente alvo;;
+USU_TORA;csn_logs_rotina;id_carga;numero identificador da carga;;
+USU_TORA;csn_logs_rotina;id_rotas_csn; numero identificador dos dados do client alvo;;
+USU_TORA;csn_logs_rotina;status_servico;Tipo de serviço 'COLETA ou ENTREGA';;
+USU_TORA;csn_logs_rotina;data_cadastro; data do cadastro;;

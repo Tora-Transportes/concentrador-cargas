@@ -5,13 +5,30 @@ import { IDadosUpdate, IInfoCarga, ILastLocations } from "./interfaceCargasJob";
 import database, { mssqlCoordenadas } from "../../database";
 import { notifyAll } from "../../socketsRoutes";
 import DateUtils from "../../Utils/date";
+import ICsnLogs from "../../models/ICsnLogs";
 
 class ServiceFinishCargasCsn {
-  dataAtual = new Date(
-    // moment().subtract(1, "hour").format("YYYY-MM-DD HH:mm:ss")
-    moment().format("YYYY-MM-DD HH:mm:ss")
-  );
+  dataAtual = new Date();
   cargaRepository = new CargaRepository();
+
+  public filtrarHorasServico(tipo: IDadosUpdate) {
+    const keyValuer = Object.keys(tipo);
+    if (keyValuer.includes("COLETA_EFETIVA_POSTO30")) {
+      return tipo.COLETA_EFETIVA_POSTO30;
+    } else if (keyValuer.includes("COLETA_EFETIVA_MUNDO")) {
+      return tipo.COLETA_EFETIVA_MUNDO;
+    } else if (keyValuer.includes("COLETA_EFETIVA_PEACAO")) {
+      return tipo.COLETA_EFETIVA_PEACAO;
+    } else if (keyValuer.includes("COLETA_EFETIVA")) {
+      return tipo.COLETA_EFETIVA;
+    } else if (keyValuer.includes("ENTREGA_EFETIVA")) {
+      return tipo.ENTREGA_EFETIVA;
+    } else if (keyValuer.includes("SAIDA_EFETIVA_COLETA")) {
+      return tipo.SAIDA_EFETIVA_COLETA;
+    } else if (keyValuer.includes("SAIDA_EFETIVA_ENTREGA")) {
+      return tipo.SAIDA_EFETIVA_ENTREGA;
+    }
+  }
 
   public async getCargasInicioTrajeto(): Promise<IInfoCarga[]> {
     return await database("con_cargas")
@@ -180,6 +197,7 @@ class ServiceFinishCargasCsn {
             LONGITUDE,
             ID,
             ID_CON_CARGAS,
+            ID_ROTAS_CSN,
             RAIO,
             STATUS_SERVICO,
             DESCRICAO,
@@ -196,7 +214,7 @@ class ServiceFinishCargasCsn {
           let latitudeDestino: number;
           let longitudeDestino: number;
 
-          // identificando qual é a latitude e longitude a ser
+          // identificando qual é a latitude e longitude a ser usada para o calculo de distância.
 
           if (STATUS_SERVICO === "ENTREGA") {
             latitudeDestino = LATITUDE.replace(",", ".");
@@ -240,7 +258,7 @@ class ServiceFinishCargasCsn {
 
             if (
               Number(calculoDistancia.toFixed(3)) < raioEmMetros &&
-              //Number(calculoDistancia.toFixed(3)) < 1106.7 &&
+              //Number(calculoDistancia.toFixed(3)) < 1144 &&
               entradaOrSaida === "Entrada"
             ) {
               let tipoEfetivoSave;
@@ -260,16 +278,18 @@ class ServiceFinishCargasCsn {
                 ID,
                 ID_CON_CARGAS,
                 STATUS_SERVICO,
-                //ENTREGA_FINAL,
+                ID_ROTAS_CSN,
+                CALCULO_DISTANCIA: calculoDistancia.toFixed(3),
+                entradaOrSaida,
+                DESCRICAO,
               });
             } else if (
               Number(calculoDistancia.toFixed(3)) > raioEmMetros &&
-              //Number(calculoDistancia.toFixed(3)) > 0.4 &&
+              //Number(calculoDistancia.toFixed(3)) > 130 &&
               entradaOrSaida === "Saida"
             ) {
               //Somando tempo de carregamento ou entrega na empresa
               const startTime = moment(horasEntrada);
-              // const endTime = moment().subtract(1, "hour");
               const endTime = moment();
               const horasPermanenciaLocal = moment
                 .utc(
@@ -304,6 +324,10 @@ class ServiceFinishCargasCsn {
                 ID_CON_CARGAS,
                 STATUS_SERVICO,
                 ENTREGA_FINAL,
+                ID_ROTAS_CSN,
+                CALCULO_DISTANCIA: calculoDistancia.toFixed(3),
+                entradaOrSaida,
+                DESCRICAO,
               });
             }
           };
@@ -367,9 +391,7 @@ class ServiceFinishCargasCsn {
             SAIDA_EFETIVA_COLETA !== null
           ) {
             carregamentoIntermediarioLiberado = true;
-          }
-
-          if (
+          } else if (
             carregamentoIntermediarioLiberado &&
             STATUS_SERVICO === "COLETA" &&
             COLETA_EFETIVA === null
@@ -404,8 +426,18 @@ class ServiceFinishCargasCsn {
     return arrayCargaUpdate;
   }
 
-  public async updatePontoParada({ ID, ...valuePontoParada }: IDadosUpdate) {
+  public async updatePontoParada({
+    ID,
+    STATUS_SERVICO,
+    CALCULO_DISTANCIA,
+    ID_ROTAS_CSN,
+    ID_CON_CARGAS,
+    entradaOrSaida,
+    DESCRICAO,
+    ...valuePontoParada
+  }: IDadosUpdate) {
     const DATA_ATUALIZACAO = this.dataAtual;
+
     await database("con_pontos_parada")
       .update({
         ...valuePontoParada,
@@ -413,16 +445,24 @@ class ServiceFinishCargasCsn {
       })
       .where("ID", ID);
 
-    const log = {
-      oid: "robô",
-      url: `/con_pontos_parada/${ID}`,
-      metodo: "PUT",
-      timestamp: DateUtils.getCurrentDate().getTime(),
-      token: moment().format("YYYY-MM-DD"),
-      corpo: `{ COLETA/ENTREGA: ${DATA_ATUALIZACAO}, DATA_ATUALIZACAO: ${DATA_ATUALIZACAO}}`,
+    const dataEntradaSaidaServico = this.filtrarHorasServico(valuePontoParada);
+
+    const log: ICsnLogs = {
+      ID_CARGA: Number(ID_CON_CARGAS),
+      ID_ROTAS_CSN: Number(ID_ROTAS_CSN) || null,
+      OID: "robô",
+      URL: `/csn/ponto-parada/${ID}`,
+      METODO: "PUT",
+      DATA_CADASTRO: this.dataAtual,
+      CALCULO_DISTANCIA: String(CALCULO_DISTANCIA) || null,
+      STATUS_SERVICO: STATUS_SERVICO || null,
+      HORAS_ENTRADA:
+        entradaOrSaida === "Entrada" ? dataEntradaSaidaServico : null,
+      HORAS_SAIDA: entradaOrSaida === "Saida" ? dataEntradaSaidaServico : null,
+      DESCRICAO,
     };
 
-    await database("con_logs_csn").insert(log);
+    await database("csn_logs_rotina").insert(log);
   }
 
   public async updateCargas(id: number, fk_situacao: number) {
@@ -469,24 +509,22 @@ export default async function run() {
 
         if (dadosAtualizar.length) {
           dadosAtualizar.forEach((itemAtualizar) => {
-            const {
-              ID_CON_CARGAS,
-              STATUS_SERVICO,
-              ENTREGA_FINAL,
-              fk_situacao,
-              ...dataPontoPassagem
-            } = itemAtualizar;
+            const { ENTREGA_FINAL, fk_situacao, ...dataPontoPassagem } =
+              itemAtualizar;
 
             serviceFinishCargas.updatePontoParada(dataPontoPassagem);
             if (
-              STATUS_SERVICO === "ENTREGA" &&
+              itemAtualizar.STATUS_SERVICO === "ENTREGA" &&
               ENTREGA_FINAL === 1 &&
               dataPontoPassagem.SAIDA_EFETIVA_ENTREGA
             ) {
-              serviceFinishCargas.updateCargas(Number(ID_CON_CARGAS), 6);
+              serviceFinishCargas.updateCargas(
+                Number(itemAtualizar.ID_CON_CARGAS),
+                6
+              );
             } else if (fk_situacao === 7 || fk_situacao === 8) {
               serviceFinishCargas.updateCargas(
-                Number(ID_CON_CARGAS),
+                Number(itemAtualizar.ID_CON_CARGAS),
                 fk_situacao
               );
             }
