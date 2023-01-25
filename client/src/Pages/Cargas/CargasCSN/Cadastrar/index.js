@@ -246,7 +246,7 @@ const CadastroCargaCSN = () => {
 						);
 
 						if (ok) {
-							//funcScrollTop(2, 2);
+							funcScrollTop(2, 2);
 							resetForm();
 						}
 					}
@@ -293,7 +293,7 @@ const CadastroCargaCSN = () => {
 		ServiceProdutos.list().then(({ data }) => {
 			setProdutos(data.data);
 		});
-		funcScrollTop(2, 2);
+		//funcScrollTop(2, 2);
 	}, []);
 
 	function resetForm() {
