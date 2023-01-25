@@ -296,5 +296,13 @@ export const columns = [
 		description: "Canal de comunicação",
 		selector: (row) => row.canal_comunicacao,
 		//sortable: "sortable",
+		// Filter: (props) => (
+		// 	<Form.Select {...props}>
+		// 		<option></option>
+		// 		<option value="manual">Manual</option>
+		// 		<option value="robô">Robô</option>
+		// 	</Form.Select>
+		// ),
+		// showFilter: true,
 	},
 ];
