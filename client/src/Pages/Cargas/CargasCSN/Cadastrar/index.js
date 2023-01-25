@@ -246,7 +246,7 @@ const CadastroCargaCSN = () => {
 						);
 
 						if (ok) {
-							funcScrollTop(2, 2);
+							//funcScrollTop(2, 2);
 							resetForm();
 						}
 					}
