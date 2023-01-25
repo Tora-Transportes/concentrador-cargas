@@ -16,6 +16,7 @@ import {
 	formatDateAddminutes,
 } from "src/Pages/Utils/formatDate";
 import { InputReferencError } from "src/Pages/Components/FormularioCadastroCSN/management";
+import { funcScrollTop } from "src/Pages/Utils/scrollTop";
 const CadastroCargaCSN = () => {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [produtos, setProdutos] = useState([]);
@@ -238,11 +239,14 @@ const CadastroCargaCSN = () => {
 						const ok = await swal(
 							"Sucesso!",
 							`A carga foi cadastrada com o identificador ${data.data.id}!`,
-							"success"
+							"success",
+							{
+								closeOnClickOutside: false,
+							}
 						);
 
 						if (ok) {
-							directScreenTop();
+							funcScrollTop(2, 2);
 							resetForm();
 						}
 					}
@@ -253,14 +257,6 @@ const CadastroCargaCSN = () => {
 			setLoading(false);
 		},
 	});
-
-	const directScreenTop = () => {
-		window.scrollTo({
-			top: 2,
-			left: 2,
-			behavior: "smooth",
-		});
-	};
 
 	function buscarCargaComDocumentoDeTransporte({ documento_transporte, id }) {
 		if (documento_transporte) {
@@ -297,7 +293,7 @@ const CadastroCargaCSN = () => {
 		ServiceProdutos.list().then(({ data }) => {
 			setProdutos(data.data);
 		});
-		directScreenTop();
+		funcScrollTop(2, 2);
 	}, []);
 
 	function resetForm() {

@@ -14,6 +14,7 @@ import FormularioCadastroCSN from "src/Pages/Components/FormularioCadastroCSN";
 import { funcBodyEdit } from "./menagemente";
 import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 import { InputReferencError } from "src/Pages/Components/FormularioCadastroCSN/management";
+import { funcScrollTop } from "src/Pages/Utils/scrollTop";
 
 function EditarCargaCsn() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -314,7 +315,9 @@ function EditarCargaCsn() {
 							? `A carga ${dadosCargaSalva.data.id} foi atualizada!`
 							: "Carga finalizada.";
 
-					const ok = await swal("Sucesso!", mensagemConfirmacao, "success");
+					const ok = await swal("Sucesso!", mensagemConfirmacao, "success", {
+						closeOnClickOutside: false,
+					});
 
 					if (ok) {
 						window.location.reload();
@@ -528,7 +531,7 @@ function EditarCargaCsn() {
 				setPermissionUser(false);
 			}
 		})();
-
+		funcScrollTop(2, 2);
 		return () => {
 			isMounted = false;
 		};

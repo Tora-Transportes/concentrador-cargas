@@ -291,4 +291,10 @@ export const columns = [
 		),
 		sortable: "sortable",
 	},
+	{
+		name: "canal_comunicacao",
+		description: "Canal de comunicação",
+		selector: (row) => row.canal_comunicacao,
+		//sortable: "sortable",
+	},
 ];

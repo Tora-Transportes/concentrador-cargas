@@ -22,6 +22,7 @@ import { BsDownload } from "react-icons/bs";
 import DateUtils from "../../Utils/date";
 import "./historicoVeiculos.css";
 import { formatDateAtual3HorasMais } from "src/Pages/Utils/formatDate";
+import { funcScrollTop } from "src/Pages/Utils/scrollTop";
 
 const truckIcon = L.icon({
 	iconUrl:
@@ -315,6 +316,7 @@ function ViewHistoricoVeiculo({
 														setLatitude(position.LAT.replace(",", "."));
 														setLongitude(position.LON.replace(",", "."));
 														setCountPosition(index);
+														funcScrollTop(30, 30);
 													}}
 												>
 													{index}
