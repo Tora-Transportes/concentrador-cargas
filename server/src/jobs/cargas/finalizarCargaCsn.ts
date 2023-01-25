@@ -243,22 +243,22 @@ class ServiceFinishCargasCsn {
             );
 
             const raioEmMetros = RAIO ? Number(RAIO) : 1;
-            console.log(
-              DESCRICAO,
-              "distancia veiculo =>",
-              calculoDistancia.toFixed(3),
-              "Raio da empresa ->",
-              raioEmMetros,
-              "ID_ponto_parada:",
-              ID,
-              "Carga:",
-              ID_CON_CARGAS,
-              "---------------------"
-            );
-            //const apagar = true;
+            // console.log(
+            //   DESCRICAO,
+            //   "distancia veiculo =>",
+            //   calculoDistancia.toFixed(3),
+            //   "Raio da empresa ->",
+            //   raioEmMetros,
+            //   "ID_ponto_parada:",
+            //   ID,
+            //   "Carga:",
+            //   ID_CON_CARGAS,
+            //   "---------------------"
+            // );
+
             if (
               Number(calculoDistancia.toFixed(3)) < raioEmMetros &&
-              // apagar &&
+              //Number(calculoDistancia.toFixed(3)) < 1144 &&
               entradaOrSaida === "Entrada"
             ) {
               let tipoEfetivoSave;
@@ -285,12 +285,11 @@ class ServiceFinishCargasCsn {
               });
             } else if (
               Number(calculoDistancia.toFixed(3)) > raioEmMetros &&
-              //apagar &&
+              //Number(calculoDistancia.toFixed(3)) > 130 &&
               entradaOrSaida === "Saida"
             ) {
               //Somando tempo de carregamento ou entrega na empresa
               const startTime = moment(horasEntrada);
-              // const endTime = moment().subtract(1, "hour");
               const endTime = moment();
               const horasPermanenciaLocal = moment
                 .utc(
@@ -438,6 +437,7 @@ class ServiceFinishCargasCsn {
     ...valuePontoParada
   }: IDadosUpdate) {
     const DATA_ATUALIZACAO = this.dataAtual;
+
     await database("con_pontos_parada")
       .update({
         ...valuePontoParada,
@@ -451,7 +451,7 @@ class ServiceFinishCargasCsn {
       ID_CARGA: Number(ID_CON_CARGAS),
       ID_ROTAS_CSN: Number(ID_ROTAS_CSN) || null,
       OID: "robô",
-      URL: `/con_pontos_parada/${ID}`,
+      URL: `/csn/ponto-parada/${ID}`,
       METODO: "PUT",
       DATA_CADASTRO: this.dataAtual,
       CALCULO_DISTANCIA: String(CALCULO_DISTANCIA) || null,
