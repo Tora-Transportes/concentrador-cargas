@@ -1,5 +1,5 @@
 //import moment from "moment";
-import { formatDateADD1HoraObject } from "src/Pages/Utils/formatDate";
+import { formatDateObject } from "src/Pages/Utils/formatDate";
 import api from "./api";
 class ServiceCargas {
 	async create({
@@ -85,12 +85,12 @@ class ServiceCargas {
 		const carga = {
 			ID_ROTAS_CSN: ponto ? ponto?.split("-")[0] : null,
 			ID_CON_CARGAS: id_carga,
-			PREVISAO: formatDateADD1HoraObject(previsao),
+			PREVISAO: formatDateObject(previsao),
 			STATUS_SERVICO: tipoServico.toUpperCase(),
 			LATITUDE: latitude ? latitude : null,
 			LONGITUDE: longitude ? longitude : null,
 			CLIENTE: client === "" ? ponto : client,
-			PREVISAO_SAIDA: formatDateADD1HoraObject(previsaoSaida),
+			PREVISAO_SAIDA: formatDateObject(previsaoSaida),
 			ENTREGA_FINAL: entregaFinal ? entregaFinal : 0,
 		};
 		//console.log("Ponto parada", carga);

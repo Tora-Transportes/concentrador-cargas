@@ -242,6 +242,7 @@ const CadastroCargaCSN = () => {
 						);
 
 						if (ok) {
+							directScreenTop();
 							resetForm();
 						}
 					}

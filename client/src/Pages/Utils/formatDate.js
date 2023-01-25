@@ -3,11 +3,13 @@ import moment from "moment";
 const dataAtual = new Date();
 // Data atual (string) 2023-01-18T14:44:40
 export const formatDate = (dataValor) => {
-	let data = new Date(dataValor);
-
-	let data2 = new Date(data.valueOf() - data.getTimezoneOffset() * 60000);
-
-	return data2.toISOString().replace(/\.\d{3}Z$/, "");
+	if (dataValor !== null) {
+		let data = new Date(dataValor);
+		let data2 = new Date(data.valueOf() - data.getTimezoneOffset() * 60000);
+		return data2.toISOString().replace(/\.\d{3}Z$/, "");
+	} else {
+		return null;
+	}
 };
 
 // Data atual mais 3 horas para conpensar o fuso horario
@@ -77,21 +79,13 @@ export const funcCompareDateOneYear = (date) => {
 	}
 };
 
-export const funcValidInputDate = (e, quantidadedigito, capiturarDigito) => {
-	if (["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(e.key)) {
-		capiturarDigito([e.key]);
-	}
-
-	if (quantidadedigito?.length > 10) return true;
-};
-
 //const hoje = new Date()
 //const dia = hoje.getDate().toString().padStart(2,'0')
 //const mes = String(hoje.getMonth() + 1).padStart(2,'0')
 //const ano = hoje.getFullYear()
 //const dataAtual = `${dia}/${mes}/${ano}`
 
-export const formatDateADD1HoraObject = (dataValues) => {
+export const formatDateObject = (dataValues) => {
 	if (dataValues) {
 		const dateFormate = new Date(dataValues);
 		//dateFormate.setHours(dateFormate.getHours() + 1);
