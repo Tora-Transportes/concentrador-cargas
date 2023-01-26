@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import useCasesCargaCsn from "../../domain/csn/UseCaseCargaCsnInfo";
 import AppError from "../../models/AppError";
+import TokenAd from "../../models/TokenAd";
 
 class CargaCsnInfoController {
   async search(req: Request, res: Response) {
@@ -24,6 +25,21 @@ class CargaCsnInfoController {
         String(placa)
       );
     return res.json({ data: result });
+  }
+
+  async updateCsn(req: Request, res: Response) {
+    const { id } = req.params;
+    const input = { ...req.body };
+    const claims = TokenAd.getClaims(String(req.headers.authorization));
+    input.id = id;
+    input.usuario = claims.name;
+
+    const updateResult = await useCasesCargaCsn.UseCaseUpdateInfoCarga.run(
+      input,
+      claims.oid
+    );
+
+    return res.json({ data: updateResult });
   }
 }
 

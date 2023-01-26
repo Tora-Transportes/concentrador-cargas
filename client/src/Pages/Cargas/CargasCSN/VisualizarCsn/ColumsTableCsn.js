@@ -299,8 +299,8 @@ export const columns = [
 		// Filter: (props) => (
 		// 	<Form.Select {...props}>
 		// 		<option></option>
-		// 		<option value="rôbo">Rôbo</option>
 		// 		<option value="manual">Manual</option>
+		// 		<option value="robô">Robô</option>
 		// 	</Form.Select>
 		// ),
 		// showFilter: true,

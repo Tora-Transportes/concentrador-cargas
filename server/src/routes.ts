@@ -62,6 +62,7 @@ routes.post("/csn/cargas", CargasCsnController.create);
 routes.put("/csn/cargas/:id", CargasCsnController.update);
 routes.delete("/csn/cargas/:id", CargasCsnController.delete);
 
+routes.put("/csn/cargas/info/:id", CargasCsnInfoController.updateCsn);
 routes.get("/csn/cargas/info", CargasCsnInfoController.search);
 routes.get("/csn/cargas/info/:id", CargasCsnInfoController.index);
 routes.get(

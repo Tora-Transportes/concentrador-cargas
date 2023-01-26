@@ -4,6 +4,9 @@ import {
   IPaginationResult,
   IResultExcel,
 } from "../../../repositories/CargaRepository";
+import { UseCaseUpdateCarga } from "../../UseCaseCarga/entities";
+import { UseCaseUpdatePontoParada } from "../../UseCasePontoParadas";
+
 export interface IRepositorySearchCsn {
   search(
     query: Record<string, any>,
@@ -50,5 +53,23 @@ export class UseCaseViewCargasCsn {
       placa
     );
     return carga;
+  }
+}
+
+export class UseCaseUpdateInfoCarga {
+  constructor(
+    private useCaseUpdatePontoParada: UseCaseUpdatePontoParada,
+    private useCaseUpdateCargaPadrao: UseCaseUpdateCarga
+  ) {}
+  async run(cargaDTO: Record<string, any>, oid: string) {
+    const { info_passagem, ...dataPadrao } = cargaDTO;
+    const id_carga = dataPadrao.id;
+    await this.useCaseUpdatePontoParada.run({ ...info_passagem, id_carga });
+    const resultUpdateCarga = await this.useCaseUpdateCargaPadrao.run(
+      dataPadrao,
+      oid
+    );
+
+    return resultUpdateCarga;
   }
 }
