@@ -538,6 +538,6 @@ export default async function run() {
       "|-----------------FIM JOB CARGA CSN EM VIAGEM-------------------|"
     );
   }
-  cron.schedule(" */1 * * * * ", job);
+  //cron.schedule(" */1 * * * * ", job);
   //job();
 }

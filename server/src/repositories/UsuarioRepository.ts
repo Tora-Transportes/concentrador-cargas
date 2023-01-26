@@ -3,13 +3,9 @@ import { Knex } from "knex";
 import IUsuario from "../models/IUsuario";
 
 export class UsuarioRepository {
-  //async search(filter: Record<string, any>, page = 1, pageSize = 11) {
   async search(filter: Record<string, any>, page = 1) {
-    //const total = database("con_usuarios").count("oid as total").first();
-    //const realPage = isNaN(page) || page < 1 ? 1 : page;
     const results = database("con_usuarios").select("*");
-    // .limit(pageSize)
-    // .offset((realPage - 1) * pageSize);
+
     const funcToFilter = (qb: Knex.QueryBuilder) => {
       if (filter.query) {
         qb.orWhere("nome", "like", `%${filter.query}%`);
@@ -21,13 +17,9 @@ export class UsuarioRepository {
       }
     };
 
-    //total.where(funcToFilter);
     results.where(funcToFilter);
-
     const usersAndPermissions = await database
       .from(results.as("usuarios"))
-      //.join("con_cargas", "con_cargas.responsavel_cadastro", "usuarios.nome")
-      //.distinctOn("con_usuarios_permissoes.fk_usuario")
       .leftJoin(
         "con_usuarios_permissoes",
         "usuarios.oid",

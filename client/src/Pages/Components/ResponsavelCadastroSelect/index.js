@@ -4,12 +4,12 @@ import ServiceUsuarios from "../../../services/ServiceUsuarios";
 
 let cache = null;
 
-function ResponsavelCadastroSelect(props) {
+function ResponsavelCadastroSelect({ user, ...props }) {
 	const [responsaveis, setResponsaveis] = useState([]);
 	useEffect(() => {
 		let isMounted = true;
 		if (!cache) {
-			ServiceUsuarios.search({ q: "", page: 1 }).then((response) => {
+			ServiceUsuarios.search({ q: "", page: 1, user }).then((response) => {
 				if (isMounted) {
 					setResponsaveis(response.data.data.results);
 					cache = response.data.data.results;
