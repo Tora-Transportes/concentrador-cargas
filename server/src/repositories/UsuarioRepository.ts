@@ -26,6 +26,8 @@ export class UsuarioRepository {
 
     const usersAndPermissions = await database
       .from(results.as("usuarios"))
+      //.join("con_cargas", "con_cargas.responsavel_cadastro", "usuarios.nome")
+      //.distinctOn("con_usuarios_permissoes.fk_usuario")
       .leftJoin(
         "con_usuarios_permissoes",
         "usuarios.oid",

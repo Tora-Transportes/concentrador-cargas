@@ -143,14 +143,6 @@ function ViewHistoricoVeiculo({
 		setLoading(false);
 	}
 
-	const directScreenTop = () => {
-		window.scrollTo({
-			top: 330,
-			left: 330,
-			behavior: "smooth",
-		});
-	};
-
 	return (
 		<div className="body-hist-veic">
 			<LoadingScreen />
