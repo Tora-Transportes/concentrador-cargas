@@ -467,6 +467,7 @@ class ServiceCargas {
 		carga_csn,
 		categoria_veiculo,
 		rastreador,
+		canal_comunicacao,
 	}) {
 		return api.get("/csn/cargas/info", {
 			params: {
@@ -492,6 +493,7 @@ class ServiceCargas {
 				carga_csn,
 				categoria_veiculo,
 				rastreador,
+				canal_comunicacao,
 			},
 		});
 	}
