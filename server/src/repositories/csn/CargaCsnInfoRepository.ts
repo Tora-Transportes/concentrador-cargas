@@ -148,6 +148,9 @@ export class CargaCsnInfoRepository {
       if (query?.categoria_veiculo) {
         qb.andWhere("categoria_veiculo", "=", query.categoria_veiculo);
       }
+      if (query?.canal_comunicacao) {
+        qb.andWhere("canal_comunicacao", "=", query.canal_comunicacao);
+      }
       if (query?.rastreador) {
         if (query.rastreador === "null") {
           qb.andWhere("rastreador", null);
