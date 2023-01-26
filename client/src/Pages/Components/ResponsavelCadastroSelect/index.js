@@ -9,12 +9,15 @@ function ResponsavelCadastroSelect({ user, ...props }) {
 	useEffect(() => {
 		let isMounted = true;
 		if (!cache) {
-			ServiceUsuarios.search({ q: "", page: 1, user }).then((response) => {
-				if (isMounted) {
-					setResponsaveis(response.data.data.results);
-					cache = response.data.data.results;
+			const tipobusca = user === undefined ? "" : user;
+			ServiceUsuarios.search({ q: tipobusca, page: 1, user }).then(
+				(response) => {
+					if (isMounted) {
+						setResponsaveis(response.data.data.results);
+						cache = response.data.data.results;
+					}
 				}
-			});
+			);
 		} else {
 			setResponsaveis(cache);
 		}

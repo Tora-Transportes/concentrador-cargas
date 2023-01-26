@@ -38,10 +38,10 @@ import EditarCargaCsn from "./Pages/Cargas/CargasCSN/Editar";
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
 	const limparCache = localStorage.getItem("clear_Cache");
-	if (limparCache == null || limparCache.toString() !== "version_2") {
+	if (limparCache == null || limparCache.toString() !== "version_1") {
 		localStorage.clear();
-		localStorage.setItem("clear_Cache", "version_2");
-		window.location.reload(true);
+		localStorage.setItem("clear_Cache", "version_1");
+		location.reload(true);
 	}
 
 	return (
