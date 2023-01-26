@@ -15,10 +15,12 @@ import {
 	formatDateAddHours,
 	formatDateAddminutes,
 } from "src/Pages/Utils/formatDate";
+import { InputReferencError } from "src/Pages/Components/FormularioCadastroCSN/management";
+import { funcScrollTop } from "src/Pages/Utils/scrollTop";
 const CadastroCargaCSN = () => {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [produtos, setProdutos] = useState([]);
-	const [isDateErrorInput, setDateErrorInput] = useState(false);
+	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
 	const history = useHistory();
 	const dataAtual = new Date();
 
@@ -110,55 +112,58 @@ const CadastroCargaCSN = () => {
 				client: "",
 				previsaoSaida: "",
 			},
-			ponto_passagem8: {
-				ponto: "",
-				tipoServico: "",
-				previsao: "",
-				latitude: "",
-				longitude: "",
-				client: "",
-				previsaoSaida: "",
-			},
-			ponto_passagem9: {
-				ponto: "",
-				tipoServico: "",
-				previsao: "",
-				latitude: "",
-				longitude: "",
-				client: "",
-				previsaoSaida: "",
-			},
-			ponto_passagem10: {
-				ponto: "",
-				tipoServico: "",
-				previsao: "",
-				latitude: "",
-				longitude: "",
-				client: "",
-				previsaoSaida: "",
-			},
-			ponto_passagem11: {
-				ponto: "",
-				tipoServico: "",
-				previsao: "",
-				latitude: "",
-				longitude: "",
-				client: "",
-				previsaoSaida: "",
-			},
-			ponto_passagem12: {
-				ponto: "",
-				tipoServico: "",
-				previsao: "",
-				latitude: "",
-				longitude: "",
-				client: "",
-				previsaoSaida: "",
-			},
+			// ponto_passagem8: {
+			// 	ponto: "",
+			// 	tipoServico: "",
+			// 	previsao: "",
+			// 	latitude: "",
+			// 	longitude: "",
+			// 	client: "",
+			// 	previsaoSaida: "",
+			// },
+			// ponto_passagem9: {
+			// 	ponto: "",
+			// 	tipoServico: "",
+			// 	previsao: "",
+			// 	latitude: "",
+			// 	longitude: "",
+			// 	client: "",
+			// 	previsaoSaida: "",
+			// },
+			// ponto_passagem10: {
+			// 	ponto: "",
+			// 	tipoServico: "",
+			// 	previsao: "",
+			// 	latitude: "",
+			// 	longitude: "",
+			// 	client: "",
+			// 	previsaoSaida: "",
+			// },
+			// ponto_passagem11: {
+			// 	ponto: "",
+			// 	tipoServico: "",
+			// 	previsao: "",
+			// 	latitude: "",
+			// 	longitude: "",
+			// 	client: "",
+			// 	previsaoSaida: "",
+			// },
+			// ponto_passagem12: {
+			// 	ponto: "",
+			// 	tipoServico: "",
+			// 	previsao: "",
+			// 	latitude: "",
+			// 	longitude: "",
+			// 	client: "",
+			// 	previsaoSaida: "",
+			// },
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
-			if (isDateErrorInput) {
+			const existInputErrado = isDateErrorInput.find(
+				(item) => item.error === true
+			);
+			if (existInputErrado?.error) {
 				swal(
 					"Atenção",
 					"Não foi possível registrar as informações, verifique os campos de data antes de continuar.!",
@@ -174,9 +179,9 @@ const CadastroCargaCSN = () => {
 						ponto_passagem5,
 						ponto_passagem6,
 						ponto_passagem7,
-						ponto_passagem8,
-						ponto_passagem9,
-						ponto_passagem10,
+						// ponto_passagem8,
+						// ponto_passagem9,
+						// ponto_passagem10,
 					} = values;
 					values.fk_filial = values.fk_filial.split("-")[0];
 
@@ -214,9 +219,9 @@ const CadastroCargaCSN = () => {
 							ponto_passagem5,
 							ponto_passagem6,
 							ponto_passagem7,
-							ponto_passagem8,
-							ponto_passagem9,
-							ponto_passagem10,
+							// ponto_passagem8,
+							// ponto_passagem9,
+							// ponto_passagem10,
 						})) {
 							if (
 								(value?.ponto.length > 0 && value?.previsao.length > 0) ||
@@ -234,7 +239,10 @@ const CadastroCargaCSN = () => {
 						const ok = await swal(
 							"Sucesso!",
 							`A carga foi cadastrada com o identificador ${data.data.id}!`,
-							"success"
+							"success",
+							{
+								closeOnClickOutside: false,
+							}
 						);
 
 						if (ok) resetForm();
@@ -282,9 +290,11 @@ const CadastroCargaCSN = () => {
 		ServiceProdutos.list().then(({ data }) => {
 			setProdutos(data.data);
 		});
+		funcScrollTop(2, 2);
 	}, []);
 
 	function resetForm() {
+		funcScrollTop(2, 2);
 		window.location.reload();
 	}
 

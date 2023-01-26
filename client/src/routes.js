@@ -41,7 +41,7 @@ export default function AllRoutes() {
 	if (limparCache == null || limparCache.toString() !== "version_1") {
 		localStorage.clear();
 		localStorage.setItem("clear_Cache", "version_1");
-		window.location.reload(true);
+		location.reload(true);
 	}
 
 	return (

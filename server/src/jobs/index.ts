@@ -20,6 +20,6 @@ if (Number(process.env.RUN_JOBS) === 1) {
     "Iniciando o job 'Atualizar cidades valor null coordenadas veiculos'"
   );
   atualizaCidadesNullCoordenadas();
+  console.log("Inicio job finalização carga csn");
+  finalizarCargaCsn();
 }
-console.log("Inicio job finalização carga csn");
-finalizarCargaCsn();

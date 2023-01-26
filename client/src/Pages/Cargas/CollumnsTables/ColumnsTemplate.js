@@ -159,7 +159,7 @@ export const columns = [
 		selector: (row) => row.responsavel_cadastro,
 		sortable: "sortable",
 		showFilter: true,
-		Filter: (props) => <ResponsavelCadastroSelect {...props} />,
+		Filter: (props) => <ResponsavelCadastroSelect user="padrao" {...props} />,
 	},
 
 	{

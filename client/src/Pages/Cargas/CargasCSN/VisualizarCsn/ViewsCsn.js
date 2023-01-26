@@ -103,7 +103,7 @@ function ViewsCsn({
 							itensPerPage={itensPerPage}
 							setModalShow={setModalShow}
 							setModalShowExcel={setModalShowExcel}
-							tipoDeBuscaPorPagina={"Listagem de Cargas CSN"}
+							tipoDeBuscaPorPagina={"table-columns-csn"}
 						/>
 					</Col>
 				</Row>

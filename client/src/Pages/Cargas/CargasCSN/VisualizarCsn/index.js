@@ -153,7 +153,7 @@ function VisualizarCsn() {
 	}
 
 	function resetView() {
-		localStorage.removeItem("table-columns");
+		localStorage.removeItem("table-columns-csn");
 		location.reload();
 	}
 

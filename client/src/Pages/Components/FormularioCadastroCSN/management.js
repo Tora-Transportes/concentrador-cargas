@@ -10,10 +10,10 @@ export const funcInputPontoParada = (
 	setViewsButtonAddColeta,
 	setInputColeta5,
 	setInputColeta6,
-	setInputColeta7,
-	setInputColeta8,
-	setInputColeta9,
-	setInputColeta10
+	setInputColeta7
+	// setInputColeta8,
+	// setInputColeta9,
+	// setInputColeta10
 ) => {
 	const viewsInputColeta = () => {
 		switch (countInput) {
@@ -30,18 +30,18 @@ export const funcInputPontoParada = (
 				setInputColeta7(true);
 				setCountInput(countInput + 1);
 				break;
-			case 6:
-				setInputColeta8(true);
-				setCountInput(countInput + 1);
-				break;
-			case 7:
-				setInputColeta9(true);
-				setCountInput(countInput + 1);
-				break;
-			case 8:
-				setInputColeta10(true);
-				setCountInput(countInput + 1);
-				break;
+			// case 6:
+			// 	setInputColeta8(true);
+			// 	setCountInput(countInput + 1);
+			// 	break;
+			// case 7:
+			// 	setInputColeta9(true);
+			// 	setCountInput(countInput + 1);
+			// 	break;
+			// case 8:
+			// 	setInputColeta10(true);
+			// 	setCountInput(countInput + 1);
+			// 	break;
 			default:
 				return;
 		}
@@ -98,49 +98,49 @@ export const funcInputPontoParada = (
 				setInputColeta7(false);
 				setViewsButtonAddColeta(true);
 				break;
-			case 7:
-				if (dados === "delete") {
-					const id = await formik.values.ponto_passagem8.id;
-					if (id?.length) funcDeletarParada(id);
-				}
-				formik.setFieldValue("ponto_passagem8.ponto", "");
-				formik.setFieldValue("ponto_passagem8.tipoServico", "");
-				formik.setFieldValue("ponto_passagem8.previsao", "");
-				formik.setFieldValue("ponto_passagem8.latitude", "");
-				formik.setFieldValue("ponto_passagem8.longitude", "");
-				formik.setFieldValue("ponto_passagem8.previsaoSaida", "");
-				setCountInput(countInput - 1);
-				setInputColeta8(false);
-				setViewsButtonAddColeta(true);
-				break;
-			case 8:
-				if (dados === "delete") {
-					const id = await formik.values.ponto_passagem9.id;
-					if (id?.length) funcDeletarParada(id);
-				}
-				formik.setFieldValue("ponto_passagem9.ponto", "");
-				formik.setFieldValue("ponto_passagem9.tipoServico", "");
-				formik.setFieldValue("ponto_passagem9.previsao", "");
-				formik.setFieldValue("ponto_passagem9.latitude", "");
-				formik.setFieldValue("ponto_passagem9.longitude", "");
-				formik.setFieldValue("ponto_passagem9.previsaoSaida", "");
-				setCountInput(countInput - 1);
-				setInputColeta9(false);
-				break;
-			case 9:
-				if (dados === "delete") {
-					const id = await formik.values.ponto_passagem10.id;
-					if (id?.length) funcDeletarParada(id);
-				}
-				formik.setFieldValue("ponto_passagem10.ponto", "");
-				formik.setFieldValue("ponto_passagem10.tipoServico", "");
-				formik.setFieldValue("ponto_passagem10.previsao", "");
-				formik.setFieldValue("ponto_passagem10.latitude", "");
-				formik.setFieldValue("ponto_passagem10.longitude", "");
-				formik.setFieldValue("ponto_passagem10.previsaoSaida", "");
-				setCountInput(countInput - 1);
-				setInputColeta10(false);
-				break;
+			// case 7:
+			// 	if (dados === "delete") {
+			// 		const id = await formik.values.ponto_passagem8.id;
+			// 		if (id?.length) funcDeletarParada(id);
+			// 	}
+			// 	formik.setFieldValue("ponto_passagem8.ponto", "");
+			// 	formik.setFieldValue("ponto_passagem8.tipoServico", "");
+			// 	formik.setFieldValue("ponto_passagem8.previsao", "");
+			// 	formik.setFieldValue("ponto_passagem8.latitude", "");
+			// 	formik.setFieldValue("ponto_passagem8.longitude", "");
+			// 	formik.setFieldValue("ponto_passagem8.previsaoSaida", "");
+			// 	setCountInput(countInput - 1);
+			// 	setInputColeta8(false);
+			// 	setViewsButtonAddColeta(true);
+			// 	break;
+			// case 8:
+			// 	if (dados === "delete") {
+			// 		const id = await formik.values.ponto_passagem9.id;
+			// 		if (id?.length) funcDeletarParada(id);
+			// 	}
+			// 	formik.setFieldValue("ponto_passagem9.ponto", "");
+			// 	formik.setFieldValue("ponto_passagem9.tipoServico", "");
+			// 	formik.setFieldValue("ponto_passagem9.previsao", "");
+			// 	formik.setFieldValue("ponto_passagem9.latitude", "");
+			// 	formik.setFieldValue("ponto_passagem9.longitude", "");
+			// 	formik.setFieldValue("ponto_passagem9.previsaoSaida", "");
+			// 	setCountInput(countInput - 1);
+			// 	setInputColeta9(false);
+			// 	break;
+			// case 9:
+			// 	if (dados === "delete") {
+			// 		const id = await formik.values.ponto_passagem10.id;
+			// 		if (id?.length) funcDeletarParada(id);
+			// 	}
+			// 	formik.setFieldValue("ponto_passagem10.ponto", "");
+			// 	formik.setFieldValue("ponto_passagem10.tipoServico", "");
+			// 	formik.setFieldValue("ponto_passagem10.previsao", "");
+			// 	formik.setFieldValue("ponto_passagem10.latitude", "");
+			// 	formik.setFieldValue("ponto_passagem10.longitude", "");
+			// 	formik.setFieldValue("ponto_passagem10.previsaoSaida", "");
+			// 	setCountInput(countInput - 1);
+			// 	setInputColeta10(false);
+			// 	break;
 			default:
 				return;
 		}
@@ -205,24 +205,24 @@ export const funcDuracaoProcesso = async (formik, status, coletafim) => {
 				"ponto_passagem7.tempServicoLocal"
 			);
 			break;
-		case 8:
-			somarHoras(
-				formik.values.ponto_passagem8.coletaEfetiva,
-				"ponto_passagem8.tempServicoLocal"
-			);
-			break;
-		case 9:
-			somarHoras(
-				formik.values.ponto_passagem9.coletaEfetiva,
-				"ponto_passagem9.tempServicoLocal"
-			);
-			break;
-		case 10:
-			somarHoras(
-				formik.values.ponto_passagem10.coletaEfetiva,
-				"ponto_passagem10.tempServicoLocal"
-			);
-			break;
+		// case 8:
+		// 	somarHoras(
+		// 		formik.values.ponto_passagem8.coletaEfetiva,
+		// 		"ponto_passagem8.tempServicoLocal"
+		// 	);
+		// 	break;
+		// case 9:
+		// 	somarHoras(
+		// 		formik.values.ponto_passagem9.coletaEfetiva,
+		// 		"ponto_passagem9.tempServicoLocal"
+		// 	);
+		// 	break;
+		// case 10:
+		// 	somarHoras(
+		// 		formik.values.ponto_passagem10.coletaEfetiva,
+		// 		"ponto_passagem10.tempServicoLocal"
+		// 	);
+		// 	break;
 		case 11:
 			formik.setFieldValue("ponto_passagem4.entregaFinal", 1);
 
@@ -260,16 +260,31 @@ export const mensagemPlacaEmUso = (id, fk_situacao, plate, history, formik) => {
 };
 
 export const InputReferencError = [
-	{ inputError: false },
-	{ inputError1: false },
-	{ inputError2: false },
-	{ inputError3: false },
-	{ inputError4: false },
-	{ inputError5: false },
-	{ inputError6: false },
-	{ inputError7: false },
-	{ inputError8: false },
-	{ inputError9: false },
-	{ inputError10: false },
-	{ inputError11: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
+	{ error: false },
 ];

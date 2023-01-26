@@ -13,6 +13,8 @@ import ServiceCargas from "src/services/ServiceCargas";
 import FormularioCadastroCSN from "src/Pages/Components/FormularioCadastroCSN";
 import { funcBodyEdit } from "./menagemente";
 import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
+import { InputReferencError } from "src/Pages/Components/FormularioCadastroCSN/management";
+import { funcScrollTop } from "src/Pages/Utils/scrollTop";
 
 function EditarCargaCsn() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -21,7 +23,7 @@ function EditarCargaCsn() {
 	const [produtos, setProdutos] = useState([]);
 	const [viewsInput, setViewsInput] = useState(0);
 	const [isPermissionUser, setPermissionUser] = useState(true);
-	const [isDateErrorInput, setDateErrorInput] = useState(false);
+	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
 
 	const formik = useFormik({
 		initialValues: {
@@ -156,61 +158,64 @@ function EditarCargaCsn() {
 				entregaEfetiva: "",
 				entregaEfetivaSaida: "",
 			},
-			ponto_passagem8: {
-				ponto: "",
-				tipoServico: "",
-				previsao: "",
-				previsaoSaida: "",
-				latitude: "",
-				longitude: "",
-				client: "",
-				id: "",
-				idRotaCsn: "",
-				coletaEfetiva: "",
-				coletaEfetivaSaida: "",
-				tempServicoLocal: "",
-				tempServicoLocalEntrega: "",
-				entregaEfetiva: "",
-				entregaEfetivaSaida: "",
-			},
-			ponto_passagem9: {
-				ponto: "",
-				tipoServico: "",
-				previsao: "",
-				previsaoSaida: "",
-				latitude: "",
-				longitude: "",
-				client: "",
-				id: "",
-				idRotaCsn: "",
-				coletaEfetiva: "",
-				coletaEfetivaSaida: "",
-				tempServicoLocal: "",
-				tempServicoLocalEntrega: "",
-				entregaEfetiva: "",
-				entregaEfetivaSaida: "",
-			},
-			ponto_passagem10: {
-				ponto: "",
-				tipoServico: "",
-				previsao: "",
-				previsaoSaida: "",
-				latitude: "",
-				longitude: "",
-				client: "",
-				id: "",
-				idRotaCsn: "",
-				coletaEfetiva: "",
-				coletaEfetivaSaida: "",
-				tempServicoLocal: "",
-				tempServicoLocalEntrega: "",
-				entregaEfetiva: "",
-				entregaEfetivaSaida: "",
-			},
+			// ponto_passagem8: {
+			// 	ponto: "",
+			// 	tipoServico: "",
+			// 	previsao: "",
+			// 	previsaoSaida: "",
+			// 	latitude: "",
+			// 	longitude: "",
+			// 	client: "",
+			// 	id: "",
+			// 	idRotaCsn: "",
+			// 	coletaEfetiva: "",
+			// 	coletaEfetivaSaida: "",
+			// 	tempServicoLocal: "",
+			// 	tempServicoLocalEntrega: "",
+			// 	entregaEfetiva: "",
+			// 	entregaEfetivaSaida: "",
+			// },
+			// ponto_passagem9: {
+			// 	ponto: "",
+			// 	tipoServico: "",
+			// 	previsao: "",
+			// 	previsaoSaida: "",
+			// 	latitude: "",
+			// 	longitude: "",
+			// 	client: "",
+			// 	id: "",
+			// 	idRotaCsn: "",
+			// 	coletaEfetiva: "",
+			// 	coletaEfetivaSaida: "",
+			// 	tempServicoLocal: "",
+			// 	tempServicoLocalEntrega: "",
+			// 	entregaEfetiva: "",
+			// 	entregaEfetivaSaida: "",
+			// },
+			// ponto_passagem10: {
+			// 	ponto: "",
+			// 	tipoServico: "",
+			// 	previsao: "",
+			// 	previsaoSaida: "",
+			// 	latitude: "",
+			// 	longitude: "",
+			// 	client: "",
+			// 	id: "",
+			// 	idRotaCsn: "",
+			// 	coletaEfetiva: "",
+			// 	coletaEfetivaSaida: "",
+			// 	tempServicoLocal: "",
+			// 	tempServicoLocalEntrega: "",
+			// 	entregaEfetiva: "",
+			// 	entregaEfetivaSaida: "",
+			// },
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
-			if (isDateErrorInput) {
+			const existInputErrado = isDateErrorInput.find(
+				(item) => item.error === true
+			);
+			if (existInputErrado?.error) {
 				swal(
 					"Atenção",
 					"Não foi possível registrar as informações, verifique os campos de data antes de continuar.!",
@@ -225,18 +230,29 @@ function EditarCargaCsn() {
 					ponto_passagem5,
 					ponto_passagem6,
 					ponto_passagem7,
-					ponto_passagem8,
-					ponto_passagem9,
-					ponto_passagem10,
+					// ponto_passagem8,
+					// ponto_passagem9,
+					// ponto_passagem10,
 				} = values;
+
+				const dadosPontoPassagem = {
+					ponto_passagem,
+					ponto_passagem2,
+					ponto_passagem3,
+					ponto_passagem4,
+					ponto_passagem5,
+					ponto_passagem6,
+					ponto_passagem7,
+				};
 				try {
 					let dadosCargaSalva;
 					const finalizarCarga = formik.values.finalizarCarga;
 
 					if (finalizarCarga !== true) {
 						values.fk_filial = values.fk_filial.split("-")[0];
-						const { data } = await ServiceCargas.update({
+						const { data } = await ServiceCargas.updateCSN({
 							...values,
+							info_passagem: dadosPontoPassagem,
 							responsavel_cadastro: String(getClaims().name),
 							fk_situacao: undefined,
 							fk_filial: formik.values.fk_filial?.split("-")[0],
@@ -253,8 +269,9 @@ function EditarCargaCsn() {
 							}
 						);
 						if (resultOk) {
-							await ServiceCargas.update({
+							await ServiceCargas.updateCSN({
 								...formik.values,
+								info_passagem: dadosPontoPassagem,
 								fk_situacao: 6,
 								fk_filial: formik.values.fk_filial?.split("-")[0],
 							});
@@ -263,30 +280,30 @@ function EditarCargaCsn() {
 						}
 					}
 
-					for (const [key, value] of Object.entries({
-						ponto_passagem,
-						ponto_passagem2,
-						ponto_passagem3,
-						ponto_passagem4,
-						ponto_passagem5,
-						ponto_passagem6,
-						ponto_passagem7,
-						ponto_passagem8,
-						ponto_passagem9,
-						ponto_passagem10,
-					})) {
-						if (
-							(value?.ponto?.length > 0 && value?.previsao?.length > 0) ||
-							(typeof value?.latitude !== "string" &&
-								typeof value?.longitude !== "string")
-						) {
-							await ServiceCargas.updatePontoParada({
-								...value,
-								id_carga: values.id,
-								key,
-							});
-						}
-					}
+					// for (const [key, value] of Object.entries({
+					// 	ponto_passagem,
+					// 	ponto_passagem2,
+					// 	ponto_passagem3,
+					// 	ponto_passagem4,
+					// 	ponto_passagem5,
+					// 	ponto_passagem6,
+					// 	ponto_passagem7,
+					// 	// ponto_passagem8,
+					// 	// ponto_passagem9,
+					// 	// ponto_passagem10,
+					// })) {
+					// 	if (
+					// 		(value?.ponto?.length > 0 && value?.previsao?.length > 0) ||
+					// 		(typeof value?.latitude !== "string" &&
+					// 			typeof value?.longitude !== "string")
+					// 	) {
+					// 		await ServiceCargas.updatePontoParada({
+					// 			...value,
+					// 			id_carga: values.id,
+					// 			key,
+					// 		});
+					// 	}
+					// }
 
 					formik.setFieldValue(
 						"responsavel_cadastro",
@@ -298,7 +315,9 @@ function EditarCargaCsn() {
 							? `A carga ${dadosCargaSalva.data.id} foi atualizada!`
 							: "Carga finalizada.";
 
-					const ok = await swal("Sucesso!", mensagemConfirmacao, "success");
+					const ok = await swal("Sucesso!", mensagemConfirmacao, "success", {
+						closeOnClickOutside: false,
+					});
 
 					if (ok) {
 						window.location.reload();
@@ -512,7 +531,7 @@ function EditarCargaCsn() {
 				setPermissionUser(false);
 			}
 		})();
-
+		funcScrollTop(2, 2);
 		return () => {
 			isMounted = false;
 		};

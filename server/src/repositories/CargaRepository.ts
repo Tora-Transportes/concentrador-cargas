@@ -204,9 +204,6 @@ export class CargaRepository {
           `%${query.origem_carga.toUpperCase()}%`
         );
       }
-      // if (query?.fk_situacao && !isNaN(Number(query.fk_situacao))) {
-      //   qb.andWhere("fk_situacao", Number(query.fk_situacao));
-      // }
       if (query?.data_coleta) {
         qb.andWhere("data_coleta", "=", new Date(query.data_coleta));
       }

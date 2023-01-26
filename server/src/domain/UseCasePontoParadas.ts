@@ -1,5 +1,6 @@
 import AppError from "../models/AppError";
-import IPontosParada from "../models/IPontosDeParada";
+import IPontosParada, { IInfo_passagem } from "../models/IPontosDeParada";
+import { formatDateObject } from "../Utils/formatData";
 import { factoryPontoParada } from "../validations/PontoParadasValidation";
 import { PontoParadaRepository } from "./../repositories/PontoParadaRepository";
 const dataAtual = new Date();
@@ -33,7 +34,7 @@ export class UseCaseSearchPontoParada {
   }
 }
 
-export class UseCaseUpdatePontoParada {
+export class UseCaseUpdatePontoParadaRota {
   constructor(
     private readonly pontoParadaRepository = new PontoParadaRepository()
   ) {}
@@ -51,6 +52,121 @@ export class UseCaseUpdatePontoParada {
     dataParada.PREVISAO = new Date(String(previsao));
     const dadosParada = { ...pontoParada, DATA_ATUALIZACAO: dataAtual };
     return await this.pontoParadaRepository.update(id, dadosParada);
+  }
+}
+export class UseCaseUpdatePontoParada {
+  constructor(
+    private readonly pontoParadaRepository = new PontoParadaRepository()
+  ) {}
+
+  async run({
+    ponto_passagem,
+    ponto_passagem2,
+    ponto_passagem3,
+    ponto_passagem4,
+    ponto_passagem5,
+    ponto_passagem6,
+    ponto_passagem7,
+    id_carga,
+  }: IInfo_passagem): Promise<void> {
+    for (const [key, value] of Object.entries({
+      ponto_passagem,
+      ponto_passagem2,
+      ponto_passagem3,
+      ponto_passagem4,
+      ponto_passagem5,
+      ponto_passagem6,
+      ponto_passagem7,
+    })) {
+      if (
+        (value.ponto &&
+          value.ponto.length > 0 &&
+          value.previsao !== "string") ||
+        (typeof value.latitude !== "string" &&
+          typeof value.longitude !== "string")
+      ) {
+        const existeRota = await this.pontoParadaRepository.index(value.id);
+        if (!existeRota)
+          throw new AppError("O Ponto de parada não existe", 400);
+        const {
+          id,
+          idRotaCsn,
+          client,
+          ponto,
+          tipoServico,
+          previsao,
+          latitude,
+          longitude,
+          coletaEfetiva,
+          coletaEfetiva_posto30,
+          coletaEfetiva_mundo,
+          coletaEfetivaSaida,
+          coletaEfetiva_peacao,
+          tempServicoLocal,
+          tempServicoLocalEntrega,
+          entregaEfetivaSaida,
+          entregaEfetiva,
+          previsaoSaida,
+        } = value;
+
+        const dataDefault = {
+          ID_ROTAS_CSN: idRotaCsn === null ? null : Number(idRotaCsn),
+          ID_CON_CARGAS: Number(id_carga),
+          PREVISAO: formatDateObject(new Date(previsao)),
+          PREVISAO_SAIDA: formatDateObject(new Date(previsaoSaida)),
+          STATUS_SERVICO: tipoServico.toUpperCase(),
+          LATITUDE: latitude ? latitude : null,
+          LONGITUDE: longitude ? longitude : null,
+          CLIENTE: ponto === "" ? client : ponto,
+          COLETA_EFETIVA:
+            coletaEfetiva === null || coletaEfetiva === "Invalid date"
+              ? null
+              : formatDateObject(new Date(coletaEfetiva)),
+          COLETA_EFETIVA_POSTO30:
+            coletaEfetiva_posto30 === null ||
+            coletaEfetiva_posto30 === "Invalid date"
+              ? null
+              : formatDateObject(new Date(coletaEfetiva_posto30)),
+          COLETA_EFETIVA_MUNDO:
+            coletaEfetiva_mundo === null ||
+            coletaEfetiva_mundo === "Invalid date"
+              ? null
+              : formatDateObject(new Date(coletaEfetiva_mundo)),
+          COLETA_EFETIVA_PEACAO:
+            coletaEfetiva_peacao === null ||
+            coletaEfetiva_peacao === "Invalid date"
+              ? null
+              : formatDateObject(new Date(coletaEfetiva_peacao)),
+          ENTREGA_EFETIVA:
+            entregaEfetiva === null || entregaEfetiva === "Invalid date"
+              ? null
+              : formatDateObject(new Date(entregaEfetiva)),
+          SAIDA_EFETIVA_COLETA:
+            coletaEfetivaSaida === null || coletaEfetivaSaida === "Invalid date"
+              ? null
+              : formatDateObject(new Date(coletaEfetivaSaida)),
+          SAIDA_EFETIVA_ENTREGA:
+            entregaEfetivaSaida === null ||
+            entregaEfetivaSaida === "Invalid date"
+              ? null
+              : formatDateObject(new Date(entregaEfetivaSaida)),
+          TEMP_SERV_LOCAL_COLETA: tempServicoLocal,
+          TEMP_SERV_LOCAL_ENTREGA: tempServicoLocalEntrega,
+        };
+        const validator = factoryPontoParada();
+        const pontoParada: IPontosParada = await validator.validate(
+          dataDefault,
+          {
+            abortEarly: false,
+            stripUnknown: true,
+          }
+        );
+
+        const dadosParada = { ...pontoParada, DATA_ATUALIZACAO: dataAtual };
+        await this.pontoParadaRepository.update(id, dadosParada);
+      }
+      key;
+    }
   }
 }
 
@@ -71,6 +187,7 @@ const instancias = {
   useCaseAddPontoParadas: new UseCaseAddPontoParadas(),
   useCaseSearchPontoParada: new UseCaseSearchPontoParada(),
   useCaseUpdatePontoParadas: new UseCaseUpdatePontoParada(),
+  useCaseUpdatePontoParadasRota: new UseCaseUpdatePontoParadaRota(),
   useCaseDeletePontoParada: new UseCaseDeletePontoParada(),
 };
 export default instancias;

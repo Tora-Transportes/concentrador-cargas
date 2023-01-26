@@ -24,6 +24,7 @@ import { BsDownload } from "react-icons/bs";
 import DateUtils from "../../Utils/date";
 import "./historicoVeiculos.css";
 import { formatDateAtual3HorasMais } from "src/Pages/Utils/formatDate";
+import { funcScrollTop } from "src/Pages/Utils/scrollTop";
 
 const truckIcon = L.icon({
 	iconUrl:
@@ -142,14 +143,6 @@ function ViewHistoricoVeiculo({
 		setLoading(false);
 	}
 
-	const directScreenTop = () => {
-		window.scrollTo({
-			top: 330,
-			left: 330,
-			behavior: "smooth",
-		});
-	};
-
 	return (
 		<div className="body-hist-veic">
 			<LoadingScreen />
@@ -212,7 +205,7 @@ function ViewHistoricoVeiculo({
 									historicoRotas?.posicao[0].LON.replace(",", "."),
 								]}
 								zoom={10}
-								maxZoom={17}
+								maxZoom={17.4}
 								style={{ height: "80vh" }}
 							>
 								<LayersControl position="topright">
@@ -341,7 +334,7 @@ function ViewHistoricoVeiculo({
 														setLatitude(position.LAT.replace(",", "."));
 														setLongitude(position.LON.replace(",", "."));
 														setCountPosition(index);
-														directScreenTop();
+														funcScrollTop(30, 30);
 													}}
 												>
 													{index}

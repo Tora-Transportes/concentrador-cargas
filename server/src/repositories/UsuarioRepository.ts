@@ -1,28 +1,45 @@
 import database from "../database";
 import { Knex } from "knex";
 import IUsuario from "../models/IUsuario";
-
 export class UsuarioRepository {
-  //async search(filter: Record<string, any>, page = 1, pageSize = 11) {
   async search(filter: Record<string, any>, page = 1) {
-    //const total = database("con_usuarios").count("oid as total").first();
-    //const realPage = isNaN(page) || page < 1 ? 1 : page;
-    const results = database("con_usuarios").select("*");
-    // .limit(pageSize)
-    // .offset((realPage - 1) * pageSize);
-    const funcToFilter = (qb: Knex.QueryBuilder) => {
-      if (filter.query) {
-        qb.orWhere("nome", "like", `%${filter.query}%`);
-        qb.orWhere("email", "like", `%${filter.query}%`);
-      }
-      for (const i in filter) {
-        if (i === "query") continue;
-        qb.andWhere(i, filter[i]);
-      }
-    };
+    let results;
+    if (filter.query === "csn") {
+      results = database("con_usuarios")
+        .select(["con_usuarios.*"])
+        .distinct()
+        .join(
+          "con_cargas",
+          "con_cargas.responsavel_cadastro",
+          "con_usuarios.nome"
+        )
+        .where("con_cargas.carga_csn", 1);
+    } else if (filter.query === "padrao") {
+      results = database("con_usuarios")
+        .select(["*"])
+        .distinct()
+        .join(
+          "con_cargas",
+          "con_cargas.responsavel_cadastro",
+          "con_usuarios.nome"
+        )
+        .where("con_cargas.carga_csn", 0)
+        .orWhereNull("con_cargas.carga_csn");
+    } else {
+      results = database("con_usuarios").select("*");
 
-    //total.where(funcToFilter);
-    results.where(funcToFilter);
+      const funcToFilter = (qb: Knex.QueryBuilder) => {
+        if (filter.query) {
+          qb.orWhere("nome", "like", `%${filter.query}%`);
+          qb.orWhere("email", "like", `%${filter.query}%`);
+        }
+        for (const i in filter) {
+          if (i === "query") continue;
+          qb.andWhere(i, filter[i]);
+        }
+      };
+      results.where(funcToFilter);
+    }
 
     const usersAndPermissions = await database
       .from(results.as("usuarios"))
@@ -57,7 +74,6 @@ export class UsuarioRepository {
 
     return {
       page,
-      //total_pages: Math.ceil(Number((await total)?.total || 0) / pageSize),
       results: outputUsers,
     };
   }

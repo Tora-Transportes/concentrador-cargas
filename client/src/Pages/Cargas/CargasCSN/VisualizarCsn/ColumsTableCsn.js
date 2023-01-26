@@ -275,7 +275,7 @@ export const columns = [
 		selector: (row) => row.responsavel_cadastro,
 		sortable: "sortable",
 		showFilter: true,
-		Filter: (props) => <ResponsavelCadastroSelect {...props} />,
+		Filter: (props) => <ResponsavelCadastroSelect user="csn" {...props} />,
 	},
 	{
 		name: "observacao",
@@ -295,6 +295,14 @@ export const columns = [
 		name: "canal_comunicacao",
 		description: "Canal de comunicação",
 		selector: (row) => row.canal_comunicacao,
-		sortable: "sortable",
+		//sortable: "sortable",
+		Filter: (props) => (
+			<Form.Select {...props}>
+				<option></option>
+				<option value="manual">Manual</option>
+				<option value="robô">Robô</option>
+			</Form.Select>
+		),
+		showFilter: true,
 	},
 ];
