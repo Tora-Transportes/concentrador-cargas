@@ -30,10 +30,10 @@ function FormularioCadastroManual({
 	formik,
 	produtos,
 	distancia,
-	//setDistancia,
 	handleSearchDistance,
 	disabledFields = [],
 	buscarCargaComDocumentoDeTransporte,
+	isViwsCargaApp,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
@@ -189,7 +189,6 @@ function FormularioCadastroManual({
 					<label>*Código da filial</label>
 					<FilialSelect
 						className="input-cod-filial"
-						//id="Codigo-filial pb-5"
 						placeholder=" "
 						name="fk_filial"
 						value={formik.values.fk_filial ?? ""}
@@ -216,10 +215,10 @@ function FormularioCadastroManual({
 				</Col>
 			</Row>
 			<Row>
+				<div className="class-linha-title2">
+					<hr className="w-100"></hr>
+				</div>
 				<Col>
-					<div className="class-linha-title2">
-						<hr className="w-100"></hr>
-					</div>
 					<Form.Group className="mb-3">
 						*É Lote?{" "}
 						<Form.Check
@@ -266,6 +265,48 @@ function FormularioCadastroManual({
 						</sub>
 					</Form.Group>
 				</Col>
+				{isViwsCargaApp && (
+					<Col className="text-end">
+						<Form.Group className="mb-3">
+							*Enviar carga para o APP?{" "}
+							<Form.Check
+								type="radio"
+								label="Sim"
+								name="carga_app"
+								onChange={() => formik.setFieldValue("carga_app", 1)}
+								onKeyDown={handleEnter}
+								checked={formik.values.carga_app === 1}
+								inline
+							/>
+							<Form.Check
+								type="radio"
+								label="Não"
+								name="carga_app"
+								onChange={() => formik.setFieldValue("carga_app", 0)}
+								onKeyDown={handleEnter}
+								checked={formik.values.carga_app === 0}
+								inline
+							/>
+							<OverlayTrigger
+								key="tooltip-overlay-carga-app"
+								placement="bottom"
+								overlay={
+									<Tooltip id={`tooltip-bottom`}>
+										Esse campo define se a carga será enviada ou não para o App.
+										Quando escolhido Sim, a carga poderá ser visualizada e
+										modificada pelo App. Se a escolha for Não, a carga só poderá
+										ser visualizada e modificada através deste portal.
+									</Tooltip>
+								}
+							>
+								<span>
+									<IoMdHelpCircle size={20} />
+								</span>
+							</OverlayTrigger>
+							<br />
+						</Form.Group>
+					</Col>
+				)}
 			</Row>
 			<div className="class-linha-title3">
 				<hr className="w-100"></hr>

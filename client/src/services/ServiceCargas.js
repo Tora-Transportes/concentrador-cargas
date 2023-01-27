@@ -29,6 +29,7 @@ class ServiceCargas {
 		locais,
 		carga_csn,
 		rastreador,
+		carga_app,
 	}) {
 		const carga = {
 			e_lote,
@@ -59,6 +60,7 @@ class ServiceCargas {
 			locais,
 			carga_csn,
 			rastreador,
+			carga_app,
 		};
 		return await api.post("/cargas", carga);
 	}

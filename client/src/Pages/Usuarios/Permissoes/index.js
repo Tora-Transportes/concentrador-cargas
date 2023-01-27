@@ -17,11 +17,13 @@ import {
 	permissBodyTemplate,
 } from "./templateDataTable";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
+import useLocalStorage from "src/Pages/Components/useLocalstorage";
 
 function Permissoes() {
 	const [users, setUsers] = useState([]);
 	const [permissSelecionado, setPermissSeleciondo] = useState([]);
 	const [globalFilter, setGlobalFilter] = useState([]);
+	const [isStorage, setStorage] = useLocalStorage("permissions_user", []);
 
 	const dadosTabela = useRef(null);
 
@@ -64,6 +66,7 @@ function Permissoes() {
 				permissSelecionado.map((item) => {
 					permissoes.push(item.name);
 				});
+				isStorage;
 			}
 			const message = apagar
 				? "Certeza que deseja deletar permissão do usuário selecionado?"
@@ -75,6 +78,7 @@ function Permissoes() {
 				})
 			) {
 				await ServiceUsuarios.changePermissions({ oid, permissoes });
+				setStorage(permissoes);
 				setUsers((old) =>
 					old.map((i) => {
 						if (i.oid === oid) {

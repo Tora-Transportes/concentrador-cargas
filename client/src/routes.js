@@ -34,6 +34,7 @@ import CadastroCargaCSN from "./Pages/Cargas/CargasCSN/Cadastrar";
 import LocalizacaoCSN from "./Pages/LocalizacaoCSN";
 import VisualizarCsn from "./Pages/Cargas/CargasCSN/VisualizarCsn";
 import EditarCargaCsn from "./Pages/Cargas/CargasCSN/Editar";
+import { DefaultUserProvider } from "./hooks/context/contextPagCargaCTE";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -47,66 +48,89 @@ export default function AllRoutes() {
 	return (
 		<BrowserRouter>
 			<Switch>
-				<Route path="/" exact component={Main} />
-				<Route path="/cargas/visualizar" exact component={VisualizarCargas} />
-				<Route path="/lotes/visualizar" exact component={VisualizarLotes} />
-				<Route path="/cargas/visualizar/csn" exact component={VisualizarCsn} />
-				<Route path="/cargas/menu" exact component={LoadMenu} />
-				<Route path="/cargas/importar" exact component={ImportarCargas} />
+				<DefaultUserProvider>
+					<Route path="/" exact component={Main} />
 
-				<Route path="/cargas/cadastro/csn" exact component={CadastroCargaCSN} />
-				<Route path="/cargas/csn/:id" exact component={EditarCargaCsn} />
-				<Route path="/localizacao" exact component={LocalizacaoCSN} />
+					<Route path="/cargas/visualizar" exact component={VisualizarCargas} />
+					<Route path="/lotes/visualizar" exact component={VisualizarLotes} />
+					<Route
+						path="/cargas/visualizar/csn"
+						exact
+						component={VisualizarCsn}
+					/>
+					<Route path="/cargas/menu" exact component={LoadMenu} />
+					<Route path="/cargas/importar" exact component={ImportarCargas} />
 
-				<Route path="/cargas/manual" exact component={CadastrarCargaManual} />
-				<Route path="/cargas/manual/:id" exact component={EditarCargaManual} />
-				<Route path="/cargas/consulta/:id" exact component={ConsultaCarga} />
-				<Route
-					path="/cargas/manual/visualizar/:id"
-					exact
-					component={LinkCarga}
-				/>
-				<Route
-					path="/cargas/derivadas/:id"
-					exact
-					component={CadastrarCargaDerivada}
-				/>
-				<Route
-					path="/usuarios/permissoes"
-					exact
-					component={PermissoesUsuarios}
-				/>
+					<Route
+						path="/cargas/cadastro/csn"
+						exact
+						component={CadastroCargaCSN}
+					/>
+					<Route path="/cargas/csn/:id" exact component={EditarCargaCsn} />
+					<Route path="/localizacao" exact component={LocalizacaoCSN} />
 
-				<Route path="/produtos" exact component={Produtos} />
+					<Route path="/cargas/manual" exact component={CadastrarCargaManual} />
+					<Route
+						path="/cargas/manual/:id"
+						exact
+						component={EditarCargaManual}
+					/>
+					<Route path="/cargas/consulta/:id" exact component={ConsultaCarga} />
+					<Route
+						path="/cargas/manual/visualizar/:id"
+						exact
+						component={LinkCarga}
+					/>
+					<Route
+						path="/cargas/derivadas/:id"
+						exact
+						component={CadastrarCargaDerivada}
+					/>
+					<Route
+						path="/usuarios/permissoes"
+						exact
+						component={PermissoesUsuarios}
+					/>
 
-				<Route path="/rotas/pendentes" exact component={RotasPendentes} />
+					<Route path="/produtos" exact component={Produtos} />
 
-				<Route
-					path="/veiculos/aprovacao/:id"
-					exact
-					component={SituacaoVeiculos}
-				/>
-				<Route path="/veiculos/raio" exact component={RaioVeiculos} />
-				<Route path="/veiculos/destino" exact component={DestinoCarga} />
-				<Route path="/veiculos/raio/empresa" exact component={RaioEmpresa} />
-				<Route path="/veiculos/historico" exact component={HistoricoVeiculo} />
-				<Route
-					path="/veiculos/coordenadas"
-					exact
-					component={CoordenadasVeiculos}
-				/>
+					<Route path="/rotas/pendentes" exact component={RotasPendentes} />
 
-				<Route
-					path="/relatorios/visualizar/:id"
-					exact
-					component={RelatoriosMain}
-				/>
-				<Route path="/relatorios/visualizar" exact component={LinkRelatorios} />
-				<Route path="/credenciais" exact component={Credenciais} />
-				{/* <Route path="/producao" exact component={CalendarioProducao} /> */}
-				<Route path="/ajuda" exact component={Helper} />
-				<Route path="/ajuda/CSN" exact component={HelperCSN} />
-				<Route path="/avisos" exact component={Avisos} />
+					<Route
+						path="/veiculos/aprovacao/:id"
+						exact
+						component={SituacaoVeiculos}
+					/>
+					<Route path="/veiculos/raio" exact component={RaioVeiculos} />
+					<Route path="/veiculos/destino" exact component={DestinoCarga} />
+					<Route path="/veiculos/raio/empresa" exact component={RaioEmpresa} />
+					<Route
+						path="/veiculos/historico"
+						exact
+						component={HistoricoVeiculo}
+					/>
+					<Route
+						path="/veiculos/coordenadas"
+						exact
+						component={CoordenadasVeiculos}
+					/>
+
+					<Route
+						path="/relatorios/visualizar/:id"
+						exact
+						component={RelatoriosMain}
+					/>
+					<Route
+						path="/relatorios/visualizar"
+						exact
+						component={LinkRelatorios}
+					/>
+					<Route path="/credenciais" exact component={Credenciais} />
+					{/* <Route path="/producao" exact component={CalendarioProducao} /> */}
+					<Route path="/ajuda" exact component={Helper} />
+					<Route path="/ajuda/CSN" exact component={HelperCSN} />
+					<Route path="/avisos" exact component={Avisos} />
+				</DefaultUserProvider>
 				<Route path="*" exact component={Main} />
 			</Switch>
 		</BrowserRouter>

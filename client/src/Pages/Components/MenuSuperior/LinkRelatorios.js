@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 // import "./ajuda.css";
 import Menusuperior from "../MenuSuperior/menusuperior";
 // import Accordion from "react-bootstrap/Accordion";
@@ -8,21 +8,23 @@ import { Button } from "react-bootstrap";
 // import telaCoordenadas from "../../../assets/helperTelaCoordenadas.gif";
 // import telaMonitoramento from "../../../assets/helperTelaMonitoramento.gif";
 import "./menuSuperior.css";
-import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
+//import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
+import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 function LinkRelatorios() {
 	const [isPermissionCsn, setPermissionCsn] = useState(false);
 	const [isPermissionPadrao, setPermissionPadrao] = useState(false);
+	const { isPermissionUser } = useContext(ContextUseDefault);
 	useEffect(() => {
-		(async () => {
-			const userPermission = await validationPermissionUser();
-			if (userPermission?.permissoes.includes("CARGAS_PADRAO")) {
-				setPermissionPadrao(true);
-			}
-			if (userPermission?.permissoes.includes("CARGAS_CSN")) {
-				setPermissionCsn(true);
-			}
-		})();
-	}, []);
+		//(async () => {
+		//const userPermission = await validationPermissionUser();
+		if (isPermissionUser?.includes("CARGAS_PADRAO")) {
+			setPermissionPadrao(true);
+		}
+		if (isPermissionUser?.includes("CARGAS_CSN")) {
+			setPermissionCsn(true);
+		}
+		//})();
+	}, [isPermissionUser]);
 	let acc = document.getElementsByClassName("accordion");
 	let i;
 

@@ -46,6 +46,7 @@ export interface ICarga {
   ponto_parada?: IPonto_parada[] | null;
   rastreador?: string | null;
   categoria_veiculo?: string | null;
+  carga_app?: number | null;
 }
 
 export interface ICargaCTE {

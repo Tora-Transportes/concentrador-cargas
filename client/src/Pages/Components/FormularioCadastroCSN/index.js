@@ -17,6 +17,7 @@ function FormularioCadastroCSN({
 	isPermissionUser,
 	isDateErrorInput,
 	setDateErrorInput,
+	isViwsCargaApp,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
@@ -26,9 +27,6 @@ function FormularioCadastroCSN({
 	const [inputColeta5, setInputColeta5] = useState(false);
 	const [inputColeta6, setInputColeta6] = useState(false);
 	const [inputColeta7, setInputColeta7] = useState(false);
-	const [inputColeta8, setInputColeta8] = useState(false);
-	const [inputColeta9, setInputColeta9] = useState(false);
-	const [inputColeta10, setInputColeta10] = useState(false);
 	const [countInput, setCountInput] = useState(3);
 	const [viewsButtonAddColeta, setViewsButtonAddColeta] = useState(true);
 	const [viewsButtonExcluir, setViewsButtonExcluir] = useState(false);
@@ -162,10 +160,7 @@ function FormularioCadastroCSN({
 		setViewsButtonAddColeta,
 		setInputColeta5,
 		setInputColeta6,
-		setInputColeta7,
-		setInputColeta8,
-		setInputColeta9,
-		setInputColeta10
+		setInputColeta7
 	);
 
 	return (
@@ -182,9 +177,6 @@ function FormularioCadastroCSN({
 				inputColeta5={inputColeta5}
 				inputColeta6={inputColeta6}
 				inputColeta7={inputColeta7}
-				inputColeta8={inputColeta8}
-				inputColeta9={inputColeta9}
-				inputColeta10={inputColeta10}
 				viewsButtonAddColeta={viewsButtonAddColeta}
 				functionInputs={functionInputs}
 				viewsButtonExcluir={viewsButtonExcluir}
@@ -200,6 +192,7 @@ function FormularioCadastroCSN({
 				isPermissionUser={isPermissionUser}
 				setDateErrorInput={setDateErrorInput}
 				isDateErrorInput={isDateErrorInput}
+				isViwsCargaApp={isViwsCargaApp}
 			/>
 		</div>
 	);

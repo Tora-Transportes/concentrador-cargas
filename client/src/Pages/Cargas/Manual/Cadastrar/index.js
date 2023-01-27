@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useFormik } from "formik";
 import useLoadingScreen from "../../../Components/LoadingScreen";
@@ -10,12 +10,15 @@ import FormularioCadastroManual from "../../../Components/FormularioCadastroManu
 import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import "./cadastroManual.css";
+import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 // import HandleClick from "./tooltipsCadastro";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [produtos, setProdutos] = useState([]);
 	const [distancia, setDistancia] = useState(null);
+	const [isViwsCargaApp, setViwsCargaApp] = useState(false);
+	const { isPermissionUser } = useContext(ContextUseDefault);
 	const history = useHistory();
 
 	const formik = useFormik({
@@ -40,6 +43,7 @@ function Manual() {
 			local_entrega: "",
 			placa_veiculo: "",
 			documento_transporte: "",
+			carga_app: 0,
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -125,6 +129,10 @@ function Manual() {
 		});
 	}, []);
 
+	useEffect(() => {
+		if (isPermissionUser?.includes("ENVIAR_CARGA_APP")) setViwsCargaApp(true);
+	}, [isPermissionUser]);
+
 	function resetForm() {
 		formik.resetForm();
 		formik.setFieldValue("id", "(gerado automaticamente)");
@@ -147,6 +155,7 @@ function Manual() {
 						produtos={produtos}
 						distancia={distancia}
 						formik={formik}
+						isViwsCargaApp={isViwsCargaApp}
 					/>
 					<Row>
 						<Col>

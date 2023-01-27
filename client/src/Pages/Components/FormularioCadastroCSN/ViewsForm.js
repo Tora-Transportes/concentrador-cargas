@@ -17,7 +17,6 @@ import AutocompleteInput from "../AutocompleteInput";
 import FilialSelect from "../FilialSelect";
 import InputCliente from "../InputCliente";
 import InputPlaca from "../InputPlaca";
-// import ListAddItens from "../ListAddItens";
 import InputsPontoPassagem from "./InputPontoPassagem";
 
 export default function ViewsForm({
@@ -30,9 +29,6 @@ export default function ViewsForm({
 	inputColeta5,
 	inputColeta6,
 	inputColeta7,
-	inputColeta8,
-	inputColeta9,
-	inputColeta10,
 	viewsButtonAddColeta,
 	functionInputs,
 	viewsButtonExcluir,
@@ -46,6 +42,7 @@ export default function ViewsForm({
 	isPermissionUser,
 	isDateErrorInput,
 	setDateErrorInput,
+	isViwsCargaApp,
 }) {
 	const handleEnter = (event) => {
 		if (event.key === "Enter") {
@@ -137,10 +134,10 @@ export default function ViewsForm({
 			</Row>
 			{!fkSituacao && (
 				<Row>
+					<div className="class-linha-title2">
+						<hr className="w-100"></hr>
+					</div>
 					<Col>
-						<div className="class-linha-title2">
-							<hr className="w-100"></hr>
-						</div>
 						<Form.Group className="mb-3">
 							*É Lote?{" "}
 							<Form.Check
@@ -186,6 +183,48 @@ export default function ViewsForm({
 							</sub>
 						</Form.Group>
 					</Col>
+					{isViwsCargaApp && (
+						<Col className="text-end">
+							<Form.Group className="mb-3">
+								*Enviar carga para o APP?{" "}
+								<Form.Check
+									type="radio"
+									label="Sim"
+									name="carga_app"
+									onChange={() => formik.setFieldValue("carga_app", 1)}
+									onKeyDown={handleEnter}
+									checked={formik.values.carga_app === 1}
+									inline
+								/>
+								<Form.Check
+									type="radio"
+									label="Não"
+									name="carga_app"
+									onChange={() => formik.setFieldValue("carga_app", 0)}
+									onKeyDown={handleEnter}
+									checked={formik.values.carga_app === 0}
+									inline
+								/>
+								<OverlayTrigger
+									key="tooltip-overlay-carga-app"
+									placement="bottom"
+									overlay={
+										<Tooltip id={`tooltip-bottom`}>
+											Esse campo define se a carga será enviada ou não para o
+											App. Quando escolhido Sim, a carga poderá ser visualizada
+											e modificada pelo App. Se a escolha for Não, a carga só
+											poderá ser visualizada e modificada através deste portal.
+										</Tooltip>
+									}
+								>
+									<span>
+										<IoMdHelpCircle size={20} />
+									</span>
+								</OverlayTrigger>
+								<br />
+							</Form.Group>
+						</Col>
+					)}
 				</Row>
 			)}
 			<div className="class-linha-title3">
@@ -388,9 +427,6 @@ export default function ViewsForm({
 				inputColeta5={inputColeta5}
 				inputColeta6={inputColeta6}
 				inputColeta7={inputColeta7}
-				inputColeta8={inputColeta8}
-				inputColeta9={inputColeta9}
-				inputColeta10={inputColeta10}
 				fkSituacao={fkSituacao}
 				isPermissionUser={isPermissionUser}
 				setDateErrorInput={setDateErrorInput}

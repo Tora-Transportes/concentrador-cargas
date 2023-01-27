@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import swal from "sweetalert";
@@ -8,16 +8,18 @@ import { SiGooglesheets } from "react-icons/si";
 import "./menuCargas.css";
 
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
-import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
+import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
+//import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 
 function Main() {
 	const [viewsCadastrarCSN, setviewsCadastrarCSN] = useState(false);
 	const [isPermissionPadrao, setPermissionPadrao] = useState(false);
+	const { isPermissionUser } = useContext(ContextUseDefault);
 	const history = useHistory();
 	useEffect(() => {
 		(async () => {
-			const userPermission = await validationPermissionUser();
-			if (!userPermission?.permissoes.includes("DELETAR_CARGAS")) {
+			//const userPermission = await validationPermissionUser();
+			if (!isPermissionUser?.includes("DELETAR_CARGAS")) {
 				await swal(
 					"OPS!",
 					"O usuário não possui permissão para acessar esta página.",
@@ -26,12 +28,11 @@ function Main() {
 				history.push("/");
 			}
 
-			if (userPermission?.permissoes.includes("CARGAS_CSN"))
-				setviewsCadastrarCSN(true);
-			if (userPermission?.permissoes.includes("CARGAS_PADRAO"))
+			if (isPermissionUser?.includes("CARGAS_CSN")) setviewsCadastrarCSN(true);
+			if (isPermissionUser?.includes("CARGAS_PADRAO"))
 				setPermissionPadrao(true);
 		})();
-	}, []);
+	}, [isPermissionUser]);
 
 	return (
 		<>

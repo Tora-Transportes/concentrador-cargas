@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./cadastrarCSN.css";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useFormik } from "formik";
@@ -17,10 +17,13 @@ import {
 } from "src/Pages/Utils/formatDate";
 import { InputReferencError } from "src/Pages/Components/FormularioCadastroCSN/management";
 import { funcScrollTop } from "src/Pages/Utils/scrollTop";
+import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 const CadastroCargaCSN = () => {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [produtos, setProdutos] = useState([]);
+	const [isViwsCargaApp, setViwsCargaApp] = useState(false);
 	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
+	const { isPermissionUser } = useContext(ContextUseDefault);
 	const history = useHistory();
 	const dataAtual = new Date();
 
@@ -48,6 +51,7 @@ const CadastroCargaCSN = () => {
 			placa_veiculo: "",
 			documento_transporte: "",
 			fk_filial: "128 - VOLTA REDONDA",
+			carga_app: 0,
 			ponto_passagem: {
 				ponto: " 60 - POSTO - 30",
 				tipoServico: "Coleta",
@@ -112,51 +116,6 @@ const CadastroCargaCSN = () => {
 				client: "",
 				previsaoSaida: "",
 			},
-			// ponto_passagem8: {
-			// 	ponto: "",
-			// 	tipoServico: "",
-			// 	previsao: "",
-			// 	latitude: "",
-			// 	longitude: "",
-			// 	client: "",
-			// 	previsaoSaida: "",
-			// },
-			// ponto_passagem9: {
-			// 	ponto: "",
-			// 	tipoServico: "",
-			// 	previsao: "",
-			// 	latitude: "",
-			// 	longitude: "",
-			// 	client: "",
-			// 	previsaoSaida: "",
-			// },
-			// ponto_passagem10: {
-			// 	ponto: "",
-			// 	tipoServico: "",
-			// 	previsao: "",
-			// 	latitude: "",
-			// 	longitude: "",
-			// 	client: "",
-			// 	previsaoSaida: "",
-			// },
-			// ponto_passagem11: {
-			// 	ponto: "",
-			// 	tipoServico: "",
-			// 	previsao: "",
-			// 	latitude: "",
-			// 	longitude: "",
-			// 	client: "",
-			// 	previsaoSaida: "",
-			// },
-			// ponto_passagem12: {
-			// 	ponto: "",
-			// 	tipoServico: "",
-			// 	previsao: "",
-			// 	latitude: "",
-			// 	longitude: "",
-			// 	client: "",
-			// 	previsaoSaida: "",
-			// },
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -179,9 +138,6 @@ const CadastroCargaCSN = () => {
 						ponto_passagem5,
 						ponto_passagem6,
 						ponto_passagem7,
-						// ponto_passagem8,
-						// ponto_passagem9,
-						// ponto_passagem10,
 					} = values;
 					values.fk_filial = values.fk_filial.split("-")[0];
 
@@ -219,9 +175,6 @@ const CadastroCargaCSN = () => {
 							ponto_passagem5,
 							ponto_passagem6,
 							ponto_passagem7,
-							// ponto_passagem8,
-							// ponto_passagem9,
-							// ponto_passagem10,
 						})) {
 							if (
 								(value?.ponto.length > 0 && value?.previsao.length > 0) ||
@@ -293,6 +246,10 @@ const CadastroCargaCSN = () => {
 		funcScrollTop(2, 2);
 	}, []);
 
+	useEffect(() => {
+		if (isPermissionUser?.includes("ENVIAR_CARGA_APP")) setViwsCargaApp(true);
+	}, [isPermissionUser]);
+
 	function resetForm() {
 		funcScrollTop(2, 2);
 		window.location.reload();
@@ -316,6 +273,7 @@ const CadastroCargaCSN = () => {
 						history={history}
 						setDateErrorInput={setDateErrorInput}
 						isDateErrorInput={isDateErrorInput}
+						isViwsCargaApp={isViwsCargaApp}
 					/>
 					<Row>
 						<Col>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import { useParams, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
@@ -12,9 +12,10 @@ import { getClaims } from "src/MicrosoftAuthentication";
 import ServiceCargas from "src/services/ServiceCargas";
 import FormularioCadastroCSN from "src/Pages/Components/FormularioCadastroCSN";
 import { funcBodyEdit } from "./menagemente";
-import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
+//import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 import { InputReferencError } from "src/Pages/Components/FormularioCadastroCSN/management";
 import { funcScrollTop } from "src/Pages/Utils/scrollTop";
+import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 
 function EditarCargaCsn() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -22,8 +23,9 @@ function EditarCargaCsn() {
 	const history = useHistory();
 	const [produtos, setProdutos] = useState([]);
 	const [viewsInput, setViewsInput] = useState(0);
-	const [isPermissionUser, setPermissionUser] = useState(true);
+	const [isPermissionUserEdit, setPermissionUserEdit] = useState(true);
 	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
+	const { isPermissionUser } = useContext(ContextUseDefault);
 
 	const formik = useFormik({
 		initialValues: {
@@ -523,19 +525,23 @@ function EditarCargaCsn() {
 			setProdutos(data.data);
 		});
 
-		(async () => {
-			const userPermission = await validationPermissionUser();
-			if (
-				userPermission?.permissoes.includes("MANUTENCAO_TRAJETO_FINALIZADO")
-			) {
-				setPermissionUser(false);
-			}
-		})();
+		// (async () => {
+		// 	const userPermission = await validationPermissionUser();
+		// 	if (isPermissionUser?.includes("MANUTENCAO_TRAJETO_FINALIZADO")) {
+		// 		setPermissionUserEdit(false);
+		// 	}
+		// })();
 		funcScrollTop(2, 2);
 		return () => {
 			isMounted = false;
 		};
 	}, []);
+
+	useEffect(() => {
+		if (isPermissionUser?.includes("MANUTENCAO_TRAJETO_FINALIZADO")) {
+			setPermissionUserEdit(false);
+		}
+	}, [isPermissionUser]);
 
 	useEffect(() => {
 		formik.setFieldValue("placa_veiculo", "");
@@ -567,7 +573,7 @@ function EditarCargaCsn() {
 						produtos={produtos}
 						formik={formik}
 						viewsInput={viewsInput}
-						isPermissionUser={isPermissionUser}
+						isPermissionUser={isPermissionUserEdit}
 						setDateErrorInput={setDateErrorInput}
 						isDateErrorInput={isDateErrorInput}
 					/>
@@ -579,7 +585,7 @@ function EditarCargaCsn() {
 							disabled={
 								[3, 5].includes(formik.values.fk_situacao) ||
 								([6, 7, 8, 9].includes(formik.values.fk_situacao) &&
-									isPermissionUser)
+									isPermissionUserEdit)
 							}
 						>
 							Gravar

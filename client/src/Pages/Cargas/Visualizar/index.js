@@ -4,6 +4,7 @@ import React, {
 	useEffect,
 	useCallback,
 	useRef,
+	useContext,
 } from "react";
 import swal from "sweetalert";
 import { useHistory } from "react-router-dom";
@@ -14,7 +15,8 @@ import io from "../../../services/socket";
 import factoryReducerCargas from "src/hooks/storageCargas/factoryReducerCargas";
 import { Toast } from "primereact/toast";
 import { showToastMessage } from "src/Pages/Utils/toastMessage";
-import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
+import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
+//import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 
 function Visualizar() {
 	const [totalRegisters, setTotalRegisters] = useState(0);
@@ -29,13 +31,14 @@ function Visualizar() {
 	const [LoadingComponent, setLoading] = useLoadingScreen();
 	const [itensPerPage, setItensPerPage] = useState(10);
 	const [modalShowExcel, setModalShowExcel] = useState(false);
+	const { isPermissionUser } = useContext(ContextUseDefault);
 	const toast = useRef(null);
 	const history = useHistory();
 
 	useEffect(() => {
 		(async () => {
-			const userPermission = await validationPermissionUser();
-			if (!userPermission?.permissoes.includes("DELETAR_CARGAS")) {
+			//const userPermission = await validationPermissionUser();
+			if (!isPermissionUser?.includes("DELETAR_CARGAS")) {
 				await swal(
 					"OPS!",
 					"O usuário não possui permissão para acessar esta página.",
@@ -44,7 +47,7 @@ function Visualizar() {
 				history.push("/");
 			}
 		})();
-	}, []);
+	}, [isPermissionUser]);
 
 	useEffect(() => {
 		const actionCargasCreate = (payload) => {

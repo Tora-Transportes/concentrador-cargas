@@ -50,6 +50,7 @@ export function factoryCargaValidator() {
     locais: yup.array().of(yup.string()).notRequired(),
     carga_csn: yup.number().nullable().notRequired(),
     rastreador: yup.string().nullable().notRequired(),
+    carga_app: yup.number().nullable().notRequired(),
   });
 
   return cargaValidator;

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import "../Totalizadores/indicador.css";
 import { useState } from "react";
 import {
@@ -25,7 +25,8 @@ import DateUtils from "../../Utils/date";
 import { showToastMessage } from "src/Pages/Utils/toastMessage";
 import { Toast } from "primereact/toast";
 import diffiInDays from "src/Pages/Utils/diffInDays";
-import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
+//import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
+import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -38,16 +39,17 @@ function ViewRotasPendentes({
 	statusCargaId,
 }) {
 	const [totalGeral, setTotalGeral] = useState(0);
+	const [codigoFilial, setCodigoFilial] = useState();
+	const { isPermissionUser } = useContext(ContextUseDefault);
 	const dataInicial = useRef(null);
 	const dataFinal = useRef(null);
-	const [codigoFilial, setCodigoFilial] = useState();
 	const toast = useRef(null);
 	const history = useHistory();
 
 	useEffect(() => {
 		(async () => {
-			const userPermission = await validationPermissionUser();
-			if (!userPermission?.permissoes.includes("DELETAR_CARGAS")) {
+			//const userPermission = await validationPermissionUser();
+			if (!isPermissionUser?.includes("DELETAR_CARGAS")) {
 				await swal(
 					"OPS!",
 					"O usuário não possui permissão para acessar esta página.",
@@ -56,7 +58,7 @@ function ViewRotasPendentes({
 				history.push("/");
 			}
 		})();
-	}, []);
+	}, [isPermissionUser]);
 
 	function percentage(total, piece) {
 		try {

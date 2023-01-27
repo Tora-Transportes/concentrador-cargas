@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import "./main.css";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
@@ -8,7 +8,8 @@ import { FaChartBar, FaTruckMoving, FaBoxes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { IoLocationSharp } from "react-icons/io5";
 import Menusuperior from "../Components/MenuSuperior/menusuperior";
-import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
+//import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
+import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 
 const queueCoresAtuais = [];
 
@@ -28,7 +29,7 @@ function Main() {
 		"warning",
 	];
 	window.history.replaceState(null, null, "/");
-
+	const { isPermissionUser } = useContext(ContextUseDefault);
 	function salvarTimestampUltimaVezJogada() {
 		const timestamp = new Date().getTime();
 		localStorage.setItem("ultima_vez_jogada", timestamp);
@@ -120,16 +121,16 @@ function Main() {
 		const nome = getClaims().name;
 		setUserData({ nome });
 		//verificarAtualizacaoVersao();
-		(async () => {
-			const userPermission = await validationPermissionUser();
-			if (userPermission?.permissoes.includes("CARGAS_PADRAO")) {
-				setPermissionPadrao(true);
-			}
-			if (userPermission?.permissoes.includes("CARGAS_CSN")) {
-				setPermissionCsn(true);
-			}
-		})();
-	}, []);
+		//(async () => {
+		//const userPermission = await validationPermissionUser();
+		if (isPermissionUser?.includes("CARGAS_PADRAO")) {
+			setPermissionPadrao(true);
+		}
+		if (isPermissionUser?.includes("CARGAS_CSN")) {
+			setPermissionCsn(true);
+		}
+		//})();
+	}, [isPermissionUser]);
 
 	useEffect(() => {
 		if (levelGame > -1) {
