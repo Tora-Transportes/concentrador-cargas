@@ -155,6 +155,7 @@ const InputsPontoPassagem = ({
 							>
 								<Form.Control
 									className={colorInputEfetivo}
+									id="posto30_inicio"
 									type="datetime-local"
 									placeholder=" "
 									name="ponto_passagem.coletaEfetiva_posto30"
@@ -180,6 +181,7 @@ const InputsPontoPassagem = ({
 							<FloatingLabel label="*Data Coleta Efetivo Fim" className="mb-3">
 								<Form.Control
 									className={colorInputEfetivo}
+									id="posto30_fim"
 									type="datetime-local"
 									placeholder=" "
 									name="ponto_passagem.coletaEfetivaSaida"

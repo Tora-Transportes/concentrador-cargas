@@ -90,6 +90,13 @@ export const funcInputPontoParada = (
 	return { viewsInputColeta, excluirInputColeta };
 };
 
+export const verificarInputPrenchidos = () => {
+	const inputPostoInicio = document.getElementById("posto30_inicio");
+	const inputPostoFim = document.getElementById("posto30_fim");
+
+	console.log("INPUT", inputPostoFim, inputPostoInicio);
+};
+
 export const funcDuracaoProcesso = async (formik, status, coletafim) => {
 	const somarHoras = (coletaInicio, nomeCampoformik) => {
 		if (coletaInicio && coletafim) {
@@ -128,6 +135,7 @@ export const funcDuracaoProcesso = async (formik, status, coletafim) => {
 				formik.values.ponto_passagem4.entregaEfetiva,
 				"ponto_passagem4.tempServicoLocalEntrega"
 			);
+			verificarInputPrenchidos();
 			break;
 		case 5:
 			somarHoras(
