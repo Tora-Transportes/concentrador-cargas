@@ -27,6 +27,14 @@ function EditarCargaCsn() {
 	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
 	const { isPermissionUser } = useContext(ContextUseDefault);
 
+	const messageDadosIncorretoInput = () => {
+		return swal(
+			"Atenção",
+			"Não foi possível registrar as informações, verifique os campos de data antes de continuar!",
+			"info"
+		);
+	};
+
 	const formik = useFormik({
 		initialValues: {
 			responsavel_cadastro: String(getClaims().name),
@@ -160,69 +168,15 @@ function EditarCargaCsn() {
 				entregaEfetiva: "",
 				entregaEfetivaSaida: "",
 			},
-			// ponto_passagem8: {
-			// 	ponto: "",
-			// 	tipoServico: "",
-			// 	previsao: "",
-			// 	previsaoSaida: "",
-			// 	latitude: "",
-			// 	longitude: "",
-			// 	client: "",
-			// 	id: "",
-			// 	idRotaCsn: "",
-			// 	coletaEfetiva: "",
-			// 	coletaEfetivaSaida: "",
-			// 	tempServicoLocal: "",
-			// 	tempServicoLocalEntrega: "",
-			// 	entregaEfetiva: "",
-			// 	entregaEfetivaSaida: "",
-			// },
-			// ponto_passagem9: {
-			// 	ponto: "",
-			// 	tipoServico: "",
-			// 	previsao: "",
-			// 	previsaoSaida: "",
-			// 	latitude: "",
-			// 	longitude: "",
-			// 	client: "",
-			// 	id: "",
-			// 	idRotaCsn: "",
-			// 	coletaEfetiva: "",
-			// 	coletaEfetivaSaida: "",
-			// 	tempServicoLocal: "",
-			// 	tempServicoLocalEntrega: "",
-			// 	entregaEfetiva: "",
-			// 	entregaEfetivaSaida: "",
-			// },
-			// ponto_passagem10: {
-			// 	ponto: "",
-			// 	tipoServico: "",
-			// 	previsao: "",
-			// 	previsaoSaida: "",
-			// 	latitude: "",
-			// 	longitude: "",
-			// 	client: "",
-			// 	id: "",
-			// 	idRotaCsn: "",
-			// 	coletaEfetiva: "",
-			// 	coletaEfetivaSaida: "",
-			// 	tempServicoLocal: "",
-			// 	tempServicoLocalEntrega: "",
-			// 	entregaEfetiva: "",
-			// 	entregaEfetivaSaida: "",
-			// },
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
 			const existInputErrado = isDateErrorInput.find(
 				(item) => item.error === true
 			);
+
 			if (existInputErrado?.error) {
-				swal(
-					"Atenção",
-					"Não foi possível registrar as informações, verifique os campos de data antes de continuar.!",
-					"info"
-				);
+				messageDadosIncorretoInput();
 			} else {
 				const {
 					ponto_passagem,
@@ -232,9 +186,6 @@ function EditarCargaCsn() {
 					ponto_passagem5,
 					ponto_passagem6,
 					ponto_passagem7,
-					// ponto_passagem8,
-					// ponto_passagem9,
-					// ponto_passagem10,
 				} = values;
 
 				const dadosPontoPassagem = {
@@ -248,6 +199,7 @@ function EditarCargaCsn() {
 				};
 				try {
 					let dadosCargaSalva;
+					let showMessageSucesso = true;
 					const finalizarCarga = formik.values.finalizarCarga;
 
 					if (finalizarCarga !== true) {
@@ -271,41 +223,29 @@ function EditarCargaCsn() {
 							}
 						);
 						if (resultOk) {
-							await ServiceCargas.updateCSN({
-								...formik.values,
-								info_passagem: dadosPontoPassagem,
-								fk_situacao: 6,
-								fk_filial: formik.values.fk_filial?.split("-")[0],
-							});
+							const InputEfetivoCorreto = validarInputEfetivo(
+								ponto_passagem,
+								ponto_passagem2,
+								ponto_passagem3,
+								ponto_passagem4,
+								6
+							);
+
+							if (!InputEfetivoCorreto) {
+								showMessageSucesso = false;
+								messageDadosIncorretoInput();
+							} else {
+								await ServiceCargas.updateCSN({
+									...formik.values,
+									info_passagem: dadosPontoPassagem,
+									fk_situacao: 6,
+									fk_filial: formik.values.fk_filial?.split("-")[0],
+								});
+							}
 						} else {
 							window.open("", "_self").close();
 						}
 					}
-
-					// for (const [key, value] of Object.entries({
-					// 	ponto_passagem,
-					// 	ponto_passagem2,
-					// 	ponto_passagem3,
-					// 	ponto_passagem4,
-					// 	ponto_passagem5,
-					// 	ponto_passagem6,
-					// 	ponto_passagem7,
-					// 	// ponto_passagem8,
-					// 	// ponto_passagem9,
-					// 	// ponto_passagem10,
-					// })) {
-					// 	if (
-					// 		(value?.ponto?.length > 0 && value?.previsao?.length > 0) ||
-					// 		(typeof value?.latitude !== "string" &&
-					// 			typeof value?.longitude !== "string")
-					// 	) {
-					// 		await ServiceCargas.updatePontoParada({
-					// 			...value,
-					// 			id_carga: values.id,
-					// 			key,
-					// 		});
-					// 	}
-					// }
 
 					formik.setFieldValue(
 						"responsavel_cadastro",
@@ -317,12 +257,14 @@ function EditarCargaCsn() {
 							? `A carga ${dadosCargaSalva.data.id} foi atualizada!`
 							: "Carga finalizada.";
 
-					const ok = await swal("Sucesso!", mensagemConfirmacao, "success", {
-						closeOnClickOutside: false,
-					});
+					if (showMessageSucesso) {
+						const ok = await swal("Sucesso!", mensagemConfirmacao, "success", {
+							closeOnClickOutside: false,
+						});
 
-					if (ok) {
-						window.location.reload();
+						if (ok) {
+							window.location.reload();
+						}
 					}
 				} catch (error) {
 					console.log(error);
@@ -479,7 +421,6 @@ function EditarCargaCsn() {
 					formik.setFieldValue(i, nonNullValue);
 				}
 			}
-			//handleSearchDistance(carga);
 		} catch (error) {
 			history.push("");
 		}
@@ -569,7 +510,6 @@ function EditarCargaCsn() {
 						buscarCargaComDocumentoDeTransporte={
 							buscarCargaComDocumentoDeTransporte
 						}
-						//handleSearchDistance={handleSearchDistance}
 						produtos={produtos}
 						formik={formik}
 						viewsInput={viewsInput}

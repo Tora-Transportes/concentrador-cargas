@@ -1,3 +1,4 @@
+import { PontoParadaRepository } from "./../../../repositories/PontoParadaRepository";
 import AppError from "../../../models/AppError";
 import { ICarga } from "../../../models/ICargas";
 import {
@@ -59,12 +60,39 @@ export class UseCaseViewCargasCsn {
 export class UseCaseUpdateInfoCarga {
   constructor(
     private useCaseUpdatePontoParada: UseCaseUpdatePontoParada,
-    private useCaseUpdateCargaPadrao: UseCaseUpdateCarga
+    private useCaseUpdateCargaPadrao: UseCaseUpdateCarga,
+    private pontoParadaRepository: PontoParadaRepository
   ) {}
   async run(cargaDTO: Record<string, any>, oid: string) {
     const { info_passagem, ...dataPadrao } = cargaDTO;
     const id_carga = dataPadrao.id;
     await this.useCaseUpdatePontoParada.run({ ...info_passagem, id_carga });
+
+    const existePontoParada = await this.pontoParadaRepository.getOfIdConCarga(
+      id_carga
+    );
+    if (
+      dataPadrao?.fk_situacao === 6 ||
+      (existePontoParada && existePontoParada[0].TEMP_SERV_LOCAL_COLETA)
+    ) {
+      const dataDiffExistente: boolean[] = [];
+
+      existePontoParada?.forEach((elem) => {
+        if (elem.COLETA_EFETIVA_POSTO30 !== null) dataDiffExistente.push(true);
+        if (elem.COLETA_EFETIVA_MUNDO !== null) dataDiffExistente.push(true);
+        if (elem.COLETA_EFETIVA_PEACAO !== null) dataDiffExistente.push(true);
+        if (elem.SAIDA_EFETIVA_COLETA !== null) dataDiffExistente.push(true);
+        if (elem.ENTREGA_EFETIVA !== null) dataDiffExistente.push(true);
+        if (elem.SAIDA_EFETIVA_ENTREGA !== null) dataDiffExistente.push(true);
+      });
+
+      if (dataDiffExistente.length < 8)
+        throw new AppError(
+          "Não foi possível registrar as informações, verifique se todos campos estão prenchidos e tente novamente.",
+          400
+        );
+    }
+
     const resultUpdateCarga = await this.useCaseUpdateCargaPadrao.run(
       dataPadrao,
       oid
