@@ -18,6 +18,8 @@ function FormularioCadastroCSN({
 	isDateErrorInput,
 	setDateErrorInput,
 	isViwsCargaApp,
+	isViewButtonFinaliza,
+	setViewButtonFinaliza,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
@@ -193,6 +195,8 @@ function FormularioCadastroCSN({
 				setDateErrorInput={setDateErrorInput}
 				isDateErrorInput={isDateErrorInput}
 				isViwsCargaApp={isViwsCargaApp}
+				isViewButtonFinaliza={isViewButtonFinaliza}
+				setViewButtonFinaliza={setViewButtonFinaliza}
 			/>
 		</div>
 	);

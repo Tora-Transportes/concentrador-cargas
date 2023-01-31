@@ -43,6 +43,8 @@ export default function ViewsForm({
 	isDateErrorInput,
 	setDateErrorInput,
 	isViwsCargaApp,
+	isViewButtonFinaliza,
+	setViewButtonFinaliza,
 }) {
 	const handleEnter = (event) => {
 		if (event.key === "Enter") {
@@ -431,6 +433,8 @@ export default function ViewsForm({
 				isPermissionUser={isPermissionUser}
 				setDateErrorInput={setDateErrorInput}
 				isDateErrorInput={isDateErrorInput}
+				isViewButtonFinaliza={isViewButtonFinaliza}
+				setViewButtonFinaliza={setViewButtonFinaliza}
 			/>
 
 			<Row className="row-button-local">

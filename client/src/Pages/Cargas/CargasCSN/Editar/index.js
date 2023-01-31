@@ -11,7 +11,7 @@ import "./editarCsn.css";
 import { getClaims } from "src/MicrosoftAuthentication";
 import ServiceCargas from "src/services/ServiceCargas";
 import FormularioCadastroCSN from "src/Pages/Components/FormularioCadastroCSN";
-import { funcBodyEdit } from "./menagemente";
+import { funcBodyEdit, validarInputEfetivo } from "./menagemente";
 //import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 import { InputReferencError } from "src/Pages/Components/FormularioCadastroCSN/management";
 import { funcScrollTop } from "src/Pages/Utils/scrollTop";
@@ -25,6 +25,7 @@ function EditarCargaCsn() {
 	const [viewsInput, setViewsInput] = useState(0);
 	const [isPermissionUserEdit, setPermissionUserEdit] = useState(true);
 	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
+	const [isViewButtonFinaliza, setViewButtonFinaliza] = useState(false);
 	const { isPermissionUser } = useContext(ContextUseDefault);
 
 	const messageDadosIncorretoInput = () => {
@@ -516,6 +517,8 @@ function EditarCargaCsn() {
 						isPermissionUser={isPermissionUserEdit}
 						setDateErrorInput={setDateErrorInput}
 						isDateErrorInput={isDateErrorInput}
+						isViewButtonFinaliza={isViewButtonFinaliza}
+						setViewButtonFinaliza={setViewButtonFinaliza}
 					/>
 					<div className="class-group-button">
 						<Button
@@ -559,7 +562,7 @@ function EditarCargaCsn() {
 							</Button>
 						)}
 
-						{[3, 7, 8].includes(formik.values.fk_situacao) && (
+						{isViewButtonFinaliza && (
 							<Button
 								variant="info"
 								className="p-2"

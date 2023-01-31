@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import "../Totalizadores/indicador.css";
 import { useState } from "react";
 import {
@@ -18,15 +18,11 @@ import { GoMailRead } from "react-icons/go";
 import { RiTruckLine } from "react-icons/ri";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { useHistory } from "react-router-dom";
-import swal from "sweetalert";
 import FilialSelect from "src/Pages/Components/FilialSelect";
 import DateUtils from "../../Utils/date";
 import { showToastMessage } from "src/Pages/Utils/toastMessage";
 import { Toast } from "primereact/toast";
 import diffiInDays from "src/Pages/Utils/diffInDays";
-//import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
-import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -40,25 +36,9 @@ function ViewRotasPendentes({
 }) {
 	const [totalGeral, setTotalGeral] = useState(0);
 	const [codigoFilial, setCodigoFilial] = useState();
-	const { isPermissionUser } = useContext(ContextUseDefault);
 	const dataInicial = useRef(null);
 	const dataFinal = useRef(null);
 	const toast = useRef(null);
-	const history = useHistory();
-
-	useEffect(() => {
-		(async () => {
-			//const userPermission = await validationPermissionUser();
-			if (!isPermissionUser?.includes("DELETAR_CARGAS")) {
-				await swal(
-					"OPS!",
-					"O usuário não possui permissão para acessar esta página.",
-					"warning"
-				);
-				history.push("/");
-			}
-		})();
-	}, [isPermissionUser]);
 
 	function percentage(total, piece) {
 		try {

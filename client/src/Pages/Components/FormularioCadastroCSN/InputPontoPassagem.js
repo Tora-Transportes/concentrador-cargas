@@ -3,7 +3,7 @@ import "./formularioCadastroCSN.css";
 import { Col, FloatingLabel, Form, Row } from "react-bootstrap";
 import RotasSelect from "../FilialSelect/rotasSelect";
 import InputCliente from "../InputCliente";
-import { funcDuracaoProcesso } from "./management";
+import { funcDuracaoProcesso, validInputPreenchidos } from "./management";
 import {
 	funcCompareDateOneYear,
 	//funcValidInputDate,
@@ -19,10 +19,13 @@ const InputsPontoPassagem = ({
 	isPermissionUser,
 	isDateErrorInput,
 	setDateErrorInput,
+	//isViewButtonFinaliza,
+	setViewButtonFinaliza,
 }) => {
 	const [inputPontoPassagem5, setInputPontoPassagem5] = useState(true);
 	const [inputPontoPassagem6, setInputPontoPassagem6] = useState(true);
 	const [inputPontoPassagem7, setInputPontoPassagem7] = useState(true);
+	const [isCountInputPrenchido, setCountInputPrenchido] = useState(0);
 
 	const disabledValidEfetiva =
 		[6, 9].includes(formik.values.fk_situacao) && isPermissionUser
@@ -74,6 +77,16 @@ const InputsPontoPassagem = ({
 			setDateErrorInput(arrayErrorEdit);
 			swal("", resultValidation.message, "info");
 		} else {
+			if (
+				validInputPreenchidos(
+					date,
+					positionInput,
+					isCountInputPrenchido,
+					setCountInputPrenchido
+				)
+			) {
+				setViewButtonFinaliza(true);
+			}
 			const arrayErrorEdit = [...isDateErrorInput];
 			arrayErrorEdit[positionInput].error = false;
 			setDateErrorInput(arrayErrorEdit);
