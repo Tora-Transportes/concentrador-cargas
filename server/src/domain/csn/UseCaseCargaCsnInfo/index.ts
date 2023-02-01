@@ -37,7 +37,8 @@ const modules = {
   UseCaseViewCargasCsn: new UseCaseViewCargasCsn(cargaCsnInfoRepository),
   UseCaseUpdateInfoCarga: new UseCaseUpdateInfoCarga(
     useCaseUpdatePontoParada,
-    UseCaseUpdateCargaPadrao
+    UseCaseUpdateCargaPadrao,
+    pontoParadaRepository
   ),
 };
 

@@ -8,7 +8,6 @@ import { FaChartBar, FaTruckMoving, FaBoxes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { IoLocationSharp } from "react-icons/io5";
 import Menusuperior from "../Components/MenuSuperior/menusuperior";
-//import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 
 const queueCoresAtuais = [];
