@@ -11,8 +11,7 @@ interface IPontoParadaRepository {
 
 export class PontoParadaRepository implements IPontoParadaRepository {
   async create(dataParada: IPontosParada): Promise<void> {
-    //await database("con_pontos_parada").insert(dataParada);
-    console.log("Repository", dataParada);
+    await database("con_pontos_parada").insert(dataParada);
   }
 
   async index(ID: number): Promise<IPontosParada | undefined> {

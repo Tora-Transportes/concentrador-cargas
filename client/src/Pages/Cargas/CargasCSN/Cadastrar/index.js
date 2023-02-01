@@ -10,7 +10,7 @@ import FormularioCadastroCSN from "../../../Components/FormularioCadastroCSN";
 import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { getClaims } from "src/MicrosoftAuthentication";
-//import ServiceRecomendacoes from "src/services/ServiceRecomendacoes";
+import ServiceRecomendacoes from "src/services/ServiceRecomendacoes";
 import {
 	formatDateAddHours,
 	formatDateAddminutes,
@@ -137,33 +137,32 @@ const CadastroCargaCSN = () => {
 					} = values;
 					values.fk_filial = values.fk_filial.split("-")[0];
 
-					// const separandoNomeCidade = ponto_passagem4.client?.split("-")[2];
-					// const cidadeEstado = separandoNomeCidade.split("/");
+					const separandoNomeCidade = ponto_passagem4.client?.split("-")[2];
+					const cidadeEstado = separandoNomeCidade.split("/");
 
-					// const resultLocalidade = (
-					// 	await ServiceRecomendacoes.locaisPorUf({
-					// 		uf: cidadeEstado[1],
-					// 		cidade: cidadeEstado[0],
-					// 	})
-					// ).data.data;
+					const resultLocalidade = (
+						await ServiceRecomendacoes.locaisPorUf({
+							uf: cidadeEstado[1],
+							cidade: cidadeEstado[0],
+						})
+					).data.data;
 
-					// const pais = resultLocalidade ? resultLocalidade?.pais : "BRASIL";
-					// const destinoCarga = `${pais}/${cidadeEstado[1]}/${cidadeEstado[0]}`;
+					const pais = resultLocalidade ? resultLocalidade?.pais : "BRASIL";
+					const destinoCarga = `${pais}/${cidadeEstado[1]}/${cidadeEstado[0]}`;
 
-					// const data = (
-					// 	await ServiceCargas.create({
-					// 		...values,
-					// 		canal_comunicacao: "manual",
-					// 		carga_csn: 1,
-					// 		origem_carga: "BRASIL/RJ/VOLTA REDONDA",
-					// 		destino_carga: destinoCarga.replace(" ", ""),
-					// 		data_coleta: ponto_passagem.previsao,
-					// 		data_entrega: ponto_passagem4.previsao,
-					// 	})
-					// ).data;
-					const moi = 11138162;
-					if (moi) {
-						//if (data.data.id) {
+					const data = (
+						await ServiceCargas.create({
+							...values,
+							canal_comunicacao: "manual",
+							carga_csn: 1,
+							origem_carga: "BRASIL/RJ/VOLTA REDONDA",
+							destino_carga: destinoCarga.replace(" ", ""),
+							data_coleta: ponto_passagem.previsao,
+							data_entrega: ponto_passagem4.previsao,
+						})
+					).data;
+
+					if (data.data.id) {
 						// for (const [key, value] of Object.entries({
 						// 	ponto_passagem,
 						// 	ponto_passagem2,
@@ -198,20 +197,20 @@ const CadastroCargaCSN = () => {
 
 						await ServiceCargas.createPontoParada({
 							...dadosPontoPassagem,
-							id_carga: moi, //data.data.id,
+							id_carga: data.data.id,
 						});
 
 						const ok = await swal(
 							"Sucesso!",
-							//`A carga foi cadastrada com o identificador ${data.data.id}!`,
-							`A carga foi cadastrada com o identificador ${moi}!`,
+							`A carga foi cadastrada com o identificador ${data.data.id}!`,
+
 							"success",
 							{
 								closeOnClickOutside: false,
 							}
 						);
 
-						if (ok) return; //resetForm();
+						if (ok) resetForm();
 					}
 				} catch (error) {
 					console.log(error);
@@ -259,10 +258,10 @@ const CadastroCargaCSN = () => {
 		funcScrollTop(2, 2);
 	}, []);
 
-	// function resetForm() {
-	// 	funcScrollTop(2, 2);
-	// 	window.location.reload();
-	// }
+	function resetForm() {
+		funcScrollTop(2, 2);
+		window.location.reload();
+	}
 
 	return (
 		<>

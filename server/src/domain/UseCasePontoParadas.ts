@@ -22,7 +22,7 @@ export class UseCaseAddPontoParadas {
       ponto_passagem7,
     }: IInfo_passagem
   ) {
-    for (const [key, value] of Object.entries({
+    for (const [, value] of Object.entries({
       ponto_passagem,
       ponto_passagem2,
       ponto_passagem3,
@@ -35,7 +35,8 @@ export class UseCaseAddPontoParadas {
         (value.ponto &&
           value.ponto.length > 0 &&
           value.previsao !== "string") ||
-        value.previsaoSaida !== "string"
+        (typeof value.latitude !== "string" &&
+          typeof value.longitude !== "string")
       ) {
         const {
           client,
@@ -53,11 +54,11 @@ export class UseCaseAddPontoParadas {
           ID_CON_CARGAS: id_carga,
           PREVISAO: formatDateObject(new Date(previsao)),
           STATUS_SERVICO: tipoServico.toUpperCase(),
-          LATITUDE: latitude ? Number(latitude) : null,
-          LONGITUDE: longitude ? Number(longitude) : null,
+          LATITUDE: latitude ? String(latitude) : null,
+          LONGITUDE: longitude ? String(longitude) : null,
           CLIENTE: client === "" ? ponto : client,
           PREVISAO_SAIDA: formatDateObject(new Date(previsaoSaida)),
-          ENTREGA_FINAL: entregaFinal ? entregaFinal : 0,
+          ENTREGA_FINAL: entregaFinal ? Number(entregaFinal) : 0,
         };
 
         const validator = factoryPontoParada();
@@ -66,29 +67,9 @@ export class UseCaseAddPontoParadas {
           stripUnknown: true,
         });
         const dadosParada = { ...body, DATA_CADASTRO: dataAtual };
-        dadosParada.PREVISAO = new Date(String(dadosParada.PREVISAO));
-        dadosParada.PREVISAO_SAIDA = new Date(
-          String(dadosParada.PREVISAO_SAIDA)
-        );
-        //await this.pontoParadaRepository.create(dadosParada);
-
-        console.log("BBBBB", value);
+        await this.pontoParadaRepository.create(dadosParada);
       }
     }
-
-    // for (const dataParadaIndex of dataParada) {
-    //   id_carga;
-    //   const validator = factoryPontoParada();
-    //   await validator.validate(dataParadaIndex, {
-    //     abortEarly: false,
-    //     stripUnknown: true,
-    //   });
-    //   const dadosParada = { ...dataParadaIndex, DATA_CADASTRO: dataAtual };
-    //   dadosParada.PREVISAO = new Date(String(dadosParada.PREVISAO));
-    //   dadosParada.PREVISAO_SAIDA = new Date(String(dadosParada.PREVISAO_SAIDA));
-    //   await this.pontoParadaRepository.create(dadosParada);
-    // }
-    //return dataParada;
   }
 }
 
@@ -136,7 +117,7 @@ export class UseCaseUpdatePontoParada {
     ponto_passagem7,
     id_carga,
   }: IInfo_passagem): Promise<void> {
-    for (const [key, value] of Object.entries({
+    for (const [, value] of Object.entries({
       ponto_passagem,
       ponto_passagem2,
       ponto_passagem3,
@@ -149,7 +130,8 @@ export class UseCaseUpdatePontoParada {
         (value.ponto &&
           value.ponto.length > 0 &&
           value.previsao !== "string") ||
-        value.previsaoSaida !== "string"
+        (typeof value.latitude !== "string" &&
+          typeof value.longitude !== "string")
       ) {
         const existeRota = await this.pontoParadaRepository.index(value.id);
         if (!existeRota)
@@ -231,7 +213,6 @@ export class UseCaseUpdatePontoParada {
         const dadosParada = { ...pontoParada, DATA_ATUALIZACAO: dataAtual };
         await this.pontoParadaRepository.update(id, dadosParada);
       }
-      key;
     }
   }
 }
