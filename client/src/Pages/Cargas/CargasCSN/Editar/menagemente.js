@@ -35,3 +35,33 @@ export const funcBodyEdit = (data, tipoServico) => {
 				: formatDate(data.COLETA_EFETIVA_POSTO30),
 	};
 };
+
+export const validarInputEfetivo = (
+	ponto_passagem,
+	ponto_passagem2,
+	ponto_passagem3,
+	ponto_passagem4,
+	fk_situacao
+) => {
+	const inputPrenchidos = [];
+	for (const [key, value] of Object.entries({
+		ponto_passagem,
+		ponto_passagem2,
+		ponto_passagem3,
+		ponto_passagem4,
+	})) {
+		if (value?.coletaEfetiva_posto30 !== null) inputPrenchidos.push(true);
+		if (value?.coletaEfetiva_mundo !== null) inputPrenchidos.push(true);
+		if (value?.coletaEfetiva_peacao !== null) inputPrenchidos.push(true);
+		if (value?.coletaEfetivaSaida !== null) inputPrenchidos.push(true);
+		if (value?.entregaEfetiva !== null) inputPrenchidos.push(true);
+		if (value?.entregaEfetivaSaida !== null) inputPrenchidos.push(true);
+		key;
+	}
+
+	let validationCounInput = true;
+	if (fk_situacao === 6 && inputPrenchidos.length < 8) {
+		validationCounInput = false;
+	}
+	return validationCounInput;
+};

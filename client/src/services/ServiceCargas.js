@@ -1,5 +1,5 @@
 //import moment from "moment";
-import { formatDateObject } from "src/Pages/Utils/formatDate";
+//import { formatDateObject } from "src/Pages/Utils/formatDate";
 import api from "./api";
 class ServiceCargas {
 	async create({
@@ -29,7 +29,6 @@ class ServiceCargas {
 		locais,
 		carga_csn,
 		rastreador,
-		carga_app,
 	}) {
 		const carga = {
 			e_lote,
@@ -60,7 +59,6 @@ class ServiceCargas {
 			locais,
 			carga_csn,
 			rastreador,
-			carga_app,
 		};
 		return await api.post("/cargas", carga);
 	}
@@ -73,31 +71,35 @@ class ServiceCargas {
 		return api.delete(`/csn/ponto_parada/${id}`);
 	}
 
-	async createPontoParada({
-		previsao,
-		tipoServico,
-		id_carga,
-		latitude,
-		longitude,
-		client,
-		ponto,
-		previsaoSaida,
-		entregaFinal,
-	}) {
-		const carga = {
-			ID_ROTAS_CSN: ponto ? ponto?.split("-")[0] : null,
-			ID_CON_CARGAS: id_carga,
-			PREVISAO: formatDateObject(previsao),
-			STATUS_SERVICO: tipoServico.toUpperCase(),
-			LATITUDE: latitude ? latitude : null,
-			LONGITUDE: longitude ? longitude : null,
-			CLIENTE: client === "" ? ponto : client,
-			PREVISAO_SAIDA: formatDateObject(previsaoSaida),
-			ENTREGA_FINAL: entregaFinal ? entregaFinal : 0,
-		};
-
-		return await api.post("/csn/ponto_parada", carga);
+	async createPontoParada(dadosPontoPassagem) {
+		console.log("Ponto parada", dadosPontoPassagem);
+		return await api.post("/csn/ponto_parada", dadosPontoPassagem);
 	}
+	// async createPontoParada({
+	// 	previsao,
+	// 	tipoServico,
+	// 	id_carga,
+	// 	latitude,
+	// 	longitude,
+	// 	client,
+	// 	ponto,
+	// 	previsaoSaida,
+	// 	entregaFinal,
+	// }) {
+	// 	const carga = {
+	// 		ID_ROTAS_CSN: ponto ? ponto?.split("-")[0] : null,
+	// 		ID_CON_CARGAS: id_carga,
+	// 		PREVISAO: formatDateObject(previsao),
+	// 		STATUS_SERVICO: tipoServico.toUpperCase(),
+	// 		LATITUDE: latitude ? latitude : null,
+	// 		LONGITUDE: longitude ? longitude : null,
+	// 		CLIENTE: client === "" ? ponto : client,
+	// 		PREVISAO_SAIDA: formatDateObject(previsaoSaida),
+	// 		ENTREGA_FINAL: entregaFinal ? entregaFinal : 0,
+	// 	};
+	// 	console.log("Ponto parada", carga);
+	// 	return await api.post("/csn/ponto_parada", carga);
+	// }
 
 	// async updatePontoParada({
 	// 	id,

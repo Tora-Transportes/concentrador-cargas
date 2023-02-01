@@ -4,10 +4,7 @@ import React, {
 	useEffect,
 	useCallback,
 	useRef,
-	useContext,
 } from "react";
-import swal from "sweetalert";
-import { useHistory } from "react-router-dom";
 import useLoadingScreen from "./../../../Components/LoadingScreen";
 import io from "../../../../services/socket";
 import factoryReducerCargas from "src/hooks/storageCargas/factoryReducerCargas";
@@ -17,7 +14,6 @@ import { showToastMessage } from "src/Pages/Utils/toastMessage";
 //import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 import ServiceCargas from "src/services/ServiceCargas";
 import ViewsCsn from "./ViewsCsn";
-import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 
 function VisualizarCsn() {
 	const [totalRegisters, setTotalRegisters] = useState(0);
@@ -33,23 +29,6 @@ function VisualizarCsn() {
 	const [itensPerPage, setItensPerPage] = useState(10);
 	const [modalShowExcel, setModalShowExcel] = useState(false);
 	const toast = useRef(null);
-	const history = useHistory();
-
-	const { isPermissionUser } = useContext(ContextUseDefault);
-
-	useEffect(() => {
-		(async () => {
-			//const userPermission = await validationPermissionUser();
-			if (!isPermissionUser?.includes("DELETAR_CARGAS")) {
-				await swal(
-					"OPS!",
-					"O usuário não possui permissão para acessar esta página.",
-					"warning"
-				);
-				history.push("/");
-			}
-		})();
-	}, [isPermissionUser]);
 
 	useEffect(() => {
 		const actionCargasCreate = (payload) => {

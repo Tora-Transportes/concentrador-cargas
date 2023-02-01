@@ -4,25 +4,26 @@ import "./menuSuperior.css";
 import { NavbarBrand } from "react-bootstrap";
 import { FaSignOutAlt } from "react-icons/fa";
 import { logout } from "../../../MicrosoftAuthentication";
-//import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
+import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 
 function Menusuperior() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
   const [isPermissionCsn, setPermissionCsn] = useState(false);
   const [isPermissionPadrao, setPermissionPadrao] = useState(false);
-  const { isPermissionUser } = useContext(ContextUseDefault);
+  const { setPermissionUser } = useContext(ContextUseDefault);
   useEffect(() => {
-    //(async () => {
-    //const userPermission = await validationPermissionUser();
-    if (isPermissionUser?.includes("CARGAS_PADRAO")) {
-      setPermissionPadrao(true);
-    }
-    if (isPermissionUser?.includes("CARGAS_CSN")) {
-      setPermissionCsn(true);
-    }
-    // })();
-  }, [isPermissionUser]);
+    (async () => {
+      const userPermission = await validationPermissionUser();
+      setPermissionUser(userPermission?.permissoes);
+      if (userPermission?.permissoes?.includes("CARGAS_PADRAO")) {
+        setPermissionPadrao(true);
+      }
+      if (userPermission?.permissoes?.includes("CARGAS_CSN")) {
+        setPermissionCsn(true);
+      }
+    })();
+  }, []);
 
   return (
     <div id="header">
