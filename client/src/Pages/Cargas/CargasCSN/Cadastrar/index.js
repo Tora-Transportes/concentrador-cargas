@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import "./cadastrarCSN.css";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { useFormik } from "formik";
@@ -10,20 +10,17 @@ import FormularioCadastroCSN from "../../../Components/FormularioCadastroCSN";
 import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { getClaims } from "src/MicrosoftAuthentication";
-import ServiceRecomendacoes from "src/services/ServiceRecomendacoes";
+//import ServiceRecomendacoes from "src/services/ServiceRecomendacoes";
 import {
 	formatDateAddHours,
 	formatDateAddminutes,
 } from "src/Pages/Utils/formatDate";
 import { InputReferencError } from "src/Pages/Components/FormularioCadastroCSN/management";
 import { funcScrollTop } from "src/Pages/Utils/scrollTop";
-import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 const CadastroCargaCSN = () => {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [produtos, setProdutos] = useState([]);
-	const [isViwsCargaApp, setViwsCargaApp] = useState(false);
 	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
-	const { isPermissionUser } = useContext(ContextUseDefault);
 	const history = useHistory();
 	const dataAtual = new Date();
 
@@ -51,7 +48,6 @@ const CadastroCargaCSN = () => {
 			placa_veiculo: "",
 			documento_transporte: "",
 			fk_filial: "128 - VOLTA REDONDA",
-			carga_app: 0,
 			ponto_passagem: {
 				ponto: " 60 - POSTO - 30",
 				tipoServico: "Coleta",
@@ -141,33 +137,56 @@ const CadastroCargaCSN = () => {
 					} = values;
 					values.fk_filial = values.fk_filial.split("-")[0];
 
-					const separandoNomeCidade = ponto_passagem4.client?.split("-")[2];
-					const cidadeEstado = separandoNomeCidade.split("/");
+					// const separandoNomeCidade = ponto_passagem4.client?.split("-")[2];
+					// const cidadeEstado = separandoNomeCidade.split("/");
 
-					const resultLocalidade = (
-						await ServiceRecomendacoes.locaisPorUf({
-							uf: cidadeEstado[1],
-							cidade: cidadeEstado[0],
-						})
-					).data.data;
+					// const resultLocalidade = (
+					// 	await ServiceRecomendacoes.locaisPorUf({
+					// 		uf: cidadeEstado[1],
+					// 		cidade: cidadeEstado[0],
+					// 	})
+					// ).data.data;
 
-					const pais = resultLocalidade ? resultLocalidade?.pais : "BRASIL";
-					const destinoCarga = `${pais}/${cidadeEstado[1]}/${cidadeEstado[0]}`;
+					// const pais = resultLocalidade ? resultLocalidade?.pais : "BRASIL";
+					// const destinoCarga = `${pais}/${cidadeEstado[1]}/${cidadeEstado[0]}`;
 
-					const data = (
-						await ServiceCargas.create({
-							...values,
-							canal_comunicacao: "manual",
-							carga_csn: 1,
-							origem_carga: "BRASIL/RJ/VOLTA REDONDA",
-							destino_carga: destinoCarga.replace(" ", ""),
-							data_coleta: ponto_passagem.previsao,
-							data_entrega: ponto_passagem4.previsao,
-						})
-					).data;
+					// const data = (
+					// 	await ServiceCargas.create({
+					// 		...values,
+					// 		canal_comunicacao: "manual",
+					// 		carga_csn: 1,
+					// 		origem_carga: "BRASIL/RJ/VOLTA REDONDA",
+					// 		destino_carga: destinoCarga.replace(" ", ""),
+					// 		data_coleta: ponto_passagem.previsao,
+					// 		data_entrega: ponto_passagem4.previsao,
+					// 	})
+					// ).data;
+					const moi = 11138162;
+					if (moi) {
+						//if (data.data.id) {
+						// for (const [key, value] of Object.entries({
+						// 	ponto_passagem,
+						// 	ponto_passagem2,
+						// 	ponto_passagem3,
+						// 	ponto_passagem4,
+						// 	ponto_passagem5,
+						// 	ponto_passagem6,
+						// 	ponto_passagem7,
+						// })) {
+						// 	if (
+						// 		(value?.ponto.length > 0 && value?.previsao.length > 0) ||
+						// 		(typeof value?.latitude !== "string" &&
+						// 			typeof value?.longitude !== "string")
+						// 	) {
+						// 		await ServiceCargas.createPontoParada({
+						// 			...value,
+						// 			id_carga: data.data.id,
+						// 			key,
+						// 		});
+						// 	}
+						// }
 
-					if (data.data.id) {
-						for (const [key, value] of Object.entries({
+						const dadosPontoPassagem = {
 							ponto_passagem,
 							ponto_passagem2,
 							ponto_passagem3,
@@ -175,30 +194,24 @@ const CadastroCargaCSN = () => {
 							ponto_passagem5,
 							ponto_passagem6,
 							ponto_passagem7,
-						})) {
-							if (
-								(value?.ponto.length > 0 && value?.previsao.length > 0) ||
-								(typeof value?.latitude !== "string" &&
-									typeof value?.longitude !== "string")
-							) {
-								await ServiceCargas.createPontoParada({
-									...value,
-									id_carga: data.data.id,
-									key,
-								});
-							}
-						}
+						};
+
+						await ServiceCargas.createPontoParada({
+							...dadosPontoPassagem,
+							id_carga: moi, //data.data.id,
+						});
 
 						const ok = await swal(
 							"Sucesso!",
-							`A carga foi cadastrada com o identificador ${data.data.id}!`,
+							//`A carga foi cadastrada com o identificador ${data.data.id}!`,
+							`A carga foi cadastrada com o identificador ${moi}!`,
 							"success",
 							{
 								closeOnClickOutside: false,
 							}
 						);
 
-						if (ok) resetForm();
+						if (ok) return; //resetForm();
 					}
 				} catch (error) {
 					console.log(error);
@@ -246,14 +259,10 @@ const CadastroCargaCSN = () => {
 		funcScrollTop(2, 2);
 	}, []);
 
-	useEffect(() => {
-		if (isPermissionUser?.includes("ENVIAR_CARGA_APP")) setViwsCargaApp(true);
-	}, [isPermissionUser]);
-
-	function resetForm() {
-		funcScrollTop(2, 2);
-		window.location.reload();
-	}
+	// function resetForm() {
+	// 	funcScrollTop(2, 2);
+	// 	window.location.reload();
+	// }
 
 	return (
 		<>
@@ -273,7 +282,6 @@ const CadastroCargaCSN = () => {
 						history={history}
 						setDateErrorInput={setDateErrorInput}
 						isDateErrorInput={isDateErrorInput}
-						isViwsCargaApp={isViwsCargaApp}
 					/>
 					<Row>
 						<Col>

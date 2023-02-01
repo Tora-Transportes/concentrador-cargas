@@ -10,18 +10,85 @@ export class UseCaseAddPontoParadas {
     private readonly pontoParadaRepository = new PontoParadaRepository()
   ) {}
 
-  async run(dataParada: IPontosParada) {
-    const validator = factoryPontoParada();
-    const pontoParada: IPontosParada = await validator.validate(dataParada, {
-      abortEarly: false,
-      stripUnknown: true,
-    });
-    const dadosParada = { ...dataParada, DATA_CADASTRO: dataAtual };
-    dadosParada.PREVISAO = new Date(String(dadosParada.PREVISAO));
-    dadosParada.PREVISAO_SAIDA = new Date(String(dadosParada.PREVISAO_SAIDA));
-    await this.pontoParadaRepository.create(dadosParada);
+  async run(
+    id_carga: number,
+    {
+      ponto_passagem,
+      ponto_passagem2,
+      ponto_passagem3,
+      ponto_passagem4,
+      ponto_passagem5,
+      ponto_passagem6,
+      ponto_passagem7,
+    }: IInfo_passagem
+  ) {
+    for (const [key, value] of Object.entries({
+      ponto_passagem,
+      ponto_passagem2,
+      ponto_passagem3,
+      ponto_passagem4,
+      ponto_passagem5,
+      ponto_passagem6,
+      ponto_passagem7,
+    })) {
+      if (
+        (value.ponto &&
+          value.ponto.length > 0 &&
+          value.previsao !== "string") ||
+        value.previsaoSaida !== "string"
+      ) {
+        const {
+          client,
+          latitude,
+          longitude,
+          ponto,
+          previsao,
+          previsaoSaida,
+          tipoServico,
+          entregaFinal,
+        } = value;
 
-    return pontoParada;
+        const body = {
+          ID_ROTAS_CSN: ponto ? Number(ponto?.split("-")[0]) : null,
+          ID_CON_CARGAS: id_carga,
+          PREVISAO: formatDateObject(new Date(previsao)),
+          STATUS_SERVICO: tipoServico.toUpperCase(),
+          LATITUDE: latitude ? Number(latitude) : null,
+          LONGITUDE: longitude ? Number(longitude) : null,
+          CLIENTE: client === "" ? ponto : client,
+          PREVISAO_SAIDA: formatDateObject(new Date(previsaoSaida)),
+          ENTREGA_FINAL: entregaFinal ? entregaFinal : 0,
+        };
+
+        const validator = factoryPontoParada();
+        await validator.validate(body, {
+          abortEarly: false,
+          stripUnknown: true,
+        });
+        const dadosParada = { ...body, DATA_CADASTRO: dataAtual };
+        dadosParada.PREVISAO = new Date(String(dadosParada.PREVISAO));
+        dadosParada.PREVISAO_SAIDA = new Date(
+          String(dadosParada.PREVISAO_SAIDA)
+        );
+        //await this.pontoParadaRepository.create(dadosParada);
+
+        console.log("BBBBB", value);
+      }
+    }
+
+    // for (const dataParadaIndex of dataParada) {
+    //   id_carga;
+    //   const validator = factoryPontoParada();
+    //   await validator.validate(dataParadaIndex, {
+    //     abortEarly: false,
+    //     stripUnknown: true,
+    //   });
+    //   const dadosParada = { ...dataParadaIndex, DATA_CADASTRO: dataAtual };
+    //   dadosParada.PREVISAO = new Date(String(dadosParada.PREVISAO));
+    //   dadosParada.PREVISAO_SAIDA = new Date(String(dadosParada.PREVISAO_SAIDA));
+    //   await this.pontoParadaRepository.create(dadosParada);
+    // }
+    //return dataParada;
   }
 }
 
@@ -82,8 +149,7 @@ export class UseCaseUpdatePontoParada {
         (value.ponto &&
           value.ponto.length > 0 &&
           value.previsao !== "string") ||
-        (typeof value.latitude !== "string" &&
-          typeof value.longitude !== "string")
+        value.previsaoSaida !== "string"
       ) {
         const existeRota = await this.pontoParadaRepository.index(value.id);
         if (!existeRota)

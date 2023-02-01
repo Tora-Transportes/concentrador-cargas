@@ -10,7 +10,11 @@ interface IPontoParadaController {
 
 class PontoParadaController implements IPontoParadaController {
   async create(req: Request, res: Response): Promise<Response> {
-    const result = await useCases.useCaseAddPontoParadas.run(req.body);
+    const { id_carga } = req.body;
+    const result = await useCases.useCaseAddPontoParadas.run(
+      Number(id_carga),
+      req.body
+    );
 
     return res.json({ data: result });
   }
