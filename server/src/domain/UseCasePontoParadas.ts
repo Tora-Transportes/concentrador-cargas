@@ -70,6 +70,7 @@ export class UseCaseAddPontoParadas {
         await this.pontoParadaRepository.create(dadosParada);
       }
     }
+    return { message: "Salvo com sucesso!" };
   }
 }
 

@@ -136,6 +136,9 @@ const CadastroCargaCSN = () => {
 						ponto_passagem7,
 					} = values;
 					values.fk_filial = values.fk_filial.split("-")[0];
+					values.rastreador = values.rastreador
+						? values.rastreador
+						: values.rastreador_carreta;
 
 					const separandoNomeCidade = ponto_passagem4.client?.split("-")[2];
 					const cidadeEstado = separandoNomeCidade.split("/");
