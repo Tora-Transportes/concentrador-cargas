@@ -82,7 +82,7 @@ const InputsPontoPassagem = ({
 
 	return (
 		<>
-			<Row className="row-input-coleta">
+			<Row className="row-input-coleta-inicio">
 				<Col sm={12} md={12} lg={12} xxl={6}>
 					<FloatingLabel label="*Ponto de Passagem" className="mb-3">
 						<Form.Control
@@ -222,8 +222,8 @@ const InputsPontoPassagem = ({
 					</>
 				)}
 			</Row>
-
-			<Row className="row-input-coleta">
+			<br />
+			<Row className="row-input-coleta-inicio">
 				<Col sm={12} md={12} lg={12} xxl={6}>
 					<FloatingLabel label="Ponto de Passagem 2" className="mb-3">
 						<Form.Control
@@ -362,7 +362,8 @@ const InputsPontoPassagem = ({
 					</>
 				)}
 			</Row>
-			<Row className="row-input-coleta">
+			<br />
+			<Row className="row-input-coleta-inicio">
 				<Col sm={12} md={12} lg={12} xxl={6}>
 					<FloatingLabel label="Ponto de Passagem 3" className="mb-3">
 						<Form.Control
@@ -502,6 +503,7 @@ const InputsPontoPassagem = ({
 					</>
 				)}
 			</Row>
+			<br />
 			{inputColeta5 && (
 				<Row className="row-input-coleta">
 					{inputPontoPassagem5 ? (

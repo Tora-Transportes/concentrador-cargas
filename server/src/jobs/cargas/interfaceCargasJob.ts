@@ -3,7 +3,7 @@ import IPontosParada from "../../models/IPontosDeParada";
 export interface IInfoCarga {
   id: number;
   placa_veiculo: string;
-  VEI_REFERENCIA: number;
+  rastreador: string;
   ponto_parada?: IPontosParada[];
 }
 
