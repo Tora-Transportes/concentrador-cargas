@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import domainAviso from "../domain/UseCaseAvisos";
 
 interface IAvisosController {
   create(req: Request, res: Response): Promise<Response>;
@@ -10,21 +11,30 @@ interface IAvisosController {
 
 class AvisosController implements IAvisosController {
   async create(req: Request, res: Response): Promise<Response> {
-    return res.json({ message: "Criado com sucesso !", result: req.body });
+    const result = await domainAviso.useCaseAddAvisos.run(req.body);
+    return res.status(201).json({ data: result });
   }
   async index(req: Request, res: Response): Promise<Response> {
-    return res.json({ mess: "este index ok", id: req.params.id });
+    const { id } = req.params;
+    const result = await domainAviso.useCaseIndexAvisos.run(Number(id));
+    return res.json({ data: result });
   }
-  async search(req: Request, res: Response): Promise<Response> {
-    return res.json("search com  sucesso");
+  async search(_req: Request, res: Response): Promise<Response> {
+    const result = await domainAviso.useCaseAllAvisos.run();
+    return res.json({ data: result });
   }
   async update(req: Request, res: Response): Promise<Response> {
-    console.log("aqui>>>>>>", req.params.id);
-
-    return res.json({ mess: "UPDATE OK", id: req.params.id, result: req.body });
+    const { id } = req.params;
+    const result = await domainAviso.useCaseUpdateAvisos.run(
+      Number(id),
+      req.body
+    );
+    return res.json({ data: result });
   }
   async delete(req: Request, res: Response): Promise<Response> {
-    return res.json({ mess: "DELETE OK", id: req.params.id });
+    const { id } = req.params;
+    const result = await domainAviso.useCaseDeleteAvisos.run(Number(id));
+    return res.json({ data: result });
   }
 }
 

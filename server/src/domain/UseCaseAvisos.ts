@@ -1,24 +1,102 @@
+import AppError from "../models/AppError";
 import IModelAvisos from "../models/Avisos";
 import { factoryAvisos } from "../validations/AvisosValidator";
 import { AvisosRepository } from "./../repositories/AvisosRepository";
+import dateTimezone from "../Utils/date";
 
-export class UseCaseAddAvisos {
+const dataAtual = dateTimezone.formatDateTimezone(new Date());
+
+class VerificacaoExisteAviso {
+  async run(id: number, avisosRepository: AvisosRepository) {
+    const existeAviso = await avisosRepository.index(id);
+    if (!existeAviso) throw new AppError("O Aviso selecionado não existe", 404);
+    return existeAviso;
+  }
+}
+class UseCaseAddAvisos {
   private readonly avisosRepository: AvisosRepository;
-  private readonly dataAtual: Date;
   constructor() {
     this.avisosRepository = new AvisosRepository();
-    this.dataAtual = new Date();
   }
 
-  async run(dataAviso: IModelAvisos) {
+  async run(dataAviso: IModelAvisos): Promise<string> {
     const validator = factoryAvisos();
-    const dataValidator = await validator.validate(dataAviso, {
+    dataAviso.DATA_CADASTRO = dataAtual;
+    await validator.validate(dataAviso, {
       abortEarly: false,
       stripUnknown: true,
     });
-    const bodyAviso = { ...dataAviso, DATA_CADASTRO: this.dataAtual };
-    await this.avisosRepository.create(bodyAviso);
 
-    return dataValidator;
+    await this.avisosRepository.create(dataAviso);
+
+    return "Aviso Salvo com sucesso!";
   }
 }
+
+export class UseCaseIndexAvisos {
+  private readonly avisosRepository: AvisosRepository;
+  private readonly verificaExisteAviso: VerificacaoExisteAviso;
+  constructor() {
+    this.avisosRepository = new AvisosRepository();
+    this.verificaExisteAviso = new VerificacaoExisteAviso();
+  }
+  async run(id: number) {
+    const aviso = await this.verificaExisteAviso.run(id, this.avisosRepository);
+    return aviso;
+  }
+}
+
+export class UseCaseAllAvisos {
+  private readonly avisosRepository: AvisosRepository;
+  constructor() {
+    this.avisosRepository = new AvisosRepository();
+  }
+  async run() {
+    return await this.avisosRepository.search();
+  }
+}
+
+export class UseCaseUpdateAvisos {
+  private readonly avisosRepository: AvisosRepository;
+  private readonly verificaExisteAviso: VerificacaoExisteAviso;
+  constructor() {
+    this.avisosRepository = new AvisosRepository();
+    this.verificaExisteAviso = new VerificacaoExisteAviso();
+  }
+
+  async run(id: number, dataAviso: IModelAvisos): Promise<IModelAvisos> {
+    await this.verificaExisteAviso.run(id, this.avisosRepository);
+    const validator = factoryAvisos();
+    dataAviso.DATA_ATUALIZACAO = dataAtual;
+    const aviso = await validator.validate(dataAviso, {
+      abortEarly: false,
+      stripUnknown: true,
+    });
+    await this.avisosRepository.update(id, aviso);
+    return aviso;
+  }
+}
+
+export class UseCaseDeleteAvisos {
+  private readonly avisosRepository: AvisosRepository;
+  private readonly verificaExisteAviso: VerificacaoExisteAviso;
+  constructor() {
+    this.avisosRepository = new AvisosRepository();
+    this.verificaExisteAviso = new VerificacaoExisteAviso();
+  }
+  async run(id: number) {
+    await this.verificaExisteAviso.run(id, this.avisosRepository);
+    await this.avisosRepository.delete(id);
+    return "Aviso deletada com sucesso!";
+  }
+}
+
+const instancias = {
+  useCaseAddAvisos: new UseCaseAddAvisos(),
+  useCaseIndexAvisos: new UseCaseIndexAvisos(),
+  useCaseAllAvisos: new UseCaseAllAvisos(),
+  useCaseUpdateAvisos: new UseCaseUpdateAvisos(),
+  useCaseDeleteAvisos: new UseCaseDeleteAvisos(),
+};
+
+export default instancias;

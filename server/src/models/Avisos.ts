@@ -3,6 +3,6 @@ export default interface IModelAvisos {
   TITULO: string;
   MENSAGEM: string;
   AUTOR: string;
-  DATA_CADASTRO: string;
-  DATA_ATUALIZACAO?: string | null;
+  DATA_CADASTRO?: Date;
+  DATA_ATUALIZACAO?: Date | null;
 }

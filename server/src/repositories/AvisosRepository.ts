@@ -11,7 +11,7 @@ interface IAvisosRepository {
 
 export class AvisosRepository implements IAvisosRepository {
   async create(dataAviso: IModelAvisos): Promise<void> {
-    await database("con_rotas_csn").insert(dataAviso);
+    await database("con_avisos").insert(dataAviso);
   }
 
   async index(ID: number): Promise<IModelAvisos> {
