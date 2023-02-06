@@ -23,11 +23,29 @@ class PontoParadaController implements IPontoParadaController {
 
     return res.json({ data: result });
   }
+  async serachPerIdCarga(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const result = await useCases.useCaseSearchPontoParadaIdCarga.run(
+      Number(id)
+    );
+
+    return res.json({ data: result });
+  }
 
   async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
     const result = await useCases.useCaseUpdatePontoParadasRota.run(
+      Number(id),
+      req.body
+    );
+    return res.json({ data: result });
+  }
+
+  async updatePatch(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+
+    const result = await useCases.useCaseUpdatePontoParadaPartial.run(
       Number(id),
       req.body
     );
