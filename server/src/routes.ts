@@ -25,7 +25,11 @@ import CargasCsnInfoController from "./controllers/csn/CargasCsnInfoController";
 
 const routes = Router();
 
-routes.get("/avisos", AvisosController.index);
+routes.post("/avisos", AvisosController.create);
+routes.get("/avisos/:id", AvisosController.index);
+routes.get("/avisos", AvisosController.search);
+routes.put("/avisos/:id", AvisosController.update);
+routes.delete("/avisos/:id", AvisosController.delete);
 
 routes.get("/credenciais", CredenciaisController.get);
 routes.post("/credenciais", CredenciaisController.post);
