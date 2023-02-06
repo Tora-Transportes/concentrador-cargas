@@ -1,5 +1,5 @@
 import database from "../database";
-import IPontosParada from "../models/IPontosDeParada";
+import IPontosParada, { IPontosParadaPath } from "../models/IPontosDeParada";
 
 interface IPontoParadaRepository {
   create(dataParada: IPontosParada): Promise<void>;
@@ -26,6 +26,12 @@ export class PontoParadaRepository implements IPontoParadaRepository {
     return await database("con_pontos_parada").select("*");
   }
 
+  async searchOfIdCarga(idCarga: number): Promise<IPontosParada[] | undefined> {
+    return await database("con_pontos_parada")
+      .select("*")
+      .where("ID_CON_CARGAS", idCarga);
+  }
+
   async getOfIdRotasCsn(ID: number): Promise<IPontosParada | undefined> {
     return await database("con_pontos_parada")
       .select("*")
@@ -47,6 +53,15 @@ export class PontoParadaRepository implements IPontoParadaRepository {
   }
 
   async update(ID: number, dataParada: IPontosParada): Promise<void> {
+    const transaction = await database.transaction();
+    try {
+      await database("con_pontos_parada").update(dataParada).where({ ID });
+      await transaction.commit();
+    } catch (error) {
+      await transaction.rollback();
+    }
+  }
+  async updatePatch(ID: number, dataParada: IPontosParadaPath): Promise<void> {
     await database("con_pontos_parada").update(dataParada).where({ ID });
   }
 

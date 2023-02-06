@@ -221,12 +221,9 @@ function EditarCargaCsn() {
 							}
 						);
 						if (resultOk) {
-							const InputEfetivoCorreto = validarInputEfetivo(
-								ponto_passagem,
-								ponto_passagem2,
-								ponto_passagem3,
-								ponto_passagem4,
-								6
+							const InputEfetivoCorreto = await validarInputEfetivo(
+								6,
+								values.id
 							);
 
 							if (!InputEfetivoCorreto) {

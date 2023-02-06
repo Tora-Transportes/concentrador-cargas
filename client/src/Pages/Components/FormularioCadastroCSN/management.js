@@ -1,6 +1,7 @@
 import moment from "moment";
 import Swal2 from "sweetalert2";
 import ServiceCargas from "src/services/ServiceCargas";
+import ServicesPontoParada from "src/services/ServicesPontoParada";
 
 export const funcInputPontoParada = (
 	formik,
@@ -90,7 +91,12 @@ export const funcInputPontoParada = (
 	return { viewsInputColeta, excluirInputColeta };
 };
 
-export const funcDuracaoProcesso = async (formik, status, coletafim) => {
+export const funcDuracaoProcesso = async (
+	formik,
+	status,
+	coletafim,
+	idPontoParada
+) => {
 	const somarHoras = (coletaInicio, nomeCampoformik) => {
 		if (coletaInicio && coletafim) {
 			const startTime = moment(coletaInicio);
@@ -98,61 +104,111 @@ export const funcDuracaoProcesso = async (formik, status, coletafim) => {
 			const horasPermanenciaLocal = moment
 				.utc(moment(endTime, "HH:mm:ss").diff(moment(startTime, "HH:mm:ss")))
 				.format("HH:mm:ss");
+
 			formik.setFieldValue(nomeCampoformik, horasPermanenciaLocal);
+			let TempoServico = {
+				TEMP_SERV_LOCAL_COLETA: horasPermanenciaLocal,
+			};
+			if (status === 24)
+				TempoServico = { TEMP_SERV_LOCAL_ENTREGA: horasPermanenciaLocal };
+
+			ServicesPontoParada.updatePatchCSN(idPontoParada, TempoServico);
 		}
 	};
 
 	switch (status) {
-		case 1:
+		case 3:
 			somarHoras(
 				formik.values.ponto_passagem.coletaEfetiva_posto30,
 				"ponto_passagem.tempServicoLocal"
 			);
 
 			break;
-		case 2:
+		case 7:
 			somarHoras(
 				formik.values.ponto_passagem2.coletaEfetiva_mundo,
 
 				"ponto_passagem2.tempServicoLocal"
 			);
 			break;
-		case 3:
+		case 11:
 			somarHoras(
 				formik.values.ponto_passagem3.coletaEfetiva_peacao,
 				"ponto_passagem3.tempServicoLocal"
 			);
 			break;
-		case 4:
+		case 24:
 			somarHoras(
 				formik.values.ponto_passagem4.entregaEfetiva,
 				"ponto_passagem4.tempServicoLocalEntrega"
 			);
 			break;
-		case 5:
+		case 14:
 			somarHoras(
 				formik.values.ponto_passagem5.coletaEfetiva,
 				"ponto_passagem5.tempServicoLocal"
 			);
 			break;
-		case 6:
+		case 18:
 			somarHoras(
 				formik.values.ponto_passagem6.coletaEfetiva,
 				"ponto_passagem6.tempServicoLocal"
 			);
 			break;
-		case 7:
+		case 19:
 			somarHoras(
 				formik.values.ponto_passagem7.coletaEfetiva,
 				"ponto_passagem7.tempServicoLocal"
 			);
 			break;
-		case 11:
+		case 1:
 			formik.setFieldValue("ponto_passagem4.entregaFinal", 1);
 
 			break;
 		default:
 			break;
+	}
+};
+
+export const MontarBoryEditPatch = (
+	idInput,
+	valorDigitado,
+	formik,
+	idPontoParada
+) => {
+	const bodySaidaEfetivaColeta = {
+		SAIDA_EFETIVA_COLETA: new Date(valorDigitado),
+	};
+	const bodyColetaEfetivaAll = { COLETA_EFETIVA: new Date(valorDigitado) };
+	funcDuracaoProcesso(formik, idInput, valorDigitado, idPontoParada);
+	switch (idInput) {
+		case 2:
+			return { COLETA_EFETIVA_POSTO30: new Date(valorDigitado) };
+		case 3:
+			return bodySaidaEfetivaColeta;
+		case 6:
+			return { COLETA_EFETIVA_MUNDO: new Date(valorDigitado) };
+		case 7:
+			return bodySaidaEfetivaColeta;
+		case 10:
+			return { COLETA_EFETIVA_PEACAO: new Date(valorDigitado) };
+		case 11:
+			return bodySaidaEfetivaColeta;
+		case 14:
+			return bodySaidaEfetivaColeta;
+		case 17:
+			return bodyColetaEfetivaAll;
+		case 18:
+			return bodySaidaEfetivaColeta;
+		case 23:
+			return { ENTREGA_EFETIVA: new Date(valorDigitado) };
+		case 24:
+			return {
+				SAIDA_EFETIVA_ENTREGA: new Date(valorDigitado),
+			};
+
+		default:
+			return { COLETA_EFETIVA: new Date(valorDigitado) };
 	}
 };
 

@@ -385,7 +385,6 @@ class ServiceCargas {
 		carga;
 		return api.put(`/csn/cargas/info/${id}`, carga);
 	}
-
 	async delete({ id, observacao_exclusao }) {
 		return api.delete(`/cargas/${id}`, { data: { observacao_exclusao } });
 	}
