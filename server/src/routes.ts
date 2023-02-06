@@ -71,8 +71,10 @@ routes.get(
 );
 
 routes.put("/csn/ponto_parada/:id", PontoParadaController.update);
+routes.patch("/csn/ponto_parada/:id", PontoParadaController.updatePatch);
 routes.post("/csn/ponto_parada", PontoParadaController.create);
 routes.get("/csn/ponto_parada", PontoParadaController.serach);
+routes.get("/csn/ponto_parada/:id", PontoParadaController.serachPerIdCarga);
 routes.delete("/csn/ponto_parada/:id", PontoParadaController.delete);
 
 routes.get("/usuarios", UsuarioController.search);
