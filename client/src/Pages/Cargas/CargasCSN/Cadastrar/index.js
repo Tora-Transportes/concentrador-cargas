@@ -166,28 +166,6 @@ const CadastroCargaCSN = () => {
 					).data;
 
 					if (data.data.id) {
-						// for (const [key, value] of Object.entries({
-						// 	ponto_passagem,
-						// 	ponto_passagem2,
-						// 	ponto_passagem3,
-						// 	ponto_passagem4,
-						// 	ponto_passagem5,
-						// 	ponto_passagem6,
-						// 	ponto_passagem7,
-						// })) {
-						// 	if (
-						// 		(value?.ponto.length > 0 && value?.previsao.length > 0) ||
-						// 		(typeof value?.latitude !== "string" &&
-						// 			typeof value?.longitude !== "string")
-						// 	) {
-						// 		await ServiceCargas.createPontoParada({
-						// 			...value,
-						// 			id_carga: data.data.id,
-						// 			key,
-						// 		});
-						// 	}
-						// }
-
 						const dadosPontoPassagem = {
 							ponto_passagem,
 							ponto_passagem2,
@@ -197,12 +175,10 @@ const CadastroCargaCSN = () => {
 							ponto_passagem6,
 							ponto_passagem7,
 						};
-
 						await ServiceCargas.createPontoParada({
 							...dadosPontoPassagem,
 							id_carga: data.data.id,
 						});
-
 						const ok = await swal(
 							"Sucesso!",
 							`A carga foi cadastrada com o identificador ${data.data.id}!`,
@@ -212,7 +188,6 @@ const CadastroCargaCSN = () => {
 								closeOnClickOutside: false,
 							}
 						);
-
 						if (ok) resetForm();
 					}
 				} catch (error) {
