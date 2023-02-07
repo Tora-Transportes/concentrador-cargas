@@ -257,8 +257,8 @@ class ServiceFinishCargasCsn {
             // );
 
             if (
-              //Number(calculoDistancia.toFixed(3)) < raioEmMetros &&
-              Number(calculoDistancia.toFixed(3)) < 24 &&
+              Number(calculoDistancia.toFixed(3)) < raioEmMetros &&
+              //Number(calculoDistancia.toFixed(3)) < 24 &&
               entradaOrSaida === "Entrada"
             ) {
               let tipoEfetivoSave;
@@ -284,8 +284,8 @@ class ServiceFinishCargasCsn {
                 DESCRICAO,
               });
             } else if (
-              //Number(calculoDistancia.toFixed(3)) > raioEmMetros &&
-              Number(calculoDistancia.toFixed(3)) > 22 &&
+              Number(calculoDistancia.toFixed(3)) > raioEmMetros &&
+              //Number(calculoDistancia.toFixed(3)) > 22 &&
               entradaOrSaida === "Saida"
             ) {
               //Somando tempo de carregamento ou entrega na empresa
@@ -437,8 +437,6 @@ class ServiceFinishCargasCsn {
     ...valuePontoParada
   }: IDadosUpdate) {
     const DATA_ATUALIZACAO = this.dataAtual;
-
-    console.log(">>>>>>", DATA_ATUALIZACAO);
     await database("con_pontos_parada")
       .update({
         ...valuePontoParada,
@@ -539,6 +537,6 @@ export default async function run() {
       "|-----------------FIM JOB CARGA CSN EM VIAGEM-------------------|"
     );
   }
-  //cron.schedule(" */1 * * * * ", job);
-  job();
+  cron.schedule(" */1 * * * * ", job);
+  //job();
 }
