@@ -243,22 +243,9 @@ class ServiceFinishCargasCsn {
             );
 
             const raioEmMetros = RAIO ? Number(RAIO) : 1;
-            // console.log(
-            //   DESCRICAO,
-            //   "distancia veiculo =>",
-            //   calculoDistancia.toFixed(3),
-            //   "Raio da empresa ->",
-            //   raioEmMetros,
-            //   "ID_ponto_parada:",
-            //   ID,
-            //   "Carga:",
-            //   ID_CON_CARGAS,
-            //   "---------------------"
-            // );
 
             if (
-              //Number(calculoDistancia.toFixed(3)) < raioEmMetros &&
-              Number(calculoDistancia.toFixed(3)) < 24 &&
+              Number(calculoDistancia.toFixed(3)) < raioEmMetros &&
               entradaOrSaida === "Entrada"
             ) {
               let tipoEfetivoSave;
@@ -284,8 +271,7 @@ class ServiceFinishCargasCsn {
                 DESCRICAO,
               });
             } else if (
-              //Number(calculoDistancia.toFixed(3)) > raioEmMetros &&
-              Number(calculoDistancia.toFixed(3)) > 22 &&
+              Number(calculoDistancia.toFixed(3)) > raioEmMetros &&
               entradaOrSaida === "Saida"
             ) {
               //Somando tempo de carregamento ou entrega na empresa
@@ -438,7 +424,6 @@ class ServiceFinishCargasCsn {
   }: IDadosUpdate) {
     const DATA_ATUALIZACAO = this.dataAtual;
 
-    console.log(">>>>>>", DATA_ATUALIZACAO);
     await database("con_pontos_parada")
       .update({
         ...valuePontoParada,
@@ -539,6 +524,6 @@ export default async function run() {
       "|-----------------FIM JOB CARGA CSN EM VIAGEM-------------------|"
     );
   }
-  //cron.schedule(" */1 * * * * ", job);
-  job();
+  cron.schedule(" */1 * * * * ", job);
+  //job();
 }
