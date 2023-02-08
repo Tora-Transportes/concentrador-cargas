@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-
+import { useHistory } from "react-router-dom";
 import ServiceCsnCargas from "src/services/ServiceCsnCargas";
 import swal from "sweetalert";
 import { validationPermissionUser } from "../Utils/validationPermissionUser";
-//import { validationPermissionUser } from "../Utils/validationPermissionUser";
 import ViewsLocalizacao from "./views";
 
 const LocalizacaoCSN = () => {
 	const [dadosLocalizacao, setDadosLocalizacao] = useState();
 	const [atualizarTabela, setAtualizarTabela] = useState(false);
+	const history = useHistory();
 
 	useEffect(() => {
 		(async () => {
