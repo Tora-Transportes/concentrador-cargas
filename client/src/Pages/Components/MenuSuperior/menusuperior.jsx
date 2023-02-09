@@ -11,6 +11,7 @@ function Menusuperior() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
   const [isPermissionCsn, setPermissionCsn] = useState(false);
   const [isPermissionPadrao, setPermissionPadrao] = useState(false);
+  const [isColorHeader, setColorHeader] = useState("header");
   const { setPermissionUser } = useContext(ContextUseDefault);
   useEffect(() => {
     (async () => {
@@ -23,10 +24,13 @@ function Menusuperior() {
         setPermissionCsn(true);
       }
     })();
+    const tipoCorHeader =
+      process.env.REACT_APP_COR_NAVEBAR === "DEV" ? "headerDev" : "header";
+    setColorHeader(tipoCorHeader);
   }, []);
 
   return (
-    <div id="header">
+    <div id={isColorHeader}>
       <NavbarBrand href="/">
         <img src={Logo} alt="Logo Tora" id="logo" />
       </NavbarBrand>
