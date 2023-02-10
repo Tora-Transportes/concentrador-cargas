@@ -305,4 +305,10 @@ export const columns = [
 		),
 		showFilter: true,
 	},
+	{
+		name: "usuario",
+		description: "Responsável pela última alteração",
+		selector: (row) => <CollapseHint text={row.usuario || ""} />,
+		sortable: "sortable",
+	},
 ];

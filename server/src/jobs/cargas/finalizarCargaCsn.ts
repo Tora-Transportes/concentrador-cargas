@@ -456,13 +456,14 @@ class ServiceFinishCargasCsn {
       .update({
         fk_situacao,
         canal_comunicacao: "robô",
+        usuario: "robô",
         data_atualizacao,
       })
       .where("id", id);
 
     const cargaAtualizada = await this.cargaRepository.index(id);
     notifyAll({
-      name: "@carga-update",
+      name: "@carga-update-csn",
       details: cargaAtualizada,
     });
 
