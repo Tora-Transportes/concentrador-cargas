@@ -24,7 +24,7 @@ class UseCaseAddAvisos {
       stripUnknown: true,
     });
     await this.avisosRepository.create(dataAviso);
-    return "Aviso Criado com sucesso!";
+    return "Aviso criado com sucesso!";
   }
 }
 
@@ -82,7 +82,7 @@ export class UseCaseDeleteAvisos {
   async run(id: number) {
     await this.verificaExisteAviso.run(id, this.avisosRepository);
     await this.avisosRepository.delete(id);
-    return "Aviso deletada com sucesso!";
+    return "Aviso deletado com sucesso!";
   }
 }
 

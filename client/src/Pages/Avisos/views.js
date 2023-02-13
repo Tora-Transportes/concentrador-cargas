@@ -1,33 +1,217 @@
-import React from "react";
-import "./avisos.css";
-import { Row, Col } from "react-bootstrap";
+import React, { useRef, useState } from "react";
+import "../Avisos/avisos.css";
+import { Row, Col, Form } from "react-bootstrap";
+import { classNames } from "primereact/utils";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
+import { InputTextarea } from "primereact/inputtextarea";
+import { getClaims } from "src/MicrosoftAuthentication";
+import { Toast } from "primereact/toast";
 
-const ViewsAviso = ({ isAvisos }) => {
+import ServiceAvisos from "src/services/ServiceAvisos";
+import { Input } from "reactstrap";
+
+let emptyNotice = {
+	ID: null,
+	TITULO: "",
+	MENSAGEM: "",
+	AUTOR: "",
+};
+
+const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
+	const [avisoDialog, setAvisoDialog] = useState(false);
+	const [deleteAviso, setDeleteAviso] = useState(false);
+
+	const [aviso, setAviso] = useState(emptyNotice);
+	const [submittedAviso, setSubmittedAviso] = useState(false);
+	const [titleAviso, setTitleAviso] = useState();
+	const toast = useRef(null);
+
 	const subtitle = (autor, dataCadastro) => (
 		<div>
-			<h6>Autor: {autor}</h6>
+			<h6>Responsável pelo Cadastro: {autor}</h6>
 			<h6>Data do cadastro: {dataCadastro}</h6>
 		</div>
 	);
+
+	const openNewNotice = () => {
+		emptyNotice.AUTOR = String(getClaims().name);
+		setAviso(emptyNotice);
+		setSubmittedAviso(false);
+		setAvisoDialog(true);
+		setTitleAviso("Cadastro de Aviso: ");
+	};
+
+	const editNotice = (aviso) => {
+		const { TITULO, MENSAGEM } = aviso;
+		aviso.TITULO = String(TITULO);
+		aviso.MENSAGEM = String(MENSAGEM);
+		aviso.AUTOR = String(getClaims().name);
+
+		setAviso({ ...aviso });
+		setAvisoDialog(true);
+		setTitleAviso("Editar Aviso:");
+	};
+
+	const hideNoticeDialog = () => {
+		setSubmittedAviso(false);
+		setAvisoDialog(false);
+	};
+
+	const hideDeleteAviso = () => {
+		setDeleteAviso(false);
+	};
+
+	const saveNotice = async () => {
+		setSubmittedAviso(true);
+		if (aviso.MENSAGEM?.length > 15 && aviso.AUTOR) {
+			const bodyAviso = {
+				TITULO: aviso.TITULO,
+				MENSAGEM: aviso.MENSAGEM,
+				AUTOR: aviso.AUTOR,
+			};
+
+			if (aviso.ID) {
+				try {
+					await ServiceAvisos.update(aviso.ID, bodyAviso);
+					toast.current.show({
+						severity: "success",
+						summary: "Sucesso!",
+						detail: "As informações do aviso foram atualizadas.",
+						life: 3000,
+					});
+
+					setAtualizarAvisos(true);
+				} catch (error) {
+					console.error(error);
+					setTimeout(() => {
+						window.aviso.reload();
+					}, 3000);
+				}
+			} else {
+				try {
+					await ServiceAvisos.create(bodyAviso);
+					toast.current.show({
+						severity: "success",
+						summary: "Sucesso !",
+						detail: "Novo aviso criado com êxito.",
+						life: 3000,
+					});
+					setAtualizarAvisos(true);
+				} catch (error) {
+					console.error(error);
+				}
+			}
+
+			setAvisoDialog(false);
+			setAviso(emptyNotice);
+		} else {
+			toast.current.show({
+				severity: "info",
+				summary: "Atenção!",
+				detail: "Mensagem deve conter pelo menos 15 caracteres.",
+				life: 3000,
+			});
+		}
+	};
+
+	const confirmDeleteNotice = (aviso) => {
+		setAviso(aviso);
+		setDeleteAviso(true);
+	};
+
+	const excluirAvisos = async () => {
+		try {
+			const result = await ServiceAvisos.delete(aviso.ID);
+			if (result.status === 204) {
+				setDeleteAviso(false);
+				toast.current.show({
+					severity: "info",
+					summary: "OPS!",
+					detail: "Este aviso não pode ser deletado, tente novamente.",
+					life: 3000,
+				});
+			} else {
+				setDeleteAviso(false);
+				setAviso(emptyNotice);
+				toast.current.show({
+					severity: "success",
+					summary: "Sucesso",
+					detail: "Aviso excluído com sucesso.",
+					life: 3000,
+				});
+				setAtualizarAvisos(true);
+			}
+		} catch (error) {
+			console.error(error);
+			setTimeout(() => {
+				window.aviso.reload();
+			}, 3000);
+		}
+	};
+	const onChangeInput = (e, name) => {
+		const valuesField = e.target.value;
+
+		let _avisos = { ...aviso };
+		_avisos[`${name}`] = valuesField;
+
+		setAviso(_avisos);
+	};
+	const deleteAvisoFooter = (
+		<div>
+			<Button
+				label="Voltar"
+				icon="pi pi-times"
+				className="button-voltar-delete"
+				onClick={hideDeleteAviso}
+			/>
+			<Button
+				label="Sim"
+				icon="pi pi-check"
+				className="button-sim-delete"
+				onClick={excluirAvisos}
+			/>
+		</div>
+	);
+	const converterData = (dataIso) => {
+		const dataTimeJs = new Date(dataIso);
+		return dataTimeJs.toLocaleString("pt-BR");
+	};
 
 	return (
 		<>
 			<div className="row-views-container">
 				<Row>
 					<Col>
-						{isAvisos?.length > 0 && (
+						{dadosAvisos?.length > 0 && (
 							<>
-								{isAvisos?.map((item) => {
+								{dadosAvisos?.map((item) => {
 									return (
-										<div key={item.id}>
+										<div key={item.ID}>
 											<Card
-												title={item?.titulo}
-												subTitle={subtitle(item.autor, item.data_cadastro)}
-												className="mt-2 mb-2"
+												className="card-avisos"
+												title={item?.TITULO}
+												subTitle={subtitle(
+													item.AUTOR,
+													converterData(item.DATA_CADASTRO)
+												)}
 											>
-												<p>{item.mensagem}</p>
+												<p>{item.MENSAGEM}</p>
+												<div className="buttons-edit-delete">
+													<Button
+														label="Editar"
+														icon="pi pi-bookmark"
+														className="edit-button"
+														onClick={() => editNotice(item)}
+													/>
+													<Button
+														label="Excluir"
+														icon="pi pi-times"
+														className="delete-button"
+														onClick={() => confirmDeleteNotice(item)}
+													/>
+												</div>
 											</Card>
 										</div>
 									);
@@ -36,26 +220,117 @@ const ViewsAviso = ({ isAvisos }) => {
 						)}
 					</Col>
 				</Row>
-				<Row className="views-row-buttons">
-					<Col className="text-end">
+				<Row className="button-add-aviso">
+					<Col className="col-button-add">
 						<Button
-							label="Adicionar"
+							label="Adicionar um novo aviso"
 							icon="pi pi-check"
-							className="views-button p-button-success p-button-outlined "
-						/>
-
-						<Button
-							label="Editar"
-							icon="pi pi-bookmark"
-							className="views-button p-button-secondary p-button-outlined "
-						/>
-						<Button
-							label="Apagar"
-							icon="pi pi-times"
-							className="views-button p-button-danger p-button-outlined "
+							className="add-button"
+							onClick={openNewNotice}
 						/>
 					</Col>
 				</Row>
+				<Dialog
+					visible={avisoDialog}
+					style={{ width: "560px", fontSize: "16px" }}
+					header={titleAviso}
+					modal
+					className="p-fluid"
+					id="dialog-cad-aviso"
+					onHide={hideNoticeDialog}
+				>
+					<div className="div-title">
+						<label htmlFor="TITULO">Título do Aviso: </label>
+						<Input
+							id="input-text-title"
+							value={aviso.TITULO}
+							onChange={(e) => onChangeInput(e, "TITULO")}
+							required
+							rows={1}
+							cols={1}
+							autoFocus
+							className={classNames({
+								"p-invalid": submittedAviso && !aviso.TITULO,
+							})}
+						/>
+						{submittedAviso && !aviso.TITULO && (
+							<small className="p-error">Título é um campo obrigatório.</small>
+						)}
+					</div>
+
+					<div className="div-description">
+						<label htmlFor="MENSAGEM">Descrição</label>
+						<InputTextarea
+							id="input-text-description"
+							value={aviso.MENSAGEM}
+							onChange={(e) => onChangeInput(e, "MENSAGEM")}
+							required
+							rows={5}
+							cols={30}
+							autoFocus
+							className={classNames({
+								"p-invalid": submittedAviso && !aviso.MENSAGEM,
+							})}
+						/>
+						{submittedAviso && !aviso.MENSAGEM && (
+							<small className="p-error">
+								Descrição é um campo obrigatório.
+							</small>
+						)}
+					</div>
+
+					<div className="div-resp-cadastro">
+						<label> Responsável pelo cadastro:</label>
+						<Form.Control
+							style={{ width: "300px", border: "none" }}
+							className="div-details-cadastro"
+							type="text"
+							placeholder={aviso?.AUTOR}
+							disabled
+						/>
+					</div>
+
+					<div className="footer-dialog-avisos">
+						<div>
+							<Button
+								label="Cancelar"
+								icon="pi pi-times"
+								className="button-cancelar"
+								onClick={hideNoticeDialog}
+							/>
+						</div>
+						<div>
+							<Button
+								label="Salvar"
+								icon="pi pi-check"
+								className="button-salvar"
+								onClick={saveNotice}
+							/>
+						</div>
+					</div>
+				</Dialog>
+				<Toast ref={toast} />
+				<Dialog
+					visible={deleteAviso}
+					style={{ width: "450px" }}
+					header="Deletar Aviso"
+					modal
+					footer={deleteAvisoFooter}
+					onHide={hideDeleteAviso}
+				>
+					<i
+						className="pi pi-exclamation-triangle"
+						style={{ fontSize: "2rem", marginLeft: "42%" }}
+					/>
+					<div className="confirmation-content">
+						{aviso && (
+							<span className="span-delete">
+								Essa ação irá deletar os dados deste aviso permanentemente.
+								<b> Deseja continuar?</b>
+							</span>
+						)}
+					</div>
+				</Dialog>
 			</div>
 		</>
 	);

@@ -1,3 +1,27 @@
+.container-body-avisos {
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.title-avisos {
+  font-size: 40px;
+  color: #00652e;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.p-saudacao-aviso {
+  color: #00652e;
+}
+.card-avisos {
+  font-family: "Poppins", sans-serif;
+  margin: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
 .row-views-container {
   border-style: solid;
   border-radius: 10px;
@@ -8,16 +32,161 @@
   width: 100%;
 }
 
-.views-button {
-  margin: 3px 0 4px 4px;
-  height: 5vh;
+.button-add-aviso {
+  box-sizing: border-box;
+}
+.col-button-add {
+  display: flex;
+  justify-content: flex-end;
+}
+.add-button {
+  border-color: #00652e;
+  background-color: #fff;
+  color: #00652e;
+  margin: 5px 15px 6px 20px;
+  height: 6vh;
+}
+.add-button:enabled:hover {
+  border-color: #009c08;
+  background-color: #009c08;
 }
 
-@media screen and (max-width: 575px) {
+.buttons-edit-delete {
+  display: flex;
+  justify-content: flex-end;
+}
+.edit-button {
+  background-color: #fff;
+  color: #64748b;
+  border-color: #64748b;
+  margin: 5px 10px -5px 0px;
+  height: 4vh;
+  width: 15vh;
+  justify-content: center;
+}
+.edit-button:enabled:hover {
+  background-color: #64748b;
+  border-color: #64748b;
+}
+
+.delete-button {
+  background-color: #fff;
+  color: #ef4444;
+  border-color: #ef4444;
+  margin: 5px 10px -5px 0px;
+  height: 4vh;
+  width: 15vh;
+  justify-content: center;
+}
+.delete-button:enabled:hover {
+  border-color: #ef4444;
+  background-color: rgba(255, 0, 21, 0.712);
+}
+
+.button-sim-delete {
+  border-color: #00652e;
+  background-color: #fff;
+  color: #00652e;
+  height: 4vh;
+  width: 15vh;
+  margin: 5px 10px;
+}
+.button-sim-delete:enabled:hover {
+  background-color: #00652dc2;
+  color: #fff;
+  border-color: #00652e;
+}
+.button-voltar-delete {
+  background-color: #fff;
+  color: #64748b;
+  border-color: #64748b;
+  height: 4vh;
+  width: 15vh;
+  margin: 5px 10px;
+}
+.button-voltar-delete:enabled:hover {
+  background-color: #64748bc9;
+  color: #fff;
+  border-color: #64748b;
+}
+/* Dialog avisos ********************************  */
+
+#dialog-cad-aviso {
+  font-family: "Poppins", sans-serif;
+}
+#input-text-title {
+  display: flex;
+  position: absolute;
+  top: 18%;
+  left: 25%;
+  height: 6.5%;
+  width: 71%;
+}
+
+#input-text-title:enabled:focus,
+#input-text-description:enabled:focus {
+  box-shadow: 0 0 0 0.2rem #b8f1c5;
+  border-color: #00652db9;
+}
+#input-text-description:hover {
+  box-shadow: 0 0 0 0.2rem #b8f1c5;
+  border-color: #00652d88 !important;
+}
+.div-resp-cadastro {
+  font-family: "Poppins", sans-serif;
+  font-size: 15.5px;
+  margin-top: 1rem;
+  display: flex;
+}
+.div-details-cadastro:disabled {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  background-color: transparent !important;
+  margin-top: -0.3rem;
+}
+div .div-details-cadastro:focus {
+  box-shadow: none;
+}
+div .button-cancelar {
+  color: rgba(255, 0, 21, 0.952);
+  background-color: transparent;
+  border: none;
+}
+div .button-cancelar:focus {
+  box-shadow: 0 0 0 0.2rem #f7b3b3;
+}
+div .button-salvar:focus {
+  box-shadow: 0 0 0 0.2rem #b8f1c5;
+}
+div .button-cancelar:enabled:active {
+  background: rgba(255, 0, 21, 0.795);
+  border-color: transparent;
+}
+div .button-cancelar:enabled:hover {
+  color: #fff;
+  background-color: rgba(255, 0, 21, 0.712);
+}
+
+div .button-salvar {
+  color: #00652e;
+  background-color: transparent;
+  border: none;
+}
+div .button-salvar:enabled:hover {
+  color: #fff;
+  background-color: #00652dd0;
+}
+.footer-dialog-avisos {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+/* @media screen and (max-width: 575px) {
   .views-button {
-    width: 96%;
+    width: 50%;
   }
   .views-row-buttons {
     align-items: center;
   }
-}
+} */

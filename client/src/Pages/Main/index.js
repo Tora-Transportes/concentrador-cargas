@@ -9,6 +9,9 @@ import { Link } from "react-router-dom";
 import { IoLocationSharp } from "react-icons/io5";
 import Menusuperior from "../Components/MenuSuperior/menusuperior";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
+import PopUp from "../Avisos/popUpAvisos";
+import ServiceAvisos from "src/services/ServiceAvisos";
+import { MdOutlineNotificationImportant } from "react-icons/md";
 
 const queueCoresAtuais = [];
 
@@ -17,6 +20,8 @@ function Main() {
 	const [isPermissionCsn, setPermissionCsn] = useState(false);
 	const [isPermissionPadrao, setPermissionPadrao] = useState(false);
 	const [visibilidadeTeclas, setVisibilidadeTeclas] = useState(false);
+	const [isShow, setShow] = useState(false);
+	const [isLastPosition, setLastPosition] = useState();
 	const [levelGame, setLevelGame] = useState(-1);
 	const inputCorAtual = useRef(null);
 	const coresBotoesGame = [
@@ -138,6 +143,22 @@ function Main() {
 		}
 	}, [levelGame]);
 
+	//************************************** */
+	// validação avisos
+
+	useEffect(() => {
+		(async () => {
+			const { data } = (await ServiceAvisos.list()).data;
+
+			const dadosStorage = localStorage.getItem("viewsAviso");
+			const lastIdPosition = data[0];
+			setLastPosition(lastIdPosition?.ID);
+			if (dadosStorage === null || dadosStorage < lastIdPosition.ID) {
+				setShow(true);
+			}
+		})();
+	}, []);
+
 	return (
 		<>
 			<ToastContainer />
@@ -150,6 +171,17 @@ function Main() {
 						</p>
 					</Col>
 				</Row>
+
+				<div className="col-avisos-style">
+					<Link to={`avisos/${isLastPosition}`} className="class-link">
+						<MdOutlineNotificationImportant
+							size={30}
+							// className="icons-responsive"
+							className="button-avisos-style"
+						/>
+						<br />
+					</Link>
+				</div>
 				<div>
 					<div>
 						<p id="style-p-saudacao">Caro(a) {userData?.nome}!</p>
@@ -286,6 +318,11 @@ function Main() {
 									</Button>
 								</div>
 							</div>
+							<PopUp
+								isShow={isShow}
+								setShow={setShow}
+								lastIdPosition={isLastPosition}
+							/>
 						</>
 					)}
 				</Row>
