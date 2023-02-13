@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "../Avisos/avisos.css";
 import { Row, Col, Form } from "react-bootstrap";
 import { classNames } from "primereact/utils";
@@ -11,6 +11,7 @@ import { Toast } from "primereact/toast";
 
 import ServiceAvisos from "src/services/ServiceAvisos";
 import { Input } from "reactstrap";
+import { ContextUseDefault } from "./../../hooks/context/contextPagCargaCTE";
 
 let emptyNotice = {
 	ID: null,
@@ -20,6 +21,8 @@ let emptyNotice = {
 };
 
 const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
+	const [userInformation, setuserInformation] = useState({});
+	const [isPermissionAviso, setPermissionAviso] = useState(false);
 	const [avisoDialog, setAvisoDialog] = useState(false);
 	const [deleteAviso, setDeleteAviso] = useState(false);
 
@@ -178,9 +181,23 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 		const dataTimeJs = new Date(dataIso);
 		return dataTimeJs.toLocaleString("pt-BR");
 	};
+	const { isPermissionUser } = useContext(ContextUseDefault);
+
+	useEffect(() => {
+		const user = getClaims().name;
+		setuserInformation({ user });
+		if (isPermissionUser?.includes("GERENCIAR_AVISOS")) {
+			setPermissionAviso(true);
+		}
+	}, [isPermissionUser]);
 
 	return (
 		<>
+			<div>
+				<p className="p-saudacao-aviso">
+					Olá, <span>{userInformation?.user}</span>!
+				</p>
+			</div>
 			<div className="row-views-container">
 				<Row>
 					<Col>
@@ -198,20 +215,22 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 												)}
 											>
 												<p>{item.MENSAGEM}</p>
-												<div className="buttons-edit-delete">
-													<Button
-														label="Editar"
-														icon="pi pi-bookmark"
-														className="edit-button"
-														onClick={() => editNotice(item)}
-													/>
-													<Button
-														label="Excluir"
-														icon="pi pi-times"
-														className="delete-button"
-														onClick={() => confirmDeleteNotice(item)}
-													/>
-												</div>
+												{isPermissionAviso && (
+													<div className="buttons-edit-delete">
+														<Button
+															label="Editar"
+															icon="pi pi-bookmark"
+															className="edit-button"
+															onClick={() => editNotice(item)}
+														/>
+														<Button
+															label="Excluir"
+															icon="pi pi-times"
+															className="delete-button"
+															onClick={() => confirmDeleteNotice(item)}
+														/>
+													</div>
+												)}
 											</Card>
 										</div>
 									);
@@ -220,16 +239,18 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 						)}
 					</Col>
 				</Row>
-				<Row className="button-add-aviso">
-					<Col className="col-button-add">
-						<Button
-							label="Adicionar um novo aviso"
-							icon="pi pi-check"
-							className="add-button"
-							onClick={openNewNotice}
-						/>
-					</Col>
-				</Row>
+				{isPermissionAviso && (
+					<Row className="button-add-aviso">
+						<Col className="col-button-add">
+							<Button
+								label="Adicionar um novo aviso"
+								icon="pi pi-check"
+								className="add-button"
+								onClick={openNewNotice}
+							/>
+						</Col>
+					</Row>
+				)}
 				<Dialog
 					visible={avisoDialog}
 					style={{ width: "560px", fontSize: "16px" }}

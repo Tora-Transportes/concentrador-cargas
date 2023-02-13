@@ -11,9 +11,13 @@
   text-align: center;
   margin-bottom: 3rem;
 }
-
 .p-saudacao-aviso {
   color: #00652e;
+  font-style: italic;
+}
+.p-saudacao-aviso span {
+  color: #00652e;
+  font-weight: bold;
 }
 .card-avisos {
   font-family: "Poppins", sans-serif;
