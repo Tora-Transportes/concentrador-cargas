@@ -139,8 +139,8 @@ function Main() {
 			<ToastContainer />
 			<Menusuperior />
 			<Container className="class-body-main">
-				<Col className="text-end">
-					<span>V: 10</span>
+				<Col className="versao">
+					<span>Versão: 10</span>
 				</Col>
 				<Row>
 					<Col className="text-center mt-1 mb-5">
