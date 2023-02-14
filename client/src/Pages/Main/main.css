@@ -1,5 +1,23 @@
 .class-body-main {
   font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+.title-page-main {
+  margin-left: 5rem;
+}
+
+.button-avisos-style {
+  position: absolute;
+  top: 12.5%;
+  right: 0%;
+  color: #00652e;
+  border: none;
+  border-radius: 0.28rem;
+  width: 5rem;
+}
+.button-avisos-style b {
+  color: #fff;
+  text-decoration: none;
 }
 
 #navbar-tora {
@@ -216,8 +234,13 @@
   margin-top: 10vh;
   color: red;
 }
+@media only screen and (max-width: 928px) {
+  .title-page-main {
+    margin-left: 0.5rem;
+  }
+}
 
-@media only screen and (max-width: 1400px) {
+@media only screen and (max-width: 1334px) {
   #style-title-main {
     font-size: 35px;
   }
