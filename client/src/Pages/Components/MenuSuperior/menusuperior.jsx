@@ -4,28 +4,33 @@ import "./menuSuperior.css";
 import { NavbarBrand } from "react-bootstrap";
 import { FaSignOutAlt } from "react-icons/fa";
 import { logout } from "../../../MicrosoftAuthentication";
-//import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
+import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 
 function Menusuperior() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
   const [isPermissionCsn, setPermissionCsn] = useState(false);
   const [isPermissionPadrao, setPermissionPadrao] = useState(false);
-  const { isPermissionUser } = useContext(ContextUseDefault);
+  const [isColorHeader, setColorHeader] = useState("header");
+  const { setPermissionUser } = useContext(ContextUseDefault);
   useEffect(() => {
-    //(async () => {
-    //const userPermission = await validationPermissionUser();
-    if (isPermissionUser?.includes("CARGAS_PADRAO")) {
-      setPermissionPadrao(true);
-    }
-    if (isPermissionUser?.includes("CARGAS_CSN")) {
-      setPermissionCsn(true);
-    }
-    // })();
-  }, [isPermissionUser]);
+    (async () => {
+      const userPermission = await validationPermissionUser();
+      setPermissionUser(userPermission?.permissoes);
+      if (userPermission?.permissoes?.includes("CARGAS_PADRAO")) {
+        setPermissionPadrao(true);
+      }
+      if (userPermission?.permissoes?.includes("CARGAS_CSN")) {
+        setPermissionCsn(true);
+      }
+    })();
+    const tipoCorHeader =
+      process.env.REACT_APP_COR_NAVEBAR === "DEV" ? "headerDev" : "header";
+    setColorHeader(tipoCorHeader);
+  }, []);
 
   return (
-    <div id="header">
+    <div id={isColorHeader}>
       <NavbarBrand href="/">
         <img src={Logo} alt="Logo Tora" id="logo" />
       </NavbarBrand>

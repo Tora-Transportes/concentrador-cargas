@@ -32,28 +32,28 @@ class ServiceFinishCargasCsn {
 
   public async getCargasInicioTrajeto(): Promise<IInfoCarga[]> {
     return await database("con_cargas")
-      .select(["con_cargas.id", "VEICULO.VEI_REFERENCIA"])
-      .join("VEICULO", "VEICULO.VEI_PLACA", "con_cargas.placa_veiculo")
+      .select(["id", "rastreador"])
       .where("ativo", 1)
       .where("e_lote", 0)
       .andWhere("carga_csn", 1)
-      .whereNotNull("VEICULO.VEI_REFERENCIA")
+      .whereNotNull("con_cargas.rastreador")
+      .whereNot("rastreador", "Sem rastreador")
       .where("fk_situacao", 3)
       .orWhere("fk_situacao", 7)
       .orWhere("fk_situacao", 8);
   }
 
   public async lastPositionVeicle(
-    veiReferencia: string
+    ratreador: string
   ): Promise<ILastLocations | undefined> {
-    if (veiReferencia) {
+    if (ratreador) {
       const dataAtualMenos2Minuto = moment()
         .subtract(62, "minutes")
         .format("YYYY-MM-DDTHH:mm:ss");
 
       const queryBuild = await mssqlCoordenadas.raw(
         `select TOP 1 LAT, LON
-      from REPORTES where DISIMEI = '${veiReferencia}' and (dtinc < '${dataAtualMenos2Minuto}') order by dtinc desc`
+      from REPORTES where DISIMEI = '${ratreador}' and (dtinc < '${dataAtualMenos2Minuto}') order by dtinc desc`
       );
       return queryBuild[0];
     }
@@ -181,7 +181,7 @@ class ServiceFinishCargasCsn {
         .orderBy("con_pontos_parada.ID", "asc");
 
       const posicaoAtual = await this.lastPositionVeicle(
-        String(infoCarga.VEI_REFERENCIA)
+        String(infoCarga.rastreador)
       );
 
       if (posicaoAtual) {
@@ -243,22 +243,9 @@ class ServiceFinishCargasCsn {
             );
 
             const raioEmMetros = RAIO ? Number(RAIO) : 1;
-            // console.log(
-            //   DESCRICAO,
-            //   "distancia veiculo =>",
-            //   calculoDistancia.toFixed(3),
-            //   "Raio da empresa ->",
-            //   raioEmMetros,
-            //   "ID_ponto_parada:",
-            //   ID,
-            //   "Carga:",
-            //   ID_CON_CARGAS,
-            //   "---------------------"
-            // );
 
             if (
               Number(calculoDistancia.toFixed(3)) < raioEmMetros &&
-              //Number(calculoDistancia.toFixed(3)) < 1144 &&
               entradaOrSaida === "Entrada"
             ) {
               let tipoEfetivoSave;
@@ -285,7 +272,6 @@ class ServiceFinishCargasCsn {
               });
             } else if (
               Number(calculoDistancia.toFixed(3)) > raioEmMetros &&
-              //Number(calculoDistancia.toFixed(3)) > 130 &&
               entradaOrSaida === "Saida"
             ) {
               //Somando tempo de carregamento ou entrega na empresa
@@ -437,7 +423,6 @@ class ServiceFinishCargasCsn {
     ...valuePontoParada
   }: IDadosUpdate) {
     const DATA_ATUALIZACAO = this.dataAtual;
-
     await database("con_pontos_parada")
       .update({
         ...valuePontoParada,
@@ -471,13 +456,14 @@ class ServiceFinishCargasCsn {
       .update({
         fk_situacao,
         canal_comunicacao: "robô",
+        usuario: "robô",
         data_atualizacao,
       })
       .where("id", id);
 
     const cargaAtualizada = await this.cargaRepository.index(id);
     notifyAll({
-      name: "@carga-update",
+      name: "@carga-update-csn",
       details: cargaAtualizada,
     });
 

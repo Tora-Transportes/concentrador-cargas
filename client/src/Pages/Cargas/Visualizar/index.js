@@ -26,8 +26,8 @@ function Visualizar() {
 	const [LoadingComponent, setLoading] = useLoadingScreen();
 	const [itensPerPage, setItensPerPage] = useState(10);
 	const [modalShowExcel, setModalShowExcel] = useState(false);
-	const toast = useRef(null);
 
+	const toast = useRef(null);
 	useEffect(() => {
 		const actionCargasCreate = (payload) => {
 			if (!payload.e_lote) {

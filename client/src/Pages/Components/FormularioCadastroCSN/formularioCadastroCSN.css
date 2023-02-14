@@ -4,6 +4,13 @@
   grid-gap: 1rem;
 }
 
+.class-input-Bitrem {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 1rem;
+  margin-bottom: 10px;
+}
+
 .input-placaCav,
 .input-carreta,
 .input-bitrem,
@@ -29,7 +36,14 @@
   grid-template-columns: auto;
 }
 
-.class-botao-DetalhesV {
+.class-botao-Detalhes {
+  background: #00652e;
+  color: #ffff;
+  border: none;
+  margin-top: 1rem;
+  margin-right: 10px;
+}
+.class-botao-Detabito {
   background: #00652e;
   color: #ffff;
   border: none;
@@ -43,11 +57,6 @@
   font-size: 14px;
 }
 
-.class-input-motorista {
-  display: grid;
-  grid-template-columns: auto auto auto auto;
-  grid-gap: 1rem;
-}
 .row-input-coleta {
   padding-top: 15px;
   border: 1px solid #ced4da;
@@ -55,6 +64,36 @@
   margin-left: 2px !important;
   margin-right: 1.5px !important;
   margin-bottom: 15px;
+  background: #f9faf8;
+  /* padding-left: 12px !important; */
+}
+.row-input-placa {
+  padding-top: 15px;
+  box-shadow: 5px 10px #928a8a;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  margin-left: 2px !important;
+  margin-right: 1.5px !important;
+  margin-bottom: 15px;
+  background: #f9faf8;
+  padding-left: 16px !important;
+}
+
+.col-input-placa-button {
+  margin-bottom: 5px;
+  text-align: end;
+}
+
+.row-input-placas {
+  margin-right: 0 !important;
+  margin-top: 5px;
+}
+.row-input-coleta-inicio {
+  padding-top: 15px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  margin-left: 2px !important;
+  margin-right: 1.5px !important;
   background: #f9faf8;
   /* padding-left: 12px !important; */
 }
@@ -123,30 +162,13 @@ label {
 .class-input-moto {
   margin-top: 1rem;
 }
-#style-ipunt-motorista {
-  width: 45rem;
-  height: 2rem;
-}
-
 #title-check-não {
   margin-bottom: -20px;
 }
 
-#botao-deb-veiculo,
-#botao-detail-veiculo {
-  background: #00652e;
-  border: none;
-}
 .class-input-placaCav {
   display: grid;
   grid-template-columns: auto;
-}
-
-.class-botao-DetalhesV {
-  background: #00652e;
-  color: #ffff;
-  border: none;
-  margin-top: 1rem;
 }
 .modal-title-csn {
   margin-left: 20.5%;
@@ -172,8 +194,12 @@ label {
   .row-button-local {
     display: grid !important;
   }
-  .row-input-coleta {
+  .row-input-coleta,
+  .row-input-coleta-inicio {
     display: grid !important;
+  }
+  .class-botao-Detalhes {
+    margin-right: 0;
   }
 }
 @media only screen and (min-width: 354px) and (max-width: 575px) {

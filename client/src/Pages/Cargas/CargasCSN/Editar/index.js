@@ -12,7 +12,6 @@ import { getClaims } from "src/MicrosoftAuthentication";
 import ServiceCargas from "src/services/ServiceCargas";
 import FormularioCadastroCSN from "src/Pages/Components/FormularioCadastroCSN";
 import { funcBodyEdit, validarInputEfetivo } from "./menagemente";
-//import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 import { InputReferencError } from "src/Pages/Components/FormularioCadastroCSN/management";
 import { funcScrollTop } from "src/Pages/Utils/scrollTop";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
@@ -25,7 +24,7 @@ function EditarCargaCsn() {
 	const [viewsInput, setViewsInput] = useState(0);
 	const [isPermissionUserEdit, setPermissionUserEdit] = useState(true);
 	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
-	const [isViewButtonFinaliza, setViewButtonFinaliza] = useState(false);
+	//const [isViewButtonFinaliza, setViewButtonFinaliza] = useState(false);
 	const { isPermissionUser } = useContext(ContextUseDefault);
 
 	const messageDadosIncorretoInput = () => {
@@ -208,7 +207,7 @@ function EditarCargaCsn() {
 						const { data } = await ServiceCargas.updateCSN({
 							...values,
 							info_passagem: dadosPontoPassagem,
-							responsavel_cadastro: String(getClaims().name),
+							canal_comunicacao: "manual",
 							fk_situacao: undefined,
 							fk_filial: formik.values.fk_filial?.split("-")[0],
 							carga_csn: 1,
@@ -224,12 +223,9 @@ function EditarCargaCsn() {
 							}
 						);
 						if (resultOk) {
-							const InputEfetivoCorreto = validarInputEfetivo(
-								ponto_passagem,
-								ponto_passagem2,
-								ponto_passagem3,
-								ponto_passagem4,
-								6
+							const InputEfetivoCorreto = await validarInputEfetivo(
+								6,
+								values.id
 							);
 
 							if (!InputEfetivoCorreto) {
@@ -239,6 +235,7 @@ function EditarCargaCsn() {
 								await ServiceCargas.updateCSN({
 									...formik.values,
 									info_passagem: dadosPontoPassagem,
+									canal_comunicacao: "manual",
 									fk_situacao: 6,
 									fk_filial: formik.values.fk_filial?.split("-")[0],
 								});
@@ -517,8 +514,8 @@ function EditarCargaCsn() {
 						isPermissionUser={isPermissionUserEdit}
 						setDateErrorInput={setDateErrorInput}
 						isDateErrorInput={isDateErrorInput}
-						isViewButtonFinaliza={isViewButtonFinaliza}
-						setViewButtonFinaliza={setViewButtonFinaliza}
+						// isViewButtonFinaliza={isViewButtonFinaliza}
+						// setViewButtonFinaliza={setViewButtonFinaliza}
 					/>
 					<div className="class-group-button">
 						<Button
@@ -562,7 +559,8 @@ function EditarCargaCsn() {
 							</Button>
 						)}
 
-						{isViewButtonFinaliza && (
+						{/* {isViewButtonFinaliza && ( */}
+						{[3, 7, 8].includes(formik.values.fk_situacao) && (
 							<Button
 								variant="info"
 								className="p-2"

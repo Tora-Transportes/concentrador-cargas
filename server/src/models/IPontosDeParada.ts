@@ -1,6 +1,6 @@
 export default interface IPontosParada {
   ID?: number;
-  ID_CON_CARGAS: number;
+  ID_CON_CARGAS?: number;
   ID_ROTAS_CSN?: number | null;
   STATUS_SERVICO: string;
   PREVISAO?: Date | null;
@@ -43,11 +43,11 @@ export interface IPontosParadaPath {
   ENTREGA_FINAL?: number | null;
 }
 
-type TStringOrString = string | string;
+type TString = string;
 type TDateOrString = Date | string;
 type TNumbeOrString = number | string;
 export interface IInfo_passagemFormatFront {
-  client: TStringOrString;
+  client: TString;
   coletaEfetiva: TDateOrString;
   coletaEfetiva_mundo: TDateOrString;
   coletaEfetiva_peacao: TDateOrString;
@@ -60,12 +60,13 @@ export interface IInfo_passagemFormatFront {
   idRotaCsn: TNumbeOrString;
   latitude: TNumbeOrString;
   longitude: TNumbeOrString;
-  ponto: TStringOrString | undefined;
+  ponto: TString | undefined;
   previsao: TDateOrString;
   previsaoSaida: TDateOrString;
-  tempServicoLocal: TStringOrString;
-  tempServicoLocalEntrega: TStringOrString;
-  tipoServico: TStringOrString;
+  tempServicoLocal: TString;
+  tempServicoLocalEntrega: TString;
+  tipoServico: TString;
+  entregaFinal?: TNumbeOrString;
 }
 export interface IInfo_passagem {
   ponto_passagem: IInfo_passagemFormatFront;
@@ -76,4 +77,14 @@ export interface IInfo_passagem {
   ponto_passagem6: IInfo_passagemFormatFront;
   ponto_passagem7: IInfo_passagemFormatFront;
   id_carga: string;
+}
+
+export interface IPontoParadaFront {
+  client: string;
+  latitude: string;
+  longitude: string;
+  ponto: string;
+  previsao: Date | string;
+  previsaoSaida: Date | string;
+  tipoServico: string;
 }

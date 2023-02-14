@@ -18,8 +18,8 @@ function FormularioCadastroCSN({
 	isDateErrorInput,
 	setDateErrorInput,
 	isViwsCargaApp,
-	isViewButtonFinaliza,
-	setViewButtonFinaliza,
+	// isViewButtonFinaliza,
+	// setViewButtonFinaliza,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
@@ -46,6 +46,10 @@ function FormularioCadastroCSN({
 		}
 	}, [viewsInput]);
 
+	const infoVeiculoPlaca = async (plate) => {
+		return (await ServiceVeiculos.detalhesImpedimentos(plate)).data.data;
+	};
+
 	async function handleShowDetailsAboutVehicle(plate) {
 		if (!plate) {
 			swal("Placa inválida");
@@ -56,8 +60,7 @@ function FormularioCadastroCSN({
 		if (isDetalhesVeiculo) {
 			vehicleData = isDetalhesVeiculo;
 		} else {
-			vehicleData = (await ServiceVeiculos.detalhesImpedimentos(plate)).data
-				.data;
+			vehicleData = await infoVeiculoPlaca(plate);
 		}
 		if (!vehicleData) {
 			swal("Não foi encontrado nenhum veículo com essa placa.");
@@ -70,9 +73,7 @@ function FormularioCadastroCSN({
 			placaCarreta = detailVeiculo?.placa_carreta;
 		}
 
-		const resultCarreta = await (
-			await ServiceVeiculos.detalhesImpedimentos(placaCarreta)
-		).data.data;
+		const resultCarreta = await infoVeiculoPlaca(placaCarreta);
 
 		if (resultCarreta) setDetalesCarreta(resultCarreta);
 		setVeiculo(vehicleData);
@@ -87,6 +88,7 @@ function FormularioCadastroCSN({
 			formik.setFieldValue("nome_motorista", null);
 		}
 	}, [formik.values.e_lote]);
+
 	async function handleSearchVehicle(plate) {
 		if (plate) {
 			setDetalesVeiculo(null);
@@ -101,19 +103,35 @@ function FormularioCadastroCSN({
 					vehicleDetails.codigo_motorista
 				);
 
-				const detalhesVeiculos = (
-					await ServiceVeiculos.detalhesImpedimentos(plate)
-				).data.data;
-
+				const detalhesVeiculos = await infoVeiculoPlaca(plate);
+				//detalhesVeiculos.RASTREADOR = "";
 				if (detalhesVeiculos?.RASTREADOR?.length > 2) {
 					await formik.setFieldValue("rastreador", detalhesVeiculos.RASTREADOR);
 				} else {
-					await formik.setFieldValue("rastreador", "Sem rastreador");
-					await Swal2.fire({
-						icon: "info",
-						title: "Oops...",
-						text: "“Veículo sem Rastreador, o processo de verificação de polígonos não será aplicado”.",
-					});
+					let rastreadorCarretaOrBitrem;
+					//vehicleDetails.placa_carreta = "";
+					if (vehicleDetails?.placa_carreta) {
+						rastreadorCarretaOrBitrem = await infoVeiculoPlaca(
+							vehicleDetails.placa_carreta
+						);
+					} else if (vehicleDetails?.placa_bitrem) {
+						rastreadorCarretaOrBitrem = await infoVeiculoPlaca(
+							vehicleDetails.placa_bitrem
+						);
+					}
+					if (rastreadorCarretaOrBitrem?.RASTREADOR?.length > 2) {
+						await formik.setFieldValue(
+							"rastreador_carreta",
+							rastreadorCarretaOrBitrem.RASTREADOR
+						);
+					} else {
+						await formik.setFieldValue("rastreador", "Sem rastreador");
+						await Swal2.fire({
+							icon: "info",
+							title: "Oops...",
+							text: "“Veículo sem Rastreador, o processo de verificação de polígonos não será aplicado”.",
+						});
+					}
 				}
 
 				const { data } = (
@@ -187,7 +205,6 @@ function FormularioCadastroCSN({
 				setDebitosVeiculo={setDebitosVeiculo}
 				setVeiculo={setVeiculo}
 				isDetalhesCarreta={isDetalhesCarreta}
-				//isDetalhesVeiculo={isDetalhesVeiculo}
 				valorTotalDebito={valorTotalDebito}
 				fkSituacao={fkSituacao}
 				handleEnter={handleEnter}
@@ -195,8 +212,8 @@ function FormularioCadastroCSN({
 				setDateErrorInput={setDateErrorInput}
 				isDateErrorInput={isDateErrorInput}
 				isViwsCargaApp={isViwsCargaApp}
-				isViewButtonFinaliza={isViewButtonFinaliza}
-				setViewButtonFinaliza={setViewButtonFinaliza}
+				// isViewButtonFinaliza={isViewButtonFinaliza}
+				// setViewButtonFinaliza={setViewButtonFinaliza}
 			/>
 		</div>
 	);

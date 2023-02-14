@@ -3,12 +3,13 @@ import "./formularioCadastroCSN.css";
 import { Col, FloatingLabel, Form, Row } from "react-bootstrap";
 import RotasSelect from "../FilialSelect/rotasSelect";
 import InputCliente from "../InputCliente";
-import { funcDuracaoProcesso, validInputPreenchidos } from "./management";
+import { MontarBoryEditPatch } from "./management";
 import {
 	funcCompareDateOneYear,
 	//funcValidInputDate,
 } from "src/Pages/Utils/formatDate";
 import swal from "sweetalert";
+import ServicesPontoParada from "src/services/ServicesPontoParada";
 
 const InputsPontoPassagem = ({
 	formik,
@@ -20,12 +21,12 @@ const InputsPontoPassagem = ({
 	isDateErrorInput,
 	setDateErrorInput,
 	//isViewButtonFinaliza,
-	setViewButtonFinaliza,
+	//setViewButtonFinaliza,
 }) => {
 	const [inputPontoPassagem5, setInputPontoPassagem5] = useState(true);
 	const [inputPontoPassagem6, setInputPontoPassagem6] = useState(true);
 	const [inputPontoPassagem7, setInputPontoPassagem7] = useState(true);
-	const [isCountInputPrenchido, setCountInputPrenchido] = useState(0);
+	//const [isCountInputPrenchido, setCountInputPrenchido] = useState(0);
 
 	const disabledValidEfetiva =
 		[6, 9].includes(formik.values.fk_situacao) && isPermissionUser
@@ -55,6 +56,11 @@ const InputsPontoPassagem = ({
 		}
 	}, [formik.values]);
 
+	const savePontoPassagemEdit = async (date, id, positionInput) => {
+		const bodySave = MontarBoryEditPatch(positionInput, date, formik, id);
+		await ServicesPontoParada.updatePatchCSN(id, bodySave);
+	};
+
 	const handleEnter = (event) => {
 		if (event.key === "Enter") {
 			const form = event.target.form;
@@ -69,7 +75,7 @@ const InputsPontoPassagem = ({
 		}
 	};
 
-	const validarDatas = async (date, positionInput) => {
+	const validarDatas = async (date, positionInput, id) => {
 		const resultValidation = funcCompareDateOneYear(date);
 		if (resultValidation?.error) {
 			const arrayErrorEdit = [...isDateErrorInput];
@@ -77,25 +83,28 @@ const InputsPontoPassagem = ({
 			setDateErrorInput(arrayErrorEdit);
 			swal("", resultValidation.message, "info");
 		} else {
-			if (
-				validInputPreenchidos(
-					date,
-					positionInput,
-					isCountInputPrenchido,
-					setCountInputPrenchido
-				)
-			) {
-				setViewButtonFinaliza(true);
-			}
+			// if (
+			// 	validInputPreenchidos(
+			// 		date,
+			// 		positionInput,
+			// 		isCountInputPrenchido,
+			// 		setCountInputPrenchido
+			// 	)
+			// ) {
+			// 	setViewButtonFinaliza(true);
+			// }
 			const arrayErrorEdit = [...isDateErrorInput];
 			arrayErrorEdit[positionInput].error = false;
 			setDateErrorInput(arrayErrorEdit);
+			if (id && date !== null) {
+				savePontoPassagemEdit(date, id, positionInput);
+			}
 		}
 	};
 
 	return (
 		<>
-			<Row className="row-input-coleta">
+			<Row className="row-input-coleta-inicio">
 				<Col sm={12} md={12} lg={12} xxl={6}>
 					<FloatingLabel label="*Ponto de Passagem" className="mb-3">
 						<Form.Control
@@ -182,7 +191,8 @@ const InputsPontoPassagem = ({
 									onBlur={() => {
 										validarDatas(
 											formik.values.ponto_passagem.coletaEfetiva_posto30,
-											2
+											2,
+											formik.values.ponto_passagem.id
 										);
 									}}
 									disabled={disabledValidEfetiva}
@@ -204,14 +214,15 @@ const InputsPontoPassagem = ({
 									isInvalid={isDateErrorInput[3]?.error}
 									max="9999-12-12T00:00"
 									onBlur={() => {
-										funcDuracaoProcesso(
-											formik,
-											1,
-											formik.values.ponto_passagem.coletaEfetivaSaida
-										);
+										// funcDuracaoProcesso(
+										// 	formik,
+										// 	3,
+										// 	formik.values.ponto_passagem.coletaEfetivaSaida
+										// );
 										validarDatas(
 											formik.values.ponto_passagem.coletaEfetivaSaida,
-											3
+											3,
+											formik.values.ponto_passagem.id
 										);
 									}}
 									disabled={disabledValidEfetiva}
@@ -237,8 +248,8 @@ const InputsPontoPassagem = ({
 					</>
 				)}
 			</Row>
-
-			<Row className="row-input-coleta">
+			<br />
+			<Row className="row-input-coleta-inicio">
 				<Col sm={12} md={12} lg={12} xxl={6}>
 					<FloatingLabel label="Ponto de Passagem 2" className="mb-3">
 						<Form.Control
@@ -323,7 +334,8 @@ const InputsPontoPassagem = ({
 									onBlur={() => {
 										validarDatas(
 											formik.values.ponto_passagem2.coletaEfetiva_mundo,
-											6
+											6,
+											formik.values.ponto_passagem2.id
 										);
 									}}
 									disabled={disabledValidEfetiva}
@@ -344,14 +356,15 @@ const InputsPontoPassagem = ({
 									isInvalid={isDateErrorInput[7]?.error}
 									max="9999-12-12T00:00"
 									onBlur={() => {
-										funcDuracaoProcesso(
-											formik,
-											2,
-											formik.values.ponto_passagem2.coletaEfetivaSaida
-										);
+										// funcDuracaoProcesso(
+										// 	formik,
+										// 	7,
+										// 	formik.values.ponto_passagem2.coletaEfetivaSaida
+										// );
 										validarDatas(
 											formik.values.ponto_passagem2.coletaEfetivaSaida,
-											7
+											7,
+											formik.values.ponto_passagem2.id
 										);
 									}}
 									disabled={disabledValidEfetiva}
@@ -377,7 +390,8 @@ const InputsPontoPassagem = ({
 					</>
 				)}
 			</Row>
-			<Row className="row-input-coleta">
+			<br />
+			<Row className="row-input-coleta-inicio">
 				<Col sm={12} md={12} lg={12} xxl={6}>
 					<FloatingLabel label="Ponto de Passagem 3" className="mb-3">
 						<Form.Control
@@ -463,7 +477,8 @@ const InputsPontoPassagem = ({
 									onBlur={() => {
 										validarDatas(
 											formik.values.ponto_passagem3.coletaEfetiva_peacao,
-											10
+											10,
+											formik.values.ponto_passagem3.id
 										);
 									}}
 									disabled={disabledValidEfetiva}
@@ -484,14 +499,15 @@ const InputsPontoPassagem = ({
 									isInvalid={isDateErrorInput[11]?.error}
 									max="9999-12-12T00:00"
 									onBlur={() => {
-										funcDuracaoProcesso(
-											formik,
-											3,
-											formik.values.ponto_passagem3.coletaEfetivaSaida
-										);
+										// funcDuracaoProcesso(
+										// 	formik,
+										// 	11,
+										// 	formik.values.ponto_passagem3.coletaEfetivaSaida
+										// );
 										validarDatas(
 											formik.values.ponto_passagem3.coletaEfetivaSaida,
-											11
+											11,
+											formik.values.ponto_passagem3.id
 										);
 									}}
 									disabled={disabledValidEfetiva}
@@ -517,6 +533,7 @@ const InputsPontoPassagem = ({
 					</>
 				)}
 			</Row>
+			<br />
 			{inputColeta5 && (
 				<Row className="row-input-coleta">
 					{inputPontoPassagem5 ? (
@@ -659,14 +676,15 @@ const InputsPontoPassagem = ({
 										isInvalid={isDateErrorInput[14]?.error}
 										max="9999-12-12T00:00"
 										onBlur={() => {
-											funcDuracaoProcesso(
-												formik,
-												5,
-												formik.values.ponto_passagem5.coletaEfetivaSaida
-											);
+											// funcDuracaoProcesso(
+											// 	formik,
+											// 	14,
+											// 	formik.values.ponto_passagem5.coletaEfetivaSaida
+											// );
 											validarDatas(
 												formik.values.ponto_passagem5.coletaEfetivaSaida,
-												14
+												14,
+												formik.values.ponto_passagem5.id
 											);
 										}}
 										disabled={disabledValidEfetiva}
@@ -819,7 +837,8 @@ const InputsPontoPassagem = ({
 										onBlur={() => {
 											validarDatas(
 												formik.values.ponto_passagem6.coletaEfetiva,
-												17
+												17,
+												formik.values.ponto_passagem6.id
 											);
 										}}
 										onKeyDown={handleEnter}
@@ -849,14 +868,15 @@ const InputsPontoPassagem = ({
 										isInvalid={isDateErrorInput[18]?.error}
 										max="9999-12-12T00:00"
 										onBlur={() => {
-											funcDuracaoProcesso(
-												formik,
-												6,
-												formik.values.ponto_passagem6.coletaEfetiva
-											);
+											// funcDuracaoProcesso(
+											// 	formik,
+											// 	18,
+											// 	formik.values.ponto_passagem6.coletaEfetiva
+											// );
 											validarDatas(
 												formik.values.ponto_passagem6.entregaEfetivaSaida,
-												18
+												18,
+												formik.values.ponto_passagem6.id
 											);
 										}}
 										disabled={disabledValidEfetiva}
@@ -1030,13 +1050,13 @@ const InputsPontoPassagem = ({
 										}
 										onKeyDown={handleEnter}
 										onChange={formik.handleChange}
-										onBlur={() =>
-											funcDuracaoProcesso(
-												formik,
-												7,
-												formik.values.ponto_passagem7.coletaEfetivaSaida
-											)
-										}
+										// onBlur={() =>
+										// 	funcDuracaoProcesso(
+										// 		formik,
+										// 		19,
+										// 		formik.values.ponto_passagem7.coletaEfetivaSaida
+										// 	)
+										// }
 										disabled={disabledValidEfetiva}
 										required
 									/>
@@ -1156,7 +1176,8 @@ const InputsPontoPassagem = ({
 									onBlur={() => {
 										validarDatas(
 											formik.values.ponto_passagem4.entregaEfetiva,
-											23
+											23,
+											formik.values.ponto_passagem4.id
 										);
 									}}
 									disabled={disabledValidEfetiva}
@@ -1179,14 +1200,15 @@ const InputsPontoPassagem = ({
 									isInvalid={isDateErrorInput[24]?.error}
 									max="9999-12-12T00:00"
 									onBlur={() => {
-										funcDuracaoProcesso(
-											formik,
-											4,
-											formik.values.ponto_passagem4.entregaEfetivaSaida
-										);
+										// funcDuracaoProcesso(
+										// 	formik,
+										// 	24,
+										// 	formik.values.ponto_passagem4.entregaEfetivaSaida
+										// );
 										validarDatas(
 											formik.values.ponto_passagem4.entregaEfetivaSaida,
-											24
+											24,
+											formik.values.ponto_passagem4.id
 										);
 									}}
 									disabled={disabledValidEfetiva}

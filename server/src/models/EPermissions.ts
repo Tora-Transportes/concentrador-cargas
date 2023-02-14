@@ -11,6 +11,7 @@ enum EPermissions {
   FINALIZAR_CARGAS_CSN = "FINALIZAR_CARGAS_CSN",
   MANUTENCAO_TRAJETO_FINALIZADO = "MANUTENCAO_TRAJETO-FINALIZADO",
   ENVIAR_CARGA_APP = "ENVIAR_CARGA_APP",
+  GERENCIAR_AVISOS = "GERENCIAR_AVISOS",
 }
 
 export function isValidPermission(permission: string) {
@@ -26,7 +27,8 @@ export function isValidPermission(permission: string) {
     permission === EPermissions.CARGAS_PADRAO ||
     permission === EPermissions.FINALIZAR_CARGAS_CSN ||
     permission === EPermissions.MANUTENCAO_TRAJETO_FINALIZADO ||
-    permission === EPermissions.ENVIAR_CARGA_APP
+    permission === EPermissions.ENVIAR_CARGA_APP ||
+    permission === EPermissions.GERENCIAR_AVISOS
   );
 }
 

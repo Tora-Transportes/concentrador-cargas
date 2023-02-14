@@ -43,8 +43,8 @@ export default function ViewsForm({
 	isDateErrorInput,
 	setDateErrorInput,
 	isViwsCargaApp,
-	isViewButtonFinaliza,
-	setViewButtonFinaliza,
+	// isViewButtonFinaliza,
+	// setViewButtonFinaliza,
 }) {
 	const handleEnter = (event) => {
 		if (event.key === "Enter") {
@@ -239,7 +239,7 @@ export default function ViewsForm({
 							<h3 id="title-check-não">Dados do veículo</h3>
 						</Col>
 					</Row>
-					<Row>
+					<Row className="mb-2">
 						<Form.Text muted className="fw-bold">
 							Caso os dados vinculados à placa não estejam corretos realize a
 							alteração no SIT, depois volte a essa página clique dentro do
@@ -247,106 +247,127 @@ export default function ViewsForm({
 							realizada novamente. Lembrando que a atualização dos dados ficará
 							indisponível uma vez que o veículo for {`"Aprovado pelo GR"`}.
 						</Form.Text>
-						<Col sm={6} md={6}>
-							<InputPlaca
-								className="input-placaCav"
-								id="Plca-cavalo"
-								readOnly={
-									formik.values.fk_situacao &&
-									![1, 2, 4].includes(Number(formik.values.fk_situacao))
-								}
-								placeholder="Placa Veículo"
-								disabled={formik.values.e_lote}
-								type="text"
-								name="placa_veiculo"
-								value={formik.values.placa_veiculo || ""}
-								onChange={formik.handleChange}
-								onBlur={() => {
-									if (
-										!formik.values.fk_situacao ||
-										[1, 2, 4].includes(Number(formik.values.fk_situacao))
-									) {
-										handleSearchVehicle(formik.values.placa_veiculo);
+					</Row>
+					<Row className="row-input-placa">
+						<Row>
+							<Col sm={12} md={6}>
+								<InputPlaca
+									className="input-placaCav"
+									id="Plca-cavalo"
+									readOnly={
+										formik.values.fk_situacao &&
+										![1, 2, 4].includes(Number(formik.values.fk_situacao))
 									}
-								}}
-							/>
-						</Col>
-						<Col sm={6} md={6}>
-							<InputGroup className="input-carreta mb-2">
-								<InputGroup.Text>Rastreador</InputGroup.Text>
-								<Form.Control
-									readOnly
-									placeholder="Rastreador Cavalo"
+									placeholder="Placa Veículo"
+									disabled={formik.values.e_lote}
 									type="text"
-									value={formik.values.rastreador || ""}
+									name="placa_veiculo"
+									value={formik.values.placa_veiculo || ""}
+									onChange={formik.handleChange}
+									onBlur={() => {
+										if (
+											!formik.values.fk_situacao ||
+											[1, 2, 4].includes(Number(formik.values.fk_situacao))
+										) {
+											handleSearchVehicle(formik.values.placa_veiculo);
+										}
+									}}
 								/>
-							</InputGroup>
-						</Col>
+							</Col>
+							<Col sm={12} md={6}>
+								<InputGroup className="input-carreta mb-2">
+									<InputGroup.Text>Rastreador</InputGroup.Text>
+									<Form.Control
+										readOnly
+										placeholder="Rastreador Cavalo"
+										type="text"
+										value={formik.values.rastreador || ""}
+									/>
+								</InputGroup>
+							</Col>
+						</Row>
+
+						<Row>
+							<Col sm={12} md={6}>
+								<InputGroup className="input-carreta mb-2">
+									<InputGroup.Text>Carreta</InputGroup.Text>
+									<Form.Control
+										readOnly
+										placeholder="Placa Carreta"
+										type="text"
+										value={formik.values.placa_carreta || ""}
+									/>
+								</InputGroup>
+							</Col>
+							<Col sm={12} md={6}>
+								<InputGroup className="input-carreta mb-2">
+									<InputGroup.Text>Rastreador Carreta</InputGroup.Text>
+									<Form.Control
+										readOnly
+										placeholder="Rastreador Carreta"
+										type="text"
+										value={formik.values.rastreador_carreta || ""}
+									/>
+								</InputGroup>
+							</Col>
+						</Row>
+						<Row>
+							<Col sm={12} md={6}>
+								<InputGroup className="class-input-moto">
+									<InputGroup.Text>Bitrem</InputGroup.Text>
+									<Form.Control
+										readOnly
+										placeholder="Placa Bitrem"
+										type="text"
+										value={formik.values.placa_bitrem || ""}
+									/>
+								</InputGroup>
+							</Col>
+							<Col>
+								<InputGroup className="input-bitrem mb-2">
+									<InputGroup.Text>Motorista</InputGroup.Text>
+									<Form.Control
+										readOnly
+										placeholder="Nome Motorista"
+										type="text"
+										value={
+											formik.values.codigo_motorista &&
+											formik.values.nome_motorista
+												? `${formik.values.codigo_motorista} - ${formik.values.nome_motorista}`
+												: ""
+										}
+									/>
+								</InputGroup>
+							</Col>
+						</Row>
+						<Row>
+							<Col className="col-input-placa-button">
+								<Button
+									className="class-botao-Detalhes"
+									id="botao-detail-veiculo"
+									onClick={() =>
+										handleShowDetailsAboutVehicle(formik.values.placa_veiculo)
+									}
+								>
+									Detalhes veículo
+								</Button>
+
+								<Button
+									className="class-botao-Detabito"
+									id="botao-deb-veiculo"
+									onClick={() =>
+										handleShowDebitAboutVehicle(formik.values.placa_veiculo)
+									}
+								>
+									Débitos veículo
+								</Button>
+							</Col>
+						</Row>
 					</Row>
-					<Row>
-						<Col sm={12} md={6}>
-							<InputGroup className="input-carreta mb-2">
-								<InputGroup.Text>Carreta</InputGroup.Text>
-								<Form.Control
-									readOnly
-									placeholder="Placa Carreta"
-									type="text"
-									value={formik.values.placa_carreta || ""}
-								/>
-							</InputGroup>
-						</Col>
-						<Col>
-							<InputGroup className="input-bitrem mb-2">
-								<InputGroup.Text>Bitrem</InputGroup.Text>
-								<Form.Control
-									readOnly
-									placeholder="Placa Bitrem"
-									type="text"
-									value={formik.values.placa_bitrem || ""}
-								/>
-							</InputGroup>
-						</Col>
-					</Row>
-
-					<div className="class-input-motorista">
-						<InputGroup id="style-ipunt-motorista" className="class-input-moto">
-							<InputGroup.Text>Motorista</InputGroup.Text>
-							<Form.Control
-								readOnly
-								placeholder="Motorista"
-								type="text"
-								value={
-									formik.values.codigo_motorista && formik.values.nome_motorista
-										? `${formik.values.codigo_motorista} - ${formik.values.nome_motorista}`
-										: ""
-								}
-							/>
-						</InputGroup>
-						<Button
-							className="class-botao-DetalhesV"
-							id="botao-detail-veiculo"
-							onClick={() =>
-								handleShowDetailsAboutVehicle(formik.values.placa_veiculo)
-							}
-						>
-							Detalhes veículo
-						</Button>
-
-						<Button
-							className="class-botao-DetalhesV"
-							id="botao-deb-veiculo"
-							onClick={() =>
-								handleShowDebitAboutVehicle(formik.values.placa_veiculo)
-							}
-						>
-							Débitos veículo
-						</Button>
-					</div>
-
 					<Row>
 						<Col>
 							{formik.values.observacao_gr && (
-								<FloatingLabel label="Observacao GR" className="mb-3">
+								<FloatingLabel label="Observacao GR" className="mb-1 mt-3">
 									<Form.Control
 										as="textarea"
 										type="text"
@@ -357,13 +378,13 @@ export default function ViewsForm({
 								</FloatingLabel>
 							)}
 						</Col>
-						<div className="class-linha-title4">
+						{/* <div className="class-linha-title4">
 							<hr className="w-100"></hr>
-						</div>
+						</div> */}
 					</Row>
 				</>
 			)}
-			<Row>
+			<Row className="mt-3">
 				<Col>
 					<InputCliente
 						id="info-clie"
@@ -433,8 +454,8 @@ export default function ViewsForm({
 				isPermissionUser={isPermissionUser}
 				setDateErrorInput={setDateErrorInput}
 				isDateErrorInput={isDateErrorInput}
-				isViewButtonFinaliza={isViewButtonFinaliza}
-				setViewButtonFinaliza={setViewButtonFinaliza}
+				// isViewButtonFinaliza={isViewButtonFinaliza}
+				// setViewButtonFinaliza={setViewButtonFinaliza}
 			/>
 
 			<Row className="row-button-local">

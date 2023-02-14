@@ -1,20 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 import ServiceCsnCargas from "src/services/ServiceCsnCargas";
 import swal from "sweetalert";
-//import { validationPermissionUser } from "../Utils/validationPermissionUser";
+import { validationPermissionUser } from "../Utils/validationPermissionUser";
 import ViewsLocalizacao from "./views";
 
 const LocalizacaoCSN = () => {
 	const [dadosLocalizacao, setDadosLocalizacao] = useState();
 	const [atualizarTabela, setAtualizarTabela] = useState(false);
-	const { isPermissionUser } = useContext(ContextUseDefault);
 	const history = useHistory();
+
 	useEffect(() => {
 		(async () => {
-			//const userPermission = await validationPermissionUser();
-			if (!isPermissionUser?.includes("CARGAS_CSN")) {
+			const userPermission = await validationPermissionUser();
+			if (!userPermission?.permissoes.includes("CARGAS_CSN")) {
 				await swal(
 					"OPS!",
 					"O usuário não possui permissão para acessar esta página.",
@@ -23,7 +22,7 @@ const LocalizacaoCSN = () => {
 				history.push("/");
 			}
 		})();
-	}, [isPermissionUser]);
+	}, []);
 
 	useEffect(() => {
 		(async () => {

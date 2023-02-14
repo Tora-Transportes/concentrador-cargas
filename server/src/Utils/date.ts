@@ -7,4 +7,16 @@ const getCurrentDate = () => {
   return currentDate;
 };
 
-export default { getCurrentDate };
+const formatDateTimezone = (data: Date | string) => {
+  const currentDate = moment
+    .utc(
+      moment(data)
+        .add(3, "hours")
+        .tz("America/Sao_Paulo")
+        .format("YYYY-MM-DDTHH:mm:ss")
+    )
+    .toDate();
+  return currentDate;
+};
+
+export default { getCurrentDate, formatDateTimezone };

@@ -1,51 +1,53 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { useFormik } from "formik";
-import { validarAviso } from "./ValidarAviso";
+
 import { Container, Row } from "react-bootstrap";
 import ViewsAviso from "./views";
+import ServiceAvisos from "src/services/ServiceAvisos";
 
 function Avisos() {
-	const [isAvisos, setAvisos] = useState([]);
+	const [dadosAvisos, setDadosAvisos] = useState([]);
+	const [atualizarAvisos, setAtualizarAvisos] = useState(false);
+	const { id } = useParams();
+	localStorage.setItem("viewsAviso", id);
 
 	const formik = useFormik({
 		initialValues: {
-			id: "",
-			titulo: "",
-			mensagem: "",
-			data_cadastro: "",
+			ID: "",
+			TITULO: "",
+			MENSAGEM: "",
+			AUTOR: "",
+			DATA_CADASTRO: "",
 		},
 	});
 
 	useEffect(() => {
 		(async () => {
 			try {
-				const carga = validarAviso;
-				setAvisos(carga);
-				for (const i in carga) {
-					const nonNullValue = carga[i] === null ? "" : carga[i];
-					if (i.indexOf("data_cadastro") !== -1) {
-						formik.setFieldValue(i, nonNullValue?.split("T")[0]);
-					} else {
-						formik.setFieldValue(i, nonNullValue);
-					}
-				}
+				const { data } = (await ServiceAvisos.list()).data;
+				setDadosAvisos(data);
 			} catch (error) {
 				console.error("Error", error);
 			}
 		})();
-	}, []);
+		setAtualizarAvisos(false);
+	}, [atualizarAvisos]);
 
 	return (
 		<>
 			<Menusuperior />
-			<Container className="mb-5 mt-5">
+			<Container className="container-body-avisos">
 				<Row>
-					<p className="title-consultarCarga">Avisos</p>
-					<hr className="w-100" />
+					<p className="title-avisos">Avisos</p>
 				</Row>
 				<Row>
-					<ViewsAviso formik={formik} isAvisos={isAvisos} />
+					<ViewsAviso
+						formik={formik}
+						dadosAvisos={dadosAvisos}
+						setAtualizarAvisos={setAtualizarAvisos}
+					/>
 				</Row>
 			</Container>
 		</>

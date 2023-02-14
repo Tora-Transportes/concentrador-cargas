@@ -1,7 +1,13 @@
 import AppError from "../models/AppError";
-import IPontosParada, { IInfo_passagem } from "../models/IPontosDeParada";
+import IPontosParada, {
+  IInfo_passagem,
+  IPontosParadaPath,
+} from "../models/IPontosDeParada";
 import { formatDateObject } from "../Utils/formatData";
-import { factoryPontoParada } from "../validations/PontoParadasValidation";
+import {
+  factoryPontoParada,
+  factoryPontoParadaPatch,
+} from "../validations/PontoParadasValidation";
 import { PontoParadaRepository } from "./../repositories/PontoParadaRepository";
 const dataAtual = new Date();
 
@@ -10,18 +16,67 @@ export class UseCaseAddPontoParadas {
     private readonly pontoParadaRepository = new PontoParadaRepository()
   ) {}
 
-  async run(dataParada: IPontosParada) {
-    const validator = factoryPontoParada();
-    const pontoParada: IPontosParada = await validator.validate(dataParada, {
-      abortEarly: false,
-      stripUnknown: true,
-    });
-    const dadosParada = { ...dataParada, DATA_CADASTRO: dataAtual };
-    dadosParada.PREVISAO = new Date(String(dadosParada.PREVISAO));
-    dadosParada.PREVISAO_SAIDA = new Date(String(dadosParada.PREVISAO_SAIDA));
-    await this.pontoParadaRepository.create(dadosParada);
+  async run(
+    id_carga: number,
+    {
+      ponto_passagem,
+      ponto_passagem2,
+      ponto_passagem3,
+      ponto_passagem4,
+      ponto_passagem5,
+      ponto_passagem6,
+      ponto_passagem7,
+    }: IInfo_passagem
+  ) {
+    for (const [, value] of Object.entries({
+      ponto_passagem,
+      ponto_passagem2,
+      ponto_passagem3,
+      ponto_passagem4,
+      ponto_passagem5,
+      ponto_passagem6,
+      ponto_passagem7,
+    })) {
+      if (
+        (value.ponto &&
+          value.ponto.length > 0 &&
+          value.previsao !== "string") ||
+        (typeof value.latitude !== "string" &&
+          typeof value.longitude !== "string")
+      ) {
+        const {
+          client,
+          latitude,
+          longitude,
+          ponto,
+          previsao,
+          previsaoSaida,
+          tipoServico,
+          entregaFinal,
+        } = value;
 
-    return pontoParada;
+        const body = {
+          ID_ROTAS_CSN: ponto ? Number(ponto?.split("-")[0]) : null,
+          ID_CON_CARGAS: id_carga,
+          PREVISAO: formatDateObject(new Date(previsao)),
+          STATUS_SERVICO: tipoServico.toUpperCase(),
+          LATITUDE: latitude ? String(latitude) : null,
+          LONGITUDE: longitude ? String(longitude) : null,
+          CLIENTE: client === "" ? ponto : client,
+          PREVISAO_SAIDA: formatDateObject(new Date(previsaoSaida)),
+          ENTREGA_FINAL: entregaFinal ? Number(entregaFinal) : 0,
+        };
+
+        const validator = factoryPontoParada();
+        await validator.validate(body, {
+          abortEarly: false,
+          stripUnknown: true,
+        });
+        const dadosParada = { ...body, DATA_CADASTRO: dataAtual };
+        await this.pontoParadaRepository.create(dadosParada);
+      }
+    }
+    return { message: "Salvo com sucesso!" };
   }
 }
 
@@ -31,6 +86,16 @@ export class UseCaseSearchPontoParada {
   ) {}
   async run() {
     return await this.pontoParadaRepository.search();
+  }
+}
+export class UseCaseSearchPontoParadaIdCarga {
+  constructor(
+    private readonly pontoParadaRepository = new PontoParadaRepository()
+  ) {}
+  async run(idCarga: number) {
+    if (!idCarga)
+      throw new AppError("Id da carga é um parâmetro obrigatório!", 400);
+    return await this.pontoParadaRepository.searchOfIdCarga(idCarga);
   }
 }
 
@@ -54,6 +119,33 @@ export class UseCaseUpdatePontoParadaRota {
     return await this.pontoParadaRepository.update(id, dadosParada);
   }
 }
+
+export class UseCaseUpdatePontoParadaPartial {
+  constructor(
+    private readonly pontoParadaRepository = new PontoParadaRepository()
+  ) {}
+
+  async run(id: number, bodyParada: IPontosParadaPath) {
+    const existeRota = await this.pontoParadaRepository.index(id);
+    if (!existeRota) throw new AppError("O Ponto de parada não existe", 400);
+    const validator = factoryPontoParadaPatch();
+    const pontoParada: IPontosParadaPath = await validator.validate(
+      bodyParada,
+      {
+        abortEarly: false,
+        stripUnknown: true,
+      }
+    );
+    // if (bodyParada.COLETA_EFETIVA_POSTO30) {
+    //   bodyParada.COLETA_EFETIVA_POSTO30 = new Date(
+    //     bodyParada.COLETA_EFETIVA_POSTO30
+    //   );
+    // }
+    const dadosParada = { ...pontoParada, DATA_ATUALIZACAO: dataAtual };
+    await this.pontoParadaRepository.updatePatch(id, dadosParada);
+    return { mensagem: "Editado com sucesso!" };
+  }
+}
 export class UseCaseUpdatePontoParada {
   constructor(
     private readonly pontoParadaRepository = new PontoParadaRepository()
@@ -69,7 +161,7 @@ export class UseCaseUpdatePontoParada {
     ponto_passagem7,
     id_carga,
   }: IInfo_passagem): Promise<void> {
-    for (const [key, value] of Object.entries({
+    for (const [, value] of Object.entries({
       ponto_passagem,
       ponto_passagem2,
       ponto_passagem3,
@@ -165,7 +257,6 @@ export class UseCaseUpdatePontoParada {
         const dadosParada = { ...pontoParada, DATA_ATUALIZACAO: dataAtual };
         await this.pontoParadaRepository.update(id, dadosParada);
       }
-      key;
     }
   }
 }
@@ -189,5 +280,7 @@ const instancias = {
   useCaseUpdatePontoParadas: new UseCaseUpdatePontoParada(),
   useCaseUpdatePontoParadasRota: new UseCaseUpdatePontoParadaRota(),
   useCaseDeletePontoParada: new UseCaseDeletePontoParada(),
+  useCaseUpdatePontoParadaPartial: new UseCaseUpdatePontoParadaPartial(),
+  useCaseSearchPontoParadaIdCarga: new UseCaseSearchPontoParadaIdCarga(),
 };
 export default instancias;

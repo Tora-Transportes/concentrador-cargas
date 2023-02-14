@@ -21,8 +21,8 @@ import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 const CadastroCargaCSN = () => {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [produtos, setProdutos] = useState([]);
-	const [isViwsCargaApp, setViwsCargaApp] = useState(false);
 	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
+	const [isViwsCargaApp, setViwsCargaApp] = useState(false);
 	const { isPermissionUser } = useContext(ContextUseDefault);
 	const history = useHistory();
 	const dataAtual = new Date();
@@ -140,6 +140,9 @@ const CadastroCargaCSN = () => {
 						ponto_passagem7,
 					} = values;
 					values.fk_filial = values.fk_filial.split("-")[0];
+					values.rastreador = values.rastreador
+						? values.rastreador
+						: values.rastreador_carreta;
 
 					const separandoNomeCidade = ponto_passagem4.client?.split("-")[2];
 					const cidadeEstado = separandoNomeCidade.split("/");
@@ -167,7 +170,7 @@ const CadastroCargaCSN = () => {
 					).data;
 
 					if (data.data.id) {
-						for (const [key, value] of Object.entries({
+						const dadosPontoPassagem = {
 							ponto_passagem,
 							ponto_passagem2,
 							ponto_passagem3,
@@ -175,29 +178,20 @@ const CadastroCargaCSN = () => {
 							ponto_passagem5,
 							ponto_passagem6,
 							ponto_passagem7,
-						})) {
-							if (
-								(value?.ponto.length > 0 && value?.previsao.length > 0) ||
-								(typeof value?.latitude !== "string" &&
-									typeof value?.longitude !== "string")
-							) {
-								await ServiceCargas.createPontoParada({
-									...value,
-									id_carga: data.data.id,
-									key,
-								});
-							}
-						}
-
+						};
+						await ServiceCargas.createPontoParada({
+							...dadosPontoPassagem,
+							id_carga: data.data.id,
+						});
 						const ok = await swal(
 							"Sucesso!",
 							`A carga foi cadastrada com o identificador ${data.data.id}!`,
+
 							"success",
 							{
 								closeOnClickOutside: false,
 							}
 						);
-
 						if (ok) resetForm();
 					}
 				} catch (error) {

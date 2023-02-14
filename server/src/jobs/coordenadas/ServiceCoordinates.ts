@@ -581,13 +581,6 @@ export default async function () {
         }
 
         const { lat, lon } = coords[0];
-        // console.log(
-        //   "Encontrei as coordenadas ",
-        //   coords[0],
-        //   " para a localidade de ",
-        //   city,
-        //   state
-        // );
         const cityExists = await database("con_localizacoes")
           .select("cidade")
           .where("cidade", city)
