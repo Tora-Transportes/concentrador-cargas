@@ -187,7 +187,7 @@ ul {
   padding: 1rem;
   align-items: center;
   justify-content: space-between;
-  background: hsl(39, 100%, 50%);
+  background:#B22222;
 }
 #menu {
   display: flex;

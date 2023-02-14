@@ -124,16 +124,12 @@ function Main() {
 	useEffect(() => {
 		const nome = getClaims().name;
 		setUserData({ nome });
-		//verificarAtualizacaoVersao();
-		//(async () => {
-		//const userPermission = await validationPermissionUser();
 		if (isPermissionUser?.includes("CARGAS_PADRAO")) {
 			setPermissionPadrao(true);
 		}
 		if (isPermissionUser?.includes("CARGAS_CSN")) {
 			setPermissionCsn(true);
 		}
-		//})();
 	}, [isPermissionUser]);
 
 	useEffect(() => {
@@ -163,9 +159,13 @@ function Main() {
 		<>
 			<ToastContainer />
 			<Menusuperior />
-			<Container className="class-body-main">
+			<h6 className="versao"> V.10</h6>
+			<Container
+				className="class-body-main"
+				// style={{ marginBottom: usuarioPodeJogar() ? "10%" : "15%" }}
+			>
 				<Row>
-					<Col className="text-center mt-5 mb-5">
+					<Col className="text-center mt-2 mb-5">
 						<p id="style-title-main" className="title-page-main">
 							Seja bem-vindo(a) ao Concentrador de Cargas
 						</p>
@@ -311,12 +311,11 @@ function Main() {
 									durante o seu dia de trabalho.
 								</p>
 							</div>
-							<div>
-								<div className="class-linha-jogo">
-									<Button className="style-button-jogo" onClick={iniciarGame}>
-										Exercitar Agora!
-									</Button>
-								</div>
+
+							<div className="class-linha-jogo">
+								<Button className="style-button-jogo" onClick={iniciarGame}>
+									Exercitar Agora!
+								</Button>
 							</div>
 							<PopUp
 								isShow={isShow}

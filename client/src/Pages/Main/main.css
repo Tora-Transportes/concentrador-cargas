@@ -18,6 +18,16 @@
 .button-avisos-style b {
   color: #fff;
   text-decoration: none;
+  height: 100%;
+}
+
+.versao {
+  text-align: start;
+  color: 	#808080;
+  font-size: 13px;
+  margin-top: 3px;
+  margin-left: 20px;
+  font-weight: 530;
 }
 
 #navbar-tora {
