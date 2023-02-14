@@ -138,12 +138,13 @@ function Main() {
 		<>
 			<ToastContainer />
 			<Menusuperior />
-			<Container className="class-body-main">
-				<Col className="versao">
-					<span>Versão: 10</span>
-				</Col>
+			<h6 className="versao"> V.10</h6>
+			<Container
+				className="class-body-main"
+				// style={{ marginBottom: usuarioPodeJogar() ? "10%" : "15%" }}
+			>
 				<Row>
-					<Col className="text-center mt-1 mb-5">
+					<Col className="text-center mt-2 mb-5">
 						<p id="style-title-main" className="title-page-main">
 							Seja bem-vindo(a) ao Concentrador de Cargas
 						</p>
