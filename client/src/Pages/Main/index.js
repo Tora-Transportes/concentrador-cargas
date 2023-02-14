@@ -139,7 +139,6 @@ function Main() {
 		}
 	}, [levelGame]);
 
-	//************************************** */
 	// validação avisos
 
 	useEffect(() => {
@@ -159,11 +158,7 @@ function Main() {
 		<>
 			<ToastContainer />
 			<Menusuperior />
-			<h6 className="versao"> V.10</h6>
-			<Container
-				className="class-body-main"
-				// style={{ marginBottom: usuarioPodeJogar() ? "10%" : "15%" }}
-			>
+			<Container className="class-body-main">
 				<Row>
 					<Col className="text-center mt-2 mb-5">
 						<p id="style-title-main" className="title-page-main">
@@ -317,15 +312,16 @@ function Main() {
 									Exercitar Agora!
 								</Button>
 							</div>
-							<PopUp
-								isShow={isShow}
-								setShow={setShow}
-								lastIdPosition={isLastPosition}
-							/>
 						</>
 					)}
 				</Row>
+				<PopUp
+					isShow={isShow}
+					setShow={setShow}
+					lastIdPosition={isLastPosition}
+				/>
 			</Container>
+			<h6 className="versionamento">V.10</h6>
 		</>
 	);
 }

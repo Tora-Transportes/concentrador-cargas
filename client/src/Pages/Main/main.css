@@ -6,6 +6,15 @@
   margin-left: 5rem;
 }
 
+.versionamento{
+  position: fixed;
+  bottom: 1px;
+  margin-left: 5px;
+  color: 	#a70505;
+  font-size: 13px;
+  font-weight: 530;
+}
+
 .button-avisos-style {
   position: absolute;
   top: 12.5%;
@@ -19,15 +28,6 @@
   color: #fff;
   text-decoration: none;
   height: 100%;
-}
-
-.versao {
-  text-align: start;
-  color: 	#808080;
-  font-size: 13px;
-  margin-top: 3px;
-  margin-left: 20px;
-  font-weight: 530;
 }
 
 #navbar-tora {
