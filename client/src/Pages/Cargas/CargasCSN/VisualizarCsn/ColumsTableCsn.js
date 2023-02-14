@@ -311,4 +311,10 @@ export const columns = [
 		selector: (row) => <CollapseHint text={row.usuario || ""} />,
 		sortable: "sortable",
 	},
+	{
+		name: "data_atualizacao",
+		description: "Data da última atualização",
+		selector: (row) => formatDateAndHour(row.data_atualizacao),
+		sortable: "sortable",
+	},
 ];
