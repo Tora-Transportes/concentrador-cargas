@@ -3,23 +3,23 @@ import "./ajuda.css";
 import Menusuperior from "../MenuSuperior/menusuperior";
 import Accordion from "react-bootstrap/Accordion";
 import { Button } from "react-bootstrap";
-//import cadastroCSN from "../../../Gif CSN/cadastro-CSN.gif";
-//import listagemCSN from "../../../Gif CSN/listagemCSN.gif";
-//import edicaoCSN from "../../../Gif CSN/edicaoCSN.gif";
+import cadastroCSN from "../../../Gif CSN/cadastroCSN.gif";
+import listagemCSN from "../../../Gif CSN/listagemCSN.gif";
+import edicaoCSN from "../../../Gif CSN/edicaoCSN.gif";
 import configTab from "../../../Gif/configTabela.gif";
 import opcoesTab from "../../../Gif/optionsTable.gif";
 import itensPage from "../../../Gif/itensPorPage.gif";
 import coordenadasGif from "../../../Gif/coordenadas.gif";
 import consultaCargas from "../../../Gif/consultarCarga.gif";
-//import monitoramentoCSN from "../../../Gif CSN/monitoramentoCsn.gif";
+import monitoramentoCSN from "../../../Gif CSN/monitoramentoCSN.gif";
 import telaProdutos from "../../../Gif/produtos.gif";
-//import indicadorOperacional from "../../../Gif CSN/indicadorOperacionalCSN.gif";
+import indicadorOperacionalCsn from "../../../Gif CSN/indicadorOperacionalCSN.gif";
 import rotasPendentes from "../../../Gif/rotasPendentesCad.gif";
 import raioEmpresa from "../../../Gif/raioAteEmpresa.gif";
 import veicProximos from "../../../Gif/veiculosXveiculos.gif";
 import veicEmpresa from "../../../Gif/veiculosEmpresa.gif";
 import historicoRota from "../../../Gif/historicoRotaVeic.gif";
-//import localizacaoCSN from "../../../Gif CSN/localizacaoCSN.gif";
+import localizacaoCSN from "../../../Gif CSN/localizacaoCSN.gif";
 
 function HelperCSN() {
 	var acc = document.getElementsByClassName("accordion");
@@ -69,7 +69,7 @@ function HelperCSN() {
 							página de Cadastro CSN.
 						</p>
 						<p className="p-tela-ajuda">Exemplo da página de Cadastro CSN:</p>
-						{/* <img src={cadastroCSN} id="style-gif2" /> */}
+						<img src={cadastroCSN} id="style-gif2" />
 						<p className="ajuda-csn-p">
 							É importante ressaltar que não é permitido cadastrar cargas com
 							placas de veículos que já possuam <br /> alguma carga vínculada em
@@ -98,7 +98,7 @@ function HelperCSN() {
 						</p>
 						<p className="p-tela-ajuda">Exemplo da Página Listagem CSN:</p>
 
-						{/* <img src={listagemCSN} id="style-gif" /> */}
+						<img src={listagemCSN} id="style-gif" />
 						<div className="class-button-ir">
 							<Button
 								href="/cargas/visualizar/csn"
@@ -122,7 +122,7 @@ function HelperCSN() {
 							<br /> Segue abaixo o exemplo da página Edição CSN:
 						</p>
 
-						{/* <img src={edicaoCSN} id="style-gif" /> */}
+						<img src={edicaoCSN} id="style-gif" />
 						<p>
 							Para acessar a página de edição de cargas, basta clicar no ícone
 							conforme exemplificado acima.
@@ -224,7 +224,7 @@ function HelperCSN() {
 							reprovar veículos de acordo com a situação de cada um.
 						</p>
 						<p className="p-tela-ajuda">Exemplo da página de Monitoramento: </p>
-						{/* <img src={monitoramentoCSN} id="style-gif" /> */}
+						<img src={monitoramentoCSN} id="style-gif" />
 
 						<div className="class-button-ir">
 							<Button
@@ -277,7 +277,7 @@ function HelperCSN() {
 							<br /> A página conta também com gráfico e tabela, download do
 							filtro de data, entre outras informações.
 						</p>
-						{/* <img src={indicadorOperacional} id="style-gif2" /> */}
+						<img src={indicadorOperacionalCsn} id="style-gif2" />
 
 						<div className="class-button-ir">
 							<Button
@@ -370,7 +370,7 @@ function HelperCSN() {
 						<p className="p-tela-ajuda">
 							Exemplo da página de Gerenciamento de Rotas:
 						</p>
-						{/* <img src={localizacaoCSN} id="style-gif" /> */}
+						<img src={localizacaoCSN} id="style-gif" />
 						<p className="ajuda-csn-p">
 							Somente pessoas com permissão são aptas a adicionar, editar e
 							remover rotas na plataforma.
