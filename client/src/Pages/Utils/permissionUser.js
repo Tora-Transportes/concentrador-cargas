@@ -1,5 +1,6 @@
 export const allTipoPermissoes = [
 	{ name: "ALTERAR_PERMISSOES" },
+	{ name: "ALTERACAO_PARCIAL" },
 	{ name: "APROVAR_VEICULOS" },
 	{ name: "APROVAR_VIAGEM" },
 	{ name: "CADASTRAR_PRODUTOS" },

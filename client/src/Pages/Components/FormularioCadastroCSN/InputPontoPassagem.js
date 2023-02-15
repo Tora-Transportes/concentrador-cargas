@@ -17,26 +17,32 @@ const InputsPontoPassagem = ({
 	inputColeta6,
 	inputColeta7,
 	fkSituacao,
-	isPermissionUser,
+	isPermissionUserEdit,
 	isDateErrorInput,
 	setDateErrorInput,
-	//isViewButtonFinaliza,
-	//setViewButtonFinaliza,
+	isAlteracaoParcial,
 }) => {
 	const [inputPontoPassagem5, setInputPontoPassagem5] = useState(true);
 	const [inputPontoPassagem6, setInputPontoPassagem6] = useState(true);
 	const [inputPontoPassagem7, setInputPontoPassagem7] = useState(true);
+	const [disabledValidEfetiva, setDisabledValidEfetiva] = useState();
+	const [colorInputEfetivo, setColorInputEfetivo] = useState();
 	//const [isCountInputPrenchido, setCountInputPrenchido] = useState(0);
 
-	const disabledValidEfetiva =
-		[6, 9].includes(formik.values.fk_situacao) && isPermissionUser
-			? true
-			: false;
-	const colorInputEfetivo = ![6, 9].includes(formik.values?.fk_situacao)
-		? ""
-		: isPermissionUser === true
-		? "input-efetivo"
-		: "";
+	useEffect(() => {
+		setDisabledValidEfetiva(
+			[6, 9].includes(formik.values.fk_situacao) && isPermissionUserEdit
+				? true
+				: false
+		);
+		setColorInputEfetivo(
+			![6, 9].includes(formik.values?.fk_situacao)
+				? ""
+				: isPermissionUserEdit === true
+				? "input-efetivo"
+				: ""
+		);
+	}, []);
 
 	useEffect(() => {
 		if (formik.values?.ponto_passagem5.tipoServico === "Entrega") {
@@ -83,16 +89,6 @@ const InputsPontoPassagem = ({
 			setDateErrorInput(arrayErrorEdit);
 			swal("", resultValidation.message, "info");
 		} else {
-			// if (
-			// 	validInputPreenchidos(
-			// 		date,
-			// 		positionInput,
-			// 		isCountInputPrenchido,
-			// 		setCountInputPrenchido
-			// 	)
-			// ) {
-			// 	setViewButtonFinaliza(true);
-			// }
 			const arrayErrorEdit = [...isDateErrorInput];
 			arrayErrorEdit[positionInput].error = false;
 			setDateErrorInput(arrayErrorEdit);
@@ -101,7 +97,7 @@ const InputsPontoPassagem = ({
 			}
 		}
 	};
-
+	console.log("filho>>>>>>.");
 	return (
 		<>
 			<Row className="row-input-coleta-inicio">
@@ -196,7 +192,7 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required
+									required={isAlteracaoParcial}
 								/>
 							</FloatingLabel>
 						</Col>
@@ -226,7 +222,7 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required
+									required={isAlteracaoParcial}
 								/>
 							</FloatingLabel>
 						</Col>
@@ -339,7 +335,7 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required
+									required={isAlteracaoParcial}
 								/>
 							</FloatingLabel>
 						</Col>
@@ -368,7 +364,7 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required
+									required={isAlteracaoParcial}
 								/>
 							</FloatingLabel>
 						</Col>
@@ -482,7 +478,7 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required
+									required={isAlteracaoParcial}
 								/>
 							</FloatingLabel>
 						</Col>
@@ -511,7 +507,7 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required
+									required={isAlteracaoParcial}
 								/>
 							</FloatingLabel>
 						</Col>
@@ -651,7 +647,7 @@ const InputsPontoPassagem = ({
 										onChange={formik.handleChange}
 										onKeyDown={handleEnter}
 										disabled={disabledValidEfetiva}
-										required
+										required={isAlteracaoParcial}
 									/>
 								</FloatingLabel>
 							</Col>
@@ -688,7 +684,7 @@ const InputsPontoPassagem = ({
 											);
 										}}
 										disabled={disabledValidEfetiva}
-										required
+										required={isAlteracaoParcial}
 									/>
 								</FloatingLabel>
 							</Col>
@@ -843,7 +839,7 @@ const InputsPontoPassagem = ({
 										}}
 										onKeyDown={handleEnter}
 										disabled={disabledValidEfetiva}
-										required
+										required={isAlteracaoParcial}
 									/>
 								</FloatingLabel>
 							</Col>
@@ -880,7 +876,7 @@ const InputsPontoPassagem = ({
 											);
 										}}
 										disabled={disabledValidEfetiva}
-										required
+										required={isAlteracaoParcial}
 									/>
 								</FloatingLabel>
 							</Col>
@@ -1028,7 +1024,7 @@ const InputsPontoPassagem = ({
 										onChange={formik.handleChange}
 										onKeyDown={handleEnter}
 										disabled={disabledValidEfetiva}
-										required
+										required={isAlteracaoParcial}
 									/>
 								</FloatingLabel>
 							</Col>
@@ -1058,7 +1054,7 @@ const InputsPontoPassagem = ({
 										// 	)
 										// }
 										disabled={disabledValidEfetiva}
-										required
+										required={isAlteracaoParcial}
 									/>
 								</FloatingLabel>
 							</Col>
@@ -1181,7 +1177,7 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required
+									required={isAlteracaoParcial}
 								/>
 							</FloatingLabel>
 						</Col>
@@ -1212,7 +1208,7 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required
+									required={isAlteracaoParcial}
 								/>
 							</FloatingLabel>
 						</Col>

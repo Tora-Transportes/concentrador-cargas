@@ -24,7 +24,7 @@ function EditarCargaCsn() {
 	const [viewsInput, setViewsInput] = useState(0);
 	const [isPermissionUserEdit, setPermissionUserEdit] = useState(true);
 	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
-	//const [isViewButtonFinaliza, setViewButtonFinaliza] = useState(false);
+	const [isAlteracaoParcial, setAlteracaoParcial] = useState(true);
 	const { isPermissionUser } = useContext(ContextUseDefault);
 
 	const messageDadosIncorretoInput = () => {
@@ -480,6 +480,9 @@ function EditarCargaCsn() {
 		if (isPermissionUser?.includes("MANUTENCAO_TRAJETO_FINALIZADO")) {
 			setPermissionUserEdit(false);
 		}
+		if (isPermissionUser?.includes("ALTERACAO_PARCIAL")) {
+			setAlteracaoParcial(false);
+		}
 	}, [isPermissionUser]);
 
 	useEffect(() => {
@@ -489,6 +492,9 @@ function EditarCargaCsn() {
 	const showInfoTitle = [6, 9].includes(formik.values?.fk_situacao)
 		? "info-tilte"
 		: "d-none";
+	// console.log("Pagina inicial", [3].includes(formik.values.fk_situacao), {
+	// 	isAlteracaoParcial,
+	// });
 
 	return (
 		<>
@@ -511,11 +517,10 @@ function EditarCargaCsn() {
 						produtos={produtos}
 						formik={formik}
 						viewsInput={viewsInput}
-						isPermissionUser={isPermissionUserEdit}
+						isPermissionUserEdit={isPermissionUserEdit}
 						setDateErrorInput={setDateErrorInput}
 						isDateErrorInput={isDateErrorInput}
-						// isViewButtonFinaliza={isViewButtonFinaliza}
-						// setViewButtonFinaliza={setViewButtonFinaliza}
+						isAlteracaoParcial={isAlteracaoParcial}
 					/>
 					<div className="class-group-button">
 						<Button
@@ -523,7 +528,8 @@ function EditarCargaCsn() {
 							type="submit"
 							className="p-2  botao-gravar"
 							disabled={
-								[3, 5].includes(formik.values.fk_situacao) ||
+								([3, 5].includes(formik.values.fk_situacao) &&
+									isAlteracaoParcial) ||
 								([6, 7, 8, 9].includes(formik.values.fk_situacao) &&
 									isPermissionUserEdit)
 							}
