@@ -142,6 +142,7 @@ export const funcDuracaoProcesso = async (
 				formik.values.ponto_passagem4.entregaEfetiva,
 				"ponto_passagem4.tempServicoLocalEntrega"
 			);
+
 			break;
 		case 14:
 			somarHoras(
@@ -268,3 +269,19 @@ export const InputReferencError = [
 	{ error: false },
 	{ error: false },
 ];
+
+// export const validInputPreenchidos = (
+// 	date,
+// 	indexInput,
+// 	isCountInputPrenchido,
+// 	setCountInputPrenchido
+// ) => {
+// 	let resultValidation = false;
+// 	const inputsParaValidar = [2, 3, 6, 7, 10, 11, 23, 24];
+// 	if (date !== null && inputsParaValidar.includes(indexInput)) {
+// 		const numeroInputPrenchido = isCountInputPrenchido + 1;
+// 		setCountInputPrenchido(numeroInputPrenchido);
+// 		resultValidation = numeroInputPrenchido < 8 ? false : true;
+// 	}
+// 	return resultValidation;
+// };

@@ -22,8 +22,9 @@ function EditarCargaCsn() {
 	const history = useHistory();
 	const [produtos, setProdutos] = useState([]);
 	const [viewsInput, setViewsInput] = useState(0);
-	const [isPermissionUserEdit, setPermissionUserEdit] = useState(true);
+	const [isPermissionUserEdit, setPermissionUserEdit] = useState(false);
 	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
+	const [isAlteracaoParcial, setAlteracaoParcial] = useState(true);
 	const { isPermissionUser } = useContext(ContextUseDefault);
 
 	const messageDadosIncorretoInput = () => {
@@ -477,7 +478,10 @@ function EditarCargaCsn() {
 
 	useEffect(() => {
 		if (isPermissionUser?.includes("MANUTENCAO_TRAJETO_FINALIZADO")) {
-			setPermissionUserEdit(false);
+			setPermissionUserEdit(true);
+		}
+		if (isPermissionUser?.includes("ALTERACAO_PARCIAL")) {
+			setAlteracaoParcial(false);
 		}
 	}, [isPermissionUser]);
 
@@ -488,6 +492,19 @@ function EditarCargaCsn() {
 	const showInfoTitle = [6, 9].includes(formik.values?.fk_situacao)
 		? "info-tilte"
 		: "d-none";
+	// console.log("Pagina inicial", [3].includes(formik.values.fk_situacao), {
+	// 	isAlteracaoParcial,
+	// });
+
+	const mensagemEditParcialSucesso = async () => {
+		setTimeout(async () => {
+			await swal("Sucesso!", "A carga foi atualizada!", "success", {
+				closeOnClickOutside: false,
+			}).then(() => {
+				window.location.reload();
+			});
+		}, 500);
+	};
 
 	return (
 		<>
@@ -510,23 +527,38 @@ function EditarCargaCsn() {
 						produtos={produtos}
 						formik={formik}
 						viewsInput={viewsInput}
-						isPermissionUser={isPermissionUserEdit}
+						isPermissionUserEdit={isPermissionUserEdit}
 						setDateErrorInput={setDateErrorInput}
 						isDateErrorInput={isDateErrorInput}
+						isAlteracaoParcial={isAlteracaoParcial}
 					/>
 					<div className="class-group-button">
-						<Button
-							variant="success"
-							type="submit"
-							className="p-2  botao-gravar"
-							disabled={
-								[3, 5].includes(formik.values.fk_situacao) ||
-								([6, 7, 8, 9].includes(formik.values.fk_situacao) &&
-									isPermissionUserEdit)
-							}
-						>
-							Gravar
-						</Button>
+						{!isAlteracaoParcial && [3].includes(formik.values.fk_situacao) && (
+							<Button
+								variant="success"
+								className="p-2"
+								onClick={mensagemEditParcialSucesso}
+							>
+								Edição Parcial
+							</Button>
+						)}
+
+						{([1, 2].includes(formik.values.fk_situacao) ||
+							([6, 7, 8, 9].includes(formik.values.fk_situacao) &&
+								isPermissionUserEdit)) && (
+							<Button
+								variant="success"
+								type="submit"
+								className="p-2  botao-gravar"
+								// disabled={
+								// 	[3, 5].includes(formik.values.fk_situacao) ||
+								// 	([6, 7, 8, 9].includes(formik.values.fk_situacao) &&
+								// 		isPermissionUserEdit)
+								// }
+							>
+								Gravar
+							</Button>
+						)}
 
 						<Button
 							variant="warning"
@@ -556,6 +588,7 @@ function EditarCargaCsn() {
 							</Button>
 						)}
 
+						{/* {isViewButtonFinaliza && ( */}
 						{[3, 7, 8].includes(formik.values.fk_situacao) && (
 							<Button
 								variant="info"

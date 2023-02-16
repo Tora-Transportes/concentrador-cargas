@@ -5,7 +5,6 @@ import React, {
 	useCallback,
 	useRef,
 } from "react";
-
 import View from "../ViewsVisualizacao";
 import ServiceCargas from "../../../services/ServiceCargas";
 import useLoadingScreen from "../../Components/LoadingScreen";
@@ -27,7 +26,6 @@ function Visualizar() {
 	const [LoadingComponent, setLoading] = useLoadingScreen();
 	const [itensPerPage, setItensPerPage] = useState(10);
 	const [modalShowExcel, setModalShowExcel] = useState(false);
-
 	const toast = useRef(null);
 
 	useEffect(() => {
