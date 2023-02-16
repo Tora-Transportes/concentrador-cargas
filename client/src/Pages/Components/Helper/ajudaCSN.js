@@ -3,23 +3,23 @@ import "./ajuda.css";
 import Menusuperior from "../MenuSuperior/menusuperior";
 import Accordion from "react-bootstrap/Accordion";
 import { Button } from "react-bootstrap";
-import cadastroCSN from "../../../Gif CSN/cadastro-CSN.gif";
+import cadastroCSN from "../../../Gif CSN/cadastroCSN.gif";
 import listagemCSN from "../../../Gif CSN/listagemCSN.gif";
 import edicaoCSN from "../../../Gif CSN/edicaoCSN.gif";
-import configTab from "../../../Gif/configurarTabela.gif";
-import opcoesTab from "../../../Gif/opcoesTabela.gif";
-import itensPage from "../../../Gif/itensPorPagina.gif";
-import coordenadasGif from "../../../Gif/coordenadasVeiculos.gif";
-import consultaCargas from "../../../Gif/consultarCargas.gif";
-import monitoramentoCSN from "../../../Gif CSN/monitoramentoCsn.gif";
-import telaProdutos from "../../../Gif/telaProdutos.gif";
-import indicadorOperacional from "../../../Gif CSN/indicadorOperacionalCSN.gif";
-import rotasPendentes from "../../../Gif/rotasPendentes.gif";
-import raioEmpresa from "../../../Gif/raioEmpresa.gif";
-import veicProximos from "../../../Gif/veiculosProximos.gif";
-import veicEmpresa from "../../../Gif/veiculoEmpresa.gif";
-import historicoRota from "../../../Gif/historicoVeiculos.gif";
-import localicaoCSN from "../../../Gif CSN/localizacaoCSN.gif";
+import configTab from "../../../Gif/configTabela.gif";
+import opcoesTab from "../../../Gif/optionsTable.gif";
+import itensPage from "../../../Gif/itensPorPage.gif";
+import coordenadasGif from "../../../Gif/coordenadas.gif";
+import consultaCargas from "../../../Gif/consultarCarga.gif";
+import monitoramentoCSN from "../../../Gif CSN/monitoramentoCSN.gif";
+import telaProdutos from "../../../Gif/produtos.gif";
+import indicadorOperacionalCsn from "../../../Gif CSN/indicadorOperacionalCSN.gif";
+import rotasPendentes from "../../../Gif/rotasPendentesCad.gif";
+import raioEmpresa from "../../../Gif/raioAteEmpresa.gif";
+import veicProximos from "../../../Gif/veiculosXveiculos.gif";
+import veicEmpresa from "../../../Gif/veiculosEmpresa.gif";
+import historicoRota from "../../../Gif/historicoRotaVeic.gif";
+import localizacaoCSN from "../../../Gif CSN/localizacaoCSN.gif";
 
 function HelperCSN() {
 	var acc = document.getElementsByClassName("accordion");
@@ -277,7 +277,7 @@ function HelperCSN() {
 							<br /> A página conta também com gráfico e tabela, download do
 							filtro de data, entre outras informações.
 						</p>
-						<img src={indicadorOperacional} id="style-gif2" />
+						<img src={indicadorOperacionalCsn} id="style-gif2" />
 
 						<div className="class-button-ir">
 							<Button
@@ -370,11 +370,11 @@ function HelperCSN() {
 						<p className="p-tela-ajuda">
 							Exemplo da página de Gerenciamento de Rotas:
 						</p>
-						<img src={localicaoCSN} id="style-gif" />
-						{/* <p className="ajuda-csn-p">
+						<img src={localizacaoCSN} id="style-gif" />
+						<p className="ajuda-csn-p">
 							Somente pessoas com permissão são aptas a adicionar, editar e
 							remover rotas na plataforma.
-						</p> */}
+						</p>
 
 						<div className="class-button-ir">
 							<Button
