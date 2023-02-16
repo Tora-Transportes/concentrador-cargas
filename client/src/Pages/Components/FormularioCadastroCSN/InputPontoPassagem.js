@@ -25,24 +25,16 @@ const InputsPontoPassagem = ({
 	const [inputPontoPassagem5, setInputPontoPassagem5] = useState(true);
 	const [inputPontoPassagem6, setInputPontoPassagem6] = useState(true);
 	const [inputPontoPassagem7, setInputPontoPassagem7] = useState(true);
-	const [disabledValidEfetiva, setDisabledValidEfetiva] = useState();
-	const [colorInputEfetivo, setColorInputEfetivo] = useState();
-	//const [isCountInputPrenchido, setCountInputPrenchido] = useState(0);
 
-	useEffect(() => {
-		setDisabledValidEfetiva(
-			[6, 9].includes(formik.values.fk_situacao) && isPermissionUserEdit
-				? true
-				: false
-		);
-		setColorInputEfetivo(
-			![6, 9].includes(formik.values?.fk_situacao)
-				? ""
-				: isPermissionUserEdit === true
-				? "input-efetivo"
-				: ""
-		);
-	}, []);
+	const disabledValidEfetiva =
+		[6, 9].includes(formik.values.fk_situacao) && !isPermissionUserEdit
+			? true
+			: false;
+	const colorInputEfetivo = ![6, 9].includes(formik.values?.fk_situacao)
+		? ""
+		: isPermissionUserEdit === false
+		? "input-efetivo"
+		: "";
 
 	useEffect(() => {
 		if (formik.values?.ponto_passagem5.tipoServico === "Entrega") {
@@ -97,7 +89,7 @@ const InputsPontoPassagem = ({
 			}
 		}
 	};
-	console.log("filho>>>>>>.");
+
 	return (
 		<>
 			<Row className="row-input-coleta-inicio">
