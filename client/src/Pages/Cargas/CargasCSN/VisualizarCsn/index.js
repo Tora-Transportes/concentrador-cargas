@@ -28,10 +28,10 @@ function VisualizarCsn() {
 	const [itensPerPage, setItensPerPage] = useState(10);
 	const [modalShowExcel, setModalShowExcel] = useState(false);
 	const toast = useRef(null);
-
+	const refFuncionalidadeSocket = useRef(true);
 	useEffect(() => {
 		const actionCargasCreate = (payload) => {
-			if (!payload.e_lote) {
+			if (!payload.e_lote && refFuncionalidadeSocket.current) {
 				setTotalRegisters((old) => old + 1);
 				dispatchCargas({ type: "ADD_CARGA", payload });
 			}
@@ -63,6 +63,10 @@ function VisualizarCsn() {
 			try {
 				const { filters, orderBy, page } = options;
 				setFiltroAtual({ filters, orderBy, page });
+				refFuncionalidadeSocket.current = Object.keys(filters).length
+					? false
+					: true;
+
 				const { data } = await ServiceCargas.searchCsn({
 					...filters,
 					page,
