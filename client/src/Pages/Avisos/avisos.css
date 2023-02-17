@@ -5,6 +5,17 @@
   margin-bottom: 1rem;
 }
 
+.row-views-container {
+  border-style: solid;
+  border-radius: 10px;
+  border-color: green;
+  padding-bottom: 1%;
+}
+
+.views-row-fieldset {
+  width: 100%;
+}
+
 .title-avisos {
   font-size: 40px;
   color: #00652e;
@@ -25,7 +36,7 @@
   margin: 1rem;
   margin-top: 1.5rem;
   margin-bottom: 1rem;
-  color: #565e66ec;
+  color: #353a3f;
   box-shadow: 0 2px 1px 3px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 18%),
     0 3px 3px 6px rgb(0 0 0 / 12%);
   border-radius: 6px;
@@ -49,32 +60,22 @@
 .div_dados_aviso {
   display: flex;
   flex-direction: column;
-  color: #606d80b0;
+  color: #393e46b9;
   margin-bottom: -4%;
-}
-.row-views-container {
-  border-style: solid;
-  border-radius: 10px;
-  border-color: green;
-}
-
-.views-row-fieldset {
-  width: 100%;
 }
 
 .button-add-aviso {
-  margin-bottom: 0.5rem;
   box-sizing: border-box;
 }
 .col-button-add {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 .add-button {
   border-color: #00652e;
   background-color: #fff;
   color: #00652e;
-  margin: 5px 15px 6px 20px;
+  margin: 15px 15px 6px 16px;
   height: 6vh;
 }
 .add-button:enabled:hover {
@@ -82,10 +83,11 @@
   background-color: #009c08;
 }
 
-.buttons-edit-delete {
+.div-buttons-edit-delete {
   display: flex;
   justify-content: flex-end;
 }
+
 .edit-button {
   background-color: #fff;
   color: #64748b;
@@ -142,9 +144,6 @@
 }
 /* Dialog avisos ********************************  */
 
-#dialog-cad-aviso {
-  font-family: "Poppins", sans-serif;
-}
 #input-text-title {
   display: flex;
   position: absolute;
@@ -169,13 +168,13 @@
   margin-top: 1rem;
   display: flex;
 }
-.div-details-cadastro:disabled {
+.form-resp-cadastro:disabled {
   font-family: "Poppins", sans-serif;
   font-size: 16px;
   background-color: transparent !important;
   margin-top: -0.3rem;
 }
-div .div-details-cadastro:focus {
+div .form-resp-cadastro:focus {
   box-shadow: none;
 }
 div .button-cancelar {
@@ -207,7 +206,7 @@ div .button-salvar:enabled:hover {
   color: #fff;
   background-color: #00652dd0;
 }
-.footer-dialog-avisos {
+.footer-dialog-editar-avisos {
   display: flex;
   justify-content: flex-end;
   margin-top: 1.5rem;

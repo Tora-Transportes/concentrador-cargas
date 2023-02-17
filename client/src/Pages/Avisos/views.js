@@ -199,6 +199,18 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 				</p>
 			</div>
 			<div className="row-views-container">
+				{isPermissionAviso && (
+					<Row className="button-add-aviso">
+						<Col className="col-button-add">
+							<Button
+								label="Adicionar um novo aviso"
+								icon="pi pi-check"
+								className="add-button"
+								onClick={openNewNotice}
+							/>
+						</Col>
+					</Row>
+				)}
 				<Row>
 					<Col>
 						{dadosAvisos?.length > 0 && (
@@ -214,7 +226,7 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 													converterData(item.DATA_CADASTRO)
 												)}
 												{isPermissionAviso && (
-													<div className="buttons-edit-delete">
+													<div className="div-buttons-edit-delete">
 														<Button
 															label="Editar"
 															icon="pi pi-bookmark"
@@ -237,28 +249,15 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 						)}
 					</Col>
 				</Row>
-				{isPermissionAviso && (
-					<Row className="button-add-aviso">
-						<Col className="col-button-add">
-							<Button
-								label="Adicionar um novo aviso"
-								icon="pi pi-check"
-								className="add-button"
-								onClick={openNewNotice}
-							/>
-						</Col>
-					</Row>
-				)}
 				<Dialog
 					visible={avisoDialog}
 					style={{ width: "560px", fontSize: "16px" }}
 					header={titleAviso}
 					modal
 					className="p-fluid"
-					id="dialog-cad-aviso"
 					onHide={hideNoticeDialog}
 				>
-					<div className="div-title">
+					<div>
 						<label htmlFor="TITULO">Título do Aviso: </label>
 						<Input
 							id="input-text-title"
@@ -302,14 +301,14 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 						<label> Responsável pelo cadastro:</label>
 						<Form.Control
 							style={{ width: "300px", border: "none" }}
-							className="div-details-cadastro"
+							className="form-resp-cadastro"
 							type="text"
 							placeholder={aviso?.AUTOR}
 							disabled
 						/>
 					</div>
 
-					<div className="footer-dialog-avisos">
+					<div className="footer-dialog-editar-avisos">
 						<div>
 							<Button
 								label="Cancelar"
