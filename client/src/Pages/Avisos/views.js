@@ -32,7 +32,7 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 	const toast = useRef(null);
 
 	const subtitle = (autor, dataCadastro) => (
-		<div>
+		<div className="div_dados_aviso">
 			<h6>Responsável pelo Cadastro: {autor}</h6>
 			<h6>Data do cadastro: {dataCadastro}</h6>
 		</div>
@@ -206,15 +206,13 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 								{dadosAvisos?.map((item) => {
 									return (
 										<div key={item.ID}>
-											<Card
-												className="card-avisos"
-												title={item?.TITULO}
-												subTitle={subtitle(
+											<Card className="card-avisos">
+												<p className="title-card-avisos">{item?.TITULO}</p>
+												<p className="p-mensagem-aviso">{item.MENSAGEM}</p>
+												{subtitle(
 													item.AUTOR,
 													converterData(item.DATA_CADASTRO)
 												)}
-											>
-												<p>{item.MENSAGEM}</p>
 												{isPermissionAviso && (
 													<div className="buttons-edit-delete">
 														<Button
@@ -287,7 +285,7 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 							onChange={(e) => onChangeInput(e, "MENSAGEM")}
 							required
 							rows={5}
-							cols={30}
+							cols={40}
 							autoFocus
 							className={classNames({
 								"p-invalid": submittedAviso && !aviso.MENSAGEM,

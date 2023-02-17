@@ -21,15 +21,37 @@
 }
 .card-avisos {
   font-family: "Poppins", sans-serif;
+  padding: 0% 3% 0%;
   margin: 1rem;
   margin-top: 1.5rem;
   margin-bottom: 1rem;
-  color: #495057;
+  color: #565e66ec;
   box-shadow: 0 2px 1px 3px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 18%),
     0 3px 3px 6px rgb(0 0 0 / 12%);
   border-radius: 6px;
 }
+.title-card-avisos {
+  font-size: 30px;
+  font-style: italic;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2%;
+  color: #00652e;
+}
 
+.p-mensagem-aviso {
+  padding: 0% 10% 5% 10%;
+  white-space: pre-wrap;
+  text-align: justify;
+  color: #242323ea;
+}
+
+.div_dados_aviso {
+  display: flex;
+  flex-direction: column;
+  color: #606d80b0;
+  margin-bottom: -4%;
+}
 .row-views-container {
   border-style: solid;
   border-radius: 10px;
@@ -68,7 +90,7 @@
   background-color: #fff;
   color: #64748b;
   border-color: #64748b;
-  margin: 5px 10px -5px 0px;
+  margin: 5px 8px -5px 0px;
   height: 4vh;
   width: 15vh;
   justify-content: center;

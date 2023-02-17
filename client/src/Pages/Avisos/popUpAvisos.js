@@ -1,9 +1,9 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import "./popUp.css";
-import { AiOutlineCloseCircle } from "react-icons/ai";
+import imgNotice from "../../assets/notice.png";
 
-function PopUp({ isShow, setShow, lastIdPosition }) {
+function PopUp({ isShow, lastIdPosition }) {
 	const history = useHistory();
 	const showPageAviso = () => {
 		history.push(`/avisos/${lastIdPosition}`);
@@ -13,18 +13,11 @@ function PopUp({ isShow, setShow, lastIdPosition }) {
 		<>
 			<div className="container-toast-aviso">
 				{isShow && (
-					<div className="div-toast-avisos">
-						<AiOutlineCloseCircle
-							id="button-close-message"
-							onClick={() => setShow(false)}
-						>
-							x
-						</AiOutlineCloseCircle>
-						<span className="span-message">Você tem um novo aviso!</span>
-
-						<button className="button-toast-aviso" onClick={showPageAviso}>
-							Ver agora
+					<div className="div-toast-popup">
+						<button className="button-toast-popup" onClick={showPageAviso}>
+							<img src={imgNotice} width="25" height="25" />
 						</button>
+						<span className="span-message">Você tem um novo aviso!</span>
 					</div>
 				)}
 			</div>
