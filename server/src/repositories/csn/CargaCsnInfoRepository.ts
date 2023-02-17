@@ -179,26 +179,27 @@ export class CargaCsnInfoRepository {
 
     const rows: ICarga[] = await results;
 
-    rows.map(async (obj) => {
-      const data = await database("con_pontos_parada")
-        .select([
-          "con_pontos_parada.*",
-          "con_rotas_csn.DESCRICAO",
-          "con_rotas_csn.LATITUDE AS LATITUDE_ROTA",
-          "con_rotas_csn.LONGITUDE AS LONGITUDE_ROTA",
-        ])
-        .where("con_pontos_parada.ID_CON_CARGAS", obj.id)
-        .leftJoin(
-          "con_rotas_csn",
-          "con_rotas_csn.ID",
-          "con_pontos_parada.ID_ROTAS_CSN"
-        );
-      obj.ponto_parada = data;
-      return obj;
-    });
+    await Promise.all(
+      rows.map(async (obj) => {
+        obj.ponto_parada = await database("con_pontos_parada")
+          .select([
+            "con_pontos_parada.*",
+            "con_rotas_csn.DESCRICAO",
+            "con_rotas_csn.LATITUDE AS LATITUDE_ROTA",
+            "con_rotas_csn.LONGITUDE AS LONGITUDE_ROTA",
+          ])
+          .where("con_pontos_parada.ID_CON_CARGAS", obj.id)
+          .leftJoin(
+            "con_rotas_csn",
+            "con_rotas_csn.ID",
+            "con_pontos_parada.ID_ROTAS_CSN"
+          )
+          .orderBy("con_pontos_parada.ID", "asc");
+        return obj;
+      })
+    );
 
     const totalRegisters = Number((await total)?.total) || 0;
-
     return {
       page: realPage,
       total_pages: Math.ceil(totalRegisters / pageSize),

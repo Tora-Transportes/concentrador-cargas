@@ -24,6 +24,7 @@ function TabelaCargas({
 	const [page, setPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
 	const [sortOrder, setSortOrder] = useState(-1);
+	const [isCountGetRota, setCountGetRota] = useState(0);
 	const initialSelectColumns = columns.filter((i) =>
 		storage.find((c) => {
 			if (c.name === i.name) return c;
@@ -100,6 +101,7 @@ function TabelaCargas({
 	};
 
 	async function notify() {
+		setCountGetRota(isCountGetRota + 1);
 		const options = {
 			filters: {},
 			orderBy: {
@@ -116,7 +118,7 @@ function TabelaCargas({
 			}
 		}
 
-		// // direction
+		// direction
 		if (orderby.values.column) {
 			options.orderBy.column = orderby.values.column;
 			options.orderBy.direction = orderby.values.direction;
@@ -126,6 +128,7 @@ function TabelaCargas({
 
 		//page
 		options.page = page;
+		options.countGetRota = isCountGetRota;
 		await get_data(options);
 	}
 

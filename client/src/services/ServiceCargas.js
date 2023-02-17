@@ -370,7 +370,7 @@ class ServiceCargas {
 		rastreador,
 		canal_comunicacao,
 	}) {
-		return api.get("/csn/cargas/info", {
+		return await api.get("/csn/cargas/info", {
 			params: {
 				page,
 				id,
