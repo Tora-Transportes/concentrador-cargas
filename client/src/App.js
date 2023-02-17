@@ -5,6 +5,7 @@ import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 import { v4 as uuidv4 } from "uuid";
 import { Helmet } from "react-helmet";
+import { DefaultUserProvider } from "./hooks/context/contextPagCargaCTE";
 
 const DefaultIcon = L.icon({
 	iconUrl: icon,
@@ -24,7 +25,9 @@ const App = () => {
 					href={pathCss}
 				/>
 			</Helmet>
-			<AllRoutes />
+			<DefaultUserProvider>
+				<AllRoutes />
+			</DefaultUserProvider>
 		</>
 	);
 };

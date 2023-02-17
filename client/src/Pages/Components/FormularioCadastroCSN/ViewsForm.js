@@ -39,10 +39,11 @@ export default function ViewsForm({
 	isDetalhesCarreta,
 	valorTotalDebito,
 	fkSituacao,
-	isPermissionUser,
+	isPermissionUserEdit,
 	isDateErrorInput,
 	setDateErrorInput,
 	isViwsCargaApp,
+	isAlteracaoParcial,
 }) {
 	const handleEnter = (event) => {
 		if (event.key === "Enter") {
@@ -365,7 +366,7 @@ export default function ViewsForm({
 					<Row>
 						<Col>
 							{formik.values.observacao_gr && (
-								<FloatingLabel label="Observacao GR" className="mb-3">
+								<FloatingLabel label="Observacao GR" className="mb-1 mt-3">
 									<Form.Control
 										as="textarea"
 										type="text"
@@ -449,9 +450,10 @@ export default function ViewsForm({
 				inputColeta6={inputColeta6}
 				inputColeta7={inputColeta7}
 				fkSituacao={fkSituacao}
-				isPermissionUser={isPermissionUser}
+				isPermissionUserEdit={isPermissionUserEdit}
 				setDateErrorInput={setDateErrorInput}
 				isDateErrorInput={isDateErrorInput}
+				isAlteracaoParcial={isAlteracaoParcial}
 			/>
 
 			<Row className="row-button-local">

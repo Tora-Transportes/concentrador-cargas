@@ -7,7 +7,6 @@ import "./menuCargas.css";
 
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
-//import { validationPermissionUser } from "src/Pages/Utils/validationPermissionUser";
 
 function Main() {
 	const [viewsCadastrarCSN, setviewsCadastrarCSN] = useState(false);
