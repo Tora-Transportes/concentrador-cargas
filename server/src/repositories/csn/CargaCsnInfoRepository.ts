@@ -194,7 +194,7 @@ export class CargaCsnInfoRepository {
             "con_rotas_csn.ID",
             "con_pontos_parada.ID_ROTAS_CSN"
           )
-          .orderBy("con_pontos_parada.ID", "asc");
+          .orderBy("con_pontos_parada.ID", "ASC");
         return obj;
       })
     );

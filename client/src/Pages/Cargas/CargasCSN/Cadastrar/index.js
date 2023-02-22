@@ -268,6 +268,7 @@ const CadastroCargaCSN = () => {
 						setDateErrorInput={setDateErrorInput}
 						isDateErrorInput={isDateErrorInput}
 						isViwsCargaApp={isViwsCargaApp}
+						status={"Cadastro"}
 					/>
 					<Row>
 						<Col>

@@ -40,7 +40,7 @@ function FormularioCadastroManual({
 	const [isDetalhesCarreta, setDetalesCarreta] = useState(null);
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
 	const [valorTotalDebito, setValorTotal] = useState();
-	//const [addDestinoInterme, setAddDestinoInterme] = useState(false);
+	const [isDisabledPlaca, setDisabledPlaca] = useState(false);
 	async function handleShowDetailsAboutVehicle(plate) {
 		if (!plate) {
 			swal("Placa inválida");
@@ -145,6 +145,17 @@ function FormularioCadastroManual({
 				event.preventDefault();
 			}
 		}
+	};
+
+	const DetalhesCargaApp = (e) => {
+		const decisaoEnvioCarga = e.target.checked;
+		const cargaEnviarApp = 1;
+		const cargaNaoEnviarApp = 0;
+		setDisabledPlaca(decisaoEnvioCarga);
+		const valorCargaAppFormik = decisaoEnvioCarga
+			? cargaEnviarApp
+			: cargaNaoEnviarApp;
+		formik.setFieldValue("carga_app", valorCargaAppFormik);
 	};
 
 	const titleInfoPlaca = isDetalhesCarreta
@@ -268,23 +279,12 @@ function FormularioCadastroManual({
 				{isViwsCargaApp && (
 					<Col className="text-end">
 						<Form.Group className="mb-3">
-							*Enviar carga para o APP?{" "}
+							*Enviar carga para o APP?
 							<Form.Check
-								type="radio"
-								label="Sim"
+								type="switch"
 								name="carga_app"
-								onChange={() => formik.setFieldValue("carga_app", 1)}
+								onClick={(e) => DetalhesCargaApp(e)}
 								onKeyDown={handleEnter}
-								checked={formik.values.carga_app === 1}
-								inline
-							/>
-							<Form.Check
-								type="radio"
-								label="Não"
-								name="carga_app"
-								onChange={() => formik.setFieldValue("carga_app", 0)}
-								onKeyDown={handleEnter}
-								checked={formik.values.carga_app === 0}
 								inline
 							/>
 							<OverlayTrigger
@@ -293,9 +293,8 @@ function FormularioCadastroManual({
 								overlay={
 									<Tooltip id={`tooltip-bottom`}>
 										Esse campo define se a carga será enviada ou não para o App.
-										Quando escolhido Sim, a carga poderá ser visualizada e
-										modificada pelo App. Se a escolha for Não, a carga só poderá
-										ser visualizada e modificada através deste portal.
+										Quando este campo é selecionado a carga será disponibilizada
+										para visualização e modificação no App de cargas.
 									</Tooltip>
 								}
 							>
@@ -335,7 +334,7 @@ function FormularioCadastroManual({
 									![1, 2, 4].includes(Number(formik.values.fk_situacao))
 								}
 								placeholder="Placa veículo"
-								disabled={formik.values.e_lote}
+								disabled={isDisabledPlaca}
 								type="text"
 								name="placa_veiculo"
 								value={formik.values.placa_veiculo}

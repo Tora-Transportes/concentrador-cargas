@@ -154,6 +154,7 @@ function Main() {
 		})();
 	}, []);
 
+	const numeroVersao = "V.11";
 	return (
 		<>
 			<ToastContainer />
@@ -321,7 +322,7 @@ function Main() {
 					lastIdPosition={isLastPosition}
 				/>
 			</Container>
-			<h6 className="versionamento">V.10</h6>
+			<h6 className="versionamento">{numeroVersao}</h6>
 		</>
 	);
 }
