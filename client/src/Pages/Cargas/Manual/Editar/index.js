@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import { useParams, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
@@ -11,6 +11,7 @@ import FormularioCadastroManual from "src/Pages/Components/FormularioCadastroMan
 // import CabecalhoFixado from "src/Pages/Components/CabecalhoFixado";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import "../Editar/style.css";
+import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -19,6 +20,8 @@ function Manual() {
 	const [produtos, setProdutos] = useState([]);
 	const [distancia, setDistancia] = useState(null);
 	const [loteInicial, setLoteInicial] = useState(0);
+	const [isViwsCargaApp, setViwsCargaApp] = useState(false);
+	const { isPermissionUser } = useContext(ContextUseDefault);
 
 	const formik = useFormik({
 		initialValues: {
@@ -46,6 +49,7 @@ function Manual() {
 			placa_veiculo: "",
 
 			fk_situacao: null,
+			carga_app: 0,
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -277,6 +281,10 @@ function Manual() {
 		});
 	}, []);
 
+	useEffect(() => {
+		if (isPermissionUser?.includes("ENVIAR_CARGA_APP")) setViwsCargaApp(true);
+	}, [isPermissionUser]);
+
 	return (
 		<>
 			<LoadingScreen />
@@ -297,6 +305,8 @@ function Manual() {
 						disabledFields={
 							loteInicial ? ["e_lote", "unidade_medida", "quantidade"] : []
 						}
+						isViwsCargaApp={isViwsCargaApp}
+						status={"Edicao"}
 					/>
 					<div className="class-group-button">
 						<Button

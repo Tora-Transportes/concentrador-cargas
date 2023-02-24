@@ -66,6 +66,13 @@ export default function ViewsForm({
 
 	const DetalhesCargaApp = (e) => {
 		const decisaoEnvioCarga = e.target.checked;
+		if (decisaoEnvioCarga) {
+			formik.setFieldValue("placa_veiculo", null);
+			formik.setFieldValue("placa_carreta", null);
+			formik.setFieldValue("placa_bitrem", null);
+			formik.setFieldValue("codigo_motorista", null);
+			formik.setFieldValue("nome_motorista", null);
+		}
 		const cargaEnviarApp = 1;
 		const cargaNaoEnviarApp = 0;
 		setDisabledPlaca(decisaoEnvioCarga);

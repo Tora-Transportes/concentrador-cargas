@@ -18,6 +18,7 @@ import {
 import { InputReferencError } from "src/Pages/Components/FormularioCadastroCSN/management";
 import { funcScrollTop } from "src/Pages/Utils/scrollTop";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
+import { envioCargaApp } from "src/Pages/Components/DataAppConcentrador";
 const CadastroCargaCSN = () => {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [produtos, setProdutos] = useState([]);
@@ -157,6 +158,9 @@ const CadastroCargaCSN = () => {
 					const pais = resultLocalidade ? resultLocalidade?.pais : "BRASIL";
 					const destinoCarga = `${pais}/${cidadeEstado[1]}/${cidadeEstado[0]}`;
 
+					const dataColeta = ponto_passagem.previsao;
+					const dataEntrega = ponto_passagem4.previsao;
+
 					const data = (
 						await ServiceCargas.create({
 							...values,
@@ -164,12 +168,28 @@ const CadastroCargaCSN = () => {
 							carga_csn: 1,
 							origem_carga: "BRASIL/RJ/VOLTA REDONDA",
 							destino_carga: destinoCarga.replace(" ", ""),
-							data_coleta: ponto_passagem.previsao,
-							data_entrega: ponto_passagem4.previsao,
+							data_coleta: dataColeta,
+							data_entrega: dataEntrega,
 						})
 					).data;
 
 					if (data.data.id) {
+						let messagemSucesso = `A carga foi cadastrada com o identificador ${data.data.id}!`;
+						if (values.carga_app === 1) {
+							messagemSucesso = `A carga foi cadastrada e enviada para  o App com o identificador ${data.data.id}!`;
+							const oid = getClaims().oid;
+							const idCarga = String(data.data.id);
+							const bodyApp = {
+								...values,
+								oid,
+								idCarga,
+								origem_carga: "BRASIL/RJ/VOLTA REDONDA",
+								destino_carga: destinoCarga.replace(" ", ""),
+								data_coleta: dataColeta,
+								data_entrega: dataEntrega,
+							};
+							envioCargaApp(bodyApp);
+						}
 						const dadosPontoPassagem = {
 							ponto_passagem,
 							ponto_passagem2,
@@ -183,15 +203,9 @@ const CadastroCargaCSN = () => {
 							...dadosPontoPassagem,
 							id_carga: data.data.id,
 						});
-						const ok = await swal(
-							"Sucesso!",
-							`A carga foi cadastrada com o identificador ${data.data.id}!`,
-
-							"success",
-							{
-								closeOnClickOutside: false,
-							}
-						);
+						const ok = await swal("Sucesso!", messagemSucesso, "success", {
+							closeOnClickOutside: false,
+						});
 						if (ok) resetForm();
 					}
 				} catch (error) {
