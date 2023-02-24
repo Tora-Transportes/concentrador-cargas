@@ -12,6 +12,7 @@ import { Toast } from "primereact/toast";
 import ServiceAvisos from "src/services/ServiceAvisos";
 import { Input } from "reactstrap";
 import { ContextUseDefault } from "./../../hooks/context/contextPagCargaCTE";
+import { HiThumbDown, HiThumbUp } from "react-icons/hi";
 
 let emptyNotice = {
 	ID: null,
@@ -25,6 +26,10 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 	const [isPermissionAviso, setPermissionAviso] = useState(false);
 	const [avisoDialog, setAvisoDialog] = useState(false);
 	const [deleteAviso, setDeleteAviso] = useState(false);
+	const [likeAviso, setLikeAviso] = useState(0);
+	const [dislikeAviso, setDislikeAviso] = useState(0);
+	const [likeActive, setLikeActive] = useState(false);
+	const [dislikeActive, setDislikeActive] = useState(false);
 
 	const [aviso, setAviso] = useState(emptyNotice);
 	const [submittedAviso, setSubmittedAviso] = useState(false);
@@ -161,6 +166,7 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 
 		setAviso(_avisos);
 	};
+
 	const deleteAvisoFooter = (
 		<div>
 			<Button
@@ -190,6 +196,36 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 			setPermissionAviso(true);
 		}
 	}, [isPermissionUser]);
+
+	const functionLikeAvisos = async () => {
+		if (likeActive) {
+			setLikeActive(false);
+			setLikeAviso(likeAviso - 1);
+		} else {
+			setLikeActive(true);
+			setLikeAviso(likeAviso + 1);
+			if (dislikeActive) {
+				setDislikeActive(false);
+				setLikeAviso(likeAviso + 1);
+				setDislikeAviso(dislikeAviso - 1);
+			}
+		}
+	};
+
+	const functionDislikeAvisos = async () => {
+		if (dislikeActive) {
+			setDislikeActive(false);
+			setDislikeAviso(dislikeAviso - 1);
+		} else {
+			setDislikeActive(true);
+			setDislikeAviso(dislikeAviso + 1);
+			if (likeActive) {
+				setLikeActive(false);
+				setDislikeAviso(dislikeAviso + 1);
+				setLikeAviso(likeAviso - 1);
+			}
+		}
+	};
 
 	return (
 		<>
@@ -241,6 +277,23 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 														/>
 													</div>
 												)}
+												<div className="p-like-avisos">
+													<p>Conte-nos! O que você achou deste aviso?</p>
+													<div className="div-reaction-avisos">
+														<Button
+															label={dislikeAviso}
+															icon={<HiThumbDown className="hi-thumb-Down" />}
+															className="button-dislike-avisos"
+															onClick={functionDislikeAvisos}
+														/>
+														<Button
+															icon={<HiThumbUp className="hi-thumb-Up" />}
+															label={likeAviso}
+															className="button-like-avisos"
+															onClick={functionLikeAvisos}
+														/>
+													</div>
+												</div>
 											</Card>
 										</div>
 									);

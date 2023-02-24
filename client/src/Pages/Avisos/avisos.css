@@ -18,9 +18,10 @@
 
 .title-avisos {
   font-size: 40px;
+  font-style: italic;
   color: #00652e;
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 .p-saudacao-aviso {
   color: #00652e;
@@ -85,7 +86,9 @@
 
 .div-buttons-edit-delete {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: row-reverse;
+  position: relative;
+  margin-right: -2%;
 }
 
 .edit-button {
@@ -114,6 +117,66 @@
 .delete-button:enabled:hover {
   border-color: #ef4444;
   background-color: rgba(255, 0, 21, 0.712);
+}
+
+.div-reaction-avisos {
+  display: flex;
+  flex-direction: row-reverse;
+  position: relative;
+  margin-top: -3%;
+  margin-right: -37%;
+  margin-bottom: -1%;
+}
+.p-like-avisos {
+  display: flex;
+  flex-direction: row-reverse;
+  position: relative;
+  font-style: italic;
+  font-size: 14px;
+  font-weight: 600;
+  color: #353a3fc9;
+  margin-top: 5%;
+  margin-right: 10%;
+  margin-bottom: -3%;
+}
+
+.button-like-avisos,
+.button-like-avisos:enabled:hover,
+.button-like-avisos:enabled:active,
+.hi-thumb-Up:enabled:hover,
+.hi-thumb-Up:enabled:active {
+  border-color: transparent;
+  border: none;
+  background-color: transparent;
+  color: #0c46e4ea;
+}
+.button-like-avisos:enabled:focus {
+  box-shadow: none;
+}
+.hi-thumb-Up {
+  color: #0c46e4af;
+  width: 30px;
+  height: 30px;
+  float: none;
+}
+.button-dislike-avisos,
+.button-dislike-avisos:enabled:hover,
+.button-dislike-avisos:enabled:active {
+  border: none;
+  background-color: transparent;
+  transform: none;
+  transition: none;
+  color: #ac1010b4;
+}
+
+.button-dislike-avisos:enabled:focus {
+  box-shadow: none;
+}
+
+.hi-thumb-Down {
+  color: #aa1c1cb2;
+  width: 30px;
+  height: 30px;
 }
 
 .button-sim-delete {
