@@ -123,15 +123,10 @@ function HelperCSN() {
 						</p>
 
 						<img src={edicaoCSN} id="style-gif" />
-						<div className="class-button-ir">
-							<Button
-								href="/cargas/csn/:id"
-								id="style-button-acc"
-								className="class-button1"
-							>
-								Navegar até Edição de Cargas
-							</Button>
-						</div>
+						<p>
+							Para acessar a página de edição de cargas, basta clicar no ícone
+							conforme exemplificado acima.
+						</p>
 					</Accordion.Body>
 				</Accordion.Item>
 				<Accordion.Item eventKey="4" id="style-button-accordion">
@@ -214,16 +209,10 @@ function HelperCSN() {
 						</p>
 						<p className="p-tela-ajuda">Exemplo da página de Consulta:</p>
 						<img src={consultaCargas} id="style-gif" />
-
-						<div className="class-button-ir">
-							<Button
-								href="/veiculos/coordenadas"
-								id="style-button-acc"
-								className="class-button1"
-							>
-								Navegar até Cosulta de Cargas
-							</Button>
-						</div>
+						<p>
+							Para acessar a página de consulta de cargas, basta clicar no ícone
+							conforme exemplificado acima.
+						</p>
 					</Accordion.Body>
 				</Accordion.Item>
 				<Accordion.Item eventKey="7" id="style-button-accordion">
@@ -239,7 +228,7 @@ function HelperCSN() {
 
 						<div className="class-button-ir">
 							<Button
-								href="/veiculos/aprovacao/padrao"
+								href="/veiculos/aprovacao/csn"
 								id="style-button-acc"
 								className="class-button1"
 							>
@@ -292,7 +281,7 @@ function HelperCSN() {
 
 						<div className="class-button-ir">
 							<Button
-								href="/relatorios"
+								href="/relatorios/visualizar/csn"
 								id="style-button-acc"
 								className="class-button1"
 							>

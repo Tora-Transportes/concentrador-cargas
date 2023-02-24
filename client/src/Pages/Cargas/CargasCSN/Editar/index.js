@@ -206,7 +206,7 @@ function EditarCargaCsn() {
 						const { data } = await ServiceCargas.updateCSN({
 							...values,
 							info_passagem: dadosPontoPassagem,
-							responsavel_cadastro: String(getClaims().name),
+							canal_comunicacao: "manual",
 							fk_situacao: undefined,
 							fk_filial: formik.values.fk_filial?.split("-")[0],
 							carga_csn: 1,
@@ -234,6 +234,7 @@ function EditarCargaCsn() {
 								await ServiceCargas.updateCSN({
 									...formik.values,
 									info_passagem: dadosPontoPassagem,
+									canal_comunicacao: "manual",
 									fk_situacao: 6,
 									fk_filial: formik.values.fk_filial?.split("-")[0],
 								});

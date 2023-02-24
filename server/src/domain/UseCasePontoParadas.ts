@@ -136,11 +136,7 @@ export class UseCaseUpdatePontoParadaPartial {
         stripUnknown: true,
       }
     );
-    // if (bodyParada.COLETA_EFETIVA_POSTO30) {
-    //   bodyParada.COLETA_EFETIVA_POSTO30 = new Date(
-    //     bodyParada.COLETA_EFETIVA_POSTO30
-    //   );
-    // }
+
     const dadosParada = { ...pontoParada, DATA_ATUALIZACAO: dataAtual };
     await this.pontoParadaRepository.updatePatch(id, dadosParada);
     return { mensagem: "Editado com sucesso!" };

@@ -158,25 +158,19 @@ function Helper() {
 					<Accordion.Header>Edição de Cargas</Accordion.Header>
 					<Accordion.Body className="class-body-accordion">
 						<p className="p-tela-ajuda">
-							Ao acessar a página você terá acesso a editar/corrigir as
-							informações das cargas, sendo possivel editar <br /> uma carga por
-							vez e dessa forma manter as informações atualizadas em nossa
-							plataforma, a carga é <br /> controlada pelo código e você terá
-							acesso a essa ferramenta através das telas de Listagem de Cargas
-							<br /> e Cargas em Lotes. Segue abaixo o exemplo da página Editar
-							Cargas:
+							Ao acessar a página você poderá editar/modificar as informações
+							das cargas, sendo possivel editar uma carga por vez, <br />
+							mantendo as informações atualizadas em nossa plataforma, as carga
+							são controladas pelo código e você terá acesso <br /> a essa
+							ferramenta através das telas de Listagem de Cargas e Cargas em
+							Lotes. <br /> Segue abaixo o exemplo da página Editar Cargas:
 						</p>
 
 						<img src={edicaoCargas} id="style-gif" />
-						<div className="class-button-ir">
-							<Button
-								href="/lotes/visualizar"
-								id="style-button-acc"
-								className="class-button1"
-							>
-								Navegar até Edição de Cargas
-							</Button>
-						</div>
+						<p>
+							Para acessar a página de edição de cargas, basta clicar no ícone
+							conforme exemplificado acima.
+						</p>
 					</Accordion.Body>
 				</Accordion.Item>
 				<Accordion.Item eventKey="5" id="style-button-accordion">
@@ -263,15 +257,10 @@ function Helper() {
 						<p className="p-tela-ajuda">Exemplo da página de Consulta:</p>
 						<img src={consultaCargas} id="style-gif" />
 
-						<div className="class-button-ir">
-							<Button
-								href="/veiculos/coordenadas"
-								id="style-button-acc"
-								className="class-button1"
-							>
-								Navegar até Cosulta de Cargas
-							</Button>
-						</div>
+						<p>
+							Para acessar a página de consulta de cargas, basta clicar no ícone
+							conforme exemplificado acima.
+						</p>
 					</Accordion.Body>
 				</Accordion.Item>
 				<Accordion.Item eventKey="8" id="style-button-accordion">
@@ -340,7 +329,7 @@ function Helper() {
 
 						<div className="class-button-ir">
 							<Button
-								href="/relatorios"
+								href="/relatorios/visualizar/padrao"
 								id="style-button-acc"
 								className="class-button1"
 							>

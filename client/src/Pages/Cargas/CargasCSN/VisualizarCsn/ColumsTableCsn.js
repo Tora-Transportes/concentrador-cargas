@@ -305,4 +305,16 @@ export const columns = [
 		),
 		showFilter: true,
 	},
+	{
+		name: "usuario",
+		description: "Responsável pela última alteração",
+		selector: (row) => <CollapseHint text={row.usuario || ""} />,
+		sortable: "sortable",
+	},
+	{
+		name: "data_atualizacao",
+		description: "Data da última atualização",
+		selector: (row) => formatDateAndHour(row.data_atualizacao),
+		sortable: "sortable",
+	},
 ];

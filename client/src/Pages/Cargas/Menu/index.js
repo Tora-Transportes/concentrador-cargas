@@ -23,7 +23,7 @@ function Main() {
 
 	return (
 		<>
-			<Menusuperior type={"teste"} />
+			<Menusuperior />
 			<Container className="class-body-menu">
 				<h1 id="titulo-selecionar-modo-carga" className="class-title-coleta">
 					Selecione o modo no qual a carga foi coletada:

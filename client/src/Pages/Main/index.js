@@ -9,6 +9,9 @@ import { Link } from "react-router-dom";
 import { IoLocationSharp } from "react-icons/io5";
 import Menusuperior from "../Components/MenuSuperior/menusuperior";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
+import PopUp from "../Avisos/popUpAvisos";
+import ServiceAvisos from "src/services/ServiceAvisos";
+import { MdOutlineNotificationImportant } from "react-icons/md";
 
 const queueCoresAtuais = [];
 
@@ -17,6 +20,8 @@ function Main() {
 	const [isPermissionCsn, setPermissionCsn] = useState(false);
 	const [isPermissionPadrao, setPermissionPadrao] = useState(false);
 	const [visibilidadeTeclas, setVisibilidadeTeclas] = useState(false);
+	const [isShow, setShow] = useState(false);
+	const [isLastPosition, setLastPosition] = useState();
 	const [levelGame, setLevelGame] = useState(-1);
 	const inputCorAtual = useRef(null);
 	const coresBotoesGame = [
@@ -119,16 +124,12 @@ function Main() {
 	useEffect(() => {
 		const nome = getClaims().name;
 		setUserData({ nome });
-		//verificarAtualizacaoVersao();
-		//(async () => {
-		//const userPermission = await validationPermissionUser();
 		if (isPermissionUser?.includes("CARGAS_PADRAO")) {
 			setPermissionPadrao(true);
 		}
 		if (isPermissionUser?.includes("CARGAS_CSN")) {
 			setPermissionCsn(true);
 		}
-		//})();
 	}, [isPermissionUser]);
 
 	useEffect(() => {
@@ -138,18 +139,44 @@ function Main() {
 		}
 	}, [levelGame]);
 
+	// validação avisos
+
+	useEffect(() => {
+		(async () => {
+			const { data } = (await ServiceAvisos.list()).data;
+
+			const dadosStorage = localStorage.getItem("viewsAviso");
+			const lastIdPosition = data[0];
+			setLastPosition(lastIdPosition?.ID);
+			if (dadosStorage === null || dadosStorage < lastIdPosition.ID) {
+				setShow(true);
+			}
+		})();
+	}, []);
+
 	return (
 		<>
 			<ToastContainer />
 			<Menusuperior />
 			<Container className="class-body-main">
 				<Row>
-					<Col className="text-center mt-5 mb-5">
+					<Col className="text-center mt-2 mb-5">
 						<p id="style-title-main" className="title-page-main">
 							Seja bem-vindo(a) ao Concentrador de Cargas
 						</p>
 					</Col>
 				</Row>
+
+				<div className="col-avisos-style">
+					<Link to={`avisos/${isLastPosition}`} className="class-link">
+						<MdOutlineNotificationImportant
+							size={30}
+							// className="icons-responsive"
+							className="button-avisos-style"
+						/>
+						<br />
+					</Link>
+				</div>
 				<div>
 					<div>
 						<p id="style-p-saudacao">Caro(a) {userData?.nome}!</p>
@@ -279,17 +306,22 @@ function Main() {
 									durante o seu dia de trabalho.
 								</p>
 							</div>
-							<div>
-								<div className="class-linha-jogo">
-									<Button className="style-button-jogo" onClick={iniciarGame}>
-										Exercitar Agora!
-									</Button>
-								</div>
+
+							<div className="class-linha-jogo">
+								<Button className="style-button-jogo" onClick={iniciarGame}>
+									Exercitar Agora!
+								</Button>
 							</div>
 						</>
 					)}
 				</Row>
+				<PopUp
+					isShow={isShow}
+					setShow={setShow}
+					lastIdPosition={isLastPosition}
+				/>
 			</Container>
+			<h6 className="versionamento">V.10</h6>
 		</>
 	);
 }

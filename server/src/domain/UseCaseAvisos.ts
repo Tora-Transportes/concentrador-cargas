@@ -1,11 +1,8 @@
+import { dateAtualMoment } from "./../Utils/formatData";
 import AppError from "../models/AppError";
 import IModelAvisos from "../models/Avisos";
 import { factoryAvisos } from "../validations/AvisosValidator";
 import { AvisosRepository } from "./../repositories/AvisosRepository";
-import dateTimezone from "../Utils/date";
-
-const dataAtual = dateTimezone.formatDateTimezone(new Date());
-
 class VerificacaoExisteAviso {
   async run(id: number, avisosRepository: AvisosRepository) {
     const existeAviso = await avisosRepository.index(id);
@@ -21,15 +18,13 @@ class UseCaseAddAvisos {
 
   async run(dataAviso: IModelAvisos): Promise<string> {
     const validator = factoryAvisos();
-    dataAviso.DATA_CADASTRO = dataAtual;
+    dataAviso.DATA_CADASTRO = new Date(dateAtualMoment());
     await validator.validate(dataAviso, {
       abortEarly: false,
       stripUnknown: true,
     });
-
     await this.avisosRepository.create(dataAviso);
-
-    return "Aviso Salvo com sucesso!";
+    return "Aviso criado com sucesso!";
   }
 }
 
@@ -67,7 +62,7 @@ export class UseCaseUpdateAvisos {
   async run(id: number, dataAviso: IModelAvisos): Promise<IModelAvisos> {
     await this.verificaExisteAviso.run(id, this.avisosRepository);
     const validator = factoryAvisos();
-    dataAviso.DATA_ATUALIZACAO = dataAtual;
+    dataAviso.DATA_ATUALIZACAO = new Date(dateAtualMoment());
     const aviso = await validator.validate(dataAviso, {
       abortEarly: false,
       stripUnknown: true,
@@ -87,7 +82,7 @@ export class UseCaseDeleteAvisos {
   async run(id: number) {
     await this.verificaExisteAviso.run(id, this.avisosRepository);
     await this.avisosRepository.delete(id);
-    return "Aviso deletada com sucesso!";
+    return "Aviso deletado com sucesso!";
   }
 }
 

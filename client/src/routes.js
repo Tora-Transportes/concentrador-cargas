@@ -38,11 +38,15 @@ import { DefaultUserProvider } from "./hooks/context/contextPagCargaCTE";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
+	// Tem que mudar a versão na pasta main linha 141 ...
 	const limparCache = localStorage.getItem("clear_Cache");
-	if (limparCache == null || limparCache.toString() !== "version_3") {
-		localStorage.clear();
-		localStorage.setItem("clear_Cache", "version_3");
-		window.location.reload();
+	if (limparCache == null || limparCache.toString() !== "version_9") {
+		localStorage.removeItem("table-columns-csn");
+		localStorage.removeItem("table-columns");
+		localStorage.removeItem("table-columns-lote");
+		localStorage.removeItem("coordenadas-table");
+		localStorage.setItem("clear_Cache", "version_9");
+		location.reload();
 	}
 
 	return (
@@ -129,7 +133,7 @@ export default function AllRoutes() {
 					{/* <Route path="/producao" exact component={CalendarioProducao} /> */}
 					<Route path="/ajuda" exact component={Helper} />
 					<Route path="/ajuda/CSN" exact component={HelperCSN} />
-					<Route path="/avisos" exact component={Avisos} />
+					<Route path="/avisos/:id" exact component={Avisos} />
 				</DefaultUserProvider>
 				<Route path="*" exact component={Main} />
 			</Switch>

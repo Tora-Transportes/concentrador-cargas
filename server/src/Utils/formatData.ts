@@ -24,3 +24,7 @@ export const formatDateObject = (dataValues: Date | null | undefined) => {
     return dateFormate;
   }
 };
+
+export const dateAtualMoment = () => {
+  return moment().utc().toDate();
+};

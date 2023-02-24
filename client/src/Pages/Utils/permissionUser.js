@@ -8,6 +8,7 @@ export const allTipoPermissoes = [
 	{ name: "DELETAR_CARGAS" },
 	{ name: "ENVIAR_CARGA_APP" },
 	{ name: "FINALIZAR_CARGAS_CSN" },
+	{ name: "GERENCIAR_AVISOS" },
 	{ name: "MANUTENCAO_TRAJETO_FINALIZADO" },
 	{ name: "REGISTRAR_JUSTIFICATIVA" },
 	{ name: "VINCULAR_PLACA" },

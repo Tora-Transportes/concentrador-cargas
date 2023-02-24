@@ -180,6 +180,15 @@ ul {
   justify-content: space-between;
   background: #00652e;
 }
+#headerDev {
+  box-sizing: border-box;
+  display: flex;
+  height: 70px;
+  padding: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  background:#B22222;
+}
 #menu {
   display: flex;
   list-style: none;
