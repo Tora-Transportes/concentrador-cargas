@@ -143,9 +143,9 @@ class CoordenadasController {
     if (placa.length < 7) {
       throw new AppError("Placa inválida", 400);
     }
-    if (cnpj.length < 14) {
-      throw new AppError("CNPJ inválido", 400);
-    }
+    // if (cnpj.length < 14) {
+    //   throw new AppError("CNPJ inválido", 400);
+    // }
 
     const service = new ServiceDistanceLocations();
     const veiculos = await service.searchRouteToEnterprise(placa, cnpj);
