@@ -33,6 +33,7 @@ routes.post(
 );
 routes.get("/avisos/:id", AvisosController.index);
 routes.get("/avisos", AvisosController.search);
+routes.patch("/avisos/:id", AvisosController.pathUpdate);
 routes.put(
   "/avisos/:id",
   HasPermission("GERENCIAR_AVISOS"),
