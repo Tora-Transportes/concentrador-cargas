@@ -3,6 +3,7 @@ import moment from "moment";
 import oracle from "../database";
 import database, { mssql, mssqlCoordenadas } from "../database";
 import AppError from "../models/AppError";
+import * as https from "https";
 export interface IQueryDistance {
   cidade_origem: string | undefined | null;
   cidade_destino: string | undefined | null;
@@ -181,28 +182,50 @@ export class ServiceDistanceLocations {
       throw new Error("Os tokens BING_MAPS_API_TOKEN não foram definidos");
     }
 
+    const anularCertificadoApiEmDev =
+      process.env.ANULAR_CERTIFICADO_BING_MAPS_API_TOKEN;
+
     const api_key = String(tokensMapsRoute[0]);
 
+    const httpsAgent = new https.Agent({
+      rejectUnauthorized: false,
+    });
+
+    let apiVirtualLearth;
+    if (anularCertificadoApiEmDev) {
+      apiVirtualLearth = axios.create({
+        httpsAgent,
+        baseURL: "https://dev.virtualearth.net/REST/v1/Routes",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } else {
+      apiVirtualLearth = axios.create({
+        baseURL: "https://dev.virtualearth.net/REST/v1/Routes",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
+
     const routeData = (
-      await axios.post(
-        `https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?key=${api_key}`,
-        {
-          origins: [
-            {
-              latitude: latitude_origem,
-              longitude: longitude_origem,
-            },
-          ],
-          destinations: [
-            {
-              latitude: latitude_destino,
-              longitude: longitude_destino,
-            },
-          ],
-          travelMode: "Driving",
-          timeUnit: "second",
-        }
-      )
+      await apiVirtualLearth.post(`/DistanceMatrix?key=${api_key}`, {
+        origins: [
+          {
+            latitude: latitude_origem,
+            longitude: longitude_origem,
+          },
+        ],
+        destinations: [
+          {
+            latitude: latitude_destino,
+            longitude: longitude_destino,
+          },
+        ],
+        travelMode: "Driving",
+        timeUnit: "second",
+      })
     ).data;
 
     let distancia_km = undefined;
