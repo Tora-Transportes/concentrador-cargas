@@ -7,6 +7,7 @@ interface IAvisosController {
   search(req: Request, res: Response): Promise<Response>;
   update(req: Request, res: Response): Promise<Response>;
   delete(req: Request, res: Response): Promise<Response>;
+  pathUpdate(req: Request, res: Response): Promise<Response>;
 }
 
 class AvisosController implements IAvisosController {
@@ -26,6 +27,15 @@ class AvisosController implements IAvisosController {
   async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const result = await domainAviso.useCaseUpdateAvisos.run(
+      Number(id),
+      req.body
+    );
+    return res.json({ data: result });
+  }
+
+  async pathUpdate(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const result = await domainAviso.useCasePathUpdateAvisos.run(
       Number(id),
       req.body
     );

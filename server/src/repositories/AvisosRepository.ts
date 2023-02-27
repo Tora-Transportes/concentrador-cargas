@@ -26,6 +26,10 @@ export class AvisosRepository implements IAvisosRepository {
     await database("con_avisos").update(dataUpdate).where({ ID });
   }
 
+  async pathUpdate(ID: number, dataUpdate: IModelAvisos): Promise<void> {
+    await database("con_avisos").update(dataUpdate).where({ ID });
+  }
+
   async delete(ID: number): Promise<void> {
     await database("con_avisos").delete().where({ ID });
   }

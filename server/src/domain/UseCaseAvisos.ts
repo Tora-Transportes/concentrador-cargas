@@ -63,12 +63,27 @@ export class UseCaseUpdateAvisos {
     await this.verificaExisteAviso.run(id, this.avisosRepository);
     const validator = factoryAvisos();
     dataAviso.DATA_ATUALIZACAO = new Date(dateAtualMoment());
-    const aviso = await validator.validate(dataAviso, {
+    await validator.validate(dataAviso, {
       abortEarly: false,
       stripUnknown: true,
     });
-    await this.avisosRepository.update(id, aviso);
-    return aviso;
+    await this.avisosRepository.update(id, dataAviso);
+    return dataAviso;
+  }
+}
+export class UseCasePathUpdateAvisos {
+  private readonly avisosRepository: AvisosRepository;
+  private readonly verificaExisteAviso: VerificacaoExisteAviso;
+  constructor() {
+    this.avisosRepository = new AvisosRepository();
+    this.verificaExisteAviso = new VerificacaoExisteAviso();
+  }
+
+  async run(id: number, dataAviso: IModelAvisos): Promise<IModelAvisos> {
+    await this.verificaExisteAviso.run(id, this.avisosRepository);
+    dataAviso.DATA_ATUALIZACAO = new Date(dateAtualMoment());
+    await this.avisosRepository.pathUpdate(id, dataAviso);
+    return dataAviso;
   }
 }
 
@@ -91,6 +106,7 @@ const instancias = {
   useCaseIndexAvisos: new UseCaseIndexAvisos(),
   useCaseAllAvisos: new UseCaseAllAvisos(),
   useCaseUpdateAvisos: new UseCaseUpdateAvisos(),
+  useCasePathUpdateAvisos: new UseCasePathUpdateAvisos(),
   useCaseDeleteAvisos: new UseCaseDeleteAvisos(),
 };
 

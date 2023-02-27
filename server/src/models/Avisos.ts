@@ -5,4 +5,6 @@ export default interface IModelAvisos {
   AUTOR: string;
   DATA_CADASTRO?: Date;
   DATA_ATUALIZACAO?: Date | null;
+  LIKE_ON: number;
+  LIKE_OF: number;
 }

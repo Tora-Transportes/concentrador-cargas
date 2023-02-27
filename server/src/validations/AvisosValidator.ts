@@ -10,6 +10,8 @@ export function factoryAvisos() {
     AUTOR: yup.string().required("O autor do aviso deve ser  preenchido!"),
     DATA_CADASTRO: yup.date(),
     DATA_ATUALIZACAO: yup.date().nullable(),
+    LIKE_ON: yup.number(),
+    LIKE_OF: yup.number(),
   });
   return avisosValidator;
 }
