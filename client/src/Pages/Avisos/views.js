@@ -13,6 +13,7 @@ import ServiceAvisos from "src/services/ServiceAvisos";
 import { Input } from "reactstrap";
 import { ContextUseDefault } from "./../../hooks/context/contextPagCargaCTE";
 import { HiThumbDown, HiThumbUp } from "react-icons/hi";
+import { BsPencilSquare } from "react-icons/bs";
 
 let emptyNotice = {
 	ID: null,
@@ -37,7 +38,7 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 	const toast = useRef(null);
 
 	const subtitle = (autor, dataCadastro) => (
-		<div className="div_dados_aviso">
+		<div className="div-resp-cad-aviso">
 			<h6>Responsável pelo Cadastro: {autor}</h6>
 			<h6>Data do cadastro: {dataCadastro}</h6>
 		</div>
@@ -255,42 +256,44 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 									return (
 										<div key={item.ID}>
 											<Card className="card-avisos">
+												{isPermissionAviso && (
+													<div className="div-buttons-edit-delete">
+														<Button
+															label="Editar"
+															icon={<BsPencilSquare />}
+															className="edit-button"
+															onClick={() => editNotice(item)}
+														/>
+														<Button
+															label="Excluir"
+															icon="pi pi-trash"
+															className="delete-button"
+															onClick={() => confirmDeleteNotice(item)}
+														/>
+													</div>
+												)}
 												<p className="title-card-avisos">{item?.TITULO}</p>
 												<p className="p-mensagem-aviso">{item.MENSAGEM}</p>
 												{subtitle(
 													item.AUTOR,
 													converterData(item.DATA_CADASTRO)
 												)}
-												{isPermissionAviso && (
-													<div className="div-buttons-edit-delete">
+												<div className="div-reaction-avisos">
+													<p className="p-conte-nos-avisos">
+														Conte-nos! O que você achou deste aviso?
+													</p>
+													<div className="buttons-reaction-avisos">
 														<Button
-															label="Editar"
-															icon="pi pi-bookmark"
-															className="edit-button"
-															onClick={() => editNotice(item)}
-														/>
-														<Button
-															label="Excluir"
-															icon="pi pi-times"
-															className="delete-button"
-															onClick={() => confirmDeleteNotice(item)}
-														/>
-													</div>
-												)}
-												<div className="p-like-avisos">
-													<p>Conte-nos! O que você achou deste aviso?</p>
-													<div className="div-reaction-avisos">
-														<Button
-															label={dislikeAviso}
-															icon={<HiThumbDown className="hi-thumb-Down" />}
-															className="button-dislike-avisos"
-															onClick={functionDislikeAvisos}
-														/>
-														<Button
+															className="button-like-avisos"
 															icon={<HiThumbUp className="hi-thumb-Up" />}
 															label={likeAviso}
-															className="button-like-avisos"
 															onClick={functionLikeAvisos}
+														/>
+														<Button
+															className="button-dislike-avisos"
+															icon={<HiThumbDown className="hi-thumb-Down" />}
+															label={dislikeAviso}
+															onClick={functionDislikeAvisos}
 														/>
 													</div>
 												</div>
