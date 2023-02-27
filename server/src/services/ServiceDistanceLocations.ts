@@ -192,7 +192,7 @@ export class ServiceDistanceLocations {
     });
 
     let apiVirtualLearth;
-    if (anularCertificadoApiEmDev) {
+    if (anularCertificadoApiEmDev === "true") {
       apiVirtualLearth = axios.create({
         httpsAgent,
         baseURL: "https://dev.virtualearth.net/REST/v1/Routes",
