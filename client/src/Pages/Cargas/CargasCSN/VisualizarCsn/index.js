@@ -61,31 +61,33 @@ function VisualizarCsn() {
 			setLoading(true);
 
 			try {
-				const { filters, orderBy, page } = options;
+				const { filters, orderBy, page, countGetRota } = options;
 				setFiltroAtual({ filters, orderBy, page });
 				refFuncionalidadeSocket.current = Object.keys(filters).length
 					? false
 					: true;
 
-				const { data } = await ServiceCargas.searchCsn({
-					...filters,
-					page,
-					order_column: orderBy?.column,
-					order_direction: orderBy?.direction,
-					limit: itensPerPage,
-					e_lote: 0,
-				});
-				setLoading(false);
+				if (countGetRota !== 1) {
+					const { data } = await ServiceCargas.searchCsn({
+						...filters,
+						page,
+						order_column: orderBy?.column,
+						order_direction: orderBy?.direction,
+						limit: itensPerPage,
+						e_lote: 0,
+					});
+					setLoading(false);
 
-				dispatchCargas({
-					type: "SET",
-					payload: {
-						results: data.data.results,
-						total_pages: data.data.total_pages,
-						current_page: data.data.page,
-					},
-				});
-				setTotalRegisters(Number(data.data.total_registers));
+					dispatchCargas({
+						type: "SET",
+						payload: {
+							results: data.data.results,
+							total_pages: data.data.total_pages,
+							current_page: data.data.page,
+						},
+					});
+					setTotalRegisters(Number(data.data.total_registers));
+				}
 			} catch (error) {
 				console.log(error);
 			}

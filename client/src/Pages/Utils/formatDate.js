@@ -92,3 +92,7 @@ export const formatDateObject = (dataValues) => {
 		return dateFormate;
 	}
 };
+
+export const dataAtualMoment = () => {
+	return moment().format("YYYY-MM-DDTHH:mm");
+};

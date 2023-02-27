@@ -22,6 +22,7 @@ import AvisosController from "./controllers/AvisosController";
 import CargasCsnController from "./controllers/csn/CargasCsnController";
 import PontoParadaController from "./controllers/PontoParadaController";
 import CargasCsnInfoController from "./controllers/csn/CargasCsnInfoController";
+import LogsErrorControllers from "./controllers/LogsErrorControllers";
 
 const routes = Router();
 
@@ -200,4 +201,6 @@ routes.post(
   HasPermission("REGISTRAR_JUSTIFICATIVA"),
   ProducaoController.createEvent
 );
+
+routes.post("/logs", LogsErrorControllers.error);
 export default routes;

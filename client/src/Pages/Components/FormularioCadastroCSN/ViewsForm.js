@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
 	Button,
 	Card,
@@ -44,7 +45,11 @@ export default function ViewsForm({
 	setDateErrorInput,
 	isViwsCargaApp,
 	isAlteracaoParcial,
+	isDisabledEnvioApp,
 }) {
+	const [isDisabledPlaca, setDisabledPlaca] = useState(false);
+	const [isRequiredPlaca, setRequiredPlaca] = useState(true);
+
 	const handleEnter = (event) => {
 		if (event.key === "Enter") {
 			const form = event.target.form;
@@ -59,9 +64,29 @@ export default function ViewsForm({
 		}
 	};
 
+	const DetalhesCargaApp = (e) => {
+		const decisaoEnvioCarga = e.target.checked;
+		if (decisaoEnvioCarga) {
+			formik.setFieldValue("placa_veiculo", null);
+			formik.setFieldValue("placa_carreta", null);
+			formik.setFieldValue("placa_bitrem", null);
+			formik.setFieldValue("codigo_motorista", null);
+			formik.setFieldValue("nome_motorista", null);
+		}
+		const cargaEnviarApp = 1;
+		const cargaNaoEnviarApp = 0;
+		setDisabledPlaca(decisaoEnvioCarga);
+		setRequiredPlaca(!decisaoEnvioCarga);
+		const valorCargaAppFormik = decisaoEnvioCarga
+			? cargaEnviarApp
+			: cargaNaoEnviarApp;
+		formik.setFieldValue("carga_app", valorCargaAppFormik);
+	};
+
 	const titleInfoPlaca = isDetalhesCarreta
 		? "Dados do Veículo / Dados Carreta"
 		: "Dados do Veículo";
+
 	return (
 		<div className="class-body-form">
 			<Row>
@@ -187,34 +212,36 @@ export default function ViewsForm({
 					{isViwsCargaApp && (
 						<Col className="text-end">
 							<Form.Group className="mb-3">
-								*Enviar carga para o APP?{" "}
-								<Form.Check
-									type="radio"
-									label="Sim"
-									name="carga_app"
-									onChange={() => formik.setFieldValue("carga_app", 1)}
-									onKeyDown={handleEnter}
-									checked={formik.values.carga_app === 1}
-									inline
-								/>
-								<Form.Check
-									type="radio"
-									label="Não"
-									name="carga_app"
-									onChange={() => formik.setFieldValue("carga_app", 0)}
-									onKeyDown={handleEnter}
-									checked={formik.values.carga_app === 0}
-									inline
-								/>
+								*Enviar carga para o App?
+								{!isDisabledEnvioApp ? (
+									<Form.Check
+										type="switch"
+										name="carga_app"
+										defaultValue={false}
+										onClick={(e) => DetalhesCargaApp(e)}
+										onKeyDown={handleEnter}
+										inline
+									/>
+								) : (
+									<Form.Check
+										type="switch"
+										name="carga_app"
+										onClick={(e) => DetalhesCargaApp(e)}
+										onKeyDown={handleEnter}
+										disabled={true}
+										checked={formik.values.carga_app === 1}
+										inline
+									/>
+								)}
 								<OverlayTrigger
 									key="tooltip-overlay-carga-app"
 									placement="bottom"
 									overlay={
 										<Tooltip id={`tooltip-bottom`}>
 											Esse campo define se a carga será enviada ou não para o
-											App. Quando escolhido Sim, a carga poderá ser visualizada
-											e modificada pelo App. Se a escolha for Não, a carga só
-											poderá ser visualizada e modificada através deste portal.
+											App. Quando este campo é selecionado a carga será
+											disponibilizada para visualização e modificação no App de
+											cargas.
 										</Tooltip>
 									}
 								>
@@ -258,7 +285,7 @@ export default function ViewsForm({
 										![1, 2, 4].includes(Number(formik.values.fk_situacao))
 									}
 									placeholder="Placa Veículo"
-									disabled={formik.values.e_lote}
+									disabled={isDisabledPlaca}
 									type="text"
 									name="placa_veiculo"
 									value={formik.values.placa_veiculo || ""}
@@ -271,6 +298,7 @@ export default function ViewsForm({
 											handleSearchVehicle(formik.values.placa_veiculo);
 										}
 									}}
+									required={isRequiredPlaca}
 								/>
 							</Col>
 							<Col sm={12} md={6}>

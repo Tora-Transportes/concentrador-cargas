@@ -19,6 +19,7 @@ function FormularioCadastroCSN({
 	setDateErrorInput,
 	isViwsCargaApp,
 	isAlteracaoParcial,
+	status,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
@@ -31,6 +32,8 @@ function FormularioCadastroCSN({
 	const [countInput, setCountInput] = useState(3);
 	const [viewsButtonAddColeta, setViewsButtonAddColeta] = useState(true);
 	const [viewsButtonExcluir, setViewsButtonExcluir] = useState(false);
+	const [isDisabledEnvioApp, setDisabledEvioApp] = useState(false);
+
 	const fkSituacao =
 		formik.values?.fk_situacao === 1 ||
 		formik.values?.fk_situacao === 2 ||
@@ -44,6 +47,10 @@ function FormularioCadastroCSN({
 			functionInputs.viewsInputColeta();
 		}
 	}, [viewsInput]);
+
+	useEffect(() => {
+		setDisabledEvioApp(status === "Edicao");
+	}, []);
 
 	const infoVeiculoPlaca = async (plate) => {
 		return (await ServiceVeiculos.detalhesImpedimentos(plate)).data.data;
@@ -212,6 +219,7 @@ function FormularioCadastroCSN({
 				isDateErrorInput={isDateErrorInput}
 				isViwsCargaApp={isViwsCargaApp}
 				isAlteracaoParcial={isAlteracaoParcial}
+				isDisabledEnvioApp={isDisabledEnvioApp}
 			/>
 		</div>
 	);

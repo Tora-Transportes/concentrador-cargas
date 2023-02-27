@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import "./cadastroManual.css";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
-// import HandleClick from "./tooltipsCadastro";
+import { envioCargaApp } from "src/Pages/Components/DataAppConcentrador";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -54,6 +54,17 @@ function Manual() {
 					canal_comunicacao: "manual",
 					carga_csn: 0,
 				});
+
+				if (values.carga_app === 1 && data) {
+					const oid = getClaims().oid;
+					const idCarga = String(data.data.id);
+					const bodyApp = {
+						...values,
+						oid,
+						idCarga,
+					};
+					envioCargaApp(bodyApp);
+				}
 				swal(
 					"Sucesso!",
 					`Carga cadastrada com o identificador ${data.data.id}!`,

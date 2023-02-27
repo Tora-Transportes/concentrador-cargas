@@ -25,6 +25,7 @@ function EditarCargaCsn() {
 	const [isPermissionUserEdit, setPermissionUserEdit] = useState(false);
 	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
 	const [isAlteracaoParcial, setAlteracaoParcial] = useState(true);
+	const [isViwsCargaApp, setViwsCargaApp] = useState(false);
 	const { isPermissionUser } = useContext(ContextUseDefault);
 
 	const messageDadosIncorretoInput = () => {
@@ -56,6 +57,7 @@ function EditarCargaCsn() {
 			locais: "",
 			nome_motorista: "",
 			finalizarCarga: "",
+			carga_app: 0,
 			ponto_passagem: {
 				ponto: " 60 - POSTO - 30",
 				tipoServico: "Coleta",
@@ -464,12 +466,6 @@ function EditarCargaCsn() {
 			setProdutos(data.data);
 		});
 
-		// (async () => {
-		// 	const userPermission = await validationPermissionUser();
-		// 	if (isPermissionUser?.includes("MANUTENCAO_TRAJETO_FINALIZADO")) {
-		// 		setPermissionUserEdit(false);
-		// 	}
-		// })();
 		funcScrollTop(2, 2);
 		return () => {
 			isMounted = false;
@@ -483,6 +479,7 @@ function EditarCargaCsn() {
 		if (isPermissionUser?.includes("ALTERACAO_PARCIAL")) {
 			setAlteracaoParcial(false);
 		}
+		if (isPermissionUser?.includes("ENVIAR_CARGA_APP")) setViwsCargaApp(true);
 	}, [isPermissionUser]);
 
 	useEffect(() => {
@@ -492,9 +489,6 @@ function EditarCargaCsn() {
 	const showInfoTitle = [6, 9].includes(formik.values?.fk_situacao)
 		? "info-tilte"
 		: "d-none";
-	// console.log("Pagina inicial", [3].includes(formik.values.fk_situacao), {
-	// 	isAlteracaoParcial,
-	// });
 
 	const mensagemEditParcialSucesso = async () => {
 		setTimeout(async () => {
@@ -531,6 +525,8 @@ function EditarCargaCsn() {
 						setDateErrorInput={setDateErrorInput}
 						isDateErrorInput={isDateErrorInput}
 						isAlteracaoParcial={isAlteracaoParcial}
+						isViwsCargaApp={isViwsCargaApp}
+						status={"Edicao"}
 					/>
 					<div className="class-group-button">
 						{!isAlteracaoParcial && [3].includes(formik.values.fk_situacao) && (
