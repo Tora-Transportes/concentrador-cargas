@@ -23,6 +23,7 @@ import CargasCsnController from "./controllers/csn/CargasCsnController";
 import PontoParadaController from "./controllers/PontoParadaController";
 import CargasCsnInfoController from "./controllers/csn/CargasCsnInfoController";
 import LogsErrorControllers from "./controllers/LogsErrorControllers";
+import CargaAppController from "./controllers/AppTora/CargaAppController";
 
 const routes = Router();
 
@@ -204,4 +205,6 @@ routes.post(
 );
 
 routes.post("/logs", LogsErrorControllers.error);
+
+routes.put("/app/aprovar/carga", CargaAppController.aprovarCarga);
 export default routes;
