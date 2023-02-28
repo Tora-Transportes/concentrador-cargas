@@ -176,9 +176,14 @@ export class ServiceDistanceLocations {
     const { latitude: latitude_destino, longitude: longitude_destino } =
       enterpriseCoordinates;
 
-    const tokensMapsRoute =
-      process.env.BING_MAPS_API_TOKEN?.split(";").filter((i) => !!i) ?? [];
-    console.log("variavel env BING_MAPS_API_TOKEN", tokensMapsRoute);
+    //Descomentar esta parte antes de subir para produção
+
+    // const tokensMapsRoute =
+    //   process.env.BING_MAPS_API_TOKEN?.split(";").filter((i) => !!i) ?? [];
+
+    const tokensMapsRoute = [
+      "CljX85lOCKB5KGVF0c76~6FnU9jIK85YyfXs1f9p5tg~AgXlBzCfarsc8MZhJ8sIANMrra8JYsDtaI22OX5z0GCsdZna_fNVFYlMoj-xkzPu",
+    ];
 
     if (!tokensMapsRoute || tokensMapsRoute.length === 0) {
       throw new Error("Os tokens BING_MAPS_API_TOKEN não foram definidos");
