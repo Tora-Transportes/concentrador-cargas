@@ -178,6 +178,8 @@ export class ServiceDistanceLocations {
 
     const tokensMapsRoute =
       process.env.BING_MAPS_API_TOKEN?.split(";").filter((i) => !!i) ?? [];
+    console.log("variavel env BING_MAPS_API_TOKEN", tokensMapsRoute);
+
     if (!tokensMapsRoute || tokensMapsRoute.length === 0) {
       throw new Error("Os tokens BING_MAPS_API_TOKEN não foram definidos");
     }
