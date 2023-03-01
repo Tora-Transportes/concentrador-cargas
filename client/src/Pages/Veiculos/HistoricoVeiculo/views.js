@@ -49,6 +49,10 @@ function ViewHistoricoVeiculo({
 	LoadingScreen,
 	setLoading,
 	isArrayLatLon,
+	isDataPosition,
+	setDataPosition,
+	setCountPosition,
+	isCountPosition,
 }) {
 	const [fields, setFields] = useState({
 		placa: "",
@@ -58,7 +62,6 @@ function ViewHistoricoVeiculo({
 
 	const [isLatitude, setLatitude] = useState();
 	const [isLongitude, setLongitude] = useState();
-	const [isCountPosition, setCountPosition] = useState(0);
 	const [isLastPosition, setLastPosition] = useState(0);
 	const colorLineMap = { color: "red", opacity: 2 };
 	useEffect(() => {
@@ -82,9 +85,10 @@ function ViewHistoricoVeiculo({
 				indexPosition = isCountPosition > 0 ? isCountPosition - 1 : 0;
 				setCountPosition(indexPosition);
 			}
-			const { LAT, LON } = historicoRotas.posicao[indexPosition];
+			const { LAT, LON, DTINC } = historicoRotas.posicao[indexPosition];
 			setLatitude(LAT.replace(",", "."));
 			setLongitude(LON.replace(",", "."));
+			setDataPosition(DateUtils.formatDate(DTINC));
 		}
 	};
 
@@ -201,8 +205,8 @@ function ViewHistoricoVeiculo({
 						<>
 							<MapContainer
 								center={[
-									historicoRotas?.posicao[0].LAT.replace(",", "."),
-									historicoRotas?.posicao[0].LON.replace(",", "."),
+									historicoRotas.posicao[0]?.LAT.replace(",", "."),
+									historicoRotas.posicao[0]?.LON.replace(",", "."),
 								]}
 								zoom={10}
 								maxZoom={17.4}
@@ -212,11 +216,11 @@ function ViewHistoricoVeiculo({
 									<>
 										<Marker
 											position={[
-												historicoRotas?.posicao[isLastPosition].LAT.replace(
+												historicoRotas.posicao[isLastPosition]?.LAT.replace(
 													",",
 													"."
 												),
-												historicoRotas?.posicao[isLastPosition].LON.replace(
+												historicoRotas.posicao[isLastPosition]?.LON.replace(
 													",",
 													"."
 												),
@@ -232,13 +236,13 @@ function ViewHistoricoVeiculo({
 											<Popup>{`Placa: ${
 												fields.placa
 											}; Data/Hora:${formatDateAtual3HorasMais(
-												historicoRotas?.posicao[isCountPosition].DTINC
+												historicoRotas.posicao[isCountPosition]?.DTINC
 											)}; Posição: ${isCountPosition}.`}</Popup>
 										</Marker>
 										<Marker
 											position={[
-												historicoRotas?.posicao[0].LAT.replace(",", "."),
-												historicoRotas?.posicao[0].LON.replace(",", "."),
+												historicoRotas.posicao[0]?.LAT.replace(",", "."),
+												historicoRotas.posicao[0]?.LON.replace(",", "."),
 											]}
 											icon={finishIcons}
 										>
@@ -272,7 +276,12 @@ function ViewHistoricoVeiculo({
 										Placa correspondente a consulta:
 										<span className="span-placa"> {fields.placa}</span>,
 										posição:{" "}
-										<span className="span-placa"> {isCountPosition}</span>
+										<span className="span-placa"> {isCountPosition}</span>,{" "}
+										{isDataPosition?.length > 0 && (
+											<>
+												data: <span> {isDataPosition}</span>
+											</>
+										)}
 									</strong>
 								</div>
 								<div className="mt- 3">
@@ -323,7 +332,7 @@ function ViewHistoricoVeiculo({
 									</tr>
 								</thead>
 								<tbody>
-									{historicoRotas.posicao.map((position, index) => (
+									{historicoRotas?.posicao.map((position, index) => (
 										<tr key={position.ID}>
 											<td>
 												{" "}
@@ -334,6 +343,9 @@ function ViewHistoricoVeiculo({
 														setLatitude(position.LAT.replace(",", "."));
 														setLongitude(position.LON.replace(",", "."));
 														setCountPosition(index);
+														setDataPosition(
+															DateUtils.formatDate(position.DTINC)
+														);
 														funcScrollTop(30, 30);
 													}}
 												>
