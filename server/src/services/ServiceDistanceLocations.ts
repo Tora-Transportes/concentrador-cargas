@@ -176,11 +176,18 @@ export class ServiceDistanceLocations {
     const { latitude: latitude_destino, longitude: longitude_destino } =
       enterpriseCoordinates;
 
+    const tokensMapsRoute =
+      process.env.BING_MAPS_API_TOKEN?.split(";").filter((i) => !!i) ?? [];
+
+    if (!tokensMapsRoute || tokensMapsRoute.length === 0) {
+      throw new Error("Os tokens BING_MAPS_API_TOKEN não foram definidos");
+    }
+    const api_key = String(tokensMapsRoute[0]);
+
     const anularCertificadoApiEmDev =
       process.env.ANULAR_CERTIFICADO_BING_MAPS_API_TOKEN;
 
     let apiVirtualLearth;
-    let tokensMapsRoute;
     if (anularCertificadoApiEmDev === "true") {
       const httpsAgent = new https.Agent({
         rejectUnauthorized: false,
@@ -192,9 +199,6 @@ export class ServiceDistanceLocations {
           "Content-Type": "application/json",
         },
       });
-      tokensMapsRoute = [
-        "o0UJ3mAfZzaORPX23wFC~aRZ95oIhlX_9a2IMW7YPqg~Am28_rjac7gNY7I_dLrejIS_h44_rk1_Avw2zFC4CNNtrpbp_JULQiMKv1Nqg7Rf",
-      ];
     } else {
       apiVirtualLearth = axios.create({
         baseURL: "https://dev.virtualearth.net/REST/v1/Routes",
@@ -202,14 +206,7 @@ export class ServiceDistanceLocations {
           "Content-Type": "application/json",
         },
       });
-      tokensMapsRoute =
-        process.env.BING_MAPS_API_TOKEN?.split(";").filter((i) => !!i) ?? [];
     }
-
-    if (!tokensMapsRoute || tokensMapsRoute.length === 0) {
-      throw new Error("Os tokens BING_MAPS_API_TOKEN não foram definidos");
-    }
-    const api_key = String(tokensMapsRoute[0]);
 
     const routeData = (
       await apiVirtualLearth.post(`/DistanceMatrix?key=${api_key}`, {
