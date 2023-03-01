@@ -12,14 +12,16 @@ import { Toast } from "primereact/toast";
 import ServiceAvisos from "src/services/ServiceAvisos";
 import { Input } from "reactstrap";
 import { ContextUseDefault } from "./../../hooks/context/contextPagCargaCTE";
-import { HiThumbDown, HiThumbUp } from "react-icons/hi";
 import { BsPencilSquare } from "react-icons/bs";
+import ViewsLikeDislike from "./viewLikeDislike";
 
 let emptyNotice = {
 	ID: null,
 	TITULO: "",
 	MENSAGEM: "",
 	AUTOR: "",
+	LIKE_ON: null,
+	LIKE_OF: null,
 };
 
 const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
@@ -27,10 +29,6 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 	const [isPermissionAviso, setPermissionAviso] = useState(false);
 	const [avisoDialog, setAvisoDialog] = useState(false);
 	const [deleteAviso, setDeleteAviso] = useState(false);
-	const [likeAviso, setLikeAviso] = useState(0);
-	const [dislikeAviso, setDislikeAviso] = useState(0);
-	const [likeActive, setLikeActive] = useState(false);
-	const [dislikeActive, setDislikeActive] = useState(false);
 
 	const [aviso, setAviso] = useState(emptyNotice);
 	const [submittedAviso, setSubmittedAviso] = useState(false);
@@ -57,7 +55,6 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 		aviso.TITULO = String(TITULO);
 		aviso.MENSAGEM = String(MENSAGEM);
 		aviso.AUTOR = String(getClaims().name);
-
 		setAviso({ ...aviso });
 		setAvisoDialog(true);
 		setTitleAviso("Editar Aviso:");
@@ -184,10 +181,12 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 			/>
 		</div>
 	);
+
 	const converterData = (dataIso) => {
 		const dataTimeJs = new Date(dataIso);
 		return dataTimeJs.toLocaleString("pt-BR");
 	};
+
 	const { isPermissionUser } = useContext(ContextUseDefault);
 
 	useEffect(() => {
@@ -197,36 +196,6 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 			setPermissionAviso(true);
 		}
 	}, [isPermissionUser]);
-
-	const functionLikeAvisos = async () => {
-		if (likeActive) {
-			setLikeActive(false);
-			setLikeAviso(likeAviso - 1);
-		} else {
-			setLikeActive(true);
-			setLikeAviso(likeAviso + 1);
-			if (dislikeActive) {
-				setDislikeActive(false);
-				setLikeAviso(likeAviso + 1);
-				setDislikeAviso(dislikeAviso - 1);
-			}
-		}
-	};
-
-	const functionDislikeAvisos = async () => {
-		if (dislikeActive) {
-			setDislikeActive(false);
-			setDislikeAviso(dislikeAviso - 1);
-		} else {
-			setDislikeActive(true);
-			setDislikeAviso(dislikeAviso + 1);
-			if (likeActive) {
-				setLikeActive(false);
-				setDislikeAviso(dislikeAviso + 1);
-				setLikeAviso(likeAviso - 1);
-			}
-		}
-	};
 
 	return (
 		<>
@@ -278,25 +247,7 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 													item.AUTOR,
 													converterData(item.DATA_CADASTRO)
 												)}
-												<div className="div-reaction-avisos">
-													<p className="p-conte-nos-avisos">
-														Conte-nos! O que você achou deste aviso?
-													</p>
-													<div className="buttons-reaction-avisos">
-														<Button
-															className="button-like-avisos"
-															icon={<HiThumbUp className="hi-thumb-Up" />}
-															label={likeAviso}
-															onClick={functionLikeAvisos}
-														/>
-														<Button
-															className="button-dislike-avisos"
-															icon={<HiThumbDown className="hi-thumb-Down" />}
-															label={dislikeAviso}
-															onClick={functionDislikeAvisos}
-														/>
-													</div>
-												</div>
+												<ViewsLikeDislike aviso={item} />
 											</Card>
 										</div>
 									);

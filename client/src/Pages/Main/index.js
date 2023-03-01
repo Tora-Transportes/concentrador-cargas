@@ -21,9 +21,11 @@ function Main() {
 	const [isPermissionPadrao, setPermissionPadrao] = useState(false);
 	const [visibilidadeTeclas, setVisibilidadeTeclas] = useState(false);
 	const [isShow, setShow] = useState(false);
-	const [isLastPosition, setLastPosition] = useState();
 	const [levelGame, setLevelGame] = useState(-1);
 	const inputCorAtual = useRef(null);
+
+	const { setIdAvisos } = useContext(ContextUseDefault);
+
 	const coresBotoesGame = [
 		"primary",
 		"secondary",
@@ -147,7 +149,7 @@ function Main() {
 
 			const dadosStorage = localStorage.getItem("viewsAviso");
 			const lastIdPosition = data[0];
-			setLastPosition(lastIdPosition?.ID);
+			setIdAvisos(lastIdPosition?.ID);
 			if (dadosStorage === null || dadosStorage < lastIdPosition.ID) {
 				setShow(true);
 			}
@@ -169,7 +171,7 @@ function Main() {
 				</Row>
 
 				<div className="col-avisos-style">
-					<Link to={`avisos/${isLastPosition}`} className="class-link">
+					<Link to={"avisos"} className="class-link">
 						<MdOutlineNotificationImportant
 							size={30}
 							// className="icons-responsive"
@@ -316,11 +318,7 @@ function Main() {
 						</>
 					)}
 				</Row>
-				<PopUp
-					isShow={isShow}
-					setShow={setShow}
-					lastIdPosition={isLastPosition}
-				/>
+				<PopUp isShow={isShow} setShow={setShow} />
 			</Container>
 			<h6 className="versionamento">{numeroVersao}</h6>
 		</>

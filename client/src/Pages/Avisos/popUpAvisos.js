@@ -3,10 +3,10 @@ import { useHistory } from "react-router-dom";
 import "./popUp.css";
 import imgNotice from "../../assets/notice.png";
 
-function PopUp({ isShow, lastIdPosition }) {
+function PopUp({ isShow }) {
 	const history = useHistory();
 	const showPageAviso = () => {
-		history.push(`/avisos/${lastIdPosition}`);
+		history.push("/avisos");
 	};
 
 	return (

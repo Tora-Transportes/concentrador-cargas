@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { useFormik } from "formik";
 
 import { Container, Row } from "react-bootstrap";
 import ViewsAviso from "./views";
 import ServiceAvisos from "src/services/ServiceAvisos";
+import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 
 function Avisos() {
 	const [dadosAvisos, setDadosAvisos] = useState([]);
 	const [atualizarAvisos, setAtualizarAvisos] = useState(false);
-	const { id } = useParams();
-	localStorage.setItem("viewsAviso", id);
-
+	const { isIdAvisos } = useContext(ContextUseDefault);
+	localStorage.setItem("viewsAviso", isIdAvisos);
 	const formik = useFormik({
 		initialValues: {
-			ID: "",
+			ID: null,
 			TITULO: "",
 			MENSAGEM: "",
 			AUTOR: "",
 			DATA_CADASTRO: "",
+			LIKE_ON: null,
+			LIKE_OF: null,
 		},
 	});
 

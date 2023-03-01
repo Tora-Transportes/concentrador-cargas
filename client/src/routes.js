@@ -111,7 +111,7 @@ export default function AllRoutes() {
 				{/* <Route path="/producao" exact component={CalendarioProducao} /> */}
 				<Route path="/ajuda" exact component={Helper} />
 				<Route path="/ajuda/CSN" exact component={HelperCSN} />
-				<Route path="/avisos/:id" exact component={Avisos} />
+				<Route path="/avisos" exact component={Avisos} />
 				<Route path="*" exact component={Main} />
 			</Switch>
 		</BrowserRouter>
