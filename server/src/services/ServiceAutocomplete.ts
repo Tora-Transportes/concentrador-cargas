@@ -19,8 +19,7 @@ class ServiceAutocomplete {
       .join("PRACA as PRA", "PRA.ORG_COD", "ORG.ORG_COD")
       .join("CIDADE as CID", "CID.CID_COD", "PRA.CID_COD")
       .join("ESTADO as EST", "EST.UF_COD", "CID.UF_COD")
-      //.join("con_localizacoes as LOC", "LOC.estado", "EST.UF_NOM")
-      .whereRaw("LENGTH(PRA.PCA_DOC_FEDERAL) = 14")
+      .whereRaw("LENGTH(PRA.PCA_DOC_FEDERAL) <= 14")
       .select([
         "ORG.ORG_RAZAO_SOCIAL AS organizacao",
         "ORG.ORG_FANTASIA AS organizacao_fantasia",

@@ -10,6 +10,8 @@ function HistoricoVeiculos() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [historicoRotas, setHistoricoRotas] = useState();
 	const [isArrayLatLon, setArrayLatLon] = useState([]);
+	const [isCountPosition, setCountPosition] = useState(0);
+	const [isDataPosition, setDataPosition] = useState("");
 	const toast = useRef(null);
 
 	async function buscarHistoricoVeicles(placa, date_inicio, date_fim) {
@@ -37,6 +39,8 @@ function HistoricoVeiculos() {
 
 	function clearHistoricoRotas() {
 		setHistoricoRotas(null);
+		setCountPosition(0);
+		setDataPosition("");
 	}
 
 	useEffect(() => {
@@ -64,7 +68,11 @@ function HistoricoVeiculos() {
 				clearHistoricoRotas={clearHistoricoRotas}
 				LoadingScreen={LoadingScreen}
 				setLoading={setLoading}
+				setDataPosition={setDataPosition}
+				isDataPosition={isDataPosition}
 				isArrayLatLon={isArrayLatLon}
+				isCountPosition={isCountPosition}
+				setCountPosition={setCountPosition}
 			/>
 		</>
 	);

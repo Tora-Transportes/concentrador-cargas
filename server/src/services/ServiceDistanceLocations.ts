@@ -3,6 +3,7 @@ import moment from "moment";
 import oracle from "../database";
 import database, { mssql, mssqlCoordenadas } from "../database";
 import AppError from "../models/AppError";
+import * as https from "https";
 export interface IQueryDistance {
   cidade_origem: string | undefined | null;
   cidade_destino: string | undefined | null;
@@ -177,32 +178,53 @@ export class ServiceDistanceLocations {
 
     const tokensMapsRoute =
       process.env.BING_MAPS_API_TOKEN?.split(";").filter((i) => !!i) ?? [];
+
     if (!tokensMapsRoute || tokensMapsRoute.length === 0) {
       throw new Error("Os tokens BING_MAPS_API_TOKEN não foram definidos");
     }
-
     const api_key = String(tokensMapsRoute[0]);
 
+    const anularCertificadoApiEmDev =
+      process.env.ANULAR_CERTIFICADO_BING_MAPS_API_TOKEN;
+
+    let apiVirtualLearth;
+    if (anularCertificadoApiEmDev === "true") {
+      const httpsAgent = new https.Agent({
+        rejectUnauthorized: false,
+      });
+      apiVirtualLearth = axios.create({
+        httpsAgent,
+        baseURL: "https://dev.virtualearth.net/REST/v1/Routes",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } else {
+      apiVirtualLearth = axios.create({
+        baseURL: "https://dev.virtualearth.net/REST/v1/Routes",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
+
     const routeData = (
-      await axios.post(
-        `https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?key=${api_key}`,
-        {
-          origins: [
-            {
-              latitude: latitude_origem,
-              longitude: longitude_origem,
-            },
-          ],
-          destinations: [
-            {
-              latitude: latitude_destino,
-              longitude: longitude_destino,
-            },
-          ],
-          travelMode: "Driving",
-          timeUnit: "second",
-        }
-      )
+      await apiVirtualLearth.post(`/DistanceMatrix?key=${api_key}`, {
+        origins: [
+          {
+            latitude: latitude_origem,
+            longitude: longitude_origem,
+          },
+        ],
+        destinations: [
+          {
+            latitude: latitude_destino,
+            longitude: longitude_destino,
+          },
+        ],
+        travelMode: "Driving",
+        timeUnit: "second",
+      })
     ).data;
 
     let distancia_km = undefined;
@@ -302,7 +324,7 @@ export class ServiceDistanceLocations {
     if (date_fim !== moment().format("YYYY-MM-DD")) {
       date_fim = moment(date_fim).format("YYYY-MM-DDT23:59:59");
     } else {
-      date_fim = moment().subtract(63, "minutes").format("YYYY-MM-DDTHH:mm:ss");
+      date_fim = moment().subtract(4, "minutes").format("YYYY-MM-DDTHH:mm:ss");
     }
 
     const historyVeicle = await mssqlCoordenadas("REPORTES")
