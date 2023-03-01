@@ -176,23 +176,15 @@ export class ServiceDistanceLocations {
     const { latitude: latitude_destino, longitude: longitude_destino } =
       enterpriseCoordinates;
 
-    const tokensMapsRoute =
-      process.env.BING_MAPS_API_TOKEN?.split(";").filter((i) => !!i) ?? [];
-    if (!tokensMapsRoute || tokensMapsRoute.length === 0) {
-      throw new Error("Os tokens BING_MAPS_API_TOKEN não foram definidos");
-    }
-
     const anularCertificadoApiEmDev =
       process.env.ANULAR_CERTIFICADO_BING_MAPS_API_TOKEN;
 
-    const api_key = String(tokensMapsRoute[0]);
-
-    const httpsAgent = new https.Agent({
-      rejectUnauthorized: false,
-    });
-
     let apiVirtualLearth;
+    let tokensMapsRoute;
     if (anularCertificadoApiEmDev === "true") {
+      const httpsAgent = new https.Agent({
+        rejectUnauthorized: false,
+      });
       apiVirtualLearth = axios.create({
         httpsAgent,
         baseURL: "https://dev.virtualearth.net/REST/v1/Routes",
@@ -200,6 +192,9 @@ export class ServiceDistanceLocations {
           "Content-Type": "application/json",
         },
       });
+      tokensMapsRoute = [
+        "o0UJ3mAfZzaORPX23wFC~aRZ95oIhlX_9a2IMW7YPqg~Am28_rjac7gNY7I_dLrejIS_h44_rk1_Avw2zFC4CNNtrpbp_JULQiMKv1Nqg7Rf",
+      ];
     } else {
       apiVirtualLearth = axios.create({
         baseURL: "https://dev.virtualearth.net/REST/v1/Routes",
@@ -207,7 +202,14 @@ export class ServiceDistanceLocations {
           "Content-Type": "application/json",
         },
       });
+      tokensMapsRoute =
+        process.env.BING_MAPS_API_TOKEN?.split(";").filter((i) => !!i) ?? [];
     }
+
+    if (!tokensMapsRoute || tokensMapsRoute.length === 0) {
+      throw new Error("Os tokens BING_MAPS_API_TOKEN não foram definidos");
+    }
+    const api_key = String(tokensMapsRoute[0]);
 
     const routeData = (
       await apiVirtualLearth.post(`/DistanceMatrix?key=${api_key}`, {
@@ -325,7 +327,7 @@ export class ServiceDistanceLocations {
     if (date_fim !== moment().format("YYYY-MM-DD")) {
       date_fim = moment(date_fim).format("YYYY-MM-DDT23:59:59");
     } else {
-      date_fim = moment().subtract(63, "minutes").format("YYYY-MM-DDTHH:mm:ss");
+      date_fim = moment().subtract(4, "minutes").format("YYYY-MM-DDTHH:mm:ss");
     }
 
     const historyVeicle = await mssqlCoordenadas("REPORTES")
