@@ -15,7 +15,7 @@ function PopUp({ isShow }) {
 				{isShow && (
 					<div className="div-toast-popup">
 						<button className="button-toast-popup" onClick={showPageAviso}>
-							<img src={imgNotice} width="25" height="25" />
+							<img src={imgNotice} width="35" height="35" />
 						</button>
 						<span className="span-message">Você tem um novo aviso!</span>
 					</div>

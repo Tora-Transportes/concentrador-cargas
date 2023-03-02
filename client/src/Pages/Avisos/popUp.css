@@ -4,21 +4,12 @@
 
 .div-toast-popup {
   position: fixed;
-  bottom: 15px;
-  right: 6px;
+  top: 10%;
+  right: -1%;
   padding: 15px 10px;
   border-radius: 10px;
-  width: 13%;
+  width: 15%;
   height: 10%;
-}
-
-.span-message {
-  color: black;
-  font-weight: bolder;
-  font-weight: 600;
-  font-size: 13px;
-  display: block;
-  text-align: start;
 }
 
 .button-toast-popup {
@@ -32,6 +23,15 @@
   margin-top: -5px;
   position: relative;
   right: -34%;
+}
+
+.span-message {
+  color: black;
+  font-weight: bolder;
+  font-weight: 600;
+  font-size: 15px;
+  display: block;
+  text-align: start;
 }
 
 @keyframes glowing {
@@ -49,6 +49,7 @@
 .button-toast-popup {
   animation: glowing 1800ms infinite;
 }
+
 @media only screen and (min-width: 100px) and (max-width: 299px) {
   .div-toast-popup {
     right: 10%;
@@ -57,12 +58,14 @@
 
     bottom: 10%;
   }
+
   .span-message {
     padding: 2px 10px;
     display: flex;
     text-align: center;
   }
 }
+
 @media only screen and (min-width: 300px) and (max-width: 599px) {
   .div-toast-popup {
     right: 5%;
@@ -71,6 +74,7 @@
 
     bottom: 5%;
   }
+
   .span-message {
     padding: 2px 10px;
     display: flex;
@@ -86,6 +90,7 @@
 
     bottom: 5%;
   }
+
   .span-message {
     padding: 2px 10px;
     display: flex;

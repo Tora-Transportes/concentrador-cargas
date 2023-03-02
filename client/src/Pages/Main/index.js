@@ -9,8 +9,6 @@ import { Link } from "react-router-dom";
 import { IoLocationSharp } from "react-icons/io5";
 import Menusuperior from "../Components/MenuSuperior/menusuperior";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
-import PopUp from "../Avisos/popUpAvisos";
-import ServiceAvisos from "src/services/ServiceAvisos";
 import { MdOutlineNotificationImportant } from "react-icons/md";
 
 const queueCoresAtuais = [];
@@ -20,11 +18,8 @@ function Main() {
 	const [isPermissionCsn, setPermissionCsn] = useState(false);
 	const [isPermissionPadrao, setPermissionPadrao] = useState(false);
 	const [visibilidadeTeclas, setVisibilidadeTeclas] = useState(false);
-	const [isShow, setShow] = useState(false);
 	const [levelGame, setLevelGame] = useState(-1);
 	const inputCorAtual = useRef(null);
-
-	const { setIdAvisos } = useContext(ContextUseDefault);
 
 	const coresBotoesGame = [
 		"primary",
@@ -141,21 +136,6 @@ function Main() {
 		}
 	}, [levelGame]);
 
-	// validação avisos
-
-	useEffect(() => {
-		(async () => {
-			const { data } = (await ServiceAvisos.list()).data;
-
-			const dadosStorage = localStorage.getItem("viewsAviso");
-			const lastIdPosition = data[0];
-			setIdAvisos(lastIdPosition?.ID);
-			if (dadosStorage === null || dadosStorage < lastIdPosition.ID) {
-				setShow(true);
-			}
-		})();
-	}, []);
-
 	const numeroVersao = "V.11";
 	return (
 		<>
@@ -174,7 +154,6 @@ function Main() {
 					<Link to={"avisos"} className="class-link">
 						<MdOutlineNotificationImportant
 							size={30}
-							// className="icons-responsive"
 							className="button-avisos-style"
 						/>
 						<br />
@@ -318,7 +297,6 @@ function Main() {
 						</>
 					)}
 				</Row>
-				<PopUp isShow={isShow} setShow={setShow} />
 			</Container>
 			<h6 className="versionamento">{numeroVersao}</h6>
 		</>

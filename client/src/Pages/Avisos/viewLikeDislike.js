@@ -13,9 +13,26 @@ const ViewsLikeDislike = ({ aviso }) => {
 	if (aviso.LIKE_ON == null || aviso.LIKE_ON == undefined) {
 		aviso.LIKE_ON = 0;
 	}
+
 	if (aviso.LIKE_OF == null || aviso.LIKE_OF == undefined) {
 		aviso.LIKE_OF = 0;
 	}
+
+	const functionLikeAvisos = async () => {
+		if (likeActive) {
+			setLikeActive(false);
+			setLikeAviso(likeAviso - 1);
+		} else {
+			setLikeActive(true);
+			setLikeAviso(likeAviso + 1);
+
+			if (dislikeActive) {
+				setDislikeActive(false);
+				setLikeAviso(likeAviso + 1);
+				setDislikeAviso(dislikeAviso - 1);
+			}
+		}
+	};
 
 	const saveLike = async () => {
 		const bodyLike = {
@@ -36,22 +53,6 @@ const ViewsLikeDislike = ({ aviso }) => {
 	useEffect(() => {
 		saveLike();
 	}, [likeAviso, dislikeAviso]);
-
-	const functionLikeAvisos = async () => {
-		if (likeActive) {
-			setLikeActive(false);
-			setLikeAviso(likeAviso - 1);
-		} else {
-			setLikeActive(true);
-			setLikeAviso(likeAviso + 1);
-
-			if (dislikeActive) {
-				setDislikeActive(false);
-				setLikeAviso(likeAviso + 1);
-				setDislikeAviso(dislikeAviso - 1);
-			}
-		}
-	};
 
 	const functionDislikeAvisos = async () => {
 		if (dislikeActive) {

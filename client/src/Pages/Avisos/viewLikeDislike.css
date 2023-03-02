@@ -34,14 +34,17 @@
   background-color: transparent;
   color: #0c46e4ea;
 }
+
 .button-like-avisos:enabled:focus {
   box-shadow: none;
 }
+
 .hi-thumb-Up {
   color: #0c46e4af;
   width: 28px;
   height: 28px;
 }
+
 .button-dislike-avisos,
 .button-dislike-avisos:enabled:hover,
 .button-dislike-avisos:enabled:active {

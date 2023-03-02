@@ -34,6 +34,7 @@ import CadastroCargaCSN from "./Pages/Cargas/CargasCSN/Cadastrar";
 import LocalizacaoCSN from "./Pages/LocalizacaoCSN";
 import VisualizarCsn from "./Pages/Cargas/CargasCSN/VisualizarCsn";
 import EditarCargaCsn from "./Pages/Cargas/CargasCSN/Editar";
+import MainPopUp from "./Pages/Avisos/indexPopUp";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -114,6 +115,8 @@ export default function AllRoutes() {
 				<Route path="/avisos" exact component={Avisos} />
 				<Route path="*" exact component={Main} />
 			</Switch>
+
+			<MainPopUp />
 		</BrowserRouter>
 	);
 }

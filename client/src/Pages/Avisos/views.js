@@ -241,7 +241,7 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 														/>
 													</div>
 												)}
-												<p className="title-card-avisos">{item?.TITULO}</p>
+												<p className="p-title-aviso">{item?.TITULO}</p>
 												<p className="p-mensagem-aviso">{item.MENSAGEM}</p>
 												{subtitle(
 													item.AUTOR,
@@ -347,9 +347,9 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 						className="pi pi-exclamation-triangle"
 						style={{ fontSize: "2rem", marginLeft: "42%" }}
 					/>
-					<div className="confirmation-content">
+					<div className="confirmation-delete">
 						{aviso && (
-							<span className="span-delete">
+							<span className="span-delete-confirmation">
 								Essa ação irá deletar os dados deste aviso permanentemente.
 								<b> Deseja continuar?</b>
 							</span>

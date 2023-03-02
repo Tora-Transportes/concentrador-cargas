@@ -12,21 +12,6 @@
   font-weight: 530;
 }
 
-.button-avisos-style {
-  position: absolute;
-  top: 12.5%;
-  right: 0%;
-  color: #00652e;
-  border: none;
-  border-radius: 0.28rem;
-  width: 5rem;
-}
-.button-avisos-style b {
-  color: #fff;
-  text-decoration: none;
-  height: 100%;
-}
-
 #navbar-tora {
   background-color: #024c01 !important;
   color: white !important;
@@ -48,7 +33,7 @@
   opacity: 0.4;
 }
 
-.icone-tora {
+/* .icone-tora {
   color: #024c01;
   transition: 0.2s;
 }
@@ -56,6 +41,22 @@
 .icone-tora:hover {
   color: #048a01;
   font-size: 15pt;
+} */
+
+.button-avisos-style {
+  position: absolute;
+  top: 12.5%;
+  right: 0%;
+  color: #00652e;
+  border: none;
+  border-radius: 0.28rem;
+  width: 5rem;
+}
+
+.button-avisos-style b {
+  color: #fff;
+  text-decoration: none;
+  height: 100%;
 }
 
 #style-title-main {
