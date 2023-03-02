@@ -207,4 +207,5 @@ routes.post(
 routes.post("/logs", LogsErrorControllers.error);
 
 routes.put("/app/aprovar/carga", CargaAppController.aprovarCarga);
+routes.patch("/app/cancelar/carga", CargaAppController.cancelarCarga);
 export default routes;

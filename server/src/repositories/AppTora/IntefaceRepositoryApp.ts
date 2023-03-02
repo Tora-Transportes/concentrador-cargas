@@ -2,12 +2,12 @@ import { ICarga } from "../../models/ICargas";
 
 export interface IStatusApp {
   fk_situacao: number;
-  codigo_motorista: number | null;
-  placa_veiculo: string | null;
+  usuario: string;
+  data_atualizacao: Date;
+  placa_veiculo?: string;
+  codigo_motorista?: number | null;
   placa_carreta?: string | null;
   placa_bitrem?: string | null;
-  data_atualizacao: Date;
-  usuario?: string;
 }
 
 export interface ICargaAppRepository {

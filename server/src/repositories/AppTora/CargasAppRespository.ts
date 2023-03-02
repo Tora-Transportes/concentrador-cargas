@@ -6,9 +6,16 @@ class CargaAppRepository implements ICargaAppRepository {
   async indexId(id: number): Promise<ICarga> {
     return await database("con_cargas").select().first().where("id", id);
   }
+  async indexIdAndPlate(id: number, placa: string): Promise<ICarga> {
+    return await database("con_cargas")
+      .select()
+      .first()
+      .where("id", id)
+      .andWhere("placa_veiculo", placa);
+  }
 
-  async updateFk_situacao(id: number, situacao: IStatusApp): Promise<number> {
-    return await database("con_cargas").update(situacao).where("id", id);
+  async updateFk_situacao(id: number, body: IStatusApp): Promise<number> {
+    return await database("con_cargas").update(body).where("id", id);
   }
 }
 
