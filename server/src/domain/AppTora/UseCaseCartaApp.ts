@@ -5,6 +5,7 @@ import { notifyAll } from "../../socketsRoutes";
 import { CargaCsnInfoRepository } from "../../repositories/csn/CargaCsnInfoRepository";
 import DateUtils from "../../Utils/date";
 import { CargaRepository } from "../../repositories/CargaRepository";
+import AppToraValidator from "../../validations/AppToraValidator";
 
 interface IBodyAprovaCarga {
   placa: string;
@@ -12,32 +13,29 @@ interface IBodyAprovaCarga {
 }
 
 class UseCaseAppAprovacaoCarga {
+  private cargaCsnInfoRepository: CargaCsnInfoRepository;
+  private cargaRepository: CargaRepository;
+  private veiculoRepository: VeiculoRepository;
+  constructor() {
+    this.cargaCsnInfoRepository = new CargaCsnInfoRepository();
+    this.cargaRepository = new CargaRepository();
+    this.veiculoRepository = new VeiculoRepository();
+  }
   async run({ placa, idCarga }: IBodyAprovaCarga): Promise<string> {
-    const cargaCsnInfoRepository = new CargaCsnInfoRepository();
-    const cargaRepository = new CargaRepository();
-    if (!placa || !idCarga)
-      throw new AppError("placa e idCarga parametros são obrigatórios!", 400);
+    const {
+      ativo,
+      fk_situacao: fk_situacaoAtual,
+      carga_csn,
+    } = await AppToraValidator.validatorAprovacao(placa, idCarga);
 
-    if (placa.length !== 7)
-      throw new AppError("Placa com formato invalido!", 400);
-
-    const veiculoRepository = new VeiculoRepository();
-    const existPlacaCadastrada = await veiculoRepository.search(placa);
+    const existPlacaCadastrada = await this.veiculoRepository.search(placa);
     if (!existPlacaCadastrada)
       throw new AppError(
         "A placa informada não esta registrada em nosso sistema!",
         404
       );
 
-    const existeCargaId = await CargaAppRepository.indexId(idCarga);
-    if (!existeCargaId)
-      throw new AppError("A carga com id informado não existe!", 404);
-
-    if (
-      existeCargaId.ativo === 0 ||
-      existeCargaId.fk_situacao === 4 ||
-      existeCargaId.fk_situacao === 5
-    )
+    if (ativo === 0 || fk_situacaoAtual === 5)
       throw new AppError(
         `Carga com id: ${idCarga} foi cancelada ou excluida!`,
         409
@@ -64,24 +62,67 @@ class UseCaseAppAprovacaoCarga {
     if (resultRepository === 0)
       throw new AppError("Erro interno do servidor!", 500);
 
-    if (existeCargaId.carga_csn !== 1) {
+    if (carga_csn !== 1) {
       notifyAll({
         name: "@carga-update",
-        details: await cargaRepository.index(idCarga),
+        details: await this.cargaRepository.index(idCarga),
       });
     } else {
       notifyAll({
         name: "@carga-update-csn",
-        details: await cargaCsnInfoRepository.index(idCarga),
+        details: await this.cargaCsnInfoRepository.index(idCarga),
       });
     }
 
     return "Carga atualizada com sucesso!";
   }
 }
+class UseCaseAppCancelarCarga {
+  private cargaCsnInfoRepository: CargaCsnInfoRepository;
+  private cargaRepository: CargaRepository;
+  constructor() {
+    this.cargaCsnInfoRepository = new CargaCsnInfoRepository();
+    this.cargaRepository = new CargaRepository();
+  }
+
+  async run({ placa, idCarga }: IBodyAprovaCarga): Promise<string> {
+    const { carga_csn } = await AppToraValidator.validatorCancelamento(
+      placa,
+      idCarga
+    );
+    const fk_situacao = 5;
+    const bodyUpdate = {
+      data_atualizacao: DateUtils.getCurrentDate(),
+      usuario: "App_tora",
+      fk_situacao,
+    };
+
+    const resultRepository = await CargaAppRepository.updateFk_situacao(
+      idCarga,
+      bodyUpdate
+    );
+    if (resultRepository === 0)
+      throw new AppError("Erro interno do servidor!", 500);
+
+    if (carga_csn !== 1) {
+      notifyAll({
+        name: "@carga-update",
+        details: await this.cargaRepository.index(idCarga),
+      });
+    } else {
+      notifyAll({
+        name: "@carga-update-csn",
+        details: await this.cargaCsnInfoRepository.index(idCarga),
+      });
+    }
+
+    return "Carga cancelada com sucesso!";
+  }
+}
 
 const instancias = {
   useCaseAprovacaoCargaApp: new UseCaseAppAprovacaoCarga(),
+  useCaseAppCancelarCarga: new UseCaseAppCancelarCarga(),
 };
 
 export default instancias;
