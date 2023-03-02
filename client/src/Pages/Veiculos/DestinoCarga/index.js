@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import useLoadingScreen from "../../Components/LoadingScreen";
-//import NavbarNavigator from "../../Components/NavbarNavigator";
 import ViewRaio from "./view";
 import ServiceCoordenadas from "src/services/ServiceCoordenadas";
 import swal from "sweetalert";
+import Swal2 from "sweetalert2";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 
 function DestinoCarga() {
@@ -24,6 +24,14 @@ function DestinoCarga() {
 					cnpj,
 				})
 			).data;
+			const { distancia_km, duracao_viagem_direta } = vehicles;
+			if (!distancia_km || !duracao_viagem_direta) {
+				await Swal2.fire({
+					icon: "info",
+					title: "Atenção!",
+					text: "Favor revisar a latitude e longitude da empresa informada. Acesse o sistema (SIT) para atualização/correção.",
+				});
+			}
 			setRota(vehicles);
 		} catch (error) {
 			setLoading(false);
@@ -38,7 +46,6 @@ function DestinoCarga() {
 	return (
 		<>
 			<LoadingScreen />
-			{/* <NavbarNavigator /> */}
 			<Menusuperior />
 			<ViewRaio
 				rota={rota}

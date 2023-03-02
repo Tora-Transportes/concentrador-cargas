@@ -6,7 +6,7 @@
   grid-template-columns: auto auto auto;
   justify-content: center;
   margin-top: 1rem;
-  grid-gap: 4rem;
+  grid-gap: 3vw;
 }
 .class-title-dest {
   font-family: "Poppins", sans-serif;
@@ -27,6 +27,15 @@
   margin-top: 2.45rem;
 }
 
+.form-input-empresa {
+  width: 40vw !important;
+  height: 3rem !important;
+}
+.form-placa {
+  width: 13rem !important;
+  height: 2.8rem !important;
+}
+
 @media only screen and (min-width: 215px) and (max-width: 865px) {
   .class-title-dest {
     display: flex;
@@ -34,6 +43,9 @@
   }
 }
 @media only screen and (min-width: 215px) and (max-width: 1199px) {
+  .form-input-empresa {
+    width: 65vw !important;
+  }
   .class-title-dest {
     font-size: 30px;
     display: flex;
@@ -57,7 +69,7 @@
 }
 @media only screen and (min-width: 1200px) and (max-width: 1825px) {
   #button-pesq-dist {
-    margin-top: 2.45rem;
+    margin-top: 2.4rem;
   }
 
   .class-card-dest {
