@@ -27,25 +27,7 @@ h1 .h1-ajuda {
   margin-left: 4rem;
   margin-top: 3.5rem;
 }
-.style-b-ajuda{
-  font-family: "Poppins", sans-serif;
-  color: #00652e;
-}
-.ajuda-csn-p{
-  font-family: "Poppins", sans-serif;
-  color: #96948e;
-}
-.ajuda-csn-p-fim{
-  font-family: "Poppins", sans-serif;
-  font-size: 14px;
-  color: #cc2931;
-  margin: 20px 15px;
-}
-p .p-tela-ajuda {
-  font-size: 16px;
-  color: #96948e;
-  margin-left: 0.5rem;
-}
+
 .class-accordion {
   margin-top: 1rem;
   margin-left: 4rem;
@@ -62,9 +44,10 @@ p .p-tela-ajuda {
   grid-gap: 2rem;
 }
 
-#style-gif {
-  width: 45rem;
-  margin-left: 2rem;
+p .p-tela-ajuda-geral {
+  font-size: 16px;
+  color: #96948e;
+  margin-left: 0.5rem;
 }
 
 #style-gif2 {
@@ -73,13 +56,9 @@ p .p-tela-ajuda {
   margin-bottom: 1rem;
 }
 
-#button-cadastro-cargas {
-  font-size: 14px;
-  background: #00652e;
-  border: none;
-  text-align: center;
-  height: 2rem;
-  margin-right: -2rem;
+.class-button-ir {
+  display: flex;
+  justify-self: end;
 }
 
 #style-button-acc {
@@ -90,6 +69,7 @@ p .p-tela-ajuda {
   height: 2rem;
   margin-right: -2rem;
 }
+
 #style-button-acc:hover,
 #button-cadastro-cargas:hover {
   transition: 0.6s;
@@ -98,17 +78,30 @@ p .p-tela-ajuda {
   background-color: #009c08;
 }
 
-.class-button1 {
+.button-helper-ir-para {
   margin-left: -15%;
 }
 
-.class-p-nav {
-  margin-top: 1.5rem;
+#button-cadastro-cargas,
+#button-import-cargas {
+  font-size: 14px;
+  background: #00652e;
+  border: none;
+  text-align: center;
+  height: 2rem;
+  margin-right: -2rem;
 }
 
-.class-button-ir {
-  display: flex;
-  justify-self: end;
+#style-gif {
+  width: 45rem;
+  margin-left: 2rem;
+}
+
+.message-final-page {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  color: #cc2931;
+  margin: 20px 15px;
 }
 
 @media only screen and (max-width: 980px) {
@@ -126,13 +119,13 @@ p .p-tela-ajuda {
     margin-top: 2.8rem;
   }
 
-  #style-gif {
-    width: 20rem;
-    margin-left: 1rem;
-  }
-
   .class-button-ir {
     display: flex;
     justify-self: center;
+  }
+
+  #style-gif {
+    width: 20rem;
+    margin-left: 1rem;
   }
 }
