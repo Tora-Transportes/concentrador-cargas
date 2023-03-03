@@ -12,8 +12,7 @@ export class ErrorReports implements IClassErroReports {
 
     if (fs.existsSync(pathNameLogs)) {
       fs.stat(pathNameLogs, (_err, start) => {
-        if (start.size > 30000) {
-          //if (start.size >= 476) {
+        if (start.size > 60000) {
           fs.writeFile(pathNameLogs, "", () => {
             return;
           });
