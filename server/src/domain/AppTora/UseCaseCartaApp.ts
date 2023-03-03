@@ -35,6 +35,13 @@ class UseCaseAppAprovacaoCarga {
         404
       );
 
+    if (!existPlacaCadastrada.codigo_motorista) {
+      throw new AppError(
+        "Não é possível ter uma placa vinculada sem motorista!",
+        422
+      );
+    }
+
     if (ativo === 0 || fk_situacaoAtual === 5)
       throw new AppError(
         `Carga com id: ${idCarga} foi cancelada ou excluida!`,
@@ -86,10 +93,10 @@ class UseCaseAppCancelarCarga {
   }
 
   async run({ placa, idCarga }: IBodyAprovaCarga): Promise<string> {
-    const { carga_csn } = await AppToraValidator.validatorCancelamento(
-      placa,
-      idCarga
-    );
+    const { carga_csn, fk_situacao: fk_situacaoAtual } =
+      await AppToraValidator.validatorCancelamento(placa, idCarga);
+    if (fk_situacaoAtual === 5)
+      throw new AppError("Carga já se encontra cancelada!", 409);
     const fk_situacao = 5;
     const bodyUpdate = {
       data_atualizacao: DateUtils.getCurrentDate(),

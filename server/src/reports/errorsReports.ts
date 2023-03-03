@@ -1,4 +1,5 @@
 import path from "path";
+import fs from "fs";
 import winston from "winston";
 import AppError from "../models/AppError";
 import { factoryLogsError } from "../validations/LogsValidator";
@@ -6,32 +7,38 @@ import { IClassErroReports, IErrorDefault } from "./interfaceReporter";
 
 export class ErrorReports implements IClassErroReports {
   async run(body: IErrorDefault): Promise<string> {
+    const { message, descricao, level, nameFile, id } = body;
+    const pathNameLogs = path.join(__dirname, "..", "logs", `${nameFile}.txt`);
+
+    if (fs.existsSync(pathNameLogs)) {
+      fs.stat(pathNameLogs, (_err, start) => {
+        if (start.size > 30000) {
+          //if (start.size >= 476) {
+          fs.writeFile(pathNameLogs, "", () => {
+            return;
+          });
+        }
+      });
+    }
     const validator = factoryLogsError();
-    const bodyValidator = await validator.validate(body, {
+    await validator.validate(body, {
       abortEarly: false,
       stripUnknown: true,
     });
-    const { message, descricao, level, nameFile, id } = bodyValidator;
     const { combine, timestamp } = winston.format;
     const logConfiguration = {
       level,
+      statusLevels: true,
       format: combine(
         timestamp({
           format: "DD-MM-YYYY HH:mm",
         }),
-        // printf(
-        //   (info) =>
-        //     `[${info.timestamp}], descricao: ${info.descricao}, message: ${info.message}, status: ${info.status}, level: ${level}`
-        // )
         winston.format.simple()
-        //winston.format.json()
       ),
+      prepend: true,
       transports: [
         new winston.transports.File({
-          //maxsize: 524, // 5MB
-          maxsize: 5242880, // 5MB
-          maxFiles: 5,
-          filename: path.join(__dirname, "..", "logs", `${nameFile}.log`),
+          filename: path.join(__dirname, "..", "logs", `${nameFile}.txt`),
           level,
         }),
       ],
