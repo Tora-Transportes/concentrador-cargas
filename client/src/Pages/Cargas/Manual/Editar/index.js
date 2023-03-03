@@ -8,10 +8,10 @@ import ServiceCargas from "../../../../services/ServiceCargas";
 import { getClaims } from "../../../../MicrosoftAuthentication";
 import ServiceProdutos from "src/services/ServiceProdutos";
 import FormularioCadastroManual from "src/Pages/Components/FormularioCadastroManual";
-// import CabecalhoFixado from "src/Pages/Components/CabecalhoFixado";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import "../Editar/style.css";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
+import { cancelarCargaApp } from "src/Pages/Components/DataAppConcentrador";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -131,7 +131,7 @@ function Manual() {
 				}
 			);
 			if (observacaoCancelamento) {
-				await ServiceCargas.update({
+				const { data } = await ServiceCargas.update({
 					...formik.values,
 					fk_situacao: 5,
 					observacao_cancelamento: observacaoCancelamento,
@@ -140,6 +140,13 @@ function Manual() {
 				});
 				await swal("Sucesso!", "Carga cancelada.", "success");
 				await carregarCarga();
+				if (data.data && formik.values.carga_app === 1) {
+					cancelarCargaApp(
+						formik.values.id,
+						getClaims().oid,
+						observacaoCancelamento
+					);
+				}
 			} else {
 				await swal("Nenhuma alteração realizada.");
 			}
@@ -288,7 +295,6 @@ function Manual() {
 	return (
 		<>
 			<LoadingScreen />
-			{/* <CabecalhoFixado>Edição de carga aberta manualmente</CabecalhoFixado> */}
 			<Menusuperior />
 			<Container className="mb-5 mt-5">
 				<p id="style-title-editorCarga">Editar carga aberta manualmente</p>

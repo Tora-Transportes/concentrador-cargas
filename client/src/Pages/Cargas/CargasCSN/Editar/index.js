@@ -15,6 +15,7 @@ import { funcBodyEdit, validarInputEfetivo } from "./menagemente";
 import { InputReferencError } from "src/Pages/Components/FormularioCadastroCSN/management";
 import { funcScrollTop } from "src/Pages/Utils/scrollTop";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
+import { cancelarCargaApp } from "src/Pages/Components/DataAppConcentrador";
 
 function EditarCargaCsn() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -333,7 +334,7 @@ function EditarCargaCsn() {
 				}
 			);
 			if (observacaoCancelamento) {
-				await ServiceCargas.update({
+				const { data } = await ServiceCargas.update({
 					...formik.values,
 					fk_situacao: 5,
 					observacao_cancelamento: observacaoCancelamento,
@@ -342,6 +343,13 @@ function EditarCargaCsn() {
 				});
 				await swal("Sucesso!", "Carga cancelada.", "success");
 				await carregarCarga();
+				if (data.data && formik.values.carga_app === 1) {
+					cancelarCargaApp(
+						formik.values.id,
+						getClaims().oid,
+						observacaoCancelamento
+					);
+				}
 			} else {
 				await swal("Nenhuma alteração realizada.");
 			}

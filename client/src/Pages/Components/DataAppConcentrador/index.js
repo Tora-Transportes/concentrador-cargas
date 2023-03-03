@@ -19,7 +19,7 @@ export const envioCargaApp = async (body) => {
 	const cidadeEstadoDestino = destino_carga.split("/");
 	const nameClient = cliente.split("-")[0];
 	const bodyEnvioApp = {
-		requestCode: idCarga, //data, //codigo da carga
+		requestCode: idCarga, //codigo da carga
 		operatorNumber: oid, // number user
 		creationDate: new Date(), //data cadastro
 		product: tipo_carga, // produto da carga
@@ -35,29 +35,52 @@ export const envioCargaApp = async (body) => {
 	};
 
 	try {
-		const result = await ServiceApp.envioCargaApp(bodyEnvioApp);
-		if (result.status === 200) {
-			ServiceLogs.run({
-				message: result.data.response.message,
-				descricao: "Envio carga App com sucesso!",
-				level: "info",
-				nameFile: "sucess-carga-app",
-				id: idCarga,
-			});
-		}
-
-		// "response": {
-		// 	"message": "Freight created successfully!",
-		// 	"data": {
-		// 		"id": 22373
-		// 	}
-		// }
+		ServiceApp.envioCargaApp(bodyEnvioApp);
+		// const { data } = await ServiceApp.envioCargaApp(bodyEnvioApp);
+		// ServiceLogs.run({
+		// 	message: data.response.message,
+		// 	descricao: "Envio carga App com sucesso!",
+		// 	level: "info",
+		// 	nameFile: "sucess-carga-app",
+		// 	id: idCarga,
+		// });
 	} catch (error) {
 		ServiceLogs.run({
 			message: String(error),
 			descricao: "Erro ao enviar carga App",
 			level: "error",
-			nameFile: "error-carga-app",
+			nameFile: "error-envio-carga-app",
+			id: idCarga,
+		});
+	}
+};
+export const cancelarCargaApp = async (
+	idCarga,
+	oid,
+	observacaoCancelamento
+) => {
+	const bodyEnvioApp = {
+		availableFreight: String(idCarga), //codigo da carga
+		concentradorUser: oid, // number user
+		cancellationReason: observacaoCancelamento,
+	};
+
+	try {
+		//const { data } = await ServiceApp.cancelarCargaApp(bodyEnvioApp);
+		ServiceApp.cancelarCargaApp(bodyEnvioApp);
+		// ServiceLogs.run({
+		// 	message: data.response.message,
+		// 	descricao: "Carga App Cancelada com sucesso!",
+		// 	level: "info",
+		// 	nameFile: "sucess-cancel-carga-app",
+		// 	id: idCarga,
+		// });
+	} catch (error) {
+		ServiceLogs.run({
+			message: String(error),
+			descricao: "Erro ao cancelar carga App",
+			level: "error",
+			nameFile: "error-cancel-carga-app",
 			id: idCarga,
 		});
 	}
