@@ -41,7 +41,6 @@ const ViewsLikeDislike = ({ aviso }) => {
 		};
 		try {
 			await ServiceAvisos.patchUpdate(aviso.ID, bodyLike);
-			console.log(aviso.ID, bodyLike);
 		} catch (error) {
 			console.error(error);
 			setTimeout(() => {

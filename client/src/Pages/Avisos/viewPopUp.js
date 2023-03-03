@@ -12,7 +12,7 @@ function PopUp({ isShow }) {
 	return (
 		<>
 			<div className="container-toast-aviso">
-				{isShow && (
+				{isShow && window.location.pathname != "/avisos" && (
 					<div className="div-toast-popup">
 						<button className="button-toast-popup" onClick={showPageAviso}>
 							<img src={imgNotice} width="35" height="35" />
