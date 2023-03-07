@@ -31,10 +31,12 @@ USU_TORA;con_cargas;canal_comunicacao;Origem da carga, Ex: email, portal, manual
 USU_TORA;con_cargas;observacao;Observa��o sobre a carga;;
 USU_TORA;con_cargas;data_cadastro;Data de cadastro da carga;;
 USU_TORA;con_cargas;data_atualizacao;Data ultima atualizacao da carga;;
-USU_TORA;con_cargas;ativo;Identifica se a carga foi exclu�da ou n�o;;
+USU_TORA;con_cargas;ativo;Identifica se a carga foi exclu�da ou não;;
 USU_TORA;con_cargas;acessorios_requisitos;Acess�rios necess�rio para o ve�culo poder transportar a carga;;
 USU_TORA;con_cargas;usuario;Nome do usu�rio que realizou a ultima altera��o no registro;;
 USU_TORA;con_cargas;carga_csn;Status que indica se o  Usuario é CSN ou padrão;;
+USU_TORA;con_cargas;rastreador;Indica a identificação do rastreador do veiculo que trasportara carga;;
+USU_TORA;con_cargas;carga_app;Indica qual carga sera enviada para o app da tora;;
 ;;;;;
 USU_TORA;con_cargas_logs_aprovacao;fk_carga;Referencia da carga da carga que foi aprovada ou reprovada;;com_cargas.id
 USU_TORA;con_cargas_logs_aprovacao;segundos;Quantidade de segundos que a carga ficou em espera;;
@@ -175,3 +177,12 @@ USU_TORA;csn_logs_rotina;id_carga;numero identificador da carga;;
 USU_TORA;csn_logs_rotina;id_rotas_csn; numero identificador dos dados do client alvo;;
 USU_TORA;csn_logs_rotina;status_servico;Tipo de serviço 'COLETA ou ENTREGA';;
 USU_TORA;csn_logs_rotina;data_cadastro; data do cadastro;;
+
+USU_TORA;con_avisos; ID; Identificador do aviso;;
+USU_TORA;con_avisos; TITULO; Titulo do aviso;;
+USU_TORA;con_avisos; MENSAGEM ; Mensagem indicando os detalhes do aviso;;
+USU_TORA;con_avisos; AUTOR; Criador do aviso;;
+USU_TORA;con_avisos; LIKE_ON; Indica que o usuario gostou do aviso ;;
+USU_TORA;con_avisos;LIKE_OF; Indica que o usuario não gostou do aviso ;;
+USU_TORA;con_avisos; DATA_CADASTRO; data do cadastro;;
+USU_TORA;con_avisos; DATA_ATUALIZACAO; data da atualizacao;;

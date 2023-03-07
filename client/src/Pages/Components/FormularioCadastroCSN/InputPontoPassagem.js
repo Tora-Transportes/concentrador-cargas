@@ -20,7 +20,7 @@ const InputsPontoPassagem = ({
 	isPermissionUserEdit,
 	isDateErrorInput,
 	setDateErrorInput,
-	isAlteracaoParcial,
+	//isAlteracaoParcial,
 }) => {
 	const [inputPontoPassagem5, setInputPontoPassagem5] = useState(true);
 	const [inputPontoPassagem6, setInputPontoPassagem6] = useState(true);
@@ -184,7 +184,7 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required={isAlteracaoParcial}
+									required
 								/>
 							</FloatingLabel>
 						</Col>
@@ -202,11 +202,6 @@ const InputsPontoPassagem = ({
 									isInvalid={isDateErrorInput[3]?.error}
 									max="9999-12-12T00:00"
 									onBlur={() => {
-										// funcDuracaoProcesso(
-										// 	formik,
-										// 	3,
-										// 	formik.values.ponto_passagem.coletaEfetivaSaida
-										// );
 										validarDatas(
 											formik.values.ponto_passagem.coletaEfetivaSaida,
 											3,
@@ -214,7 +209,7 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required={isAlteracaoParcial}
+									required
 								/>
 							</FloatingLabel>
 						</Col>
@@ -327,7 +322,7 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required={isAlteracaoParcial}
+									required
 								/>
 							</FloatingLabel>
 						</Col>
@@ -344,11 +339,6 @@ const InputsPontoPassagem = ({
 									isInvalid={isDateErrorInput[7]?.error}
 									max="9999-12-12T00:00"
 									onBlur={() => {
-										// funcDuracaoProcesso(
-										// 	formik,
-										// 	7,
-										// 	formik.values.ponto_passagem2.coletaEfetivaSaida
-										// );
 										validarDatas(
 											formik.values.ponto_passagem2.coletaEfetivaSaida,
 											7,
@@ -356,7 +346,7 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required={isAlteracaoParcial}
+									required
 								/>
 							</FloatingLabel>
 						</Col>
@@ -470,7 +460,7 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required={isAlteracaoParcial}
+									required
 								/>
 							</FloatingLabel>
 						</Col>
@@ -487,11 +477,6 @@ const InputsPontoPassagem = ({
 									isInvalid={isDateErrorInput[11]?.error}
 									max="9999-12-12T00:00"
 									onBlur={() => {
-										// funcDuracaoProcesso(
-										// 	formik,
-										// 	11,
-										// 	formik.values.ponto_passagem3.coletaEfetivaSaida
-										// );
 										validarDatas(
 											formik.values.ponto_passagem3.coletaEfetivaSaida,
 											11,
@@ -499,7 +484,7 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required={isAlteracaoParcial}
+									required
 								/>
 							</FloatingLabel>
 						</Col>
@@ -639,7 +624,7 @@ const InputsPontoPassagem = ({
 										onChange={formik.handleChange}
 										onKeyDown={handleEnter}
 										disabled={disabledValidEfetiva}
-										required={isAlteracaoParcial}
+										required
 									/>
 								</FloatingLabel>
 							</Col>
@@ -664,11 +649,6 @@ const InputsPontoPassagem = ({
 										isInvalid={isDateErrorInput[14]?.error}
 										max="9999-12-12T00:00"
 										onBlur={() => {
-											// funcDuracaoProcesso(
-											// 	formik,
-											// 	14,
-											// 	formik.values.ponto_passagem5.coletaEfetivaSaida
-											// );
 											validarDatas(
 												formik.values.ponto_passagem5.coletaEfetivaSaida,
 												14,
@@ -676,7 +656,7 @@ const InputsPontoPassagem = ({
 											);
 										}}
 										disabled={disabledValidEfetiva}
-										required={isAlteracaoParcial}
+										required
 									/>
 								</FloatingLabel>
 							</Col>
@@ -831,7 +811,7 @@ const InputsPontoPassagem = ({
 										}}
 										onKeyDown={handleEnter}
 										disabled={disabledValidEfetiva}
-										required={isAlteracaoParcial}
+										required
 									/>
 								</FloatingLabel>
 							</Col>
@@ -868,7 +848,7 @@ const InputsPontoPassagem = ({
 											);
 										}}
 										disabled={disabledValidEfetiva}
-										required={isAlteracaoParcial}
+										required
 									/>
 								</FloatingLabel>
 							</Col>
@@ -1016,7 +996,7 @@ const InputsPontoPassagem = ({
 										onChange={formik.handleChange}
 										onKeyDown={handleEnter}
 										disabled={disabledValidEfetiva}
-										required={isAlteracaoParcial}
+										required
 									/>
 								</FloatingLabel>
 							</Col>
@@ -1046,7 +1026,7 @@ const InputsPontoPassagem = ({
 										// 	)
 										// }
 										disabled={disabledValidEfetiva}
-										required={isAlteracaoParcial}
+										required
 									/>
 								</FloatingLabel>
 							</Col>
@@ -1169,7 +1149,7 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required={isAlteracaoParcial}
+									required
 								/>
 							</FloatingLabel>
 						</Col>
@@ -1188,11 +1168,6 @@ const InputsPontoPassagem = ({
 									isInvalid={isDateErrorInput[24]?.error}
 									max="9999-12-12T00:00"
 									onBlur={() => {
-										// funcDuracaoProcesso(
-										// 	formik,
-										// 	24,
-										// 	formik.values.ponto_passagem4.entregaEfetivaSaida
-										// );
 										validarDatas(
 											formik.values.ponto_passagem4.entregaEfetivaSaida,
 											24,
@@ -1200,7 +1175,7 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required={isAlteracaoParcial}
+									required
 								/>
 							</FloatingLabel>
 						</Col>

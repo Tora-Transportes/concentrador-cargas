@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import "./editarCsn.css";
 import { Container, Form, Button } from "react-bootstrap";
 import { useParams, useHistory } from "react-router-dom";
 import { useFormik } from "formik";
@@ -7,7 +8,6 @@ import swal from "sweetalert";
 
 import ServiceProdutos from "src/services/ServiceProdutos";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
-import "./editarCsn.css";
 import { getClaims } from "src/MicrosoftAuthentication";
 import ServiceCargas from "src/services/ServiceCargas";
 import FormularioCadastroCSN from "src/Pages/Components/FormularioCadastroCSN";
@@ -16,6 +16,7 @@ import { InputReferencError } from "src/Pages/Components/FormularioCadastroCSN/m
 import { funcScrollTop } from "src/Pages/Utils/scrollTop";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 import { cancelarCargaApp } from "src/Pages/Components/DataAppConcentrador";
+import { Toast } from "primereact/toast";
 
 function EditarCargaCsn() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -24,10 +25,12 @@ function EditarCargaCsn() {
 	const [produtos, setProdutos] = useState([]);
 	const [viewsInput, setViewsInput] = useState(0);
 	const [isPermissionUserEdit, setPermissionUserEdit] = useState(false);
+	const [isPermExpurgarCarga, setPermExpurgarCarga] = useState(false);
 	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
 	const [isAlteracaoParcial, setAlteracaoParcial] = useState(true);
 	const [isViwsCargaApp, setViwsCargaApp] = useState(false);
 	const { isPermissionUser } = useContext(ContextUseDefault);
+	const toast = useRef(null);
 
 	const messageDadosIncorretoInput = () => {
 		return swal(
@@ -488,6 +491,8 @@ function EditarCargaCsn() {
 			setAlteracaoParcial(false);
 		}
 		if (isPermissionUser?.includes("ENVIAR_CARGA_APP")) setViwsCargaApp(true);
+		if (isPermissionUser?.includes("EXPURGAR_CARGA"))
+			setPermExpurgarCarga(true);
 	}, [isPermissionUser]);
 
 	useEffect(() => {
@@ -508,11 +513,31 @@ function EditarCargaCsn() {
 		}, 500);
 	};
 
+	const expurgarCarga = async () => {
+		const result = await ServiceCargas.updatePatch(formik.values.id, {
+			ativo: 2,
+		});
+		if (result.status === 200) {
+			toast.current.show({
+				severity: "success",
+				detail: "Carga expurgada com sucesso.",
+				life: 3000,
+			});
+		} else {
+			toast.current.show({
+				severity: "error",
+				summary: "Erro!",
+				detail: "Error ao expurgada a carga, tente novemante.",
+				life: 3000,
+			});
+		}
+	};
+
 	return (
 		<>
 			<LoadingScreen />
-			{/* <CabecalhoFixado>Edição de carga aberta manualmente</CabecalhoFixado> */}
 			<Menusuperior />
+			<Toast ref={toast} position="top-center" />
 			<Container className="mb-5 mt-5">
 				<div className="div-title">
 					<p className="mb-1" id="style-title-editorCarga">
@@ -536,11 +561,22 @@ function EditarCargaCsn() {
 						isViwsCargaApp={isViwsCargaApp}
 						status={"Edicao"}
 					/>
-					<div className="class-group-button">
+					<div className="class-group-buttonCsn">
+						{isPermExpurgarCarga &&
+							[2, 3, 5, 6, 7, 8, 9].includes(formik.values.fk_situacao) && (
+								<Button
+									variant="primary"
+									className="p-2 botao-foter-pg"
+									onClick={expurgarCarga}
+								>
+									Expurgar carga
+								</Button>
+							)}
+
 						{!isAlteracaoParcial && [3].includes(formik.values.fk_situacao) && (
 							<Button
 								variant="success"
-								className="p-2"
+								className="p-2 botao-foter-pg"
 								onClick={mensagemEditParcialSucesso}
 							>
 								Edição Parcial
@@ -566,7 +602,7 @@ function EditarCargaCsn() {
 
 						<Button
 							variant="warning"
-							className="p-2"
+							className="p-2 botao-foter-pg"
 							onClick={handleCloseWindow}
 						>
 							Fechar edição
@@ -576,7 +612,7 @@ function EditarCargaCsn() {
 							formik.values.fk_situacao === 2) && (
 							<Button
 								variant="danger"
-								className="p-2"
+								className="p-2 botao-foter-pg"
 								onClick={handleExcluirCarga}
 							>
 								Excluir
@@ -585,7 +621,7 @@ function EditarCargaCsn() {
 						{[3, 6, 7, 8, 9].includes(formik.values.fk_situacao) && (
 							<Button
 								variant="danger"
-								className="p-2"
+								className="p-2 botao-foter-pg"
 								onClick={handleCancelarCarga}
 							>
 								Cancelar carga
@@ -596,7 +632,7 @@ function EditarCargaCsn() {
 						{[3, 7, 8].includes(formik.values.fk_situacao) && (
 							<Button
 								variant="info"
-								className="p-2"
+								className="p-2 botao-foter-pg"
 								type="submit"
 								onClick={() => formik.setFieldValue("finalizarCarga", true)}
 							>

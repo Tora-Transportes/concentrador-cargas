@@ -12,6 +12,7 @@ import {
   UseCaseAddCarga,
   UseCaseAddCargaDerivada,
   UseCaseUpdateCarga,
+  UseCaseUpdateCargaPath,
   UseCaseViewCargas,
   UseCaseDeleteCarga,
   UseCaseImportCarga,
@@ -46,6 +47,7 @@ const modules = {
     paradaRepository,
     cargaCsnInfoRepository
   ),
+  UseCaseUpdateCargaPatch: new UseCaseUpdateCargaPath(cargaRepository),
   UseCaseViewCargas: new UseCaseViewCargas(cargaRepository),
   UseCaseDeleteCarga: new UseCaseDeleteCarga(cargaRepository, notifyAll),
   UseCaseImportCarga: new UseCaseImportCarga(

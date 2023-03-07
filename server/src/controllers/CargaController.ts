@@ -64,6 +64,20 @@ class CargaController {
     return res.json({ data: updateResult });
   }
 
+  async updatePatch(req: Request, res: Response) {
+    const { id } = req.params;
+    const body = { ...req.body };
+    const claims = TokenAd.getClaims(String(req.headers.authorization));
+    body.usuario = claims.name;
+
+    const updateResult = await useCasesCarga.UseCaseUpdateCargaPatch.run(
+      Number(id),
+      body
+    );
+
+    return res.json({ data: updateResult });
+  }
+
   async delete(req: Request, res: Response) {
     const { id } = req.params;
     const { observacao_exclusao } = req.body;

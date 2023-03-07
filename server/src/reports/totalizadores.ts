@@ -244,7 +244,7 @@ export class ReportTotalizadores {
       if (i.ativo === 0) {
         output.lotes_desativados = Number(i.total);
       }
-      if (i.ativo === 1) {
+      if (i.ativo === 1 || i.ativo === 2) {
         output.lotes_ativos = Number(i.total);
       }
     }
@@ -253,7 +253,7 @@ export class ReportTotalizadores {
       if (i.ativo === 0) {
         output.cargas_desativadas = Number(i.total);
       }
-      if (i.ativo === 1) {
+      if (i.ativo === 1 || i.ativo === 2) {
         output.cargas_ativas = Number(i.total);
       }
     }
