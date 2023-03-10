@@ -334,7 +334,7 @@ export class UseCaseUpdateCargaPath {
     dadosCarga: Partial<ICarga>
   ): Promise<TResultUpdatePath> {
     const existeCarga = await this.cargaRepository.index(id);
-    if (!existeCarga) throw new AppError("A carga seleionada não existe", 400);
+    if (!existeCarga) throw new AppError("A carga seleionada não existe", 404);
     const carga = { ...dadosCarga, data_atualizacao: new Date() };
     await this.cargaRepository.updatePatch(id, carga);
     return { mensagem: "Carga editado com sucesso!" };

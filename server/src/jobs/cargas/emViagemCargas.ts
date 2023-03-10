@@ -126,7 +126,7 @@ class ServiceFinishCargas {
         await database("con_cargas")
           .count("id as total")
           .where("fk_situacao", 3)
-          .where("ativo", 1)
+          .whereIn("ativo", [1, 2])
           .where("e_lote", 0)
           .first()
       )?.total
@@ -136,7 +136,7 @@ class ServiceFinishCargas {
       const idsCargasConcentrador = (
         await database("con_cargas")
           .select("id")
-          .where("ativo", 1)
+          .whereIn("ativo", [1, 2])
           .where("e_lote", 0)
           .where("fk_situacao", 3)
           .limit(PAGE_SIZE)

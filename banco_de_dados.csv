@@ -31,7 +31,7 @@ USU_TORA;con_cargas;canal_comunicacao;Origem da carga, Ex: email, portal, manual
 USU_TORA;con_cargas;observacao;Observa��o sobre a carga;;
 USU_TORA;con_cargas;data_cadastro;Data de cadastro da carga;;
 USU_TORA;con_cargas;data_atualizacao;Data ultima atualizacao da carga;;
-USU_TORA;con_cargas;ativo;Identifica se a carga foi exclu�da ou não;;
+USU_TORA;con_cargas;ativo;Identifica se a carga foi exclu�da ou se a carga foi expurgada, 0: carga desativada, 1: carga ativa , 2:carga expurgada;;
 USU_TORA;con_cargas;acessorios_requisitos;Acess�rios necess�rio para o ve�culo poder transportar a carga;;
 USU_TORA;con_cargas;usuario;Nome do usu�rio que realizou a ultima altera��o no registro;;
 USU_TORA;con_cargas;carga_csn;Status que indica se o  Usuario é CSN ou padrão;;

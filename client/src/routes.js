@@ -34,7 +34,9 @@ import CadastroCargaCSN from "./Pages/Cargas/CargasCSN/Cadastrar";
 import LocalizacaoCSN from "./Pages/LocalizacaoCSN";
 import VisualizarCsn from "./Pages/Cargas/CargasCSN/VisualizarCsn";
 import EditarCargaCsn from "./Pages/Cargas/CargasCSN/Editar";
-import MainPopUp from "./Pages/Avisos/indexPopUp";
+//import MainPopUp from "./Pages/Avisos/indexPopUp";
+import LinkRelatoriosApp from "./Pages/Components/MenuSuperior/LinkRelatoriosApp";
+import RelatoriosAppMain from "./Pages/Relatorios/TotalizadoresApp";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -107,7 +109,17 @@ export default function AllRoutes() {
 					exact
 					component={RelatoriosMain}
 				/>
+				<Route
+					path="/relatorios/app/visualizar/:id"
+					exact
+					component={RelatoriosAppMain}
+				/>
 				<Route path="/relatorios/visualizar" exact component={LinkRelatorios} />
+				<Route
+					path="/relatorios/app/visualizar"
+					exact
+					component={LinkRelatoriosApp}
+				/>
 				<Route path="/credenciais" exact component={Credenciais} />
 				{/* <Route path="/producao" exact component={CalendarioProducao} /> */}
 				<Route path="/ajuda" exact component={Helper} />
@@ -116,7 +128,7 @@ export default function AllRoutes() {
 				<Route path="*" exact component={Main} />
 			</Switch>
 
-			<MainPopUp />
+			{/* <MainPopUp /> */}
 		</BrowserRouter>
 	);
 }

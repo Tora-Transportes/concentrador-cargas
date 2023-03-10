@@ -1,8 +1,14 @@
 import api from "./api";
 class ServiceRelatorios {
-	async totalizadores({ data_inicio, data_final, fk_filial, carga_csn } = {}) {
+	async totalizadores({
+		data_inicio,
+		data_final,
+		fk_filial,
+		carga_csn,
+		carga_app,
+	} = {}) {
 		return api.get("/relatorio/totalizadores", {
-			params: { data_inicio, data_final, fk_filial, carga_csn },
+			params: { data_inicio, data_final, fk_filial, carga_csn, carga_app },
 		});
 	}
 

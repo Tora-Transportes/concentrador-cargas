@@ -5,6 +5,7 @@ export interface IFilter {
   data_final?: string;
   fk_filial?: number | null;
   carga_csn?: number | null;
+  carga_app?: string | null;
 }
 
 export class ReportTotalizadores {
@@ -13,6 +14,7 @@ export class ReportTotalizadores {
     data_final,
     fk_filial,
     carga_csn,
+    carga_app,
   }: IFilter) {
     const query = database(
       database.raw(
@@ -33,6 +35,10 @@ export class ReportTotalizadores {
         qB.andWhere("carga_csn", "=", 0);
         qB.orWhereNull("carga_csn");
       });
+    }
+
+    if (carga_app === "1") {
+      query.where({ carga_app });
     }
 
     if (data_inicio) {
@@ -61,6 +67,7 @@ export class ReportTotalizadores {
     data_final,
     fk_filial,
     carga_csn,
+    carga_app,
   }: IFilter) {
     const query = database(
       database.raw(
@@ -87,6 +94,9 @@ export class ReportTotalizadores {
         qB.orWhereNull("carga_csn");
       });
     }
+    if (carga_app == "1") {
+      query.where({ carga_app });
+    }
     if (data_inicio) {
       query.whereRaw(`to_char("data_cadastro", 'yyyy-mm-dd') >= ?`, [
         data_inicio,
@@ -112,6 +122,7 @@ export class ReportTotalizadores {
     data_final,
     fk_filial,
     carga_csn,
+    carga_app,
   }: IFilter) {
     const subquery = database("con_cargas")
       .where("con_cargas.ativo", 1)
@@ -125,6 +136,9 @@ export class ReportTotalizadores {
         qB.andWhere("carga_csn", "=", 0);
         qB.orWhereNull("carga_csn");
       });
+    }
+    if (carga_app == "1") {
+      subquery.where({ carga_app });
     }
     if (data_inicio) {
       subquery.whereRaw(`to_char("data_cadastro", 'yyyy-mm-dd') >= ?`, [
@@ -189,6 +203,7 @@ export class ReportTotalizadores {
     data_inicio,
     fk_filial,
     carga_csn,
+    carga_app,
   }: IFilter) {
     const status = database.raw(
       `(select 1 "ativo" from DUAL union select 0 "ativo" from "DUAL") "con_vw_status"`
@@ -202,6 +217,9 @@ export class ReportTotalizadores {
         qB.andWhere("carga_csn", "=", 0);
         qB.orWhereNull("carga_csn");
       });
+    }
+    if (carga_app == "1") {
+      subquery.where({ carga_app });
     }
     if (data_inicio) {
       subquery.whereRaw(`to_char("data_cadastro", 'yyyy-mm-dd') >= ?`, [
@@ -244,7 +262,7 @@ export class ReportTotalizadores {
       if (i.ativo === 0) {
         output.lotes_desativados = Number(i.total);
       }
-      if (i.ativo === 1 || i.ativo === 2) {
+      if (i.ativo === 1) {
         output.lotes_ativos = Number(i.total);
       }
     }
@@ -253,7 +271,7 @@ export class ReportTotalizadores {
       if (i.ativo === 0) {
         output.cargas_desativadas = Number(i.total);
       }
-      if (i.ativo === 1 || i.ativo === 2) {
+      if (i.ativo === 1) {
         output.cargas_ativas = Number(i.total);
       }
     }
@@ -269,6 +287,7 @@ export class ReportTotalizadores {
         output.cadastro_manual = Number(i.total);
       }
     }
+
     // @ts-expect-error: coisa de typescript
     output.geral.push(...(await this.generateBySituacao(filter)));
 
