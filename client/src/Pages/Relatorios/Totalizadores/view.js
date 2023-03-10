@@ -86,6 +86,10 @@ function ViewRotasPendentes({
 		setTotalGeral(total);
 	}, [totalizadores]);
 
+	// const keyExcelAtivo = statusCargaId === 0 ? "ativas" : "csn_ativas";
+	// const keyExcelDesativo =
+	// 	statusCargaId === 0 ? "desativadas" : "csn_desativadas";
+
 	const titlePage =
 		statusCargaId === 0 ? "Indicador Operacional" : "Indicador Operacional CSN";
 	return (
@@ -177,6 +181,7 @@ function ViewRotasPendentes({
 											"rgba(66, 135, 245)",
 											"rgba(112,128,144)",
 											"rgba(205,92,92)",
+											"rgba(0,0,139)",
 										],
 										borderWidth: 1,
 									},
@@ -253,7 +258,14 @@ function ViewRotasPendentes({
 										<td>
 											<b>{totalizadores.cargas_ativas}</b>
 										</td>
-										<td></td>
+										<td>
+											{/* <Button
+												variant=""
+												onClick={() => handleExportExcel(keyExcelAtivo)}
+											>
+												<BsDownload />
+											</Button> */}
+										</td>
 									</tr>
 
 									<tr>
@@ -274,7 +286,14 @@ function ViewRotasPendentes({
 										<td>
 											<b>{totalizadores.cargas_desativadas}</b>
 										</td>
-										<td></td>
+										<td>
+											{/* <Button
+												variant=""
+												onClick={() => handleExportExcel(keyExcelDesativo)}
+											>
+												<BsDownload />
+											</Button> */}
+										</td>
 									</tr>
 								</tbody>
 							</Table>
