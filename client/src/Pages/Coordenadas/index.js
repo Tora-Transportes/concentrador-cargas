@@ -1,4 +1,10 @@
-import React, { useCallback, useReducer, useState, useRef } from "react";
+import React, {
+	useCallback,
+	useReducer,
+	useState,
+	useRef,
+	useEffect,
+} from "react";
 import useLoadingScreen from "../Components/LoadingScreen";
 import ViewMonitoramento from "./view";
 import ServiceCoordenadas from "src/services/ServiceCoordenadas";
@@ -6,7 +12,6 @@ import factoryReducerCargas from "../../hooks/storageCargas/factoryReducerCargas
 import swal from "sweetalert";
 import { getColumns } from "./columnsTable";
 import { Toast } from "primereact/toast";
-import { showToastMessage } from "src/Pages/Utils/toastMessage";
 import Menusuperior from "../Components/MenuSuperior/menusuperior";
 
 function RotasPendentes() {
@@ -175,48 +180,29 @@ function RotasPendentes() {
 		location.reload();
 	}
 
-	async function handleExportExcel(
-		date_execel_inicio,
-		date_execel_fim,
-		categoria_veiculo
-	) {
+	async function handleExportExcel() {
 		setLoading(true);
 		const { filters, orderBy } = lastOptions;
 		const options = {
 			...filters,
 			order_column: orderBy?.column,
 			order_direction: orderBy?.direction,
-			date_execel_inicio,
-			date_execel_fim,
-			categoria_veiculo,
 		};
 		const response = await ServiceCoordenadas.exportToXlsx(options);
-
-		if (response.status === 202) {
-			const message =
-				"O período entre a data de início e fim não pode ser maior que 31 dias!";
-			await showToastMessage(toast, "warn", message, 7000);
-			setLoading(false);
-			setModalShowExcel(true);
-		} else if (response.data.byteLength < 14493) {
-			const message =
-				"Não foram encontrados dados com essas informaçoes no filtro de data.";
-			await showToastMessage(toast, "warn", message, 7000);
-			setLoading(false);
-			setModalShowExcel(true);
-		} else {
-			const url = window.URL.createObjectURL(new Blob([response.data]));
-			const link = document.createElement("a");
-			link.href = url;
-			link.setAttribute(
-				"download",
-				`RELATORIO-COORDENADAS_${new Date().getTime()}.xlsx`
-			);
-			link.click();
-			setModalShowExcel(false);
-			setLoading(false);
-		}
+		const url = window.URL.createObjectURL(new Blob([response.data]));
+		const link = document.createElement("a");
+		link.href = url;
+		link.setAttribute(
+			"download",
+			`RELATORIO-COORDENADAS_${new Date().getTime()}.xlsx`
+		);
+		link.click();
+		setModalShowExcel(false);
+		setLoading(false);
 	}
+	useEffect(() => {
+		if (modalShowExcel) handleExportExcel();
+	}, [modalShowExcel]);
 
 	const tableFetchData = useCallback(
 		async function (options) {
@@ -253,14 +239,14 @@ function RotasPendentes() {
 				get_data={tableFetchData}
 				columns={columns}
 				data={cargas}
-				handleExportExcel={handleExportExcel}
+				//handleExportExcel={handleExportExcel}
 				totalRegisters={totalRegisters}
 				resetView={resetView}
 				itensPerPage={itensPerPage}
 				setItensPerPage={setItensPerPage}
 				visibleCteCardObject={{ visibleCardCte, setVisibleCardCte }}
 				dadosCTEObjet={{ dataCTE, setDataCTE }}
-				modalShowExcel={modalShowExcel}
+				//modalShowExcel={modalShowExcel}
 				setModalShowExcel={setModalShowExcel}
 				dadosLastLocation={dadosLastLocation}
 				viewsLastLocationObject={{

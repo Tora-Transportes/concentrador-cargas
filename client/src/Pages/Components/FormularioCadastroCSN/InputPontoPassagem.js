@@ -165,7 +165,6 @@ const InputsPontoPassagem = ({
 							>
 								<Form.Control
 									className={colorInputEfetivo}
-									id="posto30_inicio"
 									type="datetime-local"
 									placeholder=" "
 									name="ponto_passagem.coletaEfetiva_posto30"

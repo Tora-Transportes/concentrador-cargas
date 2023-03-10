@@ -53,7 +53,7 @@ class ExportController {
 
     const stream = fs.createReadStream(filename);
     stream.pipe(res);
-    fs.unlinkSync(filename);
+    if (fs.existsSync(filename)) fs.unlinkSync(filename);
     return res;
   }
 }

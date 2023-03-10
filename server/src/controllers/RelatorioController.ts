@@ -23,9 +23,11 @@ class RelatorioController {
     const stream = fs.createReadStream(filename);
     stream.pipe(res);
 
+    if (fs.existsSync(filename)) {
+      fs.unlinkSync(filename);
+    }
     return new Promise((resolve) => {
       res.on("close", () => {
-        fs.unlinkSync(filename);
         resolve(res);
       });
     });
