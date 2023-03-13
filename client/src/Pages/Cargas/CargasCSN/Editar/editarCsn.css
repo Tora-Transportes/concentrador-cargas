@@ -8,12 +8,17 @@
 }
 
 .class-group-buttonCsn {
-  margin-top: 40px;
+  margin-top: 8px;
   display: flex;
   justify-content: center;
   grid-gap: 3rem;
   font-family: "Poppins", sans-serif;
   font-weight: bold;
+}
+
+.msg-info-topo {
+  display: flex;
+  justify-content: space-between;
 }
 
 @media only screen and (max-width: 991px) {
@@ -22,7 +27,7 @@
     margin-top: 1px;
     grid-gap: 0.5rem;
   }
-  .botao-foter-pg{
+  .botao-foter-pg {
     width: 55vw;
   }
 }

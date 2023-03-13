@@ -26,6 +26,7 @@ function EditarCargaCsn() {
 	const [viewsInput, setViewsInput] = useState(0);
 	const [isPermissionUserEdit, setPermissionUserEdit] = useState(false);
 	const [isPermExpurgarCarga, setPermExpurgarCarga] = useState(false);
+	const [isCargaExpurgada, setCargaExpurgada] = useState(false);
 	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
 	const [isAlteracaoParcial, setAlteracaoParcial] = useState(true);
 	const [isViwsCargaApp, setViwsCargaApp] = useState(false);
@@ -367,7 +368,7 @@ function EditarCargaCsn() {
 		try {
 			let city;
 			const carga = (await ServiceCargas.indexCsn({ id })).data.data;
-			if (carga.ativo === 2) setPermExpurgarCarga(false);
+			if (carga.ativo === 2) setCargaExpurgada(true);
 			for (let i in carga) {
 				let nonNullValue = carga[i] === null ? "" : carga[i];
 				if (i.indexOf("data") !== -1) {
@@ -504,6 +505,7 @@ function EditarCargaCsn() {
 	const showInfoTitle = [6, 9].includes(formik.values?.fk_situacao)
 		? "info-tilte"
 		: "d-none";
+	const showMsgCargaExpurgo = isCargaExpurgada ? "info-tilte" : "d-none";
 
 	const mensagemEditParcialSucesso = async () => {
 		setTimeout(async () => {
@@ -525,7 +527,7 @@ function EditarCargaCsn() {
 				detail: "Carga expurgada com sucesso.",
 				life: 3000,
 			});
-			setPermExpurgarCarga(false);
+			setCargaExpurgada(true);
 		} else {
 			toast.current.show({
 				severity: "error",
@@ -546,9 +548,16 @@ function EditarCargaCsn() {
 					<p className="mb-1" id="style-title-editorCarga">
 						Editar Carga CSN
 					</p>
-					<h6 className={showInfoTitle}>carga finalizada!</h6>
+					<div className="msg-info-topo">
+						<div>
+							<h6 className={showInfoTitle}>carga finalizada!</h6>
+						</div>
+						<div>
+							<h6 className={showMsgCargaExpurgo}>Carga Expurgada!</h6>
+						</div>
+					</div>
 				</div>
-				<hr />
+				<hr className="mt-0" />
 				<Form onSubmit={formik.handleSubmit}>
 					<FormularioCadastroCSN
 						buscarCargaComDocumentoDeTransporte={
@@ -564,8 +573,12 @@ function EditarCargaCsn() {
 						isViwsCargaApp={isViwsCargaApp}
 						status={"Edicao"}
 					/>
+					<div className="text-end">
+						<h6 className={showMsgCargaExpurgo}>Carga Expurgada!</h6>
+					</div>
 					<div className="class-group-buttonCsn">
 						{isPermExpurgarCarga &&
+							!isCargaExpurgada &&
 							[2, 3, 5, 6, 7, 8, 9].includes(formik.values.fk_situacao) && (
 								<Button
 									variant="primary"
