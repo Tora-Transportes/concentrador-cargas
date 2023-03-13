@@ -49,7 +49,7 @@ export default function ModalExportExcel({
 	const footer = (
 		<div>
 			<Button variant="success" onClick={enviarDataExcel}>
-				Importar
+				Exportar
 			</Button>
 			<Button variant="secondary" onClick={onHide}>
 				Sair

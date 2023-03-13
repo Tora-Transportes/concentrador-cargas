@@ -62,6 +62,7 @@ function EditarCargaCsn() {
 			nome_motorista: "",
 			finalizarCarga: "",
 			carga_app: 0,
+			ativo: "",
 			ponto_passagem: {
 				ponto: " 60 - POSTO - 30",
 				tipoServico: "Coleta",
@@ -366,6 +367,7 @@ function EditarCargaCsn() {
 		try {
 			let city;
 			const carga = (await ServiceCargas.indexCsn({ id })).data.data;
+			if (carga.ativo === 2) setPermExpurgarCarga(false);
 			for (let i in carga) {
 				let nonNullValue = carga[i] === null ? "" : carga[i];
 				if (i.indexOf("data") !== -1) {
@@ -523,6 +525,7 @@ function EditarCargaCsn() {
 				detail: "Carga expurgada com sucesso.",
 				life: 3000,
 			});
+			setPermExpurgarCarga(false);
 		} else {
 			toast.current.show({
 				severity: "error",
