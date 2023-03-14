@@ -42,12 +42,13 @@ export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
 	// Tem que mudar a versão na pasta main linha 141 ...
 	const limparCache = localStorage.getItem("clear_Cache");
-	if (limparCache == null || limparCache.toString() !== "version_9") {
+	if (limparCache == null || limparCache.toString() !== "version_1") {
 		localStorage.removeItem("table-columns-csn");
 		localStorage.removeItem("table-columns");
 		localStorage.removeItem("table-columns-lote");
 		localStorage.removeItem("coordenadas-table");
-		localStorage.setItem("clear_Cache", "version_9");
+		localStorage.removeItem("viewsAviso");
+		localStorage.setItem("clear_Cache", "version_1");
 		location.reload();
 	}
 
