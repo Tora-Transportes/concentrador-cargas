@@ -45,7 +45,8 @@
 
 .button-avisos-style {
   position: absolute;
-  top: 12.5%;
+  top: 13.5%;
+  /* top: 12.5%; */
   right: 0%;
   color: #00652e;
   border: none;
@@ -63,7 +64,7 @@
   font-size: 40px;
   color: #00652e;
   font-style: italic;
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
   font-family: "Poppins", sans-serif;
   font-weight: 400;
 }
