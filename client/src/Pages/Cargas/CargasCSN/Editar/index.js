@@ -507,15 +507,15 @@ function EditarCargaCsn() {
 		: "d-none";
 	const showMsgCargaExpurgo = isCargaExpurgada ? "info-tilte" : "d-none";
 
-	const mensagemEditParcialSucesso = async () => {
-		setTimeout(async () => {
-			await swal("Sucesso!", "A carga foi atualizada!", "success", {
-				closeOnClickOutside: false,
-			}).then(() => {
-				window.location.reload();
-			});
-		}, 500);
-	};
+	// const mensagemEditParcialSucesso = async () => {
+	// 	setTimeout(async () => {
+	// 		await swal("Sucesso!", "A carga foi atualizada!", "success", {
+	// 			closeOnClickOutside: false,
+	// 		}).then(() => {
+	// 			window.location.reload();
+	// 		});
+	// 	}, 500);
+	// };
 
 	const expurgarCarga = async () => {
 		const result = await ServiceCargas.updatePatch(formik.values.id, {
@@ -589,7 +589,7 @@ function EditarCargaCsn() {
 								</Button>
 							)}
 
-						{!isAlteracaoParcial && [3].includes(formik.values.fk_situacao) && (
+						{/* {!isAlteracaoParcial && [3].includes(formik.values.fk_situacao) && (
 							<Button
 								variant="success"
 								className="p-2 botao-foter-pg"
@@ -597,7 +597,7 @@ function EditarCargaCsn() {
 							>
 								Edição Parcial
 							</Button>
-						)}
+						)} */}
 
 						{([1, 2].includes(formik.values.fk_situacao) ||
 							([6, 7, 8, 9].includes(formik.values.fk_situacao) &&
