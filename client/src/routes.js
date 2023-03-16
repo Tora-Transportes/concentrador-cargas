@@ -34,18 +34,21 @@ import CadastroCargaCSN from "./Pages/Cargas/CargasCSN/Cadastrar";
 import LocalizacaoCSN from "./Pages/LocalizacaoCSN";
 import VisualizarCsn from "./Pages/Cargas/CargasCSN/VisualizarCsn";
 import EditarCargaCsn from "./Pages/Cargas/CargasCSN/Editar";
-import MainPopUp from "./Pages/Avisos/indexPopUp";
+// import MainPopUp from "./Pages/Avisos/indexPopUp";
+import LinkRelatoriosApp from "./Pages/Components/MenuSuperior/LinkRelatoriosApp";
+import RelatoriosAppMain from "./Pages/Relatorios/TotalizadoresApp";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
 	// Tem que mudar a versão na pasta main linha 141 ...
 	const limparCache = localStorage.getItem("clear_Cache");
-	if (limparCache == null || limparCache.toString() !== "version_9") {
+	if (limparCache == null || limparCache.toString() !== "version_1") {
 		localStorage.removeItem("table-columns-csn");
 		localStorage.removeItem("table-columns");
 		localStorage.removeItem("table-columns-lote");
 		localStorage.removeItem("coordenadas-table");
-		localStorage.setItem("clear_Cache", "version_9");
+		localStorage.removeItem("viewsAviso");
+		localStorage.setItem("clear_Cache", "version_1");
 		location.reload();
 	}
 
@@ -107,7 +110,17 @@ export default function AllRoutes() {
 					exact
 					component={RelatoriosMain}
 				/>
+				<Route
+					path="/relatorios/app/visualizar/:id"
+					exact
+					component={RelatoriosAppMain}
+				/>
 				<Route path="/relatorios/visualizar" exact component={LinkRelatorios} />
+				<Route
+					path="/relatorios/app/visualizar"
+					exact
+					component={LinkRelatoriosApp}
+				/>
 				<Route path="/credenciais" exact component={Credenciais} />
 				{/* <Route path="/producao" exact component={CalendarioProducao} /> */}
 				<Route path="/ajuda" exact component={Helper} />
@@ -116,7 +129,7 @@ export default function AllRoutes() {
 				<Route path="*" exact component={Main} />
 			</Switch>
 
-			<MainPopUp />
+			{/* <MainPopUp /> */}
 		</BrowserRouter>
 	);
 }

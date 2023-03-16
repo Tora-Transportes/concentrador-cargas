@@ -11,18 +11,21 @@ function Menusuperior() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
   const [isPermissionCsn, setPermissionCsn] = useState(false);
   const [isPermissionPadrao, setPermissionPadrao] = useState(false);
+  const [isPermAlterarPerm, setPermAlterarPerm] = useState(false);
   const [isColorHeader, setColorHeader] = useState("header");
   const { setPermissionUser } = useContext(ContextUseDefault);
   useEffect(() => {
     (async () => {
       const userPermission = await validationPermissionUser();
       setPermissionUser(userPermission?.permissoes);
-      if (userPermission?.permissoes?.includes("CARGAS_PADRAO")) {
+      if (userPermission?.permissoes?.includes("CARGAS_PADRAO"))
         setPermissionPadrao(true);
-      }
-      if (userPermission?.permissoes?.includes("CARGAS_CSN")) {
+
+      if (userPermission?.permissoes?.includes("CARGAS_CSN"))
         setPermissionCsn(true);
-      }
+
+      if (userPermission?.permissoes?.includes("ALTERAR_PERMISSOES"))
+        setPermAlterarPerm(true);
     })();
     const tipoCorHeader =
       process.env.REACT_APP_COR_NAVEBAR === "DEV" ? "headerDev" : "header";
@@ -92,11 +95,13 @@ function Menusuperior() {
               </div>
             </div>
           </div>
-          <li className="class-li">
-            <a id="style-a" href="/usuarios/permissoes">
-              Permissões
-            </a>
-          </li>
+          {isPermAlterarPerm && (
+            <li className="class-li">
+              <a id="style-a" href="/usuarios/permissoes">
+                Permissões
+              </a>
+            </li>
+          )}
           <li className="class-li">
             <a id="style-a" href="/produtos">
               Produtos

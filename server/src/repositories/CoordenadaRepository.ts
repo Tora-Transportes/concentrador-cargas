@@ -31,8 +31,6 @@ export class CoordenadaRepository {
       responsavel_placa_email,
       apelido_carreta,
       cpf_motorista,
-      date_execel_inicio,
-      date_execel_fim,
     } = filter;
 
     const currentPage = Number(page ?? 1) < 1 ? 1 : Number(page ?? 1);
@@ -61,6 +59,12 @@ export class CoordenadaRepository {
       "con_coordenadas_veiculos.placa"
     );
 
+    total.leftJoin(
+      "con_veiculos_distancia",
+      "con_veiculos_distancia.fk_placa",
+      "con_coordenadas_veiculos.placa"
+    );
+
     query.leftJoin(
       "con_dados_coordenadas",
       "con_dados_coordenadas.fk_placa",
@@ -83,17 +87,17 @@ export class CoordenadaRepository {
       "con_dados_coordenadas.responsavel_placa"
     );
 
-    query.modify(function (con_coordenadas_veiculos) {
-      if (date_execel_inicio && date_execel_fim) {
-        con_coordenadas_veiculos.andWhereBetween(
-          "con_coordenadas_veiculos.data_emissao_documento",
-          [
-            new Date(date_execel_inicio + "T00:00:00"),
-            new Date(date_execel_fim + "T23:59:59"),
-          ]
-        );
-      }
-    });
+    // query.modify(function (con_coordenadas_veiculos) {
+    //   if (date_execel_inicio && date_execel_fim) {
+    //     con_coordenadas_veiculos.andWhereBetween(
+    //       "con_coordenadas_veiculos.data_emissao_documento",
+    //       [
+    //         new Date(date_execel_inicio + "T00:00:00"),
+    //         new Date(date_execel_fim + "T23:59:59"),
+    //       ]
+    //     );
+    //   }
+    // });
 
     query.leftJoin(
       "VEICULO as VEI",
@@ -111,8 +115,18 @@ export class CoordenadaRepository {
     total.leftJoin("APELIDO_VEICULO as APV", "APV.AV_SEQ", "VEI.AV_SEQ");
 
     query.leftJoin("CADASTRO_GERAL AS CAG", "CAG.CG_COD", "VEI.CG_MOT");
+    total.leftJoin("CADASTRO_GERAL AS CAG", "CAG.CG_COD", "VEI.CG_MOT");
 
     query
+      .innerJoin("CG_IDENTIFICACAO", function () {
+        this.on("CG_IDENTIFICACAO.LOC_COD", "CAG.LOC_COD").andOn(
+          "CG_IDENTIFICACAO.CG_COD",
+          "CAG.CG_COD"
+        );
+      })
+      .where("CG_IDENTIFICACAO.TI_COD", 2);
+
+    total
       .innerJoin("CG_IDENTIFICACAO", function () {
         this.on("CG_IDENTIFICACAO.LOC_COD", "CAG.LOC_COD").andOn(
           "CG_IDENTIFICACAO.CG_COD",

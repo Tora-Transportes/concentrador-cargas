@@ -1,8 +1,33 @@
-.div-title{
-    align-items: center;
+.div-title {
+  align-items: center;
 }
 
-.info-tilte{
-    font-size: 20px;
-    color: red;
+.info-tilte {
+  font-size: 20px;
+  color: red;
+}
+
+.class-group-buttonCsn {
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  grid-gap: 3rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+}
+
+.msg-info-topo {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media only screen and (max-width: 991px) {
+  .class-group-buttonCsn {
+    display: grid;
+    margin-top: 1px;
+    grid-gap: 0.5rem;
+  }
+  .botao-foter-pg {
+    width: 55vw;
+  }
 }

@@ -6,17 +6,18 @@ import ServiceAvisos from "src/services/ServiceAvisos";
 
 function MainPopUp() {
 	const [isShow, setShow] = useState(false);
+	const [isLastIdPosition, setLastIdPosition] = useState();
 
 	const { setIdAvisos } = useContext(ContextUseDefault);
 
 	useEffect(() => {
 		(async () => {
 			const { data } = (await ServiceAvisos.list()).data;
-
 			const dadosStorage = localStorage.getItem("viewsAviso");
 			const lastIdPosition = data[0];
+			setLastIdPosition(data[0]?.ID);
 			setIdAvisos(lastIdPosition?.ID);
-			if (dadosStorage === null || dadosStorage < lastIdPosition.ID) {
+			if (dadosStorage === null || dadosStorage < lastIdPosition?.ID) {
 				setShow(true);
 			}
 		})();
@@ -24,7 +25,11 @@ function MainPopUp() {
 
 	return (
 		<>
-			<PopUp isShow={isShow} setShow={setShow} />
+			<PopUp
+				isShow={isShow}
+				setShow={setShow}
+				isLastIdPosition={isLastIdPosition}
+			/>
 		</>
 	);
 }

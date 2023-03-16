@@ -131,6 +131,10 @@ export class CargaRepository {
     return carga;
   }
 
+  async updatePatch(id: number, dadosCarga: Partial<ICarga>): Promise<void> {
+    await database("con_cargas").update(dadosCarga).where({ id });
+  }
+
   async search(
     query: Record<string, any>,
     page = 1,
@@ -234,7 +238,7 @@ export class CargaRepository {
         qb.andWhere("placa_veiculo", "like", `%${query.placa_veiculo}%`);
       }
       if (!isNaN(Number(query?.ativo))) {
-        qb.andWhere("ativo", "=", Number(query?.ativo));
+        qb.whereIn("ativo", [1, 2]);
       }
       if (!isNaN(Number(query?.fk_situacao))) {
         qb.andWhere("fk_situacao", "=", Number(query?.fk_situacao));

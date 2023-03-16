@@ -213,6 +213,10 @@ class ServiceCargas {
 		return api.put(`/cargas/${id}`, carga);
 	}
 
+	async updatePatch(id, dataCarga) {
+		return api.patch(`/cargas/${id}`, dataCarga);
+	}
+
 	async updateCSN({
 		id,
 		e_lote,

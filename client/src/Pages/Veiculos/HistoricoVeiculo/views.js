@@ -259,7 +259,7 @@ function ViewHistoricoVeiculo({
 											url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 										/>
 									</LayersControl.BaseLayer>
-									<LayersControl.BaseLayer name="Mapa satélite">
+									<LayersControl.BaseLayer name="Mapa Satélite">
 										<TileLayer
 											attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 											//url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

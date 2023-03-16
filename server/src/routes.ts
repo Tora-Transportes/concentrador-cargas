@@ -70,6 +70,7 @@ routes.get("/cargaCTE/:id", CargaTecController.indexCTE);
 routes.get("/cargas/:id", CargaController.index);
 routes.get("/cargas/placa/:plate", CargaController.indexPlate);
 routes.put("/cargas/:id", CargaController.update);
+routes.patch("/cargas/:id", CargaController.updatePatch);
 routes.delete(
   "/cargas/:id",
   HasPermission("DELETAR_CARGAS"),
@@ -119,11 +120,6 @@ routes.put(
   HasPermission("CADASTRAR_PRODUTOS"),
   ProdutoController.update
 );
-// routes.put(
-//   "/produtos/:id/nome",
-//   HasPermission("CADASTRAR_PRODUTOS"),
-//   ProdutoController.enable
-// );
 routes.put(
   "/produtos/:id/ativar",
   HasPermission("CADASTRAR_PRODUTOS"),

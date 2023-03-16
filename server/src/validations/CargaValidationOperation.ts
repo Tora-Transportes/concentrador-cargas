@@ -35,7 +35,10 @@ export class CargaValidationOperation {
     }
 
     if (cargaAnterior) {
-      if (cargaAtual.ativo === 0 && cargaAnterior.ativo === 1) {
+      if (
+        cargaAtual.ativo === 0 &&
+        (cargaAnterior.ativo === 1 || cargaAnterior.ativo === 2)
+      ) {
         if (!this.hasPermission.has("DELETAR_CARGAS")) {
           throw new Error(
             "Não é possível excluir uma carga sem a permissão DELETAR_CARGAS"

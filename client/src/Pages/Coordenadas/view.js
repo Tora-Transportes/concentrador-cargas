@@ -9,7 +9,7 @@ import { Dialog } from "primereact/dialog";
 import bandeira from "../../assets/bandeiraBrasil.png";
 // import HandleClick from "./tooltipsCoordenadas";
 import "../Coordenadas/coordenadas.css";
-import ModalDataExcel from "src/Pages/Cargas/modal/exportExcel";
+//import ModalDataExcel from "src/Pages/Cargas/modal/exportExcel";
 import { SideBarFuncition } from "../Utils/sideBar";
 import InfoCTEcard from "./cards/infoCTEcard";
 import LastLocationVeicles from "./cards/lastLocation";
@@ -25,7 +25,7 @@ function ViewCoordenadas({
 	setItensPerPage,
 	visibleCteCardObject,
 	dadosCTEObjet,
-	modalShowExcel,
+	//modalShowExcel,
 	setModalShowExcel,
 	viewsLastLocationObject,
 	dadosLastLocation,
@@ -71,20 +71,20 @@ function ViewCoordenadas({
 		</div>
 	);
 
-	const exportExcelDate = (dataInicio, dataFim, categoria_veiculo) => {
-		handleExportExcel(dataInicio, dataFim, categoria_veiculo);
-		setModalShowExcel(false);
-	};
+	// const exportExcelDate = (dataInicio, dataFim, categoria_veiculo) => {
+	// 	handleExportExcel(dataInicio, dataFim, categoria_veiculo);
+	// 	setModalShowExcel(false);
+	// };
 
 	return (
 		<>
 			<Container fluid className="container-coord-veic">
-				<ModalDataExcel
+				{/* <ModalDataExcel
 					show={modalShowExcel}
 					exportExcelDate={exportExcelDate}
 					onHide={() => setModalShowExcel(false)}
 					pagina={"coordenadas"}
-				/>
+				/> */}
 				<Row className="mb-2">
 					<h1
 						className="class-title-Coord"

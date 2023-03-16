@@ -1,3 +1,4 @@
+import { IServiceSit } from "./../UseCaseCarga/entities";
 import CargaAppRepository from "./../../repositories/AppTora/CargasAppRespository";
 import AppError from "../../models/AppError";
 import { VeiculoRepository } from "../../repositories/VeiculoRepository";
@@ -6,6 +7,7 @@ import { CargaCsnInfoRepository } from "../../repositories/csn/CargaCsnInfoRepos
 import DateUtils from "../../Utils/date";
 import { CargaRepository } from "../../repositories/CargaRepository";
 import AppToraValidator from "../../validations/AppToraValidator";
+import ServiceMigrarSIT from "../../services/ServiceMigrarSIT";
 
 interface IBodyAprovaCarga {
   placa: string;
@@ -22,11 +24,10 @@ class UseCaseAppAprovacaoCarga {
     this.veiculoRepository = new VeiculoRepository();
   }
   async run({ placa, idCarga }: IBodyAprovaCarga): Promise<string> {
-    const {
-      ativo,
-      fk_situacao: fk_situacaoAtual,
-      carga_csn,
-    } = await AppToraValidator.validatorAprovacao(placa, idCarga);
+    const cargaAtual = await AppToraValidator.validatorAprovacao(
+      placa,
+      idCarga
+    );
 
     const existPlacaCadastrada = await this.veiculoRepository.search(placa);
     if (!existPlacaCadastrada)
@@ -42,7 +43,7 @@ class UseCaseAppAprovacaoCarga {
       );
     }
 
-    if (ativo === 0 || fk_situacaoAtual === 5)
+    if (cargaAtual.ativo === 0 || cargaAtual.fk_situacao === 5)
       throw new AppError(
         `Carga com id: ${idCarga} foi cancelada ou excluida!`,
         409
@@ -56,12 +57,17 @@ class UseCaseAppAprovacaoCarga {
       data_atualizacao: DateUtils.getCurrentDate(),
       usuario: "App_tora",
       placa_veiculo: placa,
+      observacao_gr: "Aprovação App Tora. ",
+      e_lote: false,
+      locais: undefined,
       codigo_motorista,
       placa_carreta,
       placa_bitrem,
       fk_situacao,
     };
 
+    const cargaCompleta = { ...cargaAtual, ...bodyUpdate };
+    await ServiceMigrarSIT.migrar([cargaCompleta]);
     const resultRepository = await CargaAppRepository.updateFk_situacao(
       idCarga,
       bodyUpdate
@@ -69,7 +75,7 @@ class UseCaseAppAprovacaoCarga {
     if (resultRepository === 0)
       throw new AppError("Erro interno do servidor!", 500);
 
-    if (carga_csn !== 1) {
+    if (cargaAtual.carga_csn !== 1) {
       notifyAll({
         name: "@carga-update",
         details: await this.cargaRepository.index(idCarga),
@@ -93,9 +99,11 @@ class UseCaseAppCancelarCarga {
   }
 
   async run({ placa, idCarga }: IBodyAprovaCarga): Promise<string> {
-    const { carga_csn, fk_situacao: fk_situacaoAtual } =
-      await AppToraValidator.validatorCancelamento(placa, idCarga);
-    if (fk_situacaoAtual === 5)
+    const cargaAtual = await AppToraValidator.validatorCancelamento(
+      placa,
+      idCarga
+    );
+    if (cargaAtual.fk_situacao === 5)
       throw new AppError("Carga já se encontra cancelada!", 409);
     const fk_situacao = 5;
     const bodyUpdate = {
@@ -103,7 +111,7 @@ class UseCaseAppCancelarCarga {
       usuario: "App_tora",
       fk_situacao,
     };
-
+    await ServiceMigrarSIT.cancelar([cargaAtual]);
     const resultRepository = await CargaAppRepository.updateFk_situacao(
       idCarga,
       bodyUpdate
@@ -111,7 +119,7 @@ class UseCaseAppCancelarCarga {
     if (resultRepository === 0)
       throw new AppError("Erro interno do servidor!", 500);
 
-    if (carga_csn !== 1) {
+    if (cargaAtual.carga_csn !== 1) {
       notifyAll({
         name: "@carga-update",
         details: await this.cargaRepository.index(idCarga),

@@ -158,38 +158,3 @@ class ServiceMigrarSit implements IServiceSit {
 }
 
 export default new ServiceMigrarSit();
-
-// const carga = {
-//   id: "M-1639673022149",
-//   cliente:
-//     "\t D MELO DE SOUZA HELITEC CONSTRUCAO E C - 06106604000284 - MANAUS/AM",
-//   e_lote: false,
-//   origem_carga: "BRASIL/MG/CONTAGEM",
-//   destino_carga: "BRASIL/MG/BELO HORIZONTE",
-//   data_entrega: null,
-//   data_coleta: null,
-//   tipo_carga: null,
-//   quantidade: 1,
-//   unidade_medida: "CX",
-//   responsavel_cadastro: "Andre Alves Leocadio",
-//   canal_comunicacao: "manual",
-//   observacao: null,
-//   data_cadastro: "2021-12-16T16:44:19.646Z",
-//   data_atualizacao: "2021-12-16T16:44:19.646Z",
-//   ativo: 1,
-//   acessorios_requisitos: null,
-//   usuario: "Andre Alves Leocadio",
-//   informacoes_restritivas: null,
-//   janela_coleta: null,
-//   janela_entrega: null,
-//   local_coleta: "12",
-//   local_entrega: "21",
-//   fk_lote_pai: null,
-//   quantidade_atual: 1,
-//   fk_situacao: 3,
-//   placa_veiculo: "OUF9329",
-//   observacao_gr: "pq sim",
-//   documento_transporte: null,
-// };
-
-// migrar([carga]).then(console.log).catch(console.error);

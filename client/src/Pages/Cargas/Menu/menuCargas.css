@@ -37,6 +37,15 @@
   font-size: 27px;
 }
 
+.linck-RelatorioApp-Title-CSN {
+  color: #00652e;
+  font-family: "Poppins", sans-serif;
+  font-size: 27px;
+}
+
+.linck-RelatorioApp-Title-CSN -CSN {
+  margin-left: 0.7rem;
+}
 #title-CSN {
   margin-left: 0.7rem;
 }
@@ -68,7 +77,14 @@
   transition: 0.5s;
   -webkit-transform: scale(1.2);
   transform: scale(1.1);
-  color: #009c08
+  color: #009c08;
+}
+.linck-RelatorioApp-Title-CSN :hover,
+#icon-csn:hover {
+  transition: 0.5s;
+  -webkit-transform: scale(1.2);
+  transform: scale(1.1);
+  color: #009c08;
 }
 @media only screen and (min-width: 215px) and (max-width: 390px) {
   #titulo-selecionar-modo-carga {
@@ -91,7 +107,6 @@
     margin-top: 1rem !important;
     margin-left: 35% !important;
   }
-
   #hand {
     color: #00652e;
     margin-top: 3rem;
@@ -103,13 +118,14 @@
   }
   #icon-csn {
     color: #00652e;
-    margin-left: 1.6rem;
+    margin-left: 12.5vw;
   }
-  
-  #title-CSN{
-    
-    margin-left: 2rem;
 
+  .linck-RelatorioApp-Title-CSN {
+    margin-left: 2rem;
+  }
+  #title-CSN {
+    margin-left: 2rem;
   }
 
   .class-title-coleta {
@@ -117,20 +133,25 @@
   }
 }
 
-@media only screen and (min-width: 506px) and (max-width: 1024px) {
-.class-button-icons {
-  margin-top: 2rem;
-  grid-gap: 3rem;
-  margin-left: 2rem;
-}
+@media only screen and (min-width: 506px) and (max-width: 1023px) {
+  .class-button-icons {
+    margin-top: 2rem;
+    grid-gap: 3rem;
+    margin-left: 2rem;
+  }
 
-#title-manual,#hand{
-  margin-left: 1rem !important;
-}
+  #title-manual,
+  #hand {
+    margin-left: 1rem !important;
+  }
 
-#icon-csn,#title-CSN{
-  margin-left: -3rem !important;
-}
+  #icon-csn,
+  #title-CSN {
+    margin-left: -3rem !important;
+  }
+  .linck-RelatorioApp-Title-CSN {
+    margin-left: -3rem !important;
+  }
 }
 
 @media only screen and (max-width: 1024px) {
@@ -142,7 +163,6 @@
     font-size: 30px;
     text-align: center;
   }
-  
 
   #title-manual {
     font-size: 22px;
@@ -160,20 +180,23 @@
     font-size: 22px;
     margin-left: -2rem;
   }
+
+  .linck-RelatorioApp-Title-CSN {
+    font-size: 23px;
+    /* margin-right: 10vw; */
+  }
   #import {
     color: #00652e;
     margin-top: 3rem;
     margin-left: 2rem;
   }
-  
-  #icon-csn{
-    
-    margin-top: 2.5rem;
-    margin-left: 1.8rem;
-  }
-  #title-CSN{
-    margin-left: 2.2rem;
 
+  #icon-csn {
+    margin-top: 2.5rem;
+    margin-left: 12.5vw;
+  }
+  #title-CSN {
+    margin-left: 2.2rem;
   }
 
   .class-title-coleta {

@@ -115,14 +115,19 @@ function RelatoriosMain() {
 		clearInterval(interval.current);
 		interval.current = setTimeout(async () => {
 			setLoading(true);
-			setTotalizadores(
-				(
-					await ServiceRelatorios.totalizadores({
-						...filters,
-						carga_csn: statusCargaId,
-					})
-				).data.data
-			);
+			let result = (
+				await ServiceRelatorios.totalizadores({
+					...filters,
+					carga_csn: statusCargaId,
+				})
+			).data.data;
+
+			if (statusCargaId === 0) {
+				result.geral = await result.geral.filter(
+					(item) => item.fk_situacao < 7
+				);
+			}
+			setTotalizadores(result);
 
 			setTempoMedioAprovacaoGr(
 				await (
@@ -176,6 +181,12 @@ function RelatoriosMain() {
 				const total = (
 					await ServiceRelatorios.totalizadores({ carga_csn: statusCargaId })
 				).data.data;
+
+				if (statusCargaId === 0) {
+					total.geral = await total.geral.filter(
+						(item) => item.fk_situacao < 7
+					);
+				}
 				setTotalizadores(total);
 			}
 		})();

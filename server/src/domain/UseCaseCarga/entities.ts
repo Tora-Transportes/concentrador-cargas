@@ -124,6 +124,7 @@ export class UseCaseAddCarga {
 }
 export interface IRepositoryUpdateCarga extends IRepositoryAddCarga {
   update(id: number, carga: ICarga): Promise<ICarga>;
+  updatePatch(id: number, dadosCarga: Partial<ICarga>): Promise<void>;
 }
 export class UseCaseAddCargaDerivada {
   constructor(
@@ -320,6 +321,23 @@ export class UseCaseUpdateCarga {
       });
     }
     return cargaOficial;
+  }
+}
+type TResultUpdatePath = {
+  mensagem: string;
+};
+export class UseCaseUpdateCargaPath {
+  constructor(private readonly cargaRepository: IRepositoryUpdateCarga) {}
+
+  async run(
+    id: number,
+    dadosCarga: Partial<ICarga>
+  ): Promise<TResultUpdatePath> {
+    const existeCarga = await this.cargaRepository.index(id);
+    if (!existeCarga) throw new AppError("A carga seleionada não existe", 404);
+    const carga = { ...dadosCarga, data_atualizacao: new Date() };
+    await this.cargaRepository.updatePatch(id, carga);
+    return { mensagem: "Carga editado com sucesso!" };
   }
 }
 

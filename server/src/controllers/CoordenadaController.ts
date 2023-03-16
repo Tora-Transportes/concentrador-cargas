@@ -24,20 +24,6 @@ class CoordenadasController {
   }
 
   async export(req: Request, res: Response) {
-    const { date_execel_inicio, date_execel_fim } = req.query;
-    if (date_execel_inicio && date_execel_fim) {
-      const diferencaDate = await calculateDiffDate(
-        String(date_execel_inicio),
-        String(date_execel_fim)
-      );
-
-      if (diferencaDate > 31) {
-        throw new AppError(
-          "O período entre a data de início e fim não pode ser maior que 31 dias!",
-          202
-        );
-      }
-    }
     const data = await useCases.UseCaseViewCoordenada.run(
       req.query,
       9999999999
@@ -73,7 +59,7 @@ class CoordenadasController {
 
     const stream = fs.createReadStream(filename);
     stream.pipe(res);
-    fs.unlinkSync(filename);
+    if (fs.existsSync(filename)) fs.unlinkSync(filename);
     return res;
   }
 

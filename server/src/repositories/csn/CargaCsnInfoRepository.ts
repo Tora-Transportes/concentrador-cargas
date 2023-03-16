@@ -133,7 +133,7 @@ export class CargaCsnInfoRepository {
         qb.andWhere("placa_carreta", "like", `%${query.placa_carreta}%`);
       }
       if (!isNaN(Number(query?.ativo))) {
-        qb.andWhere("ativo", "=", Number(query?.ativo));
+        qb.whereIn("ativo", [1, 2]);
       }
       if (!isNaN(Number(query?.fk_situacao))) {
         qb.andWhere("fk_situacao", "=", Number(query?.fk_situacao));
@@ -270,9 +270,9 @@ export class CargaCsnInfoRepository {
     const carga: ICarga[] = await database("con_cargas")
       .select("*")
       .where("con_cargas.placa_veiculo", placa)
+      .whereIn("ativo", [1, 2])
       .andWhere("con_cargas.carga_csn", 1)
       .andWhere("con_cargas.e_lote", 0)
-      .andWhere("con_cargas.ativo", 1)
       .whereIn("con_cargas.fk_situacao", [2, 3, 7, 8]);
 
     if (!carga) return;

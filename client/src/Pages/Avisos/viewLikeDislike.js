@@ -1,5 +1,6 @@
 import { Button } from "primereact/button";
-import React, { useEffect, useState } from "react";
+//import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { HiThumbDown, HiThumbUp } from "react-icons/hi";
 import ServiceAvisos from "src/services/ServiceAvisos";
 import "./viewLikeDislike.css";
@@ -49,14 +50,15 @@ const ViewsLikeDislike = ({ aviso }) => {
 		}
 	};
 
-	useEffect(() => {
-		saveLike();
-	}, [likeAviso, dislikeAviso]);
+	// useEffect(() => {
+	// 	saveLike();
+	// }, [likeAviso, dislikeAviso]);
 
 	const functionDislikeAvisos = async () => {
 		if (dislikeActive) {
 			setDislikeActive(false);
 			setDislikeAviso(dislikeAviso - 1);
+			saveLike(); // coloquei a função aqui aleatoriamente, depois volta ela pro lugar...
 		} else {
 			setDislikeActive(true);
 			setDislikeAviso(dislikeAviso + 1);

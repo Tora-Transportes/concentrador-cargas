@@ -7,19 +7,6 @@ import { TempoMedioAprovacaoGr } from "../reports/tempoMedioAprovacaoGr";
 import fs from "fs";
 import AppError from "../models/AppError";
 class RelatorioController {
-  /*
-    {
-        "cargas_ativas": 0,
-        "cargas_desativadas": 0,
-        "cadastro_portal": 0,
-        "cadastro_manual": 0,
-        "cadastro_email": 0,
-        "geral" : [
-            {"total": 0, "fk_situacao": 1, "descricao": "Teste 1"},
-            {"total": 0, "fk_situacao": 2, "descricao": "Teste 2"}
-        ]
-    }
-    */
   async gerarTotalizadores(req: Request, res: Response) {
     const report = new ReportTotalizadores();
     return res.json({
@@ -36,9 +23,11 @@ class RelatorioController {
     const stream = fs.createReadStream(filename);
     stream.pipe(res);
 
+    if (fs.existsSync(filename)) {
+      fs.unlinkSync(filename);
+    }
     return new Promise((resolve) => {
       res.on("close", () => {
-        fs.unlinkSync(filename);
         resolve(res);
       });
     });
@@ -46,7 +35,8 @@ class RelatorioController {
 
   async gerarResumoDiario(req: Request, res: Response) {
     const report = new ReportResumoPorDia();
-    const { fk_filial, data_inicio, data_final, carga_csn } = req.query;
+    const { fk_filial, data_inicio, data_final, carga_csn, carga_app } =
+      req.query;
     if (!fk_filial || !data_inicio || !data_final) {
       throw new AppError("Parametros inválidos para gerar o relatório", 400);
     }
@@ -57,6 +47,7 @@ class RelatorioController {
         data_inicio: String(data_inicio),
         data_final: String(data_final),
         carga_csn: String(carga_csn),
+        carga_app: String(carga_app),
       }),
     });
   }

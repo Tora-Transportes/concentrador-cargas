@@ -33,7 +33,7 @@ class ServiceFinishCargasCsn {
   public async getCargasInicioTrajeto(): Promise<IInfoCarga[]> {
     return await database("con_cargas")
       .select(["id", "rastreador"])
-      .where("ativo", 1)
+      .whereIn("ativo", [1, 2])
       .where("e_lote", 0)
       .andWhere("carga_csn", 1)
       .whereNotNull("con_cargas.rastreador")
