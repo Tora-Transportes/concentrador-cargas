@@ -229,7 +229,14 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 													<div className="div-buttons-edit-delete">
 														<Button
 															label="Editar"
-															icon={<BsPencilSquare />}
+															icon={
+																<BsPencilSquare
+																	style={{
+																		fontSize: "16px",
+																		marginLeft: "-5px",
+																	}}
+																/>
+															}
 															className="edit-button"
 															onClick={() => editNotice(item)}
 														/>

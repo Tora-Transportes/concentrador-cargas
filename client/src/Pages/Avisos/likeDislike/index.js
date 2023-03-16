@@ -3,7 +3,7 @@ import { Button } from "primereact/button";
 import React, { useState } from "react";
 import { HiThumbDown, HiThumbUp } from "react-icons/hi";
 import ServiceAvisos from "src/services/ServiceAvisos";
-import "./viewLikeDislike.css";
+import "./likeDislike.css";
 
 const ViewsLikeDislike = ({ aviso }) => {
 	const [likeAviso, setLikeAviso] = useState(aviso.LIKE_ON);
