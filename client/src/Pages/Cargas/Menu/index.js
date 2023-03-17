@@ -36,16 +36,16 @@ function Main() {
 							</Link>
 
 							<Link className="text-decoration-none" to="/cargas/importar">
-								<SiGooglesheets size={70} id="import" />
-								<p id="title-ico-import">Importação em Lote</p>
+								<SiGooglesheets size={70} className="icon-import" />
+								<p className="title-ico-import">Importação em Lote</p>
 							</Link>
 						</>
 					)}
 
 					{viewsCadastrarCSN && (
 						<Link className="text-decoration-none" to="/cargas/cadastro/csn">
-							<MdOutlineAppRegistration size={75} id="icon-csn" />
-							<p id="title-CSN">CSN</p>
+							<MdOutlineAppRegistration size={75} className="icon-csn" />
+							<p className="title-CSN">CSN</p>
 						</Link>
 					)}
 				</div>

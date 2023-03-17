@@ -29,28 +29,29 @@
   margin-top: 3rem;
 }
 
-#title-ico-import,
+div .title-ico-import,
 #title-manual,
-#title-CSN {
-  color: #00652e;
+div .title-CSN {
   font-family: "Poppins", sans-serif;
-  font-size: 27px;
+  font-size: 25px;
+  color: #00652e;
 }
 
 .linck-RelatorioApp-Title-CSN {
   color: #00652e;
   font-family: "Poppins", sans-serif;
-  font-size: 27px;
+  font-size: 25px;
 }
 
 .linck-RelatorioApp-Title-CSN -CSN {
   margin-left: 0.7rem;
 }
-#title-CSN {
+
+div .title-CSN {
   margin-left: 0.7rem;
 }
 
-#import {
+div .icon-import {
   margin-left: 5rem;
   color: #00652e;
   margin-top: 4.5rem;
@@ -63,69 +64,117 @@
   margin-top: 4.5rem;
 }
 
-#icon-csn {
+.icon-csn {
   color: #00652e;
   margin-top: 4.2rem;
 }
 
-#title-ico-import:hover,
-#import:hover,
+.title-ico-import:hover,
+div .icon-import:hover,
 #hand:hover,
 #title-manual:hover,
-#title-CSN:hover,
-#icon-csn:hover {
+div .title-CSN:hover,
+.icon-csn:hover {
   transition: 0.5s;
   -webkit-transform: scale(1.2);
   transform: scale(1.1);
   color: #009c08;
 }
+
 .linck-RelatorioApp-Title-CSN :hover,
-#icon-csn:hover {
+.icon-csn:hover {
   transition: 0.5s;
   -webkit-transform: scale(1.2);
   transform: scale(1.1);
   color: #009c08;
 }
-@media only screen and (min-width: 215px) and (max-width: 390px) {
-  #titulo-selecionar-modo-carga {
-    font-size: 25px !important;
+
+@media only screen and (min-width: 115px) and (max-width: 264px) {
+  div #titulo-selecionar-modo-carga {
+    font-size: 25px;
   }
-  .class-button-icons {
-    position: absolute !important;
+  div .class-button-icons {
+    position: absolute;
     display: block;
-    margin-top: 1rem !important;
-    margin-left: 28% !important;
+    margin-top: 1rem;
+    margin-left: 5vh;
+  }
+
+  div .title-CSN {
+    margin-left: 2.2rem !important;
+  }
+
+  div .icon-csn {
+    color: #00652e;
+    margin-left: 1.5rem;
   }
 }
-@media only screen and (min-width: 391px) and (max-width: 505px) {
+@media only screen and (min-width: 115px) and (max-width: 189px) {
+  div .class-button-icons {
+    position: absolute;
+    display: block;
+    margin-top: 1rem;
+    margin-left: 3vh;
+  }
+
+  #title-manual,
+  #hand {
+    margin-left: 0.8rem !important;
+  }
+
+  div .icon-import {
+    margin-left: 1rem !important;
+  }
+
+  div .title-CSN {
+    margin-left: 1rem !important;
+  }
+
+  div .icon-csn {
+    color: #00652e;
+    margin-left: 0.5rem;
+  }
+}
+
+@media only screen and (min-width: 265px) and (max-width: 335px) {
+  div .class-button-icons {
+    position: absolute;
+    display: block;
+    margin-top: 1rem;
+    margin-left: 5rem;
+  }
+}
+
+@media only screen and (min-width: 336px) and (max-width: 505px) {
+  div .class-button-icons {
+    position: absolute;
+    display: block;
+    margin-top: 1rem;
+    margin-left: 9rem;
+  }
+}
+
+@media only screen and (min-width: 265px) and (max-width: 505px) {
   .class-body-menu {
     overflow: none;
   }
-  .class-button-icons {
-    position: absolute !important;
-    display: block;
-    margin-top: 1rem !important;
-    margin-left: 35% !important;
-  }
+
   #hand {
     color: #00652e;
     margin-top: 3rem;
   }
 
-  #title-ico-import {
-    font-size: 22px;
-    margin-left: -1.8rem !important;
-  }
-  #icon-csn {
+  div .icon-csn {
     color: #00652e;
-    margin-left: 12.5vw;
+    margin-left: 1.6rem;
   }
 
   .linck-RelatorioApp-Title-CSN {
     margin-left: 2rem;
   }
-  #title-CSN {
-    margin-left: 2rem;
+
+  div .title-CSN {
+    margin-left: 2.5rem !important;
   }
 
   .class-title-coleta {
@@ -142,15 +191,19 @@
 
   #title-manual,
   #hand {
-    margin-left: 1rem !important;
+    margin-left: 1rem;
   }
 
-  #icon-csn,
-  #title-CSN {
-    margin-left: -3rem !important;
+  div .icon-csn {
+    margin-left: -1rem;
   }
+
+  div .title-CSN {
+    margin-left: 1rem;
+  }
+
   .linck-RelatorioApp-Title-CSN {
-    margin-left: -3rem !important;
+    margin-left: -3rem;
   }
 }
 
@@ -158,6 +211,7 @@
   .class-body-menu {
     overflow: none;
   }
+
   #titulo-selecionar-modo-carga {
     margin-top: 5rem;
     font-size: 30px;
@@ -175,7 +229,7 @@
     margin-top: 3rem;
   }
 
-  #title-ico-import {
+  div .title-ico-import {
     text-align: center;
     font-size: 22px;
     margin-left: -2rem;
@@ -185,18 +239,19 @@
     font-size: 23px;
     /* margin-right: 10vw; */
   }
-  #import {
+
+  div .icon-import {
     color: #00652e;
     margin-top: 3rem;
     margin-left: 2rem;
   }
 
-  #icon-csn {
+  .icon-csn {
     margin-top: 2.5rem;
-    margin-left: 12.5vw;
   }
-  #title-CSN {
-    margin-left: 2.2rem;
+
+  div .title-CSN {
+    margin-left: 0.7rem;
   }
 
   .class-title-coleta {
