@@ -13,6 +13,7 @@ import ServiceAvisos from "src/services/ServiceAvisos";
 import { Input } from "reactstrap";
 import { ContextUseDefault } from "./../../hooks/context/contextPagCargaCTE";
 import { BsPencilSquare } from "react-icons/bs";
+import { HiOutlineTrash } from "react-icons/hi";
 //import ViewsLikeDislike from "./viewLikeDislike";
 
 let emptyNotice = {
@@ -233,7 +234,8 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 																<BsPencilSquare
 																	style={{
 																		fontSize: "16px",
-																		marginLeft: "-5px",
+																		marginLeft: "-8px",
+																		marginRight: "2px",
 																	}}
 																/>
 															}
@@ -242,7 +244,14 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 														/>
 														<Button
 															label="Excluir"
-															icon="pi pi-trash"
+															icon={
+																<HiOutlineTrash
+																	style={{
+																		fontSize: "16px",
+																		marginLeft: "-15px",
+																	}}
+																/>
+															}
 															className="delete-button"
 															onClick={() => confirmDeleteNotice(item)}
 														/>
