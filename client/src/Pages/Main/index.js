@@ -152,7 +152,7 @@ function Main() {
 					</Col>
 				</Row>
 
-				<div className="col-avisos-style">
+				<div>
 					<Link to={"avisos"} className="class-link">
 						<MdOutlineNotificationImportant
 							size={30}
@@ -284,14 +284,14 @@ function Main() {
 					{levelGame === -1 && (
 						<>
 							<div>
-								<p id="title-p-jogo">
+								<p className="title-p-jogo">
 									{" "}
 									Exercite sua memória, garantindo a melhor tomada de decisão
 									durante o seu dia de trabalho.
 								</p>
 							</div>
 
-							<div className="class-linha-jogo">
+							<div className="class-button-jogo">
 								<Button className="style-button-jogo" onClick={iniciarGame}>
 									Exercitar Agora!
 								</Button>

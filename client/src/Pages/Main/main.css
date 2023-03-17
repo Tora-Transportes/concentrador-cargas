@@ -4,9 +4,9 @@
 }
 
 .versionamento {
-  position: fixed;
-  bottom: 1px;
-  margin-left: 5px;
+  position: absolute;
+  bottom: 0.5%;
+  margin-left: 7px;
   color: #a70505;
   font-size: 13px;
   font-weight: 530;
@@ -45,8 +45,7 @@
 
 .button-avisos-style {
   position: absolute;
-  top: 13.5%;
-  /* top: 12.5%; */
+  top: 5rem;
   right: 0%;
   color: #00652e;
   border: none;
@@ -54,17 +53,17 @@
   width: 5rem;
 }
 
-.button-avisos-style b {
+/* .button-avisos-style b {
   color: #fff;
   text-decoration: none;
   height: 100%;
-}
+} */
 
 #style-title-main {
   font-size: 40px;
   color: #00652e;
   font-style: italic;
-  /* margin-top: 2rem; */
+  margin-top: 1rem;
   font-family: "Poppins", sans-serif;
   font-weight: 400;
 }
@@ -144,7 +143,7 @@
   color: #00652e;
 }
 
-#title-p-jogo {
+.title-p-jogo {
   font-weight: 500;
   font-family: "Poppins", sans-serif;
   text-align: center;
@@ -153,15 +152,21 @@
   margin-bottom: 2rem;
 }
 
-.class-linha-jogo {
+div .class-button-jogo {
   display: grid;
   grid-template-rows: auto auto;
   justify-content: center;
 }
 
-.style-button-jogo {
-  background: #00652e !important;
-  border: none !important;
+div .style-button-jogo,
+div .style-button-jogo:hover,
+div .style-button-jogo:focus,
+div .style-button-jogo:active,
+div .style-button-jogo:focus-visible {
+  background-color: #00652e;
+  border: none;
+  border-color: #00652e;
+  box-shadow: 0 0 0 0.25rem #009c0875;
   width: 12rem;
   margin-left: -0.5rem;
   align-items: center;
@@ -196,6 +201,16 @@
 }
 
 @media only screen and (max-width: 768px) {
+  .button-avisos-style {
+    position: absolute;
+    top: 4.5rem;
+    right: -4%;
+    color: #00652e;
+    border: none;
+    border-radius: 0.28rem;
+    width: 5rem;
+  }
+
   .class-icons-body {
     display: block;
     margin-top: 4rem;
@@ -210,7 +225,7 @@
     margin-left: -0.2rem;
   }
 
-  #title-p-jogo {
+  .title-p-jogo {
     color: #939598;
     font-size: 2.5vh;
     font-family: "Poppins", sans-serif;
@@ -247,10 +262,19 @@
   .title-page-main {
     margin-left: 0.5rem;
   }
+  .versionamento {
+    position: relative;
+    bottom: -1%;
+    margin-left: 5px;
+    color: #a70505;
+    font-size: 13px;
+    font-weight: 530;
+  }
 }
 
-@media only screen and (max-width: 1334px) {
+@media only screen and (min-width: 929px) and (max-width: 1334px) {
   #style-title-main {
+    margin-top: 2rem;
     font-size: 35px;
   }
 
@@ -270,8 +294,22 @@
     text-align: center;
   }
 
-  .style-button-jogo {
-    margin-bottom: 1rem !important;
+  div .style-button-jogo {
+    margin-bottom: 1.5rem;
     margin-left: -1rem;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .title-p-jogo {
+    margin-top: 8rem;
+  }
+
+  div .versionamento {
+    position: absolute;
+    margin-left: 7px;
+    color: #a70505;
+    font-size: 13px;
+    font-weight: 530;
   }
 }
