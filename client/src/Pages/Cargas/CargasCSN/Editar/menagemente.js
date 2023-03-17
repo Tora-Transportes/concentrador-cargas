@@ -1,5 +1,5 @@
 import { formatDate } from "src/Pages/Utils/formatDate";
-import ServicesPontoParada from "src/services/ServicesPontoParada";
+//import ServicesPontoParada from "src/services/ServicesPontoParada";
 
 export const funcBodyEdit = (data, tipoServico) => {
 	const nomeCliente = data.CLIENTE !== null ? data.CLIENTE : data.DESCRICAO;
@@ -37,25 +37,25 @@ export const funcBodyEdit = (data, tipoServico) => {
 	};
 };
 
-export const validarInputEfetivo = async (fk_situacao, idCarga) => {
-	let validationCounInput = true;
-	if (fk_situacao === 6) {
-		const pontoParada = (
-			await ServicesPontoParada.getPontoParadaPerIdCarga(idCarga)
-		).data.data;
-		if (pontoParada.length) {
-			const dataDiffExistente = [];
-			pontoParada?.forEach((elem) => {
-				if (elem.COLETA_EFETIVA_POSTO30 !== null) dataDiffExistente.push(true);
-				if (elem.COLETA_EFETIVA_MUNDO !== null) dataDiffExistente.push(true);
-				if (elem.COLETA_EFETIVA_PEACAO !== null) dataDiffExistente.push(true);
-				if (elem.SAIDA_EFETIVA_COLETA !== null) dataDiffExistente.push(true);
-				if (elem.ENTREGA_EFETIVA !== null) dataDiffExistente.push(true);
-				if (elem.SAIDA_EFETIVA_ENTREGA !== null) dataDiffExistente.push(true);
-			});
+// export const validarInputEfetivo = async (fk_situacao, idCarga) => {
+// 	let validationCounInput = true;
+// 	if (fk_situacao === 6) {
+// 		const pontoParada = (
+// 			await ServicesPontoParada.getPontoParadaPerIdCarga(idCarga)
+// 		).data.data;
+// 		if (pontoParada.length) {
+// 			const dataDiffExistente = [];
+// 			pontoParada?.forEach((elem) => {
+// 				if (elem.COLETA_EFETIVA_POSTO30 !== null) dataDiffExistente.push(true);
+// 				if (elem.COLETA_EFETIVA_MUNDO !== null) dataDiffExistente.push(true);
+// 				if (elem.COLETA_EFETIVA_PEACAO !== null) dataDiffExistente.push(true);
+// 				if (elem.SAIDA_EFETIVA_COLETA !== null) dataDiffExistente.push(true);
+// 				if (elem.ENTREGA_EFETIVA !== null) dataDiffExistente.push(true);
+// 				if (elem.SAIDA_EFETIVA_ENTREGA !== null) dataDiffExistente.push(true);
+// 			});
 
-			if (dataDiffExistente.length < 8) validationCounInput = false;
-		}
-	}
-	return validationCounInput;
-};
+// 			if (dataDiffExistente.length < 8) validationCounInput = false;
+// 		}
+// 	}
+// 	return validationCounInput;
+// };

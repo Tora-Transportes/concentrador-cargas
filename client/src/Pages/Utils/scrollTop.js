@@ -1,7 +1,7 @@
-export const funcScrollTop = (indexTop, indexLeft) => {
+export const funcScrollTop = (indexLeft, indexTop) => {
 	return window.scrollTo({
-		top: indexTop,
 		left: indexLeft,
+		top: indexTop,
 		behavior: "smooth",
 	});
 };
