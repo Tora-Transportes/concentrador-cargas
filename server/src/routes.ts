@@ -89,6 +89,10 @@ routes.get(
   "/csn/cargas/placa",
   CargasCsnInfoController.indexOfSituacaoEndPlaca
 );
+routes.get(
+  "/csn/relatorio/cargas/info",
+  ExportController.generateReportFromCargasInScreenCsn
+);
 
 routes.put("/csn/ponto_parada/:id", PontoParadaController.update);
 routes.patch("/csn/ponto_parada/:id", PontoParadaController.updatePatch);

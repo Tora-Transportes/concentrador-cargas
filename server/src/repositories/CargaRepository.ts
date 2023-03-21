@@ -336,6 +336,7 @@ export class CargaRepository {
         ),
       ])
       .where("fk_filial", query?.fk_filial)
+      .andWhere("carga_csn", "<>", 1)
       .join(
         "con_situacoes_cargas",
         "con_situacoes_cargas.id",

@@ -95,7 +95,8 @@ export const funcDuracaoProcesso = async (
 	formik,
 	status,
 	coletafim,
-	idPontoParada
+	idPontoParada,
+	isAlteracaoParcial
 ) => {
 	const somarHoras = (coletaInicio, nomeCampoformik) => {
 		if (coletaInicio && coletafim) {
@@ -112,7 +113,8 @@ export const funcDuracaoProcesso = async (
 			if (status === 24)
 				TempoServico = { TEMP_SERV_LOCAL_ENTREGA: horasPermanenciaLocal };
 
-			ServicesPontoParada.updatePatchCSN(idPontoParada, TempoServico);
+			if (isAlteracaoParcial)
+				ServicesPontoParada.updatePatchCSN(idPontoParada, TempoServico);
 		}
 	};
 
@@ -175,13 +177,20 @@ export const MontarBoryEditPatch = (
 	idInput,
 	valorDigitado,
 	formik,
-	idPontoParada
+	idPontoParada,
+	isAlteracaoParcial
 ) => {
 	const bodySaidaEfetivaColeta = {
 		SAIDA_EFETIVA_COLETA: new Date(valorDigitado),
 	};
 	const bodyColetaEfetivaAll = { COLETA_EFETIVA: new Date(valorDigitado) };
-	funcDuracaoProcesso(formik, idInput, valorDigitado, idPontoParada);
+	funcDuracaoProcesso(
+		formik,
+		idInput,
+		valorDigitado,
+		idPontoParada,
+		isAlteracaoParcial
+	);
 	switch (idInput) {
 		case 2:
 			return { COLETA_EFETIVA_POSTO30: new Date(valorDigitado) };
@@ -285,3 +294,63 @@ export const InputReferencError = [
 // 	}
 // 	return resultValidation;
 // };
+
+export const validarDadosInput = (
+	dados,
+	isDateErrorInput,
+	setDateErrorInput
+) => {
+	const arrayDados = [dados];
+	arrayDados.forEach((elem) => {
+		if (elem.ponto_passagem.coletaEfetiva_posto30 === null) {
+			const arrayErrorEdit = [...isDateErrorInput];
+			arrayErrorEdit[2].error = true;
+			setDateErrorInput(arrayErrorEdit);
+		}
+		if (elem.ponto_passagem.coletaEfetivaSaida === null) {
+			const arrayErrorEdit = [...isDateErrorInput];
+			arrayErrorEdit[3].error = true;
+			setDateErrorInput(arrayErrorEdit);
+		}
+		if (elem.ponto_passagem2.coletaEfetiva_mundo === null) {
+			const arrayErrorEdit = [...isDateErrorInput];
+			arrayErrorEdit[6].error = true;
+			setDateErrorInput(arrayErrorEdit);
+		}
+		if (elem.ponto_passagem2.coletaEfetivaSaida === null) {
+			const arrayErrorEdit = [...isDateErrorInput];
+			arrayErrorEdit[7].error = true;
+			setDateErrorInput(arrayErrorEdit);
+		}
+		if (elem.ponto_passagem3.coletaEfetiva_peacao === null) {
+			const arrayErrorEdit = [...isDateErrorInput];
+			arrayErrorEdit[10].error = true;
+			setDateErrorInput(arrayErrorEdit);
+		}
+		if (elem.ponto_passagem3.coletaEfetivaSaida === null) {
+			const arrayErrorEdit = [...isDateErrorInput];
+			arrayErrorEdit[11].error = true;
+			setDateErrorInput(arrayErrorEdit);
+		}
+		if (elem.ponto_passagem5.coletaEfetiva === null) {
+			const arrayErrorEdit = [...isDateErrorInput];
+			arrayErrorEdit[13].error = true;
+			setDateErrorInput(arrayErrorEdit);
+		}
+		if (elem.ponto_passagem5.coletaEfetivaSaida === null) {
+			const arrayErrorEdit = [...isDateErrorInput];
+			arrayErrorEdit[14].error = true;
+			setDateErrorInput(arrayErrorEdit);
+		}
+		if (elem.ponto_passagem4.entregaEfetiva === null) {
+			const arrayErrorEdit = [...isDateErrorInput];
+			arrayErrorEdit[23].error = true;
+			setDateErrorInput(arrayErrorEdit);
+		}
+		if (elem.ponto_passagem4.entregaEfetivaSaida === null) {
+			const arrayErrorEdit = [...isDateErrorInput];
+			arrayErrorEdit[24].error = true;
+			setDateErrorInput(arrayErrorEdit);
+		}
+	});
+};

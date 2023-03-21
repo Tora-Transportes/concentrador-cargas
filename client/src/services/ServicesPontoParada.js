@@ -6,7 +6,7 @@ class ServicePontoParada {
 	}
 
 	async updatePatchCSN(id, body) {
-		api.patch(`/csn/ponto_parada/${id}`, body);
+		return await api.patch(`/csn/ponto_parada/${id}`, body);
 	}
 }
 
