@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Form, Button, Table, Card } from "react-bootstrap";
-import "./../styleVeiculos.css";
+// import "./../styleVeiculos.css";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { BsDownload } from "react-icons/bs";
 import "./style.css";
@@ -100,7 +100,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 								<Form.Group controlId="formPlaca">
 									<Form.Label>Placa</Form.Label>
 									<Form.Control
-										style={{ width: "15rem" }}
+										className="form-placa-veic"
 										type="text"
 										name="placa"
 										value={fields.placa}
@@ -112,7 +112,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 								<Form.Group controlId="formdistancia">
 									<Form.Label>Distância (KM)</Form.Label>
 									<Form.Control
-										style={{ width: "15rem" }}
+										className="form-distancia-veic"
 										type="number"
 										min="1"
 										name="distancia_km"
@@ -122,7 +122,7 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 									/>
 								</Form.Group>
 
-								<Button type="submit" id="button-veic-prox">
+								<Button type="submit" id="button-pesq-veic-prox">
 									Pesquisar
 								</Button>
 							</Form>

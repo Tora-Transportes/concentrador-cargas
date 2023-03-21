@@ -1,8 +1,8 @@
-.class-body-permissoes{
-  font-family: 'Poppins', sans-serif;
+.class-body-permissoes {
+  font-family: "Poppins", sans-serif;
 }
 
-.class-title-Permissao{
+.class-title-Permissao {
   font-family: "Poppins", sans-serif;
   color: #00652e;
   font-size: 40px;
@@ -27,7 +27,7 @@
 .text-center .mt-1 tbody td .icon-save {
   height: 28px;
   width: 22px;
-  color: #00652E;
+  color: #00652e;
   cursor: pointer;
 }
 
@@ -181,7 +181,7 @@
 }
 
 @media only screen and (max-width: 560px) {
-.form-multSelect-button,
+  .form-multSelect-button,
   .form-multSelect-button:disabled {
     margin-right: 25% !important;
   }
@@ -197,11 +197,11 @@
     background-color: #f3f3f3;
     border-radius: 10px;
   }
-  .class-title-Permissao{
+  .class-title-Permissao {
     margin-left: 0.6rem;
     font-size: 30px;
   }
-  .form-multSelect-button{
+  .form-multSelect-button {
     margin-top: 0.4rem;
   }
 
@@ -269,35 +269,52 @@
 }
 
 /* css nativa da tabela */
-.datatable-responsive-demo .p-datatable-responsive-demo .p-datatable-tbody>tr>td .p-column-title {
+.datatable-responsive-demo
+  .p-datatable-responsive-demo
+  .p-datatable-tbody
+  > tr
+  > td
+  .p-column-title {
   display: none;
 }
 
-
 @media screen and (max-width: 50em) {
-
-  .datatable-responsive-demo .p-datatable.p-datatable-responsive-demo .p-datatable-thead>tr>th,
-  .datatable-responsive-demo .p-datatable.p-datatable-responsive-demo .p-datatable-tfoot>tr>td {
-      display: none !important;
+  .datatable-responsive-demo
+    .p-datatable.p-datatable-responsive-demo
+    .p-datatable-thead
+    > tr
+    > th,
+  .datatable-responsive-demo
+    .p-datatable.p-datatable-responsive-demo
+    .p-datatable-tfoot
+    > tr
+    > td {
+    display: none !important;
   }
 
-  .datatable-responsive-demo .p-datatable.p-datatable-responsive-demo .p-datatable-tbody>tr>td {
-      text-align: left;
-      display: block;
-      width: 100%;
-      float: left;
-      clear: left;
-      border: 0 none;
+  .datatable-responsive-demo
+    .p-datatable.p-datatable-responsive-demo
+    .p-datatable-tbody
+    > tr
+    > td {
+    text-align: left;
+    display: block;
+    width: 100%;
+    float: left;
+    clear: left;
+    border: 0 none;
   }
 
-  .datatable-responsive-demo .p-datatable.p-datatable-responsive-demo .p-datatable-tbody>tr>td .p-column-title {
-      padding: .4rem;
-      min-width: 30%;
-      display: inline-block;
-      margin: -.4em 1em -.4em -.4rem;
-      font-weight: bold;
+  .datatable-responsive-demo
+    .p-datatable.p-datatable-responsive-demo
+    .p-datatable-tbody
+    > tr
+    > td
+    .p-column-title {
+    padding: 0.4rem;
+    min-width: 30%;
+    display: inline-block;
+    margin: -0.4em 1em -0.4em -0.4rem;
+    font-weight: bold;
   }
-
-
 }
-

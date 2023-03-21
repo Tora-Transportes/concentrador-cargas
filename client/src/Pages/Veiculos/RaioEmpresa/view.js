@@ -100,7 +100,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 							<Form.Group controlId="formDestino">
 								<Form.Label>Empresa</Form.Label>
 								<InputCliente
-									style={{ width: "15rem", height: "2rem" }}
+									className="input-nome-empresa"
 									name="empresa"
 									value={fields.empresa}
 									onChange={handleChange}
@@ -111,7 +111,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 							<Form.Group controlId="formKM">
 								<Form.Label>KM</Form.Label>
 								<Form.Control
-									style={{ width: "15rem" }}
+									className="form-distancia-km"
 									type="number"
 									name="distancia_km"
 									value={fields.distancia_km}

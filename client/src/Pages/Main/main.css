@@ -3,15 +3,6 @@
   box-sizing: border-box;
 }
 
-.versionamento {
-  position: absolute;
-  bottom: 0.5%;
-  margin-left: 7px;
-  color: #a70505;
-  font-size: 13px;
-  font-weight: 530;
-}
-
 #navbar-tora {
   background-color: #024c01 !important;
   color: white !important;
@@ -45,7 +36,7 @@
 
 .button-avisos-style {
   position: absolute;
-  top: 5rem;
+  top: 4.8rem;
   right: 0%;
   color: #00652e;
   border: none;
@@ -53,14 +44,8 @@
   width: 5rem;
 }
 
-/* .button-avisos-style b {
-  color: #fff;
-  text-decoration: none;
-  height: 100%;
-} */
-
-#style-title-main {
-  font-size: 40px;
+.style-title-main {
+  font-size: 2.4rem;
   color: #00652e;
   font-style: italic;
   margin-top: 1rem;
@@ -68,7 +53,7 @@
   font-weight: 400;
 }
 
-#style-p-saudacao {
+.style-p-saudacao {
   font-weight: 400;
   font-style: italic;
   font-family: "Poppins", sans-serif;
@@ -91,7 +76,7 @@
   font-family: "Poppins", sans-serif;
   font-weight: 500;
   text-align: center;
-  font-size: 17px;
+  font-size: 1rem;
 }
 
 .class-icons-body {
@@ -115,9 +100,6 @@
   transform: scale(1.1);
 }
 
-#style-iconn-4:hover,
-#style-iconn-3:hover,
-#style-iconn-2:hover,
 #style-iconn:hover,
 .class-ico-ind:hover {
   color: #009c08;
@@ -125,31 +107,20 @@
 
 .class-ico-ind {
   color: #00652e;
-
   margin-left: -0.1rem;
 }
+
 #style-iconn {
-  color: #00652e;
-}
-/* maps */
-#style-iconn-2 {
-  color: #00652e;
-  margin-left: 1.2rem;
-}
-#style-iconn-3 {
-  color: #00652e;
-}
-#style-iconn-4 {
   color: #00652e;
 }
 
 .title-p-jogo {
-  font-size: 17px;
+  font-size: 1rem;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
   text-align: center;
   color: #939598;
-  margin-top: 5rem;
+  margin-top: 4rem;
   margin-bottom: 2rem;
 }
 
@@ -179,18 +150,38 @@ div .style-button-jogo:focus-visible {
   grid-gap: 3rem;
   margin-bottom: 2rem;
 }
+
 .class-p-fimjogo {
   font-size: 16px;
   margin-top: 20vh;
   color: red;
 }
 
-@media only screen and (max-width: 480px) {
-  #style-title-main {
-    font-size: 30px !important;
+.versionamento {
+  position: relative;
+  bottom: -1%;
+  margin-left: 6px;
+  color: #a70505;
+  font-size: 13px;
+  font-weight: 530;
+}
+@media only screen and (max-width: 280px) {
+  .style-p-saudacao {
+    font-size: 0.9rem !important;
   }
-  #style-p-saudacao {
-    font-size: 20px !important;
+}
+@media only screen and (max-width: 580px) {
+  .style-title-main {
+    font-size: 1.5rem;
+    margin-top: 0.3rem;
+  }
+
+  .style-p-saudacao {
+    font-size: 1rem;
+  }
+
+  #style-p-text {
+    font-size: 0.9rem;
   }
 
   .class-jogo {
@@ -199,9 +190,22 @@ div .style-button-jogo:focus-visible {
     grid-gap: 4rem;
     margin-bottom: 3rem;
   }
+
+  div .style-button-jogo {
+    background: #00652e;
+    border: none;
+    width: 12rem;
+    margin-left: 40rem;
+    margin-right: 5rem;
+    margin-bottom: 1rem;
+  }
 }
 
 @media only screen and (max-width: 768px) {
+  .style-title-main {
+    font-size: 2rem;
+    margin-top: 0.3rem;
+  }
   .button-avisos-style {
     position: absolute;
     top: 4.5rem;
@@ -222,22 +226,17 @@ div .style-button-jogo:focus-visible {
   .icons-responsive {
     margin-top: 2rem;
   }
-  #style-iconn-4 {
-    margin-left: -0.2rem;
-  }
 
   .title-p-jogo {
-    color: #939598;
-    font-family: "Poppins", sans-serif;
-    text-align: center;
+    font-size: 0.9rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: -1rem;
+    margin-left: -0.5rem;
     margin-top: 3rem;
   }
 
-  .style-button-jogo {
+  div .style-button-jogo {
     background: #00652e;
     border: none;
     width: 14rem;
@@ -258,27 +257,38 @@ div .style-button-jogo:focus-visible {
   margin-top: 10vh;
   color: red;
 }
-@media only screen and (max-width: 928px) {
-  .title-page-main {
-    margin-left: 0.5rem;
+
+@media only screen and (min-width: 768px) and (max-width: 928px) {
+  .style-title-main {
+    font-size: 2rem;
+    margin-top: -0.5rem;
   }
   .versionamento {
     position: relative;
-    bottom: -1%;
-    margin-left: 5px;
+    bottom: -0.8%;
+    margin-left: 7px;
     color: #a70505;
     font-size: 13px;
     font-weight: 530;
   }
 }
 
-@media only screen and (min-width: 929px) and (max-width: 1334px) {
-  #style-title-main {
-    margin-top: 2rem;
-    font-size: 35px;
+@media only screen and (min-width: 929px) and (max-width: 1339px) {
+  .style-title-main {
+    font-size: 2rem;
+    margin-top: -0.5rem;
   }
 
-  #style-p-saudacao {
+  .versionamento {
+    position: relative;
+    bottom: -0.8%;
+    margin-left: 7px;
+    color: #a70505;
+    font-size: 13px;
+    font-weight: 530;
+  }
+
+  .style-p-saudacao {
     font-size: 22px;
     margin-bottom: -2rem;
     text-align: center;
@@ -290,24 +300,66 @@ div .style-button-jogo:focus-visible {
 
   #style-p-text {
     margin-top: 3rem;
-    font-size: 2.5vh;
+    font-size: 1rem;
     text-align: center;
   }
 
   div .style-button-jogo {
+    background: #00652e;
+    border: none;
     margin-bottom: 1.5rem;
     margin-left: -1rem;
   }
 }
 
-@media only screen and (min-width: 1440px) {
-  .title-p-jogo {
-    margin-top: 8rem;
+@media only screen and (min-width: 1340px) and (max-width: 1439px) {
+  .style-title-main {
+    margin-top: -1.5rem;
+    font-size: 2.5rem;
   }
 
-  div .versionamento {
+  div .style-button-jogo {
+    background: #00652e;
+    border: none;
+    margin-bottom: 2rem;
+    margin-left: -1rem;
+  }
+
+  .versionamento {
+    position: relative;
+    bottom: -0.8%;
+    margin-left: 7px;
+    color: #a70505;
+    font-size: 13px;
+    font-weight: 530;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .button-avisos-style {
+    position: absolute;
+    top: 5rem;
+    right: 0%;
+    color: #00652e;
+    border: none;
+    border-radius: 0.28rem;
+    width: 5rem;
+  }
+
+  .title-p-jogo {
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    color: #939598;
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+  }
+
+  .versionamento {
     position: absolute;
     margin-left: 7px;
+    bottom: 0.3rem;
     color: #a70505;
     font-size: 13px;
     font-weight: 530;

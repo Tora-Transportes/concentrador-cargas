@@ -10,35 +10,59 @@
   color: #00652e;
   font-size: 40px;
 }
-.class-card-raioemp {
+div .class-card-raioemp {
   margin-top: 2rem;
-  height: 7rem;
-  width: 60rem;
-  margin-left: 5rem;
+  width: 75rem;
+  margin-left: -1rem;
+}
+
+div .input-nome-empresa {
+  width: 45vw;
+  height: 3.5rem !important;
+}
+
+.form-distancia-km {
+  width: 15rem;
+  height: 3.4rem;
 }
 
 #button-pesq-raioemp {
   background: #00652e;
   border: none;
-  margin-top: 2.4rem;
+  margin-top: 2.5rem;
   width: 10rem;
   height: 2rem;
 }
-
-@media only screen and (min-width: 215px) and (max-width: 1199px) {
+@media only screen and (max-width: 225px) {
+  .form-distancia-km {
+    width: 15rem;
+  }
+  #button-pesq-raioemp {
+    margin-top: 1rem;
+    width: 98%;
+  }
+}
+@media only screen and (min-width: 115px) and (max-width: 599px) {
+  div .input-nome-empresa {
+    width: 105% !important;
+    height: 1rem;
+  }
+}
+@media only screen and (min-width: 115px) and (max-width: 1199px) {
   .class-title-raioemp {
-    font-size: 30px;
+    font-size: 2.2rem;
     display: flex !important;
     justify-content: space-around;
   }
-  .class-card-raioemp {
-    margin-left: 8%;
-    width: 85%;
-    height: 22rem;
+
+  div .input-nome-empresa {
+    height: 1rem;
   }
 
-  #button-pesq-raioemp {
-    margin-top: 1rem;
+  div .class-card-raioemp {
+    margin-left: 8%;
+    width: 90%;
+    height: 22rem;
   }
 
   .class-body-viewraioemp {

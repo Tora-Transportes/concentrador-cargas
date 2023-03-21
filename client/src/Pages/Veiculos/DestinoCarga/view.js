@@ -41,9 +41,9 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 
 	return (
 		<div className="class-body">
-			<Container className="text-center mb-5 mt-4">
-				<Row className="text-center mb-4">
-					<h1 className="class-title-dest mt-4">
+			<Container style={{ marginLeft: "2rem" }}>
+				<Row>
+					<h1 className="class-title-dest">
 						Distância entre o veículo e a empresa:
 					</h1>
 
@@ -53,8 +53,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 								<Form.Group controlId="formDestino">
 									<Form.Label>Empresa</Form.Label>
 									<InputCliente
-										className="form-input-empresa"
-										// style={{ width: "40rem", height: "3rem" }}
+										className="form-empresa-dist"
 										name="empresa"
 										value={fields.empresa}
 										onChange={handleChange}
@@ -65,8 +64,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 								<Form.Group controlId="formPlaca">
 									<Form.Label>Placa</Form.Label>
 									<Form.Control
-										className="form-placa"
-										// style={{ width: "13rem", height: "2.8rem" }}
+										className="form-placa-dist"
 										type="text"
 										name="placa"
 										value={fields.placa}

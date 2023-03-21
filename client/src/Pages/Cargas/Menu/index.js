@@ -23,8 +23,8 @@ function Main() {
 	return (
 		<>
 			<Menusuperior />
-			<Container className="class-body-menu">
-				<h1 id="titulo-selecionar-modo-carga" className="class-title-coleta">
+			<Container className="class-cargas-menu">
+				<h1 className="class-title-coleta">
 					Selecione o modo no qual a carga foi coletada:
 				</h1>
 				<div className="class-button-icons">
