@@ -91,17 +91,35 @@ export const funcInputPontoParada = (
 	return { viewsInputColeta, excluirInputColeta };
 };
 
+const atualizarFkSituacaoCarga = (formik, idInput) => {
+	const fkSituacaoAtual = formik.values.fk_situacao;
+	const idCarga = formik.values.id;
+	if (idInput === 3 && fkSituacaoAtual === 3) {
+		const statusFkSituacao = 7;
+		ServiceCargas.updatePatch(idCarga, { fk_situacao: statusFkSituacao });
+		formik.setFieldValue("fk_situacao", 7);
+	} else if (idInput === 7 && fkSituacaoAtual === 7) {
+		const statusFkSituacao = 8;
+		ServiceCargas.updatePatch(idCarga, { fk_situacao: statusFkSituacao });
+		formik.setFieldValue("fk_situacao", 8);
+	}
+};
+
 export const funcDuracaoProcesso = async (
 	formik,
-	status,
+	idInput,
 	coletafim,
 	idPontoParada,
 	isAlteracaoParcial
 ) => {
-	const somarHoras = (coletaInicio, nomeCampoformik) => {
+	const somarHoras = (coletaInicio, nomeCampoformik, inverterData = false) => {
 		if (coletaInicio && coletafim) {
-			const startTime = moment(coletaInicio);
-			const endTime = moment(coletafim);
+			let startTime = moment(coletaInicio);
+			let endTime = moment(coletafim);
+			if (inverterData) {
+				startTime = moment(coletafim);
+				endTime = moment(coletaInicio);
+			}
 			const horasPermanenciaLocal = moment
 				.utc(moment(endTime, "HH:mm:ss").diff(moment(startTime, "HH:mm:ss")))
 				.format("HH:mm:ss");
@@ -110,21 +128,40 @@ export const funcDuracaoProcesso = async (
 			let TempoServico = {
 				TEMP_SERV_LOCAL_COLETA: horasPermanenciaLocal,
 			};
-			if (status === 24)
+			if (idInput === 24)
 				TempoServico = { TEMP_SERV_LOCAL_ENTREGA: horasPermanenciaLocal };
 
-			if (isAlteracaoParcial)
+			if (isAlteracaoParcial) {
 				ServicesPontoParada.updatePatchCSN(idPontoParada, TempoServico);
+				const fkSituacaoAtual = formik.values.fk_situacao;
+				if ([3, 7].includes(fkSituacaoAtual))
+					atualizarFkSituacaoCarga(formik, idInput);
+			}
 		}
 	};
 
-	switch (status) {
+	switch (idInput) {
+		case 2:
+			{
+				const saidaPosto30 = formik.values.ponto_passagem.coletaEfetivaSaida;
+				if (saidaPosto30 !== null)
+					somarHoras(saidaPosto30, "ponto_passagem.tempServicoLocal", true);
+			}
+
+			break;
 		case 3:
 			somarHoras(
 				formik.values.ponto_passagem.coletaEfetiva_posto30,
 				"ponto_passagem.tempServicoLocal"
 			);
 
+			break;
+		case 6:
+			{
+				const saidaMundo = formik.values.ponto_passagem2.coletaEfetivaSaida;
+				if (saidaMundo !== null)
+					somarHoras(saidaMundo, "ponto_passagem2.tempServicoLocal", true);
+			}
 			break;
 		case 7:
 			somarHoras(
@@ -133,11 +170,29 @@ export const funcDuracaoProcesso = async (
 				"ponto_passagem2.tempServicoLocal"
 			);
 			break;
+		case 10:
+			{
+				const saidaPeacao = formik.values.ponto_passagem3.coletaEfetivaSaida;
+				if (saidaPeacao !== null)
+					somarHoras(saidaPeacao, "ponto_passagem3.tempServicoLocal", true);
+			}
+			break;
 		case 11:
 			somarHoras(
 				formik.values.ponto_passagem3.coletaEfetiva_peacao,
 				"ponto_passagem3.tempServicoLocal"
 			);
+			break;
+		case 23:
+			{
+				const entregaCarga = formik.values.ponto_passagem4.entregaEfetivaSaida;
+				if (entregaCarga !== null)
+					somarHoras(
+						entregaCarga,
+						"ponto_passagem4.tempServicoLocalEntrega",
+						true
+					);
+			}
 			break;
 		case 24:
 			somarHoras(
