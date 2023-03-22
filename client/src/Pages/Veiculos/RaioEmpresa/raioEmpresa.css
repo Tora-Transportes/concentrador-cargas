@@ -37,8 +37,8 @@ div .input-nome-empresa {
   .form-distancia-km {
     width: 15rem;
   }
-  #button-pesq-raioemp {
-    margin-top: 1rem;
+  div #button-pesq-raioemp {
+    margin-top: -1rem;
     width: 98%;
   }
 }
@@ -48,6 +48,7 @@ div .input-nome-empresa {
     height: 1rem;
   }
 }
+
 @media only screen and (min-width: 115px) and (max-width: 1199px) {
   .class-title-raioemp {
     font-size: 2.2rem;
@@ -70,6 +71,10 @@ div .input-nome-empresa {
     flex-direction: column;
     align-items: center;
     grid-gap: 2rem;
+  }
+
+  div #button-pesq-raioemp {
+    margin-top: 1rem;
   }
 }
 

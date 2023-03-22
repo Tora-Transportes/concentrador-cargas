@@ -19,6 +19,7 @@ import FilialSelect from "../FilialSelect";
 import InputCliente from "../InputCliente";
 import InputPlaca from "../InputPlaca";
 import InputsPontoPassagem from "./InputPontoPassagem";
+import "./formularioCadastroCSN.css";
 
 export default function ViewsForm({
 	formik,
@@ -122,7 +123,7 @@ export default function ViewsForm({
 			</Row>
 			<Row>
 				<Col
-					sm={12}
+					sm={10}
 					md={6}
 					style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
 					className="col-cod-filial2"
@@ -368,7 +369,7 @@ export default function ViewsForm({
 							</Col>
 						</Row>
 						<Row>
-							<Col className="col-input-placa-button">
+							<Col className="col-buttons-inf-veiculos">
 								<Button
 									className="class-botao-Detalhes"
 									id="botao-detail-veiculo"
@@ -380,7 +381,7 @@ export default function ViewsForm({
 								</Button>
 
 								<Button
-									className="class-botao-Detabito"
+									className="class-botao-Debito"
 									id="botao-deb-veiculo"
 									onClick={() =>
 										handleShowDebitAboutVehicle(formik.values.placa_veiculo)

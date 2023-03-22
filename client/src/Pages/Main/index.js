@@ -10,7 +10,6 @@ import { IoLocationSharp } from "react-icons/io5";
 import Menusuperior from "../Components/MenuSuperior/menusuperior";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 import { MdOutlineNotificationImportant } from "react-icons/md";
-import MainPopUp from "../Avisos/popUp/index";
 
 const queueCoresAtuais = [];
 
@@ -142,7 +141,6 @@ function Main() {
 		<>
 			<ToastContainer />
 			<Menusuperior />
-			<MainPopUp />
 			<Container className="class-body-main">
 				<Row>
 					<Col className="text-center mt-2 mb-5">

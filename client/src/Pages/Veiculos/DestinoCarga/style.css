@@ -71,6 +71,14 @@ div #button-pesq-dist {
     width: 35vh;
     height: 2.5rem;
   }
+
+  div #button-pesq-dist {
+    background: #00652e;
+    border: none;
+    width: 10rem;
+    height: 2rem;
+    margin-top: -0.5rem !important;
+  }
 }
 @media only screen and (min-width: 575px) and (max-width: 1065px) {
   .class-title-dest {
@@ -107,21 +115,21 @@ div #button-pesq-dist {
   .class-card-dest {
     margin-left: 5%;
     width: 90%;
-    height: 25rem;
+    height: 20rem;
   }
-  /* .class-body-viewdest {
+  .class-body-viewdest {
     display: flex;
     flex-direction: column;
     align-items: center;
-    grid-gap: 2rem;
-  } */
+    grid-gap: 1rem;
+  }
 
   div #button-pesq-dist {
     background: #00652e;
     border: none;
     width: 10rem;
     height: 2rem;
-    margin-top: 2rem !important;
+    margin-top: 1rem !important;
   }
 }
 @media only screen and (min-width: 1300px) and (max-width: 1825px) {

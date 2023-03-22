@@ -44,11 +44,11 @@
   width: 5rem;
 }
 
-.style-title-main {
+div .style-title-main {
   font-size: 2.4rem;
   color: #00652e;
   font-style: italic;
-  margin-top: 1rem;
+  margin-top: 2rem;
   font-family: "Poppins", sans-serif;
   font-weight: 400;
 }
@@ -62,7 +62,7 @@
   display: flex;
   grid-template-rows: auto auto;
   justify-content: center;
-  margin-top: -3.5rem;
+  margin-top: -3.9rem;
 }
 
 .class-p-text {
@@ -157,9 +157,9 @@ div .style-button-jogo:focus-visible {
   color: red;
 }
 
-.versionamento {
+div .versionamento {
   position: relative;
-  bottom: -1%;
+  bottom: -0.5%;
   margin-left: 6px;
   color: #a70505;
   font-size: 13px;

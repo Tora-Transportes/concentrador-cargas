@@ -17,7 +17,6 @@ import { IoMdHelpCircle } from "react-icons/io";
 import InputLocalizacao from "../InputLocalizacao";
 import AutocompleteInput from "../AutocompleteInput";
 import InputCliente from "../InputCliente";
-// import UnidadesMedida from "../UnidadesMedida";
 import InputPlaca from "../InputPlaca";
 import FilialSelect from "../FilialSelect";
 import ServiceVeiculos from "src/services/ServiceVeiculos";

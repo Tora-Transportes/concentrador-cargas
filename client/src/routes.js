@@ -37,6 +37,7 @@ import EditarCargaCsn from "./Pages/Cargas/CargasCSN/Editar";
 // import MainPopUp from "./Pages/Avisos/indexPopUp";
 import LinkRelatoriosApp from "./Pages/Components/MenuSuperior/LinkRelatoriosApp";
 import RelatoriosAppMain from "./Pages/Relatorios/TotalizadoresApp";
+import MainPopUp from "./Pages/Avisos/popUp";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -129,7 +130,7 @@ export default function AllRoutes() {
 				<Route path="*" exact component={Main} />
 			</Switch>
 
-			{/* <MainPopUp /> */}
+			<MainPopUp />
 		</BrowserRouter>
 	);
 }
