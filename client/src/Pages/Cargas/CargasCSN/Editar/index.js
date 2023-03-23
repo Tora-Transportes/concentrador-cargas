@@ -34,6 +34,7 @@ function EditarCargaCsn() {
 	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
 	const [isAlteracaoParcial, setAlteracaoParcial] = useState(false);
 	const [isViwsCargaApp, setViwsCargaApp] = useState(false);
+	const [isDisabledPlaca, setDisabledPlaca] = useState(false);
 	const { isPermissionUser } = useContext(ContextUseDefault);
 	const toast = useRef(null);
 	const messageDadosIncorretoInput = () => {
@@ -571,6 +572,8 @@ function EditarCargaCsn() {
 						isViwsCargaApp={isViwsCargaApp}
 						status={"Edicao"}
 						isCargaApp={isCargaApp}
+						isDisabledPlaca={isDisabledPlaca}
+						setDisabledPlaca={setDisabledPlaca}
 					/>
 					<div className="text-end">
 						<h6 className={showMsgCargaExpurgo}>Carga Expurgada!</h6>

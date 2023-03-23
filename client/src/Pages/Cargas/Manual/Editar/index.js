@@ -21,8 +21,9 @@ function Manual() {
 	const [distancia, setDistancia] = useState(null);
 	const [loteInicial, setLoteInicial] = useState(0);
 	const [isViwsCargaApp, setViwsCargaApp] = useState(false);
-	const { isPermissionUser } = useContext(ContextUseDefault);
 	const [isCargaApp, setCargaApp] = useState(false);
+	const [isDisabledPlaca, setDisabledPlaca] = useState(false);
+	const { isPermissionUser } = useContext(ContextUseDefault);
 
 	const formik = useFormik({
 		initialValues: {
@@ -316,6 +317,8 @@ function Manual() {
 						isViwsCargaApp={isViwsCargaApp}
 						status={"Edicao"}
 						isCargaApp={isCargaApp}
+						isDisabledPlaca={isDisabledPlaca}
+						setDisabledPlaca={setDisabledPlaca}
 					/>
 					<div className="class-group-button">
 						<Button

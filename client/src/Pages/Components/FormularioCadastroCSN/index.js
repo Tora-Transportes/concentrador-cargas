@@ -20,6 +20,8 @@ function FormularioCadastroCSN({
 	isAlteracaoParcial,
 	status,
 	isCargaApp,
+	isDisabledPlaca,
+	setDisabledPlaca,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
@@ -220,6 +222,8 @@ function FormularioCadastroCSN({
 				isAlteracaoParcial={isAlteracaoParcial}
 				isDisabledEnvioApp={isDisabledEnvioApp}
 				isCargaApp={isCargaApp}
+				isDisabledPlaca={isDisabledPlaca}
+				setDisabledPlaca={setDisabledPlaca}
 			/>
 		</div>
 	);
