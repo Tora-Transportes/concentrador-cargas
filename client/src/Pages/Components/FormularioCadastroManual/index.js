@@ -35,6 +35,7 @@ function FormularioCadastroManual({
 	buscarCargaComDocumentoDeTransporte,
 	isViwsCargaApp,
 	status,
+	isCargaApp,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
@@ -89,7 +90,8 @@ function FormularioCadastroManual({
 
 	useEffect(() => {
 		setDisabledEvioApp(status === "Edicao");
-	}, []);
+		if (isCargaApp) setDisabledPlaca(true);
+	}, [isCargaApp]);
 
 	async function handleSearchVehicle(plate) {
 		if (plate) {

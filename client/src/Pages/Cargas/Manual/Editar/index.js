@@ -22,6 +22,7 @@ function Manual() {
 	const [loteInicial, setLoteInicial] = useState(0);
 	const [isViwsCargaApp, setViwsCargaApp] = useState(false);
 	const { isPermissionUser } = useContext(ContextUseDefault);
+	const [isCargaApp, setCargaApp] = useState(false);
 
 	const formik = useFormik({
 		initialValues: {
@@ -210,6 +211,7 @@ function Manual() {
 		try {
 			let city;
 			const carga = (await ServiceCargas.index({ id })).data.data;
+			if (carga.carga_app === 1) setCargaApp(true);
 			setLoteInicial(carga.e_lote);
 			for (let i in carga) {
 				let nonNullValue = carga[i] === null ? "" : carga[i];
@@ -313,6 +315,7 @@ function Manual() {
 						}
 						isViwsCargaApp={isViwsCargaApp}
 						status={"Edicao"}
+						isCargaApp={isCargaApp}
 					/>
 					<div className="class-group-button">
 						<Button

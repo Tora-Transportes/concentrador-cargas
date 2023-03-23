@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
 	Button,
 	Card,
@@ -46,6 +46,7 @@ export default function ViewsForm({
 	isViwsCargaApp,
 	isAlteracaoParcial,
 	isDisabledEnvioApp,
+	isCargaApp,
 }) {
 	const [isDisabledPlaca, setDisabledPlaca] = useState(false);
 	const [isRequiredPlaca, setRequiredPlaca] = useState(true);
@@ -82,6 +83,13 @@ export default function ViewsForm({
 			: cargaNaoEnviarApp;
 		formik.setFieldValue("carga_app", valorCargaAppFormik);
 	};
+
+	useEffect(() => {
+		if (isCargaApp) {
+			setDisabledPlaca(true);
+			setRequiredPlaca(false);
+		}
+	}, [isCargaApp]);
 
 	const titleInfoPlaca = isDetalhesCarreta
 		? "Dados do Veículo / Dados Carreta"
