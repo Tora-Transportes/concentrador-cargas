@@ -5,10 +5,10 @@
   margin-top: 0.5rem;
   margin-bottom: 2rem;
 }
-.confirmation-content{
+.confirmation-content {
   font-family: "Poppins", sans-serif;
 }
-.confirmation-content .span-b-delete{
+.confirmation-content .span-b-delete {
   margin-left: 8rem;
 }
 
@@ -25,26 +25,32 @@
   align-items: center;
   justify-content: space-between;
 }
+
+@media screen and (max-width: 615px) {
+  .title-gerenciamento {
+    margin-top: 2.5rem;
+  }
+}
 @media screen and (max-width: 960px) {
   .datatable-crud-demo .table-header {
     align-items: flex-start;
   }
-}
-.datatable-crud-demo .product-image {
-  width: 100px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-}
-.datatable-crud-demo .p-dialog .product-image {
-  width: 150px;
-  margin: 0 auto 2rem auto;
-  display: block;
-}
-.datatable-crud-demo .confirmation-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-@media screen and (max-width: 960px) {
+
+  .datatable-crud-demo .product-image {
+    width: 100px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  }
+  .datatable-crud-demo .p-dialog .product-image {
+    width: 150px;
+    margin: 0 auto 2rem auto;
+    display: block;
+  }
+  .datatable-crud-demo .confirmation-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .datatable-crud-demo .p-toolbar {
     flex-wrap: wrap;
   }

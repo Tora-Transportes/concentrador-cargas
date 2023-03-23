@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import "./produtos.css";
 import { Container, Row } from "react-bootstrap";
 import { useFormik } from "formik";
-//import NavbarNavigator from "../Components/NavbarNavigator";
 import ServiceProdutos from "../../services/ServiceProdutos";
 import swal from "sweetalert";
 import { getClaims } from "../../MicrosoftAuthentication";
@@ -151,7 +150,6 @@ function Produtos() {
 	return (
 		<div className="class-body-produtos">
 			<LoadingScreen />
-			{/* <NavbarNavigator /> */}
 			<Menusuperior />
 			<Container className="pagina-produtos">
 				<Row>

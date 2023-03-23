@@ -541,7 +541,7 @@ function EditarCargaCsn() {
 			<Toast ref={toast} position="top-center" />
 			<Container className="mb-5 mt-5">
 				<div className="div-title">
-					<p className="mb-1" id="style-title-editorCarga">
+					<p className="mb-2" id="style-title-editorCarga">
 						Editar Carga CSN
 					</p>
 					<div className="msg-info-topo">

@@ -1,10 +1,9 @@
 .class-input-motorista {
   display: grid;
   grid-template-columns: auto auto auto auto;
-  grid-gap: 1rem;
+  grid-gap: 0.8rem;
 }
 .col-cod-filial {
-  /* width: 100%; */
   height: 3.6rem;
   border-radius: 4px;
   font-size: 14px;
@@ -22,9 +21,8 @@ label {
   padding: -1rem;
   outline-color: #fff;
 }
-#filiaisDataList:focus{
+#filiaisDataList:focus {
   outline: none;
-
 }
 .sub-cagas-total {
   font-size: 0.85rem;
@@ -37,26 +35,25 @@ label {
 .class-input-moto {
   margin-top: 1rem;
 }
-#style-ipunt-motorista {
-  width: 45rem;
+div #style-input-motorista {
+  width: 95%;
   height: 2rem;
 }
 
 #title-check-não {
   margin-bottom: -20px;
 }
-
 #botao-deb-veiculo,
 #botao-detail-veiculo {
   background: #00652e;
   border: none;
 }
 
-.modal-debitos-veiculo{
+.modal-debitos-veiculo {
   font-family: "Poppins", sans-serif;
   font-size: 14px;
 }
-.list-group-flush{
+.list-group-flush {
   margin-top: 2rem;
 }
 .class-input-placaCav {
@@ -75,8 +72,8 @@ label {
     margin-bottom: 1rem;
     width: 92% !important;
   }
-
 }
+
 @media only screen and (min-width: 354px) and (max-width: 575px) {
   .col-cod-filial {
     margin-bottom: 1rem;
@@ -88,9 +85,6 @@ label {
     display: grid;
     position: relative;
     grid-template-columns: auto;
-  }
-  #style-ipunt-motorista {
-    width: 100%;
   }
   .col-cod-filial {
     margin-left: 11px;

@@ -1,14 +1,20 @@
-.class-body-monito {
+.class-body-monitoramento {
   font-family: "Poppins", sans-serif;
 }
-.class-title-monit {
+div .class-title-monit {
   font-family: "Poppins", sans-serif;
   color: #00652e;
   font-size: 40px;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   margin-bottom: 2px;
 }
 
 #total-reg {
   margin-bottom: -1px;
+}
+
+@media only screen and (max-width: 645px) {
+  div .class-title-monit {
+    margin-top: 4rem;
+  }
 }

@@ -49,7 +49,7 @@ ul {
   font-family: "Poppins", sans-serif;
 }
 
-.h1-relatorios {
+div .h1-relatorios {
   font-size: 40px;
   color: #00652e;
   text-align: center;
@@ -218,7 +218,7 @@ div .class-app-icons {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  margin-top: 3rem;
+  margin-top: 1rem;
 }
 
 .link-RelatorioApp-Title-padrao {
@@ -268,8 +268,9 @@ div .class-app-icons {
 }
 
 @media only screen and (max-width: 280px) {
-  .h1-relatorios {
-    font-size: 2.2rem;
+  div .h1-relatorios {
+    font-size: 2.3rem;
+    margin-top: 3rem;
   }
   #button-relatorios {
     font-size: 0.8rem;
@@ -428,6 +429,10 @@ div .class-app-icons {
 
   #style-button-drop {
     font-size: 16px;
+  }
+
+  div .title-indicadorOperacional-app {
+    margin-top: 5rem;
   }
 }
 

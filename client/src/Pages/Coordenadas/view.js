@@ -86,11 +86,7 @@ function ViewCoordenadas({
 					pagina={"coordenadas"}
 				/> */}
 				<Row className="mb-2">
-					<h1
-						className="class-title-Coord"
-						id="title-coorde"
-						// onClick={HandleClick}
-					>
+					<h1 className="class-title-Coord" id="title-coorde">
 						Coordenadas - Veículos
 					</h1>
 				</Row>

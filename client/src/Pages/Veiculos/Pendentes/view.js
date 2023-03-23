@@ -16,7 +16,7 @@ function ViewRotasPendentes({
 			? "Monitoramento - Veículos Pendentes CSN"
 			: "Monitoramento - Veículos Pendentes";
 	return (
-		<div className="class-body">
+		<div className="class-body-monitoramento">
 			<Container fluid className="text-center mt-4">
 				<Row className="class-title-monit">
 					<h1

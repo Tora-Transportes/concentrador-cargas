@@ -129,18 +129,24 @@
   letter-spacing: 2px;
 }
 
+@media only screen and (min-width: 30px) and (max-width: 585px) {
+  div .class-title-Coord {
+    font-size: 2rem;
+    margin-top: 2.5rem;
+  }
+}
 @media only screen and (min-width: 230px) and (max-width: 585px) {
   #botao-detalhe-tabela {
     margin-left: 20%;
   }
+  .ul_last-location {
+    padding: 0;
+  }
 }
 
-.ul_last-location{
-  padding: 0 ;
-}
 @media only screen and (min-width: 130px) and (max-width: 1325px) {
   .class-title-Coord {
-    font-size: 30px;
+    font-size: 2.5rem;
   }
   #botao-detalhe-tabela {
     margin-top: 0.5rem;
@@ -157,6 +163,4 @@
     width: 35% !important;
     background-color: #00652e !important;
   }
-
-
 }
