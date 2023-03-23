@@ -28,3 +28,8 @@ export const formatDateObject = (dataValues: Date | null | undefined) => {
 export const dateAtualMoment = () => {
   return moment().utc().toDate();
 };
+
+export const verificarDataStringValida = (dateString: string) => {
+  const pattern = /^\d{4}-\d{2}-\d{2}$/;
+  return pattern.test(dateString);
+};
