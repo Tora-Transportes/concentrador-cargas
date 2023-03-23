@@ -15,7 +15,7 @@ const InputsPontoPassagem = ({
 	inputColeta6,
 	inputColeta7,
 	fkSituacao,
-	isPermissionUser,
+	isPermissionUserEdit,
 	isDateErrorInput,
 	setDateErrorInput,
 	isAlteracaoParcial,
@@ -25,12 +25,12 @@ const InputsPontoPassagem = ({
 	const [inputPontoPassagem7, setInputPontoPassagem7] = useState(true);
 	const alertDataSalva = useRef(null);
 	const disabledValidEfetiva =
-		[6, 9].includes(formik.values.fk_situacao) && isPermissionUser
+		[5, 6, 9].includes(formik.values.fk_situacao) && !isPermissionUserEdit
 			? true
 			: false;
 	const colorInputEfetivo = ![6, 9].includes(formik.values?.fk_situacao)
 		? ""
-		: isPermissionUser === true
+		: isPermissionUserEdit === false
 		? "input-efetivo"
 		: "";
 

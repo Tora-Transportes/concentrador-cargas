@@ -327,7 +327,11 @@ type TResultUpdatePath = {
   mensagem: string;
 };
 export class UseCaseUpdateCargaPath {
-  constructor(private readonly cargaRepository: IRepositoryUpdateCarga) {}
+  constructor(
+    private readonly cargaRepository: IRepositoryUpdateCarga,
+    private readonly cargaCsnInfoRepository: IRepositoryCargaCsnInfoRepository,
+    private notifyAll: (event: IEventSocket) => void
+  ) {}
 
   async run(
     id: number,
@@ -337,6 +341,10 @@ export class UseCaseUpdateCargaPath {
     if (!existeCarga) throw new AppError("A carga seleionada não existe", 404);
     const carga = { ...dadosCarga, data_atualizacao: new Date() };
     await this.cargaRepository.updatePatch(id, carga);
+    this.notifyAll({
+      name: "@carga-update-csn",
+      details: await this.cargaCsnInfoRepository.index(id),
+    });
     return { mensagem: "Carga editado com sucesso!" };
   }
 }

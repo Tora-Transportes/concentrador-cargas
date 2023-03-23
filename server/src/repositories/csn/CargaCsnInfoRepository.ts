@@ -219,10 +219,10 @@ export class CargaCsnInfoRepository {
           "con_cargas"."destino_carga" "Destino Carga", to_char("con_cargas"."data_coleta", 'dd/mm/yyyy') AS "Data Coleta", 
           to_char("con_cargas"."data_entrega", 'dd/mm/yyyy') AS "Data Entrega", "con_cargas"."tipo_carga" "Tipo Material", 
           "con_cargas"."unidade_medida" "UN", "con_cargas"."quantidade" "Peso",
-          "con_cargas"."quantidade_atual" "Quantidade Atual", "con_cargas"."fk_lote_pai" "Lote Pai", "con_situacoes_cargas"."descricao" "Situação", 
+          "con_cargas"."quantidade_atual" "Quantidade Atual", "con_cargas"."fk_lote_pai" "Lote Pai", "con_situacoes_cargas_csn"."descricao" "Situação", 
           "FILIAL"."FIL_DSC" "Descrição Filial", "con_cargas"."fk_filial" "Código Filial", "con_cargas"."documento_transporte" "Documento de transporte", 
-          "con_cargas"."canal_comunicacao" "Canal Comunicação", "con_situacoes_cargas"."descricao" "Status",
-          "con_cargas"."placa_veiculo" "Placa", "con_cargas"."placa_carreta" "Placa Carreta", "con_cargas"."rastreador" "Rastreador",
+          "con_cargas"."canal_comunicacao" "Canal Comunicação","con_cargas"."placa_veiculo" "Placa",
+          "con_cargas"."placa_carreta" "Placa Carreta", "con_cargas"."rastreador" "Rastreador",
           "con_cargas"."observacao" "Observação","con_cargas"."observacao_gr" "Observação do GR", "con_cargas"."observacao_cancelamento" "Observação Cancelamento",
           CASE WHEN "coordenada_vei"."categoria_veiculo" = 'A' THEN 'Agregado' WHEN "coordenada_vei"."categoria_veiculo" = 'C' THEN 'Carreteiro' 
           WHEN "coordenada_vei"."categoria_veiculo" = 'F' THEN 'Frota Própria' END AS "Categoria Veículo",
@@ -234,7 +234,7 @@ export class CargaCsnInfoRepository {
           to_char("d"."ENTREGA_EFETIVA", 'dd/mm/yyyy HH24:MI:SS') AS "Entrega Efetiva",to_char("d"."SAIDA_EFETIVA_ENTREGA", 'dd/mm/yyyy HH24:MI:SS') AS "Saìda Efetia Entrega",
           "con_cargas"."responsavel_cadastro" "Responsável Cadastro", "con_cargas"."usuario" "Responsável Alteração"
       from "con_cargas" 
-          inner join "con_situacoes_cargas" on "con_situacoes_cargas"."id" = "con_cargas"."fk_situacao" 
+          inner join "con_situacoes_cargas_csn" on "con_situacoes_cargas_csn"."id" = "con_cargas"."fk_situacao" 
           left join "FILIAL" on "FILIAL"."FIL_COD" = "con_cargas"."fk_filial" 
           left join "CADASTRO_GERAL" on "CADASTRO_GERAL"."CG_COD" = "con_cargas"."codigo_motorista" 
           left join "con_pontos_parada" "a" on ("con_cargas"."id" = "a"."ID_CON_CARGAS" and "a"."COLETA_EFETIVA_POSTO30" is not null)

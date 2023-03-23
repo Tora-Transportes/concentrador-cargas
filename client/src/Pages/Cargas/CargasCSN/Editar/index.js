@@ -585,7 +585,7 @@ function EditarCargaCsn() {
 								</Button>
 							)}
 						{([1, 2].includes(formik.values.fk_situacao) ||
-							([6, 7, 8, 9].includes(formik.values.fk_situacao) &&
+							([6, 9].includes(formik.values.fk_situacao) &&
 								isPermissionUserEdit)) && (
 							<Button
 								variant="success"

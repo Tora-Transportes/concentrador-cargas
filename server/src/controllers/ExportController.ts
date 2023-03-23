@@ -71,6 +71,11 @@ class ExportController {
           202
         );
       }
+    } else {
+      throw new AppError(
+        "Parametros date_execel_inicio e date_execel_fim são obrigátorios!",
+        400
+      );
     }
 
     const filename = `RELATORIO_CARGAS-${new Date().getTime()}.xlsx`;
