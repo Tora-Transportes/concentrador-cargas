@@ -88,11 +88,11 @@ Button #botao-detail-veiculo {
   margin-top: 5px;
 }
 .row-input-coleta-inicio {
-  padding-top: 15px;
+  padding-top: 14px;
   border: 1px solid #ced4da;
   border-radius: 4px;
-  margin-left: 2px !important;
-  margin-right: 1.5px !important;
+  margin-left: 1px !important;
+  margin-right: 1px !important;
   background: #f9faf8;
 }
 .col-cod-local {

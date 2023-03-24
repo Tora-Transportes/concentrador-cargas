@@ -78,7 +78,7 @@ function HelperCSN() {
 						</p>
 						<div className="class-button-ir">
 							<Button href="/cargas/cadastro/csn" id="button-cadastro-cargas">
-								Navegar até Cadastro CSN
+								Ir até Cadastro CSN
 							</Button>
 						</div>
 					</Accordion.Body>
@@ -101,7 +101,7 @@ function HelperCSN() {
 								id="style-button-acc"
 								className="button-helper-ir-para"
 							>
-								Navegar até Listagem CSN
+								Ir até Listagem CSN
 							</Button>
 						</div>
 					</Accordion.Body>
@@ -190,7 +190,7 @@ function HelperCSN() {
 								id="style-button-acc"
 								className="button-helper-ir-para"
 							>
-								Navegar até Coordenadas
+								Ir até Coordenadas
 							</Button>
 						</div>
 					</Accordion.Body>
@@ -230,7 +230,7 @@ function HelperCSN() {
 								id="style-button-acc"
 								className="button-helper-ir-para"
 							>
-								Navegar até Monitoramento CSN
+								Ir até Monitoramento CSN
 							</Button>
 						</div>
 					</Accordion.Body>
@@ -256,7 +256,7 @@ function HelperCSN() {
 								id="style-button-acc"
 								className="button-helper-ir-para"
 							>
-								Navegar até Produtos
+								Ir até Produtos
 							</Button>
 						</div>
 					</Accordion.Body>
@@ -380,7 +380,7 @@ function HelperCSN() {
 								id="style-button-acc"
 								className="button-helper-ir-para"
 							>
-								Navegar até Localização
+								Ir até Localização
 							</Button>
 						</div>
 					</Accordion.Body>

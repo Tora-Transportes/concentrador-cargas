@@ -208,7 +208,7 @@ div .h1-relatorios {
   font-size: 40px;
   font-weight: 500;
   color: #00652e;
-  margin-top: 6rem;
+  margin-top: 5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -277,9 +277,8 @@ div .class-app-icons {
   }
 }
 @media only screen and (max-width: 373px) {
-  .title-indicadorOperacional-app {
+  h1.title-indicadorOperacional-app {
     font-size: 1.8rem;
-    margin-top: 3rem;
   }
   .link-RelatorioApp-Title-padrao,
   .link-RelatorioApp-Title-CSN {
@@ -295,7 +294,6 @@ div .class-app-icons {
 @media only screen and (min-width: 374px) and (max-width: 400px) {
   .title-indicadorOperacional-app {
     font-size: 2.1rem;
-    margin-top: 3rem;
   }
   .link-RelatorioApp-Title-padrao,
   .link-RelatorioApp-Title-CSN {
@@ -306,7 +304,6 @@ div .class-app-icons {
 @media only screen and (min-width: 401px) and (max-width: 768px) {
   .title-indicadorOperacional-app {
     font-size: 2.1rem;
-    margin-top: 3rem;
   }
   .link-RelatorioApp-Title-padrao,
   .link-RelatorioApp-Title-CSN {
@@ -432,7 +429,7 @@ div .class-app-icons {
   }
 
   div .title-indicadorOperacional-app {
-    margin-top: 5rem;
+    margin-top: 4.5rem;
   }
 }
 

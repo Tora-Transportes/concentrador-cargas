@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { MdMobileFriendly, MdOutlineMobileScreenShare } from "react-icons/md";
 import "../MenuSuperior/menuSuperior.css";
+import "../../Relatorios/Totalizadores/indicador.css";
 
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
@@ -22,7 +23,7 @@ function LinkRelatoriosApp() {
 	return (
 		<>
 			<Menusuperior />
-			<Container className="body-indicadorOperacional-app">
+			<Container className="body-indicadorOperacional-app mt-3">
 				<h1 className="title-indicadorOperacional-app">
 					Indicador Operacional App-Tora:
 				</h1>

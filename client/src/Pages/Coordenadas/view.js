@@ -7,7 +7,6 @@ import { BiCog } from "react-icons/bi";
 import { ImQrcode } from "react-icons/im";
 import { Dialog } from "primereact/dialog";
 import bandeira from "../../assets/bandeiraBrasil.png";
-// import HandleClick from "./tooltipsCoordenadas";
 import "../Coordenadas/coordenadas.css";
 //import ModalDataExcel from "src/Pages/Cargas/modal/exportExcel";
 import { SideBarFuncition } from "../Utils/sideBar";
@@ -133,7 +132,7 @@ function ViewCoordenadas({
 						/>
 					</Dialog>
 					<Dialog
-						className="dialog-localidade"
+						className="dialog-localidade-title"
 						header={"Dados da última localização"}
 						visible={visibleLastLocation}
 						onHide={() => onHide(setVisibleLastLocation)}

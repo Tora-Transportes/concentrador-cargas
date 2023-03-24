@@ -44,9 +44,9 @@
   color: #000 !important;
 }
 
-.ul-card-li {
+/* .ul-card-li {
   margin-left: 1vw;
-}
+} */
 
 .header-dialog {
   text-align: center;
@@ -67,10 +67,15 @@
   background-color: #00652e !important;
 }
 
-.dialog-btn-last-location {
-  height: 4.5vh !important;
-  width: auto !important;
-  background-color: #00652e !important;
+div .dialog-btn-last-location {
+  height: 4.5vh;
+  background-color: #00652e;
+  border-color: #00652e;
+}
+
+div .ul_last-location {
+  position: relative;
+  left: -1.5rem;
 }
 
 /*css placa*/
@@ -139,8 +144,8 @@
   #botao-detalhe-tabela {
     margin-left: 20%;
   }
-  .ul_last-location {
-    padding: 0;
+  div .ul_last-location {
+    width: 100%;
   }
 }
 

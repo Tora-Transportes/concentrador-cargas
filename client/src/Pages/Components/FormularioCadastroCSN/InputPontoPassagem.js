@@ -106,7 +106,7 @@ const InputsPontoPassagem = ({
 		<>
 			<Toast ref={alertDataSalva} position="top-center" />
 			<Row className="row-input-coleta-inicio">
-				<Col sm={12} md={12} lg={12} xxl={6}>
+				<Col sm={10} md={10} lg={10} xxl={8}>
 					<FloatingLabel label="*Ponto de Passagem" className="mb-3">
 						<Form.Control
 							type="text"
@@ -250,7 +250,7 @@ const InputsPontoPassagem = ({
 			</Row>
 			<br />
 			<Row className="row-input-coleta-inicio">
-				<Col sm={12} md={12} lg={12} xxl={6}>
+				<Col sm={10} md={10} lg={10} xxl={8}>
 					<FloatingLabel label="Ponto de Passagem 2" className="mb-3">
 						<Form.Control
 							type="text"
@@ -393,7 +393,7 @@ const InputsPontoPassagem = ({
 			</Row>
 			<br />
 			<Row className="row-input-coleta-inicio">
-				<Col sm={12} md={12} lg={12} xxl={6}>
+				<Col sm={10} md={10} lg={10} xxl={8}>
 					<FloatingLabel label="Ponto de Passagem 3" className="mb-3">
 						<Form.Control
 							type="text"
@@ -540,8 +540,10 @@ const InputsPontoPassagem = ({
 				<Row className="row-input-coleta">
 					{inputPontoPassagem5 ? (
 						<Col
-							sm={12}
-							md={6}
+							sm={10}
+							md={10}
+							lg={10}
+							xxl={8}
 							style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
 							className="col-cod-local"
 						>
@@ -558,7 +560,7 @@ const InputsPontoPassagem = ({
 							/>
 						</Col>
 					) : (
-						<Col sm={12} md={12} lg={12} xxl={6}>
+						<Col sm={10} md={10} lg={10} xxl={8}>
 							<InputCliente
 								type="text"
 								placeholder=" "
@@ -729,8 +731,10 @@ const InputsPontoPassagem = ({
 				<Row className="row-input-coleta">
 					{inputPontoPassagem6 ? (
 						<Col
-							sm={12}
-							md={6}
+							sm={10}
+							md={10}
+							lg={10}
+							xxl={8}
 							style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
 							className="col-cod-local"
 						>

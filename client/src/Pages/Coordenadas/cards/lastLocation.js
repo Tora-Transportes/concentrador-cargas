@@ -35,50 +35,48 @@ function LastLocationVeicles({ placa, setVisibleLastLocation }) {
 		<>
 			<LoadingScreen />
 			<Row>
-				<Col>
+				<Col className="p-2">
 					<ul className="ul_last-location">
-						<div>
-							<Card>
-								<li className="ul-card-li-last-location">
-									<h6>
-										Data:{" "}
-										<strong>
-											{DateUtils.formatDate(dadosLastLocation?.DTINC)}
-										</strong>
-									</h6>
-								</li>
-								<li className="ul-card-li-last-location">
-									<h6>
-										UF: <strong>{dadosLastLocation?.UF}</strong>
-									</h6>
-								</li>
-								<li className="ul-card-li-last-location">
-									<h6>
-										Municipio: <strong>{dadosLastLocation?.MUN}</strong>
-									</h6>
-								</li>
-								<li className="ul-card-li-last-location">
-									<h6>
-										Latitude: <strong>{dadosLastLocation?.LAT}</strong>
-									</h6>
-								</li>
-								<li className="ul-card-li-last-location">
-									<h6>
-										Longitude: <strong>{dadosLastLocation?.LON}</strong>
-									</h6>
-								</li>
-								{/* <li className="ul-card-li-last-location">
+						<Card className="card-dados-last-location">
+							<li className="class-li-last-location">
+								<h6>
+									Data:{" "}
+									<strong>
+										{DateUtils.formatDate(dadosLastLocation?.DTINC)}
+									</strong>
+								</h6>
+							</li>
+							<li>
+								<h6>
+									UF: <strong>{dadosLastLocation?.UF}</strong>
+								</h6>
+							</li>
+							<li>
+								<h6>
+									Municipio: <strong>{dadosLastLocation?.MUN}</strong>
+								</h6>
+							</li>
+							<li>
+								<h6>
+									Latitude: <strong>{dadosLastLocation?.LAT}</strong>
+								</h6>
+							</li>
+							<li>
+								<h6>
+									Longitude: <strong>{dadosLastLocation?.LON}</strong>
+								</h6>
+							</li>
+							{/* <li >
 									<h6>
 										Localidade: <strong>{dadosLastLocation?.LOC}</strong>
 									</h6>
 								</li> */}
-								<li className="ul-card-li-last-location">
-									<h6>
-										Placa: <strong>{placa}</strong>
-									</h6>
-								</li>
-							</Card>
-						</div>
+							<li>
+								<h6>
+									Placa: <strong>{placa}</strong>
+								</h6>
+							</li>
+						</Card>
 					</ul>
 				</Col>
 			</Row>
