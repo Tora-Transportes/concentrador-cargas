@@ -1,7 +1,13 @@
 import React from "react";
 import { Container, Row, Form, Button, Card } from "react-bootstrap";
 import { Button as ButtonReact } from "primereact/button";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import {
+	LayersControl,
+	MapContainer,
+	Marker,
+	Popup,
+	TileLayer,
+} from "react-leaflet";
 import "./raioEmpresa.css";
 import InputCliente from "../../Components/InputCliente";
 import DateUtils from "../../Utils/date";
@@ -127,35 +133,47 @@ function ViewRotasPendentes({
 						/>
 						<MapContainer
 							center={[rota.latitude_origem, rota.longitude_origem]}
-							zoom={15}
+							zoom={10}
+							maxZoom={17.4}
 							style={{ height: "80vh", marginTop: "10px" }}
 						>
-							<TileLayer
-								attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-								url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-							/>
+							<LayersControl position="topright">
+								<LayersControl.BaseLayer checked name="Mapa Básico">
+									<TileLayer
+										attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+										url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+									/>
+								</LayersControl.BaseLayer>
+								<LayersControl.BaseLayer name="Mapa Satélite">
+									<TileLayer
+										attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+										//url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+										url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+									/>
+								</LayersControl.BaseLayer>
 
-							<Marker
-								position={[rota.latitude_origem, rota.longitude_origem]}
-								icon={originIcon}
-							>
-								<Popup>Empresa de CNPJ {rota.cnpj}.</Popup>
-							</Marker>
+								<Marker
+									position={[rota.latitude_origem, rota.longitude_origem]}
+									icon={originIcon}
+								>
+									<Popup>Empresa de CNPJ {rota.cnpj}.</Popup>
+								</Marker>
 
-							{rota.veiculos.map((i) => {
-								return (
-									<Marker
-										key={i.placa}
-										position={[i.latitude, i.longitude]}
-										icon={truckIcon}
-									>
-										<Popup>
-											Veículo {i.placa} a {Number(i.distancia_km).toFixed(2)} KM
-											da empresa.
-										</Popup>
-									</Marker>
-								);
-							})}
+								{rota.veiculos.map((i) => {
+									return (
+										<Marker
+											key={i.placa}
+											position={[i.latitude, i.longitude]}
+											icon={truckIcon}
+										>
+											<Popup>
+												Veículo {i.placa} a {Number(i.distancia_km).toFixed(2)}{" "}
+												KM da empresa.
+											</Popup>
+										</Marker>
+									);
+								})}
+							</LayersControl>
 						</MapContainer>
 					</>
 				)}
