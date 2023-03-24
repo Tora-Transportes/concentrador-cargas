@@ -1,10 +1,10 @@
+import { Knex } from "knex";
 import database from "../database";
 import IModelAvisos from "../models/Avisos";
-
 interface IAvisosRepository {
   create(dataAviso: IModelAvisos): Promise<void>;
   index(id: number): Promise<IModelAvisos>;
-  search(): Promise<IModelAvisos[]>;
+  search(query: any, page: number, pageSize: number): Promise<IModelAvisos[]>;
   update(id: number, dataUpdate: IModelAvisos): Promise<void>;
   delete(id: number): Promise<void>;
 }
@@ -18,8 +18,29 @@ export class AvisosRepository implements IAvisosRepository {
     return await database("con_avisos").select("*").first().where({ ID });
   }
 
-  async search(): Promise<IModelAvisos[]> {
-    return database("con_avisos").select("*").orderBy("ID", "desc");
+  async search(
+    query: any,
+    page = 1,
+    pageSize: number
+  ): Promise<IModelAvisos[]> {
+    const realPage = isNaN(Number(page)) || Number(page) < 1 ? 1 : Number(page);
+    const results = database("con_avisos")
+      .select("*")
+      .orderBy("ID", "desc")
+      .limit(pageSize)
+      .offset((realPage - 1) * pageSize);
+
+    const filterDbFunction = (qb: Knex.QueryBuilder) => {
+      const data = query?.data;
+      if (data) {
+        qb.andWhereBetween("DATA_CADASTRO", [
+          new Date(data + "T00:00:00"),
+          new Date(data + "T23:59:59"),
+        ]);
+      }
+    };
+    results.andWhere(filterDbFunction);
+    return results;
   }
 
   async update(ID: number, dataUpdate: IModelAvisos): Promise<void> {

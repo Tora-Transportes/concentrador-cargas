@@ -30,9 +30,11 @@ function EditarCargaCsn() {
 	const [isPermissionUserEdit, setPermissionUserEdit] = useState(false);
 	const [isPermExpurgarCarga, setPermExpurgarCarga] = useState(false);
 	const [isCargaExpurgada, setCargaExpurgada] = useState(false);
+	const [isCargaApp, setCargaApp] = useState(false);
 	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
 	const [isAlteracaoParcial, setAlteracaoParcial] = useState(false);
 	const [isViwsCargaApp, setViwsCargaApp] = useState(false);
+	const [isDisabledPlaca, setDisabledPlaca] = useState(false);
 	const { isPermissionUser } = useContext(ContextUseDefault);
 	const toast = useRef(null);
 	const messageDadosIncorretoInput = () => {
@@ -375,6 +377,7 @@ function EditarCargaCsn() {
 			let city;
 			const carga = (await ServiceCargas.indexCsn({ id })).data.data;
 			if (carga.ativo === 2) setCargaExpurgada(true);
+			if (carga.carga_app === 1) setCargaApp(true);
 			for (let i in carga) {
 				let nonNullValue = carga[i] === null ? "" : carga[i];
 				if (i.indexOf("data") !== -1) {
@@ -568,6 +571,9 @@ function EditarCargaCsn() {
 						isAlteracaoParcial={isAlteracaoParcial}
 						isViwsCargaApp={isViwsCargaApp}
 						status={"Edicao"}
+						isCargaApp={isCargaApp}
+						isDisabledPlaca={isDisabledPlaca}
+						setDisabledPlaca={setDisabledPlaca}
 					/>
 					<div className="text-end">
 						<h6 className={showMsgCargaExpurgo}>Carga Expurgada!</h6>

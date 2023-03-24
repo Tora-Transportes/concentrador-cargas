@@ -34,14 +34,16 @@ function FormularioCadastroManual({
 	buscarCargaComDocumentoDeTransporte,
 	isViwsCargaApp,
 	status,
+	isCargaApp,
+	setDisabledPlaca,
+	isDisabledPlaca,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
 	const [isDetalhesCarreta, setDetalesCarreta] = useState(null);
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
 	const [valorTotalDebito, setValorTotal] = useState();
-	const [isDisabledPlaca, setDisabledPlaca] = useState(false);
-	const [isDisabledEnvioApp, setDisabledEvioApp] = useState(false);
+	const [isDisabledEnvioApp, setDisabledEnvioApp] = useState(false);
 
 	async function handleShowDetailsAboutVehicle(plate) {
 		if (!plate) {
@@ -87,8 +89,9 @@ function FormularioCadastroManual({
 	}, [formik.values.e_lote]);
 
 	useEffect(() => {
-		setDisabledEvioApp(status === "Edicao");
-	}, []);
+		setDisabledEnvioApp(status === "Edicao");
+		if (isCargaApp) setDisabledPlaca(true);
+	}, [isCargaApp]);
 
 	async function handleSearchVehicle(plate) {
 		if (plate) {
@@ -155,11 +158,13 @@ function FormularioCadastroManual({
 	const DetalhesCargaApp = (e) => {
 		const decisaoEnvioCarga = e.target.checked;
 		if (decisaoEnvioCarga) {
-			formik.setFieldValue("placa_veiculo", null);
-			formik.setFieldValue("placa_carreta", null);
-			formik.setFieldValue("placa_bitrem", null);
-			formik.setFieldValue("codigo_motorista", null);
-			formik.setFieldValue("nome_motorista", null);
+			setTimeout(() => {
+				formik.setFieldValue("placa_veiculo", null);
+				formik.setFieldValue("placa_carreta", null);
+				formik.setFieldValue("placa_bitrem", null);
+				formik.setFieldValue("codigo_motorista", null);
+				formik.setFieldValue("nome_motorista", null);
+			}, 500);
 		}
 		const cargaEnviarApp = 1;
 		const cargaNaoEnviarApp = 0;
@@ -292,26 +297,17 @@ function FormularioCadastroManual({
 					<Col className="text-end">
 						<Form.Group className="mb-3">
 							*Enviar carga para o APP?
-							{!isDisabledEnvioApp ? (
-								<Form.Check
-									type="switch"
-									name="carga_app"
-									defaultValue={false}
-									onClick={(e) => DetalhesCargaApp(e)}
-									onKeyDown={handleEnter}
-									inline
-								/>
-							) : (
-								<Form.Check
-									type="switch"
-									name="carga_app"
-									onClick={(e) => DetalhesCargaApp(e)}
-									onKeyDown={handleEnter}
-									disabled={true}
-									checked={formik.values.carga_app === 1}
-									inline
-								/>
-							)}
+							<Form.Check
+								type="switch"
+								name="carga_app"
+								//defaultValue={false}
+								checked={formik.values.carga_app === 1}
+								onClick={(e) => DetalhesCargaApp(e)}
+								onKeyDown={handleEnter}
+								disabled={isDisabledEnvioApp}
+								inline
+								readOnly
+							/>
 							<OverlayTrigger
 								key="tooltip-overlay-carga-app"
 								placement="bottom"

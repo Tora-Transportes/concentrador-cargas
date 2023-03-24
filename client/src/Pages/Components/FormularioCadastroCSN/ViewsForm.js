@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
 	Button,
 	Card,
@@ -47,8 +47,10 @@ export default function ViewsForm({
 	isViwsCargaApp,
 	isAlteracaoParcial,
 	isDisabledEnvioApp,
+	isCargaApp,
+	isDisabledPlaca,
+	setDisabledPlaca,
 }) {
-	const [isDisabledPlaca, setDisabledPlaca] = useState(false);
 	const [isRequiredPlaca, setRequiredPlaca] = useState(true);
 
 	const handleEnter = (event) => {
@@ -68,11 +70,14 @@ export default function ViewsForm({
 	const DetalhesCargaApp = (e) => {
 		const decisaoEnvioCarga = e.target.checked;
 		if (decisaoEnvioCarga) {
-			formik.setFieldValue("placa_veiculo", null);
-			formik.setFieldValue("placa_carreta", null);
-			formik.setFieldValue("placa_bitrem", null);
-			formik.setFieldValue("codigo_motorista", null);
-			formik.setFieldValue("nome_motorista", null);
+			setTimeout(() => {
+				formik.setFieldValue("placa_veiculo", null);
+				formik.setFieldValue("placa_carreta", null);
+				formik.setFieldValue("placa_bitrem", null);
+				formik.setFieldValue("codigo_motorista", null);
+				formik.setFieldValue("nome_motorista", null);
+				formik.setFieldValue("rastreador", null);
+			}, 500);
 		}
 		const cargaEnviarApp = 1;
 		const cargaNaoEnviarApp = 0;
@@ -83,6 +88,13 @@ export default function ViewsForm({
 			: cargaNaoEnviarApp;
 		formik.setFieldValue("carga_app", valorCargaAppFormik);
 	};
+
+	useEffect(() => {
+		if (isCargaApp) {
+			setDisabledPlaca(true);
+			setRequiredPlaca(false);
+		}
+	}, [isCargaApp]);
 
 	const titleInfoPlaca = isDetalhesCarreta
 		? "Dados do Veículo / Dados Carreta"
@@ -214,26 +226,17 @@ export default function ViewsForm({
 						<Col className="text-end">
 							<Form.Group className="mb-3">
 								*Enviar carga para o App?
-								{!isDisabledEnvioApp ? (
-									<Form.Check
-										type="switch"
-										name="carga_app"
-										defaultValue={false}
-										onClick={(e) => DetalhesCargaApp(e)}
-										onKeyDown={handleEnter}
-										inline
-									/>
-								) : (
-									<Form.Check
-										type="switch"
-										name="carga_app"
-										onClick={(e) => DetalhesCargaApp(e)}
-										onKeyDown={handleEnter}
-										disabled={true}
-										checked={formik.values.carga_app === 1}
-										inline
-									/>
-								)}
+								<Form.Check
+									type="switch"
+									name="carga_app"
+									//defaultValue={false}
+									checked={formik.values.carga_app === 1}
+									onClick={(e) => DetalhesCargaApp(e)}
+									onKeyDown={handleEnter}
+									disabled={isDisabledEnvioApp}
+									inline
+									readOnly
+								/>
 								<OverlayTrigger
 									key="tooltip-overlay-carga-app"
 									placement="bottom"
@@ -406,9 +409,6 @@ export default function ViewsForm({
 								</FloatingLabel>
 							)}
 						</Col>
-						{/* <div className="class-linha-title4">
-							<hr className="w-100"></hr>
-						</div> */}
 					</Row>
 				</>
 			)}
@@ -573,18 +573,6 @@ export default function ViewsForm({
 					</Form.Group>
 				</Col>
 			</Row>
-
-			{/* <div>
-				<ListAddItens
-					id="style-botao-add"
-					value={formik.values.locais}
-					name="locais"
-					onChange={formik.handleChange}
-					onKeyDown={handleEnter}
-					formik={formik}
-				/>
-			</div> */}
-
 			<Modal show={veiculo !== null} size="lg" onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
 					<Modal.Title className="modal-title-csn">

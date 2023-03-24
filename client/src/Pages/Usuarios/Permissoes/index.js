@@ -55,35 +55,45 @@ function Permissoes() {
 
 	async function handleSavePermissions(rowData, apagar) {
 		let { oid, permissoes } = await rowData;
-
 		if (!permissSelecionado.length && !apagar) {
 			await swal("", "Nenhuma alteração aplicada", "warning");
 		} else {
+			let salvarPermissao = false;
 			if (!apagar) {
-				permissoes = [];
-				permissSelecionado.map((item) => {
-					permissoes.push(item.name);
+				//permissoes = [];
+				permissSelecionado.map(async (item) => {
+					if (!permissoes.includes(item.name)) {
+						salvarPermissao = true;
+						await permissoes.push(item.name);
+					}
 				});
+			} else {
+				salvarPermissao = true;
 			}
 			const message = apagar
 				? "Certeza que deseja deletar permissão do usuário selecionado?"
 				: "Certeza que deseja aplicar essas permissões para o usuário selecionado?";
 
-			if (
-				await swal("", message, "warning", {
-					buttons: ["Não", true],
-				})
-			) {
-				await ServiceUsuarios.changePermissions({ oid, permissoes });
-				setUsers((old) =>
-					old.map((i) => {
-						if (i.oid === oid) {
-							return { ...i, permissoes: permissoes };
-						}
-						return i;
+			if (salvarPermissao) {
+				if (
+					await swal("", message, "warning", {
+						buttons: ["Não", true],
 					})
-				);
-				swal("Sucesso", "Permissões alteradas", "success");
+				) {
+					await ServiceUsuarios.changePermissions({ oid, permissoes });
+
+					setUsers((old) =>
+						old.map((i) => {
+							if (i.oid === oid) {
+								return { ...i, permissoes: permissoes };
+							}
+							return i;
+						})
+					);
+					swal("Sucesso", "Permissões alteradas", "success");
+				}
+			} else {
+				swal("Ops...", "O usuário já possui a permissão selecionada.", "info");
 			}
 		}
 	}
@@ -146,7 +156,7 @@ function Permissoes() {
 								options={allTipoPermissoes}
 								onChange={(e) => setPermissSeleciondo(e.value)}
 								optionLabel="name"
-								placeholder="Selecionar permissões"
+								placeholder="Adicionar permissões"
 								filter={true}
 								filterPlaceholder=" Filtrar por "
 							/>
