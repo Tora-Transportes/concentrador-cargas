@@ -278,14 +278,17 @@ export class ServiceDistanceLocations {
       dbo.fncCalcula_Distancia_Coordenada(LAT, LON, ?, ?) as distancia_km,
       PLACA as placa,
       LAT as latitude,
-      LON as longitude
+      LON as longitude,
+      VEI.VEI_CATEGORIA
 
       from (
         SELECT MAXPOSITION.PLACA, MAXPOSITION.DT_ALTERACAO, MAXPOSITION.LAT, MAXPOSITION.LON,
         ROW_NUMBER() OVER (PARTITION BY PLACA ORDER BY DT_ALTERACAO DESC) as POS
         from MAXPOSITION
       ) M1
-      WHERE PLACA is not null
+      LEFT JOIN Veiculo VEI ON VEI.VEI_PLACA = M1.PLACA
+      WHERE CONVERT(DATE,DT_ALTERACAO) >= CONVERT(DATE,GETDATE()-7)
+      AND PLACA is not null
       AND M1.POS = 1
       and LAT is not null
       and LON is not null
