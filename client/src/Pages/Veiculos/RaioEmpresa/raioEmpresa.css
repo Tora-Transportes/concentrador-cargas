@@ -48,6 +48,15 @@ div .input-nome-empresa {
     height: 1rem;
   }
 }
+.button-export {
+  height: 2.5px !important;
+  margin-top: 10px !important;
+}
+
+.icon-import {
+  margin-left: -0.5rem;
+  margin-right: 5px;
+}
 
 @media only screen and (min-width: 115px) and (max-width: 1199px) {
   .class-title-raioemp {
