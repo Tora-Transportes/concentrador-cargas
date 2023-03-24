@@ -279,7 +279,8 @@ export class ServiceDistanceLocations {
       PLACA as placa,
       LAT as latitude,
       LON as longitude,
-      VEI.VEI_CATEGORIA
+      VEI.VEI_CATEGORIA,
+      VEI.SV_DSC
 
       from (
         SELECT MAXPOSITION.PLACA, MAXPOSITION.DT_ALTERACAO, MAXPOSITION.LAT, MAXPOSITION.LON,

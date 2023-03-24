@@ -48,7 +48,8 @@ function ViewRotasPendentes({
 
 	function exportCsv() {
 		setLoading(true);
-		let csvTitle = "PLACA;CATEGORIA;LATITUDE;LONGITUDE;DISTÂNCIA;EMPRESA;\n\n";
+		let csvTitle =
+			"PLACA;CATEGORIA;LATITUDE;LONGITUDE;DISTÂNCIA;EMPRESA;SETOR;\n\n";
 		let csv = "\ufeff" + csvTitle;
 		for (const position of rota.veiculos) {
 			const message = "sem dados";
@@ -60,7 +61,8 @@ function ViewRotasPendentes({
 				position.distancia_km == null ? message : position.distancia_km;
 			const CATEGORIA =
 				position.VEI_CATEGORIA == null ? message : position.VEI_CATEGORIA;
-			csv += `${PLACA};${CATEGORIA};${LONGITUDE};${LATITUDE};${DISTANCIA};${fields.empresa}\n`;
+			const SETOR = position.SV_DSC == null ? message : position.SV_DSC;
+			csv += `${PLACA};${CATEGORIA};${LONGITUDE};${LATITUDE};${DISTANCIA};${fields.empresa};${SETOR}\n`;
 		}
 
 		const csvData = new Blob([csv], {
