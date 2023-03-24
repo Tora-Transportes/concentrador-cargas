@@ -121,7 +121,7 @@ function ViewRotasPendentes({
 					<>
 						<ButtonReact
 							label=" Exportar Veículos"
-							icon={<AiFillFileExcel className="icon-import" />}
+							icon={<AiFillFileExcel className="icon-excel" />}
 							onClick={exportCsv}
 							className="p-button-success button-export"
 						/>
