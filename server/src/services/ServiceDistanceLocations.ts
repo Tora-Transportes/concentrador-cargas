@@ -158,7 +158,7 @@ export class ServiceDistanceLocations {
     const enterpriseCoordinates = await database("PRACA")
       .whereNotNull("PCA_LATITUDE")
       .whereNotNull("PCA_LONGITUDE")
-      .where("PCA_DOC_FEDERAL", cnpj)
+      .where("PCA_DOC_FEDERAL", cnpj?.trim())
       .select([
         "PCA_DOC_FEDERAL as cnpj",
         "PCA_LATITUDE as latitude",
@@ -344,7 +344,7 @@ export class ServiceDistanceLocations {
         "LOC",
         "DTINC",
       ])
-      .where("DISIMEI", query?.VEI_REFERENCIA)
+      .where("DISIMEI", query?.VEI_REFERENCIA?.trim())
       .andWhere("DTINC", ">=", date_inicio)
       .andWhere("DTINC", "<=", date_fim);
 
