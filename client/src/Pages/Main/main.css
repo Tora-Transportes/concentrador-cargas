@@ -137,8 +137,8 @@ div .style-button-jogo:active,
 div .style-button-jogo:focus-visible {
   background-color: #00652e;
   border: none;
-  border-color: #00652e;
-  box-shadow: 0 0 0 0.25rem #009c0875;
+  border-color: #FFF;
+  box-shadow: 0 0 0 0.25rem #FFF;
   width: 12rem;
   margin-left: -0.5rem;
   align-items: center;
