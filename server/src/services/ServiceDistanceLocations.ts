@@ -117,7 +117,6 @@ export class ServiceDistanceLocations {
       DT_ALTERACAO as data_alteracao,
       LAT as latitude,
       LON as longitude
-
       from (
         SELECT MAXPOSITION.PLACA, MAXPOSITION.DT_ALTERACAO, MAXPOSITION.LAT, MAXPOSITION.LON,
         ROW_NUMBER() OVER (PARTITION BY PLACA ORDER BY DT_ALTERACAO DESC) as POS
@@ -158,7 +157,7 @@ export class ServiceDistanceLocations {
     const enterpriseCoordinates = await database("PRACA")
       .whereNotNull("PCA_LATITUDE")
       .whereNotNull("PCA_LONGITUDE")
-      .where("PCA_DOC_FEDERAL", cnpj)
+      .where("PCA_DOC_FEDERAL", cnpj?.trim())
       .select([
         "PCA_DOC_FEDERAL as cnpj",
         "PCA_LATITUDE as latitude",
@@ -278,14 +277,17 @@ export class ServiceDistanceLocations {
       dbo.fncCalcula_Distancia_Coordenada(LAT, LON, ?, ?) as distancia_km,
       PLACA as placa,
       LAT as latitude,
-      LON as longitude
-
+      LON as longitude,
+      VEI.VEI_CATEGORIA,
+      VEI.SV_DSC
       from (
         SELECT MAXPOSITION.PLACA, MAXPOSITION.DT_ALTERACAO, MAXPOSITION.LAT, MAXPOSITION.LON,
         ROW_NUMBER() OVER (PARTITION BY PLACA ORDER BY DT_ALTERACAO DESC) as POS
         from MAXPOSITION
       ) M1
-      WHERE PLACA is not null
+      LEFT JOIN Veiculo VEI ON VEI.VEI_PLACA = M1.PLACA
+      WHERE CONVERT(DATE,DT_ALTERACAO) >= CONVERT(DATE,GETDATE()-7)
+      AND PLACA is not null
       AND M1.POS = 1
       and LAT is not null
       and LON is not null
@@ -340,7 +342,7 @@ export class ServiceDistanceLocations {
         "LOC",
         "DTINC",
       ])
-      .where("DISIMEI", query?.VEI_REFERENCIA)
+      .where("DISIMEI", query?.VEI_REFERENCIA?.trim())
       .andWhere("DTINC", ">=", date_inicio)
       .andWhere("DTINC", "<=", date_fim);
 

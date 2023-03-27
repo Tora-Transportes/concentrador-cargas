@@ -1,12 +1,19 @@
 import React from "react";
 import { Container, Row, Form, Button, Card } from "react-bootstrap";
-
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { Button as ButtonReact } from "primereact/button";
+import {
+	LayersControl,
+	MapContainer,
+	Marker,
+	Popup,
+	TileLayer,
+} from "react-leaflet";
 import "./raioEmpresa.css";
 import InputCliente from "../../Components/InputCliente";
 import DateUtils from "../../Utils/date";
 
 import L from "leaflet";
+import { AiFillFileExcel } from "react-icons/ai";
 
 const originIcon = L.icon({
 	iconUrl:
@@ -20,7 +27,12 @@ const truckIcon = L.icon({
 	iconSize: new L.Point(40, 40),
 });
 
-function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
+function ViewRotasPendentes({
+	calcularRotaDestino,
+	rota,
+	clearRota,
+	setLoading,
+}) {
 	const [fields, setFields] = React.useState({
 		placa: "",
 		distancia_km: 20,
@@ -40,55 +52,40 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 		calcularRotaDestino(fields.empresa, fields.distancia_km);
 	}
 
+	function exportCsv() {
+		setLoading(true);
+		let csvTitle =
+			"PLACA;CATEGORIA;LATITUDE;LONGITUDE;DISTÂNCIA;EMPRESA;SETOR;\n\n";
+		let csv = "\ufeff" + csvTitle;
+		for (const position of rota.veiculos) {
+			const message = "sem dados";
+			const PLACA = position.placa == null ? message : position.placa;
+			const LATITUDE = position.latitude == null ? message : position.latitude;
+			const LONGITUDE =
+				position.longitude == null ? message : position.longitude;
+			const DISTANCIA =
+				position.distancia_km == null ? message : position.distancia_km;
+			const CATEGORIA =
+				position.VEI_CATEGORIA == null ? message : position.VEI_CATEGORIA;
+			const SETOR = position.SV_DSC == null ? message : position.SV_DSC;
+			csv += `${PLACA};${CATEGORIA};${LONGITUDE};${LATITUDE};${DISTANCIA};${fields.empresa};${SETOR}\n`;
+		}
+
+		const csvData = new Blob([csv], {
+			type: "text/csv;charset=utf-8,/uFEFF;",
+		});
+
+		const csvURL = window.URL.createObjectURL(csvData);
+		const tempLink = document.createElement("a");
+		tempLink.href = csvURL;
+		tempLink.setAttribute("download", "Raio-veiculos-Empresa.csv");
+		tempLink.click();
+		setLoading(false);
+	}
+
 	return (
 		<div className="class-body">
 			<Container className="text-center mb-5 mt-4">
-				{rota && (
-					<MapContainer
-						center={[rota.latitude_origem, rota.longitude_origem]}
-						zoom={15}
-						style={{ height: "80vh" }}
-					>
-						<TileLayer
-							attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-						/>
-
-						<Marker
-							position={[rota.latitude_origem, rota.longitude_origem]}
-							icon={originIcon}
-						>
-							<Popup>Empresa de CNPJ {rota.cnpj}.</Popup>
-						</Marker>
-
-						{rota.veiculos.map((i) => {
-							return (
-								<Marker
-									key={i.placa}
-									position={[i.latitude, i.longitude]}
-									icon={truckIcon}
-								>
-									<Popup>
-										Veículo {i.placa} a {Number(i.distancia_km).toFixed(2)} KM
-										da empresa.
-									</Popup>
-								</Marker>
-							);
-						})}
-					</MapContainer>
-				)}
-				{rota && rota.distancia_km && (
-					<p>
-						Distância entre o veículo e a empresa é de{" "}
-						{Number(rota.distancia_km).toFixed(2)} KM.
-					</p>
-				)}
-				{rota && rota.duracao_viagem_direta && (
-					<p>
-						Em viagem direta a duração é de{" "}
-						{DateUtils.convertDateToReadableTime(rota.duracao_viagem_direta)}.
-					</p>
-				)}
 				<Row className="align-middle">
 					<h1 className="class-title-raioemp mt-4">
 						Veículos no raio da empresa
@@ -100,9 +97,9 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 							<Form.Group controlId="formDestino">
 								<Form.Label>Empresa</Form.Label>
 								<InputCliente
-									style={{ width: "15rem", height: "2rem" }}
+									className="input-nome-empresa"
 									name="empresa"
-									value={fields.empresa}
+									value={fields.empresa || ""}
 									onChange={handleChange}
 									required
 								/>
@@ -111,7 +108,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 							<Form.Group controlId="formKM">
 								<Form.Label>KM</Form.Label>
 								<Form.Control
-									style={{ width: "15rem" }}
+									className="form-distancia-km"
 									type="number"
 									name="distancia_km"
 									value={fields.distancia_km}
@@ -126,6 +123,72 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 						</Form>
 					</Card>
 				</div>
+				{rota && (
+					<>
+						<ButtonReact
+							label=" Exportar Veículos"
+							icon={<AiFillFileExcel className="icon-excel" />}
+							onClick={exportCsv}
+							className="p-button-success button-export"
+						/>
+						<MapContainer
+							center={[rota.latitude_origem, rota.longitude_origem]}
+							zoom={13}
+							maxZoom={17.4}
+							style={{ height: "80vh", marginTop: "10px" }}
+						>
+							<LayersControl position="topright">
+								<LayersControl.BaseLayer checked name="Mapa Básico">
+									<TileLayer
+										attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+										url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+									/>
+								</LayersControl.BaseLayer>
+								<LayersControl.BaseLayer name="Mapa Satélite">
+									<TileLayer
+										attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+										//url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+										url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+									/>
+								</LayersControl.BaseLayer>
+
+								<Marker
+									position={[rota.latitude_origem, rota.longitude_origem]}
+									icon={originIcon}
+								>
+									<Popup>Empresa de CNPJ {rota.cnpj}.</Popup>
+								</Marker>
+
+								{rota.veiculos.map((i) => {
+									return (
+										<Marker
+											key={i.placa}
+											position={[i.latitude, i.longitude]}
+											icon={truckIcon}
+										>
+											<Popup>
+												Veículo {i.placa} a {Number(i.distancia_km).toFixed(2)}{" "}
+												KM da empresa.
+											</Popup>
+										</Marker>
+									);
+								})}
+							</LayersControl>
+						</MapContainer>
+					</>
+				)}
+				{rota && rota.distancia_km && (
+					<p>
+						Distância entre o veículo e a empresa é de{" "}
+						{Number(rota.distancia_km).toFixed(2)} KM.
+					</p>
+				)}
+				{rota && rota.duracao_viagem_direta && (
+					<p>
+						Em viagem direta a duração é de{" "}
+						{DateUtils.convertDateToReadableTime(rota.duracao_viagem_direta)}.
+					</p>
+				)}
 			</Container>
 		</div>
 	);

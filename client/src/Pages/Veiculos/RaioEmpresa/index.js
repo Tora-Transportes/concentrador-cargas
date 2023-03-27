@@ -44,6 +44,7 @@ function RaioEmpresa() {
 				rota={rota}
 				calcularRotaDestino={calcularRotaDestino}
 				clearRota={clearRota}
+				setLoading={setLoading}
 			/>
 		</>
 	);
