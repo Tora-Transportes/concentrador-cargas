@@ -88,7 +88,7 @@ div .input-nome-empresa {
   }
 }
 
-@media only screen and (min-width: 1200px) and (max-width: 1825px) {
+@media only screen and (min-width: 1281px) and (max-width: 1825px) {
   .class-card-raioemp {
     margin-left: 8%;
     width: 85%;
