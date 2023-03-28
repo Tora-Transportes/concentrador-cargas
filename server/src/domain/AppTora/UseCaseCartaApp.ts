@@ -29,7 +29,15 @@ class UseCaseAppAprovacaoCarga {
       idCarga
     );
 
+    if (cargaAtual?.fk_situacao === 3) {
+      throw new AppError(
+        `Carga com id: ${idCarga} já se encontra aprovada em nossos sistemas!`,
+        409
+      );
+    }
+
     const existPlacaCadastrada = await this.veiculoRepository.search(placa);
+
     if (!existPlacaCadastrada)
       throw new AppError(
         "A placa informada não esta registrada em nosso sistema!",

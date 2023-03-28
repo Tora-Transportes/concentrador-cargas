@@ -2,8 +2,8 @@
   display: grid;
   grid-template-columns: auto auto auto;
   justify-content: center;
-  margin-top: 1rem;
-  grid-gap: 4rem;
+  margin-top: 4px;
+  grid-gap: 2rem;
 }
 .class-title-raioemp {
   font-family: "Poppins", sans-serif;
@@ -13,17 +13,17 @@
 div .class-card-raioemp {
   margin-top: 2rem;
   width: 75rem;
-  margin-left: -1rem;
+  margin-left: 4%;
 }
 
 div .input-nome-empresa {
-  width: 45vw;
-  height: 3.5rem !important;
+  width: 40vw;
+  height: 3.3rem !important;
 }
 
 .form-distancia-km {
   width: 15rem;
-  height: 3.4rem;
+  height: 3.1rem;
 }
 
 #button-pesq-raioemp {
@@ -48,6 +48,16 @@ div .input-nome-empresa {
     height: 1rem;
   }
 }
+.button-export {
+  height: 2.5px !important;
+  margin-top: 10px !important;
+}
+
+.icon-excel {
+  margin-left: -0.5rem;
+  margin-right: 5px;
+}
+
 
 @media only screen and (min-width: 115px) and (max-width: 1199px) {
   .class-title-raioemp {
@@ -61,16 +71,16 @@ div .input-nome-empresa {
   }
 
   div .class-card-raioemp {
-    margin-left: 8%;
+    margin-left: 5%;
     width: 90%;
-    height: 22rem;
+    height: 15.5rem;
   }
 
   .class-body-viewraioemp {
     display: flex;
     flex-direction: column;
     align-items: center;
-    grid-gap: 2rem;
+    grid-gap: 0rem;
   }
 
   div #button-pesq-raioemp {
@@ -78,9 +88,14 @@ div .input-nome-empresa {
   }
 }
 
-@media only screen and (min-width: 1200px) and (max-width: 1825px) {
+@media only screen and (min-width: 1200px) and (max-width: 1280px) {
   .class-card-raioemp {
-    margin-left: 8%;
+    margin-left: -4%;
+  }
+}
+@media only screen and (min-width: 1281px) and (max-width: 1825px) {
+  .class-card-raioemp {
+    /* margin-left: 8%; */
     width: 85%;
   }
 }
