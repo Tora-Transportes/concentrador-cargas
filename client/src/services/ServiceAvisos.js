@@ -2,7 +2,6 @@ import api from "./api";
 
 class ServiceAvisos {
 	async list(data) {
-		console.log(data);
 		return await api.get("/avisos", { params: { data } });
 	}
 	async create(data) {

@@ -244,10 +244,13 @@ div .button-salvar:enabled:hover {
 .confirmation-delete {
   font-family: "Poppins", sans-serif;
 }
-@media only screen and (max-width: 405px) {
+@media only screen and (max-width: 515px) {
   div .add-button {
     font-size: 0.8rem;
     margin: 3rem 15px 1px 16px;
+  }
+  .float-pesquisa-aviso {
+    width: 30rem;
   }
 }
 @media only screen and (max-width: 765px) {
@@ -273,7 +276,7 @@ div .button-salvar:enabled:hover {
   }
 }
 
-@media screen and (min-width: 406px) and (max-width: 1595px) {
+@media screen and (min-width: 516px) and (max-width: 1595px) {
   div .add-button {
     font-size: 1rem;
     margin: -0.5rem 15px -11px 16px;
