@@ -135,12 +135,11 @@ div .style-button-jogo:hover,
 div .style-button-jogo:focus,
 div .style-button-jogo:active,
 div .style-button-jogo:focus-visible {
-  background-color: #00652e;
+  background-color: #fff;
   border: none;
-  border-color: #00652e;
-  box-shadow: 0 0 0 0.25rem #009c0875;
+  border-color: #fff;
+  box-shadow: 0 0 0 0.25rem #fff;
   width: 12rem;
-  margin-left: -0.5rem;
   align-items: center;
 }
 
@@ -165,6 +164,7 @@ div .versionamento {
   font-size: 13px;
   font-weight: 530;
 }
+
 @media only screen and (max-width: 280px) {
   .style-p-saudacao {
     font-size: 0.9rem !important;
@@ -263,6 +263,7 @@ div .versionamento {
     bottom: -1%;
     margin-left: 7px;
     color: #a70505;
+    font-family: "Poppins", sans-serif;
     font-size: 13px;
     font-weight: 530;
   }
@@ -278,6 +279,7 @@ div .versionamento {
     bottom: -0.8%;
     margin-left: 7px;
     color: #a70505;
+    font-family: "Poppins", sans-serif;
     font-size: 13px;
     font-weight: 530;
   }
@@ -294,6 +296,7 @@ div .versionamento {
     bottom: -0.8%;
     margin-left: 7px;
     color: #a70505;
+    font-family: "Poppins", sans-serif;
     font-size: 13px;
     font-weight: 530;
   }
@@ -357,12 +360,12 @@ div .versionamento {
     margin-bottom: 2rem;
   }
 
-  /* .versionamento {
+  div .versionamento {
     position: absolute;
-    margin-left: 7px;
-    bottom: 0.3rem;
+    bottom: -0.8%;
+    margin-left: 6px;
     color: #a70505;
     font-size: 13px;
     font-weight: 530;
-  } */
+  }
 }

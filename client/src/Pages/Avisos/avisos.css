@@ -42,21 +42,28 @@
   box-sizing: border-box;
 }
 
-.col-button-add {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.add-button {
+div .add-button {
   border-color: #00652e;
   background-color: #fff;
   color: #00652e;
-  margin: 15px 15px 6px 16px;
   height: 6vh;
 }
 .add-button:enabled:hover {
   border-color: #009c08;
   background-color: #009c08;
+}
+
+.div-pesquisa-aviso {
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: row-reverse;
+  position: relative;
+  margin: 0.5rem 15px 1rem 15px;
+  height: 1px;
+}
+
+.float-pesquisa-aviso {
+  width: 15rem;
 }
 
 .card-avisos {
@@ -237,8 +244,13 @@ div .button-salvar:enabled:hover {
 .confirmation-delete {
   font-family: "Poppins", sans-serif;
 }
-
-@media screen and (max-width: 765px) {
+@media only screen and (max-width: 405px) {
+  div .add-button {
+    font-size: 0.8rem;
+    margin: 3rem 15px 1px 16px;
+  }
+}
+@media only screen and (max-width: 765px) {
   .p-conte-nos-avisos {
     margin-right: 15%;
 
@@ -252,11 +264,18 @@ div .button-salvar:enabled:hover {
   }
 }
 
-@media screen and (min-width: 766px) and (max-width: 995px) {
+@media only screen and (min-width: 766px) and (max-width: 995px) {
   .p-conte-nos-avisos {
     margin-right: 10%;
   }
   .div-reaction-avisos {
     display: flexbox;
+  }
+}
+
+@media screen and (min-width: 406px) and (max-width: 1595px) {
+  div .add-button {
+    font-size: 1rem;
+    margin: -0.5rem 15px -11px 16px;
   }
 }

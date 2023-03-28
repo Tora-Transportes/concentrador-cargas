@@ -47,6 +47,7 @@ function Avisos() {
 					<ViewsAviso
 						formik={formik}
 						dadosAvisos={dadosAvisos}
+						setDadosAvisos={setDadosAvisos}
 						setAtualizarAvisos={setAtualizarAvisos}
 					/>
 				</Row>

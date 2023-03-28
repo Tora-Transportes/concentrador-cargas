@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "../Avisos/avisos.css";
-import { Row, Col, Form } from "react-bootstrap";
+import { Row, Col, Form, FloatingLabel, FormControl } from "react-bootstrap";
 import { classNames } from "primereact/utils";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
@@ -25,12 +25,11 @@ let emptyNotice = {
 	LIKE_OF: null,
 };
 
-const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
+const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 	const [userInformation, setuserInformation] = useState({});
 	const [isPermissionAviso, setPermissionAviso] = useState(false);
 	const [avisoDialog, setAvisoDialog] = useState(false);
 	const [deleteAviso, setDeleteAviso] = useState(false);
-
 	const [aviso, setAviso] = useState(emptyNotice);
 	const [submittedAviso, setSubmittedAviso] = useState(false);
 	const [titleAviso, setTitleAviso] = useState();
@@ -198,6 +197,43 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 		}
 	}, [isPermissionUser]);
 
+	const filtrarPorData = async (evento) => {
+		const dataSelecionada = evento.target.value;
+		const anoValido = dataSelecionada.split("-")[0];
+		if (Number(anoValido) > 2022) {
+			const dataRegex = /^\d{4}-\d{2}-\d{2}$/;
+
+			if (dataRegex.test(dataSelecionada)) {
+				const result = (await ServiceAvisos.list(dataSelecionada)).data;
+
+				if (!result.data.length) {
+					toast.current.show({
+						severity: "info",
+						summary: "Ops!",
+						detail: "Não constam avisos cadastrados com essa data.",
+						life: 5000,
+					});
+				} else {
+					setDadosAvisos(result.data);
+				}
+			} else {
+				toast.current.show({
+					severity: "warn",
+					summary: "Ops!",
+					detail: "Informação inválida, verifique a data e tente novamente.",
+					life: 3000,
+				});
+			}
+		} else {
+			toast.current.show({
+				severity: "error",
+				summary: "Ops!",
+				detail: "Não existem registros de avisos, para essa data.",
+				life: 900,
+			});
+		}
+	};
+
 	return (
 		<>
 			<div>
@@ -206,11 +242,23 @@ const ViewsAviso = ({ dadosAvisos, setAtualizarAvisos }) => {
 				</p>
 			</div>
 			<div className="row-views-container">
+				<div className="div-pesquisa-aviso">
+					<FloatingLabel
+						label="Pesquisar aviso:"
+						className="float-pesquisa-aviso"
+					>
+						<FormControl
+							type="date"
+							max="9999-12-12T00:00"
+							onChange={(e) => filtrarPorData(e)}
+						></FormControl>
+					</FloatingLabel>
+				</div>
 				{isPermissionAviso && (
 					<Row className="button-add-aviso">
-						<Col className="col-button-add">
+						<Col>
 							<Button
-								label="Adicionar um novo aviso"
+								label="Adicionar um aviso"
 								icon="pi pi-check"
 								className="add-button"
 								onClick={openNewNotice}
