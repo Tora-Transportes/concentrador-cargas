@@ -211,7 +211,7 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 						severity: "info",
 						summary: "Ops!",
 						detail: "Não constam avisos cadastrados com essa data.",
-						life: 5000,
+						life: 2500,
 					});
 				} else {
 					setDadosAvisos(result.data);
@@ -221,7 +221,7 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 					severity: "warn",
 					summary: "Ops!",
 					detail: "Informação inválida, verifique a data e tente novamente.",
-					life: 3000,
+					life: 2000,
 				});
 			}
 		} else {
