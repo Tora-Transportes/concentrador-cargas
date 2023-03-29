@@ -87,7 +87,7 @@ function ViewRotasPendentes({
 		<div className="class-body">
 			<Container className="text-center mb-5 mt-4">
 				<Row className="align-middle">
-					<h1 className="class-title-raioemp mt-4">
+					<h1 className="class-title-raioemp mt-4 mb-4">
 						Veículos no raio da empresa
 					</h1>
 				</Row>
@@ -133,7 +133,7 @@ function ViewRotasPendentes({
 						/>
 						<MapContainer
 							center={[rota.latitude_origem, rota.longitude_origem]}
-							zoom={10}
+							zoom={13}
 							maxZoom={17.4}
 							style={{ height: "80vh", marginTop: "10px" }}
 						>
