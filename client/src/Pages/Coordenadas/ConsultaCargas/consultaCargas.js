@@ -76,13 +76,17 @@ function Consulta() {
 			<Menusuperior />
 			<Container className="body-consulta-cargas">
 				<Row className="row-title-button">
-					<Col lg={11}>
+					<Col lg={10}>
 						<p className="title-consultarCarga">
 							Consultar carga aberta manualmente
 						</p>
 					</Col>
-					<Col lg={1} className="button-exit">
-						<Button variant="link" onClick={exitPage} className="text-success">
+					<Col lg={2} className="button-exit">
+						<Button
+							variant="link"
+							onClick={exitPage}
+							className="btn-icon-HiArrowCircleLeft"
+						>
 							<HiArrowCircleLeft className="fs-4" />
 						</Button>
 					</Col>

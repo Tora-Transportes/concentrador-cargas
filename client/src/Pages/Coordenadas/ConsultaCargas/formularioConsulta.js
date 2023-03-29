@@ -365,12 +365,8 @@ function FormularioConsulta({ formik, exitPage }) {
 				</Col>
 			</Row>
 			<Col>
-				<Button
-					variant="success"
-					className="button-footer-voltar"
-					onClick={exitPage}
-				>
-					<HiArrowCircleLeft className="fs-5 mb-1" /> Voltar
+				<Button className="button-consultCarg-voltar" onClick={exitPage}>
+					<HiArrowCircleLeft className="fs-6 mb-1" /> Voltar
 				</Button>
 			</Col>
 		</div>

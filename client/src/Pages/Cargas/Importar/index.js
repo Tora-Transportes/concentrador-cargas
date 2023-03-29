@@ -98,7 +98,7 @@ function Importar() {
 			<LoadingScreen />
 			{/* <NavbarNavigator /> */}
 			<Menusuperior />
-			<div className="class-container-importar">
+			<div className="class-container-importar mt-4">
 				<div>
 					<h1 id="title-import">Importação de Cargas</h1>
 				</div>

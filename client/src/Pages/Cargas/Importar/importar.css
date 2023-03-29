@@ -1,5 +1,5 @@
-.class-body-importCarga{
-  font-family: 'Poppins', sans-serif;
+.class-body-importCarga {
+  font-family: "Poppins", sans-serif;
 }
 .class-container-importar {
   display: grid;
@@ -9,7 +9,7 @@
   margin-left: -1rem;
 }
 
-#title-tab-import-carg{
+#title-tab-import-carg {
   font-size: 32px;
 }
 #title-import {
@@ -53,11 +53,10 @@
   align-items: center;
   text-align: center;
   margin: 3.5rem 0 0 1rem;
-  
 }
 
- /*tabela*/
- .class-title-preview{
+/*tabela*/
+.class-title-preview {
   display: grid;
   justify-content: center;
   text-align: center;
@@ -65,30 +64,28 @@
   margin-bottom: -2rem;
 }
 
-@media only screen and (max-width: 555px) {
-
-  .class-container-importar{
+@media only screen and (max-width: 540px) {
+  .class-container-importar {
     margin-left: 2rem;
   }
-  #title-import{
+  #title-import {
     font-size: 30px;
     text-align: center;
     margin-left: -1.5rem;
   }
 
   /*Input Escolher Arquivo*/
-  .class-input-button{
+  .class-input-button {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     margin-left: -2rem;
-   
   }
-  #import-arq{
+  #import-arq {
     margin-left: -2rem;
   }
-  #botao-process{
-    margin-top: -.2rem;
+  #botao-process {
+    margin-top: -0.2rem;
     width: 10rem;
   }
   #botao-download {
@@ -101,26 +98,24 @@
   }
 
   /*tabela*/
-  
-  #title-tab-import-carg{
+
+  #title-tab-import-carg {
     margin-top: 4rem;
     margin-bottom: -2rem;
-    margin-left: .5rem;
+    margin-left: 0.5rem;
     font-size: 1.5rem;
     display: grid;
     justify-content: center;
     text-align: center;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
   }
 
-  .class-table-importCarga{
+  .class-table-importCarga {
     margin-left: -1rem !important;
   }
-} 
-  @media only screen and (max-width: 1025px) {
-    .class-table-importCarga{
-      margin-left: 1.8rem;
-    }
-
+}
+@media only screen and (max-width: 1025px) {
+  .class-table-importCarga {
+    margin-left: 1.8rem;
   }
-  
+}

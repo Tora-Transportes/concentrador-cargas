@@ -17,7 +17,7 @@
   grid-template-columns: auto auto;
   justify-content: space-evenly;
   align-items: center;
-  grid-gap: -3rem;
+  grid-gap: -5rem;
   margin-top: 3rem;
 }
 
@@ -66,18 +66,18 @@ div .title-CSN:hover,
   color: #009c08;
 }
 
-@media only screen and (min-width: 115px) and (max-width: 235px) {
+/* @media only screen and (min-width: 115px) and (max-width: 235px) {
   div .class-title-coleta {
     font-size: 1.8rem;
-  }
+  } */
 
-  div .class-button-icons {
+/* div .class-button-icons {
     position: absolute;
     display: block;
     margin-top: 0.5rem;
     margin-left: 10%;
-  }
-  div .title-CSN,
+  } */
+/* div .title-CSN,
   div .title-ico-import,
   #title-manual {
     font-size: 22px;
@@ -100,21 +100,21 @@ div .title-CSN:hover,
   div .icon-csn {
     margin-left: 0.6rem;
   }
-}
+} */
 
 @media only screen and (min-width: 236px) and (max-width: 305px) {
   div .class-title-coleta {
     margin-left: 1rem;
   }
-
-  div .class-button-icons {
+}
+/* div .class-button-icons {
     position: absolute;
     display: block;
     margin-top: 1rem;
     margin-left: 20%;
-  }
+  } */
 
-  .class-cargas-menu {
+/* .class-cargas-menu {
     overflow: none;
   }
 
@@ -140,22 +140,21 @@ div .title-CSN:hover,
   }
   div .icon-csn {
     margin-left: 0.6rem;
-  }
-}
+  } */
 
-@media only screen and (min-width: 306px) and (max-width: 505px) {
+/* @media only screen and (min-width: 306px) and (max-width: 505px) {
   div .class-title-coleta {
-    margin-left: 1rem;
-  }
+  
+  } */
 
-  div .class-button-icons {
+/* div .class-button-icons {
     position: absolute;
     display: block;
     margin-top: 1rem;
     margin-left: 30%;
-  }
+  } */
 
-  .class-cargas-menu {
+/* .class-cargas-menu {
     overflow: none;
   }
 
@@ -166,7 +165,7 @@ div .title-CSN:hover,
   }
 
   div .title-ico-import {
-    margin-left: -3rem !important;
+    margin-left: 3rem !important;
   }
   div .icon-import {
     margin-left: 1rem !important;
@@ -177,17 +176,40 @@ div .title-CSN:hover,
   }
   div .icon-csn {
     margin-left: 0.6rem;
+  } */
+
+@media only screen and (max-width: 808px) {
+  div .class-title-coleta {
+    font-size: 1.8rem;
+  }
+  .class-cargas-menu {
+    overflow: none;
+  }
+  div .class-button-icons {
+    position: absolute;
+    display: block;
+    margin-top: 1rem;
+    margin-left: 30%;
+  }
+
+  div .title-ico-import {
+    margin-left: -4rem;
+  }
+
+  div .icon-import {
+    color: #00652e;
+    margin-top: 3rem;
+    margin-left: 0.9rem;
+  }
+
+  div .title-CSN {
+    margin-left: 1rem;
+  }
+  div .icon-csn {
+    margin-left: 0.5rem;
   }
 }
-@media only screen and (max-width: 768px) {
-}
-@media only screen and (min-width: 900px) {
-  .title-CSN,
-  .title-ico-import,
-  #title-manual {
-    font-size: 35px;
-  }
-}
+
 /* @media only screen and (min-width: 506px) {
   .class-button-icons {
     margin-top: 2rem;
@@ -227,11 +249,7 @@ div .title-CSN:hover,
     margin-top: 3rem;
   }
 
-  div .icon-import {
-    color: #00652e;
-    margin-top: 3rem;
-    margin-left: 2rem;
-  }
+  
   div .title-CSN {
     font-size: 22px;
     color: #00652e;

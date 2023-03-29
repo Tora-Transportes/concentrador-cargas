@@ -586,7 +586,7 @@ function FormularioCadastroManual({
 				</Row>
 			)}
 			<Row>
-				<Col sm={12} md={6}>
+				<Col sm={12} md={7}>
 					<FloatingLabel label="Tipo de material" className="mb-3">
 						<AutocompleteInput
 							keyDataList="tipo_carga"
@@ -599,7 +599,7 @@ function FormularioCadastroManual({
 				</Col>
 				<Col>
 					<Row>
-						<Col>
+						<Col sm={12} md={6} lg={2}>
 							<FloatingLabel label="*Unidade de medida" className="mb-3">
 								<Form.Control
 									type="text"

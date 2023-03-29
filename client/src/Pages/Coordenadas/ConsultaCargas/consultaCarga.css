@@ -1,21 +1,27 @@
 .body-consulta-cargas {
   font-family: "Poppins", sans-serif;
 }
-.title-consultarCarga {
-  font-family: "Poppins", sans-serif;
-  font-size: 40px;
-  color: #00652e;
-  margin-top: 1.5rem;
-}
-
-.title-consultarCarga {
-  color: #00652e;
-  font-size: 2.3rem;
-}
 
 .row-title-button {
   align-items: center;
 }
+
+.title-consultarCarga {
+  font-family: "Poppins", sans-serif;
+  font-size: 2.3rem;
+  color: #00652e;
+  margin-top: 3rem;
+}
+
+div .btn-icon-HiArrowCircleLeft {
+  margin-top: 2.9rem;
+  color: #00652e;
+}
+
+.button-exit {
+  text-align: end;
+}
+
 .class-body-form {
   color: black;
 }
@@ -29,16 +35,7 @@
   margin-bottom: 30px;
 }
 
-.button-exit {
-  text-align: end;
-}
-
-.button-footer-voltar {
-  background-color: #00652e !important;
-}
-
 .col-cod-filial {
-  /* width: 100%; */
   height: 3.6rem;
   border-radius: 4px;
   font-size: 14px;
@@ -55,6 +52,18 @@
   outline-color: #fff;
 }
 
+div .button-consultCarg-voltar,
+div .button-consultCarg-voltar:hover,
+div .button-consultCarg-voltar:enabled:hover,
+div .button-consultCarg-voltar:active {
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  background-color: #00652e;
+  border: none;
+  margin-bottom: 5px;
+  height: 2.2rem;
+}
+
 @media only screen and (max-width: 353px) {
   .col-cod-filial {
     margin-bottom: 1rem;
@@ -64,6 +73,7 @@
 
 @media only screen and (max-width: 620px) {
   .title-consultarCarga {
+    font-size: 2.2em;
     margin-top: 3rem;
   }
 }
@@ -74,7 +84,7 @@
   }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 993px) {
   .button-exit {
     display: none;
   }
