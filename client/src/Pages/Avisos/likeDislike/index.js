@@ -35,6 +35,7 @@ const ViewsLikeDislike = ({ aviso }) => {
 	};
 
 	const clickLike = (statusLike) => {
+		console.log("bbbbbbb");
 		if (statusLike === "like") {
 			setLikeAviso(likeAviso + 1);
 			if (dislikeAviso > 0) setDislikeAviso(-1);
