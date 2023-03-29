@@ -14,7 +14,7 @@ import { Input } from "reactstrap";
 import { ContextUseDefault } from "./../../hooks/context/contextPagCargaCTE";
 import { BsPencilSquare } from "react-icons/bs";
 import { HiOutlineTrash } from "react-icons/hi";
-//import ViewsLikeDislike from "./viewLikeDislike";
+import ViewsLikeDislike from "./viewLikeDislike";
 
 let emptyNotice = {
 	ID: null,
@@ -311,7 +311,7 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 													item.AUTOR,
 													converterData(item.DATA_CADASTRO)
 												)}
-												{/* <ViewsLikeDislike aviso={item} /> */}
+												<ViewsLikeDislike aviso={item} />
 											</Card>
 										</div>
 									);
