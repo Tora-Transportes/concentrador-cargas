@@ -33,6 +33,7 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 	const [aviso, setAviso] = useState(emptyNotice);
 	const [submittedAviso, setSubmittedAviso] = useState(false);
 	const [titleAviso, setTitleAviso] = useState();
+	const likeStorage = localStorage.getItem("LikeAviso");
 	const toast = useRef(null);
 
 	const subtitle = (autor, dataCadastro) => (
@@ -311,7 +312,10 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 													item.AUTOR,
 													converterData(item.DATA_CADASTRO)
 												)}
-												<ViewsLikeDislike aviso={item} />
+												<ViewsLikeDislike
+													aviso={item}
+													likeStorage={likeStorage}
+												/>
 											</Card>
 										</div>
 									);
