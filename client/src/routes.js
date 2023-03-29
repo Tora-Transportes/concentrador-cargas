@@ -27,8 +27,8 @@ import HistoricoVeiculo from "./Pages/Veiculos/HistoricoVeiculo";
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css";
-import Helper from "./Pages/Components/Helper/ajuda";
-import HelperCSN from "./Pages/Components/Helper/ajudaCSN";
+// import Helper from "./Pages/Components/Helper/ajuda";
+// import HelperCSN from "./Pages/Components/Helper/ajudaCSN";
 import Avisos from "./Pages/Avisos";
 import CadastroCargaCSN from "./Pages/Cargas/CargasCSN/Cadastrar";
 import LocalizacaoCSN from "./Pages/LocalizacaoCSN";
@@ -123,8 +123,8 @@ export default function AllRoutes() {
 				/>
 				<Route path="/credenciais" exact component={Credenciais} />
 				{/* <Route path="/producao" exact component={CalendarioProducao} /> */}
-				<Route path="/ajuda" exact component={Helper} />
-				<Route path="/ajuda/CSN" exact component={HelperCSN} />
+				{/* <Route path="/ajuda" exact component={Helper} />
+				<Route path="/ajuda/CSN" exact component={HelperCSN} /> */}
 				<Route path="/avisos" exact component={Avisos} />
 				<Route path="*" exact component={Main} />
 			</Switch>
