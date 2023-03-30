@@ -52,6 +52,18 @@ export const getColumns = (
 			showFilter: true,
 		},
 		{
+			name: "placa_carreta",
+			description: "Placa Carreta",
+			selector: (row) => row.placa_carreta,
+			showFilter: true,
+		},
+		{
+			name: "placa_bitrem",
+			description: "Placa Bitrem",
+			selector: (row) => row.placa_bitrem,
+			showFilter: true,
+		},
+		{
 			name: "tipo_cavalo",
 			description: "Tipo cavalo",
 			selector: (row) => row.tipo_cavalo,
