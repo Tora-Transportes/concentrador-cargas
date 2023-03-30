@@ -100,10 +100,10 @@ function Importar() {
 			<Menusuperior />
 			<div className="class-container-importar mt-4">
 				<div>
-					<h1 id="title-import">Importação de Cargas</h1>
+					<h1 id="title-import-carg">Importação de Cargas</h1>
 				</div>
 
-				<div className="class-input-button" id="import-arq">
+				<div className="class-input-button">
 					<div>
 						<Form.Group controlId="formFile">
 							<Form.Label></Form.Label>

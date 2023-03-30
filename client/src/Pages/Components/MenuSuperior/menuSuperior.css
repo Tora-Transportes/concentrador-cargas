@@ -183,7 +183,7 @@ div .h1-relatorios {
   padding: 1rem;
   align-items: center;
   justify-content: space-between;
-  background: #B22222;
+  background: #b22222;
 }
 #menu {
   display: flex;
@@ -251,8 +251,8 @@ div .class-app-icons {
   margin-top: 4.2rem;
 }
 
-@media only screen and (max-width: 220px) {
-  div .class-app-icons {
+@media only screen and (max-width: 520px) {
+  div.class-app-icons {
     display: grid;
     align-items: center;
     margin-top: 2.5rem;

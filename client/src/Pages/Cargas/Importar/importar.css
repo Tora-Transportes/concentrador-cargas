@@ -1,5 +1,6 @@
 .class-body-importCarga {
   font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
 }
 .class-container-importar {
   display: grid;
@@ -12,11 +13,11 @@
 #title-tab-import-carg {
   font-size: 32px;
 }
-#title-import {
-  color: #00652e;
+#title-import-carg {
   font-family: "Poppins", sans-serif;
-  font-size: 40px;
+  font-size: 2.4rem;
   font-weight: 500;
+  color: #00652e;
   display: grid;
   grid-template-rows: auto auto;
   justify-content: center;
@@ -27,7 +28,8 @@
   grid-template-columns: auto auto;
   grid-gap: 1rem;
   justify-content: center;
-  margin-top: 3rem;
+  margin-top: 2rem;
+  width: auto;
 }
 #botao-process {
   background: #00652e;
@@ -66,12 +68,12 @@
 
 @media only screen and (max-width: 540px) {
   .class-container-importar {
-    margin-left: 2rem;
+    margin-left: 0.5rem;
   }
-  #title-import {
-    font-size: 30px;
+  #title-import-carg {
+    font-size: 2.1rem;
     text-align: center;
-    margin-left: -1.5rem;
+    margin-left: -1rem;
   }
 
   /*Input Escolher Arquivo*/
@@ -79,20 +81,17 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-left: -2rem;
+    width: auto;
   }
-  #import-arq {
-    margin-left: -2rem;
-  }
+
   #botao-process {
     margin-top: -0.2rem;
     width: 10rem;
   }
+
   #botao-download {
-    background: #00652e;
     border: none;
-    font-family: "Poppins", sans-serif;
-    margin-left: 1rem;
+    margin-left: -0.5rem;
     margin-top: 2rem;
     width: 15rem;
   }

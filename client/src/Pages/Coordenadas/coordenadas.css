@@ -156,17 +156,20 @@ div .ul_last-location {
   }
 }
 
-@media only screen and (min-width: 130px) and (max-width: 1325px) {
+@media only screen and (max-width: 755px) {
+  .dialog-cte {
+    width: 95%;
+    height: auto;
+  }
+}
+
+@media only screen and (min-width: 130px) and (max-width: 1225px) {
   .class-title-Coord {
     font-size: 2.5rem;
   }
   #botao-detalhe-tabela {
     margin-top: 0.5rem;
     margin-bottom: 1rem;
-  }
-  .dialog-cte {
-    width: 95%;
-    height: auto;
   }
 
   .dialog-btn-voltar {

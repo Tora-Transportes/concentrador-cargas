@@ -24,7 +24,7 @@ function Main() {
 		<>
 			<Menusuperior />
 			<Container className="class-cargas-menu">
-				<h1 className="class-title-coleta">
+				<h1 className="h1-title-selecaoCarg">
 					Selecione o modo no qual a carga foi coletada:
 				</h1>
 				<div className="class-button-icons">

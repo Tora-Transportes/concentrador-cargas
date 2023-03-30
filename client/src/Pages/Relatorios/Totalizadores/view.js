@@ -229,7 +229,7 @@ function ViewRotasPendentes({
 							<b className="cor-letras">Cargas Ativadas & Desativadas</b>
 						</Accordion.Header>
 						<Accordion.Body>
-							<Table>
+							<Table className="table-relatorios-footer">
 								<thead>
 									<tr>
 										<th>#</th>
