@@ -1,47 +1,44 @@
 import { Button } from "primereact/button";
-//import React, { useEffect, useState } from "react";
 import React, { useState } from "react";
 import { HiThumbDown, HiThumbUp } from "react-icons/hi";
+import useLocalStorage from "src/Pages/Components/useLocalstorage";
 import ServiceAvisos from "src/services/ServiceAvisos";
 import "./likeDislike.css";
 
-const ViewsLikeDislike = ({ aviso }) => {
-	const [likeAviso, setLikeAviso] = useState(aviso.LIKE_ON);
-	const [dislikeAviso, setDislikeAviso] = useState(aviso.LIKE_OF);
+const ViewsLikeDislike = ({ aviso, toast }) => {
+	const [likeAviso, setLikeAviso] = useState(
+		aviso.LIKE_ON === null ? 0 : aviso.LIKE_ON
+	);
+	const [dislikeAviso, setDislikeAviso] = useState(
+		aviso.LIKE_OF === null ? 0 : aviso.LIKE_OF
+	);
 	const [likeActive, setLikeActive] = useState(false);
 	const [dislikeActive, setDislikeActive] = useState(false);
+	const [storage, setStorage] = useLocalStorage("like.avisos", [
+		{
+			idAviso: 0,
+			like: "",
+		},
+	]);
+	const idAvisoSelecionado = aviso.ID;
 
-	if (aviso.LIKE_ON == null || aviso.LIKE_ON == undefined) {
-		aviso.LIKE_ON = 0;
-	}
-
-	if (aviso.LIKE_OF == null || aviso.LIKE_OF == undefined) {
-		aviso.LIKE_OF = 0;
-	}
-
-	const functionLikeAvisos = async () => {
-		if (likeActive) {
-			setLikeActive(false);
-			setLikeAviso(likeAviso - 1);
-		} else {
-			setLikeActive(true);
-			setLikeAviso(likeAviso + 1);
-
-			if (dislikeActive) {
-				setDislikeActive(false);
-				setLikeAviso(likeAviso + 1);
-				setDislikeAviso(dislikeAviso - 1);
-			}
-		}
+	const messageJaClicado = () => {
+		toast.current.clear();
+		toast.current.show({
+			severity: "info",
+			summary: "Ops...",
+			detail: "Você já deu Like nesse aviso. Obrigado!",
+			life: 3000,
+		});
 	};
 
-	const saveLike = async () => {
+	const saveLike = async (like, dislike) => {
 		const bodyLike = {
-			LIKE_ON: likeAviso,
-			LIKE_OF: dislikeAviso,
+			LIKE_ON: like,
+			LIKE_OF: dislike,
 		};
 		try {
-			await ServiceAvisos.patchUpdate(aviso.ID, bodyLike);
+			ServiceAvisos.patchUpdate(aviso.ID, bodyLike);
 		} catch (error) {
 			console.error(error);
 			setTimeout(() => {
@@ -50,23 +47,73 @@ const ViewsLikeDislike = ({ aviso }) => {
 		}
 	};
 
-	// useEffect(() => {
-	// 	saveLike();
-	// }, [likeAviso, dislikeAviso]);
-
-	const functionDislikeAvisos = async () => {
-		if (dislikeActive) {
-			setDislikeActive(false);
-			setDislikeAviso(dislikeAviso - 1);
-			saveLike(); // coloquei a função aqui aleatoriamente, depois volta ela pro lugar...
+	const saveToCache = (like) => {
+		const infoAtualStorage =
+			JSON.parse(localStorage.getItem("like.avisos")) || storage;
+		const infoSaveCache = [
+			...infoAtualStorage,
+			{ idAviso: idAvisoSelecionado, like },
+		];
+		const existeInfoStorage = infoAtualStorage.filter((item) => {
+			if (item.idAviso === idAvisoSelecionado) return item;
+		});
+		if (existeInfoStorage.length) {
+			infoAtualStorage.filter((item) => {
+				if (item.idAviso === idAvisoSelecionado) {
+					item.like = like;
+				}
+			});
+			setStorage(infoAtualStorage);
 		} else {
-			setDislikeActive(true);
-			setDislikeAviso(dislikeAviso + 1);
+			setStorage(infoSaveCache);
+		}
+	};
 
-			if (likeActive) {
+	const existeInfoCache = (like) => {
+		const existInfoStorage = storage.some((obj) => {
+			return (
+				JSON.stringify(obj) ===
+				JSON.stringify({ idAviso: idAvisoSelecionado, like })
+			);
+		});
+
+		return existInfoStorage;
+	};
+
+	const clickLike = async (statusLike) => {
+		const idExisteCache = await existeInfoCache("on");
+		if (statusLike === "like" && !likeActive) {
+			if (!idExisteCache) {
+				const countLike = likeAviso + 1;
+				let countDislike = 0;
+				setLikeAviso(countLike);
+				if (dislikeAviso > 0) {
+					countDislike = dislikeAviso - 1;
+					setDislikeAviso(countDislike);
+				}
+				saveToCache("on");
+				setLikeActive(true);
+				setDislikeActive(false);
+				saveLike(countLike, countDislike);
+			} else {
+				messageJaClicado();
+			}
+		} else {
+			const idExisteCache = await existeInfoCache("off");
+			if (statusLike === "disLike" && !dislikeActive && !idExisteCache) {
+				const countDislike = dislikeAviso + 1;
+				let countLike = 0;
+				setDislikeAviso(countDislike);
+				if (likeAviso > 0) {
+					countLike = likeAviso - 1;
+					setLikeAviso(countLike);
+				}
+				saveToCache("off");
 				setLikeActive(false);
-				setDislikeAviso(dislikeAviso + 1);
-				setLikeAviso(likeAviso - 1);
+				setDislikeActive(true);
+				saveLike(countLike, countDislike);
+			} else {
+				messageJaClicado();
 			}
 		}
 	};
@@ -81,13 +128,13 @@ const ViewsLikeDislike = ({ aviso }) => {
 					className="button-like-avisos p-1"
 					icon={<HiThumbUp className="hi-thumb-Up" />}
 					label={likeAviso}
-					onClick={() => functionLikeAvisos()}
+					onClick={() => clickLike("like")}
 				/>
 				<Button
 					className="button-dislike-avisos p-1"
 					icon={<HiThumbDown className="hi-thumb-Down" />}
 					label={dislikeAviso}
-					onClick={() => functionDislikeAvisos()}
+					onClick={() => clickLike("disLike")}
 				/>
 			</div>
 		</div>

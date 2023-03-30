@@ -17,6 +17,8 @@ export interface IVehicleRange {
   data_alteracao: Date;
   latitude: number;
   longitude: number;
+  VEI_CATEGORIA?: string | null;
+  SV_DSC: string | null;
 }
 
 export interface ISearchVehicleRange {
@@ -53,6 +55,12 @@ interface ILastLocations {
   DISIMEI: string;
   DTINC: string;
   ID?: number;
+}
+
+interface IInfoSetorVeiculo {
+  VEI_PLACA: string;
+  SV_DSC: string;
+  VEI_CATEGORIA: string;
 }
 export class ServiceDistanceLocations {
   async find(query: IQueryDistance): Promise<null | number> {
@@ -278,16 +286,12 @@ export class ServiceDistanceLocations {
       dbo.fncCalcula_Distancia_Coordenada(LAT, LON, ?, ?) as distancia_km,
       PLACA as placa,
       LAT as latitude,
-      LON as longitude,
-      VEI.VEI_CATEGORIA,
-      VEI.SV_DSC
-
+      LON as longitude
       from (
         SELECT MAXPOSITION.PLACA, MAXPOSITION.DT_ALTERACAO, MAXPOSITION.LAT, MAXPOSITION.LON,
         ROW_NUMBER() OVER (PARTITION BY PLACA ORDER BY DT_ALTERACAO DESC) as POS
         from MAXPOSITION
       ) M1
-      LEFT JOIN Veiculo VEI ON VEI.VEI_PLACA = M1.PLACA
       WHERE CONVERT(DATE,DT_ALTERACAO) >= CONVERT(DATE,GETDATE()-7)
       AND PLACA is not null
       AND M1.POS = 1
@@ -298,6 +302,21 @@ export class ServiceDistanceLocations {
     `,
       [lat, lon, lat, lon, distanceInKm]
     );
+
+    const placas = vehicles.map((item) => ` '${item.placa}'`);
+    const infoSetorVeiculo = await database.raw(
+      `SELECT VEI_CATEGORIA, SVI.SV_DSC, VEI_PLACA  FROM VEICULO VEI INNER JOIN SETOR_VEICULO SVI
+              ON SVI.SV_COD = VEI.SV_COD WHERE VEI_PLACA IN (${placas})`
+    );
+
+    vehicles.forEach((elem) => {
+      return infoSetorVeiculo.filter((filtroData: IInfoSetorVeiculo) => {
+        if (elem.placa === filtroData.VEI_PLACA) {
+          elem.SV_DSC = filtroData.SV_DSC;
+          elem.VEI_CATEGORIA = filtroData.VEI_CATEGORIA;
+        }
+      });
+    });
 
     return {
       cnpj,

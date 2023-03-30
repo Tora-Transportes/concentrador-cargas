@@ -179,6 +179,36 @@ export class CargaCsnInfoRepository {
 
     const rows: ICarga[] = await results;
 
+    //ESTA LINHA DE CODIGO ABAIXO ESTA SENDO DESENVOLVIDA PARA GANHO NA AUTONOMIA DOS CARREGAMENTOD DOS DADOS
+    // const idCarga = rows.map((item) => ` ${item.id}`);
+    // const infoPontoParada = await database("con_pontos_parada")
+    //   .select([
+    //     "con_pontos_parada.*",
+    //     "con_rotas_csn.DESCRICAO",
+    //     "con_rotas_csn.LATITUDE AS LATITUDE_ROTA",
+    //     "con_rotas_csn.LONGITUDE AS LONGITUDE_ROTA",
+    //   ])
+    //   .whereIn("con_pontos_parada.ID_CON_CARGAS", idCarga)
+    //   .leftJoin(
+    //     "con_rotas_csn",
+    //     "con_rotas_csn.ID",
+    //     "con_pontos_parada.ID_ROTAS_CSN"
+    //   )
+    //   .orderBy("con_pontos_parada.ID", "ASC");
+
+    // rows.forEach((elem) => {
+    //   return infoPontoParada.filter((filtroData: IPonto_parada) => {
+    //     let allPontoParadaId: IPonto_parada[] = [];
+    //     if (elem.id === filtroData.ID_CON_CARGAS) {
+    //       allPontoParadaId.push(filtroData);
+    //       if (infoPontoParada.length === 3) {
+    //         elem.ponto_parada = infoPontoParada;
+    //         allPontoParadaId = [];
+    //       }
+    //     }
+    //   });
+    // });
+
     await Promise.all(
       rows.map(async (obj) => {
         obj.ponto_parada = await database("con_pontos_parada")

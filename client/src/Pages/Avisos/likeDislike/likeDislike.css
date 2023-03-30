@@ -21,7 +21,7 @@
   flex-direction: row;
   position: absolute;
   align-items: flex-end;
-  margin-right: -9%;
+  margin-right: -10%;
 }
 
 .button-like-avisos,
@@ -58,9 +58,9 @@
   box-shadow: none;
 }
 
-.button-dislike-avisos {
+/* .button-dislike-avisos {
   margin-left: -12%;
-}
+} */
 
 .hi-thumb-Down {
   color: #aa1c1cb2;
@@ -71,6 +71,20 @@
 .button-like-avisos:enabled:focus,
 .button-dislike-avisos:enabled:focus {
   box-shadow: none;
+}
+
+@media screen and (max-width: 454px) {
+  .buttons-reaction-avisos {
+    margin-left: 29%;
+  }
+  .button-dislike-avisos {
+    margin-left: -2%;
+  }
+
+  .div-reaction-avisos {
+    display: block;
+    text-align: center;
+  }
 }
 
 @media screen and (min-width: 455px) and (max-width: 580px) {
@@ -105,9 +119,9 @@
     margin-left: -2%;
   }
 
-  .button-dislike-avisos {
+  /* .button-dislike-avisos {
     margin-left: -10%;
-  }
+  } */
 }
 
 @media screen and (min-width: 996px) and (max-width: 1199px) {
@@ -141,7 +155,7 @@
     margin-left: -2%;
   }
 
-  .button-dislike-avisos {
+  /* .button-dislike-avisos {
     margin-left: -10%;
-  }
+  } */
 }
