@@ -253,28 +253,6 @@ div .button-salvar:enabled:hover {
     width: 30rem;
   }
 }
-@media only screen and (max-width: 765px) {
-  .p-conte-nos-avisos {
-    margin-right: 15%;
-
-    font-size: 15px;
-  }
-  .div-reaction-avisos {
-    display: flexbox;
-  }
-  .buttons-reaction-avisos {
-    margin-top: -1%;
-  }
-}
-
-@media only screen and (min-width: 766px) and (max-width: 995px) {
-  .p-conte-nos-avisos {
-    margin-right: 10%;
-  }
-  .div-reaction-avisos {
-    display: flexbox;
-  }
-}
 
 @media screen and (min-width: 516px) and (max-width: 1595px) {
   div .add-button {
