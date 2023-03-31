@@ -2,8 +2,8 @@
   font-family: "Poppins", sans-serif;
 }
 
-.class-title-coleta {
-  font-size: 40px;
+.h1-title-selecaoCarg {
+  font-size: 2.4rem;
   font-weight: 500;
   color: #00652e;
   margin-top: 6rem;
@@ -17,7 +17,7 @@
   grid-template-columns: auto auto;
   justify-content: space-evenly;
   align-items: center;
-  grid-gap: -3rem;
+  grid-gap: -5rem;
   margin-top: 3rem;
 }
 
@@ -25,7 +25,7 @@ div .title-ico-import,
 #title-manual,
 div .title-CSN {
   font-family: "Poppins", sans-serif;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: #00652e;
 }
 
@@ -45,6 +45,7 @@ div .icon-import {
 .icon-csn {
   color: #00652e;
   margin-top: 4.2rem;
+  margin-left: -0.5rem;
 }
 
 .title-ico-import:hover,
@@ -66,177 +67,67 @@ div .title-CSN:hover,
   color: #009c08;
 }
 
-@media only screen and (min-width: 115px) and (max-width: 235px) {
-  div .class-title-coleta {
+@media only screen and (max-width: 295px) {
+  .h1-title-selecaoCarg {
+    text-align: left;
+  }
+  div .title-ico-import {
+    text-align: center;
+  }
+
+  div .class-button-icons {
+    margin-left: 25% !important;
+  }
+}
+@media only screen and (min-width: 306px) and (max-width: 365px) {
+  div .h1-title-selecaoCarg {
+    margin-left: 1rem;
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  div .class-button-icons {
+    text-align: flex;
+    position: absolute;
+    display: block;
+    margin-top: 1rem;
+    margin-left: 35% !important;
+  }
+}
+
+@media only screen and (max-width: 808px) {
+  .class-cargas-menu {
+    overflow: none;
+  }
+  div .class-button-icons {
+    text-align: flex;
+    position: absolute;
+    display: block;
+    margin-top: 1rem;
+    margin-left: 32%;
+  }
+
+  div .title-ico-import {
+    margin-left: -4rem;
+  }
+
+  div .icon-import {
+    color: #00652e;
+    margin-top: 3rem;
+    margin-left: 0.9rem;
+  }
+
+  div .title-CSN {
+    margin-left: 1rem;
+  }
+  div .icon-csn {
+    margin-left: 0.3rem;
+  }
+}
+
+@media only screen and (max-width: 902px) {
+  div .h1-title-selecaoCarg {
     font-size: 1.8rem;
-  }
-
-  div .class-button-icons {
-    position: absolute;
-    display: block;
-    margin-top: 0.5rem;
-    margin-left: 10%;
-  }
-  div .title-CSN,
-  div .title-ico-import,
-  #title-manual {
-    font-size: 22px;
-  }
-
-  #title-manual,
-  #hand {
-    margin-left: 0.6rem;
-  }
-  div .title-ico-import {
-    margin-left: -1.3rem;
-  }
-  div .icon-import {
-    margin-left: 1rem;
-  }
-
-  div .title-CSN {
-    margin-left: 1rem;
-  }
-  div .icon-csn {
-    margin-left: 0.6rem;
+    text-align: center;
   }
 }
-
-@media only screen and (min-width: 236px) and (max-width: 305px) {
-  div .class-title-coleta {
-    margin-left: 1rem;
-  }
-
-  div .class-button-icons {
-    position: absolute;
-    display: block;
-    margin-top: 1rem;
-    margin-left: 20%;
-  }
-
-  .class-cargas-menu {
-    overflow: none;
-  }
-
-  div .title-CSN,
-  div .title-ico-import,
-  #title-manual {
-    font-size: 22px !important;
-  }
-
-  #title-manual,
-  #hand {
-    margin-left: 0.8rem;
-  }
-  div .title-ico-import {
-    margin-left: -2rem !important;
-  }
-  div .icon-import {
-    margin-left: 1rem !important;
-  }
-
-  div .title-CSN {
-    margin-left: 1.2rem;
-  }
-  div .icon-csn {
-    margin-left: 0.6rem;
-  }
-}
-
-@media only screen and (min-width: 306px) and (max-width: 505px) {
-  div .class-title-coleta {
-    margin-left: 1rem;
-  }
-
-  div .class-button-icons {
-    position: absolute;
-    display: block;
-    margin-top: 1rem;
-    margin-left: 30%;
-  }
-
-  .class-cargas-menu {
-    overflow: none;
-  }
-
-  div .title-CSN,
-  div .title-ico-import,
-  #title-manual {
-    font-size: 22px;
-  }
-
-  div .title-ico-import {
-    margin-left: -3rem !important;
-  }
-  div .icon-import {
-    margin-left: 1rem !important;
-  }
-
-  div .title-CSN {
-    margin-left: 1rem;
-  }
-  div .icon-csn {
-    margin-left: 0.6rem;
-  }
-}
-@media only screen and (max-width: 768px) {
-}
-@media only screen and (min-width: 900px) {
-  .title-CSN,
-  .title-ico-import,
-  #title-manual {
-    font-size: 35px;
-  }
-}
-/* @media only screen and (min-width: 506px) {
-  .class-button-icons {
-    margin-top: 2rem;
-    grid-gap: 3rem;
-    margin-left: 2rem;
-  }
-
-  #title-manual,
-  #hand {
-    margin-left: 1rem;
-  }
-
-  div .icon-csn {
-    margin-left: -1rem;
-  }
-}
-
-{
-  .class-title-coleta {
-    margin-top: 4rem;
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    margin-left: 1rem;
-  }
-
-  .class-cargas-menu {
-    overflow: none;
-  }
-
-  #title-manual {
-    font-size: 22px;
-  }
-
-  #hand {
-    color: #00652e;
-    margin-top: 3rem;
-  }
-
-  div .icon-import {
-    color: #00652e;
-    margin-top: 3rem;
-    margin-left: 2rem;
-  }
-  div .title-CSN {
-    font-size: 22px;
-    color: #00652e;
-  }
-  .icon-csn {
-    margin-top: 2.5rem;
-  }
-} */

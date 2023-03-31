@@ -143,8 +143,8 @@ function Main() {
 			<Menusuperior />
 			<Container className="class-body-main">
 				<Row>
-					<Col className="text-center mt-2 mb-5">
-						<p className="style-title-main">
+					<Col className="text-center mb-5">
+						<p className="style-p-title-main">
 							Seja bem-vindo(a) ao Concentrador de Cargas
 						</p>
 					</Col>

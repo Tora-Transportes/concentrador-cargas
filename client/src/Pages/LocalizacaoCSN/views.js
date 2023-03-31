@@ -239,7 +239,7 @@ const ViewsLocalizacao = ({ dadosLocalizacao, setAtualizarTabela }) => {
 			<Container>
 				<Row className="mt-3 text-center">
 					<Col>
-						<h1 className="title-gerenciamento">
+						<h1 className="title-gerenciamento-CSN">
 							Gerenciamento de Rotas - CSN
 						</h1>
 					</Col>

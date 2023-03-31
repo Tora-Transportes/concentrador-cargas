@@ -599,7 +599,7 @@ function FormularioCadastroManual({
 				</Col>
 				<Col>
 					<Row>
-						<Col>
+						<Col sm={6} md={6} lg={6}>
 							<FloatingLabel label="*Unidade de medida" className="mb-3">
 								<Form.Control
 									type="text"

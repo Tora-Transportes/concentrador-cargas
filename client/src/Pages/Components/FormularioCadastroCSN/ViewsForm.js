@@ -429,7 +429,7 @@ export default function ViewsForm({
 				</Col>
 			</Row>
 			<Row>
-				<Col sm={12} md={6}>
+				<Col sm={12} md={6} lg={7}>
 					<FloatingLabel label="Tipo de Material" className="mb-3">
 						<AutocompleteInput
 							keyDataList="tipo_carga"
@@ -443,7 +443,7 @@ export default function ViewsForm({
 				</Col>
 				<Col>
 					<Row>
-						<Col>
+						<Col sm={6} md={7} lg={6}>
 							<FloatingLabel label="*Unidade de Medida" className="mb-3">
 								<Form.Control
 									type="text"
@@ -453,7 +453,7 @@ export default function ViewsForm({
 								/>
 							</FloatingLabel>
 						</Col>
-						<Col>
+						<Col sm={6} md={5} lg={6}>
 							<FloatingLabel label="*Quantidade" className="mb-3">
 								<Form.Control
 									type="number"

@@ -175,7 +175,7 @@
 // 							<br />
 // 							Veja a seguir os exemplos dessas funcionalidades: <br />
 // 							<br />
-// 							<b className="style-b-ajuda">Configurar Tabela - </b>você poderá
+// 							<b className="style-b-ajuda">Configurar Tabela - </b> Você poderá
 // 							filtrar os itens que deseja visualizar na página de acordo com a
 // 							sua necessidade no momento da consulta.
 // 						</p>
