@@ -10,7 +10,7 @@ function ResponsavelCadastroSelect({ user, ...props }) {
 		let isMounted = true;
 		if (!cache) {
 			const tipobusca = user === undefined ? "" : user;
-			ServiceUsuarios.search({ q: tipobusca, page: 1, user }).then(
+			ServiceUsuarios.searchName({ q: tipobusca, page: 1, user }).then(
 				(response) => {
 					if (isMounted) {
 						setResponsaveis(response.data.data.results);
@@ -28,8 +28,8 @@ function ResponsavelCadastroSelect({ user, ...props }) {
 	return (
 		<Form.Select {...props}>
 			<option></option>
-			{responsaveis?.map((i) => (
-				<option key={i.oid} value={props.key_value === "oid" ? i.oid : i.nome}>
+			{responsaveis?.map((i, index) => (
+				<option key={index} value={props.key_value === "oid" ? i.oid : i.nome}>
 					{i.nome}
 				</option>
 			))}

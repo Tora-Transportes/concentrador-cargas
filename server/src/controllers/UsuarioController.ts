@@ -2,12 +2,21 @@ import { Request, Response } from "express";
 import {
   UseCaseViewUsuario,
   UseCaseUpdateUsuario,
+  UseCaseSearchName,
 } from "../domain/UseCaseUsuario";
 
 class UsuarioController {
   async search(req: Request, res: Response) {
     const { q } = req.query;
     const searchResult = await new UseCaseViewUsuario().run({
+      query: String(q),
+    });
+
+    return res.json({ data: searchResult });
+  }
+  async searchName(req: Request, res: Response) {
+    const { q } = req.query;
+    const searchResult = await new UseCaseSearchName().run({
       query: String(q),
     });
 
