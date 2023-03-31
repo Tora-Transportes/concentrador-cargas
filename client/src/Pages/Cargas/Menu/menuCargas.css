@@ -68,17 +68,30 @@ div .title-CSN:hover,
 }
 
 @media only screen and (max-width: 295px) {
+  .h1-title-selecaoCarg {
+    text-align: left;
+  }
   div .title-ico-import {
     text-align: center;
   }
 
   div .class-button-icons {
-    margin-left: 20% !important;
+    margin-left: 25% !important;
   }
 }
 @media only screen and (min-width: 306px) and (max-width: 365px) {
   div .h1-title-selecaoCarg {
     margin-left: 1rem;
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  div .class-button-icons {
+    text-align: flex;
+    position: absolute;
+    display: block;
+    margin-top: 1rem;
+    margin-left: 35% !important;
   }
 }
 
@@ -91,7 +104,7 @@ div .title-CSN:hover,
     position: absolute;
     display: block;
     margin-top: 1rem;
-    margin-left: 30%;
+    margin-left: 32%;
   }
 
   div .title-ico-import {
