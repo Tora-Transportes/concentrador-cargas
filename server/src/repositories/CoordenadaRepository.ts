@@ -8,7 +8,8 @@ export class CoordenadaRepository {
     traducaoNomeColuna.set("responsavel_placa_email", "con_usuarios.email");
     traducaoNomeColuna.set("cpf_motorista", "CG_IDENTIFICACAO.CGI_NUM");
     traducaoNomeColuna.set("apelido_carreta", "APV.AV_DSC");
-
+    traducaoNomeColuna.set("placa_carreta", "CARRETA.VEI_PLACA");
+    traducaoNomeColuna.set("placa_bitrem", "BITREM.VEI_PLACA");
     const { order_column, order_direction, page } = filter;
     const {
       placa,
@@ -31,6 +32,8 @@ export class CoordenadaRepository {
       responsavel_placa_email,
       apelido_carreta,
       cpf_motorista,
+      placa_carreta,
+      placa_bitrem,
     } = filter;
 
     const currentPage = Number(page ?? 1) < 1 ? 1 : Number(page ?? 1);
@@ -43,11 +46,10 @@ export class CoordenadaRepository {
       "con_dados_coordenadas.responsavel_placa",
       "con_usuarios.nome as responsavel_placa_nome",
       "con_usuarios.email as responsavel_placa_email",
-      // "con_cargas.placa_carreta",
-      // "con_cargas.placa_bitrem",
-      // "con_cargas.id",
       "CG_IDENTIFICACAO.CGI_NUM as cpf_motorista",
       "APV.AV_DSC as apelido_carreta",
+      "CARRETA.VEI_PLACA as placa_carreta",
+      "BITREM.VEI_PLACA as placa_bitrem",
     ]);
     const total = database("con_coordenadas_veiculos")
       .count("placa as total")
@@ -111,6 +113,29 @@ export class CoordenadaRepository {
       "con_coordenadas_veiculos.codigo_veiculo"
     );
 
+    query.leftJoin(
+      database("VEICULO").as("CARRETA"),
+      "CARRETA.COD_CARRETA",
+      "VEI.VEI_COD"
+    );
+
+    total.leftJoin(
+      database("VEICULO").as("CARRETA"),
+      "CARRETA.COD_CARRETA",
+      "VEI.VEI_COD"
+    );
+
+    query.leftJoin(
+      database("VEICULO").as("BITREM"),
+      "BITREM.COD_BITREM",
+      "VEI.VEI_COD"
+    );
+    total.leftJoin(
+      database("VEICULO").as("BITREM"),
+      "BITREM.COD_BITREM",
+      "VEI.VEI_COD"
+    );
+
     query.leftJoin("APELIDO_VEICULO as APV", "APV.AV_SEQ", "VEI.AV_SEQ");
     total.leftJoin("APELIDO_VEICULO as APV", "APV.AV_SEQ", "VEI.AV_SEQ");
 
@@ -154,17 +179,23 @@ export class CoordenadaRepository {
       responsavel_placa,
       responsavel_placa_nome,
       responsavel_placa_email,
-      // id,
-      // placa_bitrem,
-      // placa_carreta,
       cpf_motorista,
       apelido_carreta,
+      placa_carreta,
+      placa_bitrem,
     })) {
       if (value !== undefined && key) {
         const columnName = traducaoNomeColuna.get(key) ?? key;
         if (traducaoNomeColuna.get(key)) {
-          const validationValue: string =
-            key === "apelido_carreta" ? value.toUpperCase() : value;
+          let validationValue: string = value;
+          const sholdHaveValueToUpperCase = [
+            "apelido_carreta",
+            "placa_carreta",
+            "placa_bitrem",
+          ];
+          if (sholdHaveValueToUpperCase.includes(key)) {
+            validationValue = value.toUpperCase();
+          }
           query.where(columnName, "like", `%${validationValue}%`);
           total.where(columnName, "like", `%${validationValue}%`);
         } else {

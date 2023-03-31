@@ -22,12 +22,12 @@ const ViewsLikeDislike = ({ aviso, toast }) => {
 	]);
 	const idAvisoSelecionado = aviso.ID;
 
-	const messageJaClicado = () => {
+	const messageJaClicado = (message) => {
 		toast.current.clear();
 		toast.current.show({
 			severity: "info",
 			summary: "Ops...",
-			detail: "Você já deu Like nesse aviso. Obrigado!",
+			detail: message,
 			life: 3000,
 		});
 	};
@@ -96,7 +96,7 @@ const ViewsLikeDislike = ({ aviso, toast }) => {
 				setDislikeActive(false);
 				saveLike(countLike, countDislike);
 			} else {
-				messageJaClicado();
+				messageJaClicado("Você já deu Like nesse aviso. Obrigado!");
 			}
 		} else {
 			const idExisteCache = await existeInfoCache("off");
@@ -113,7 +113,11 @@ const ViewsLikeDislike = ({ aviso, toast }) => {
 				setDislikeActive(true);
 				saveLike(countLike, countDislike);
 			} else {
-				messageJaClicado();
+				messageJaClicado(
+					statusLike === "like"
+						? "Você já deu Like nesse aviso. Obrigado!"
+						: "Você já deu dislike nesse aviso. Obrigado!"
+				);
 			}
 		}
 	};
