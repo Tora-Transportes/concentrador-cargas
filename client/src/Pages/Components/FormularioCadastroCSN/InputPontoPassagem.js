@@ -106,7 +106,7 @@ const InputsPontoPassagem = ({
 		<>
 			<Toast ref={alertDataSalva} position="top-center" />
 			<Row className="row-input-coleta-inicio">
-				<Col sm={12} md={9} lg={9} xxl={7}>
+				<Col sm={12} md={12} lg={12} xxl={6}>
 					<FloatingLabel label="*Ponto de Passagem" className="mb-3">
 						<Form.Control
 							type="text"
@@ -131,7 +131,7 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
-				<Col md={12}>
+				<Col>
 					<FloatingLabel label="*Previsão Início" className="mb-3">
 						<Form.Control
 							type="datetime-local"
@@ -250,7 +250,7 @@ const InputsPontoPassagem = ({
 			</Row>
 			<br />
 			<Row className="row-input-coleta-inicio">
-				<Col sm={12} md={9} lg={9} xxl={7}>
+				<Col sm={12} md={12} lg={12} xxl={6}>
 					<FloatingLabel label="Ponto de Passagem 2" className="mb-3">
 						<Form.Control
 							type="text"
@@ -275,7 +275,7 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
-				<Col md={12}>
+				<Col>
 					<FloatingLabel label="*Previsão Início 2" className="mb-3">
 						<Form.Control
 							type="datetime-local"
@@ -393,7 +393,7 @@ const InputsPontoPassagem = ({
 			</Row>
 			<br />
 			<Row className="row-input-coleta-inicio">
-				<Col sm={12} md={9} lg={9} xxl={7}>
+				<Col sm={12} md={12} lg={12} xxl={6}>
 					<FloatingLabel label="Ponto de Passagem 3" className="mb-3">
 						<Form.Control
 							type="text"
@@ -418,7 +418,7 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
-				<Col md={12}>
+				<Col>
 					<FloatingLabel label="*Previsão Início 3" className="mb-3">
 						<Form.Control
 							type="datetime-local"
@@ -541,9 +541,7 @@ const InputsPontoPassagem = ({
 					{inputPontoPassagem5 ? (
 						<Col
 							sm={12}
-							md={10}
-							lg={10}
-							xxl={9}
+							md={6}
 							style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
 							className="col-cod-local"
 						>
@@ -560,7 +558,7 @@ const InputsPontoPassagem = ({
 							/>
 						</Col>
 					) : (
-						<Col sm={12} md={10} lg={10} xxl={9}>
+						<Col sm={12} md={12} lg={12} xxl={6}>
 							<InputCliente
 								type="text"
 								placeholder=" "
@@ -593,7 +591,7 @@ const InputsPontoPassagem = ({
 							</Form.Select>
 						</FloatingLabel>
 					</Col>
-					<Col sm={6} md={6} lg={6}>
+					<Col>
 						<FloatingLabel label="*Previsão Início 5" className="mb-3">
 							<Form.Control
 								type="datetime-local"
@@ -732,9 +730,7 @@ const InputsPontoPassagem = ({
 					{inputPontoPassagem6 ? (
 						<Col
 							sm={12}
-							md={9}
-							lg={9}
-							xxl={7}
+							md={6}
 							style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
 							className="col-cod-local"
 						>
@@ -785,7 +781,7 @@ const InputsPontoPassagem = ({
 							</Form.Select>
 						</FloatingLabel>
 					</Col>
-					<Col sm={6} md={6} lg={6}>
+					<Col>
 						<FloatingLabel label="*Previsão Início 6" className="mb-3">
 							<Form.Control
 								type="datetime-local"
@@ -921,9 +917,7 @@ const InputsPontoPassagem = ({
 					{inputPontoPassagem7 ? (
 						<Col
 							sm={12}
-							md={9}
-							lg={9}
-							xxl={7}
+							md={6}
 							style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
 							className="col-cod-local"
 						>
@@ -976,7 +970,7 @@ const InputsPontoPassagem = ({
 							</Form.Select>
 						</FloatingLabel>
 					</Col>
-					<Col sm={6} md={6} lg={6}>
+					<Col>
 						<FloatingLabel label="*Previsão Início 7" className="mb-3">
 							<Form.Control
 								type="datetime-local"
@@ -1121,7 +1115,7 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
-				<Col md={12}>
+				<Col>
 					<FloatingLabel label="*Previsão Início 4" className="mb-3">
 						<Form.Control
 							type="datetime-local"
