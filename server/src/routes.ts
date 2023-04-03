@@ -102,6 +102,7 @@ routes.get("/csn/ponto_parada/:id", PontoParadaController.serachPerIdCarga);
 routes.delete("/csn/ponto_parada/:id", PontoParadaController.delete);
 
 routes.get("/usuarios", UsuarioController.search);
+routes.get("/usuarios/nome", UsuarioController.searchName);
 routes.get("/usuarios/:oid", UsuarioController.index);
 routes.put(
   "/usuarios/:oid/permissoes",

@@ -3,43 +3,19 @@ import { Knex } from "knex";
 import IUsuario from "../models/IUsuario";
 export class UsuarioRepository {
   async search(filter: Record<string, any>, page = 1) {
-    let results;
-    if (filter.query === "csn") {
-      results = database("con_usuarios")
-        .select(["con_usuarios.*"])
-        .distinct()
-        .join(
-          "con_cargas",
-          "con_cargas.responsavel_cadastro",
-          "con_usuarios.nome"
-        )
-        .where("con_cargas.carga_csn", 1);
-    } else if (filter.query === "padrao") {
-      results = database("con_usuarios")
-        .select(["*"])
-        .distinct()
-        .join(
-          "con_cargas",
-          "con_cargas.responsavel_cadastro",
-          "con_usuarios.nome"
-        )
-        .where("con_cargas.carga_csn", 0)
-        .orWhereNull("con_cargas.carga_csn");
-    } else {
-      results = database("con_usuarios").select("*");
+    const results = database("con_usuarios").select("*");
 
-      const funcToFilter = (qb: Knex.QueryBuilder) => {
-        if (filter.query) {
-          qb.orWhere("nome", "like", `%${filter.query}%`);
-          qb.orWhere("email", "like", `%${filter.query}%`);
-        }
-        for (const i in filter) {
-          if (i === "query") continue;
-          qb.andWhere(i, filter[i]);
-        }
-      };
-      results.where(funcToFilter);
-    }
+    const funcToFilter = (qb: Knex.QueryBuilder) => {
+      if (filter.query) {
+        qb.orWhere("nome", "like", `%${filter.query}%`);
+        qb.orWhere("email", "like", `%${filter.query}%`);
+      }
+      for (const i in filter) {
+        if (i === "query") continue;
+        qb.andWhere(i, filter[i]);
+      }
+    };
+    results.where(funcToFilter);
 
     const usersAndPermissions = await database
       .from(results.as("usuarios"))
@@ -76,6 +52,25 @@ export class UsuarioRepository {
       page,
       results: outputUsers,
     };
+  }
+
+  async searchName(filter: any) {
+    const result = database("con_cargas")
+      .select([
+        "con_cargas.usuario as nome",
+        "con_usuarios.oid as oid",
+        "con_usuarios.email as email",
+      ])
+      .leftJoin("con_usuarios", "con_usuarios.nome", "con_cargas.usuario")
+      .distinct();
+    const funcToFilter = (qb: Knex.QueryBuilder) => {
+      if (filter.query === "csn") {
+        qb.orWhere("carga_csn", 1);
+      }
+    };
+    result.where(funcToFilter);
+    const rows = await result;
+    return { results: rows };
   }
 
   async update(oid: string, usuario: IUsuario) {

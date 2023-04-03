@@ -125,7 +125,7 @@ const ViewsLikeDislike = ({ aviso, toast }) => {
 	return (
 		<div className="div-reaction-avisos">
 			<p className="p-conte-nos-avisos">
-				Conte-nos! O que você achou deste aviso?
+				{/* Conte-nos! O que você achou deste aviso? */}
 			</p>
 			<div className="buttons-reaction-avisos">
 				<Button

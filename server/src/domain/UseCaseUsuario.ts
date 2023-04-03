@@ -38,3 +38,9 @@ export class UseCaseViewUsuario {
     return usuarioRepository.search(filter);
   }
 }
+export class UseCaseSearchName {
+  async run(filter: Record<string, any>) {
+    const usuarioRepository = new UsuarioRepository();
+    return usuarioRepository.searchName(filter);
+  }
+}
