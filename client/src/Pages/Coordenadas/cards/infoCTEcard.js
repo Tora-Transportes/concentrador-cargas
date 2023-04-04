@@ -64,7 +64,7 @@ function InfoCTEcard({ rowInfoPlaca, setVisibleCardCte }) {
 		<>
 			<LoadingScreen />
 			<Row>
-				<Col>
+				<Col sm={12} md={12} lg={11} xxl={10}>
 					<ul>
 						{dataCTE?.map((i, index) => (
 							<div key={index}>
