@@ -368,10 +368,15 @@ div .versionamento {
 @media only screen and (min-width: 100px) and (max-width: 1555px) {
   div .versionamento {
     position: relative;
-    bottom: -1%;
+    bottom: -0.9%;
     margin-left: 6px;
     color: #a70505;
     font-size: 13px;
     font-weight: 530;
+  }
+}
+@media only screen and (min-width: 1440px) {
+  div .versionamento {
+    position: absolute;
   }
 }
