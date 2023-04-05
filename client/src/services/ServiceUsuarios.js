@@ -5,6 +5,11 @@ class ServiceUsuarios {
 			params: { q, page },
 		});
 	}
+	async searchName({ q }) {
+		return api.get("/usuarios/nome", {
+			params: { q },
+		});
+	}
 
 	async changePermissions({ oid, permissoes }) {
 		return api.put(`/usuarios/${oid}/permissoes`, {

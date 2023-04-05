@@ -29,7 +29,7 @@
 }
 
 .footer-table {
-  margin-left: 17vw;
+  margin-left: 15vw;
 }
 
 .footer-table-totalPages {
@@ -70,7 +70,7 @@
 .paginator-table-col {
   display: none;
 }
-#Tabela-coordenadas{
+#Tabela-coordenadas {
   margin-right: -2rem;
 }
 /* css nativa da tabela */
@@ -127,7 +127,6 @@
   .p-datatable-responsive-grid
   .p-column-filter-row
   .p-column-filter-element {
-  /* width: auto; */
   height: 2.5em;
 }
 .datatable-responsive-gridCargas
@@ -151,10 +150,16 @@
 .p-column-filter-row .p-column-filter-clear-button {
   display: none;
 }
-
-@media only screen and (max-width: 345px) {
-  .button-input-multiselect {
-    display: none;
+@media only screen and (max-width: 306px) {
+  .footer-table Button {
+    font-size: 0.84rem;
+  }
+}
+@media only screen and (max-width: 334px) {
+  .footer-table Button {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
   }
 }
 
@@ -162,9 +167,10 @@
   .paginator-table-col {
     display: grid;
   }
-  /* .datatable-responsive-gridCargas .p-datatable-header {
+
+  .button-input-multiselect {
     display: none;
-  } */
+  }
 
   .col-paginator-itens {
     text-align: center;
@@ -181,22 +187,24 @@
   .header-table-col-buttons {
     display: grid;
   }
-}
 
-@media only screen and (max-width: 575px) {
+  .footer-table {
+    display: grid !important;
+    margin-right: 10vw;
+  }
   .footer-table Button {
-    margin-left: -1.5rem !important;
+    margin-left: 1.3rem !important;
   }
 }
 
 @media only screen and (max-width: 661px) {
   .footer-table {
-    display: grid;
+    display: flex;
   }
 
   .footer-table Button {
-    margin: 3px;
-    width: 90%;
+    margin: 4px;
+    width: 70%;
   }
 }
 

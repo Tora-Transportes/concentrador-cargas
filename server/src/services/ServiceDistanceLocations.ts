@@ -303,18 +303,6 @@ export class ServiceDistanceLocations {
       [lat, lon, lat, lon, distanceInKm]
     );
 
-    // await Promise.all(
-    //   vehicles.map(async (obj) => {
-    //     const veiCategoria = await database.raw(
-    //       `SELECT VEI_CATEGORIA, SVI.SV_DSC FROM VEICULO VEI INNER JOIN SETOR_VEICULO SVI
-    //         ON SVI.SV_COD = VEI.SV_COD WHERE VEI_PLACA = ('${obj.placa}')`
-    //     );
-    //     obj.VEI_CATEGORIA = veiCategoria[0]?.VEI_CATEGORIA;
-    //     obj.SV_DSC = veiCategoria[0]?.SV_DSC;
-    //     return obj;
-    //   })
-    // );
-
     const placas = vehicles.map((item) => ` '${item.placa}'`);
     const infoSetorVeiculo = await database.raw(
       `SELECT VEI_CATEGORIA, SVI.SV_DSC, VEI_PLACA  FROM VEICULO VEI INNER JOIN SETOR_VEICULO SVI

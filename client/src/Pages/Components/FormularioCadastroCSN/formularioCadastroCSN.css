@@ -26,8 +26,8 @@
   margin-bottom: -20px;
 }
 
-#botao-deb-veiculo,
-#botao-detail-veiculo {
+Button #botao-deb-veiculo,
+Button #botao-detail-veiculo {
   background: #00652e;
   border: none;
 }
@@ -43,7 +43,7 @@
   margin-top: 1rem;
   margin-right: 10px;
 }
-.class-botao-Detabito {
+.class-botao-Debito {
   background: #00652e;
   color: #ffff;
   border: none;
@@ -65,28 +65,6 @@
   margin-right: 1.5px !important;
   margin-bottom: 15px;
   background: #f9faf8;
-  /* padding-left: 12px !important; */
-}
-.row-input-placa {
-  padding-top: 15px;
-  box-shadow: 5px 10px #928a8a;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  margin-left: 2px !important;
-  margin-right: 1.5px !important;
-  margin-bottom: 15px;
-  background: #f9faf8;
-  padding-left: 16px !important;
-}
-
-.col-input-placa-button {
-  margin-bottom: 5px;
-  text-align: end;
-}
-
-.row-input-placas {
-  margin-right: 0 !important;
-  margin-top: 5px;
 }
 .row-input-coleta-inicio {
   padding-top: 15px;
@@ -96,6 +74,27 @@
   margin-right: 1.5px !important;
   background: #f9faf8;
   /* padding-left: 12px !important; */
+}
+.row-input-placa {
+  padding-top: 15px;
+  /* box-shadow: 5px 10px #928a8a;
+  border: 1px solid #ced4da; */
+  border-radius: 4px;
+  margin-left: 2px !important;
+  margin-right: 1.5px !important;
+  margin-bottom: 15px;
+  background: #f9faf8;
+  padding-left: 16px !important;
+}
+
+.col-buttons-inf-veiculos {
+  margin-bottom: 5px;
+  text-align: end;
+}
+
+.row-input-placas {
+  margin-right: 0 !important;
+  margin-top: 5px;
 }
 .col-cod-local {
   width: 48.2% !important;
@@ -122,7 +121,6 @@
   border: none;
   display: grid;
   width: 100%;
-  /* padding: -1rem; */
   outline-color: #fff;
 }
 .input-cod-filial {
@@ -179,17 +177,19 @@ label {
 }
 
 .col-temp-servic-local {
-  margin-right: 43px;
+  margin-right: 4%;
+  min-width: 22%;
 }
 
 .floatingLabel-temp-servic-local {
-  width: 110%;
+  width: 113%;
 }
+
 @media only screen and (max-width: 486px) {
-  .col-cod-filial2,
+  div .col-cod-filial2,
   .col-cod-local {
+    width: 93% !important;
     margin-bottom: 1rem;
-    width: 92% !important;
   }
   .row-button-local {
     display: grid !important;
@@ -198,19 +198,22 @@ label {
   .row-input-coleta-inicio {
     display: grid !important;
   }
-  .class-botao-Detalhes {
-    margin-right: 0;
-  }
 }
-@media only screen and (min-width: 354px) and (max-width: 575px) {
+@media only screen and (max-width: 575px) {
   .col-cod-filial2 {
     margin-bottom: 1rem;
-    width: 95% !important;
+    width: 97% !important;
   }
 }
+
 @media only screen and (max-width: 770px) {
   .input-ponto-passagem-coleta-entrega {
     min-width: 30%;
+  }
+
+  .col-cod-filial2 {
+    margin-bottom: 1rem;
+    width: 95% !important;
   }
 }
 @media only screen and (max-width: 1100px) {
@@ -242,6 +245,17 @@ label {
   }
   #style-ipunt-motorista {
     width: 100%;
+  }
+
+  .col-buttons-inf-veiculos {
+    margin: 5px;
+    text-align: center;
+  }
+  Button #botao-deb-veiculo,
+  Button #botao-detail-veiculo {
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
   }
 
   .col-temp-servic-local {

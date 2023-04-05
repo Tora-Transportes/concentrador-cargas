@@ -1,45 +1,106 @@
-.class-body-destCarga {
+div .class-body-destCarga {
   font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
 }
+
+div .class-title-dest {
+  font-family: "Poppins", sans-serif;
+  font-size: 40px;
+  color: #00652e;
+  margin-top: 3rem;
+  margin-left: 3rem;
+  text-align: center;
+}
+div .class-card-dest {
+  box-sizing: border-box;
+  margin-top: 2rem;
+  width: 100%;
+}
+
 .class-body-viewdest {
+  box-sizing: border-box !important;
   display: grid;
   grid-template-columns: auto auto auto;
   justify-content: center;
   margin-top: 1rem;
   grid-gap: 3vw;
 }
-.class-title-dest {
-  font-family: "Poppins", sans-serif;
-  color: #00652e;
-  font-size: 40px;
+
+div .form-empresa-dist {
+  width: 45vw;
+  height: 3.5rem !important;
 }
-.class-card-dest {
-  margin-top: 2rem;
-  height: 7rem;
-  width: 60rem;
+div .form-placa-dist {
+  width: 30vh;
+  height: 3.4rem;
 }
 
-#button-pesq-dist {
+div #button-pesq-dist {
   background: #00652e;
   border: none;
   width: 10rem;
   height: 2rem;
-  margin-top: 2.45rem;
+  margin-top: 2.8rem;
 }
 
-.form-input-empresa {
-  width: 40vw !important;
-  height: 3rem !important;
-}
-.form-placa {
-  width: 13rem !important;
-  height: 2.8rem !important;
-}
+@media only screen and (min-width: 115px) and (max-width: 574px) {
+  .class-title-dest {
+    margin-left: -2rem !important;
+    display: flex;
+    justify-content: space-around;
+    box-sizing: border-box;
+  }
+  .class-body-viewdest {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    grid-gap: 2rem;
+  }
 
-@media only screen and (min-width: 215px) and (max-width: 865px) {
+  div .class-card-dest {
+    margin-top: 2rem;
+    margin-left: -2rem;
+    width: 100%;
+  }
+
+  div .form-empresa-dist {
+    width: 102% !important;
+    height: 3.5rem !important;
+  }
+  div .form-placa-dist {
+    width: 35vh;
+    height: 2.5rem;
+  }
+
+  div #button-pesq-dist {
+    background: #00652e;
+    border: none;
+    width: 10rem;
+    height: 2rem;
+    margin-top: -0.5rem !important;
+  }
+}
+@media only screen and (min-width: 575px) and (max-width: 1065px) {
   .class-title-dest {
     display: flex;
     justify-content: space-around;
+  }
+
+  .class-body-viewdest {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    grid-gap: 2rem;
+  }
+
+  div .form-empresa-dist {
+    width: 20rem !important;
+    height: 2.5rem !important;
+  }
+
+  div .form-placa-dist {
+    width: 30vh;
+    height: 2.5rem !important;
   }
 }
 @media only screen and (min-width: 215px) and (max-width: 1199px) {
@@ -56,22 +117,22 @@
     width: 90%;
     height: 20rem;
   }
-
-  #button-pesq-dist {
-    margin-top: 1rem;
-  }
   .class-body-viewdest {
     display: flex;
     flex-direction: column;
     align-items: center;
-    grid-gap: 2rem;
-  }
-}
-@media only screen and (min-width: 1200px) and (max-width: 1825px) {
-  #button-pesq-dist {
-    margin-top: 2.4rem;
+    grid-gap: 1rem;
   }
 
+  div #button-pesq-dist {
+    background: #00652e;
+    border: none;
+    width: 10rem;
+    height: 2rem;
+    margin-top: 1rem !important;
+  }
+}
+@media only screen and (min-width: 1300px) and (max-width: 1825px) {
   .class-card-dest {
     margin-left: 6%;
     width: 90%;

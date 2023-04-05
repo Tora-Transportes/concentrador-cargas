@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import PopUp from "./viewPopUp";
 
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 import ServiceAvisos from "src/services/ServiceAvisos";
+import PopUp from "./view";
 
 function MainPopUp() {
 	const [isShow, setShow] = useState(false);

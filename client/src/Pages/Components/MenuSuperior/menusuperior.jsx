@@ -109,7 +109,6 @@ function Menusuperior() {
           </li>
           <div className="class-dropdown">
             <div className="dropdown-veic">
-              {/* <button id="style-button-drop" className="dropbtn-veic"> */}
               <a
                 href="/relatorios/visualizar"
                 className="dropbtn-veic"
@@ -117,15 +116,6 @@ function Menusuperior() {
               >
                 Relatórios
               </a>
-
-              {/* <div id="myDropdown-veic" className="dropdown-content-veic">
-                <a href="/relatorios">Indicador Operacional</a>
-                <a href="/rotas/pendentes">Rotas Pendentes</a>
-                <a href="/veiculos/raio/empresa">Raio Empresa</a>
-                <a href="/veiculos/raio">Veículos x Veículos</a>
-                <a href="/veiculos/destino">Veículos até Empresa</a>
-                <a href="/veiculos/historico">Histórico Veículos</a>
-              </div> */}
             </div>
           </div>
           {isPermissionCsn && (

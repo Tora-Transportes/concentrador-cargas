@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { FaEnvelope } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 import "./popUp.css";
-//import imgNotice from "../../assets/notice.png";
 
 function PopUp({ isShow, isLastIdPosition }) {
 	const [isCountAviso, setCountAviso] = useState(1);
@@ -40,10 +39,6 @@ function PopUp({ isShow, isLastIdPosition }) {
 								size="35px"
 							/>
 						</div>
-						{/* <button className="button-toast-popup" onClick={showPageAviso}>
-							<img src={imgNotice} width="35" height="35" />
-						</button> */}
-						{/* <span className="span-message">Você tem um novo aviso!</span> */}
 					</div>
 				)}
 			</div>

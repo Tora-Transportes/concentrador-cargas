@@ -78,7 +78,7 @@
 // 						</p>
 // 						<div className="class-button-ir">
 // 							<Button href="/cargas/cadastro/csn" id="button-cadastro-cargas">
-// 								Navegar até Cadastro CSN
+// 								Ir até Cadastro CSN
 // 							</Button>
 // 						</div>
 // 					</Accordion.Body>
@@ -101,7 +101,7 @@
 // 								id="style-button-acc"
 // 								className="button-helper-ir-para"
 // 							>
-// 								Navegar até Listagem CSN
+// 								Ir até Listagem CSN
 // 							</Button>
 // 						</div>
 // 					</Accordion.Body>
@@ -148,14 +148,19 @@
 // 						</p>
 // 						<img src={configTab} id="style-gif2" />
 // 						<p className="p-tela-ajuda-geral">
-// 							<b className="style-b-ajuda">Opções da Tabela</b> - Legenda das
-// 							cargas: mostra o significado de todas as possíveis situações de
-// 							cargas <br /> cadastradas no sistema, facilitando o entendimento
-// 							das mesmas.
-// 							<br /> Importar tabela: Permite filtro por data e código da filial
+// 							<b className="style-b-ajuda">Opções da Tabela - </b>{" "}
+// 							<b>Legenda das cargas:</b> Mostra o significado de todas as
+// 							possíveis situações de cargas cadastradas no sistema, facilitando
+// 							o entendimento das mesmas.
+// 							<br />
+// 							<br />
+// 							<b>Importar tabela:</b> Permite filtro por data e código da filial
 // 							e oferece o download da tabela em formato excel.
-// 							<br /> Redefinir tabela: Possibilita redefinir as configurações
-// 							feitas na página, para o formato padrão da ferramenta.
+// 							<br />
+// 							<br />
+// 							<b>Redefinir tabela:</b> Possibilita a redefinição das
+// 							configurações feitas na página, para o formato padrão da
+// 							ferramenta.
 // 						</p>
 // 						<p className="p-tela-ajuda-geral mb-1 mt-3">
 // 							Exemplo de Opções da Tabela:{" "}
@@ -190,7 +195,7 @@
 // 								id="style-button-acc"
 // 								className="button-helper-ir-para"
 // 							>
-// 								Navegar até Coordenadas
+// 								Ir até Coordenadas
 // 							</Button>
 // 						</div>
 // 					</Accordion.Body>
@@ -230,7 +235,7 @@
 // 								id="style-button-acc"
 // 								className="button-helper-ir-para"
 // 							>
-// 								Navegar até Monitoramento CSN
+// 								Ir até Monitoramento CSN
 // 							</Button>
 // 						</div>
 // 					</Accordion.Body>
@@ -256,7 +261,7 @@
 // 								id="style-button-acc"
 // 								className="button-helper-ir-para"
 // 							>
-// 								Navegar até Produtos
+// 								Ir até Produtos
 // 							</Button>
 // 						</div>
 // 					</Accordion.Body>
@@ -380,7 +385,7 @@
 // 								id="style-button-acc"
 // 								className="button-helper-ir-para"
 // 							>
-// 								Navegar até Localização
+// 								Ir até Localização
 // 							</Button>
 // 						</div>
 // 					</Accordion.Body>

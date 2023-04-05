@@ -28,15 +28,15 @@ import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css";
 // import Helper from "./Pages/Components/Helper/ajuda";
-// import HelperCSN from "./Pages/Components/Helper/ajudaCSN";
+//import HelperCSN from "./Pages/Components/Helper/ajudaCSN";
 import Avisos from "./Pages/Avisos";
 import CadastroCargaCSN from "./Pages/Cargas/CargasCSN/Cadastrar";
 import LocalizacaoCSN from "./Pages/LocalizacaoCSN";
 import VisualizarCsn from "./Pages/Cargas/CargasCSN/VisualizarCsn";
 import EditarCargaCsn from "./Pages/Cargas/CargasCSN/Editar";
-// import MainPopUp from "./Pages/Avisos/indexPopUp";
 import LinkRelatoriosApp from "./Pages/Components/MenuSuperior/LinkRelatoriosApp";
 import RelatoriosAppMain from "./Pages/Relatorios/TotalizadoresApp";
+import MainPopUp from "./Pages/Avisos/popUp";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -123,13 +123,13 @@ export default function AllRoutes() {
 				/>
 				<Route path="/credenciais" exact component={Credenciais} />
 				{/* <Route path="/producao" exact component={CalendarioProducao} /> */}
-				{/* <Route path="/ajuda" exact component={Helper} />
-				<Route path="/ajuda/CSN" exact component={HelperCSN} /> */}
+				{/* <Route path="/ajuda" exact component={Helper} /> */}
+				{/* <Route path="/ajuda/CSN" exact component={HelperCSN} /> */}
 				<Route path="/avisos" exact component={Avisos} />
 				<Route path="*" exact component={Main} />
 			</Switch>
 
-			{/* <MainPopUp /> */}
+			<MainPopUp />
 		</BrowserRouter>
 	);
 }

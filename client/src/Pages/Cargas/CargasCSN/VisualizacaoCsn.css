@@ -1,39 +1,38 @@
 .class-body-gridcarga {
-    font-family: "Poppins", sans-serif;
+  font-family: "Poppins", sans-serif;
+}
+
+.img-cargas-lote {
+  width: 80px;
+  position: absolute;
+  top: 80px;
+  right: -5px;
+}
+
+#style-button-detail {
+  background: #00652e;
+  border: none;
+  font-size: 16px;
+  margin-bottom: 0.4rem;
+  width: 13rem;
+  height: 5.5vh;
+}
+
+@media only screen and (min-width: 385px) and (max-width: 585px) {
+  .row-inicio-carga button {
+    width: 100%;
   }
-  
-  .img-cargas-lote{
-    width: 80px;
-    position: absolute;
-    top: 80px;
-    right: -5px;
+  .inicio-col-registros {
+    margin-bottom: 5px;
   }
-  
-  #style-button-detail {
-    background: #00652e;
-    border: none;
-    font-size: 16px;
-    margin-bottom: 0.4rem;
-    width: 13rem;
-    height: 5.5vh;
-    
+
+  .opcao-tabela {
+    margin-left: 4.6vw;
   }
-  
-  @media only screen and (min-width: 385px) and (max-width: 585px) {
-    .row-inicio-carga button {
-      width: 100%;
-    }
-    .inicio-col-registros {
-      margin-bottom: 5px;
-    }
-  
-    .opcao-tabela{
-      margin-left: 4.6vw;
-    }
-  }
-  
-  @media only screen and (max-width: 585px) {
+}
+
+@media only screen and (max-width: 585px) {
   .img-cargas-lote {
     display: none;
   }
-  }
+}

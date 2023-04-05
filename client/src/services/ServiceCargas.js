@@ -449,6 +449,52 @@ class ServiceCargas {
 			},
 		});
 	}
+	async exportToXlsxCsn({
+		id,
+		cliente,
+		e_lote,
+		data_entrega,
+		data_coleta,
+		tipo_carga,
+		responsavel_cadastro,
+		data_cadastro,
+		destino_carga,
+		origem_carga,
+		fk_situacao,
+		limit,
+		placa_veiculo,
+		documento_transporte,
+		fk_filial,
+		order_column,
+		order_direction,
+		date_execel_inicio,
+		date_execel_fim,
+	}) {
+		return await api.get("/csn/relatorio/cargas/info", {
+			responseType: "arraybuffer",
+			params: {
+				id,
+				cliente,
+				e_lote,
+				data_entrega,
+				data_coleta,
+				tipo_carga,
+				responsavel_cadastro,
+				data_cadastro,
+				order_column,
+				order_direction,
+				fk_filial,
+				origem_carga,
+				destino_carga,
+				fk_situacao,
+				limit,
+				placa_veiculo,
+				documento_transporte,
+				date_execel_inicio,
+				date_execel_fim,
+			},
+		});
+	}
 
 	async getDistance({
 		cidade_origem,

@@ -47,7 +47,11 @@ const modules = {
     paradaRepository,
     cargaCsnInfoRepository
   ),
-  UseCaseUpdateCargaPatch: new UseCaseUpdateCargaPath(cargaRepository),
+  UseCaseUpdateCargaPatch: new UseCaseUpdateCargaPath(
+    cargaRepository,
+    cargaCsnInfoRepository,
+    notifyAll
+  ),
   UseCaseViewCargas: new UseCaseViewCargas(cargaRepository),
   UseCaseDeleteCarga: new UseCaseDeleteCarga(cargaRepository, notifyAll),
   UseCaseImportCarga: new UseCaseImportCarga(

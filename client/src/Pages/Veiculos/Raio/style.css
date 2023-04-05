@@ -1,3 +1,6 @@
+.class-body {
+  font-family: "Poppins", sans-serif;
+}
 .class-body-viewraio {
   display: grid;
   grid-template-columns: auto auto auto;
@@ -16,15 +19,34 @@
   margin-left: 5%;
   width: 90%;
 }
-#button-veic-prox {
-  background: #00652e;
-  border: none;
-  width: 10rem;
+
+.form-placa-veic {
+  width: 15rem;
   height: 2rem;
-  margin-top: 2.4rem;
 }
 
-@media only screen and (min-width: 215px) and (max-width: 1199px) {
+.form-distancia-veic {
+  width: 15rem;
+  height: 2rem;
+}
+
+#button-pesq-veic-prox {
+  background: #00652e;
+  border: none;
+  margin-top: 2rem;
+  width: 10rem;
+  height: 2rem;
+}
+@media only screen and (min-width: 115px) and (max-width: 320px) {
+  #button-pesq-veic-prox {
+    background: #00652e;
+    border: none;
+    margin-top: 2rem;
+    width: 90% !important;
+    height: 2rem;
+  }
+}
+@media only screen and (min-width: 115px) and (max-width: 1199px) {
   .class-title-raio {
     font-size: 30px;
     display: flex;
@@ -36,21 +58,22 @@
     height: 20rem;
   }
 
-  #button-veic-prox {
-    margin-top: .5rem;
-  }
-
   .class-body-viewraio {
     display: flex;
     flex-direction: column;
     align-items: center;
     grid-gap: 2rem;
   }
+
+  #button-pesq-veic-prox {
+    background: #00652e;
+    border: none;
+    margin-top: 2rem;
+    width: 13rem;
+    height: 2rem;
+  }
 }
 @media only screen and (min-width: 1200px) and (max-width: 1425px) {
-  #button-pesq-raio {
-    margin-top: 2.2rem;
-  }
   .class-card-raio {
     margin-left: 5%;
     width: 90%;

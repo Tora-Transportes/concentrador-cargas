@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
 	Button,
 	Card,
@@ -19,6 +19,7 @@ import FilialSelect from "../FilialSelect";
 import InputCliente from "../InputCliente";
 import InputPlaca from "../InputPlaca";
 import InputsPontoPassagem from "./InputPontoPassagem";
+import "./formularioCadastroCSN.css";
 
 export default function ViewsForm({
 	formik,
@@ -46,8 +47,10 @@ export default function ViewsForm({
 	isViwsCargaApp,
 	isAlteracaoParcial,
 	isDisabledEnvioApp,
+	isCargaApp,
+	isDisabledPlaca,
+	setDisabledPlaca,
 }) {
-	const [isDisabledPlaca, setDisabledPlaca] = useState(false);
 	const [isRequiredPlaca, setRequiredPlaca] = useState(true);
 
 	const handleEnter = (event) => {
@@ -67,11 +70,14 @@ export default function ViewsForm({
 	const DetalhesCargaApp = (e) => {
 		const decisaoEnvioCarga = e.target.checked;
 		if (decisaoEnvioCarga) {
-			formik.setFieldValue("placa_veiculo", null);
-			formik.setFieldValue("placa_carreta", null);
-			formik.setFieldValue("placa_bitrem", null);
-			formik.setFieldValue("codigo_motorista", null);
-			formik.setFieldValue("nome_motorista", null);
+			setTimeout(() => {
+				formik.setFieldValue("placa_veiculo", null);
+				formik.setFieldValue("placa_carreta", null);
+				formik.setFieldValue("placa_bitrem", null);
+				formik.setFieldValue("codigo_motorista", null);
+				formik.setFieldValue("nome_motorista", null);
+				formik.setFieldValue("rastreador", null);
+			}, 500);
 		}
 		const cargaEnviarApp = 1;
 		const cargaNaoEnviarApp = 0;
@@ -82,6 +88,13 @@ export default function ViewsForm({
 			: cargaNaoEnviarApp;
 		formik.setFieldValue("carga_app", valorCargaAppFormik);
 	};
+
+	useEffect(() => {
+		if (isCargaApp) {
+			setDisabledPlaca(true);
+			setRequiredPlaca(false);
+		}
+	}, [isCargaApp]);
 
 	const titleInfoPlaca = isDetalhesCarreta
 		? "Dados do Veículo / Dados Carreta"
@@ -122,7 +135,7 @@ export default function ViewsForm({
 			</Row>
 			<Row>
 				<Col
-					sm={12}
+					sm={10}
 					md={6}
 					style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
 					className="col-cod-filial2"
@@ -213,26 +226,17 @@ export default function ViewsForm({
 						<Col className="text-end">
 							<Form.Group className="mb-3">
 								*Enviar carga para o App?
-								{!isDisabledEnvioApp ? (
-									<Form.Check
-										type="switch"
-										name="carga_app"
-										defaultValue={false}
-										onClick={(e) => DetalhesCargaApp(e)}
-										onKeyDown={handleEnter}
-										inline
-									/>
-								) : (
-									<Form.Check
-										type="switch"
-										name="carga_app"
-										onClick={(e) => DetalhesCargaApp(e)}
-										onKeyDown={handleEnter}
-										disabled={true}
-										checked={formik.values.carga_app === 1}
-										inline
-									/>
-								)}
+								<Form.Check
+									type="switch"
+									name="carga_app"
+									//defaultValue={false}
+									checked={formik.values.carga_app === 1}
+									onClick={(e) => DetalhesCargaApp(e)}
+									onKeyDown={handleEnter}
+									disabled={isDisabledEnvioApp}
+									inline
+									readOnly
+								/>
 								<OverlayTrigger
 									key="tooltip-overlay-carga-app"
 									placement="bottom"
@@ -368,7 +372,7 @@ export default function ViewsForm({
 							</Col>
 						</Row>
 						<Row>
-							<Col className="col-input-placa-button">
+							<Col className="col-buttons-inf-veiculos">
 								<Button
 									className="class-botao-Detalhes"
 									id="botao-detail-veiculo"
@@ -380,7 +384,7 @@ export default function ViewsForm({
 								</Button>
 
 								<Button
-									className="class-botao-Detabito"
+									className="class-botao-Debito"
 									id="botao-deb-veiculo"
 									onClick={() =>
 										handleShowDebitAboutVehicle(formik.values.placa_veiculo)
@@ -405,9 +409,6 @@ export default function ViewsForm({
 								</FloatingLabel>
 							)}
 						</Col>
-						{/* <div className="class-linha-title4">
-							<hr className="w-100"></hr>
-						</div> */}
 					</Row>
 				</>
 			)}
@@ -428,7 +429,7 @@ export default function ViewsForm({
 				</Col>
 			</Row>
 			<Row>
-				<Col sm={12} md={6}>
+				<Col sm={12} md={6} lg={7}>
 					<FloatingLabel label="Tipo de Material" className="mb-3">
 						<AutocompleteInput
 							keyDataList="tipo_carga"
@@ -442,7 +443,7 @@ export default function ViewsForm({
 				</Col>
 				<Col>
 					<Row>
-						<Col>
+						<Col sm={6} md={7} lg={6}>
 							<FloatingLabel label="*Unidade de Medida" className="mb-3">
 								<Form.Control
 									type="text"
@@ -452,7 +453,7 @@ export default function ViewsForm({
 								/>
 							</FloatingLabel>
 						</Col>
-						<Col>
+						<Col sm={6} md={5} lg={6}>
 							<FloatingLabel label="*Quantidade" className="mb-3">
 								<Form.Control
 									type="number"
@@ -572,18 +573,6 @@ export default function ViewsForm({
 					</Form.Group>
 				</Col>
 			</Row>
-
-			{/* <div>
-				<ListAddItens
-					id="style-botao-add"
-					value={formik.values.locais}
-					name="locais"
-					onChange={formik.handleChange}
-					onKeyDown={handleEnter}
-					formik={formik}
-				/>
-			</div> */}
-
 			<Modal show={veiculo !== null} size="lg" onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
 					<Modal.Title className="modal-title-csn">

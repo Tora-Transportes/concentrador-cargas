@@ -14,10 +14,6 @@ ul {
   margin-top: 1rem;
 }
 
-/* .class-list {
-  margin-top: 0.9rem;
-} */
-
 #style-a,
 #style-button-drop {
   font-size: 16px;
@@ -53,7 +49,7 @@ ul {
   font-family: "Poppins", sans-serif;
 }
 
-.h1-relatorios {
+div .h1-relatorios {
   font-size: 40px;
   color: #00652e;
   text-align: center;
@@ -183,11 +179,11 @@ ul {
 #headerDev {
   box-sizing: border-box;
   display: flex;
-  height: 70px;
+  height: 3.98em;
   padding: 1rem;
   align-items: center;
   justify-content: space-between;
-  background:#B22222;
+  background: #b22222;
 }
 #menu {
   display: flex;
@@ -201,6 +197,118 @@ ul {
 }
 #btn-mobile {
   display: none;
+}
+
+.body-indicadorOperacional-app {
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+.title-indicadorOperacional-app {
+  font-size: 40px;
+  font-weight: 500;
+  color: #00652e;
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div .class-app-icons {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.link-RelatorioApp-Title-padrao {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.3rem;
+  color: #00652e;
+  display: grid;
+  margin-left: 0.7rem;
+}
+
+.link-RelatorioApp-Title-CSN {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.3rem;
+  color: #00652e;
+}
+
+.icon-app-padrao:hover,
+.icon-app-csn:hover,
+.link-RelatorioApp-Title:hover,
+.link-RelatorioApp-Title-CSN:hover {
+  transition: 0.5s;
+  -webkit-transform: scale(1.2);
+  transform: scale(1.1);
+  color: #009c08;
+}
+
+.icon-app-padrao,
+.icon-app-csn {
+  color: #00652e;
+  margin-top: 4.2rem;
+}
+
+@media only screen and (max-width: 520px) {
+  div.class-app-icons {
+    display: grid;
+    align-items: center;
+    margin-top: 2.5rem;
+  }
+
+  .icon-app-padrao {
+    margin-left: -0.5rem;
+  }
+  .link-RelatorioApp-Title-padrao,
+  .link-RelatorioApp-Title-CSN {
+    margin-left: -1rem;
+  }
+}
+
+@media only screen and (max-width: 280px) {
+  div .h1-relatorios {
+    font-size: 2.3rem;
+    margin-top: 3rem;
+  }
+  #button-relatorios {
+    font-size: 0.8rem;
+  }
+}
+@media only screen and (max-width: 373px) {
+  h1.title-indicadorOperacional-app {
+    font-size: 1.8rem;
+  }
+  .link-RelatorioApp-Title-padrao,
+  .link-RelatorioApp-Title-CSN {
+    font-size: 1rem;
+  }
+
+  .dropdown-content-veic2,
+  #button-relatorios {
+    width: 95%;
+  }
+}
+
+@media only screen and (min-width: 374px) and (max-width: 400px) {
+  .title-indicadorOperacional-app {
+    font-size: 2.1rem;
+  }
+  .link-RelatorioApp-Title-padrao,
+  .link-RelatorioApp-Title-CSN {
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (min-width: 401px) and (max-width: 768px) {
+  .title-indicadorOperacional-app {
+    font-size: 2.1rem;
+  }
+  .link-RelatorioApp-Title-padrao,
+  .link-RelatorioApp-Title-CSN {
+    font-size: 1rem;
+  }
 }
 
 @media only screen and (max-width: 400px) {
@@ -316,13 +424,12 @@ ul {
     top: -7px;
   }
 
-  /* .class-dropdown {
-    display: grid;
-    grid-template-rows: auto auto auto;
-  } */
-
   #style-button-drop {
     font-size: 16px;
+  }
+
+  div .title-indicadorOperacional-app {
+    margin-top: 4.5rem;
   }
 }
 
@@ -397,11 +504,6 @@ ul {
     transform: rotate(-135deg);
     top: -7px;
   }
-
-  /* .class-dropdown {
-    display: grid;
-    grid-template-rows: auto auto auto;
-  } */
 
   #style-button-drop {
     font-size: 16px;

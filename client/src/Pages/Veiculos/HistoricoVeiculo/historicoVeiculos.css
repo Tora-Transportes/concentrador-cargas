@@ -7,7 +7,7 @@
   font-size: 40px;
   font-weight: 500;
   color: #00652e;
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
 .row-input-history {
   justify-content: center;
@@ -15,10 +15,7 @@
   margin-bottom: 30px;
   width: 100%;
 }
-h1 {
-font-family: "Poppins", sans-serif;
-color: #00652e;
-}
+
 #button-pesq-history {
   background: #00652e;
   border: none;
@@ -41,4 +38,11 @@ color: #00652e;
 
 .span-placa {
   color: #0069aa;
+}
+
+@media only screen and (max-width: 580px) {
+  div #title-hist-veic {
+    margin-top: 4rem;
+    margin-bottom: -1rem;
+  }
 }

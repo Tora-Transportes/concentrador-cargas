@@ -6,10 +6,10 @@
   margin-top: 1.5rem;
 }
 
-.class-title-Coord {
+div .class-title-Coord {
   font-family: "Poppins", sans-serif;
   color: #00652e;
-  font-size: 40px;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
 }
 
@@ -45,7 +45,7 @@
 }
 
 .ul-card-li {
-  margin-left: 1vw;
+  margin-left: 1.5vw;
 }
 
 .header-dialog {
@@ -60,17 +60,34 @@
   margin-left: 5%;
 }
 
-.dialog-btn-voltar {
-  margin-left: 2vw !important;
-  height: 4.5vh !important;
-  width: auto !important;
-  background-color: #00652e !important;
+div .dialog-btn-voltar,
+div .dialog-btn-voltar:hover,
+div .dialog-btn-voltar:enabled:hover,
+div .dialog-btn-voltar:active {
+  margin-top: 0.5rem;
+  margin-left: 2vw;
+  height: 4.5vh;
+  width: auto;
+  border: none;
+  border-color: none;
+  background-color: #00652e;
 }
 
-.dialog-btn-last-location {
-  height: 4.5vh !important;
-  width: auto !important;
-  background-color: #00652e !important;
+div .ul_last-location {
+  position: relative;
+  left: -2rem;
+}
+div .class-li-last-location {
+  margin-left: 2vh;
+}
+div .dialog-btn-last-location,
+div .dialog-btn-last-location:hover,
+div .dialog-btn-last-location:enabled:hover,
+div .dialog-btn-last-location:active {
+  height: 4.5vh;
+  border: none;
+  border-color: none;
+  background-color: #00652e;
 }
 
 /*css placa*/
@@ -99,7 +116,6 @@
 
 .col-placa-body {
   display: flex;
-  /* justify-content: center; */
 }
 
 .col-placa-body-qrCod {
@@ -110,8 +126,6 @@
 }
 
 .col-placa-body-qrCod p {
-  /* font-size: 10px;
-  margin: 11px 0 0 3px; */
   font-size: 12px;
   margin: 11px 0 0 0px;
 }
@@ -129,34 +143,48 @@
   letter-spacing: 2px;
 }
 
+@media only screen and (min-width: 30px) and (max-width: 585px) {
+  div .class-title-Coord {
+    font-size: 2rem !important;
+    margin-top: 2.5rem;
+  }
+
+  .dialog-localidade-title {
+    width: 90%;
+  }
+
+  .card-dados-last-location {
+    width: 110%;
+  }
+}
 @media only screen and (min-width: 230px) and (max-width: 585px) {
   #botao-detalhe-tabela {
     margin-left: 20%;
   }
+  div .ul_last-location {
+    width: 100%;
+  }
 }
 
-.ul_last-location{
-  padding: 0 ;
+@media only screen and (max-width: 755px) {
+  .dialog-cte {
+    width: 85%;
+    height: auto;
+  }
 }
-@media only screen and (min-width: 130px) and (max-width: 1325px) {
-  .class-title-Coord {
-    font-size: 30px;
+
+@media only screen and (min-width: 130px) and (max-width: 1225px) {
+  div .class-title-Coord {
+    font-size: 2.5rem;
   }
   #botao-detalhe-tabela {
     margin-top: 0.5rem;
     margin-bottom: 1rem;
   }
-  .dialog-cte {
-    width: 95%;
-    height: auto;
+
+  div .dialog-btn-voltar {
+    margin-left: 3.9vw;
+    height: 5vh;
+    width: 35%;
   }
-
-  .dialog-btn-voltar {
-    margin-left: 9.5vw !important;
-    height: 5vh !important;
-    width: 35% !important;
-    background-color: #00652e !important;
-  }
-
-
 }

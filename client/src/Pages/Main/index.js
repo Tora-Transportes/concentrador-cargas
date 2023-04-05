@@ -10,7 +10,6 @@ import { IoLocationSharp } from "react-icons/io5";
 import Menusuperior from "../Components/MenuSuperior/menusuperior";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 import { MdOutlineNotificationImportant } from "react-icons/md";
-import MainPopUp from "../Avisos/indexPopUp";
 
 const queueCoresAtuais = [];
 
@@ -137,22 +136,21 @@ function Main() {
 		}
 	}, [levelGame]);
 
-	const numeroVersao = "V.11";
+	const numeroVersao = "V.12";
 	return (
 		<>
 			<ToastContainer />
 			<Menusuperior />
-			<MainPopUp />
 			<Container className="class-body-main">
 				<Row>
-					<Col className="text-center mt-2 mb-5">
-						<p id="style-title-main" className="title-page-main">
+					<Col className="text-center mb-5">
+						<p className="style-p-title-main">
 							Seja bem-vindo(a) ao Concentrador de Cargas
 						</p>
 					</Col>
 				</Row>
 
-				<div className="col-avisos-style">
+				<div>
 					<Link to={"avisos"} className="class-link">
 						<MdOutlineNotificationImportant
 							size={30}
@@ -163,7 +161,7 @@ function Main() {
 				</div>
 				<div>
 					<div>
-						<p id="style-p-saudacao">Caro(a) {userData?.nome}!</p>
+						<p className="style-p-saudacao">Caro(a) {userData?.nome}!</p>
 					</div>
 					<div className="class-p-text">
 						<p id="style-p-text">
@@ -186,11 +184,11 @@ function Main() {
 						<Link to="/veiculos/coordenadas" className="class-link">
 							<IoLocationSharp
 								size={50}
-								id="style-iconn-2"
-								className="icons-responsive me-4"
+								id="style-iconn"
+								className="icons-responsive"
 							/>
 							<br />
-							<b id="style-iconn-4">Coordenadas</b>
+							<b id="style-iconn">Coordenadas</b>
 						</Link>
 					</div>
 					{isPermissionPadrao && (
@@ -198,11 +196,11 @@ function Main() {
 							<Link to="/cargas/visualizar" className="class-link">
 								<FaTruckMoving
 									size={50}
-									id="style-iconn-3"
+									id="style-iconn"
 									className="icons-responsive"
 								/>
 								<br />
-								<b id="style-iconn-4">Cargas</b>
+								<b id="style-iconn">Cargas</b>
 							</Link>
 						</div>
 					)}
@@ -211,11 +209,11 @@ function Main() {
 							<Link to="/cargas/visualizar/csn" className="class-link">
 								<TbTruckDelivery
 									size={50}
-									id="style-iconn-3"
+									id="style-iconn"
 									className="icons-responsive"
 								/>
 								<br />
-								<b id="style-iconn-4">Cargas CSN</b>
+								<b id="style-iconn">Cargas CSN</b>
 							</Link>
 						</div>
 					)}
@@ -223,11 +221,11 @@ function Main() {
 						<Link to="/lotes/visualizar" className="class-link">
 							<FaBoxes
 								size={50}
-								id="style-iconn-4"
+								id="style-iconn"
 								className="icons-responsive"
 							/>
 							<br />
-							<b id="style-iconn-4">Lotes</b>
+							<b id="style-iconn">Lotes</b>
 						</Link>
 					</div>
 				</div>
@@ -284,14 +282,14 @@ function Main() {
 					{levelGame === -1 && (
 						<>
 							<div>
-								<p id="title-p-jogo">
+								<p className="title-p-jogo">
 									{" "}
 									Exercite sua memória, garantindo a melhor tomada de decisão
 									durante o seu dia de trabalho.
 								</p>
 							</div>
 
-							<div className="class-linha-jogo">
+							<div className="class-button-jogo">
 								<Button className="style-button-jogo" onClick={iniciarGame}>
 									Exercitar Agora!
 								</Button>

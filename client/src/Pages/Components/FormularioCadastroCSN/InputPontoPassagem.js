@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./formularioCadastroCSN.css";
 import { Col, FloatingLabel, Form, Row } from "react-bootstrap";
+import swal from "sweetalert";
 import RotasSelect from "../FilialSelect/rotasSelect";
 import InputCliente from "../InputCliente";
 import { MontarBoryEditPatch } from "./management";
 import { funcCompareDateOneYear } from "src/Pages/Utils/formatDate";
-import swal from "sweetalert";
 import ServicesPontoParada from "src/services/ServicesPontoParada";
+import { Toast } from "primereact/toast";
 
 const InputsPontoPassagem = ({
 	formik,
@@ -14,21 +15,22 @@ const InputsPontoPassagem = ({
 	inputColeta6,
 	inputColeta7,
 	fkSituacao,
-	isPermissionUser,
+	isPermissionUserEdit,
 	isDateErrorInput,
 	setDateErrorInput,
+	isAlteracaoParcial,
 }) => {
 	const [inputPontoPassagem5, setInputPontoPassagem5] = useState(true);
 	const [inputPontoPassagem6, setInputPontoPassagem6] = useState(true);
 	const [inputPontoPassagem7, setInputPontoPassagem7] = useState(true);
-
+	const alertDataSalva = useRef(null);
 	const disabledValidEfetiva =
-		[6, 9].includes(formik.values.fk_situacao) && isPermissionUser
+		[5, 6, 9].includes(formik.values.fk_situacao) && !isPermissionUserEdit
 			? true
 			: false;
 	const colorInputEfetivo = ![6, 9].includes(formik.values?.fk_situacao)
 		? ""
-		: isPermissionUser === true
+		: isPermissionUserEdit === false
 		? "input-efetivo"
 		: "";
 
@@ -51,8 +53,22 @@ const InputsPontoPassagem = ({
 	}, [formik.values]);
 
 	const savePontoPassagemEdit = async (date, id, positionInput) => {
-		const bodySave = MontarBoryEditPatch(positionInput, date, formik, id);
-		await ServicesPontoParada.updatePatchCSN(id, bodySave);
+		const bodySave = MontarBoryEditPatch(
+			positionInput,
+			date,
+			formik,
+			id,
+			isAlteracaoParcial
+		);
+		if (isAlteracaoParcial) {
+			const result = await ServicesPontoParada.updatePatchCSN(id, bodySave);
+			if (result?.status === 200)
+				alertDataSalva.current.show({
+					severity: "success",
+					detail: "Data salva com sucesso.",
+					life: 2000,
+				});
+		}
 	};
 
 	const handleEnter = (event) => {
@@ -88,8 +104,9 @@ const InputsPontoPassagem = ({
 
 	return (
 		<>
+			<Toast ref={alertDataSalva} position="top-center" />
 			<Row className="row-input-coleta-inicio">
-				<Col sm={12} md={12} lg={12} xxl={6}>
+				<Col sm={12} md={6} lg={6} xxl={6}>
 					<FloatingLabel label="*Ponto de Passagem" className="mb-3">
 						<Form.Control
 							type="text"
@@ -102,7 +119,7 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
-				<Col className="input-ponto-passagem-coleta-entrega">
+				<Col md={6} lg={6} className="input-ponto-passagem-coleta-entrega">
 					<FloatingLabel label="Coleta/Entrega" className="mb-3">
 						<Form.Control
 							type="text"
@@ -114,7 +131,7 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
-				<Col>
+				<Col md={6} lg={6}>
 					<FloatingLabel label="*Previsão Início" className="mb-3">
 						<Form.Control
 							type="datetime-local"
@@ -133,7 +150,7 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
-				<Col>
+				<Col md={6} lg={6}>
 					<FloatingLabel label="*Previsão Fim" className="mb-3">
 						<Form.Control
 							type="datetime-local"
@@ -155,10 +172,7 @@ const InputsPontoPassagem = ({
 				{fkSituacao && (
 					<>
 						<Col>
-							<FloatingLabel
-								label="*Data Coleta Efetivo Início"
-								className="mb-3"
-							>
+							<FloatingLabel label="*Data Coleta Início" className="mb-3">
 								<Form.Control
 									className={colorInputEfetivo}
 									type="datetime-local"
@@ -179,12 +193,15 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required
+									//required
 								/>
+								{isDateErrorInput[2].error && (
+									<p className="text-danger">Campo Obrigatório!</p>
+								)}
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="*Data Coleta Efetivo Fim" className="mb-3">
+							<FloatingLabel label="*Data Coleta Fim" className="mb-3">
 								<Form.Control
 									className={colorInputEfetivo}
 									type="datetime-local"
@@ -203,8 +220,11 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required
+									//required
 								/>
+								{isDateErrorInput[3].error && (
+									<p className="text-danger">Campo Obrigatório!</p>
+								)}
 							</FloatingLabel>
 						</Col>
 						<Col className="col-temp-servic-local">
@@ -227,7 +247,7 @@ const InputsPontoPassagem = ({
 			</Row>
 			<br />
 			<Row className="row-input-coleta-inicio">
-				<Col sm={12} md={12} lg={12} xxl={6}>
+				<Col sm={12} md={6} lg={6} xxl={6}>
 					<FloatingLabel label="Ponto de Passagem 2" className="mb-3">
 						<Form.Control
 							type="text"
@@ -240,7 +260,7 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
-				<Col className="input-ponto-passagem-coleta-entrega">
+				<Col md={6} lg={6} className="input-ponto-passagem-coleta-entrega">
 					<FloatingLabel label="Coleta/Entrega" className="mb-3">
 						<Form.Control
 							type="text"
@@ -252,7 +272,7 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
-				<Col>
+				<Col md={6} lg={6}>
 					<FloatingLabel label="*Previsão Início 2" className="mb-3">
 						<Form.Control
 							type="datetime-local"
@@ -270,7 +290,7 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
-				<Col>
+				<Col md={6} lg={6}>
 					<FloatingLabel label="*Previsão Fim 2" className="mb-3">
 						<Form.Control
 							type="datetime-local"
@@ -292,10 +312,7 @@ const InputsPontoPassagem = ({
 				{fkSituacao && (
 					<>
 						<Col>
-							<FloatingLabel
-								label="*Data Coleta Efetivo Início"
-								className="mb-3"
-							>
+							<FloatingLabel label="*Data Coleta Início" className="mb-3">
 								<Form.Control
 									className={colorInputEfetivo}
 									type="datetime-local"
@@ -316,12 +333,15 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required
+									//required
 								/>
+								{isDateErrorInput[6]?.error && (
+									<p className="text-danger">Campo Obrigatório!</p>
+								)}
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="*Data Coleta Efetivo Fim" className="mb-3">
+							<FloatingLabel label="*Data Coleta Fim" className="mb-3">
 								<Form.Control
 									className={colorInputEfetivo}
 									type="datetime-local"
@@ -333,11 +353,6 @@ const InputsPontoPassagem = ({
 									isInvalid={isDateErrorInput[7]?.error}
 									max="9999-12-12T00:00"
 									onBlur={() => {
-										// funcDuracaoProcesso(
-										// 	formik,
-										// 	7,
-										// 	formik.values.ponto_passagem2.coletaEfetivaSaida
-										// );
 										validarDatas(
 											formik.values.ponto_passagem2.coletaEfetivaSaida,
 											7,
@@ -345,8 +360,11 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required
+									//required
 								/>
+								{isDateErrorInput[7]?.error && (
+									<p className="text-danger">Campo Obrigatório!</p>
+								)}
 							</FloatingLabel>
 						</Col>
 						<Col className="col-temp-servic-local">
@@ -369,7 +387,7 @@ const InputsPontoPassagem = ({
 			</Row>
 			<br />
 			<Row className="row-input-coleta-inicio">
-				<Col sm={12} md={12} lg={12} xxl={6}>
+				<Col sm={12} md={6} lg={6} xxl={6}>
 					<FloatingLabel label="Ponto de Passagem 3" className="mb-3">
 						<Form.Control
 							type="text"
@@ -382,7 +400,7 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
-				<Col className="input-ponto-passagem-coleta-entrega">
+				<Col md={6} lg={6} className="input-ponto-passagem-coleta-entrega">
 					<FloatingLabel label="Coleta/Entrega" className="mb-3">
 						<Form.Control
 							type="text"
@@ -394,7 +412,7 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
-				<Col>
+				<Col md={6} lg={6}>
 					<FloatingLabel label="*Previsão Início 3" className="mb-3">
 						<Form.Control
 							type="datetime-local"
@@ -413,7 +431,7 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
-				<Col>
+				<Col md={6} lg={6}>
 					<FloatingLabel label="*Previsão Fim 3" className="mb-3">
 						<Form.Control
 							type="datetime-local"
@@ -435,10 +453,7 @@ const InputsPontoPassagem = ({
 				{fkSituacao && (
 					<>
 						<Col>
-							<FloatingLabel
-								label="*Data Coleta Efetivo Início"
-								className="mb-3"
-							>
+							<FloatingLabel label="*Data Coleta Início" className="mb-3">
 								<Form.Control
 									className={colorInputEfetivo}
 									type="datetime-local"
@@ -459,12 +474,15 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required
+									//required
 								/>
+								{isDateErrorInput[10]?.error && (
+									<p className="text-danger">Campo Obrigatório!</p>
+								)}
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="*Data Coleta Efetivo Fim" className="mb-3">
+							<FloatingLabel label="*Data Coleta Fim" className="mb-3">
 								<Form.Control
 									className={colorInputEfetivo}
 									type="datetime-local"
@@ -483,8 +501,11 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required
+									//required
 								/>
+								{isDateErrorInput[11]?.error && (
+									<p className="text-danger">Campo Obrigatório!</p>
+								)}
 							</FloatingLabel>
 						</Col>
 						<Col className="col-temp-servic-local">
@@ -528,7 +549,7 @@ const InputsPontoPassagem = ({
 							/>
 						</Col>
 					) : (
-						<Col sm={12} md={12} lg={12} xxl={6}>
+						<Col sm={12} md={6} lg={6} xxl={6}>
 							<InputCliente
 								type="text"
 								placeholder=" "
@@ -602,10 +623,7 @@ const InputsPontoPassagem = ({
 					{fkSituacao && (
 						<>
 							<Col>
-								<FloatingLabel
-									label="Data Coleta/Entrega Efetivo"
-									className="mb-3"
-								>
+								<FloatingLabel label="Data Coleta/Entrega" className="mb-3">
 									<Form.Control
 										className={colorInputEfetivo}
 										type="datetime-local"
@@ -621,6 +639,15 @@ const InputsPontoPassagem = ({
 												: formik.values.ponto_passagem5.entregaEfetiva || ""
 										}
 										onChange={formik.handleChange}
+										isInvalid={isDateErrorInput[13]?.error}
+										max="9999-12-12T00:00"
+										onBlur={() => {
+											validarDatas(
+												formik.values.ponto_passagem5.coletaEfetiva,
+												13,
+												formik.values.ponto_passagem5.id
+											);
+										}}
 										onKeyDown={handleEnter}
 										disabled={disabledValidEfetiva}
 										required
@@ -628,10 +655,7 @@ const InputsPontoPassagem = ({
 								</FloatingLabel>
 							</Col>
 							<Col>
-								<FloatingLabel
-									label="*Data Coleta Efetivo Fim"
-									className="mb-3"
-								>
+								<FloatingLabel label="*Data Coleta Fim" className="mb-3">
 									<Form.Control
 										className={colorInputEfetivo}
 										type="datetime-local"
@@ -655,8 +679,11 @@ const InputsPontoPassagem = ({
 											);
 										}}
 										disabled={disabledValidEfetiva}
-										required
+										//required
 									/>
+									{isDateErrorInput[14]?.error && (
+										<p className="text-danger">Campo Obrigatório!</p>
+									)}
 								</FloatingLabel>
 							</Col>
 							<Col className="col-temp-servic-local">
@@ -706,7 +733,7 @@ const InputsPontoPassagem = ({
 							/>
 						</Col>
 					) : (
-						<Col sm={12} md={12} lg={12} xxl={6}>
+						<Col sm={12} md={6} lg={6} xxl={6}>
 							<InputCliente
 								type="text"
 								placeholder=" "
@@ -780,10 +807,7 @@ const InputsPontoPassagem = ({
 					{fkSituacao && (
 						<>
 							<Col>
-								<FloatingLabel
-									label="Data Coleta/Entrega Efetivo"
-									className="mb-3"
-								>
+								<FloatingLabel label="Data Coleta/Entrega" className="mb-3">
 									<Form.Control
 										className={colorInputEfetivo}
 										type="datetime-local"
@@ -815,10 +839,7 @@ const InputsPontoPassagem = ({
 								</FloatingLabel>
 							</Col>
 							<Col>
-								<FloatingLabel
-									label="Data Coleta/Entrega Efetivo Fim"
-									className="mb-3"
-								>
+								<FloatingLabel label="Data Coleta/Entrega Fim" className="mb-3">
 									<Form.Control
 										className={colorInputEfetivo}
 										type="datetime-local"
@@ -835,11 +856,6 @@ const InputsPontoPassagem = ({
 										isInvalid={isDateErrorInput[18]?.error}
 										max="9999-12-12T00:00"
 										onBlur={() => {
-											// funcDuracaoProcesso(
-											// 	formik,
-											// 	18,
-											// 	formik.values.ponto_passagem6.coletaEfetiva
-											// );
 											validarDatas(
 												formik.values.ponto_passagem6.entregaEfetivaSaida,
 												18,
@@ -898,7 +914,7 @@ const InputsPontoPassagem = ({
 							/>
 						</Col>
 					) : (
-						<Col sm={12} md={12} lg={12} xxl={6}>
+						<Col sm={12} md={6} lg={6} xxl={6}>
 							<InputCliente
 								type="text"
 								placeholder=" "
@@ -974,10 +990,7 @@ const InputsPontoPassagem = ({
 					{fkSituacao && (
 						<>
 							<Col>
-								<FloatingLabel
-									label="Data Coleta/Entrega Efetivo"
-									className="mb-3"
-								>
+								<FloatingLabel label="Data Coleta/Entrega" className="mb-3">
 									<Form.Control
 										className={colorInputEfetivo}
 										type="datetime-local"
@@ -1000,10 +1013,7 @@ const InputsPontoPassagem = ({
 								</FloatingLabel>
 							</Col>
 							<Col>
-								<FloatingLabel
-									label="Data Coleta/Entrega Efetivo Fim"
-									className="mb-3"
-								>
+								<FloatingLabel label="Data Coleta/Entrega Fim" className="mb-3">
 									<Form.Control
 										className={colorInputEfetivo}
 										type="datetime-local"
@@ -1047,7 +1057,7 @@ const InputsPontoPassagem = ({
 				</Row>
 			)}
 			<Row className="row-input-coleta">
-				<Col sm={12} md={12} lg={12} xxl={6}>
+				<Col sm={12} md={6} lg={6} xxl={6}>
 					<InputCliente
 						type="text"
 						placeholder=" "
@@ -1065,7 +1075,7 @@ const InputsPontoPassagem = ({
 						disabled={fkSituacao}
 					/>
 				</Col>
-				<Col className="input-ponto-passagem-coleta-entrega">
+				<Col md={6} lg={6} className="input-ponto-passagem-coleta-entrega">
 					<FloatingLabel label="Coleta/Entrega" className="mb-3">
 						<Form.Control
 							type="text"
@@ -1078,7 +1088,7 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
-				<Col>
+				<Col md={6} lg={6}>
 					<FloatingLabel label="*Previsão Início 4" className="mb-3">
 						<Form.Control
 							type="datetime-local"
@@ -1097,7 +1107,7 @@ const InputsPontoPassagem = ({
 						/>
 					</FloatingLabel>
 				</Col>
-				<Col>
+				<Col md={6} lg={6}>
 					<FloatingLabel label="*Previsão Fim 4" className="mb-3">
 						<Form.Control
 							type="datetime-local"
@@ -1119,10 +1129,7 @@ const InputsPontoPassagem = ({
 				{fkSituacao && (
 					<>
 						<Col md={4} lg={4}>
-							<FloatingLabel
-								label="*Data Entrega Efetivo Início"
-								className="mb-3"
-							>
+							<FloatingLabel label="*Data Entrega Início" className="mb-3">
 								<Form.Control
 									className={colorInputEfetivo}
 									type="datetime-local"
@@ -1141,12 +1148,15 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required
+									//required
 								/>
+								{isDateErrorInput[23]?.error && (
+									<p className="text-danger">Campo Obrigatório!</p>
+								)}
 							</FloatingLabel>
 						</Col>
 						<Col>
-							<FloatingLabel label="*Data Entrega Efetivo Fim" className="mb-3">
+							<FloatingLabel label="*Data Entrega Fim" className="mb-3">
 								<Form.Control
 									className={colorInputEfetivo}
 									type="datetime-local"
@@ -1160,11 +1170,6 @@ const InputsPontoPassagem = ({
 									isInvalid={isDateErrorInput[24]?.error}
 									max="9999-12-12T00:00"
 									onBlur={() => {
-										// funcDuracaoProcesso(
-										// 	formik,
-										// 	24,
-										// 	formik.values.ponto_passagem4.entregaEfetivaSaida
-										// );
 										validarDatas(
 											formik.values.ponto_passagem4.entregaEfetivaSaida,
 											24,
@@ -1172,8 +1177,11 @@ const InputsPontoPassagem = ({
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									required
+									//required
 								/>
+								{isDateErrorInput[24]?.error && (
+									<p className="text-danger">Campo Obrigatório!</p>
+								)}
 							</FloatingLabel>
 						</Col>
 						<Col className="col-temp-servic-local">

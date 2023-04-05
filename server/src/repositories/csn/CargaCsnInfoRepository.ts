@@ -179,6 +179,36 @@ export class CargaCsnInfoRepository {
 
     const rows: ICarga[] = await results;
 
+    //ESTA LINHA DE CODIGO ABAIXO ESTA SENDO DESENVOLVIDA PARA GANHO NA AUTONOMIA DOS CARREGAMENTOD DOS DADOS
+    // const idCarga = rows.map((item) => ` ${item.id}`);
+    // const infoPontoParada = await database("con_pontos_parada")
+    //   .select([
+    //     "con_pontos_parada.*",
+    //     "con_rotas_csn.DESCRICAO",
+    //     "con_rotas_csn.LATITUDE AS LATITUDE_ROTA",
+    //     "con_rotas_csn.LONGITUDE AS LONGITUDE_ROTA",
+    //   ])
+    //   .whereIn("con_pontos_parada.ID_CON_CARGAS", idCarga)
+    //   .leftJoin(
+    //     "con_rotas_csn",
+    //     "con_rotas_csn.ID",
+    //     "con_pontos_parada.ID_ROTAS_CSN"
+    //   )
+    //   .orderBy("con_pontos_parada.ID", "ASC");
+
+    // rows.forEach((elem) => {
+    //   return infoPontoParada.filter((filtroData: IPonto_parada) => {
+    //     let allPontoParadaId: IPonto_parada[] = [];
+    //     if (elem.id === filtroData.ID_CON_CARGAS) {
+    //       allPontoParadaId.push(filtroData);
+    //       if (infoPontoParada.length === 3) {
+    //         elem.ponto_parada = infoPontoParada;
+    //         allPontoParadaId = [];
+    //       }
+    //     }
+    //   });
+    // });
+
     await Promise.all(
       rows.map(async (obj) => {
         obj.ponto_parada = await database("con_pontos_parada")
@@ -208,6 +238,58 @@ export class CargaCsnInfoRepository {
     };
   }
 
+  async searchExcelCsn(
+    query: Record<string, any>,
+    pageSize = 5
+  ): Promise<IResultExcel<ICarga>> {
+    const results = database.raw(
+      `select * from 
+      (select "con_cargas"."id" "Código da carga", "con_cargas"."cliente" "Cliente", 
+          CASE WHEN "con_cargas"."e_lote" = 0 THEN 'Não' WHEN "con_cargas"."e_lote" = 1 THEN 'Sim' END AS "E lote", "con_cargas"."origem_carga" "Origem Carga", 
+          "con_cargas"."destino_carga" "Destino Carga", to_char("con_cargas"."data_coleta", 'dd/mm/yyyy') AS "Data Coleta", 
+          to_char("con_cargas"."data_entrega", 'dd/mm/yyyy') AS "Data Entrega", "con_cargas"."tipo_carga" "Tipo Material", 
+          "con_cargas"."unidade_medida" "UN", "con_cargas"."quantidade" "Peso",
+          "con_cargas"."quantidade_atual" "Quantidade Atual", "con_cargas"."fk_lote_pai" "Lote Pai", "con_situacoes_cargas_csn"."descricao" "Situação", 
+          "FILIAL"."FIL_DSC" "Descrição Filial", "con_cargas"."fk_filial" "Código Filial", "con_cargas"."documento_transporte" "Documento de transporte", 
+          "con_cargas"."canal_comunicacao" "Canal Comunicação","con_cargas"."placa_veiculo" "Placa",
+          "con_cargas"."placa_carreta" "Placa Carreta", "con_cargas"."rastreador" "Rastreador",
+          "con_cargas"."observacao" "Observação","con_cargas"."observacao_gr" "Observação do GR", "con_cargas"."observacao_cancelamento" "Observação Cancelamento",
+          CASE WHEN "coordenada_vei"."categoria_veiculo" = 'A' THEN 'Agregado' WHEN "coordenada_vei"."categoria_veiculo" = 'C' THEN 'Carreteiro' 
+          WHEN "coordenada_vei"."categoria_veiculo" = 'F' THEN 'Frota Própria' END AS "Categoria Veículo",
+          to_char("con_cargas"."data_cadastro", 'dd/mm/yyyy') AS "Data Cadastro", 
+          to_char("con_cargas"."data_atualizacao", 'dd/mm/yyyy') AS "Data Atualização",
+          to_char("a"."COLETA_EFETIVA_POSTO30", 'dd/mm/yyyy HH24:MI:SS') AS "Coleta Efetiva Posto 30" ,to_char("a"."SAIDA_EFETIVA_COLETA", 'dd/mm/yyyy HH24:MI:SS') AS "Saída Efetiva Posto 30 ",
+          to_char("b"."COLETA_EFETIVA_MUNDO", 'dd/mm/yyyy HH24:MI:SS') AS "Coleta Efetiva Mundo",to_char("b"."SAIDA_EFETIVA_COLETA", 'dd/mm/yyyy HH24:MI:SS') AS "Saìda Efetia Mundo",
+          to_char("c"."COLETA_EFETIVA_PEACAO", 'dd/mm/yyyy HH24:MI:SS') AS "Coleta Efetiva Peação",to_char("c"."SAIDA_EFETIVA_COLETA", 'dd/mm/yyyy HH24:MI:SS') AS "Saìda Efetia Peação",
+          to_char("d"."ENTREGA_EFETIVA", 'dd/mm/yyyy HH24:MI:SS') AS "Entrega Efetiva",to_char("d"."SAIDA_EFETIVA_ENTREGA", 'dd/mm/yyyy HH24:MI:SS') AS "Saìda Efetia Entrega",
+          "con_cargas"."responsavel_cadastro" "Responsável Cadastro", "con_cargas"."usuario" "Responsável Alteração"
+      from "con_cargas" 
+          inner join "con_situacoes_cargas_csn" on "con_situacoes_cargas_csn"."id" = "con_cargas"."fk_situacao" 
+          left join "FILIAL" on "FILIAL"."FIL_COD" = "con_cargas"."fk_filial" 
+          left join "CADASTRO_GERAL" on "CADASTRO_GERAL"."CG_COD" = "con_cargas"."codigo_motorista" 
+          left join "con_pontos_parada" "a" on ("con_cargas"."id" = "a"."ID_CON_CARGAS" and "a"."COLETA_EFETIVA_POSTO30" is not null)
+          left join "con_pontos_parada" "b" on ("con_cargas"."id" = "b"."ID_CON_CARGAS" and "b"."COLETA_EFETIVA_MUNDO" is not null)
+          left join "con_pontos_parada" "c" on ("con_cargas"."id" = "c"."ID_CON_CARGAS" and "c"."COLETA_EFETIVA_PEACAO" is not null)
+          left join "con_pontos_parada" "d" on ("con_cargas"."id" = "d"."ID_CON_CARGAS" and "d"."ENTREGA_EFETIVA" is not null)
+          left join "con_coordenadas_veiculos" "coordenada_vei" on ("coordenada_vei"."placa" = "con_cargas"."placa_veiculo")
+        where "fk_filial" = ? and "carga_csn" = 1 and "con_cargas"."data_cadastro" BETWEEN ? and ? 
+        and "con_cargas"."e_lote" = ? order by "con_cargas"."id" asc) 
+      where rownum <= ?`,
+      [
+        query?.fk_filial,
+        new Date(query.date_execel_inicio + "T00:00:00"),
+        new Date(query.date_execel_fim + "T23:59:00"),
+        query.e_lote,
+        pageSize,
+      ]
+    );
+
+    const rows: ICarga[] = await results;
+    return {
+      results: rows,
+    };
+  }
+
   async index(id: number): Promise<ICarga | undefined> {
     const carga: ICarga[] = await database("con_cargas")
       .select([
@@ -217,7 +299,6 @@ export class CargaCsnInfoRepository {
         "FILIAL.FIL_DSC as filial.descricao",
         "CADASTRO_GERAL.CG_NOME as nome_motorista",
       ])
-      //.first()
       .where("con_cargas.id", id)
       .join(
         "con_situacoes_cargas_csn",

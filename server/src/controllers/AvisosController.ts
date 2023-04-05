@@ -20,8 +20,8 @@ class AvisosController implements IAvisosController {
     const result = await domainAviso.useCaseIndexAvisos.run(Number(id));
     return res.json({ data: result });
   }
-  async search(_req: Request, res: Response): Promise<Response> {
-    const result = await domainAviso.useCaseAllAvisos.run();
+  async search(req: Request, res: Response): Promise<Response> {
+    const result = await domainAviso.useCaseAllAvisos.run(req.query);
     return res.json({ data: result });
   }
   async update(req: Request, res: Response): Promise<Response> {

@@ -24,6 +24,7 @@ const CadastroCargaCSN = () => {
 	const [produtos, setProdutos] = useState([]);
 	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
 	const [isViwsCargaApp, setViwsCargaApp] = useState(false);
+	const [isDisabledPlaca, setDisabledPlaca] = useState(false);
 	const { isPermissionUser } = useContext(ContextUseDefault);
 	const history = useHistory();
 	const dataAtual = new Date();
@@ -206,6 +207,8 @@ const CadastroCargaCSN = () => {
 						const ok = await swal("Sucesso!", messagemSucesso, "success", {
 							closeOnClickOutside: false,
 						});
+						funcScrollTop(2, 2);
+						setDisabledPlaca(false);
 						if (ok) resetForm();
 					}
 				} catch (error) {
@@ -251,7 +254,7 @@ const CadastroCargaCSN = () => {
 		ServiceProdutos.list().then(({ data }) => {
 			setProdutos(data.data);
 		});
-		funcScrollTop(2, 2);
+		//funcScrollTop(2, 2);
 	}, []);
 
 	useEffect(() => {
@@ -259,7 +262,6 @@ const CadastroCargaCSN = () => {
 	}, [isPermissionUser]);
 
 	function resetForm() {
-		funcScrollTop(2, 2);
 		window.location.reload();
 	}
 
@@ -282,6 +284,8 @@ const CadastroCargaCSN = () => {
 						setDateErrorInput={setDateErrorInput}
 						isDateErrorInput={isDateErrorInput}
 						isViwsCargaApp={isViwsCargaApp}
+						isDisabledPlaca={isDisabledPlaca}
+						setDisabledPlaca={setDisabledPlaca}
 						status={"Cadastro"}
 					/>
 					<Row>

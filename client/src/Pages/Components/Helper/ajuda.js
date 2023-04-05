@@ -65,8 +65,8 @@
 // 					<Accordion.Body className="class-body-accordion">
 // 						<p className="p-tela-ajuda-geral">
 // 							No menu Cargas, ao clicar em Cadastrar Cargas você será
-// 							direcionado(a) para a página de seleção, onde <br />
-// 							deverá escolher o modo em que deseja cadastrar a carga.
+// 							direcionado(a) para a página de seleção, onde deverá escolher o
+// 							modo em que deseja cadastrar a carga.
 // 						</p>
 // 						<p className="p-tela-ajuda-geral">Exemplo da Página de Seleção: </p>
 
@@ -81,7 +81,7 @@
 // 						<img src={cadastroManual} id="style-gif2" />
 // 						<div className="class-button-ir">
 // 							<Button href="/cargas/manual" id="button-cadastro-cargas">
-// 								Navegar até Cadastro Manual
+// 								Ir até Cadastro Manual
 // 							</Button>
 // 						</div>
 
@@ -91,7 +91,7 @@
 // 						<img src={importacaoLote} id="style-gif" />
 // 						<div className="class-button-ir">
 // 							<Button href="/cargas/importar" id="button-import-cargas">
-// 								Navegar até Importação de Cargas
+// 								Ir até Importação de Cargas
 // 							</Button>
 // 						</div>
 // 					</Accordion.Body>
@@ -101,7 +101,7 @@
 // 					<Accordion.Body className="class-body-accordion">
 // 						<p className="p-tela-ajuda-geral">
 // 							Essa página lhe dará acesso ao detalhamento de informações das
-// 							cargas cadastradas manualmente em <br /> nossa plataforma.
+// 							cargas cadastradas manualmente em nossa plataforma.
 // 						</p>
 // 						<p className="p-tela-ajuda-geral">
 // 							Exemplo da Página Listagem de Cargas:
@@ -114,7 +114,7 @@
 // 								id="style-button-acc"
 // 								className="button-helper-ir-para"
 // 							>
-// 								Navegar até Listagem de Cargas
+// 								Ir até Listagem de Cargas
 // 							</Button>
 // 						</div>
 // 					</Accordion.Body>
@@ -124,7 +124,7 @@
 // 					<Accordion.Body className="class-body-accordion">
 // 						<p className="p-tela-ajuda-geral">
 // 							Essa página lhe dará acesso ao detalhamento de informações das
-// 							cargas cadastradas por importação <br /> em lote na plataforma.
+// 							cargas cadastradas por importação em lote na plataforma.
 // 						</p>
 // 						<p className="p-tela-ajuda-geral">
 // 							Exemplo da página Listagem de Cargas em Lotes:
@@ -137,7 +137,7 @@
 // 								id="style-button-acc"
 // 								className="button-helper-ir-para"
 // 							>
-// 								Navegar até Cargas em Lotes
+// 								Ir até Cargas em Lotes
 // 							</Button>
 // 						</div>
 // 					</Accordion.Body>
@@ -147,11 +147,11 @@
 // 					<Accordion.Body className="class-body-accordion">
 // 						<p className="p-tela-ajuda-geral">
 // 							Ao acessar a página você poderá editar/modificar as informações
-// 							das cargas, sendo possivel editar uma carga por vez, <br />
-// 							mantendo as informações atualizadas em nossa plataforma, as carga
-// 							são controladas pelo código e você terá acesso <br /> a essa
-// 							ferramenta através das telas de Listagem de Cargas e Cargas em
-// 							Lotes. <br /> Segue abaixo o exemplo da página Editar Cargas:
+// 							das cargas, sendo possivel editar uma carga por vez, mantendo as
+// 							informações atualizadas em nossa plataforma, as carga são
+// 							controladas pelo código e você terá acesso a essa ferramenta
+// 							através das telas de Listagem de Cargas e Cargas em Lotes. Segue
+// 							abaixo o exemplo da página Editar Cargas:
 // 						</p>
 
 // 						<img src={edicaoCargas} id="style-gif" />
@@ -167,32 +167,35 @@
 // 					<Accordion.Body className="class-body-accordion">
 // 						<p className="p-tela-ajuda-geral">
 // 							Algumas ferramentas da plataforma irão permitir configurações nas
-// 							páginas para que sejam apresentadas <br /> apenas as informações
+// 							páginas para que sejam apresentadas apenas as informações
 // 							necessárias no momento da consulta, facilitando sua utilização da
-// 							plataforma. <br /> Essas funcionalidades buscam ajudar e otimizar
-// 							seu uso nas páginas da plataforma, dando maior <br /> conforto e
-// 							interação com as ferramentas disponíveis.
+// 							plataforma. Essas funcionalidades buscam ajudar e otimizar seu uso
+// 							nas páginas da plataforma, dando maior conforto e interação com as
+// 							ferramentas disponíveis.
 // 							<br />
-// 							<br /> Veja a seguir os exemplos dessas funcionalidades: <br />
+// 							Veja a seguir os exemplos dessas funcionalidades: <br />
 // 							<br />
-// 							<b className="style-b-ajuda">Configurar Tabela - </b>você poderá
+// 							<b className="style-b-ajuda">Configurar Tabela - </b> Você poderá
 // 							filtrar os itens que deseja visualizar na página de acordo com a
-// 							sua <br /> necessidade no momento da consulta.
+// 							sua necessidade no momento da consulta.
 // 						</p>
-// 						<p className="p-tela-ajuda-geral mb-1">
+// 						<p className="p-tela-ajuda-geral">
 // 							Exemplo do filtro Configurar Tabela:
 // 						</p>
 // 						<img src={configTab} id="style-gif2" />
 // 						<p className="p-tela-ajuda-geral">
 // 							<b className="style-b-ajuda">Opções da Tabela - </b>{" "}
 // 							<b>Legenda das cargas:</b> Mostra o significado de todas as
-// 							possíveis situações de cargas <br /> cadastradas no sistema,
-// 							facilitando o entendimento das mesmas.
+// 							possíveis situações de cargas cadastradas no sistema, facilitando
+// 							o entendimento das mesmas.
 // 							<br />
-// 							<br /> <b>Importar tabela:</b> Permite filtro por data e código da
-// 							filial e oferece o download da tabela em formato excel.
-// 							<br /> <br /> <b>Redefinir tabela:</b> Possibilita a redefinição
-// 							das configurações feitas na página, para o formato padrão da
+// 							<br />
+// 							<b>Importar tabela:</b> Permite filtro por data e código da filial
+// 							e oferece o download da tabela em formato excel.
+// 							<br />
+// 							<br />
+// 							<b>Redefinir tabela:</b> Possibilita a redefinição das
+// 							configurações feitas na página, para o formato padrão da
 // 							ferramenta.
 // 						</p>
 // 						<p className="p-tela-ajuda-geral mb-1 mt-3">
@@ -216,9 +219,9 @@
 // 					<Accordion.Body className="class-body-accordion">
 // 						<p className="p-tela-ajuda-geral">
 // 							A página de Coordenadas disponibiliza detalhes do veículo,
-// 							informações de rota e localização, categoria, <br /> placa, dados
-// 							do motorista, dentre outras informações sobre os veículos
-// 							cadastrados na plataforma.
+// 							informações de rota e localização, categoria, placa, dados do
+// 							motorista, dentre outras informações sobre os veículos cadastrados
+// 							na plataforma.
 // 						</p>
 // 						<p className="p-tela-ajuda-geral">Exemplo da página Coordenadas:</p>
 // 						<img src={coordenadasGif} id="style-gif" />
@@ -229,7 +232,7 @@
 // 								id="style-button-acc"
 // 								className="button-helper-ir-para"
 // 							>
-// 								Navegar até Coordenadas
+// 								Ir até Coordenadas
 // 							</Button>
 // 						</div>
 // 					</Accordion.Body>
@@ -239,8 +242,8 @@
 // 					<Accordion.Body className="class-body-accordion">
 // 						<p className="p-tela-ajuda-geral">
 // 							Ao acessar a tela de Consulta de Cargas (presente na página de
-// 							Coordenadas), você poderá visualizar <br /> informações de cargas
-// 							abertas manualmente em nossa plataforma.
+// 							Coordenadas), você poderá visualizar informações de cargas abertas
+// 							manualmente em nossa plataforma.
 // 						</p>
 // 						<p className="p-tela-ajuda-geral">Exemplo da página de Consulta:</p>
 // 						<img src={consultaCargas} id="style-gif" />
@@ -256,8 +259,8 @@
 // 					<Accordion.Body className="class-body-accordion">
 // 						<p className="p-tela-ajuda-geral">
 // 							Nessa opção você será apresentado à página de Monitoramento, onde
-// 							conseguirá verificar veículos <br /> pendentes, e aprovar ou
-// 							reprovar veículos de acordo com a situação de cada um.
+// 							conseguirá verificar veículos pendentes, e aprovar ou reprovar
+// 							veículos de acordo com a situação de cada um.
 // 						</p>
 // 						<p className="p-tela-ajuda-geral">
 // 							Exemplo da página de Monitoramento:{" "}
@@ -270,7 +273,7 @@
 // 								id="style-button-acc"
 // 								className="button-helper-ir-para"
 // 							>
-// 								Navegar até Monitoramento
+// 								Ir até Monitoramento
 // 							</Button>
 // 						</div>
 // 					</Accordion.Body>
@@ -280,8 +283,8 @@
 // 					<Accordion.Body className="class-body-accordion">
 // 						<p className="p-tela-ajuda-geral">
 // 							Essa página possibilita visualizar, adicionar, editar e desativar
-// 							produtos, e apresenta a situação de cada <br /> um deles, provendo
-// 							melhor acompanhamento dos mesmos.
+// 							produtos, e apresenta a situação de cada um deles, provendo melhor
+// 							acompanhamento dos mesmos.
 // 						</p>
 // 						<p className="p-tela-ajuda-geral">
 // 							Exemplo da página de Produtos:{" "}
@@ -289,7 +292,7 @@
 // 						<img src={telaProdutos} id="style-gif" />
 // 						<p className="ajuda-csn-p">
 // 							Somente pessoas com permissão são aptas a adicionar, editar e
-// 							desativar os produtos <br /> na plataforma.
+// 							desativar os produtos na plataforma.
 // 						</p>
 
 // 						<div className="class-button-ir">
@@ -298,7 +301,7 @@
 // 								id="style-button-acc"
 // 								className="button-helper-ir-para"
 // 							>
-// 								Navegar até Produtos
+// 								Ir até Produtos
 // 							</Button>
 // 						</div>
 // 					</Accordion.Body>
@@ -309,13 +312,13 @@
 // 						<p className="p-tela-ajuda-geral">
 // 							<br />
 // 							Ao clicar em Relatórios, você terá várias opções de consulta
-// 							disponíveis na plataforma, são elas: <br /> <br />{" "}
-// 							<b className="style-b-ajuda">Indicador Operacional - </b>Mostra a
-// 							situação e permite acompanhamento das cargas já cadastradas na{" "}
-// 							<br /> platafoma, essas informações serão apresentadas de acordo
-// 							com o preechimento do filtro de data, a
-// 							<br /> página conta também com gráfico e tabela,cargas ativadas e
-// 							desativadas, entre outras informações.
+// 							disponíveis na plataforma, são elas: <br />
+// 							<br /> <b className="style-b-ajuda">Indicador Operacional - </b>
+// 							Mostra a situação e permite acompanhamento das cargas já
+// 							cadastradas na platafoma, essas informações serão apresentadas de
+// 							acordo com o preechimento do filtro de data, a página conta também
+// 							com gráfico e tabela,cargas ativadas e desativadas, entre outras
+// 							informações.
 // 						</p>
 // 						<img src={indicadorOperacional} id="style-gif2" />
 
@@ -331,9 +334,9 @@
 // 						<p className="p-tela-ajuda-geral">
 // 							<b className="style-b-ajuda">Rotas Pendentes de Cadastro - </b>{" "}
 // 							Disponibiliza os nomes das cidades e dos estados de origem e
-// 							<br /> destino, provendo acesso á informações de rotas, e permite
-// 							também que você busque uma cidade ou estado <br /> específico,
-// 							para melhor acompanhamento.
+// 							destino, provendo acesso á informações de rotas, e permite também
+// 							que você busque uma cidade ou estado específico, para melhor
+// 							acompanhamento.
 // 						</p>
 // 						<img src={rotasPendentes} id="style-gif" />
 
@@ -381,10 +384,9 @@
 // 							<br />
 // 							Em <b className="style-b-ajuda">Histórico de Rotas do Veículo </b>
 // 							, você terá acesso ao histórico de localização do veículo, busque
-// 							pela <br /> placa do veículo e datas de início e fim e as
-// 							informações serão mostradas no mapa da plataforma, a tela <br />{" "}
-// 							oferece também a opção de download do histórico consultado (via
-// 							excel).
+// 							pela placa do veículo e datas de início e fim e as informações
+// 							serão mostradas no mapa da plataforma, a tela oferece também a
+// 							opção de download do histórico consultado (via excel).
 // 						</p>
 // 						<img src={historicoRota} id="style-gif" />
 

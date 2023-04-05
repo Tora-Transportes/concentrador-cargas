@@ -11,8 +11,11 @@ import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { getClaims } from "src/MicrosoftAuthentication";
 import ServiceCargas from "src/services/ServiceCargas";
 import FormularioCadastroCSN from "src/Pages/Components/FormularioCadastroCSN";
-import { funcBodyEdit, validarInputEfetivo } from "./menagemente";
-import { InputReferencError } from "src/Pages/Components/FormularioCadastroCSN/management";
+import { funcBodyEdit } from "./menagemente";
+import {
+	InputReferencError,
+	validarDadosInput,
+} from "src/Pages/Components/FormularioCadastroCSN/management";
 import { funcScrollTop } from "src/Pages/Utils/scrollTop";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 import { cancelarCargaApp } from "src/Pages/Components/DataAppConcentrador";
@@ -27,12 +30,13 @@ function EditarCargaCsn() {
 	const [isPermissionUserEdit, setPermissionUserEdit] = useState(false);
 	const [isPermExpurgarCarga, setPermExpurgarCarga] = useState(false);
 	const [isCargaExpurgada, setCargaExpurgada] = useState(false);
+	const [isCargaApp, setCargaApp] = useState(false);
 	const [isDateErrorInput, setDateErrorInput] = useState(InputReferencError);
-	const [isAlteracaoParcial, setAlteracaoParcial] = useState(true);
+	const [isAlteracaoParcial, setAlteracaoParcial] = useState(false);
 	const [isViwsCargaApp, setViwsCargaApp] = useState(false);
+	const [isDisabledPlaca, setDisabledPlaca] = useState(false);
 	const { isPermissionUser } = useContext(ContextUseDefault);
 	const toast = useRef(null);
-
 	const messageDadosIncorretoInput = () => {
 		return swal(
 			"Atenção",
@@ -74,7 +78,6 @@ function EditarCargaCsn() {
 				client: "",
 				id: "",
 				idRotaCsn: "",
-				//coletaEfetiva_posto30: "",
 				coletaEfetiva: "",
 				coletaEfetivaSaida: "",
 				tempServicoLocal: "",
@@ -89,7 +92,6 @@ function EditarCargaCsn() {
 				client: "",
 				id: "",
 				idRotaCsn: "",
-				//coletaEfetiva_mundo: "",
 				coletaEfetiva: "",
 				coletaEfetivaSaida: "",
 				tempServicoLocal: "",
@@ -104,7 +106,6 @@ function EditarCargaCsn() {
 				client: "",
 				id: "",
 				idRotaCsn: "",
-				//coletaEfetiva_peacao: "",
 				coletaEfetiva: "",
 				coletaEfetivaSaida: "",
 				tempServicoLocal: "",
@@ -179,32 +180,39 @@ function EditarCargaCsn() {
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
+			const {
+				ponto_passagem,
+				ponto_passagem2,
+				ponto_passagem3,
+				ponto_passagem4,
+				ponto_passagem5,
+				ponto_passagem6,
+				ponto_passagem7,
+			} = values;
+
+			const dadosPontoPassagem = {
+				ponto_passagem,
+				ponto_passagem2,
+				ponto_passagem3,
+				ponto_passagem4,
+				ponto_passagem5,
+				ponto_passagem6,
+				ponto_passagem7,
+			};
+			if (values.fk_situacao > 2)
+				validarDadosInput(
+					dadosPontoPassagem,
+					isDateErrorInput,
+					setDateErrorInput
+				);
 			const existInputErrado = isDateErrorInput.find(
 				(item) => item.error === true
 			);
 
 			if (existInputErrado?.error) {
 				messageDadosIncorretoInput();
+				funcScrollTop(0, 1000);
 			} else {
-				const {
-					ponto_passagem,
-					ponto_passagem2,
-					ponto_passagem3,
-					ponto_passagem4,
-					ponto_passagem5,
-					ponto_passagem6,
-					ponto_passagem7,
-				} = values;
-
-				const dadosPontoPassagem = {
-					ponto_passagem,
-					ponto_passagem2,
-					ponto_passagem3,
-					ponto_passagem4,
-					ponto_passagem5,
-					ponto_passagem6,
-					ponto_passagem7,
-				};
 				try {
 					let dadosCargaSalva;
 					let showMessageSucesso = true;
@@ -231,23 +239,23 @@ function EditarCargaCsn() {
 							}
 						);
 						if (resultOk) {
-							const InputEfetivoCorreto = await validarInputEfetivo(
-								6,
-								values.id
-							);
+							// const InputEfetivoCorreto = await validarInputEfetivo(
+							// 	6,
+							// 	values.id
+							// );
 
-							if (!InputEfetivoCorreto) {
-								showMessageSucesso = false;
-								messageDadosIncorretoInput();
-							} else {
-								await ServiceCargas.updateCSN({
-									...formik.values,
-									info_passagem: dadosPontoPassagem,
-									canal_comunicacao: "manual",
-									fk_situacao: 6,
-									fk_filial: formik.values.fk_filial?.split("-")[0],
-								});
-							}
+							// if (!InputEfetivoCorreto) {
+							// 	showMessageSucesso = false;
+							// 	messageDadosIncorretoInput();
+							// } else {
+							await ServiceCargas.updateCSN({
+								...formik.values,
+								info_passagem: dadosPontoPassagem,
+								canal_comunicacao: "manual",
+								fk_situacao: 6,
+								fk_filial: formik.values.fk_filial?.split("-")[0],
+							});
+							//}
 						} else {
 							window.open("", "_self").close();
 						}
@@ -369,6 +377,7 @@ function EditarCargaCsn() {
 			let city;
 			const carga = (await ServiceCargas.indexCsn({ id })).data.data;
 			if (carga.ativo === 2) setCargaExpurgada(true);
+			if (carga.carga_app === 1) setCargaApp(true);
 			for (let i in carga) {
 				let nonNullValue = carga[i] === null ? "" : carga[i];
 				if (i.indexOf("data") !== -1) {
@@ -491,7 +500,7 @@ function EditarCargaCsn() {
 			setPermissionUserEdit(true);
 		}
 		if (isPermissionUser?.includes("ALTERACAO_PARCIAL")) {
-			setAlteracaoParcial(false);
+			setAlteracaoParcial(true);
 		}
 		if (isPermissionUser?.includes("ENVIAR_CARGA_APP")) setViwsCargaApp(true);
 		if (isPermissionUser?.includes("EXPURGAR_CARGA"))
@@ -506,16 +515,6 @@ function EditarCargaCsn() {
 		? "info-tilte"
 		: "d-none";
 	const showMsgCargaExpurgo = isCargaExpurgada ? "info-tilte" : "d-none";
-
-	// const mensagemEditParcialSucesso = async () => {
-	// 	setTimeout(async () => {
-	// 		await swal("Sucesso!", "A carga foi atualizada!", "success", {
-	// 			closeOnClickOutside: false,
-	// 		}).then(() => {
-	// 			window.location.reload();
-	// 		});
-	// 	}, 500);
-	// };
 
 	const expurgarCarga = async () => {
 		const result = await ServiceCargas.updatePatch(formik.values.id, {
@@ -545,7 +544,7 @@ function EditarCargaCsn() {
 			<Toast ref={toast} position="top-center" />
 			<Container className="mb-5 mt-5">
 				<div className="div-title">
-					<p className="mb-1" id="style-title-editorCarga">
+					<p className="mb-2" id="style-title-editorCarga">
 						Editar Carga CSN
 					</p>
 					<div className="msg-info-topo">
@@ -572,6 +571,9 @@ function EditarCargaCsn() {
 						isAlteracaoParcial={isAlteracaoParcial}
 						isViwsCargaApp={isViwsCargaApp}
 						status={"Edicao"}
+						isCargaApp={isCargaApp}
+						isDisabledPlaca={isDisabledPlaca}
+						setDisabledPlaca={setDisabledPlaca}
 					/>
 					<div className="text-end">
 						<h6 className={showMsgCargaExpurgo}>Carga Expurgada!</h6>
@@ -588,29 +590,13 @@ function EditarCargaCsn() {
 									Expurgar carga
 								</Button>
 							)}
-
-						{/* {!isAlteracaoParcial && [3].includes(formik.values.fk_situacao) && (
-							<Button
-								variant="success"
-								className="p-2 botao-foter-pg"
-								onClick={mensagemEditParcialSucesso}
-							>
-								Edição Parcial
-							</Button>
-						)} */}
-
 						{([1, 2].includes(formik.values.fk_situacao) ||
-							([6, 7, 8, 9].includes(formik.values.fk_situacao) &&
+							([6, 9].includes(formik.values.fk_situacao) &&
 								isPermissionUserEdit)) && (
 							<Button
 								variant="success"
 								type="submit"
 								className="p-2  botao-gravar"
-								// disabled={
-								// 	[3, 5].includes(formik.values.fk_situacao) ||
-								// 	([6, 7, 8, 9].includes(formik.values.fk_situacao) &&
-								// 		isPermissionUserEdit)
-								// }
 							>
 								Gravar
 							</Button>
@@ -644,7 +630,6 @@ function EditarCargaCsn() {
 							</Button>
 						)}
 
-						{/* {isViewButtonFinaliza && ( */}
 						{[3, 7, 8].includes(formik.values.fk_situacao) && (
 							<Button
 								variant="info"

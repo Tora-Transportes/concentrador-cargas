@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import useLoadingScreen from "../../Components/LoadingScreen";
-//import NavbarNavigator from "../../Components/NavbarNavigator";
 import ViewRaio from "./view";
 import ServiceCoordenadas from "src/services/ServiceCoordenadas";
 import swal from "sweetalert";
@@ -38,7 +37,6 @@ function RaioEmpresa() {
 	return (
 		<>
 			<LoadingScreen />
-			{/* <NavbarNavigator /> */}
 			<Menusuperior />
 			<ViewRaio
 				rota={rota}

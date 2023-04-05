@@ -89,6 +89,10 @@ routes.get(
   "/csn/cargas/placa",
   CargasCsnInfoController.indexOfSituacaoEndPlaca
 );
+routes.get(
+  "/csn/relatorio/cargas/info",
+  ExportController.generateReportFromCargasInScreenCsn
+);
 
 routes.put("/csn/ponto_parada/:id", PontoParadaController.update);
 routes.patch("/csn/ponto_parada/:id", PontoParadaController.updatePatch);
@@ -98,6 +102,7 @@ routes.get("/csn/ponto_parada/:id", PontoParadaController.serachPerIdCarga);
 routes.delete("/csn/ponto_parada/:id", PontoParadaController.delete);
 
 routes.get("/usuarios", UsuarioController.search);
+routes.get("/usuarios/nome", UsuarioController.searchName);
 routes.get("/usuarios/:oid", UsuarioController.index);
 routes.put(
   "/usuarios/:oid/permissoes",

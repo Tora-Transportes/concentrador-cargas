@@ -1,19 +1,11 @@
-.class-body-menu .row-main {
+.class-cargas-menu {
   font-family: "Poppins", sans-serif;
-  margin-top: 7rem;
-}
-.puts a:hover svg {
-  transform: scale(1.1);
 }
 
-#titulo-selecionar-modo-carga {
-  color: #00652e;
-  font-family: "Poppins", sans-serif;
-  font-size: 40px;
+.h1-title-selecaoCarg {
+  font-size: 2.4rem;
   font-weight: 500;
-}
-
-.class-title-coleta {
+  color: #00652e;
   margin-top: 6rem;
   display: grid;
   justify-content: center;
@@ -25,35 +17,16 @@
   grid-template-columns: auto auto;
   justify-content: space-evenly;
   align-items: center;
-  grid-gap: -3rem;
+  grid-gap: -5rem;
   margin-top: 3rem;
 }
 
-#title-ico-import,
+div .title-ico-import,
 #title-manual,
-#title-CSN {
-  color: #00652e;
+div .title-CSN {
   font-family: "Poppins", sans-serif;
-  font-size: 27px;
-}
-
-.linck-RelatorioApp-Title-CSN {
+  font-size: 1.6rem;
   color: #00652e;
-  font-family: "Poppins", sans-serif;
-  font-size: 27px;
-}
-
-.linck-RelatorioApp-Title-CSN -CSN {
-  margin-left: 0.7rem;
-}
-#title-CSN {
-  margin-left: 0.7rem;
-}
-
-#import {
-  margin-left: 5rem;
-  color: #00652e;
-  margin-top: 4.5rem;
 }
 
 #hand {
@@ -63,147 +36,98 @@
   margin-top: 4.5rem;
 }
 
-#icon-csn {
+div .icon-import {
+  margin-left: 5rem;
+  color: #00652e;
+  margin-top: 4.5rem;
+}
+
+.icon-csn {
   color: #00652e;
   margin-top: 4.2rem;
+  margin-left: -0.5rem;
 }
 
-#title-ico-import:hover,
-#import:hover,
+.title-ico-import:hover,
+div .icon-import:hover,
 #hand:hover,
 #title-manual:hover,
-#title-CSN:hover,
-#icon-csn:hover {
+div .title-CSN:hover,
+.icon-csn:hover {
   transition: 0.5s;
   -webkit-transform: scale(1.2);
   transform: scale(1.1);
   color: #009c08;
 }
-.linck-RelatorioApp-Title-CSN :hover,
-#icon-csn:hover {
+
+.icon-csn:hover {
   transition: 0.5s;
   -webkit-transform: scale(1.2);
   transform: scale(1.1);
   color: #009c08;
 }
-@media only screen and (min-width: 215px) and (max-width: 390px) {
-  #titulo-selecionar-modo-carga {
-    font-size: 25px !important;
+
+@media only screen and (max-width: 295px) {
+  .h1-title-selecaoCarg {
+    text-align: left;
   }
-  .class-button-icons {
-    position: absolute !important;
-    display: block;
-    margin-top: 1rem !important;
-    margin-left: 28% !important;
+  div .title-ico-import {
+    text-align: center;
+  }
+
+  div .class-button-icons {
+    margin-left: 25% !important;
   }
 }
-@media only screen and (min-width: 391px) and (max-width: 505px) {
-  .class-body-menu {
-    overflow: none;
+@media only screen and (min-width: 306px) and (max-width: 365px) {
+  div .h1-title-selecaoCarg {
+    margin-left: 1rem;
   }
-  .class-button-icons {
-    position: absolute !important;
+}
+
+@media only screen and (max-width: 680px) {
+  div .class-button-icons {
+    text-align: flex;
+    position: absolute;
     display: block;
-    margin-top: 1rem !important;
+    margin-top: 1rem;
     margin-left: 35% !important;
   }
-  #hand {
-    color: #00652e;
-    margin-top: 3rem;
-  }
-
-  #title-ico-import {
-    font-size: 22px;
-    margin-left: -1.8rem !important;
-  }
-  #icon-csn {
-    color: #00652e;
-    margin-left: 12.5vw;
-  }
-
-  .linck-RelatorioApp-Title-CSN {
-    margin-left: 2rem;
-  }
-  #title-CSN {
-    margin-left: 2rem;
-  }
-
-  .class-title-coleta {
-    margin-left: 1rem;
-  }
 }
 
-@media only screen and (min-width: 506px) and (max-width: 1023px) {
-  .class-button-icons {
-    margin-top: 2rem;
-    grid-gap: 3rem;
-    margin-left: 2rem;
-  }
-
-  #title-manual,
-  #hand {
-    margin-left: 1rem !important;
-  }
-
-  #icon-csn,
-  #title-CSN {
-    margin-left: -3rem !important;
-  }
-  .linck-RelatorioApp-Title-CSN {
-    margin-left: -3rem !important;
-  }
-}
-
-@media only screen and (max-width: 1024px) {
-  .class-body-menu {
+@media only screen and (max-width: 808px) {
+  .class-cargas-menu {
     overflow: none;
   }
-  #titulo-selecionar-modo-carga {
-    margin-top: 5rem;
-    font-size: 30px;
-    text-align: center;
+  div .class-button-icons {
+    text-align: flex;
+    position: absolute;
+    display: block;
+    margin-top: 1rem;
+    margin-left: 32%;
   }
 
-  #title-manual {
-    font-size: 22px;
-    margin-left: 2rem;
+  div .title-ico-import {
+    margin-left: -4rem;
   }
 
-  #hand {
-    margin-left: 2.2rem;
+  div .icon-import {
     color: #00652e;
     margin-top: 3rem;
+    margin-left: 0.9rem;
   }
 
-  #title-ico-import {
-    text-align: center;
-    font-size: 22px;
-    margin-left: -2rem;
-  }
-
-  .linck-RelatorioApp-Title-CSN {
-    font-size: 23px;
-    /* margin-right: 10vw; */
-  }
-  #import {
-    color: #00652e;
-    margin-top: 3rem;
-    margin-left: 2rem;
-  }
-
-  #icon-csn {
-    margin-top: 2.5rem;
-    margin-left: 12.5vw;
-  }
-  #title-CSN {
-    margin-left: 2.2rem;
-  }
-
-  .class-title-coleta {
-    margin-top: 4rem;
-    display: grid;
-    justify-content: center;
-    align-items: center;
+  div .title-CSN {
     margin-left: 1rem;
+  }
+  div .icon-csn {
+    margin-left: 0.3rem;
+  }
+}
+
+@media only screen and (max-width: 902px) {
+  div .h1-title-selecaoCarg {
+    font-size: 1.8rem;
+    text-align: center;
   }
 }

@@ -267,7 +267,7 @@ function FormularioConsulta({ formik, exitPage }) {
 			)}
 			<Row>
 				<Col sm={12} md={6}>
-					<FloatingLabel label="Quantidade" className="mb-3">
+					<FloatingLabel label="Tipo de Material" className="mb-3">
 						<Form.Control
 							type="text"
 							placeholder=" "
@@ -281,7 +281,7 @@ function FormularioConsulta({ formik, exitPage }) {
 				<Col>
 					<Row>
 						<Col>
-							<FloatingLabel label="Unidade" className="mb-3">
+							<FloatingLabel label="Unidade Medida" className="mb-3">
 								<Form.Control
 									type="text"
 									placeholder=" "
@@ -365,12 +365,8 @@ function FormularioConsulta({ formik, exitPage }) {
 				</Col>
 			</Row>
 			<Col>
-				<Button
-					variant="success"
-					className="button-footer-voltar"
-					onClick={exitPage}
-				>
-					<HiArrowCircleLeft className="fs-5 mb-1" /> Voltar
+				<Button className="button-consultCarg-voltar" onClick={exitPage}>
+					<HiArrowCircleLeft className="fs-6 mb-1" /> Voltar
 				</Button>
 			</Col>
 		</div>

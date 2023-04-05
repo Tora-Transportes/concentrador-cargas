@@ -66,7 +66,7 @@ export const funcValidDate = (date) => {
 export const funcCompareDateOneYear = (date) => {
 	const validandoData = funcValidDate(date);
 	if (validandoData)
-		return { error: true, message: "Data com formato Incorreta." };
+		return { error: true, message: "Data com formato Incorreto." };
 	const dataMaisUmAno = formatAddOrSubtracDate(dataAtual, 366, "somar");
 	const dataSubtrairUmAno = formatAddOrSubtracDate(dataAtual, 366, "subtrair");
 	if (date > dataMaisUmAno || date < dataSubtrairUmAno) {

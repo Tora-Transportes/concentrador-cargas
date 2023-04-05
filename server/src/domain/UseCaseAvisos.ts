@@ -1,4 +1,7 @@
-import { dateAtualMoment } from "./../Utils/formatData";
+import {
+  dateAtualMoment,
+  verificarDataStringValida,
+} from "./../Utils/formatData";
 import AppError from "../models/AppError";
 import IModelAvisos from "../models/Avisos";
 import { factoryAvisos } from "../validations/AvisosValidator";
@@ -46,8 +49,16 @@ export class UseCaseAllAvisos {
   constructor() {
     this.avisosRepository = new AvisosRepository();
   }
-  async run() {
-    return await this.avisosRepository.search();
+  async run(filter: any) {
+    if (filter.data) {
+      if (!verificarDataStringValida(filter.data))
+        throw new AppError("Formato de data inválido", 400);
+    }
+    return await this.avisosRepository.search(
+      filter,
+      filter.page,
+      filter.limit || 10
+    );
   }
 }
 

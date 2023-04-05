@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { MdMobileFriendly, MdOutlineMobileScreenShare } from "react-icons/md";
-import "../../Cargas/Menu/menuCargas.css";
+import "../MenuSuperior/menuSuperior.css";
+import "../../Relatorios/Totalizadores/indicador.css";
 
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
@@ -22,19 +23,21 @@ function LinkRelatoriosApp() {
 	return (
 		<>
 			<Menusuperior />
-			<Container>
-				<h1 id="titulo-selecionar-modo-carga" className="class-title-coleta">
+			<Container className="body-indicadorOperacional-app mt-3">
+				<h1 className="title-indicadorOperacional-app">
 					Indicador Operacional App-Tora:
 				</h1>
-				<div className="class-button-icons">
+				<div className="class-app-icons">
 					{isPermissionPadrao && (
 						<>
 							<Link
-								className="text-decoration-none"
+								className="text-decoration-none text-center"
 								to="/relatorios/app/visualizar/padrao"
 							>
-								<MdMobileFriendly size={70} id="import" />
-								<p id="title-ico-import">Carga App Padrão</p>
+								<MdMobileFriendly size={70} className="icon-app-padrao" />
+								<p className="link-RelatorioApp-Title-padrao">
+									Carga App Padrão
+								</p>
 							</Link>
 						</>
 					)}
@@ -44,8 +47,8 @@ function LinkRelatoriosApp() {
 							className="text-decoration-none text-center"
 							to="/relatorios/app/visualizar/csn"
 						>
-							<MdOutlineMobileScreenShare size={70} id="icon-csn" />
-							<p className="linck-RelatorioApp-Title-CSN ">Carga App CSN</p>
+							<MdOutlineMobileScreenShare size={70} className="icon-app-csn" />
+							<p className="link-RelatorioApp-Title-CSN ">Carga App CSN</p>
 						</Link>
 					)}
 				</div>

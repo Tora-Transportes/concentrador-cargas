@@ -112,7 +112,7 @@ function VisualizarCsn() {
 			date_execel_fim,
 			fk_filial: fk_filial.split("-")[0],
 		};
-		const response = await ServiceCargas.exportToXlsx(options);
+		const response = await ServiceCargas.exportToXlsxCsn(options);
 
 		if (response.status === 202) {
 			const message =
@@ -132,7 +132,7 @@ function VisualizarCsn() {
 			link.href = url;
 			link.setAttribute(
 				"download",
-				`RELATORIO-CARGAS_${new Date().getTime()}.xlsx`
+				`RELATORIO-CARGAS-CSN_${new Date().getTime()}.xlsx`
 			);
 			link.click();
 			setModalShowExcel(false);

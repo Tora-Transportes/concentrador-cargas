@@ -95,7 +95,7 @@ function ViewRotasPendentes({
 	return (
 		<div className="class-body-relatorios">
 			<Container className="text-center mb-5 mt-4">
-				<p className="style-title-rel">{titlePage}</p>
+				<p className="style-title-rel2">{titlePage}</p>
 				<hr className="linha-abaixo-titulo" id="style-hr-rel" />
 				<Toast ref={toast} position="top-center"></Toast>
 				<span>
@@ -229,7 +229,7 @@ function ViewRotasPendentes({
 							<b className="cor-letras">Cargas Ativadas & Desativadas</b>
 						</Accordion.Header>
 						<Accordion.Body>
-							<Table>
+							<Table className="table-relatorios-footer">
 								<thead>
 									<tr>
 										<th>#</th>

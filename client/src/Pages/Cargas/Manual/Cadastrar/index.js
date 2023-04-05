@@ -18,6 +18,7 @@ function Manual() {
 	const [produtos, setProdutos] = useState([]);
 	const [distancia, setDistancia] = useState(null);
 	const [isViwsCargaApp, setViwsCargaApp] = useState(false);
+	const [isDisabledPlaca, setDisabledPlaca] = useState(false);
 	const { isPermissionUser } = useContext(ContextUseDefault);
 	const history = useHistory();
 
@@ -70,6 +71,7 @@ function Manual() {
 					`Carga cadastrada com o identificador ${data.data.id}!`,
 					"success"
 				);
+				setDisabledPlaca(false);
 				resetForm();
 			} catch (error) {
 				console.log(error);
@@ -167,6 +169,9 @@ function Manual() {
 						distancia={distancia}
 						formik={formik}
 						isViwsCargaApp={isViwsCargaApp}
+						isDisabledPlaca={isDisabledPlaca}
+						setDisabledPlaca={setDisabledPlaca}
+						status={"Cadastro"}
 					/>
 					<Row>
 						<Col>

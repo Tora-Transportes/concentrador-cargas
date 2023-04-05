@@ -23,8 +23,8 @@ function Main() {
 	return (
 		<>
 			<Menusuperior />
-			<Container className="class-body-menu">
-				<h1 id="titulo-selecionar-modo-carga" className="class-title-coleta">
+			<Container className="class-cargas-menu">
+				<h1 className="h1-title-selecaoCarg">
 					Selecione o modo no qual a carga foi coletada:
 				</h1>
 				<div className="class-button-icons">
@@ -36,16 +36,16 @@ function Main() {
 							</Link>
 
 							<Link className="text-decoration-none" to="/cargas/importar">
-								<SiGooglesheets size={70} id="import" />
-								<p id="title-ico-import">Importação em Lote</p>
+								<SiGooglesheets size={70} className="icon-import" />
+								<p className="title-ico-import">Importação em Lote</p>
 							</Link>
 						</>
 					)}
 
 					{viewsCadastrarCSN && (
 						<Link className="text-decoration-none" to="/cargas/cadastro/csn">
-							<MdOutlineAppRegistration size={75} id="icon-csn" />
-							<p id="title-CSN">CSN</p>
+							<MdOutlineAppRegistration size={75} className="icon-csn" />
+							<p className="title-CSN">CSN</p>
 						</Link>
 					)}
 				</div>

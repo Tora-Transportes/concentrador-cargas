@@ -6,7 +6,7 @@
 }
 
 .title-avisos {
-  font-size: 40px;
+  font-size: 2.3rem;
   font-style: italic;
   color: #00652e;
   text-align: center;
@@ -42,21 +42,28 @@
   box-sizing: border-box;
 }
 
-.col-button-add {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.add-button {
+div .add-button {
   border-color: #00652e;
   background-color: #fff;
   color: #00652e;
-  margin: 15px 15px 6px 16px;
   height: 6vh;
 }
 .add-button:enabled:hover {
   border-color: #009c08;
   background-color: #009c08;
+}
+
+.div-pesquisa-aviso {
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: row-reverse;
+  position: relative;
+  margin: 0.5rem 15px 1rem 15px;
+  height: 1px;
+}
+
+.float-pesquisa-aviso {
+  width: 15rem;
 }
 
 .card-avisos {
@@ -237,26 +244,31 @@ div .button-salvar:enabled:hover {
 .confirmation-delete {
   font-family: "Poppins", sans-serif;
 }
-
-@media screen and (max-width: 765px) {
-  .p-conte-nos-avisos {
-    margin-right: 15%;
-
-    font-size: 15px;
+@media only screen and (max-width: 515px) {
+  div .add-button {
+    font-size: 0.8rem;
+    margin: 3rem 15px 1px 16px;
   }
-  .div-reaction-avisos {
-    display: flexbox;
+  .float-pesquisa-aviso {
+    width: 30rem;
   }
-  .buttons-reaction-avisos {
-    margin-top: -1%;
+
+  .row-views-container {
+    margin-left: 3%;
+    width: 92% !important;
+  }
+
+  .card-avisos {
+    margin: 0;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    padding: 0 0;
   }
 }
 
-@media screen and (min-width: 766px) and (max-width: 995px) {
-  .p-conte-nos-avisos {
-    margin-right: 10%;
-  }
-  .div-reaction-avisos {
-    display: flexbox;
+@media screen and (min-width: 516px) and (max-width: 1595px) {
+  div .add-button {
+    font-size: 1rem;
+    margin: -0.5rem 15px -11px 16px;
   }
 }
