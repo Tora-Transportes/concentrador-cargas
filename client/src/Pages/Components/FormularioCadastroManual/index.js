@@ -492,7 +492,6 @@ function FormularioCadastroManual({
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							onBlur={() => handleSearchDistance(formik.values)}
-							className="text-primary"
 							required
 						/>
 					</FloatingLabel>
@@ -514,7 +513,7 @@ function FormularioCadastroManual({
 								} e ${
 									formik.values.destino_carga.split("/")[2]
 								} é de ${distancia} KM.`}
-								className="text-primary"
+								className="text-success"
 								readOnly
 							/>
 							<Form.Text id="passwordHelpBlock" muted>

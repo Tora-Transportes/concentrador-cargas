@@ -174,6 +174,19 @@ export const columns = [
 		showFilter: true,
 	},
 	{
+		name: "carga_app",
+		description: "Cargas enviadas App",
+		selector: (row) => (row.carga_app === 1 ? "Sim" : "Não"),
+		Filter: (props) => (
+			<Form.Select {...props}>
+				<option></option>
+				<option value="1"> Sim </option>
+				<option value="0"> Não </option>
+			</Form.Select>
+		),
+		showFilter: true,
+	},
+	{
 		name: "ponto_parada[0].COLETA_EFETIVA_POSTO30",
 		description: "Inicio Efetivo Posto 30",
 		selector: (row) =>
