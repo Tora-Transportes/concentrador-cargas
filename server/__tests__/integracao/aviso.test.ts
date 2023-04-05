@@ -52,6 +52,38 @@ describe("Gerenciar avisos", () => {
       .set("Authorization", `Bearer ${jwtToken}`)
       .then((res) => {
         expect(res.status).to.eql(400);
+        expect(res.body.message).to.eql("Erro na validação dos campos");
+        closeServer();
+      });
+  });
+
+  it("Deve retornar 400 na falta de enviar a MENSAGEM no body da criação", function () {
+    request(server)
+      .post("/avisos")
+      .send({
+        TITULO: "TESTE INTEGRAÇÃO BACK",
+        AUTOR: "MOISES PIRES DE CASTRO",
+      })
+      .set("Authorization", `Bearer ${jwtToken}`)
+      .then((res) => {
+        expect(res.status).to.eql(400);
+        expect(res.body.message).to.eql("Erro na validação dos campos");
+        closeServer();
+      });
+  });
+
+  it("Deve retornar 400 na falta de enviar do AUTOR no body da criação", function () {
+    request(server)
+      .post("/avisos")
+      .send({
+        TITULO: "TESTE INTEGRAÇÃO BACK",
+        MENSAGEM:
+          "Teste da tela de aviso, verificão de funcionalidades, testando tudo.",
+      })
+      .set("Authorization", `Bearer ${jwtToken}`)
+      .then((res) => {
+        expect(res.status).to.eql(400);
+        expect(res.body.message).to.eql("Erro na validação dos campos");
         closeServer();
       });
   });
