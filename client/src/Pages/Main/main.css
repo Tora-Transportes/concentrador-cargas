@@ -158,7 +158,7 @@ div .style-button-jogo:focus-visible {
 
 div .versionamento {
   position: absolute;
-  bottom: -0.8%;
+  bottom: -1%;
   margin-left: 6px;
   color: #a70505;
   font-size: 13px;
@@ -256,7 +256,7 @@ div .versionamento {
     color: red;
   }
 
-  div .versionamento {
+  /* div .versionamento {
     position: relative;
     bottom: -1%;
     margin-left: 7px;
@@ -264,14 +264,14 @@ div .versionamento {
     font-family: "Poppins", sans-serif;
     font-size: 13px;
     font-weight: 530;
-  }
+  } */
 }
 
 @media only screen and (min-width: 768px) and (max-width: 928px) {
   .style-p-title-main {
     font-size: 2rem;
   }
-  div .versionamento {
+  /* div .versionamento {
     position: relative;
     bottom: -0.8%;
     margin-left: 7px;
@@ -279,7 +279,7 @@ div .versionamento {
     font-family: "Poppins", sans-serif;
     font-size: 13px;
     font-weight: 530;
-  }
+  } */
 }
 
 @media only screen and (min-width: 929px) and (max-width: 1339px) {
@@ -287,7 +287,7 @@ div .versionamento {
     font-size: 2rem;
   }
 
-  div .versionamento {
+  /* div .versionamento {
     position: relative;
     bottom: -0.8%;
     margin-left: 7px;
@@ -295,7 +295,7 @@ div .versionamento {
     font-family: "Poppins", sans-serif;
     font-size: 13px;
     font-weight: 530;
-  }
+  } */
 
   .style-p-saudacao {
     font-size: 22px;
@@ -355,12 +355,28 @@ div .versionamento {
     margin-bottom: 2rem;
   }
 
-  div .versionamento {
+  /* div .versionamento {
     position: absolute;
     bottom: -0.8%;
     margin-left: 6px;
     color: #a70505;
     font-size: 13px;
     font-weight: 530;
+  } */
+}
+
+@media only screen and (min-width: 100px) and (max-width: 1555px) {
+  div .versionamento {
+    position: relative;
+    bottom: -0.9%;
+    margin-left: 6px;
+    color: #a70505;
+    font-size: 13px;
+    font-weight: 530;
+  }
+}
+@media only screen and (min-width: 1440px) {
+  div .versionamento {
+    position: absolute;
   }
 }

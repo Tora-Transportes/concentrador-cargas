@@ -6,7 +6,7 @@
 }
 
 .title-avisos {
-  font-size: 40px;
+  font-size: 2.3rem;
   font-style: italic;
   color: #00652e;
   text-align: center;
@@ -251,6 +251,18 @@ div .button-salvar:enabled:hover {
   }
   .float-pesquisa-aviso {
     width: 30rem;
+  }
+
+  .row-views-container {
+    margin-left: 3%;
+    width: 92% !important;
+  }
+
+  .card-avisos {
+    margin: 0;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    padding: 0 0;
   }
 }
 

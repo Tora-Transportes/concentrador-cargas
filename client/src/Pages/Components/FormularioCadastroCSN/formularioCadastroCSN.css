@@ -66,10 +66,19 @@ Button #botao-detail-veiculo {
   margin-bottom: 15px;
   background: #f9faf8;
 }
+.row-input-coleta-inicio {
+  padding-top: 15px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  margin-left: 2px !important;
+  margin-right: 1.5px !important;
+  background: #f9faf8;
+  /* padding-left: 12px !important; */
+}
 .row-input-placa {
   padding-top: 15px;
-  box-shadow: 5px 10px #928a8a;
-  border: 1px solid #ced4da;
+  /* box-shadow: 5px 10px #928a8a;
+  border: 1px solid #ced4da; */
   border-radius: 4px;
   margin-left: 2px !important;
   margin-right: 1.5px !important;
@@ -86,14 +95,6 @@ Button #botao-detail-veiculo {
 .row-input-placas {
   margin-right: 0 !important;
   margin-top: 5px;
-}
-.row-input-coleta-inicio {
-  padding-top: 14px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  margin-left: 1px !important;
-  margin-right: 1px !important;
-  background: #f9faf8;
 }
 .col-cod-local {
   width: 48.2% !important;
@@ -176,11 +177,12 @@ label {
 }
 
 .col-temp-servic-local {
-  margin-right: 43px;
+  margin-right: 4%;
+  min-width: 22%;
 }
 
 .floatingLabel-temp-servic-local {
-  width: 110%;
+  width: 113%;
 }
 
 @media only screen and (max-width: 486px) {

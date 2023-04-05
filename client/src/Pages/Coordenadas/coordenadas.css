@@ -6,10 +6,10 @@
   margin-top: 1.5rem;
 }
 
-.class-title-Coord {
+div .class-title-Coord {
   font-family: "Poppins", sans-serif;
   color: #00652e;
-  font-size: 40px;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
 }
 
@@ -44,9 +44,9 @@
   color: #000 !important;
 }
 
-/* .ul-card-li {
-  margin-left: 1vw;
-} */
+.ul-card-li {
+  margin-left: 1.5vw;
+}
 
 .header-dialog {
   text-align: center;
@@ -64,7 +64,7 @@ div .dialog-btn-voltar,
 div .dialog-btn-voltar:hover,
 div .dialog-btn-voltar:enabled:hover,
 div .dialog-btn-voltar:active {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   margin-left: 2vw;
   height: 4.5vh;
   width: auto;
@@ -73,6 +73,13 @@ div .dialog-btn-voltar:active {
   background-color: #00652e;
 }
 
+div .ul_last-location {
+  position: relative;
+  left: -2rem;
+}
+div .class-li-last-location {
+  margin-left: 2vh;
+}
 div .dialog-btn-last-location,
 div .dialog-btn-last-location:hover,
 div .dialog-btn-last-location:enabled:hover,
@@ -81,11 +88,6 @@ div .dialog-btn-last-location:active {
   border: none;
   border-color: none;
   background-color: #00652e;
-}
-
-div .ul_last-location {
-  position: relative;
-  left: -1.5rem;
 }
 
 /*css placa*/
@@ -143,8 +145,16 @@ div .ul_last-location {
 
 @media only screen and (min-width: 30px) and (max-width: 585px) {
   div .class-title-Coord {
-    font-size: 2rem;
+    font-size: 2rem !important;
     margin-top: 2.5rem;
+  }
+
+  .dialog-localidade-title {
+    width: 90%;
+  }
+
+  .card-dados-last-location {
+    width: 110%;
   }
 }
 @media only screen and (min-width: 230px) and (max-width: 585px) {
@@ -158,13 +168,13 @@ div .ul_last-location {
 
 @media only screen and (max-width: 755px) {
   .dialog-cte {
-    width: 95%;
+    width: 85%;
     height: auto;
   }
 }
 
 @media only screen and (min-width: 130px) and (max-width: 1225px) {
-  .class-title-Coord {
+  div .class-title-Coord {
     font-size: 2.5rem;
   }
   #botao-detalhe-tabela {
@@ -172,10 +182,9 @@ div .ul_last-location {
     margin-bottom: 1rem;
   }
 
-  .dialog-btn-voltar {
-    margin-left: 9.5vw !important;
-    height: 5vh !important;
-    width: 35% !important;
-    background-color: #00652e !important;
+  div .dialog-btn-voltar {
+    margin-left: 3.9vw;
+    height: 5vh;
+    width: 35%;
   }
 }

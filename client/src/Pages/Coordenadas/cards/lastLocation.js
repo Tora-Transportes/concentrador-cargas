@@ -35,7 +35,7 @@ function LastLocationVeicles({ placa, setVisibleLastLocation }) {
 		<>
 			<LoadingScreen />
 			<Row>
-				<Col className="p-2">
+				<Col>
 					<ul className="ul_last-location">
 						<Card className="card-dados-last-location">
 							<li className="class-li-last-location">
@@ -46,22 +46,22 @@ function LastLocationVeicles({ placa, setVisibleLastLocation }) {
 									</strong>
 								</h6>
 							</li>
-							<li>
+							<li className="class-li-last-location">
 								<h6>
 									UF: <strong>{dadosLastLocation?.UF}</strong>
 								</h6>
 							</li>
-							<li>
+							<li className="class-li-last-location">
 								<h6>
 									Municipio: <strong>{dadosLastLocation?.MUN}</strong>
 								</h6>
 							</li>
-							<li>
+							<li className="class-li-last-location">
 								<h6>
 									Latitude: <strong>{dadosLastLocation?.LAT}</strong>
 								</h6>
 							</li>
-							<li>
+							<li className="class-li-last-location">
 								<h6>
 									Longitude: <strong>{dadosLastLocation?.LON}</strong>
 								</h6>
@@ -71,7 +71,7 @@ function LastLocationVeicles({ placa, setVisibleLastLocation }) {
 										Localidade: <strong>{dadosLastLocation?.LOC}</strong>
 									</h6>
 								</li> */}
-							<li>
+							<li className="class-li-last-location">
 								<h6>
 									Placa: <strong>{placa}</strong>
 								</h6>
