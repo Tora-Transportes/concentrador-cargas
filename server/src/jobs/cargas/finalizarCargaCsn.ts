@@ -48,7 +48,7 @@ class ServiceFinishCargasCsn {
   ): Promise<ILastLocations | undefined> {
     if (ratreador) {
       const dataAtualMenos2Minuto = moment()
-        .subtract(62, "minutes")
+        .subtract(2, "minutes")
         .format("YYYY-MM-DDTHH:mm:ss");
 
       const queryBuild = await mssqlCoordenadas.raw(
