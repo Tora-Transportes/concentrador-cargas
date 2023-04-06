@@ -44,7 +44,7 @@
   width: 5rem;
 }
 
-div .style-p-title-main {
+.style-p-title-main {
   font-size: 2.4rem;
   color: #00652e;
   font-style: italic;
@@ -203,6 +203,7 @@ div .versionamento {
 @media only screen and (max-width: 768px) {
   .style-p-title-main {
     font-size: 2rem;
+    margin-top: 4rem;
   }
   .button-avisos-style {
     position: absolute;
@@ -270,6 +271,7 @@ div .versionamento {
 @media only screen and (min-width: 768px) and (max-width: 928px) {
   .style-p-title-main {
     font-size: 2rem;
+    margin-top: 4rem;
   }
   /* div .versionamento {
     position: relative;
@@ -375,7 +377,7 @@ div .versionamento {
     font-weight: 530;
   }
 }
-@media only screen and (min-width: 1440px) {
+@media only screen and (min-width: 1240px) {
   div .versionamento {
     position: absolute;
   }
