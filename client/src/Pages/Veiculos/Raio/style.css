@@ -1,18 +1,23 @@
 .class-body {
   font-family: "Poppins", sans-serif;
 }
-.class-body-viewraio {
+
+div .title-veic-prox {
+  font-family: "Poppins", sans-serif;
+  font-size: 2.5rem;
+  text-align: center;
+  margin-top: 4rem;
+  color: #00652e;
+}
+
+.form-view-veiculos {
   display: grid;
   grid-template-columns: auto auto auto;
   justify-content: center;
   margin-top: 1rem;
   grid-gap: 4rem;
 }
-.class-title-raio {
-  font-family: "Poppins", sans-serif;
-  color: #00652e;
-  font-size: 40px;
-}
+
 .class-card-raio {
   margin-top: 2rem;
   height: 7rem;
@@ -47,22 +52,21 @@
   }
 }
 @media only screen and (min-width: 115px) and (max-width: 1199px) {
-  .class-title-raio {
-    font-size: 30px;
-    display: flex;
-    justify-content: space-around;
+  .title-veic-prox {
+    font-size: 2.2rem;
   }
   .class-card-raio {
-    margin-left: 9%;
-    width: 85%;
+    width: 90%;
     height: 20rem;
   }
 
-  .class-body-viewraio {
+  .form-view-veiculos {
     display: flex;
     flex-direction: column;
     align-items: center;
     grid-gap: 2rem;
+    width: 95%;
+    margin-left: 0;
   }
 
   #button-pesq-veic-prox {
