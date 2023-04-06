@@ -48,14 +48,19 @@ class ServiceFinishCargasCsn {
   ): Promise<ILastLocations | undefined> {
     if (ratreador) {
       const dataAtualMenos2Minuto = moment()
-        .subtract(62, "minutes")
-        .format("YYYY-MM-DDTHH:mm:ss");
+        .subtract(2, "minutes")
+        .format("YYYY-MM-DD HH:mm:ss");
 
-      const queryBuild = await mssqlCoordenadas.raw(
-        `select TOP 1 LAT, LON
-      from REPORTES where DISIMEI = '${ratreador}' and (dtinc < '${dataAtualMenos2Minuto}') order by dtinc desc`
-      );
-      return queryBuild[0];
+      try {
+        const queryBuild = await mssqlCoordenadas.raw(
+          `select TOP 1 id, veiid ,LAT, LON
+          from REPORTES where DISIMEI = '${ratreador?.trim()}' and (dtinc < '${dataAtualMenos2Minuto}') order by dtinc desc`
+        );
+
+        return queryBuild[0];
+      } catch (error) {
+        console.log("Error ao buscar posição 'REPORTER'", error);
+      }
     }
   }
 
@@ -483,7 +488,7 @@ class ServiceFinishCargasCsn {
 export default async function run() {
   async function job() {
     console.log(
-      "|-------------------INICIO JOB CARGA CSN EM VIAGEM---------------------|"
+      "|-------------------EXECUTANDO JOB CARGA CSN EM VIAGEM---------------------|"
     );
     try {
       const serviceFinishCargas = new ServiceFinishCargasCsn();
@@ -521,7 +526,7 @@ export default async function run() {
       console.error("ERROR JOB CSN", error);
     }
     console.log(
-      "|-----------------FIM JOB CARGA CSN EM VIAGEM-------------------|"
+      "|-----------------FIM DA EXECUÇÃO JOB CARGA CSN EM VIAGEM-------------------|"
     );
   }
   cron.schedule(" */1 * * * * ", job);

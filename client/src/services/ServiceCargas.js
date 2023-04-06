@@ -319,6 +319,7 @@ class ServiceCargas {
 		documento_transporte,
 		fk_filial,
 		carga_csn,
+		carga_app,
 	}) {
 		const url = carga_csn === 1 ? "csn/cargas/info" : "/cargas/";
 		return api.get(url, {
@@ -342,6 +343,7 @@ class ServiceCargas {
 				documento_transporte,
 				fk_filial,
 				carga_csn,
+				carga_app,
 			},
 		});
 	}
@@ -373,6 +375,7 @@ class ServiceCargas {
 		categoria_veiculo,
 		rastreador,
 		canal_comunicacao,
+		carga_app,
 	}) {
 		return await api.get("/csn/cargas/info", {
 			params: {
@@ -399,6 +402,7 @@ class ServiceCargas {
 				categoria_veiculo,
 				rastreador,
 				canal_comunicacao,
+				carga_app,
 			},
 		});
 	}

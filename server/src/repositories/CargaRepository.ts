@@ -250,6 +250,16 @@ export class CargaRepository {
           `%${query.responsavel_cadastro}%`
         );
       }
+      if (!isNaN(Number(query.carga_app))) {
+        if (Number(query.carga_app) !== 1) {
+          qb.where((qB) => {
+            qB.andWhere("carga_app", "=", Number(query.carga_app));
+            qB.orWhereNull("carga_app");
+          });
+        } else {
+          qb.andWhere("carga_app", "=", Number(query.carga_app));
+        }
+      }
     };
 
     total.andWhere(filterDbFunction);

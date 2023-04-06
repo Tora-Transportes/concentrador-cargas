@@ -87,4 +87,15 @@ describe("Gerenciar avisos", () => {
         closeServer();
       });
   });
+
+  it("Deve retornar 404 quando buscar um aviso com id que não existe", function () {
+    request(server)
+      .get("/avisos/10000")
+      .set("Authorization", `Bearer ${jwtToken}`)
+      .then((res) => {
+        expect(res.status).to.eql(404);
+        expect(res.body.message).to.eql("O Aviso selecionado não existe");
+        closeServer();
+      });
+  });
 });
