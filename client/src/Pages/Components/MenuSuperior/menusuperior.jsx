@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Logo from "../../../assets/logotoraico.png";
 import "./menuSuperior.css";
 import { NavbarBrand } from "react-bootstrap";
@@ -9,6 +9,7 @@ import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 
 function Menusuperior() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
+  const hamburgerRef = useRef(null);
   const [isPermissionCsn, setPermissionCsn] = useState(false);
   const [isPermissionPadrao, setPermissionPadrao] = useState(false);
   const [isPermAlterarPerm, setPermAlterarPerm] = useState(false);
@@ -32,6 +33,22 @@ function Menusuperior() {
     setColorHeader(tipoCorHeader);
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        hamburgerRef.current &&
+        !hamburgerRef.current.contains(event.target)
+      ) {
+        setIsNavExpanded(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [hamburgerRef]);
+
   return (
     <div id={isColorHeader}>
       <NavbarBrand href="/">
@@ -47,6 +64,7 @@ function Menusuperior() {
           onClick={() => {
             setIsNavExpanded(!isNavExpanded);
           }}
+          ref={hamburgerRef}
         >
           <span id="hamburguer"></span>
         </button>
