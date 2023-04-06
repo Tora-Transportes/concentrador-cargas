@@ -12,6 +12,7 @@ import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import "./cadastroManual.css";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 import { envioCargaApp } from "src/Pages/Components/DataAppConcentrador";
+import { funcScrollTop } from "src/Pages/Utils/scrollTop";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -147,6 +148,7 @@ function Manual() {
 	}, [isPermissionUser]);
 
 	function resetForm() {
+		funcScrollTop(2, 2);
 		formik.resetForm();
 		formik.setFieldValue("id", "(gerado automaticamente)");
 	}
