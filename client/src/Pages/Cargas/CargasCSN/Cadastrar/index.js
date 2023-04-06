@@ -207,7 +207,7 @@ const CadastroCargaCSN = () => {
 						const ok = await swal("Sucesso!", messagemSucesso, "success", {
 							closeOnClickOutside: false,
 						});
-						funcScrollTop(2, 2);
+						//uncScrollTop(2, 2);
 						setDisabledPlaca(false);
 						if (ok) resetForm();
 					}
@@ -254,7 +254,7 @@ const CadastroCargaCSN = () => {
 		ServiceProdutos.list().then(({ data }) => {
 			setProdutos(data.data);
 		});
-		//funcScrollTop(2, 2);
+		funcScrollTop(2, 2);
 	}, []);
 
 	useEffect(() => {
