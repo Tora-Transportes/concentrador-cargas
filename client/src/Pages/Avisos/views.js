@@ -166,16 +166,14 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 	};
 
 	const deleteAvisoFooter = (
-		<div>
+		<div className="div-footer-delete-aviso">
 			<Button
 				label="Voltar"
-				icon="pi pi-times"
 				className="button-voltar-delete"
 				onClick={hideDeleteAviso}
 			/>
 			<Button
 				label="Sim"
-				icon="pi pi-check"
 				className="button-sim-delete"
 				onClick={excluirAvisos}
 			/>
@@ -242,18 +240,6 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 				</p>
 			</div>
 			<div className="row-views-container">
-				<div className="div-pesquisa-aviso">
-					<FloatingLabel
-						label="Pesquisar aviso:"
-						className="float-pesquisa-aviso"
-					>
-						<FormControl
-							type="date"
-							max="9999-12-12T00:00"
-							onChange={(e) => filtrarPorData(e)}
-						></FormControl>
-					</FloatingLabel>
-				</div>
 				{isPermissionAviso && (
 					<Row className="button-add-aviso">
 						<Col>
@@ -266,6 +252,19 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 						</Col>
 					</Row>
 				)}
+				<div className="div-pesquisa-aviso">
+					<FloatingLabel
+						label="Pesquisar aviso:"
+						className="float-pesquisa-aviso"
+					>
+						<FormControl
+							type="date"
+							max="9999-12-12T00:00"
+							onChange={(e) => filtrarPorData(e)}
+						></FormControl>
+					</FloatingLabel>
+				</div>
+
 				<Row>
 					<Col>
 						{dadosAvisos?.length > 0 && (
@@ -322,10 +321,9 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 				</Row>
 				<Dialog
 					visible={avisoDialog}
-					style={{ width: "560px", fontSize: "16px" }}
 					header={titleAviso}
 					modal
-					className="p-fluid"
+					className="p-fluid dialog-cadastro-aviso"
 					onHide={hideNoticeDialog}
 				>
 					<div>
@@ -354,7 +352,7 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 							value={aviso.MENSAGEM}
 							onChange={(e) => onChangeInput(e, "MENSAGEM")}
 							required
-							rows={5}
+							rows={4}
 							cols={40}
 							autoFocus
 							className={classNames({
@@ -371,7 +369,6 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 					<div className="div-resp-cadastro">
 						<label> Responsável pelo cadastro:</label>
 						<Form.Control
-							style={{ width: "300px", border: "none" }}
 							className="form-resp-cadastro"
 							type="text"
 							placeholder={aviso?.AUTOR}
@@ -401,7 +398,7 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 				<Toast ref={toast} />
 				<Dialog
 					visible={deleteAviso}
-					style={{ width: "450px" }}
+					className="dialog-delete-aviso"
 					header="Deletar Aviso"
 					modal
 					footer={deleteAvisoFooter}
@@ -409,7 +406,7 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 				>
 					<i
 						className="pi pi-exclamation-triangle"
-						style={{ fontSize: "2rem", marginLeft: "42%" }}
+						style={{ fontSize: "2rem", marginLeft: "43%" }}
 					/>
 					<div className="confirmation-delete">
 						{aviso && (

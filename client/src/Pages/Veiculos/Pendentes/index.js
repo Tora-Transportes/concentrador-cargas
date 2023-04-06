@@ -38,14 +38,14 @@ function RotasPendentes() {
 			buttons: ["Cancelar", true],
 		});
 		if (!observacaoGr) {
-			await swal("Nenhuma alteração aplicada");
+			await swal("Nenhuma alteração aplicada.");
 		} else {
 			await ServiceCargas.update({
 				...carga,
 				fk_situacao: 3,
 				observacao_gr: observacaoGr,
 			});
-			await swal("Aprovado");
+			await swal("Aprovado!");
 			repopularVisao();
 			dispatchCargas({ type: "DELETE_CARGA", payload: carga });
 		}
