@@ -101,7 +101,6 @@ class ServiceCoordinates {
 
   async searchInApi(latitude: number, longitude: number, placa: string) {
     console.log("--------------------API NOMINATIN----------------------");
-    //console.log("Placa: ", placa);
     const data = (
       await axios.get("https://nominatim.openstreetmap.org/reverse", {
         params: {
@@ -111,7 +110,6 @@ class ServiceCoordinates {
         },
       })
     ).data;
-    //console.log(data);
 
     const city = TextUtils.normalize(
       data.address.town ||
@@ -130,11 +128,6 @@ class ServiceCoordinates {
 
     const siglaEstado = tuple ? tuple.sigla_estado : "NC";
 
-    // console.log("Com tratamento", `${city} - ${siglaEstado}`);
-    // console.log(
-    //   "Sem tratamento",
-    //   `${data.address.town} || ${data.address.city} || ${data.address.city_district} || ${data.address.village} || ${data.address.road} || ${data.address.industrial} - ${siglaEstado}`
-    // );
     console.log("-------------------------------------------------------");
 
     return `${city} - ${siglaEstado}`;
@@ -142,14 +135,10 @@ class ServiceCoordinates {
 
   async populateLocalTable() {
     console.time("Popular tabela");
-    //console.log("Carregando lista de coordenadas");
     console.time("Carregando dados para popular");
     const data = await this.list();
     console.timeEnd("Carregando dados para popular");
 
-    // console.log(
-    //   "Calculando distancia prevista com base na tabela de rotas da produção"
-    // );
     const distanciasAProcurar = new Set<string>();
     for (const i of data) {
       if (i.ultima_viagem_origem && i.ultima_viagem_destino) {
@@ -219,7 +208,6 @@ class ServiceCoordinates {
   }
 
   async list() {
-    //console.log("Carregando coordenadas dos veiculos da integracao");
     const coordenadas = await this.getVehiclesCoodinates();
     const totalPages = Math.ceil(coordenadas.length / 1000) || 1;
 
@@ -227,7 +215,6 @@ class ServiceCoordinates {
     for (let page = 1; page <= totalPages; page++) {
       const start = (page - 1) * 1000;
       const end = start + 999;
-      // console.log(`Carregando Chunk de dados ${page} dos veiculos`);
       const queryTipoVeiculo = database("VEICULO")
         .select([
           "VEICULO.VEI_PLACA as placa",
@@ -314,7 +301,6 @@ class ServiceCoordinates {
       this.loadLastTripAutonomous(veiculosAutonomos),
     ]);
 
-    // console.log("Traduzindo a saida para o formato desejado");
     const hashComplementosPorPlaca = new Map();
     for (const i of complementosDadosVeiculos) {
       hashComplementosPorPlaca.set(i.placa, i);
@@ -500,9 +486,6 @@ export default async function () {
       throw "cole";
     }
 
-    // console.log(
-    //   "Buscando cidades na api e salvando na base de dados de tecnologia"
-    // );
     const promiseUpdateCityName = new Promise((resolve) => {
       console.time("AUTOCOMPLETE - Cidades destino");
       let requestInProgress = false;
@@ -539,7 +522,6 @@ export default async function () {
                 cidade_atual: cidade.cidade_atual,
               }),
           ]);
-          //console.log(`Busquei e retornei ${cidade.cidade_atual}`);
           requestInProgress = false;
         } catch (error) {
           requestInProgress = false;
@@ -549,7 +531,6 @@ export default async function () {
     });
 
     console.time("CALC - DISTANCIA VEICULOS");
-    //console.log("Calculando distancia e salvando na base de dados");
     console.log("Carregando veiculos em memoria para completar com distancia");
     const veiculos = await database.raw(`
       select "placa", "con_coordenadas_veiculos"."lat", "con_coordenadas_veiculos"."lon", "ultima_viagem_destino", "con_localizacoes"."lat" "lat_destino", "lng" "lon_destino"
@@ -631,7 +612,6 @@ export default async function () {
       jobsApiDistance.add(veiculo);
 
       if (jobsApiDistance.size >= 5) {
-        //console.log("Processando lote");
         console.time(`Lote com ${jobsApiDistance.size}`);
         await Promise.all(
           Array.from(jobsApiDistance).map((j) =>
@@ -644,7 +624,6 @@ export default async function () {
     }
 
     if (jobsApiDistance.size > 0) {
-      // console.log("Processando lote final", jobsApiDistance);
       console.time(`Lote com ${jobsApiDistance.size}`);
       await Promise.all(
         Array.from(jobsApiDistance).map((j) =>

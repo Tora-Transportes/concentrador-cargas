@@ -84,7 +84,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 					<MapContainer
 						center={[rota.latitude_origem, rota.longitude_origem]}
 						zoom={5}
-						style={{ height: "80vh" }}
+						style={{ height: "80vh", marginLeft: "9%", marginTop: "15px" }}
 					>
 						<TileLayer
 							attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
