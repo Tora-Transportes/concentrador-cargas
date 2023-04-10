@@ -35,11 +35,13 @@ function Menusuperior() {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        hamburgerRef.current &&
-        !hamburgerRef.current.contains(event.target)
-      ) {
-        setIsNavExpanded(false);
+      if (event.target.id.length < 1) {
+        if (
+          hamburgerRef.current &&
+          !hamburgerRef.current.contains(event.target)
+        ) {
+          setIsNavExpanded(false);
+        }
       }
     };
     document.addEventListener("click", handleClickOutside);
