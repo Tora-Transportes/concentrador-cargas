@@ -1,6 +1,7 @@
 import database from "../database";
 import { Knex } from "knex";
 import IUsuario from "../models/IUsuario";
+import { ISavePermission } from "../domain/UseCaseUsuario";
 export class UsuarioRepository {
   async search(filter: Record<string, any>, page = 1) {
     const results = database("con_usuarios").select("*");
@@ -121,5 +122,20 @@ export class UsuarioRepository {
     }
 
     return usuario;
+  }
+
+  async getAllFkUsuario() {
+    return await database("con_usuarios_permissoes")
+      .select(["fk_usuario"])
+      .distinct();
+  }
+
+  async deleteAllPermissions(permissoes: string[]) {
+    return await database("con_usuarios_permissoes")
+      .delete()
+      .whereIn("permissao", permissoes);
+  }
+  async insertAllPermissions(permissoes: ISavePermission[]) {
+    return await database("con_usuarios_permissoes").insert(permissoes);
   }
 }

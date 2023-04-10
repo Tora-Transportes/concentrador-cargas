@@ -3,6 +3,8 @@ import {
   UseCaseViewUsuario,
   UseCaseUpdateUsuario,
   UseCaseSearchName,
+  UseCaseBatchPermissions,
+  UseCaseDeleteAllPermissions,
 } from "../domain/UseCaseUsuario";
 
 class UsuarioController {
@@ -37,6 +39,17 @@ class UsuarioController {
       permissoes,
     });
     return res.json({ data: user });
+  }
+
+  async batchPermissions(req: Request, res: Response) {
+    const { permissoes } = req.body;
+    const result = await new UseCaseBatchPermissions().run(permissoes);
+    return res.json({ data: result });
+  }
+  async deleteAllPermissions(req: Request, res: Response) {
+    const { permissoes } = req.body;
+    const result = await new UseCaseDeleteAllPermissions().run(permissoes);
+    return res.json({ data: result });
   }
 }
 
