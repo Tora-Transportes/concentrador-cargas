@@ -109,6 +109,16 @@ routes.put(
   HasPermission("ALTERAR_PERMISSOES"),
   UsuarioController.changePermissions
 );
+routes.put(
+  "/usuarios/permissoes/lote",
+  HasPermission("ALTERAR_PERMISSOES"),
+  UsuarioController.batchPermissions
+);
+routes.delete(
+  "/usuarios/permissoes/lote",
+  HasPermission("ALTERAR_PERMISSOES"),
+  UsuarioController.deleteAllPermissions
+);
 
 routes.get(
   "/relatorio/cargas",
