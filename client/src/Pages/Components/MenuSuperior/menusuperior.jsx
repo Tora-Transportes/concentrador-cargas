@@ -76,7 +76,7 @@ function Menusuperior() {
               Início
             </a>
           </li>
-          <div className="class-dropdown">
+          <div className="class-li">
             <div className="dropdown">
               {(isPermissionCsn || isPermissionPadrao) && (
                 <button id="style-button-drop" className="dropbtn">
@@ -102,7 +102,7 @@ function Menusuperior() {
               Coordenadas
             </a>
           </li>
-          <div className="class-dropdown">
+          <div className="class-li">
             <div className="dropdown">
               <button id="style-button-drop" className="dropbtn">
                 Monitoramento
@@ -127,17 +127,15 @@ function Menusuperior() {
               Produtos
             </a>
           </li>
-          <div className="class-dropdown">
-            <div className="dropdown-veic">
-              <a
-                href="/relatorios/visualizar"
-                className="dropbtn-veic"
-                id="link-rel"
-              >
-                Relatórios
-              </a>
-            </div>
-          </div>
+          <li className="class-li">
+            <a
+              href="/relatorios/visualizar"
+              className="dropbtn-veic"
+              id="link-rel"
+            >
+              Relatórios
+            </a>
+          </li>
           {isPermissionCsn && (
             <li className="class-li">
               <a id="style-a" href="/localizacao">
@@ -145,8 +143,8 @@ function Menusuperior() {
               </a>
             </li>
           )}
-          {/* {isPermissionPadrao && isPermissionCsn ? (
-            <div className="class-dropdown">
+          {isPermissionPadrao && isPermissionCsn ? (
+            <div className="class-li">
               <div className="dropdown">
                 <button id="style-button-drop" className="dropbtn">
                   Ajuda
@@ -173,7 +171,7 @@ function Menusuperior() {
                 </a>
               </li>
             )
-          )} */}
+          )}
 
           <li className="class-li" to="/">
             <a
