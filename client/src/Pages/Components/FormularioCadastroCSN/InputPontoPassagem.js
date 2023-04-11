@@ -106,7 +106,7 @@ const InputsPontoPassagem = ({
 		<>
 			<Toast ref={alertDataSalva} position="top-center" />
 			<Row className="row-input-coleta-inicio">
-				<Col sm={12} md={6} lg={6} xxl={6}>
+				<Col xs={12} sm={12} md={6} lg={6} xxl={6}>
 					<FloatingLabel label="*Ponto de Passagem" className="mb-3">
 						<Form.Control
 							type="text"
