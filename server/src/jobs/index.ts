@@ -23,6 +23,6 @@ if (Number(process.env.RUN_JOBS) === 1) {
   atualizaCidadesNullCoordenadas();
   console.log("Inicio job finalização carga csn");
   finalizarCargaCsn();
+  console.log("Inicio job Gerar planilha coordenadas");
+  gerarPlanilhaCoordenadas();
 }
-console.log("Inicio job Gerar planilha coordenadas");
-gerarPlanilhaCoordenadas();
