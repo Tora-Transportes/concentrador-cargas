@@ -69,6 +69,11 @@
   margin-inline-start: auto;
 }
 
+.header-table-add-permission {
+  display: flex;
+  justify-content: space-between;
+}
+
 .form-multSelect-button:hover {
   background-color: #d60404c7;
 }
@@ -115,7 +120,7 @@
   margin-bottom: 15px;
   display: contents;
 }
-.menu-header-table-permission {
+.menu-header-table-permission1 {
   display: flex;
   align-items: center;
   background-color: #ffff;
@@ -131,13 +136,26 @@
   justify-content: center;
 }
 
-.menu-header-table-permission input {
+.div-botoes-all {
+  display: flex;
+}
+
+.button-all-add {
+  margin: 0px 18px 5px 0;
+  height: 6vh;
+}
+.button-all-delete {
+  margin: 0px 0px 5px 0;
+  height: 6vh;
+}
+
+.menu-header-table-permission1 input {
   padding: 8px;
   border: none;
   width: 100%;
 }
 
-.menu-header-table-permission i {
+.menu-header-table-permission1 i {
   margin-right: 15px;
   margin-left: 10px;
 }
@@ -180,13 +198,12 @@
   margin-bottom: 5px;
 }
 
-@media only screen and (max-width: 560px) {
+/* @media only screen and (max-width: 560px) {
   .form-multSelect-button,
   .form-multSelect-button:disabled {
     margin-right: 25% !important;
   }
-}
-
+} */
 @media only screen and (max-width: 600px) {
   .form-multSelect {
     display: flex;
@@ -203,9 +220,9 @@
     font-size: 30px;
   }
   .form-multSelect-button {
-    margin-top: 0.4rem;
+    margin-top: 6px;
   }
-
+  
   .button-table-add-permission {
     width: 100%;
     flex-direction: row;
@@ -213,28 +230,49 @@
     justify-content: center;
     margin-bottom: 10px;
   }
+  
+  .div-botoes-all {
+    display: block;
+  }
+  
+  .button-all-add {
+    margin-top: 5px;
+    margin-right: 0;
+  }
+  .button-all-delete {
+    margin-top: 5px;
+  }
+}
 
+@media only screen and (max-width: 768px) {
   .header-table-add-permission {
-    background-color: #ffffff !important;
+    display: grid;
+    justify-content: center;
   }
 
-  /* td {
-    border-right: 1px solid #c8c8c8 !important;
-    border-left: 1px solid #c8c8c8 !important;
-  } */
+  .menu-header-table-permission1 {
+    width: 100% !important;
+    margin-left: 0;
+  }
+
+  .div-botoes-all {
+    margin-top: 6px;
+    display: contents;
+  }
+
+  .button-all-add {
+    margin-right: 0px;
+    margin-top: 5px;
+  }
+  .button-all-delete {
+    margin-top: 5px;
+  }
 }
-@media only screen and (max-width: 961px) {
-  .menu-header-table-permission {
-    width: 100%;
+@media only screen and (max-width: 992px) {
+  .menu-header-table-permission1 {
+    width: 45%;
   }
 
-  .form-multSelect-button,
-  .form-multSelect-button:disabled {
-    margin-right: 1%;
-  }
-}
-
-@media (max-width: 992px) {
   .ModalStyle {
     height: 100%;
     overflow: auto;

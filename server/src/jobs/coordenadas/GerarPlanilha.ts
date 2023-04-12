@@ -62,6 +62,4 @@ class GerarPlanilha {
 export default function atualizaCidadesCoordenadas() {
   const gerarPlanilha = new GerarPlanilha();
   cron.schedule("15 * * * *", gerarPlanilha.job);
-  //cron.schedule("32 * * * * *", gerarPlanilha.job);
-  //gerarPlanilha.job();
 }

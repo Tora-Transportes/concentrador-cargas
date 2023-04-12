@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./permissoes.css";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import swal from "sweetalert";
 import { useFormik } from "formik";
 import { MultiSelect } from "primereact/multiselect";
@@ -17,6 +17,7 @@ import {
 	permissBodyTemplate,
 } from "./templateDataTable";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
+import { addOrDelAllPermissios } from "./menagemente";
 
 function Permissoes() {
 	const [users, setUsers] = useState([]);
@@ -125,7 +126,7 @@ function Permissoes() {
 	const getRenderHeader = () => {
 		return (
 			<div className="header-table-add-permission">
-				<div className="menu-header-table-permission">
+				<div className="menu-header-table-permission1">
 					<input
 						placeholder=" Pesquisar por coluna "
 						value={globalFilter}
@@ -133,6 +134,22 @@ function Permissoes() {
 						className=" input-empty"
 					/>
 					<i className="pi pi-search" />
+				</div>
+				<div className="div-botoes-all">
+					<Button
+						className=" text-light button-all-add "
+						variant="warning"
+						onClick={() => addOrDelAllPermissios(permissSelecionado, "Add")}
+					>
+						Adicionar/todos
+					</Button>
+					<Button
+						className="button-all-delete"
+						variant="danger"
+						onClick={() => addOrDelAllPermissios(permissSelecionado, "Del")}
+					>
+						Deletar/todos
+					</Button>
 				</div>
 			</div>
 		);

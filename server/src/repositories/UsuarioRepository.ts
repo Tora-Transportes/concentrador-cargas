@@ -125,9 +125,7 @@ export class UsuarioRepository {
   }
 
   async getAllFkUsuario() {
-    return await database("con_usuarios_permissoes")
-      .select(["fk_usuario"])
-      .distinct();
+    return await database("con_usuarios").select(["oid"]).distinct();
   }
 
   async deleteAllPermissions(permissoes: string[]) {

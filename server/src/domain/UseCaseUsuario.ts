@@ -48,7 +48,7 @@ export class UseCaseBatchPermissions {
 
     const allFkUsuarios: TPermissions = (
       await usuarioRepository.getAllFkUsuario()
-    ).map((item) => item.fk_usuario);
+    ).map((item) => item.oid);
 
     if (allFkUsuarios.length) {
       await usuarioRepository.deleteAllPermissions(permissoes);
@@ -77,7 +77,7 @@ export class UseCaseDeleteAllPermissions {
 
     const allFkUsuarios: TPermissions = (
       await usuarioRepository.getAllFkUsuario()
-    ).map((item) => item.fk_usuario);
+    ).map((item) => item.oid);
 
     if (allFkUsuarios.length) {
       await usuarioRepository.deleteAllPermissions(permissoes);
