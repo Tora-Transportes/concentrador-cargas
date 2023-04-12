@@ -26,11 +26,8 @@ class AvisosController implements IAvisosController {
   }
   async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const result = await domainAviso.useCaseUpdateAvisos.run(
-      Number(id),
-      req.body
-    );
-    return res.json({ data: result });
+    await domainAviso.useCaseUpdateAvisos.run(Number(id), req.body);
+    return res.status(204).send();
   }
 
   async pathUpdate(req: Request, res: Response): Promise<Response> {

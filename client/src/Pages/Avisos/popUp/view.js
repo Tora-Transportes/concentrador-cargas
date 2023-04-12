@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { FaEnvelope } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 import "./popUp.css";
 
-function PopUp({ isShow, isLastIdPosition }) {
-	const [isCountAviso, setCountAviso] = useState(1);
+function PopUp({
+	isShow,
+	isLastIdPosition,
+	isCountAviso,
+	setCountAviso,
+	isUpdateAviso,
+	setUpdateAviso,
+}) {
 	const history = useHistory();
 	const showPageAviso = () => {
 		history.push("/avisos");
@@ -18,10 +24,14 @@ function PopUp({ isShow, isLastIdPosition }) {
 			localStorage.setItem("viewsAviso", isLastIdPosition - 1);
 		} else if (idAvisoLocalStorage > 0 && isLastIdPosition > 0) {
 			avisosNaoLidos = isLastIdPosition - idAvisoLocalStorage;
+			if (isUpdateAviso) {
+				avisosNaoLidos = avisosNaoLidos + 1;
+				setUpdateAviso(false);
+			}
 			if (avisosNaoLidos > 99) avisosNaoLidos = "+99";
 			setCountAviso(avisosNaoLidos);
 		}
-	}, [isLastIdPosition]);
+	}, [isLastIdPosition, isUpdateAviso]);
 
 	return (
 		<>
