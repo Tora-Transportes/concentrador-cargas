@@ -396,40 +396,47 @@ function FormularioCadastroManual({
 						</Col>
 					</Row>
 
-					<div className="class-input-motorista">
-						<InputGroup id="style-ipunt-motorista" className="class-input-moto">
-							<InputGroup.Text>Motorista</InputGroup.Text>
-							<Form.Control
-								readOnly
-								placeholder="Motorista"
-								type="text"
-								value={
-									formik.values.codigo_motorista && formik.values.nome_motorista
-										? `${formik.values.codigo_motorista} - ${formik.values.nome_motorista}`
-										: ""
+					<Row className="class-input-motorista">
+						<Col sm={12} md={6} lg={8}>
+							<InputGroup
+								id="style-ipunt-motorista"
+								className="class-input-moto"
+							>
+								<InputGroup.Text>Motorista</InputGroup.Text>
+								<Form.Control
+									readOnly
+									placeholder="Motorista"
+									type="text"
+									value={
+										formik.values.codigo_motorista &&
+										formik.values.nome_motorista
+											? `${formik.values.codigo_motorista} - ${formik.values.nome_motorista}`
+											: ""
+									}
+								/>
+							</InputGroup>
+						</Col>
+						<Col className="col-info-veic-manual" id="detalhes-veiculo-manual">
+							<Button
+								className="button-info-veic-manual"
+								onClick={() =>
+									handleShowDetailsAboutVehicle(formik.values.placa_veiculo)
 								}
-							/>
-						</InputGroup>
-						<Button
-							className="class-botao-DetalhesV"
-							id="botao-detail-veiculo"
-							onClick={() =>
-								handleShowDetailsAboutVehicle(formik.values.placa_veiculo)
-							}
-						>
-							Detalhes veículo
-						</Button>
+							>
+								Detalhes veículo
+							</Button>
 
-						<Button
-							className="class-botao-DetalhesV"
-							id="botao-deb-veiculo"
-							onClick={() =>
-								handleShowDebitAboutVehicle(formik.values.placa_veiculo)
-							}
-						>
-							Débitos veículo
-						</Button>
-					</div>
+							<Button
+								className="button-info-veic-manual"
+								// id="botao-deb-veiculo"
+								onClick={() =>
+									handleShowDebitAboutVehicle(formik.values.placa_veiculo)
+								}
+							>
+								Débitos veículo
+							</Button>
+						</Col>
+					</Row>
 
 					<Row>
 						<Col>
@@ -556,7 +563,7 @@ function FormularioCadastroManual({
 			</Row>
 			{!formik.values.e_lote && (
 				<Row>
-					<Col>
+					<Col sm={6}>
 						<FloatingLabel label="Janela coleta" className="mb-3">
 							<Form.Control
 								type="time"
@@ -598,7 +605,7 @@ function FormularioCadastroManual({
 				</Col>
 				<Col>
 					<Row>
-						<Col sm={6} md={6} lg={6}>
+						<Col sm={6} md={7} lg={6}>
 							<FloatingLabel label="*Unidade de medida" className="mb-3">
 								<Form.Control
 									type="text"
