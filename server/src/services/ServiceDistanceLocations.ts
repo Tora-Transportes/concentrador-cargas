@@ -367,21 +367,36 @@ export class ServiceDistanceLocations {
       .andWhere("DTINC", ">=", date_inicio)
       .andWhere("DTINC", "<=", date_fim);
 
-    //retirando duplicidades do array
-    // const historicosSemDuplicidade: IHistoryTravelVehicle[] = [];
-    // historyVeicle.forEach((elem, index, arrayHistorico) => {
-    //   if (index > 0) {
-    //     const indexMenosUm = index - 1;
-    //     const latitudeArr = arrayHistorico[indexMenosUm].LAT;
-    //     const longitudeArr = arrayHistorico[indexMenosUm].LON;
+    //retirando os duplicados e adicionando o tempo parada do veiculo
+    const resultSemDuplicidade = [];
+    let objAnterior = historyVeicle[0];
+    let totalTime = 0;
 
-    //     if (elem.LAT !== latitudeArr || elem.LON !== longitudeArr) {
-    //       historicosSemDuplicidade.push(elem);
-    //     }
-    //   } else {
-    //     historicosSemDuplicidade.push(elem);
-    //   }
-    // });
+    for (const dadosAtual of historyVeicle) {
+      if (
+        dadosAtual.LAT === objAnterior.LAT &&
+        dadosAtual.LON === objAnterior.LON
+      ) {
+        //soma o tempo parado das posições repetidas(em via a soma em minutos)
+        const diferencaEmMS = Math.abs(dadosAtual.DTINC - objAnterior.DTINC);
+        totalTime += Math.floor(diferencaEmMS / 1000 / 60);
+      } else {
+        //adiciona o tempo parado nas posições
+        objAnterior.DOWNTIME = totalTime;
+        resultSemDuplicidade.push(objAnterior);
+        objAnterior = dadosAtual;
+        totalTime = 0;
+      }
+    }
+
+    // Adicionar o último objeto que ficou fora do loop
+    objAnterior.DOWNTIME = totalTime;
+    resultSemDuplicidade.push(objAnterior);
+
+    // Adicionar o atributo "DOWNTIME" aos objetos que não se repetem
+    resultSemDuplicidade.forEach((obj) => {
+      if (!obj.DOWNTIME) obj.DOWNTIME = 0;
+    });
 
     //ordenação de historyVeicle DESC (se ordernar na query fica muito lento a busca);
     function compare(a: IHistoryTravelVehicle, b: IHistoryTravelVehicle) {
@@ -389,11 +404,11 @@ export class ServiceDistanceLocations {
       if (a.ID < b.ID) return 1;
       return 0;
     }
-    historyVeicle.sort(compare);
+    resultSemDuplicidade.sort(compare);
 
     return {
       placa: plate,
-      posicao: historyVeicle,
+      posicao: resultSemDuplicidade,
     };
   }
 
