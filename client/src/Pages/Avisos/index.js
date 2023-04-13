@@ -1,17 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import { useFormik } from "formik";
 
 import { Container, Row } from "react-bootstrap";
 import ViewsAviso from "./views";
 import ServiceAvisos from "src/services/ServiceAvisos";
-import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 
 function Avisos() {
 	const [dadosAvisos, setDadosAvisos] = useState([]);
 	const [atualizarAvisos, setAtualizarAvisos] = useState(false);
-	const { isIdAvisos } = useContext(ContextUseDefault);
-	localStorage.setItem("viewsAviso", isIdAvisos);
+
 	const formik = useFormik({
 		initialValues: {
 			ID: null,
@@ -28,6 +26,7 @@ function Avisos() {
 		(async () => {
 			try {
 				const { data } = (await ServiceAvisos.list()).data;
+				localStorage.setItem("viewsAviso", data[0]?.ID);
 				setDadosAvisos(data);
 			} catch (error) {
 				console.error("Error", error);

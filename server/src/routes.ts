@@ -34,6 +34,7 @@ routes.post(
 );
 routes.get("/avisos/:id", AvisosController.index);
 routes.get("/avisos", AvisosController.search);
+routes.get("/avisos/ultimo/id", AvisosController.lastIdAviso);
 routes.patch("/avisos/:id", AvisosController.pathUpdate);
 routes.put(
   "/avisos/:id",
