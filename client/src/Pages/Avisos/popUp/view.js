@@ -8,8 +8,7 @@ function PopUp({
 	isLastIdPosition,
 	isCountAviso,
 	setCountAviso,
-	isUpdateAviso,
-	setUpdateAviso,
+	idAvisoLocalStorage,
 }) {
 	const history = useHistory();
 	const showPageAviso = () => {
@@ -17,21 +16,16 @@ function PopUp({
 	};
 
 	useEffect(() => {
-		const idAvisoLocalStorage = localStorage.getItem("viewsAviso");
 		let avisosNaoLidos;
 
 		if (idAvisoLocalStorage < 1 && isLastIdPosition > 0) {
 			localStorage.setItem("viewsAviso", isLastIdPosition - 1);
 		} else if (idAvisoLocalStorage > 0 && isLastIdPosition > 0) {
 			avisosNaoLidos = isLastIdPosition - idAvisoLocalStorage;
-			if (isUpdateAviso) {
-				avisosNaoLidos = avisosNaoLidos + 1;
-				setUpdateAviso(false);
-			}
 			if (avisosNaoLidos > 99) avisosNaoLidos = "+99";
 			setCountAviso(avisosNaoLidos);
 		}
-	}, [isLastIdPosition, isUpdateAviso]);
+	}, [isLastIdPosition]);
 
 	return (
 		<>

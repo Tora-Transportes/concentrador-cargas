@@ -69,6 +69,15 @@ export class UseCaseAllAvisos {
     );
   }
 }
+export class UseCaseLastIdAviso {
+  private readonly avisosRepository: AvisosRepository;
+  constructor() {
+    this.avisosRepository = new AvisosRepository();
+  }
+  async run() {
+    return await this.avisosRepository.lastIdAviso();
+  }
+}
 
 export class UseCaseUpdateAvisos {
   private readonly avisosRepository: AvisosRepository;
@@ -129,6 +138,7 @@ export class UseCaseDeleteAvisos {
 const instancias = {
   useCaseAddAvisos: new UseCaseAddAvisos(),
   useCaseIndexAvisos: new UseCaseIndexAvisos(),
+  useCaseLastIdAviso: new UseCaseLastIdAviso(),
   useCaseAllAvisos: new UseCaseAllAvisos(),
   useCaseUpdateAvisos: new UseCaseUpdateAvisos(),
   useCasePathUpdateAvisos: new UseCasePathUpdateAvisos(),

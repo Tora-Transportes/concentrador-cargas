@@ -8,19 +8,18 @@ import PopUp from "./view";
 function MainPopUp() {
 	const [isShow, setShow] = useState(false);
 	const [isLastIdPosition, setLastIdPosition] = useState();
-	const [isCountAviso, setCountAviso] = useState(1);
-	const [isUpdateAviso, setUpdateAviso] = useState(false);
-
+	const [isCountAviso, setCountAviso] = useState(0);
+	const idAvisoLocalStorage = localStorage.getItem("viewsAviso");
 	const { setIdAvisos } = useContext(ContextUseDefault);
 
 	useEffect(() => {
 		(async () => {
-			const { data } = (await ServiceAvisos.list()).data;
-			const dadosStorage = localStorage.getItem("viewsAviso");
-			const lastIdPosition = data[0];
-			setLastIdPosition(data[0]?.ID);
-			setIdAvisos(lastIdPosition?.ID);
-			if (dadosStorage === null || dadosStorage < lastIdPosition?.ID) {
+			const { data } = (await ServiceAvisos.lastId()).data;
+			const lastIdPosition = data?.ID;
+			setLastIdPosition(lastIdPosition);
+			setIdAvisos(lastIdPosition);
+			if (idAvisoLocalStorage < lastIdPosition) {
+				idAvisoLocalStorage === null ? setCountAviso("?") : "";
 				setShow(true);
 			}
 		})();
@@ -29,9 +28,9 @@ function MainPopUp() {
 			setShow(true);
 			setLastIdPosition(payload?.ID);
 		};
-		const actionAvidoUpdate = () => {
+		const actionAvidoUpdate = (payload) => {
+			if (payload?.ID - idAvisoLocalStorage < 1) setCountAviso("?");
 			setShow(true);
-			setUpdateAviso(true);
 		};
 		io.on("@aviso-create", actionAvisoCreate);
 		io.on("@aviso-update", actionAvidoUpdate);
@@ -50,8 +49,7 @@ function MainPopUp() {
 				isLastIdPosition={isLastIdPosition}
 				setCountAviso={setCountAviso}
 				isCountAviso={isCountAviso}
-				isUpdateAviso={isUpdateAviso}
-				setUpdateAviso={setUpdateAviso}
+				idAvisoLocalStorage={idAvisoLocalStorage}
 			/>
 		</>
 	);

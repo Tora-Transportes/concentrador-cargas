@@ -4,6 +4,9 @@ class ServiceAvisos {
 	async list(data) {
 		return await api.get("/avisos", { params: { data } });
 	}
+	async lastId() {
+		return await api.get("/avisos/ultimo/id");
+	}
 	async create(data) {
 		return await api.post("/avisos", data);
 	}
