@@ -18,6 +18,30 @@ describe("GERENCIAMENTO DE HISTORICO DOS VEICULOS", () => {
 
     const arrayDuplicadoSequencia: IarrayDuplicadoSequencia[] = [
       {
+        ID: "1044498116",
+        DISIMEI: "1295189",
+        LAT: "-22,52208800",
+        LON: "-44,12481931",
+        UF: "RJ",
+        DTINC: "2023-04-13T10:35:55.267Z",
+      },
+      {
+        ID: "1044498115",
+        DISIMEI: "1295189",
+        LAT: "-22,52208800",
+        LON: "-44,12481931",
+        UF: "RJ",
+        DTINC: "2023-04-13T10:36:55.267Z",
+      },
+      {
+        ID: "104449816",
+        DISIMEI: "1295189",
+        LAT: "-22,52208855",
+        LON: "-44,12481931",
+        UF: "RJ",
+        DTINC: "2023-04-13T10:36:55.267Z",
+      },
+      {
         ID: "1044498113",
         DISIMEI: "1295189",
         LAT: "-22,52208800",
@@ -26,7 +50,7 @@ describe("GERENCIAMENTO DE HISTORICO DOS VEICULOS", () => {
         DTINC: "2023-04-13T10:44:55.267Z",
       },
       {
-        ID: "1044499308",
+        ID: "1044498114",
         DISIMEI: "1295189",
         LAT: "-22,52208800",
         LON: "-44,12481930",
@@ -34,7 +58,7 @@ describe("GERENCIAMENTO DE HISTORICO DOS VEICULOS", () => {
         DTINC: "2023-04-13T10:45:55.267Z",
       },
       {
-        ID: "1044500985",
+        ID: "1044498115",
         DISIMEI: "1295189",
         LAT: "-22,52208800",
         LON: "-44,12481930",
@@ -42,15 +66,7 @@ describe("GERENCIAMENTO DE HISTORICO DOS VEICULOS", () => {
         DTINC: "2023-04-13T10:55:55.267Z",
       },
       {
-        ID: "1044495348",
-        DISIMEI: "1295189",
-        LAT: "-22,52208800",
-        LON: "-44,12481931",
-        UF: "RJ",
-        DTINC: "2023-04-13T10:42:55.267Z",
-      },
-      {
-        ID: "1044496575",
+        ID: "1044498117",
         DISIMEI: "1295189",
         LAT: "-22,5220880",
         LON: "-44,12481935",
@@ -58,7 +74,7 @@ describe("GERENCIAMENTO DE HISTORICO DOS VEICULOS", () => {
         DTINC: "2023-04-13T10:43:55.267Z",
       },
       {
-        ID: "1044501957",
+        ID: "1044498118",
         DISIMEI: "1295189",
         LAT: "-25,52208801",
         LON: "-45,12481931",
@@ -66,58 +82,51 @@ describe("GERENCIAMENTO DE HISTORICO DOS VEICULOS", () => {
         DTINC: "2023-04-13T10:40:50.267Z",
       },
       {
-        ID: "1044501953",
+        ID: "1044498119",
         DISIMEI: "1295189",
         LAT: "-25,52208801",
         LON: "-45,12481931",
         UF: "RJ",
         DTINC: "2023-04-13T11:30:50.267Z",
       },
-      {
-        ID: "1044495399",
-        DISIMEI: "1295189",
-        LAT: "-22,52208800",
-        LON: "-44,12481931",
-        UF: "RJ",
-        DTINC: "2023-04-13T10:42:55.267Z",
-      },
     ];
 
-    const resultSemDuplicidade: IarrayDuplicadoSequencia[] = [];
     let objAnterior: IarrayDuplicadoSequencia = arrayDuplicadoSequencia[0];
     let totalTime = 0;
 
-    for (const dadosAtual of arrayDuplicadoSequencia) {
-      if (
-        dadosAtual.LAT === objAnterior.LAT &&
-        dadosAtual.LON === objAnterior.LON
-      ) {
-        //soma o tempo parado das posições repetidas(em via a soma em minutos)
-        const diferencaEmMS = Math.abs(
-          new Date(dadosAtual.DTINC).getTime() -
-            new Date(objAnterior.DTINC).getTime()
-        );
-        totalTime += Math.floor(diferencaEmMS / 1000 / 60);
-      } else {
-        //adiciona o tempo parado nas posições
-        objAnterior.DOWNTIME = totalTime;
-        resultSemDuplicidade.push(objAnterior);
-        objAnterior = dadosAtual;
-        totalTime = 0;
-      }
-    }
-
-    // Adicionar o último objeto que ficou fora do loop
-    objAnterior.DOWNTIME = totalTime;
-    resultSemDuplicidade.push(objAnterior);
-
-    // Adicionar o atributo "DOWNTIME" aos objetos que não se repetem
-    resultSemDuplicidade.forEach((obj: IarrayDuplicadoSequencia) => {
-      if (!obj.DOWNTIME) obj.DOWNTIME = 0;
+    const historicosSemDuplicidade: IarrayDuplicadoSequencia[] = [];
+    arrayDuplicadoSequencia.push({
+      ID: "0",
+      DISIMEI: "0",
+      LAT: "-0",
+      LON: "-0",
+      UF: "0",
+      DTINC: "2023-04-13T11:30:50.267Z",
     });
 
-    expect(resultSemDuplicidade[0].DOWNTIME).to.eq(12);
-    expect(resultSemDuplicidade[3].DOWNTIME).to.eq(50);
-    expect(resultSemDuplicidade.length).to.eq(5);
+    arrayDuplicadoSequencia.forEach(
+      (dadosPositionAtual, index, arrayHistorico) => {
+        if (
+          dadosPositionAtual.LAT !== objAnterior.LAT ||
+          dadosPositionAtual.LON !== objAnterior.LON
+        ) {
+          const positionIndice = index > 0 ? index - 1 : index;
+          const dataInicioParado = new Date(objAnterior.DTINC);
+          const dataFinParado = new Date(arrayHistorico[positionIndice].DTINC);
+
+          totalTime = dataFinParado.getTime() - dataInicioParado.getTime();
+          objAnterior.DOWNTIME = Math.floor(totalTime / (1000 * 60));
+
+          historicosSemDuplicidade.push(objAnterior);
+          objAnterior = dadosPositionAtual;
+          totalTime = 0;
+        }
+      }
+    );
+
+    expect(historicosSemDuplicidade[0].DOWNTIME).to.eq(1);
+    expect(historicosSemDuplicidade[2].DOWNTIME).to.eq(11);
+    expect(historicosSemDuplicidade[4].DOWNTIME).to.eq(50);
+    expect(historicosSemDuplicidade.length).to.eq(5);
   });
 });

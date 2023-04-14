@@ -4,6 +4,7 @@ import oracle from "../database";
 import database, { mssql, mssqlCoordenadas } from "../database";
 import AppError from "../models/AppError";
 import * as https from "https";
+import { calculateDiffDate } from "../Utils/formatData";
 export interface IQueryDistance {
   cidade_origem: string | undefined | null;
   cidade_destino: string | undefined | null;
@@ -38,6 +39,7 @@ interface IHistoryTravelVehicle {
   DISIMEI: number;
   DTINC: Date;
   ID: number;
+  DOWNTIME?: number;
 }
 
 export interface IResultHistoryVeicle {
@@ -55,6 +57,7 @@ interface ILastLocations {
   DISIMEI: string;
   DTINC: string;
   ID?: number;
+  DOWNTIME?: number;
 }
 
 interface IInfoSetorVeiculo {
@@ -367,35 +370,128 @@ export class ServiceDistanceLocations {
       .andWhere("DTINC", ">=", date_inicio)
       .andWhere("DTINC", "<=", date_fim);
 
-    //retirando os duplicados e adicionando o tempo parada do veiculo
-    const resultSemDuplicidade = [];
-    let objAnterior = historyVeicle[0];
-    let totalTime = 0;
+    //retirando duplicidades do array
+    // const historicosSemDuplicidade: IHistoryTravelVehicle[] = [];
+    // historyVeicle.forEach((elem, index, arrayHistorico) => {
+    //   if (index > 0) {
+    //     const indexMenosUm = index - 1;
+    //     const latitudeArr = arrayHistorico[indexMenosUm].LAT;
+    //     const longitudeArr = arrayHistorico[indexMenosUm].LON;
 
-    for (const dadosAtual of historyVeicle) {
-      if (
-        dadosAtual.LAT === objAnterior.LAT &&
-        dadosAtual.LON === objAnterior.LON
-      ) {
-        //soma o tempo parado das posições repetidas(em via a soma em minutos)
-        const diferencaEmMS = Math.abs(dadosAtual.DTINC - objAnterior.DTINC);
-        totalTime += Math.floor(diferencaEmMS / 1000 / 60);
-      } else {
-        //adiciona o tempo parado nas posições
-        objAnterior.DOWNTIME = totalTime;
-        resultSemDuplicidade.push(objAnterior);
-        objAnterior = dadosAtual;
-        totalTime = 0;
-      }
+    //     if (elem.LAT !== latitudeArr || elem.LON !== longitudeArr) {
+    //       historicosSemDuplicidade.push(elem);
+    //     }
+    //   } else {
+    //     historicosSemDuplicidade.push(elem);
+    //   }
+    // });
+
+    //ordenação de historyVeicle DESC (se ordernar na query fica muito lento a busca);
+    function compare(a: IHistoryTravelVehicle, b: IHistoryTravelVehicle) {
+      if (a.ID > b.ID) return -1;
+      if (a.ID < b.ID) return 1;
+      return 0;
+    }
+    historyVeicle.sort(compare);
+
+    return {
+      placa: plate,
+      posicao: historyVeicle,
+    };
+  }
+
+  async historyTempVeicleService(
+    plate: string,
+    date_inicio: string,
+    date_fim: string
+  ): Promise<IResultHistoryVeicle> {
+    const query = await oracle("VEICULO")
+      .select(["VEI_REFERENCIA"])
+      .first()
+      .where("VEI_PLACA", plate);
+
+    if (!query) {
+      throw new AppError(
+        "A placa especificada não existe ou não possui coordenadas cadastradas!",
+        404
+      );
     }
 
-    // Adicionar o último objeto que ficou fora do loop
-    objAnterior.DOWNTIME = totalTime;
-    resultSemDuplicidade.push(objAnterior);
+    date_inicio = moment(date_inicio).format("YYYY-MM-DDT00:00:00");
+    if (plate.length !== 7) {
+      throw new AppError("Placa inválida", 400);
+    }
 
-    // Adicionar o atributo "DOWNTIME" aos objetos que não se repetem
-    resultSemDuplicidade.forEach((obj) => {
-      if (!obj.DOWNTIME) obj.DOWNTIME = 0;
+    if (!date_inicio || !date_fim) {
+      throw new AppError(
+        "Query param date_inicio ou date_fim não informado",
+        400
+      );
+    } else {
+      const diferencaDate = await calculateDiffDate(
+        String(date_inicio),
+        String(date_fim)
+      );
+
+      if (diferencaDate > 7) {
+        throw new AppError(
+          "O período entre as datas não pode ser maior que 07 dias.",
+          400
+        );
+      }
+    }
+    if (date_fim !== moment().format("YYYY-MM-DD")) {
+      date_fim = moment(date_fim).format("YYYY-MM-DDT23:59:59");
+    } else {
+      date_fim = moment().subtract(4, "minutes").format("YYYY-MM-DDTHH:mm:ss");
+    }
+
+    const historyVeicle = await mssqlCoordenadas("REPORTES")
+      .select([
+        "ID",
+        "DISIMEI",
+        "LAT",
+        "LON",
+        "UF",
+        "ROD",
+        "RUA",
+        "MUN",
+        "LOC",
+        "DTINC",
+      ])
+      .where("DISIMEI", query?.VEI_REFERENCIA?.trim())
+      .andWhere("DTINC", ">=", date_inicio)
+      .andWhere("DTINC", "<=", date_fim);
+
+    let objAnterior: IHistoryTravelVehicle = historyVeicle[0];
+    let totalTime = 0;
+
+    //retirando os duplicados e adicionando o tempo parada do veiculo;
+    const historicosSemDuplicidade: IHistoryTravelVehicle[] = [];
+    historyVeicle.push({
+      ID: "0",
+      DISIMEI: "0",
+      LAT: "-0",
+      LON: "-0",
+      UF: "0",
+      DTINC: "2023-04-13T11:30:50.267Z",
+    });
+    historyVeicle.forEach((dadosPositionAtual, index, arrayHistorico) => {
+      if (
+        dadosPositionAtual.LAT !== objAnterior.LAT ||
+        dadosPositionAtual.LON !== objAnterior.LON
+      ) {
+        const positionIndice = index > 0 ? index - 1 : index;
+        const dataInicioParado = objAnterior.DTINC;
+        const dataFinParado = arrayHistorico[positionIndice].DTINC;
+
+        totalTime = dataFinParado.getTime() - dataInicioParado.getTime();
+        objAnterior.DOWNTIME = Math.floor(totalTime / (1000 * 60));
+
+        historicosSemDuplicidade.push(objAnterior);
+        objAnterior = dadosPositionAtual;
+        totalTime = 0;
+      }
     });
 
     //ordenação de historyVeicle DESC (se ordernar na query fica muito lento a busca);
@@ -404,11 +500,11 @@ export class ServiceDistanceLocations {
       if (a.ID < b.ID) return 1;
       return 0;
     }
-    resultSemDuplicidade.sort(compare);
+    historicosSemDuplicidade.sort(compare);
 
     return {
       placa: plate,
-      posicao: resultSemDuplicidade,
+      posicao: historicosSemDuplicidade,
     };
   }
 
