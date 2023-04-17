@@ -377,8 +377,3 @@ div .versionamento {
     font-weight: 530;
   }
 }
-@media only screen and (min-width: 1240px) {
-  div .versionamento {
-    position: absolute;
-  }
-}

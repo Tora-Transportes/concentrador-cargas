@@ -268,7 +268,16 @@ div .button-salvar:enabled:hover {
   }
 }
 
-@media only screen and (max-width: 565px) {
+@media screen and (min-width: 440px) {
+  .div-resp-cadastro {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    margin-top: 0.5rem;
+    display: flex;
+  }
+}
+
+@media only screen and (max-width: 576px) {
   .title-avisos {
     font-size: 2.3rem;
   }
@@ -288,7 +297,7 @@ div .button-salvar:enabled:hover {
 
   .row-views-container {
     margin-left: 2%;
-    width: 92% !important;
+    width: 95% !important;
   }
 
   .card-avisos {
@@ -335,16 +344,7 @@ div .button-salvar:enabled:hover {
   }
 }
 
-@media screen and (min-width: 440px) {
-  .div-resp-cadastro {
-    font-family: "Poppins", sans-serif;
-    font-size: 14px;
-    margin-top: 0.5rem;
-    display: flex;
-  }
-}
-
-@media screen and (min-width: 566px) and (max-width: 1795px) {
+@media screen and (min-width: 577px) and (max-width: 1795px) {
   .p-title-aviso {
     margin-top: 1.5rem;
     font-size: 1.8rem;
@@ -355,10 +355,6 @@ div .button-salvar:enabled:hover {
     margin: 0.5rem -10px -41px 16px;
     height: 2.5rem;
   }
-
-  /* .dialog-delete-aviso {
-    margin-top: 10rem;
-  } */
 
   .div-buttons-edit-delete {
     margin-top: -2%;
