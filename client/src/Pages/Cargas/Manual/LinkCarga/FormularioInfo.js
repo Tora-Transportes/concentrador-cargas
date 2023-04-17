@@ -190,7 +190,7 @@ function Formulario({ formik, produtos, distancia }) {
 						</Col>
 					</Row>
 					<Row className="class-input-motorista">
-						<Col sm={12} md={6} lg={8}>
+						<Col xs={12} sm={12} md={6} lg={8}>
 							<InputGroup className="mb-2">
 								<InputGroup.Text
 									id="style-ipunt-motorista"

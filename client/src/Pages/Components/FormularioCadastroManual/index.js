@@ -397,7 +397,7 @@ function FormularioCadastroManual({
 					</Row>
 
 					<Row className="class-input-motorista">
-						<Col sm={12} md={6} lg={8}>
+						<Col xs={12} sm={12} md={6} lg={8}>
 							<InputGroup
 								id="style-ipunt-motorista"
 								className="class-input-moto"
