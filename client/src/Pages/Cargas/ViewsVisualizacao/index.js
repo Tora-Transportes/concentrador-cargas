@@ -53,30 +53,29 @@ function VisualizarCargas({
 				/>
 				<Row className="mt-3 text-center">
 					<Col>
-						<h1 id="title-h1">{tituloPag}</h1>
+						<h1 id="title-cargas-lote">{tituloPag}</h1>
 					</Col>
 
 					<Link target="_blank" to="/relatorios/visualizar/padrao">
 						<img className="img-cargas-lote" src={chartImg} />
 					</Link>
 				</Row>
-				<Row className="row-inicio-carga mt-4">
-					<Col className="text-start opcao-tabela">
-						<ButtonReact
-							label="Opções da Tabela"
-							id="style-button-detail"
-							icon={<BiCog className="me-1" />}
-							onClick={() => setVisibleLeft(true)}
-						/>
-					</Col>
-					<Col sm={6} lg={6} className="inicio-col-registros">
+				<Row className="row-listagem-padrao">
+					<div className="col-registros">
 						{totalRegisters && (
 							<>
 								Total de <b>{totalRegisters}</b> registros
 							</>
 						)}
-					</Col>
-					<Col></Col>
+					</div>
+					<div className="opcao-tabela-padrao">
+						<ButtonReact
+							label="Opções da Tabela"
+							id="button-opcoes-tabela"
+							icon={<BiCog />}
+							onClick={() => setVisibleLeft(true)}
+						/>
+					</div>
 				</Row>
 				<Row>
 					<Sidebar

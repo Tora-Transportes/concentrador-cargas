@@ -19,6 +19,7 @@ import InputLocalizacao from "src/Pages/Components/InputLocalizacao";
 import InputPlaca from "src/Pages/Components/InputPlaca";
 import somaDebitoVeiculo from "src/Pages/Utils/somaDebitoVeiculo";
 import "./modalDebitos.css";
+import "../../../Components/FormularioCadastroManual/formularioManual.css";
 
 function Formulario({ formik, produtos, distancia }) {
 	const [veiculo, setVeiculo] = useState(null);
@@ -188,10 +189,15 @@ function Formulario({ formik, produtos, distancia }) {
 							</InputGroup>
 						</Col>
 					</Row>
-					<Row>
-						<Col>
+					<Row className="class-input-motorista">
+						<Col sm={12} md={6} lg={8}>
 							<InputGroup className="mb-2">
-								<InputGroup.Text className="p-3">Motorista 👨‍🚒</InputGroup.Text>
+								<InputGroup.Text
+									id="style-ipunt-motorista"
+									className="class-input-moto"
+								>
+									Motorista 👨‍🚒
+								</InputGroup.Text>
 								<Form.Control
 									readOnly
 									placeholder="Motorista"
@@ -205,7 +211,7 @@ function Formulario({ formik, produtos, distancia }) {
 								/>
 							</InputGroup>
 						</Col>
-						<Col lg={1}>
+						<Col className="col-info-veic-manual" id="detalhes-veiculo-manual">
 							<Button
 								id="botao-detail-veiculo"
 								onClick={() =>
@@ -214,10 +220,9 @@ function Formulario({ formik, produtos, distancia }) {
 							>
 								Detalhes veículo
 							</Button>
-						</Col>
-						<Col lg={1}>
+
 							<Button
-								id="botao-deb-veiculo"
+								className="button-info-veic-manual"
 								onClick={() =>
 									handleShowDebitAboutVehicle(formik.values.placa_veiculo)
 								}

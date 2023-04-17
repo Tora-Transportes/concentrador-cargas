@@ -9,7 +9,7 @@
   right: -5px;
 }
 
-#style-button-detail {
+#style-opcao-tabela-csn {
   background: #00652e;
   border: none;
   font-size: 16px;
@@ -19,9 +19,9 @@
 }
 
 @media only screen and (min-width: 385px) and (max-width: 585px) {
-  .row-inicio-carga button {
+  /* .row-registros-csn button {
     width: 100%;
-  }
+  } */
   .inicio-col-registros {
     margin-bottom: 5px;
   }
@@ -34,5 +34,12 @@
 @media only screen and (max-width: 585px) {
   .img-cargas-lote {
     display: none;
+  }
+}
+
+@media only screen and (min-width: 130px) and (max-width: 765px) {
+  .opcao-tabela-csn {
+    display: flex;
+    justify-content: center;
   }
 }

@@ -57,23 +57,22 @@ function ViewsCsn({
 						<img className="img-cargas-lote" src={chartImg} />
 					</Link>
 				</Row>
-				<Row className="row-inicio-carga mt-3 mb-2 ">
-					<Col className="text-start opcao-tabela">
-						<ButtonReact
-							label="Opções da Tabela"
-							id="style-button-detail"
-							icon={<BiCog className="me-1" />}
-							onClick={() => setVisibleLeft(true)}
-						/>
-					</Col>
-					<Col sm={6} lg={6} className="inicio-col-registros">
+				<Row className="row-registros-csn mt-2 mb-2 ">
+					<div className="inicio-col-registros">
 						{totalRegisters && (
 							<>
 								Total de <b>{totalRegisters}</b> registros
 							</>
 						)}
-					</Col>
-					<Col></Col>
+					</div>
+					<div className="text-start opcao-tabela-csn">
+						<ButtonReact
+							label="Opções da Tabela"
+							id="style-opcao-tabela-csn"
+							icon={<BiCog />}
+							onClick={() => setVisibleLeft(true)}
+						/>
+					</div>
 				</Row>
 				<Row>
 					<Sidebar
