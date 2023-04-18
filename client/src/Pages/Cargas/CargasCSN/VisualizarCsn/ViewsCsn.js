@@ -34,7 +34,7 @@ function ViewsCsn({
 	};
 
 	return (
-		<div className="class-body-gridcarga">
+		<div className="class-cargas-csn">
 			<LoadingComponent />
 			<Menusuperior />
 			<Container fluid className="text-center mb-5">
@@ -48,16 +48,16 @@ function ViewsCsn({
 					exportExcelDate={exportExcelDate}
 					onHide={() => setModalShowExcel(false)}
 				/>
-				<Row className="mt-3 text-center">
+				<Row className=" text-center">
 					<Col>
-						<h1 id="title-h1">{"Listagem de Cargas CSN"}</h1>
+						<h1 className="title-cargas-csn">{"Listagem de Cargas CSN"}</h1>
 					</Col>
 
 					<Link target="_blank" to="/relatorios/visualizar/csn">
 						<img className="img-cargas-lote" src={chartImg} />
 					</Link>
 				</Row>
-				<Row className="row-registros-csn mt-2 mb-2 ">
+				<Row className="row-registros-csn mb-2 ">
 					<div className="inicio-col-registros">
 						{totalRegisters && (
 							<>
