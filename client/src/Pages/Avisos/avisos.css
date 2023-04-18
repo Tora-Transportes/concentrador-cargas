@@ -169,6 +169,9 @@ div .add-button {
 .p-mensagem-aviso {
   padding: 0% 10% 5% 10%;
   white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
   text-align: justify;
   color: #242323ea;
 }
@@ -259,6 +262,7 @@ div .button-salvar:enabled:hover {
   .p-mensagem-aviso {
     padding: -2%;
     white-space: wrap;
+    word-break: break-word;
     text-align: start;
     color: #242323ea;
   }

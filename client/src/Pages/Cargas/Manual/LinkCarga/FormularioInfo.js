@@ -189,15 +189,10 @@ function Formulario({ formik, produtos, distancia }) {
 							</InputGroup>
 						</Col>
 					</Row>
-					<Row className="class-input-motorista">
-						<Col xs={12} sm={12} md={6} lg={8}>
+					<Row>
+						<Col>
 							<InputGroup className="mb-2">
-								<InputGroup.Text
-									id="style-ipunt-motorista"
-									className="class-input-moto"
-								>
-									Motorista 👨‍🚒
-								</InputGroup.Text>
+								<InputGroup.Text className="p-3">Motorista 👨‍🚒</InputGroup.Text>
 								<Form.Control
 									readOnly
 									placeholder="Motorista"
@@ -211,7 +206,7 @@ function Formulario({ formik, produtos, distancia }) {
 								/>
 							</InputGroup>
 						</Col>
-						<Col className="col-info-veic-manual" id="detalhes-veiculo-manual">
+						<Col lg={1}>
 							<Button
 								id="botao-detail-veiculo"
 								onClick={() =>
@@ -220,9 +215,10 @@ function Formulario({ formik, produtos, distancia }) {
 							>
 								Detalhes veículo
 							</Button>
-
+						</Col>
+						<Col lg={1}>
 							<Button
-								className="button-info-veic-manual"
+								id="botao-deb-veiculo"
 								onClick={() =>
 									handleShowDebitAboutVehicle(formik.values.placa_veiculo)
 								}
@@ -264,6 +260,7 @@ function Formulario({ formik, produtos, distancia }) {
 					/>
 				</Col>
 			</Row>
+
 			<Row>
 				<Col sm={12} md={6}>
 					<FloatingLabel label="*Origem da carga" className="mb-3">

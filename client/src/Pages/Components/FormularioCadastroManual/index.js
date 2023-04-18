@@ -396,10 +396,10 @@ function FormularioCadastroManual({
 						</Col>
 					</Row>
 
-					<Row className="class-input-motorista">
-						<Col xs={12} sm={12} md={6} lg={8}>
+					<Row className="row-input-motorista">
+						<Col>
 							<InputGroup
-								id="style-ipunt-motorista"
+								// id="style-ipunt-motorista"
 								className="class-input-moto"
 							>
 								<InputGroup.Text>Motorista</InputGroup.Text>
@@ -416,26 +416,6 @@ function FormularioCadastroManual({
 								/>
 							</InputGroup>
 						</Col>
-						<Col className="col-info-veic-manual" id="detalhes-veiculo-manual">
-							<Button
-								className="button-info-veic-manual"
-								onClick={() =>
-									handleShowDetailsAboutVehicle(formik.values.placa_veiculo)
-								}
-							>
-								Detalhes veículo
-							</Button>
-
-							<Button
-								className="button-info-veic-manual"
-								// id="botao-deb-veiculo"
-								onClick={() =>
-									handleShowDebitAboutVehicle(formik.values.placa_veiculo)
-								}
-							>
-								Débitos veículo
-							</Button>
-						</Col>
 					</Row>
 
 					<Row>
@@ -451,10 +431,30 @@ function FormularioCadastroManual({
 								</FloatingLabel>
 							)}
 						</Col>
-						<div className="class-linha-title4">
-							<hr className="w-100"></hr>
-						</div>
 					</Row>
+					<Col className="col-info-veic-manual" id="detalhes-veiculo-manual">
+						<Button
+							className="button-info-veic-manual buttons-inf-veiculos"
+							onClick={() =>
+								handleShowDetailsAboutVehicle(formik.values.placa_veiculo)
+							}
+						>
+							Detalhes veículo
+						</Button>
+
+						<Button
+							className="button-info-veic-manual buttons-inf-veiculos"
+							// id="botao-deb-veiculo"
+							onClick={() =>
+								handleShowDebitAboutVehicle(formik.values.placa_veiculo)
+							}
+						>
+							Débitos veículo
+						</Button>
+					</Col>
+					<div className="class-linha-title4">
+						<hr className="w-100"></hr>
+					</div>
 				</>
 			)}
 			<Row>
