@@ -179,6 +179,10 @@ routes.get(
   CoordenadasController.historyTravelVeicleController
 );
 routes.get(
+  "/coordenadas/:placa/history/tempo",
+  CoordenadasController.historyTempVeicleController
+);
+routes.get(
   "/coordenadas/:placa/ultima_posicao_veiculo",
   CoordenadasController.searchLastPositionController
 );

@@ -175,6 +175,19 @@ class CoordenadasController {
 
     return res.json(hitoryVeicle);
   }
+  async historyTempVeicleController(req: Request, res: Response) {
+    const { placa } = req.params;
+    const { date_inicio, date_fim } = req.query;
+
+    const service = new ServiceDistanceLocations();
+    const hitoryVeicle = await service.historyTempVeicleService(
+      placa,
+      String(date_inicio),
+      String(date_fim)
+    );
+
+    return res.json(hitoryVeicle);
+  }
 
   async searchLastPositionController(req: Request, res: Response) {
     const { placa } = req.params;

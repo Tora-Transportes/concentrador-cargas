@@ -14,6 +14,7 @@ enum EPermissions {
   GERENCIAR_AVISOS = "GERENCIAR_AVISOS",
   ALTERACAO_PARCIAL = "ALTERACAO_PARCIAL",
   EXPURGAR_CARGA = "EXPURGAR_CARGA",
+  HISTORICO_VEICULOS_2 = "HISTORICO_VEICULOS_2",
 }
 
 export function isValidPermission(permission: string) {
@@ -32,7 +33,8 @@ export function isValidPermission(permission: string) {
     permission === EPermissions.ENVIAR_CARGA_APP ||
     permission === EPermissions.GERENCIAR_AVISOS ||
     permission === EPermissions.ALTERACAO_PARCIAL ||
-    permission === EPermissions.EXPURGAR_CARGA
+    permission === EPermissions.EXPURGAR_CARGA ||
+    permission === EPermissions.HISTORICO_VEICULOS_2
   );
 }
 

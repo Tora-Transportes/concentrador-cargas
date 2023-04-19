@@ -24,6 +24,7 @@ import DestinoCarga from "./Pages/Veiculos/DestinoCarga";
 import RaioEmpresa from "./Pages/Veiculos/RaioEmpresa";
 import LinkCarga from "./Pages/Cargas/Manual/LinkCarga";
 import HistoricoVeiculo from "./Pages/Veiculos/HistoricoVeiculo";
+import HistoricoVeiculoTempo from "./Pages/Veiculos/Historico2.0";
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css";
@@ -99,6 +100,11 @@ export default function AllRoutes() {
 				<Route path="/veiculos/destino" exact component={DestinoCarga} />
 				<Route path="/veiculos/raio/empresa" exact component={RaioEmpresa} />
 				<Route path="/veiculos/historico" exact component={HistoricoVeiculo} />
+				<Route
+					path="/veiculos/historico/tempo"
+					exact
+					component={HistoricoVeiculoTempo}
+				/>
 				<Route
 					path="/veiculos/coordenadas"
 					exact
