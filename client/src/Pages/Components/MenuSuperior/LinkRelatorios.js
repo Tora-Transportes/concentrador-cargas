@@ -17,7 +17,7 @@ function LinkRelatorios() {
 		HISTORICO_VEICULOS_2: setPermissionHistorico,
 		ENVIAR_CARGA_APP: setPermissionOperacionalApp,
 	};
-	console.log("entender");
+
 	useEffect(() => {
 		if (isPermissionUser) {
 			for (const permission in permissions) {
