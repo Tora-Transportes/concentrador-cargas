@@ -48,7 +48,7 @@ export default function ModalExportExcel({
 	};
 	const footer = (
 		<div>
-			<Button variant="success" onClick={enviarDataExcel}>
+			<Button className="button-export-excel" onClick={enviarDataExcel}>
 				Exportar
 			</Button>
 			<Button variant="secondary" onClick={onHide}>
@@ -60,7 +60,7 @@ export default function ModalExportExcel({
 		<>
 			<Toast ref={toast} className="w-25" position="top-center"></Toast>
 			<Dialog
-				header="Importar excel por filtro de data:"
+				header="Exportar excel por filtro de data:"
 				visible={show}
 				className="dialog-modal-import"
 				footer={footer}
@@ -69,7 +69,13 @@ export default function ModalExportExcel({
 				<Card className="text-center">
 					<Card.Body className="card-body-excel">
 						<Row className="row-main-excel">
-							<Col lg={12} sm={12} md={12} className="col-card-excel-inicio">
+							<Col
+								lg={12}
+								xs={12}
+								sm={12}
+								md={12}
+								className="col-card-excel-inicio"
+							>
 								<Calendar
 									className="calendar-data-inicio"
 									dateFormat="dd/mm/yy"
@@ -98,33 +104,35 @@ export default function ModalExportExcel({
 									}}
 								/>
 							</Col>
-							{pagina === "coordenadas" ? (
-								<Col sm={12} lg={12}>
-									<FloatingLabel label="*Categoria" className="mb-3">
-										<Form.Select
-											placeholder="Categoria"
-											value={categoria}
-											onChange={(e) => setCategoria(e.target.value)}
-											name="categoria"
-										>
-											<option></option>
-											<option value="A">Agregado</option>
-											<option value="C">Carreteiro</option>
-											<option value="F">Frota</option>
-										</Form.Select>
-									</FloatingLabel>
-								</Col>
-							) : (
-								<Col sm={4} md={12} className="col-modal-filial">
-									<label>*Código da filial</label>
-									<FilialSelect
-										className="modal-input-filial"
-										name="fk_filial"
-										value={codigoFilial || ""}
-										onChange={(event) => setCodigoFilial(event.target.value)}
-									/>
-								</Col>
-							)}
+							<Row>
+								{pagina === "coordenadas" ? (
+									<Col sm={12} md={12} lg={12}>
+										<FloatingLabel label="*Categoria" className="mb-3">
+											<Form.Select
+												placeholder="Categoria"
+												value={categoria}
+												onChange={(e) => setCategoria(e.target.value)}
+												name="categoria"
+											>
+												<option></option>
+												<option value="A">Agregado</option>
+												<option value="C">Carreteiro</option>
+												<option value="F">Frota</option>
+											</Form.Select>
+										</FloatingLabel>
+									</Col>
+								) : (
+									<Col sm={12} md={12} lg={12} className="col-modal-filial">
+										<label>*Código da filial</label>
+										<FilialSelect
+											className="modal-input-filial"
+											name="fk_filial"
+											value={codigoFilial || ""}
+											onChange={(event) => setCodigoFilial(event.target.value)}
+										/>
+									</Col>
+								)}
+							</Row>
 						</Row>
 					</Card.Body>
 				</Card>

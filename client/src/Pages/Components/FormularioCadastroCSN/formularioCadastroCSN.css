@@ -38,8 +38,8 @@
 }
 
 .col-buttons-inf-veiculos {
-  margin-bottom: 5px;
   text-align: end;
+  margin-bottom: 5px;
 }
 
 .class-botao-Detalhes {
@@ -47,8 +47,9 @@
   color: #ffff;
   border: none;
   margin-top: 1rem;
-  margin-right: 10px;
+  margin-right: 3rem;
 }
+
 .class-botao-Debito {
   background: #00652e;
   color: #ffff;
@@ -217,6 +218,18 @@ label {
   margin-bottom: 1rem;
 } */
 
+@media only screen and (max-width: 350px) {
+  div .col-buttons-inf-veiculos {
+    display: block;
+    text-align: center;
+  }
+  .class-botao-Debito,
+  .class-botao-Detalhes {
+    margin: 0.5rem;
+    width: 10rem;
+  }
+}
+
 @media only screen and (max-width: 586px) {
   div .codigo-filial-csn {
     margin-bottom: 1rem;
@@ -226,6 +239,10 @@ label {
     display: grid !important;
   }
 
+  div .col-buttons-inf-veiculos {
+    text-align: center;
+  }
+
   .previsao-inicio,
   .previsao-fim {
     margin-right: 0px !important;
@@ -233,12 +250,12 @@ label {
   .data-coleta-entrega,
   .data-coleta-entrega-fim,
   .duracao-processo {
-    width: 105% !important;
+    width: 106% !important;
   }
 
-  /* .duracao-processo-2 {
+  .duracao-processo-2 {
     width: 110% !important;
-  } */
+  }
 
   /* .row-input-coleta,
   .row-input-coleta-inicio {
@@ -334,11 +351,6 @@ label {
     display: grid;
     position: relative;
     grid-template-columns: auto;
-  }
-
-  .col-buttons-inf-veiculos {
-    /* margin: 5px; */
-    text-align: center;
   }
 
   div .div-input-passagem {

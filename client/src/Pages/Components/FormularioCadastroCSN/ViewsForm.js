@@ -366,7 +366,21 @@ export default function ViewsForm({
 						</Col>
 					</Row>
 					<Row>
-						<Col className="col-buttons-inf-veiculos">
+						<Col xs={12} sm={12} md={6} lg={7} xxl={8}>
+							{formik.values.observacao_gr && (
+								<FloatingLabel label="Observacao GR" className="mb-1 mt-3">
+									<Form.Control
+										as="textarea"
+										type="text"
+										value={formik.values.observacao_gr}
+										onKeyDown={handleEnter}
+										readOnly
+									/>
+								</FloatingLabel>
+							)}
+						</Col>
+
+						<Col className="col-buttons-inf-veiculos mt-4">
 							<Button
 								className="class-botao-Detalhes"
 								id="botao-detail-veiculo"
@@ -385,21 +399,6 @@ export default function ViewsForm({
 							>
 								Débitos veículo
 							</Button>
-						</Col>
-					</Row>
-					<Row>
-						<Col>
-							{formik.values.observacao_gr && (
-								<FloatingLabel label="Observacao GR" className="mb-1 mt-3">
-									<Form.Control
-										as="textarea"
-										type="text"
-										value={formik.values.observacao_gr}
-										onKeyDown={handleEnter}
-										readOnly
-									/>
-								</FloatingLabel>
-							)}
 						</Col>
 					</Row>
 				</>
