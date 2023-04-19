@@ -132,23 +132,16 @@ class ServiceCoordenadas {
 			params: { date_inicio, date_fim },
 		});
 	}
+	async historyVeicleswithTemp({ placa, date_inicio, date_fim }) {
+		return await api.get(`/coordenadas/${placa}/history/tempo`, {
+			params: { date_inicio, date_fim },
+		});
+	}
 	async searchLastPosition(placa) {
 		return await api.get(`/coordenadas/${placa}/ultima_posicao_veiculo`);
 	}
 
 	async searchRoute({ placa, cnpj }) {
-		// return {
-		// 	data: {
-		// 		cnpj: cnpj,
-		// 		placa: placa,
-		// 		latitude_origem: -23.476389,
-		// 		longitude_origem: -46.439444,
-		// 		latitude_destino: -23.467848999999998,
-		// 		longitude_destino: -46.48377,
-		// 		distancia_km: 5.855,
-		// 		duracao_viagem_direta: 504,
-		// 	},
-		// };
 		return api.get(`/coordenadas/${placa}/empresa/${cnpj}`);
 	}
 
@@ -156,27 +149,6 @@ class ServiceCoordenadas {
 		return api.get(`/coordenadas/empresa/${cnpj}`, {
 			params: { distancia_km },
 		});
-		// return {
-		// 	data: {
-		// 		cnpj: cnpj,
-		// 		latitude_origem: -23.476389,
-		// 		longitude_origem: -46.439444,
-		// 		veiculos: [
-		// 			{
-		// 				placa: "ABC1234",
-		// 				latitude: -22.476389,
-		// 				longitude: -46.439444,
-		// 				distancia_km: 12.5,
-		// 			},
-		// 			{
-		// 				placa: "ABC1235",
-		// 				latitude: -23.476389,
-		// 				longitude: -46.439444,
-		// 				distancia_km: 13.5,
-		// 			},
-		// 		],
-		// 	},
-		// };
 	}
 }
 
