@@ -36,7 +36,7 @@ function Main() {
 							</Link>
 
 							<Link className="text-decoration-none" to="/cargas/importar">
-								<SiGooglesheets size={70} className="icon-import" />
+								<SiGooglesheets size={70} className="icon-import-lote" />
 								<p className="title-ico-import">Importação em Lote</p>
 							</Link>
 						</>

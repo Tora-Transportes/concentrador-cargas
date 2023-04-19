@@ -71,9 +71,16 @@
   animation: glowing 1800ms infinite;
 }
 
+@media only screen and (min-width: 116px) and (max-width: 1354px) {
+  div .div-toast-popup {
+    top: 7%;
+    left: -2rem;
+  }
+}
+
 @media only screen and (min-width: 916px) and (max-width: 1355px) {
   div .div-toast-popup {
-    top: 9%;
+    top: 8%;
     left: -2rem;
   }
 }
