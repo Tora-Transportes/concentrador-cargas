@@ -143,7 +143,7 @@ function Menusuperior() {
               </a>
             </li>
           )}
-          {isPermissionPadrao && isPermissionCsn ? (
+          {/* {isPermissionPadrao && isPermissionCsn ? (
             <div className="class-li">
               <div className="dropdown">
                 <button id="style-button-drop" className="dropbtn">
@@ -171,7 +171,7 @@ function Menusuperior() {
                 </a>
               </li>
             )
-          )}
+          )} */}
 
           <li className="class-li" to="/">
             <a

@@ -19,6 +19,7 @@ import InputLocalizacao from "src/Pages/Components/InputLocalizacao";
 import InputPlaca from "src/Pages/Components/InputPlaca";
 import somaDebitoVeiculo from "src/Pages/Utils/somaDebitoVeiculo";
 import "./modalDebitos.css";
+import "../../../Components/FormularioCadastroManual/formularioManual.css";
 
 function Formulario({ formik, produtos, distancia }) {
 	const [veiculo, setVeiculo] = useState(null);
@@ -259,6 +260,7 @@ function Formulario({ formik, produtos, distancia }) {
 					/>
 				</Col>
 			</Row>
+
 			<Row>
 				<Col sm={12} md={6}>
 					<FloatingLabel label="*Origem da carga" className="mb-3">

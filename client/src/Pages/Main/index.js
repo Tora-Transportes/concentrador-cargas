@@ -136,7 +136,7 @@ function Main() {
 		}
 	}, [levelGame]);
 
-	const numeroVersao = "V.12";
+	const numeroVersao = "V.13";
 	return (
 		<>
 			<ToastContainer />
@@ -298,7 +298,7 @@ function Main() {
 					)}
 				</Row>
 			</Container>
-			<h6 className="versionamento">{numeroVersao}</h6>
+			<div className="versionamento">{numeroVersao}</div>
 		</>
 	);
 }

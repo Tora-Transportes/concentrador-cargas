@@ -245,22 +245,6 @@ div .class-app-icons {
   margin-top: 4.2rem;
 }
 
-@media only screen and (max-width: 520px) {
-  div.class-app-icons {
-    display: grid;
-    align-items: center;
-    margin-top: 2.5rem;
-  }
-
-  .icon-app-padrao {
-    margin-left: -0.5rem;
-  }
-  .link-RelatorioApp-Title-padrao,
-  .link-RelatorioApp-Title-CSN {
-    margin-left: -1rem;
-  }
-}
-
 @media only screen and (max-width: 280px) {
   div .h1-relatorios {
     font-size: 2.3rem;
@@ -270,6 +254,13 @@ div .class-app-icons {
     font-size: 0.8rem;
   }
 }
+
+@media only screen and (max-width: 318px) {
+  #menu {
+    width: 100% !important;
+  }
+}
+
 @media only screen and (max-width: 373px) {
   h1.title-indicadorOperacional-app {
     font-size: 1.8rem;
@@ -304,17 +295,13 @@ div .class-app-icons {
     font-size: 1rem;
   }
 }
-@media only screen and (max-width: 318px) {
-  #menu {
-    width: 100% !important;
-  }
-}
+
 @media only screen and (max-width: 400px) {
   #btn-mobile {
     display: block;
   }
   #nav.active #menu {
-    height: calc(55vh - 70px);
+    height: calc(90vh - 50px);
     visibility: visible;
     overflow-y: auto;
   }
@@ -356,6 +343,22 @@ div .class-app-icons {
   #nav.active #hamburguer::after {
     transform: rotate(-135deg);
     top: -7px;
+  }
+}
+
+@media only screen and (max-width: 520px) {
+  div.class-app-icons {
+    display: grid;
+    align-items: center;
+    margin-top: 2.5rem;
+  }
+
+  .icon-app-padrao {
+    margin-left: -0.5rem;
+  }
+  .link-RelatorioApp-Title-padrao,
+  .link-RelatorioApp-Title-CSN {
+    margin-left: -1rem;
   }
 }
 
@@ -439,7 +442,7 @@ div .class-app-icons {
   }
 
   #nav.active #menu {
-    height: calc(95vh - 39px);
+    height: calc(90vh - 39px);
     visibility: visible;
     overflow-y: auto;
   }
