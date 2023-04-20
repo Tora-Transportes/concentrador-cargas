@@ -90,24 +90,11 @@ function ViewHistoricoVeiculo({
 				indexPosition = isCountPosition > 0 ? isCountPosition - 1 : 0;
 				setCountPosition(indexPosition);
 			}
+			tableLineTop();
 			const { LAT, LON, DTINC } = historicoRotas.posicao[indexPosition];
 			setLatitude(LAT.replace(",", "."));
 			setLongitude(LON.replace(",", "."));
 			setDataPosition(DateUtils.formatDate(DTINC));
-		}
-	};
-
-	const handlePositionMap = (event) => {
-		if (event.key === "ArrowUp" || event.key === "ArrowDown") {
-			if (historicoRotas?.posicao.length) {
-				if (event.key === "ArrowUp") {
-					moverPosicao("Seguinte");
-					event.preventDefault();
-				} else {
-					moverPosicao("Anterior");
-					event.preventDefault();
-				}
-			}
 		}
 	};
 
@@ -157,10 +144,8 @@ function ViewHistoricoVeiculo({
 	const handleKeyDown = (event) => {
 		if (event.key === "ArrowUp") {
 			moverPosicao("Anterior");
-			tableLineTop();
 		} else if (event.key === "ArrowDown") {
 			moverPosicao("Seguinte");
-			tableLineTop();
 		}
 	};
 	const handleScroll = (event) => {
@@ -173,7 +158,6 @@ function ViewHistoricoVeiculo({
 		} else if (newScroll < prevScrollRef.current) {
 			moverPosicao("Anterior");
 		}
-		tableLineTop();
 		prevScrollRef.current = newScroll;
 	};
 
@@ -317,26 +301,24 @@ function ViewHistoricoVeiculo({
 								<div className="mt- 3">
 									<Button
 										style={{
-											background: "#03410b",
+											background: "#00652e",
 											border: "none",
 											color: "#FFFFFF",
 											marginRight: 5,
 										}}
 										variant="outline-info"
 										onClick={() => moverPosicao("Anterior")}
-										onKeyDown={handlePositionMap}
 									>
 										Posição Anterior
 									</Button>
 									<Button
 										variant="outline-info"
 										style={{
-											background: "#03410b",
+											background: "#00652e",
 											border: "none",
 											color: "#FFFFFF",
 										}}
 										onClick={() => moverPosicao("Seguinte")}
-										onKeyDown={handlePositionMap}
 									>
 										Posição Seguinte
 									</Button>
@@ -347,6 +329,7 @@ function ViewHistoricoVeiculo({
 								ref={tableRef}
 								tabIndex="0"
 								onKeyDown={handleKeyDown}
+								//onKeyUp={handleKeyDown} aqui é descosiderado se o user segurar a tecla
 								onWheel={handleScroll}
 								className="table-historico"
 								striped
@@ -381,7 +364,6 @@ function ViewHistoricoVeiculo({
 												{" "}
 												<Button
 													variant="link"
-													onKeyDown={handlePositionMap}
 													onClick={() => {
 														setLatitude(position.LAT.replace(",", "."));
 														setLongitude(position.LON.replace(",", "."));
