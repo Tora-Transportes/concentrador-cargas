@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
-import useCases from "../domain/UseCaseCoordenada";
 import xlsx from "xlsx";
 import os from "os";
 import path from "path";
 import fs from "fs";
+
+import useCases from "../domain/UseCaseCoordenada";
 import TokenAd from "../models/TokenAd";
 import { ServiceDistanceLocations } from "../services/ServiceDistanceLocations";
 import AppError from "../models/AppError";

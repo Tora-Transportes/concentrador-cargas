@@ -62,6 +62,6 @@
     "dev": "ts-node-dev src/index.ts --respawn --transpile-only",
     "build": "tsc",
     "test": "ts-mocha --watch __tests__/**/*.spec.ts",
-    "test:integration": "ts-mocha --watch __tests__/**/*test.ts"
+    "test:integration": "ts-mocha  __tests__/**/*test.ts --exit"
   }
 }
