@@ -166,7 +166,7 @@ function Permissoes() {
 				</Row>
 				<Row>
 					<div className="page-add-permissin-user">
-						<div className="form-multSelect">
+						<div className="form-multiSelect">
 							<MultiSelect
 								display="chip"
 								value={permissSelecionado}
@@ -181,7 +181,7 @@ function Permissoes() {
 							<button
 								onClick={limparPermissoes}
 								disabled={disableClearFilter}
-								className="form-multSelect-button"
+								className="button-limparFiltros"
 							>
 								<MdDeleteForever size={20} color="white" />
 								<span>Limpar Filtros</span>

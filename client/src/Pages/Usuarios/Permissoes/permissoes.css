@@ -32,7 +32,7 @@
 }
 
 .page-add-permissin-user,
-.form-multSelect {
+.form-multiSelect {
   width: 100%;
 }
 
@@ -41,7 +41,7 @@
   margin-bottom: 20px;
 }
 
-.form-multSelect {
+.form-multiSelect {
   display: flex;
   flex-direction: row;
   padding: 9px;
@@ -49,7 +49,7 @@
   border-radius: 10px;
 }
 
-.form-multSelect-button,
+.button-limparFiltros,
 .button-table-add-permission button {
   display: flex;
   justify-content: center;
@@ -61,7 +61,7 @@
   cursor: pointer;
 }
 
-.form-multSelect-button {
+.button-limparFiltros {
   background-color: #9e0101cc;
   padding: 5px;
   color: white;
@@ -69,20 +69,26 @@
   margin-inline-start: auto;
 }
 
-.header-table-add-permission {
-  display: flex;
-  justify-content: space-between;
-}
-
-.form-multSelect-button:hover {
+.button-limparFiltros:hover {
   background-color: #d60404c7;
 }
 
-.form-multSelect-button:disabled {
+.button-limparFiltros:disabled {
   background-color: #97070c6f;
   cursor: not-allowed;
   margin-bottom: 10px;
   margin-inline-start: auto;
+}
+
+.button-limparFiltros span {
+  font-weight: bold;
+  color: white;
+  margin-left: 5px;
+}
+
+.header-table-add-permission {
+  display: flex;
+  justify-content: space-between;
 }
 
 .p-multiselect.p-multiselect-chip .p-multiselect-token span {
@@ -110,13 +116,8 @@
   background-color: rgb(90, 226, 63);
 }
 
-.form-multSelect-button span {
-  font-weight: bold;
-  color: white;
-  margin-left: 5px;
-}
 .table-add-permission,
-.form-multSelect {
+.form-multiSelect {
   margin-bottom: 15px;
   display: contents;
 }
@@ -198,19 +199,19 @@
   margin-bottom: 5px;
 }
 
-/* @media only screen and (max-width: 560px) {
-  .form-multSelect-button,
-  .form-multSelect-button:disabled {
-    margin-right: 25% !important;
+@media only screen and (max-width: 460px) {
+  .button-limparFiltros,
+  .button-limparFiltros:disabled {
+    margin-right: 20% !important;
   }
-} */
+}
 @media only screen and (max-width: 600px) {
-  .form-multSelect {
+  .form-multiSelect {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 20px;
+    padding: 15px;
     background-color: #f3f3f3;
     border-radius: 10px;
   }
@@ -219,10 +220,10 @@
     margin-left: 0.6rem;
     font-size: 30px;
   }
-  .form-multSelect-button {
+  .button-limparFiltros {
     margin-top: 6px;
   }
-  
+
   .button-table-add-permission {
     width: 100%;
     flex-direction: row;
@@ -230,11 +231,11 @@
     justify-content: center;
     margin-bottom: 10px;
   }
-  
+
   .div-botoes-all {
     display: block;
   }
-  
+
   .button-all-add {
     margin-top: 5px;
     margin-right: 0;
