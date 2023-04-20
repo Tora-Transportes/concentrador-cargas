@@ -139,7 +139,7 @@ function ViewCoordenadas({
 						<ButtonReact
 							label="Voltar"
 							onClick={() => setVisibleLastLocation(false)}
-							className="dialog-btn-last-location"
+							className="dialog-btn-last-location mt-2"
 						/>
 					</Dialog>
 					<Sidebar

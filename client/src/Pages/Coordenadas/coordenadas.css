@@ -149,8 +149,8 @@ div .dialog-btn-last-location:active {
 
 @media only screen and (min-width: 30px) and (max-width: 585px) {
   div .class-title-Coord {
-    font-size: 2rem !important;
-    margin-top: 2.5rem;
+    font-size: 2.2rem !important;
+    margin-top: 2rem;
   }
 
   .dialog-localidade-title {
@@ -167,7 +167,9 @@ div .dialog-btn-last-location:active {
     justify-content: center;
   }
   div .ul_last-location {
-    width: 100%;
+    width: 95%;
+    position: relative;
+    left: -1.5rem;
   }
 }
 
