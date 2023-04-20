@@ -167,7 +167,9 @@ div .dialog-btn-last-location:active {
     justify-content: center;
   }
   div .ul_last-location {
-    width: 100%;
+    width: 95%;
+    position: relative;
+    left: -1.5rem;
   }
 }
 
