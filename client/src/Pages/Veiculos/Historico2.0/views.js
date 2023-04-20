@@ -317,7 +317,7 @@ function ViewHistoricoVeiculo({
 								<div className="mt- 3">
 									<Button
 										style={{
-											background: "#03410b",
+											background: "#00652e",
 											border: "none",
 											color: "#FFFFFF",
 											marginRight: 5,
@@ -331,7 +331,7 @@ function ViewHistoricoVeiculo({
 									<Button
 										variant="outline-info"
 										style={{
-											background: "#03410b",
+											background: "#00652e",
 											border: "none",
 											color: "#FFFFFF",
 										}}

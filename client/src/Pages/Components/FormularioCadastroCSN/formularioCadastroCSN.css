@@ -217,6 +217,12 @@ label {
   width: 123%;
   margin-bottom: 1rem;
 } */
+.button-add-ponto-passagem {
+  text-align: start;
+}
+.button-excluir-ponto-passagem {
+  text-align: end;
+}
 
 @media only screen and (max-width: 350px) {
   div .col-buttons-inf-veiculos {
@@ -255,6 +261,13 @@ label {
 
   .duracao-processo-2 {
     width: 110% !important;
+  }
+  .button-add-ponto-passagem {
+    text-align: center;
+  }
+  div .button-excluir-ponto-passagem {
+    text-align: center;
+    margin-top: 1rem;
   }
 
   /* .row-input-coleta,
