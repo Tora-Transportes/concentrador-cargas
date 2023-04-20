@@ -73,12 +73,12 @@
 
 @media only screen and (min-width: 116px) and (max-width: 1354px) {
   div .div-toast-popup {
-    top: 7%;
+    top: 6.5%;
     left: -2rem;
   }
 }
 
-@media only screen and (min-width: 916px) and (max-width: 1355px) {
+@media only screen and (min-width: 1355px) {
   div .div-toast-popup {
     top: 8%;
     left: -2rem;

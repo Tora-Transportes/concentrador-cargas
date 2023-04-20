@@ -230,7 +230,7 @@ function Formulario({ formik, produtos, distancia }) {
 					<Row>
 						<Col>
 							{formik.values.observacao_gr && (
-								<FloatingLabel label="Observacao GR" className="mb-3">
+								<FloatingLabel label="Observação GR" className="mb-3">
 									<Form.Control
 										as="textarea"
 										type="text"

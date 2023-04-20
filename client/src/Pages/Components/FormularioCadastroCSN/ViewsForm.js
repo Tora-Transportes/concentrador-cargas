@@ -338,7 +338,7 @@ export default function ViewsForm({
 						</Col>
 
 						<Col sm={12} md={6}>
-							<InputGroup className="class-input-moto">
+							<InputGroup className="input-bitrem">
 								<InputGroup.Text>Bitrem</InputGroup.Text>
 								<Form.Control
 									readOnly
@@ -349,7 +349,7 @@ export default function ViewsForm({
 							</InputGroup>
 						</Col>
 						<Col>
-							<InputGroup className="input-bitrem mb-2">
+							<InputGroup className="class-input-moto mt-4">
 								<InputGroup.Text>Motorista</InputGroup.Text>
 								<Form.Control
 									readOnly
@@ -368,7 +368,7 @@ export default function ViewsForm({
 					<Row>
 						<Col xs={12} sm={12} md={6} lg={7} xxl={8}>
 							{formik.values.observacao_gr && (
-								<FloatingLabel label="Observacao GR" className="mb-1 mt-3">
+								<FloatingLabel label="Observação GR" className="mt-3">
 									<Form.Control
 										as="textarea"
 										type="text"
@@ -380,7 +380,7 @@ export default function ViewsForm({
 							)}
 						</Col>
 
-						<Col className="col-buttons-inf-veiculos mt-4">
+						<Col className="col-buttons-inf-veiculos mt-3">
 							<Button
 								className="class-botao-Detalhes"
 								id="botao-detail-veiculo"
@@ -477,7 +477,7 @@ export default function ViewsForm({
 			/>
 
 			<Row className="row-button-local">
-				<Col>
+				<Col className="button-add-ponto-passagem">
 					{viewsButtonAddColeta && (
 						<Button
 							className="bg-success border border-white"
@@ -490,7 +490,7 @@ export default function ViewsForm({
 						</Button>
 					)}
 				</Col>
-				<Col className="text-end">
+				<Col className="button-excluir-ponto-passagem">
 					{viewsButtonExcluir && (
 						<Button
 							className="bg-secondary ms-2 border border-white"

@@ -36,10 +36,12 @@
   color: #0e4f26;
   padding-top: 6px;
 }
+
 .input-config-tab {
   justify-content: center;
   display: flex;
 }
+
 .button-input-multiselect {
   display: flex;
   justify-content: center;
@@ -50,8 +52,17 @@
   color: white;
   background-color: #eefdec;
   border: 1px solid #e4e7e4;
-  height: 2.7em;
+  height: 3.13rem;
   margin-top: 5px;
+}
+
+.p-multiselect:not(.p-disabled):hover,
+.p-inputtext:enabled:hover,
+.p-multiselect:not(.p-disabled):hover,
+.p-inputtext:enabled:hover {
+  border-color: #aeb9ac !important;
+  box-shadow: #fff !important;
+  border: #6c757d !important;
 }
 
 .dropLines {
@@ -150,6 +161,18 @@
 .p-column-filter-row .p-column-filter-clear-button {
   display: none;
 }
+
+@media only screen and (max-width: 280px) {
+  .input-config-tab {
+    justify-content: flex-start;
+    display: flex;
+    margin-left: -25px;
+  }
+  .button-input-multiselect {
+    display: none;
+  }
+}
+
 @media only screen and (max-width: 306px) {
   .footer-table Button {
     font-size: 0.84rem;
@@ -166,10 +189,6 @@
 @media only screen and (max-width: 585px) {
   .paginator-table-col {
     display: grid;
-  }
-
-  .button-input-multiselect {
-    display: none;
   }
 
   .col-paginator-itens {
