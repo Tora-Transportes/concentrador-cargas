@@ -3,7 +3,7 @@ import { Container, Row, Form, Button, Card } from "react-bootstrap";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import InputCliente from "../../Components/InputCliente";
 import DateUtils from "../../Utils/date";
-import "./style.css";
+import "./destinoCarga.css";
 import L from "leaflet";
 
 const originIcon = L.icon({
@@ -40,51 +40,49 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 	}
 
 	return (
-		<div className="class-body">
-			<Container style={{ marginLeft: "2rem" }}>
-				<Row>
-					<h1 className="class-title-dest">
+		<>
+			<Container className="mb-5 text-center">
+				<Row className="class-body-destCarga">
+					<h1 className="title-distancia-veic">
 						Distância entre o veículo e a empresa:
 					</h1>
 
-					<div>
-						<Card className="class-card-dest">
-							<Form onSubmit={handleSubmit} className="class-body-viewdest">
-								<Form.Group controlId="formDestino">
-									<Form.Label>Empresa</Form.Label>
-									<InputCliente
-										className="form-empresa-dist"
-										name="empresa"
-										value={fields.empresa}
-										onChange={handleChange}
-										required
-									/>
-								</Form.Group>
+					<Card className="card-viewdest">
+						<Form onSubmit={handleSubmit} className="class-body-viewdest">
+							<Form.Group controlId="formDestino">
+								<Form.Label>Empresa</Form.Label>
+								<InputCliente
+									className="form-dados-empresa"
+									name="empresa"
+									value={fields.empresa}
+									onChange={handleChange}
+									required
+								/>
+							</Form.Group>
 
-								<Form.Group controlId="formPlaca">
-									<Form.Label>Placa</Form.Label>
-									<Form.Control
-										className="form-placa-dist"
-										type="text"
-										name="placa"
-										value={fields.placa}
-										onChange={handleChange}
-										required
-									/>
-								</Form.Group>
+							<Form.Group controlId="formPlaca">
+								<Form.Label>Placa</Form.Label>
+								<Form.Control
+									className="form-placa-dist"
+									type="text"
+									name="placa"
+									value={fields.placa}
+									onChange={handleChange}
+									required
+								/>
+							</Form.Group>
 
-								<Button type="submit" id="button-pesq-dist">
-									Pesquisar
-								</Button>
-							</Form>
-						</Card>
-					</div>
+							<Button type="submit" id="button-pesq-dist">
+								Pesquisar
+							</Button>
+						</Form>
+					</Card>
 				</Row>
 				{rota && (
 					<MapContainer
 						center={[rota.latitude_origem, rota.longitude_origem]}
 						zoom={5}
-						style={{ height: "80vh", marginLeft: "9%", marginTop: "15px" }}
+						style={{ height: "80vh", marginTop: "25px", marginBottom: "25px" }}
 					>
 						<TileLayer
 							attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -119,7 +117,7 @@ function ViewRotasPendentes({ calcularRotaDestino, rota, clearRota }) {
 					</p>
 				)}
 			</Container>
-		</div>
+		</>
 	);
 }
 

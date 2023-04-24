@@ -162,7 +162,7 @@
   display: none;
 }
 
-@media only screen and (max-width: 280px) {
+@media only screen and (max-width: 303px) {
   .input-config-tab {
     justify-content: flex-start;
     display: flex;
@@ -205,6 +205,11 @@
 
   .header-table-col-buttons {
     display: grid;
+  }
+
+  .input-config-tab {
+    display: flex;
+    margin-left: -15px;
   }
 
   .footer-table {
