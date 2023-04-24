@@ -1,9 +1,12 @@
 import axios from "axios";
 import moment from "moment";
+import * as https from "https";
+import { orderBy } from "lodash";
+import lodash from "lodash";
+
 import oracle from "../database";
 import database, { mssql, mssqlCoordenadas } from "../database";
 import AppError from "../models/AppError";
-import * as https from "https";
 import { calculateDiffDate } from "../Utils/formatData";
 export interface IQueryDistance {
   cidade_origem: string | undefined | null;
@@ -467,44 +470,53 @@ export class ServiceDistanceLocations {
     let totalTime = 0;
 
     //retirando os duplicados e adicionando o tempo parada do veiculo;
-    const historicosSemDuplicidade: IHistoryTravelVehicle[] = [];
+    const historicos: IHistoryTravelVehicle[] = [];
     historyVeicle.push({
       ID: "0",
-      DISIMEI: "0",
+      DISIMEI: "00",
       LAT: "-0",
       LON: "-0",
       UF: "0",
       DTINC: "2023-04-13T11:30:50.267Z",
     });
-    historyVeicle.forEach((dadosPositionAtual, index, arrayHistorico) => {
-      if (
-        dadosPositionAtual.LAT !== objAnterior.LAT ||
-        dadosPositionAtual.LON !== objAnterior.LON
-      ) {
-        const positionIndice = index > 0 ? index - 1 : index;
-        const dataInicioParado = objAnterior.DTINC;
-        const dataFinParado = arrayHistorico[positionIndice].DTINC;
 
-        totalTime = dataFinParado.getTime() - dataInicioParado.getTime();
-        objAnterior.DOWNTIME = Math.floor(totalTime / (1000 * 60));
+    lodash.forEach(
+      historyVeicle,
+      (dadosPositionAtual, index, arrayHistorico) => {
+        if (
+          dadosPositionAtual.LAT !== objAnterior.LAT ||
+          dadosPositionAtual.LON !== objAnterior.LON
+        ) {
+          const positionIndice = index > 0 ? index - 1 : index;
+          const dataInicioParado = objAnterior.DTINC;
+          const dataFinParado = arrayHistorico[positionIndice].DTINC;
 
-        historicosSemDuplicidade.push(objAnterior);
-        objAnterior = dadosPositionAtual;
-        totalTime = 0;
+          totalTime = dataFinParado.getTime() - dataInicioParado.getTime();
+          objAnterior.DOWNTIME = Math.floor(totalTime / (1000 * 60));
+
+          historicos.push(objAnterior);
+          objAnterior = dadosPositionAtual;
+          totalTime = 0;
+        }
       }
-    });
+    );
 
-    //ordenação de historyVeicle DESC (se ordernar na query fica muito lento a busca);
-    function compare(a: IHistoryTravelVehicle, b: IHistoryTravelVehicle) {
-      if (a.ID > b.ID) return -1;
-      if (a.ID < b.ID) return 1;
-      return 0;
-    }
-    historicosSemDuplicidade.sort(compare);
+    // Remove duplicatas usando a função uniqWith da lodash
+    const historicosSemDuplicidade: IHistoryTravelVehicle[] = lodash.uniqWith(
+      historicos,
+      lodash.isEqual
+    );
+
+    //ordenação de historyVeicle DESC;
+    const historicosSemDuplicidadeOrdenado = orderBy(
+      historicosSemDuplicidade,
+      ["ID"],
+      ["desc"]
+    );
 
     return {
       placa: plate,
-      posicao: historicosSemDuplicidade,
+      posicao: historicosSemDuplicidadeOrdenado,
     };
   }
 

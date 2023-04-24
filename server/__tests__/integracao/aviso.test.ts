@@ -3,7 +3,9 @@ import chaiHttp from "chai-http";
 import { request, expect } from "chai";
 import "mocha";
 
+import database from "../../src/database";
 import server from "../../src/index";
+
 chai.use(chaiHttp);
 
 interface IBodyAvisos {
@@ -97,5 +99,8 @@ describe("Gerenciar avisos", () => {
         expect(res.body.message).to.eql("O Aviso selecionado não existe");
         closeServer();
       });
+  });
+  after(async () => {
+    await database.destroy();
   });
 });

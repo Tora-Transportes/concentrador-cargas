@@ -44,6 +44,7 @@ function FormularioCadastroManual({
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
 	const [valorTotalDebito, setValorTotal] = useState();
 	const [isDisabledEnvioApp, setDisabledEnvioApp] = useState(false);
+	const [isDisableColetaEntrega, setDisableColetaEntrega] = useState(false);
 
 	async function handleShowDetailsAboutVehicle(plate) {
 		if (!plate) {
@@ -157,6 +158,7 @@ function FormularioCadastroManual({
 
 	const DetalhesCargaApp = (e) => {
 		const decisaoEnvioCarga = e.target.checked;
+		setDisableColetaEntrega(decisaoEnvioCarga);
 		if (decisaoEnvioCarga) {
 			setTimeout(() => {
 				formik.setFieldValue("placa_veiculo", null);
@@ -544,6 +546,7 @@ function FormularioCadastroManual({
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
+							required={isDisableColetaEntrega}
 						/>
 					</FloatingLabel>
 				</Col>
@@ -557,6 +560,7 @@ function FormularioCadastroManual({
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
+							required={isDisableColetaEntrega}
 						/>
 					</FloatingLabel>
 				</Col>
