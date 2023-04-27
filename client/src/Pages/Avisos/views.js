@@ -23,9 +23,15 @@ let emptyNotice = {
 	AUTOR: "",
 	LIKE_ON: null,
 	LIKE_OF: null,
+	DATA_ATUALIZACAO: null,
 };
 
-const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
+const ViewsAviso = ({
+	dadosAvisos,
+	setDadosAvisos,
+	setAtualizarAvisos,
+	setAtivarRefresh,
+}) => {
 	const [userInformation, setuserInformation] = useState({});
 	const [isPermissionAviso, setPermissionAviso] = useState(false);
 	const [avisoDialog, setAvisoDialog] = useState(false);
@@ -35,12 +41,25 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 	const [titleAviso, setTitleAviso] = useState();
 	const toast = useRef(null);
 
-	const subtitle = (autor, dataCadastro) => (
-		<div className="div-resp-cad-aviso">
-			<h6>Responsável pelo Cadastro: {autor}</h6>
-			<h6>Data do cadastro: {dataCadastro}</h6>
-		</div>
-	);
+	const subtitle = (
+		autor,
+		dataCadastro,
+		dataAtualizacao
+		//responsavelAtualizacao
+	) => {
+		return (
+			<div className="div-resp-cad-aviso">
+				<h6>Responsável pelo Cadastro: {autor}</h6>
+				<h6>Data do cadastro: {dataCadastro}</h6>
+				{dataAtualizacao && (
+					<>
+						{/* <h6>Responsável pela Atualização: {responsavelAtualizacao}</h6> */}
+						<h6>Data da atualização: {dataAtualizacao}</h6>
+					</>
+				)}
+			</div>
+		);
+	};
 
 	const openNewNotice = () => {
 		emptyNotice.AUTOR = String(getClaims().name);
@@ -51,6 +70,9 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 	};
 
 	const editNotice = (aviso) => {
+		const currentDate = new Date();
+		aviso.DATA_ATUALIZACAO = currentDate.toISOString();
+		// aviso.AUTOR_ATUALIZACAO = String(getClaims().name);
 		const { TITULO, MENSAGEM } = aviso;
 		aviso.TITULO = String(TITULO);
 		aviso.MENSAGEM = String(MENSAGEM);
@@ -76,6 +98,8 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 				TITULO: aviso.TITULO,
 				MENSAGEM: aviso.MENSAGEM,
 				AUTOR: aviso.AUTOR,
+				DATA_ATUALIZACAO: aviso.DATA_ATUALIZACAO,
+				// AUTOR_ATUALIZACAO: aviso.AUTOR_ATUALIZACAO,
 			};
 
 			if (aviso.ID) {
@@ -87,7 +111,7 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 						detail: "As informações do aviso foram atualizadas.",
 						life: 3000,
 					});
-
+					setAtivarRefresh(false);
 					setAtualizarAvisos(true);
 				} catch (error) {
 					console.error(error);
@@ -182,7 +206,7 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 
 	const converterData = (dataIso) => {
 		const dataTimeJs = new Date(dataIso);
-		return dataTimeJs.toLocaleString("pt-BR");
+		return dataIso !== null ? dataTimeJs.toLocaleString("pt-BR") : null;
 	};
 
 	const { isPermissionUser } = useContext(ContextUseDefault);
@@ -308,7 +332,8 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 												<p className="p-mensagem-aviso">{item.MENSAGEM}</p>
 												{subtitle(
 													item.AUTOR,
-													converterData(item.DATA_CADASTRO)
+													converterData(item.DATA_CADASTRO),
+													converterData(item?.DATA_ATUALIZACAO)
 												)}
 												<ViewsLikeDislike aviso={item} toast={toast} />
 											</Card>

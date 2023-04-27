@@ -19,7 +19,7 @@ function PopUp({
 		let avisosNaoLidos;
 
 		if (idAvisoLocalStorage < 1 && isLastIdPosition > 0) {
-			localStorage.setItem("viewsAviso", isLastIdPosition - 1);
+			localStorage.setItem("viewsAviso", isLastIdPosition - 1 + ";");
 		} else if (idAvisoLocalStorage > 0 && isLastIdPosition > 0) {
 			avisosNaoLidos = isLastIdPosition - idAvisoLocalStorage;
 			if (avisosNaoLidos > 99) avisosNaoLidos = "+99";

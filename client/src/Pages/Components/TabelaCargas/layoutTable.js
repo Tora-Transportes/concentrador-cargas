@@ -67,7 +67,6 @@ export const headerTableFunction = (
 						filter={true}
 						removeIcon
 						filterPlaceholder="Filtrar por"
-						filterInputAutoWidth={true}
 						className="class-multiSelect-filter"
 					/>
 				</InputGroup>

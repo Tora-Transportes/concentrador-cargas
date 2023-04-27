@@ -9,8 +9,12 @@ function MainPopUp() {
 	const [isShow, setShow] = useState(false);
 	const [isLastIdPosition, setLastIdPosition] = useState();
 	const [isCountAviso, setCountAviso] = useState(0);
-	const idAvisoLocalStorage = localStorage.getItem("viewsAviso");
 	const { setIdAvisos } = useContext(ContextUseDefault);
+
+	const infoAvisoLocalStorage = localStorage.getItem("viewsAviso");
+	let idAvisoLocalStorage = null;
+	if (infoAvisoLocalStorage)
+		idAvisoLocalStorage = infoAvisoLocalStorage.split(";")[0] || null;
 
 	useEffect(() => {
 		(async () => {
@@ -18,8 +22,13 @@ function MainPopUp() {
 			const lastIdPosition = data?.ID;
 			setLastIdPosition(lastIdPosition);
 			setIdAvisos(lastIdPosition);
+
+			const avisoEditado = infoAvisoLocalStorage.split(";")[1];
 			if (idAvisoLocalStorage < lastIdPosition) {
 				idAvisoLocalStorage === null ? setCountAviso("?") : "";
+				setShow(true);
+			} else if (avisoEditado) {
+				setCountAviso("?");
 				setShow(true);
 			}
 		})();
