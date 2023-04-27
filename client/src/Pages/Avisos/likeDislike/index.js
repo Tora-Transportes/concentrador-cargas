@@ -50,6 +50,7 @@ const ViewsLikeDislike = ({ aviso, toast }) => {
 	const saveToCache = (like) => {
 		const infoAtualStorage =
 			JSON.parse(localStorage.getItem("like.avisos")) || storage;
+
 		const infoSaveCache = [
 			...infoAtualStorage,
 			{ idAviso: idAvisoSelecionado, like },
@@ -116,7 +117,7 @@ const ViewsLikeDislike = ({ aviso, toast }) => {
 				messageJaClicado(
 					statusLike === "like"
 						? "Você já deu Like nesse aviso. Obrigado!"
-						: "Você já deu dislike nesse aviso. Obrigado!"
+						: "Você já deu Dislike nesse aviso. Obrigado!"
 				);
 			}
 		}
