@@ -1,5 +1,4 @@
-body,
-ul {
+body {
   margin: 0px;
   padding: 0px;
   font-family: "Poppins", sans-serif;
@@ -430,7 +429,7 @@ div .class-app-icons {
   #menu {
     display: block;
     position: absolute;
-    width: 20rem;
+    width: 18rem;
     top: 3rem;
     right: -0rem;
     background: #00652e;
@@ -442,7 +441,7 @@ div .class-app-icons {
   }
 
   #nav.active #menu {
-    height: calc(90vh - 39px);
+    height: calc(80vh - 59px);
     visibility: visible;
     overflow-y: auto;
   }

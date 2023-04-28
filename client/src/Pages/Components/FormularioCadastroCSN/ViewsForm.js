@@ -361,7 +361,7 @@ function ViewsForm({ dataComponenteFormulario }) {
 							</InputGroup>
 						</Col>
 						<Col>
-							<InputGroup className="class-input-moto mt-4">
+							<InputGroup className="class-input-moto mt-3">
 								<InputGroup.Text>Motorista</InputGroup.Text>
 								<Form.Control
 									readOnly
