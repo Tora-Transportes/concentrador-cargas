@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
+import "./formularioCadastroCSN.css";
 import {
 	Button,
 	Card,
@@ -15,13 +16,13 @@ import {
 } from "react-bootstrap";
 import { IoMdAdd, IoMdHelpCircle } from "react-icons/io";
 import AutocompleteInput from "../AutocompleteInput";
+
 import FilialSelect from "../FilialSelect";
 import InputCliente from "../InputCliente";
 import InputPlaca from "../InputPlaca";
 import InputsPontoPassagem from "./InputPontoPassagem";
-import "./formularioCadastroCSN.css";
 
-export default function ViewsForm({ dataComponenteFormulario }) {
+function ViewsForm({ dataComponenteFormulario }) {
 	const {
 		formik,
 		buscarCargaComDocumentoDeTransporte,
@@ -682,3 +683,4 @@ export default function ViewsForm({ dataComponenteFormulario }) {
 		</div>
 	);
 }
+export default memo(ViewsForm);

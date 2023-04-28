@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
-import ServiceVeiculos from "src/services/ServiceVeiculos";
-import swal from "sweetalert";
+import React, { useEffect, useState, memo } from "react";
 import "./formularioCadastroCSN.css";
+import swal from "sweetalert";
+import Swal2 from "sweetalert2";
+
+import ServiceVeiculos from "src/services/ServiceVeiculos";
 import somaDebitoVeiculo from "src/Pages/Utils/somaDebitoVeiculo";
 import { funcInputPontoParada, mensagemPlacaEmUso } from "./management";
 import ViewsForm from "./ViewsForm";
 import ServiceCargas from "src/services/ServiceCargas";
-import Swal2 from "sweetalert2";
 function FormularioCadastroCSN({ dataComponenteIndex }) {
 	const {
 		formik,
@@ -64,7 +65,6 @@ function FormularioCadastroCSN({ dataComponenteIndex }) {
 			swal("Placa inválida");
 			return;
 		}
-
 		let vehicleData;
 		if (isDetalhesVeiculo) {
 			vehicleData = isDetalhesVeiculo;
@@ -113,12 +113,10 @@ function FormularioCadastroCSN({ dataComponenteIndex }) {
 				);
 
 				const detalhesVeiculos = await infoVeiculoPlaca(plate);
-				//detalhesVeiculos.RASTREADOR = "";
 				if (detalhesVeiculos?.RASTREADOR?.length > 2) {
 					await formik.setFieldValue("rastreador", detalhesVeiculos.RASTREADOR);
 				} else {
 					let rastreadorCarretaOrBitrem;
-					//vehicleDetails.placa_carreta = "";
 					if (vehicleDetails?.placa_carreta) {
 						rastreadorCarretaOrBitrem = await infoVeiculoPlaca(
 							vehicleDetails.placa_carreta
@@ -229,4 +227,4 @@ function FormularioCadastroCSN({ dataComponenteIndex }) {
 	);
 }
 
-export default FormularioCadastroCSN;
+export default memo(FormularioCadastroCSN);
