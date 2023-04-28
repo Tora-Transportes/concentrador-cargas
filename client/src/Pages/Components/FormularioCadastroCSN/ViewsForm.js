@@ -378,7 +378,7 @@ function ViewsForm({ dataComponenteFormulario }) {
 						</Col>
 					</Row>
 					<Row>
-						<Col xs={12} sm={12} md={6} lg={7} xxl={8}>
+						<Col xs={12} sm={12} md={6} lg={6} xxl={8}>
 							{formik.values.observacao_gr && (
 								<FloatingLabel label="Observação GR" className="mt-3">
 									<Form.Control
@@ -413,6 +413,7 @@ function ViewsForm({ dataComponenteFormulario }) {
 							</Button>
 						</Col>
 					</Row>
+					<hr></hr>
 				</>
 			)}
 			<Row className="mt-3">
@@ -432,7 +433,7 @@ function ViewsForm({ dataComponenteFormulario }) {
 				</Col>
 			</Row>
 			<Row>
-				<Col sm={12} md={6} lg={7}>
+				<Col sm={12} md={6} lg={6}>
 					<FloatingLabel label="Tipo de Material" className="mb-3">
 						<AutocompleteInput
 							keyDataList="tipo_carga"
