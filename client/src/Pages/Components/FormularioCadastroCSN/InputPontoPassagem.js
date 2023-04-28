@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import "./formularioCadastroCSN.css";
 import { Col, FloatingLabel, Form, Row } from "react-bootstrap";
 import swal from "sweetalert";
+import { Toast } from "primereact/toast";
+
 import RotasSelect from "../FilialSelect/rotasSelect";
 import InputCliente from "../InputCliente";
 import { MontarBoryEditPatch } from "./management";
 import { funcCompareDateOneYear } from "src/Pages/Utils/formatDate";
 import ServicesPontoParada from "src/services/ServicesPontoParada";
-import { Toast } from "primereact/toast";
 
 const InputsPontoPassagem = ({ dataComponenteViews }) => {
 	const {
@@ -1130,7 +1131,6 @@ const InputsPontoPassagem = ({ dataComponenteViews }) => {
 						value={formik.values.ponto_passagem4.client}
 						onKeyDown={handleEnter}
 						onChange={formik.handleChange}
-						//onBlur={formik.handleBlur}
 						onBlur={() =>
 							formik.setFieldValue("ponto_passagem4.entregaFinal", 1)
 						}
@@ -1213,7 +1213,6 @@ const InputsPontoPassagem = ({ dataComponenteViews }) => {
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									//required
 								/>
 								{isDateErrorInput[23]?.error && (
 									<p className="text-danger">Campo Obrigatório!</p>
@@ -1242,7 +1241,6 @@ const InputsPontoPassagem = ({ dataComponenteViews }) => {
 										);
 									}}
 									disabled={disabledValidEfetiva}
-									//required
 								/>
 								{isDateErrorInput[24]?.error && (
 									<p className="text-danger">Campo Obrigatório!</p>
@@ -1273,4 +1271,4 @@ const InputsPontoPassagem = ({ dataComponenteViews }) => {
 	);
 };
 
-export default InputsPontoPassagem;
+export default memo(InputsPontoPassagem);

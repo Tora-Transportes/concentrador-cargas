@@ -1,9 +1,26 @@
+import React, { useReducer, useState, memo } from "react";
+import "./likeDislike.css";
 import { Button } from "primereact/button";
-import React, { useState } from "react";
 import { HiThumbDown, HiThumbUp } from "react-icons/hi";
+
 import useLocalStorage from "src/Pages/Components/useLocalstorage";
 import ServiceAvisos from "src/services/ServiceAvisos";
-import "./likeDislike.css";
+
+const initialLike = {
+	likeActive: false,
+	deslikeAtive: false,
+};
+
+const reducerLike = (state, action) => {
+	switch (action.type) {
+		case "LIKE":
+			return { ...state, likeAtive: true };
+		case "DESLIKE":
+			return { ...state, deslikeAtive: true };
+		default:
+			return state;
+	}
+};
 
 const ViewsLikeDislike = ({ aviso, toast }) => {
 	const [likeAviso, setLikeAviso] = useState(
@@ -12,8 +29,8 @@ const ViewsLikeDislike = ({ aviso, toast }) => {
 	const [dislikeAviso, setDislikeAviso] = useState(
 		aviso.LIKE_OF === null ? 0 : aviso.LIKE_OF
 	);
-	const [likeActive, setLikeActive] = useState(false);
-	const [dislikeActive, setDislikeActive] = useState(false);
+
+	const [tipoLike, dispatchLike] = useReducer(reducerLike, initialLike);
 	const [storage, setStorage] = useLocalStorage("like.avisos", [
 		{
 			idAviso: 0,
@@ -82,7 +99,7 @@ const ViewsLikeDislike = ({ aviso, toast }) => {
 
 	const clickLike = async (statusLike) => {
 		const idExisteCache = await existeInfoCache("on");
-		if (statusLike === "like" && !likeActive) {
+		if (statusLike === "like" && !tipoLike.likeActive) {
 			if (!idExisteCache) {
 				const countLike = likeAviso + 1;
 				let countDislike = 0;
@@ -92,15 +109,18 @@ const ViewsLikeDislike = ({ aviso, toast }) => {
 					setDislikeAviso(countDislike);
 				}
 				saveToCache("on");
-				setLikeActive(true);
-				setDislikeActive(false);
+				dispatchLike({ type: "LIKE" });
 				saveLike(countLike, countDislike);
 			} else {
 				messageJaClicado("Você já deu Like nesse aviso. Obrigado!");
 			}
 		} else {
 			const idExisteCache = await existeInfoCache("off");
-			if (statusLike === "disLike" && !dislikeActive && !idExisteCache) {
+			if (
+				statusLike === "disLike" &&
+				!tipoLike.dislikeActive &&
+				!idExisteCache
+			) {
 				const countDislike = dislikeAviso + 1;
 				let countLike = 0;
 				setDislikeAviso(countDislike);
@@ -109,8 +129,7 @@ const ViewsLikeDislike = ({ aviso, toast }) => {
 					setLikeAviso(countLike);
 				}
 				saveToCache("off");
-				setLikeActive(false);
-				setDislikeActive(true);
+				dispatchLike({ type: "DESLIKE" });
 				saveLike(countLike, countDislike);
 			} else {
 				messageJaClicado(
@@ -145,4 +164,4 @@ const ViewsLikeDislike = ({ aviso, toast }) => {
 	);
 };
 
-export default ViewsLikeDislike;
+export default memo(ViewsLikeDislike);
