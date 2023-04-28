@@ -56,15 +56,6 @@
   margin-top: 5px;
 }
 
-.p-multiselect:not(.p-disabled):hover,
-.p-inputtext:enabled:hover,
-.p-multiselect:not(.p-disabled):hover,
-.p-inputtext:enabled:hover {
-  border-color: #aeb9ac !important;
-  box-shadow: #fff !important;
-  border: #6c757d !important;
-}
-
 .dropLines {
   height: 43px;
 }
@@ -140,6 +131,7 @@
   .p-column-filter-element {
   height: 2.5em;
 }
+
 .datatable-responsive-gridCargas
   .p-datatable-responsive-grid
   .p-column-filter-row {
@@ -153,6 +145,7 @@
   .mb-3 {
   margin-bottom: 0;
 }
+
 .mb-3 .form-floating {
   margin-bottom: 0;
 }
