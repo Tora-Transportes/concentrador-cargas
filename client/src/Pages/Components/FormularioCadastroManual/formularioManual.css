@@ -66,8 +66,10 @@ label {
 } */
 
 .col-info-veic-manual {
-  text-align: end;
+  display: flex;
+  justify-content: flex-end;
 }
+
 div .button-info-veic-manual,
 div .button-info-veic-manual:hover {
   background: #00652e;
@@ -102,13 +104,13 @@ div .button-info-veic-manual:hover {
 }
 @media only screen and (max-width: 991px) {
   .button-info-veic-manual {
-    margin: 0px 10px;
+    margin-left: 10px;
+  }
+  .col-info-veic-manual {
+    justify-content: flex-end;
   }
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
-  .col-info-veic-manual {
-    text-align: end;
-  }
   .button-info-veic-manual {
     margin: 1rem 8px 1px -6px;
   }
@@ -140,6 +142,5 @@ div .button-info-veic-manual:hover {
     background: #00652e;
     color: #ffff;
     border: none;
-    margin: 1rem 5px 1px 20px;
   }
 }
