@@ -9,17 +9,18 @@ import { funcCompareDateOneYear } from "src/Pages/Utils/formatDate";
 import ServicesPontoParada from "src/services/ServicesPontoParada";
 import { Toast } from "primereact/toast";
 
-const InputsPontoPassagem = ({
-	formik,
-	inputColeta5,
-	inputColeta6,
-	inputColeta7,
-	fkSituacao,
-	isPermissionUserEdit,
-	isDateErrorInput,
-	setDateErrorInput,
-	isAlteracaoParcial,
-}) => {
+const InputsPontoPassagem = ({ dataComponenteViews }) => {
+	const {
+		formik,
+		inputColeta5,
+		inputColeta6,
+		inputColeta7,
+		fkSituacao,
+		isPermissionUserEdit,
+		isDateErrorInput,
+		setDateErrorInput,
+		isAlteracaoParcial,
+	} = dataComponenteViews;
 	const [inputPontoPassagem5, setInputPontoPassagem5] = useState(true);
 	const [inputPontoPassagem6, setInputPontoPassagem6] = useState(true);
 	const [inputPontoPassagem7, setInputPontoPassagem7] = useState(true);

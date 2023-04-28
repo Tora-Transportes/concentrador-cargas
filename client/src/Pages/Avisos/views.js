@@ -8,12 +8,12 @@ import { Dialog } from "primereact/dialog";
 import { InputTextarea } from "primereact/inputtextarea";
 import { getClaims } from "src/MicrosoftAuthentication";
 import { Toast } from "primereact/toast";
+import { BsPencilSquare } from "react-icons/bs";
+import { HiOutlineTrash } from "react-icons/hi";
 
 import ServiceAvisos from "src/services/ServiceAvisos";
 import { Input } from "reactstrap";
 import { ContextUseDefault } from "./../../hooks/context/contextPagCargaCTE";
-import { BsPencilSquare } from "react-icons/bs";
-import { HiOutlineTrash } from "react-icons/hi";
 import ViewsLikeDislike from "./likeDislike";
 
 let emptyNotice = {
@@ -26,12 +26,9 @@ let emptyNotice = {
 	DATA_ATUALIZACAO: null,
 };
 
-const ViewsAviso = ({
-	dadosAvisos,
-	setDadosAvisos,
-	setAtualizarAvisos,
-	setAtivarRefresh,
-}) => {
+const ViewsAviso = ({ dataComponenteIndex }) => {
+	const { dadosAvisos, setDadosAvisos, setAtualizarAvisos, setAtivarRefresh } =
+		dataComponenteIndex;
 	const [userInformation, setuserInformation] = useState({});
 	const [isPermissionAviso, setPermissionAviso] = useState(false);
 	const [avisoDialog, setAvisoDialog] = useState(false);
@@ -44,8 +41,8 @@ const ViewsAviso = ({
 	const subtitle = (
 		autor,
 		dataCadastro,
-		dataAtualizacao
-		//responsavelAtualizacao
+		dataAtualizacao,
+		responsavelAtualizacao
 	) => {
 		return (
 			<div className="div-resp-cad-aviso">
@@ -53,7 +50,7 @@ const ViewsAviso = ({
 				<h6>Data do cadastro: {dataCadastro}</h6>
 				{dataAtualizacao && (
 					<>
-						{/* <h6>Responsável pela Atualização: {responsavelAtualizacao}</h6> */}
+						<h6>Responsável pela Atualização: {responsavelAtualizacao}</h6>
 						<h6>Data da atualização: {dataAtualizacao}</h6>
 					</>
 				)}
@@ -72,7 +69,6 @@ const ViewsAviso = ({
 	const editNotice = (aviso) => {
 		const currentDate = new Date();
 		aviso.DATA_ATUALIZACAO = currentDate.toISOString();
-		// aviso.AUTOR_ATUALIZACAO = String(getClaims().name);
 		const { TITULO, MENSAGEM } = aviso;
 		aviso.TITULO = String(TITULO);
 		aviso.MENSAGEM = String(MENSAGEM);
@@ -99,7 +95,6 @@ const ViewsAviso = ({
 				MENSAGEM: aviso.MENSAGEM,
 				AUTOR: aviso.AUTOR,
 				DATA_ATUALIZACAO: aviso.DATA_ATUALIZACAO,
-				// AUTOR_ATUALIZACAO: aviso.AUTOR_ATUALIZACAO,
 			};
 
 			if (aviso.ID) {
@@ -333,7 +328,8 @@ const ViewsAviso = ({
 												{subtitle(
 													item.AUTOR,
 													converterData(item.DATA_CADASTRO),
-													converterData(item?.DATA_ATUALIZACAO)
+													converterData(item.DATA_ATUALIZACAO),
+													item.RESPONSAVEL_EDICAO
 												)}
 												<ViewsLikeDislike aviso={item} toast={toast} />
 											</Card>

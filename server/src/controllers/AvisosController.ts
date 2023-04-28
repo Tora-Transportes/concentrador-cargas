@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import domainAviso from "../domain/UseCaseAvisos";
+import TokenAd from "../models/TokenAd";
 
 interface IAvisosController {
   create(req: Request, res: Response): Promise<Response>;
@@ -30,6 +31,8 @@ class AvisosController implements IAvisosController {
   }
   async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
+    const { name } = TokenAd.getClaims(String(req.headers.authorization));
+    req.body.RESPONSAVEL_EDICAO = name;
     await domainAviso.useCaseUpdateAvisos.run(Number(id), req.body);
     return res.status(204).send();
   }

@@ -12,6 +12,7 @@ export function factoryAvisos() {
     DATA_ATUALIZACAO: yup.date().nullable(),
     LIKE_ON: yup.number(),
     LIKE_OF: yup.number(),
+    RESPONSAVEL_EDICAO: yup.string(),
   });
   return avisosValidator;
 }

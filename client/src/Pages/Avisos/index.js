@@ -41,6 +41,13 @@ function Avisos() {
 		setAtualizarAvisos(false);
 	}, [atualizarAvisos]);
 
+	const dataComponenteIndex = {
+		formik,
+		dadosAvisos,
+		setDadosAvisos,
+		setAtualizarAvisos,
+		setAtivarRefresh,
+	};
 	return (
 		<>
 			<Menusuperior />
@@ -49,13 +56,7 @@ function Avisos() {
 					<p className="title-avisos">Avisos</p>
 				</Row>
 				<Row>
-					<ViewsAviso
-						formik={formik}
-						dadosAvisos={dadosAvisos}
-						setDadosAvisos={setDadosAvisos}
-						setAtualizarAvisos={setAtualizarAvisos}
-						setAtivarRefresh={setAtivarRefresh}
-					/>
+					<ViewsAviso dataComponenteIndex={dataComponenteIndex} />
 				</Row>
 			</Container>
 		</>
