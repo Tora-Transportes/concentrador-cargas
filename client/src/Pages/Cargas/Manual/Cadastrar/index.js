@@ -20,6 +20,7 @@ function Manual() {
 	const [distancia, setDistancia] = useState(null);
 	const [isViwsCargaApp, setViwsCargaApp] = useState(false);
 	const [isDisabledPlaca, setDisabledPlaca] = useState(false);
+	const [isDisableColetaEntrega, setDisableColetaEntrega] = useState(false);
 	const { isPermissionUser } = useContext(ContextUseDefault);
 	const history = useHistory();
 
@@ -151,6 +152,7 @@ function Manual() {
 		funcScrollTop(2, 2);
 		formik.resetForm();
 		formik.setFieldValue("id", "(gerado automaticamente)");
+		setDisableColetaEntrega(false);
 	}
 
 	return (
@@ -174,6 +176,8 @@ function Manual() {
 						isDisabledPlaca={isDisabledPlaca}
 						setDisabledPlaca={setDisabledPlaca}
 						status={"Cadastro"}
+						isDisableColetaEntrega={isDisableColetaEntrega}
+						setDisableColetaEntrega={setDisableColetaEntrega}
 					/>
 					<Row>
 						<Col>

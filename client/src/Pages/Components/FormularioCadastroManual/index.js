@@ -37,6 +37,8 @@ function FormularioCadastroManual({
 	isCargaApp,
 	setDisabledPlaca,
 	isDisabledPlaca,
+	isDisableColetaEntrega,
+	setDisableColetaEntrega,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
@@ -44,7 +46,6 @@ function FormularioCadastroManual({
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
 	const [valorTotalDebito, setValorTotal] = useState();
 	const [isDisabledEnvioApp, setDisabledEnvioApp] = useState(false);
-	const [isDisableColetaEntrega, setDisableColetaEntrega] = useState(false);
 
 	async function handleShowDetailsAboutVehicle(plate) {
 		if (!plate) {
@@ -157,6 +158,7 @@ function FormularioCadastroManual({
 	};
 
 	const DetalhesCargaApp = (e) => {
+		console.log("RRR");
 		const decisaoEnvioCarga = e.target.checked;
 		setDisableColetaEntrega(decisaoEnvioCarga);
 		if (decisaoEnvioCarga) {
