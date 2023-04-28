@@ -7,22 +7,23 @@ import { funcInputPontoParada, mensagemPlacaEmUso } from "./management";
 import ViewsForm from "./ViewsForm";
 import ServiceCargas from "src/services/ServiceCargas";
 import Swal2 from "sweetalert2";
-function FormularioCadastroCSN({
-	formik,
-	produtos,
-	viewsInput,
-	buscarCargaComDocumentoDeTransporte,
-	history,
-	isPermissionUserEdit,
-	isDateErrorInput,
-	setDateErrorInput,
-	isViwsCargaApp,
-	isAlteracaoParcial,
-	status,
-	isCargaApp,
-	isDisabledPlaca,
-	setDisabledPlaca,
-}) {
+function FormularioCadastroCSN({ dataComponenteIndex }) {
+	const {
+		formik,
+		produtos,
+		viewsInput,
+		buscarCargaComDocumentoDeTransporte,
+		history,
+		isPermissionUserEdit,
+		isDateErrorInput,
+		setDateErrorInput,
+		isViwsCargaApp,
+		isAlteracaoParcial,
+		status,
+		isCargaApp,
+		isDisabledPlaca,
+		setDisabledPlaca,
+	} = dataComponenteIndex;
 	const [veiculo, setVeiculo] = useState(null);
 	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
 	const [isDetalhesCarreta, setDetalesCarreta] = useState(null);
@@ -191,40 +192,39 @@ function FormularioCadastroCSN({
 		setInputColeta7
 	);
 
+	const dataComponenteFormulario = {
+		formik,
+		buscarCargaComDocumentoDeTransporte,
+		handleSearchVehicle,
+		handleShowDetailsAboutVehicle,
+		handleShowDebitAboutVehicle,
+		produtos,
+		inputColeta5,
+		inputColeta6,
+		inputColeta7,
+		viewsButtonAddColeta,
+		functionInputs,
+		viewsButtonExcluir,
+		veiculo,
+		debitosVeiculo,
+		setDebitosVeiculo,
+		setVeiculo,
+		isDetalhesCarreta,
+		valorTotalDebito,
+		fkSituacao,
+		isPermissionUserEdit,
+		setDateErrorInput,
+		isDateErrorInput,
+		isViwsCargaApp,
+		isAlteracaoParcial,
+		isDisabledEnvioApp,
+		isCargaApp,
+		isDisabledPlaca,
+		setDisabledPlaca,
+	};
 	return (
 		<div className="class-body-form">
-			<ViewsForm
-				formik={formik}
-				buscarCargaComDocumentoDeTransporte={
-					buscarCargaComDocumentoDeTransporte
-				}
-				handleSearchVehicle={handleSearchVehicle}
-				handleShowDetailsAboutVehicle={handleShowDetailsAboutVehicle}
-				handleShowDebitAboutVehicle={handleShowDebitAboutVehicle}
-				produtos={produtos}
-				inputColeta5={inputColeta5}
-				inputColeta6={inputColeta6}
-				inputColeta7={inputColeta7}
-				viewsButtonAddColeta={viewsButtonAddColeta}
-				functionInputs={functionInputs}
-				viewsButtonExcluir={viewsButtonExcluir}
-				veiculo={veiculo}
-				debitosVeiculo={debitosVeiculo}
-				setDebitosVeiculo={setDebitosVeiculo}
-				setVeiculo={setVeiculo}
-				isDetalhesCarreta={isDetalhesCarreta}
-				valorTotalDebito={valorTotalDebito}
-				fkSituacao={fkSituacao}
-				isPermissionUserEdit={isPermissionUserEdit}
-				setDateErrorInput={setDateErrorInput}
-				isDateErrorInput={isDateErrorInput}
-				isViwsCargaApp={isViwsCargaApp}
-				isAlteracaoParcial={isAlteracaoParcial}
-				isDisabledEnvioApp={isDisabledEnvioApp}
-				isCargaApp={isCargaApp}
-				isDisabledPlaca={isDisabledPlaca}
-				setDisabledPlaca={setDisabledPlaca}
-			/>
+			<ViewsForm dataComponenteFormulario={dataComponenteFormulario} />
 		</div>
 	);
 }

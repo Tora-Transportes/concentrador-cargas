@@ -12,20 +12,14 @@ export const envioCargaApp = async (body) => {
 		data_coleta,
 		tipo_carga,
 		quantidade,
-		acessorios_requisitos,
-		informacoes_restritivas,
+		// acessorios_requisitos,
+		// informacoes_restritivas,
 		observacao,
 	} = body;
 
 	const cidadeEstadoOrigem = origem_carga.split("/");
 	const cidadeEstadoDestino = destino_carga.split("/");
 	const nameClient = cliente.split("-")[0];
-	const existeAcessoriosRequisitos =
-		acessorios_requisitos.length > 1 ? acessorios_requisitos + "; " : "";
-	const existeInformacoesRestritivas =
-		informacoes_restritivas.length > 1 ? informacoes_restritivas + "; " : "";
-	const existeObservacao = observacao ? observacao + ";" : "";
-	const observacoes = `${existeAcessoriosRequisitos}${existeInformacoesRestritivas}${existeObservacao}`;
 	const bodyEnvioApp = {
 		requestCode: idCarga, //codigo da carga
 		operatorNumber: oid, // number user
@@ -38,7 +32,9 @@ export const envioCargaApp = async (body) => {
 		deliveryCity: cidadeEstadoDestino[2], // cidade destino
 		estimatedStartDate: data_coleta, // data coleta
 		estimatedEndDate: data_entrega, // data entrega
-		notes: observacoes, // observação
+		notes: observacao, // observação
+		// acessorios_requisitos,
+		// informacoes_restritivas,
 		weight: quantidade, // peso
 	};
 

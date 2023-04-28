@@ -652,7 +652,9 @@ function FormularioCadastroManual({
 						</Form.Label>
 						<Form.Control
 							placeholder="Adicione restrições e/ou acessórios do veículo caso necessário, exemplo(s): motorista necessita de treinamento atualizado no cliente, cinta, luvas, etc."
-							as="textarea"
+							//as="textarea"
+							type="text"
+							maxLength={150}
 							rows={3}
 							name="acessorios_requisitos"
 							value={formik.values.acessorios_requisitos || ""}
@@ -670,7 +672,9 @@ function FormularioCadastroManual({
 						<Form.Label>Informações restritivas do veículo</Form.Label>
 						<Form.Control
 							placeholder="Adicione as informções restritivas do veículo, se houver, exemplo: proibido entrada de rodotrem."
-							as="textarea"
+							//as="textarea"
+							type="text"
+							maxLength={150}
 							rows={3}
 							name="informacoes_restritivas"
 							value={formik.values.informacoes_restritivas || ""}
@@ -688,7 +692,9 @@ function FormularioCadastroManual({
 						<Form.Label>Observações complementares</Form.Label>
 						<Form.Control
 							placeholder="Adicione aqui as observações complementares, exemplo: frete será pago por peso."
-							as="textarea"
+							//as="textarea"
+							type="text"
+							maxLength={150}
 							rows={3}
 							name="observacao"
 							value={formik.values.observacao || ""}

@@ -21,38 +21,38 @@ import InputPlaca from "../InputPlaca";
 import InputsPontoPassagem from "./InputPontoPassagem";
 import "./formularioCadastroCSN.css";
 
-export default function ViewsForm({
-	formik,
-	buscarCargaComDocumentoDeTransporte,
-	handleSearchVehicle,
-	handleShowDetailsAboutVehicle,
-	handleShowDebitAboutVehicle,
-	produtos,
-	inputColeta5,
-	inputColeta6,
-	inputColeta7,
-	viewsButtonAddColeta,
-	functionInputs,
-	viewsButtonExcluir,
-	veiculo,
-	debitosVeiculo,
-	setDebitosVeiculo,
-	setVeiculo,
-	isDetalhesCarreta,
-	valorTotalDebito,
-	fkSituacao,
-	isPermissionUserEdit,
-	isDateErrorInput,
-	setDateErrorInput,
-	isViwsCargaApp,
-	isAlteracaoParcial,
-	isDisabledEnvioApp,
-	isCargaApp,
-	isDisabledPlaca,
-	setDisabledPlaca,
-}) {
+export default function ViewsForm({ dataComponenteFormulario }) {
+	const {
+		formik,
+		buscarCargaComDocumentoDeTransporte,
+		handleSearchVehicle,
+		handleShowDetailsAboutVehicle,
+		handleShowDebitAboutVehicle,
+		produtos,
+		inputColeta5,
+		inputColeta6,
+		inputColeta7,
+		viewsButtonAddColeta,
+		functionInputs,
+		viewsButtonExcluir,
+		veiculo,
+		debitosVeiculo,
+		setDebitosVeiculo,
+		setVeiculo,
+		isDetalhesCarreta,
+		valorTotalDebito,
+		fkSituacao,
+		isPermissionUserEdit,
+		isDateErrorInput,
+		setDateErrorInput,
+		isViwsCargaApp,
+		isAlteracaoParcial,
+		isDisabledEnvioApp,
+		isCargaApp,
+		isDisabledPlaca,
+		setDisabledPlaca,
+	} = dataComponenteFormulario;
 	const [isRequiredPlaca, setRequiredPlaca] = useState(true);
-
 	const handleEnter = (event) => {
 		if (event.key === "Enter") {
 			const form = event.target.form;
@@ -100,6 +100,17 @@ export default function ViewsForm({
 		? "Dados do Veículo / Dados Carreta"
 		: "Dados do Veículo";
 
+	const dataComponenteViews = {
+		formik,
+		inputColeta5,
+		inputColeta6,
+		inputColeta7,
+		fkSituacao,
+		isPermissionUserEdit,
+		setDateErrorInput,
+		isDateErrorInput,
+		isAlteracaoParcial,
+	};
 	return (
 		<div className="class-body-form">
 			<Row>
@@ -464,17 +475,7 @@ export default function ViewsForm({
 					</Row>
 				</Col>
 			</Row>
-			<InputsPontoPassagem
-				formik={formik}
-				inputColeta5={inputColeta5}
-				inputColeta6={inputColeta6}
-				inputColeta7={inputColeta7}
-				fkSituacao={fkSituacao}
-				isPermissionUserEdit={isPermissionUserEdit}
-				setDateErrorInput={setDateErrorInput}
-				isDateErrorInput={isDateErrorInput}
-				isAlteracaoParcial={isAlteracaoParcial}
-			/>
+			<InputsPontoPassagem dataComponenteViews={dataComponenteViews} />
 
 			<Row className="row-button-local">
 				<Col className="button-add-ponto-passagem">
@@ -515,7 +516,9 @@ export default function ViewsForm({
 						</Form.Label>
 						<Form.Control
 							placeholder="Adicione restrições e/ou acessórios do veículo caso necessário, exemplo(s): motorista necessita de treinamento atualizado no cliente, cinta, luvas, etc."
-							as="textarea"
+							//as="textarea"
+							type="text"
+							maxLength={160}
 							rows={3}
 							name="acessorios_requisitos"
 							value={formik.values.acessorios_requisitos || ""}
@@ -534,7 +537,9 @@ export default function ViewsForm({
 						<Form.Label>Informações restritivas do veículo</Form.Label>
 						<Form.Control
 							placeholder="Adicione as informções restritivas do veículo, se houver, exemplo: proibido entrada de rodotrem."
-							as="textarea"
+							//as="textarea"
+							type="text"
+							maxLength={160}
 							rows={3}
 							name="informacoes_restritivas"
 							value={formik.values.informacoes_restritivas || ""}
@@ -553,7 +558,9 @@ export default function ViewsForm({
 						<Form.Label>Observações complementares</Form.Label>
 						<Form.Control
 							placeholder="Adicione aqui as observações complementares, exemplo: frete será pago por peso."
-							as="textarea"
+							//as="textarea"
+							type="text"
+							maxLength={160}
 							rows={3}
 							name="observacao"
 							value={formik.values.observacao || ""}
