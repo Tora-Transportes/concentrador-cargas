@@ -575,7 +575,7 @@ function ViewsForm({ dataComponenteFormulario }) {
 			</Row>
 			<Modal show={veiculo !== null} size="lg" onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
-					<Modal.Title className="modal-title-csn">
+					<Modal.Title className="modal-detail-veic-title-csn">
 						{titleInfoPlaca}
 					</Modal.Title>
 				</Modal.Header>

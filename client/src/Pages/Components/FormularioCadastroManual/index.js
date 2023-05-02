@@ -421,7 +421,7 @@ function FormularioCadastroManual({
 
 						<Col className="col-info-veic-manual" id="detalhes-veiculo-manual">
 							<Button
-								className="button-info-veic-manual me-3"
+								className="button-info-veic-manual buttons-detail-veiculos"
 								onClick={() =>
 									handleShowDetailsAboutVehicle(formik.values.placa_veiculo)
 								}
@@ -429,7 +429,7 @@ function FormularioCadastroManual({
 								Detalhes veículo
 							</Button>
 							<Button
-								className="button-info-veic-manual"
+								className="button-info-veic-manual buttons-inf-veiculos"
 								// id="botao-deb-veiculo"
 								onClick={() =>
 									handleShowDebitAboutVehicle(formik.values.placa_veiculo)

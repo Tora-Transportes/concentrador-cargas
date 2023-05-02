@@ -159,6 +159,12 @@ div .add-button {
 
 .p-title-aviso {
   font-size: 1.8rem;
+  padding: 0% 2% 5% 10%;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  text-align: justify;
   font-style: italic;
   font-weight: bold;
   text-align: center;

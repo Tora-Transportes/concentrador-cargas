@@ -47,7 +47,7 @@
   color: #ffff;
   border: none;
   margin-top: 1rem;
-  margin-right: 1rem;
+  margin-right: 1.5rem;
 }
 
 .class-botao-Debito {
@@ -151,9 +151,6 @@ label {
 .class-input-placaCav {
   display: grid;
   grid-template-columns: auto;
-}
-.modal-title-csn {
-  margin-left: 20.5%;
 }
 
 .input-efetivo {
