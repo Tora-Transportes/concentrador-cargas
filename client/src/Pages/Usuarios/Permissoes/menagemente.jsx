@@ -22,7 +22,7 @@ export const addOrDelAllPermissios = async (permissions, status) => {
   } else if (status === "Add") {
     if (
       await funcMsgAlert(
-        "Tem certeza que deseja adicionar as permissões a todos os usuários?"
+        "Tem certeza que deseja adicionar as permissões selecionadas a todos os usuários?"
       )
     ) {
       const permissoes = await permissions.map((item) => item.name);
@@ -33,7 +33,7 @@ export const addOrDelAllPermissios = async (permissions, status) => {
   } else {
     if (
       await funcMsgAlert(
-        "Tem certeza que deseja deletar as permissões de todos os usuários"
+        "Tem certeza que deseja deletar as permissões selecionadas a todos os usuários?"
       )
     ) {
       const permissoes = await permissions.map((item) => item.name);
