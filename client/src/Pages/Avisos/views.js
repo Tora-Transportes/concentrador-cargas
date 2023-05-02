@@ -72,7 +72,7 @@ const ViewsAviso = ({ dataComponenteIndex }) => {
 		const { TITULO, MENSAGEM } = aviso;
 		aviso.TITULO = String(TITULO);
 		aviso.MENSAGEM = String(MENSAGEM);
-		aviso.AUTOR = String(getClaims().name);
+		//aviso.AUTOR = String(getClaims().name);
 		setAviso({ ...aviso });
 		setAvisoDialog(true);
 		setTitleAviso("Editar Aviso:");

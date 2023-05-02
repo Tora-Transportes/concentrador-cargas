@@ -37,9 +37,12 @@ function MainPopUp() {
 			setShow(true);
 			setLastIdPosition(payload?.ID);
 		};
-		const actionAvidoUpdate = (payload) => {
+		const actionAvidoUpdate = async (payload) => {
 			if (payload?.ID - idAvisoLocalStorage < 1) setCountAviso("?");
 			setShow(true);
+			const { data } = (await ServiceAvisos.lastId()).data;
+			if (idAvisoLocalStorage == data?.ID)
+				localStorage.setItem("viewsAviso", data?.ID + ";Editado");
 		};
 		io.on("@aviso-create", actionAvisoCreate);
 		io.on("@aviso-update", actionAvidoUpdate);

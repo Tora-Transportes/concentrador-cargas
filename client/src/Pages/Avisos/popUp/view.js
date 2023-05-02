@@ -17,7 +17,6 @@ function PopUp({
 
 	useEffect(() => {
 		let avisosNaoLidos;
-
 		if (idAvisoLocalStorage < 1 && isLastIdPosition > 0) {
 			localStorage.setItem("viewsAviso", isLastIdPosition - 1 + ";");
 		} else if (idAvisoLocalStorage > 0 && isLastIdPosition > 0) {
