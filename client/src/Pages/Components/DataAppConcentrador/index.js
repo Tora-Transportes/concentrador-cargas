@@ -12,8 +12,8 @@ export const envioCargaApp = async (body) => {
 		data_coleta,
 		tipo_carga,
 		quantidade,
-		// acessorios_requisitos,
-		// informacoes_restritivas,
+		acessorios_requisitos,
+		informacoes_restritivas,
 		observacao,
 	} = body;
 
@@ -32,15 +32,13 @@ export const envioCargaApp = async (body) => {
 		deliveryCity: cidadeEstadoDestino[2], // cidade destino
 		estimatedStartDate: data_coleta, // data coleta
 		estimatedEndDate: data_entrega, // data entrega
-		notes: observacao, // observação
-		// acessorios_requisitos,
-		// informacoes_restritivas,
+		notes: observacao, // observação 3
+		acessorios_requisitos, // observação 1
+		informacoes_restritivas, // observação 2
 		weight: quantidade, // peso
 	};
 
-	try {
-		ServiceApp.envioCargaApp(bodyEnvioApp);
-	} catch (error) {
+	const saveError = (error) => {
 		ServiceLogs.run({
 			message: String(error),
 			descricao: "Erro ao enviar carga App",
@@ -48,6 +46,12 @@ export const envioCargaApp = async (body) => {
 			nameFile: "error-envio-carga-app",
 			id: idCarga,
 		});
+	};
+
+	try {
+		await ServiceApp.envioCargaApp(bodyEnvioApp);
+	} catch (error) {
+		saveError(error);
 	}
 };
 export const cancelarCargaApp = async (

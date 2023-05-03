@@ -35,4 +35,4 @@ const server = https.createServer(
 Socket.createServer(server);
 Socket.handleUsersConnected(socketsRoutes);
 server.listen(process.env.PORT || 3333);
-export default server;
+//export default server;
