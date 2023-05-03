@@ -32,7 +32,7 @@ export const envioCargaApp = async (body) => {
 		deliveryCity: cidadeEstadoDestino[2], // cidade destino
 		estimatedStartDate: data_coleta, // data coleta
 		estimatedEndDate: data_entrega, // data entrega
-		notes: observacao, // observação 3
+		observacao, // observação 3
 		acessorios_requisitos, // observação 1
 		informacoes_restritivas, // observação 2
 		weight: quantidade, // peso
