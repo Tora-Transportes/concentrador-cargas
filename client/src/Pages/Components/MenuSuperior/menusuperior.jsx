@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Logo from "../../../assets/logotoraico.png";
 import "./menuSuperior.css";
 import { NavbarBrand } from "react-bootstrap";
@@ -9,6 +9,7 @@ import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 
 function Menusuperior() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
+  const hamburgerRef = useRef(null);
   const [isPermissionCsn, setPermissionCsn] = useState(false);
   const [isPermissionPadrao, setPermissionPadrao] = useState(false);
   const [isPermAlterarPerm, setPermAlterarPerm] = useState(false);
@@ -32,6 +33,24 @@ function Menusuperior() {
     setColorHeader(tipoCorHeader);
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (event.target.id.length < 1) {
+        if (
+          hamburgerRef.current &&
+          !hamburgerRef.current.contains(event.target)
+        ) {
+          setIsNavExpanded(false);
+        }
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [hamburgerRef]);
+
   return (
     <div id={isColorHeader}>
       <NavbarBrand href="/">
@@ -47,6 +66,7 @@ function Menusuperior() {
           onClick={() => {
             setIsNavExpanded(!isNavExpanded);
           }}
+          ref={hamburgerRef}
         >
           <span id="hamburguer"></span>
         </button>
@@ -56,7 +76,7 @@ function Menusuperior() {
               Início
             </a>
           </li>
-          <div className="class-dropdown">
+          <div className="class-li">
             <div className="dropdown">
               {(isPermissionCsn || isPermissionPadrao) && (
                 <button id="style-button-drop" className="dropbtn">
@@ -82,7 +102,7 @@ function Menusuperior() {
               Coordenadas
             </a>
           </li>
-          <div className="class-dropdown">
+          <div className="class-li">
             <div className="dropdown">
               <button id="style-button-drop" className="dropbtn">
                 Monitoramento
@@ -107,17 +127,15 @@ function Menusuperior() {
               Produtos
             </a>
           </li>
-          <div className="class-dropdown">
-            <div className="dropdown-veic">
-              <a
-                href="/relatorios/visualizar"
-                className="dropbtn-veic"
-                id="link-rel"
-              >
-                Relatórios
-              </a>
-            </div>
-          </div>
+          <li className="class-li">
+            <a
+              href="/relatorios/visualizar"
+              className="dropbtn-veic"
+              id="link-rel"
+            >
+              Relatórios
+            </a>
+          </li>
           {isPermissionCsn && (
             <li className="class-li">
               <a id="style-a" href="/localizacao">
@@ -126,7 +144,7 @@ function Menusuperior() {
             </li>
           )}
           {/* {isPermissionPadrao && isPermissionCsn ? (
-            <div className="class-dropdown">
+            <div className="class-li">
               <div className="dropdown">
                 <button id="style-button-drop" className="dropbtn">
                   Ajuda

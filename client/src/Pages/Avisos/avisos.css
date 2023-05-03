@@ -38,10 +38,6 @@
   padding-bottom: 1%;
 }
 
-.button-add-aviso {
-  box-sizing: border-box;
-}
-
 div .add-button {
   border-color: #00652e;
   background-color: #fff;
@@ -53,12 +49,16 @@ div .add-button {
   background-color: #009c08;
 }
 
+.button-add-aviso {
+  box-sizing: border-box;
+}
+
 .div-pesquisa-aviso {
   box-sizing: content-box;
   display: flex;
   flex-direction: row-reverse;
   position: relative;
-  margin: 0.5rem 15px 1rem 15px;
+  margin: -1rem 16px 2.5rem 15px;
   height: 1px;
 }
 
@@ -83,7 +83,7 @@ div .add-button {
   display: flex;
   flex-direction: row-reverse;
   position: relative;
-  margin-top: -1%;
+  margin-top: -2%;
   margin-right: -1%;
 }
 
@@ -117,27 +117,40 @@ div .add-button {
   background-color: rgba(255, 0, 21, 0.712);
 }
 
-.button-sim-delete {
-  border-color: #00652e;
-  background-color: #fff;
-  color: #00652e;
-  height: 4vh;
-  width: 15vh;
-  margin: 5px 10px;
+.dialog-delete-aviso {
+  margin-top: 5rem;
+  width: 450px;
 }
+.confirmation-delete {
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+}
+
+.div-footer-delete-aviso {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.button-sim-delete {
+  border-color: #b22222;
+  background-color: #fff;
+  color: #b22222;
+  height: 4vh;
+}
+
 .button-sim-delete:enabled:hover {
   background-color: #00652dc2;
   color: #fff;
   border-color: #00652e;
 }
+
 .button-voltar-delete {
   background-color: #fff;
   color: #64748b;
   border-color: #64748b;
   height: 4vh;
-  width: 15vh;
-  margin: 5px 10px;
 }
+
 .button-voltar-delete:enabled:hover {
   background-color: #64748bc9;
   color: #fff;
@@ -145,7 +158,13 @@ div .add-button {
 }
 
 .p-title-aviso {
-  font-size: 30px;
+  font-size: 1.8rem;
+  padding: 0% 2% 5% 10%;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  text-align: justify;
   font-style: italic;
   font-weight: bold;
   text-align: center;
@@ -156,19 +175,20 @@ div .add-button {
 .p-mensagem-aviso {
   padding: 0% 10% 5% 10%;
   white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
   text-align: justify;
   color: #242323ea;
 }
 
 /* Dialog avisos para criar/editar avisos ********************************  */
-
+.dialog-cadastro-aviso {
+  margin-top: 5rem;
+  justify-content: center;
+}
 #input-text-title {
-  display: flex;
-  position: absolute;
-  top: 18%;
-  left: 25%;
-  height: 6.5%;
-  width: 71%;
+  height: 2rem;
 }
 
 #input-text-description:hover {
@@ -184,16 +204,19 @@ div .add-button {
 
 .div-resp-cadastro {
   font-family: "Poppins", sans-serif;
-  font-size: 15.5px;
-  margin-top: 1rem;
+  font-size: 14px;
+  margin-top: 0.5rem;
   display: flex;
 }
 
 .form-resp-cadastro:disabled {
+  margin-left: -0.5rem;
+  margin-top: -0.4rem;
   font-family: "Poppins", sans-serif;
-  font-size: 16px;
+  font-size: 15px;
+  width: 400px;
+  border: none;
   background-color: transparent !important;
-  margin-top: -0.3rem;
 }
 
 div .form-resp-cadastro:focus {
@@ -241,21 +264,50 @@ div .button-salvar:enabled:hover {
   background-color: #00652dd0;
 }
 
-.confirmation-delete {
-  font-family: "Poppins", sans-serif;
+@media only screen and (max-width: 395px) {
+  .p-mensagem-aviso {
+    padding: -2%;
+    white-space: wrap;
+    word-break: break-word;
+    text-align: start;
+    color: #242323ea;
+  }
+
+  .confirmation-delete {
+    text-align: left;
+  }
 }
-@media only screen and (max-width: 515px) {
+
+@media screen and (min-width: 440px) {
+  .div-resp-cadastro {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    margin-top: 0.5rem;
+    display: flex;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .title-avisos {
+    font-size: 2.3rem;
+  }
+  .p-title-aviso {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+  }
   div .add-button {
     font-size: 0.8rem;
-    margin: 3rem 15px 1px 16px;
+    margin: 1rem 17px 2rem 1px;
+    height: 4vh;
   }
   .float-pesquisa-aviso {
-    width: 30rem;
+    margin-left: -1rem;
+    width: 28rem;
   }
 
   .row-views-container {
-    margin-left: 3%;
-    width: 92% !important;
+    margin-left: 2%;
+    width: 95% !important;
   }
 
   .card-avisos {
@@ -264,11 +316,57 @@ div .button-salvar:enabled:hover {
     margin-bottom: 1rem;
     padding: 0 0;
   }
+  .dialog-cadastro-aviso {
+    width: 85%;
+    justify-content: center;
+  }
+  .div-resp-cadastro {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    margin-top: 0.5rem;
+    display: grid;
+  }
+  .form-resp-cadastro:disabled {
+    margin-left: -0.8rem;
+    margin-top: -0.4rem;
+    font-family: "Poppins", sans-serif;
+    font-size: 15px;
+    width: 350px;
+    border: none;
+    background-color: transparent !important;
+  }
+
+  .div-buttons-edit-delete {
+    margin-top: -3%;
+  }
+  .footer-dialog-editar-avisos {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .dialog-delete-aviso {
+    width: 90%;
+  }
+  .confirmation-delete {
+    text-align: center;
+  }
 }
 
-@media screen and (min-width: 516px) and (max-width: 1595px) {
+@media screen and (min-width: 577px) and (max-width: 1795px) {
+  .p-title-aviso {
+    margin-top: 1.5rem;
+    font-size: 1.8rem;
+  }
+
   div .add-button {
     font-size: 1rem;
-    margin: -0.5rem 15px -11px 16px;
+    margin: 0.5rem -10px -41px 16px;
+    height: 2.5rem;
+  }
+
+  .div-buttons-edit-delete {
+    margin-top: -2%;
   }
 }

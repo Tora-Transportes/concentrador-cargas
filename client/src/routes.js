@@ -24,6 +24,7 @@ import DestinoCarga from "./Pages/Veiculos/DestinoCarga";
 import RaioEmpresa from "./Pages/Veiculos/RaioEmpresa";
 import LinkCarga from "./Pages/Cargas/Manual/LinkCarga";
 import HistoricoVeiculo from "./Pages/Veiculos/HistoricoVeiculo";
+import HistoricoVeiculoTempo from "./Pages/Veiculos/Historico2.0";
 import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css";
@@ -41,16 +42,16 @@ import MainPopUp from "./Pages/Avisos/popUp";
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
 	// Tem que mudar a versão na pasta main linha 141 ...
-	// const limparCache = localStorage.getItem("clear_Cache");
-	// if (limparCache == null || limparCache.toString() !== "version_1") {
-	// 	localStorage.removeItem("table-columns-csn");
-	// 	localStorage.removeItem("table-columns");
-	// 	localStorage.removeItem("table-columns-lote");
-	// 	localStorage.removeItem("coordenadas-table");
-	// 	localStorage.removeItem("viewsAviso");
-	// 	localStorage.setItem("clear_Cache", "version_1");
-	// 	location.reload();
-	// }
+	const limparCache = localStorage.getItem("clear_Cache");
+	if (limparCache == null || limparCache.toString() !== "version_13") {
+		localStorage.removeItem("table-columns-csn");
+		localStorage.removeItem("table-columns");
+		//localStorage.removeItem("table-columns-lote");
+		//localStorage.removeItem("coordenadas-table");
+		//localStorage.removeItem("viewsAviso");
+		localStorage.setItem("clear_Cache", "version_13");
+		window.location.reload(true);
+	}
 
 	return (
 		<BrowserRouter>
@@ -99,6 +100,11 @@ export default function AllRoutes() {
 				<Route path="/veiculos/destino" exact component={DestinoCarga} />
 				<Route path="/veiculos/raio/empresa" exact component={RaioEmpresa} />
 				<Route path="/veiculos/historico" exact component={HistoricoVeiculo} />
+				<Route
+					path="/veiculos/historico/tempo"
+					exact
+					component={HistoricoVeiculoTempo}
+				/>
 				<Route
 					path="/veiculos/coordenadas"
 					exact

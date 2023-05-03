@@ -36,7 +36,7 @@ div .title-CSN {
   margin-top: 4.5rem;
 }
 
-div .icon-import {
+.icon-import-lote {
   margin-left: 5rem;
   color: #00652e;
   margin-top: 4.5rem;
@@ -49,7 +49,7 @@ div .icon-import {
 }
 
 .title-ico-import:hover,
-div .icon-import:hover,
+.icon-import-lote:hover,
 #hand:hover,
 #title-manual:hover,
 div .title-CSN:hover,
@@ -74,31 +74,8 @@ div .title-CSN:hover,
   div .title-ico-import {
     text-align: center;
   }
-
-  div .class-button-icons {
-    margin-left: 25% !important;
-  }
 }
-@media only screen and (min-width: 306px) and (max-width: 365px) {
-  div .h1-title-selecaoCarg {
-    margin-left: 1rem;
-  }
-}
-
-@media only screen and (max-width: 680px) {
-  div .class-button-icons {
-    text-align: flex;
-    position: absolute;
-    display: block;
-    margin-top: 1rem;
-    margin-left: 35% !important;
-  }
-}
-
-@media only screen and (max-width: 808px) {
-  .class-cargas-menu {
-    overflow: none;
-  }
+@media only screen and (max-width: 400px) {
   div .class-button-icons {
     text-align: flex;
     position: absolute;
@@ -108,24 +85,85 @@ div .title-CSN:hover,
   }
 
   div .title-ico-import {
-    margin-left: -4rem;
+    margin-left: -4.6rem;
   }
 
-  div .icon-import {
+  .icon-import-lote {
     color: #00652e;
     margin-top: 3rem;
-    margin-left: 0.9rem;
+    margin-left: 0.6rem;
   }
 
   div .title-CSN {
-    margin-left: 1rem;
+    margin-left: 0.6rem;
   }
   div .icon-csn {
-    margin-left: 0.3rem;
+    margin-left: 0.1rem;
   }
 }
 
-@media only screen and (max-width: 902px) {
+@media only screen and (min-width: 401px) and (max-width: 620px) {
+  .class-cargas-menu {
+    overflow: none;
+  }
+
+  .class-button-icons {
+    text-align: flex;
+    position: absolute;
+    display: block;
+    margin-top: 1rem;
+    margin-left: 35% !important;
+  }
+
+  div .title-ico-import {
+    margin-left: -4.6rem;
+  }
+
+  .icon-import-lote {
+    color: #00652e;
+    margin-top: 3rem;
+    margin-left: 0.6rem;
+  }
+
+  div .title-CSN {
+    margin-left: 0.8rem;
+  }
+  div .icon-csn {
+    margin-left: 0.2rem;
+  }
+}
+
+@media only screen and (min-width: 621px) and (max-width: 767px) {
+  .class-cargas-menu {
+    overflow: none;
+  }
+  .class-button-icons {
+    text-align: flex;
+    position: absolute;
+    display: block;
+    margin-top: 1rem;
+    margin-left: 30%;
+  }
+
+  div .title-ico-import {
+    margin-left: -5rem;
+  }
+
+  .icon-import-lote {
+    color: #00652e;
+    margin-top: 3rem;
+    margin-left: 0.6rem;
+  }
+
+  div .title-CSN {
+    margin-left: 0.8rem;
+  }
+  div .icon-csn {
+    margin-left: 0.2rem;
+  }
+}
+
+@media only screen and (max-width: 992px) {
   div .h1-title-selecaoCarg {
     font-size: 1.8rem;
     text-align: center;

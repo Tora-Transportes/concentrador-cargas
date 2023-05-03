@@ -19,6 +19,17 @@ class ServiceUsuarios {
 	async index({ oid }) {
 		return api.get(`/usuarios/${oid}`);
 	}
+
+	async addAllPermissions(permissoes) {
+		return api.put("/usuarios/permissoes/lote", {
+			permissoes,
+		});
+	}
+	async DeleteAllPermissions(permissoes) {
+		return api.delete("/usuarios/permissoes/lote", {
+			data: { permissoes },
+		});
+	}
 }
 
 export default new ServiceUsuarios();

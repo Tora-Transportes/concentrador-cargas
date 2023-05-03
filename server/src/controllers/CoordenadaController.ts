@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
-import useCases from "../domain/UseCaseCoordenada";
 import xlsx from "xlsx";
 import os from "os";
 import path from "path";
 import fs from "fs";
+
+import useCases from "../domain/UseCaseCoordenada";
 import TokenAd from "../models/TokenAd";
 import { ServiceDistanceLocations } from "../services/ServiceDistanceLocations";
 import AppError from "../models/AppError";
@@ -168,6 +169,19 @@ class CoordenadasController {
 
     const service = new ServiceDistanceLocations();
     const hitoryVeicle = await service.historyTravelVeicleService(
+      placa,
+      String(date_inicio),
+      String(date_fim)
+    );
+
+    return res.json(hitoryVeicle);
+  }
+  async historyTempVeicleController(req: Request, res: Response) {
+    const { placa } = req.params;
+    const { date_inicio, date_fim } = req.query;
+
+    const service = new ServiceDistanceLocations();
+    const hitoryVeicle = await service.historyTempVeicleService(
       placa,
       String(date_inicio),
       String(date_fim)

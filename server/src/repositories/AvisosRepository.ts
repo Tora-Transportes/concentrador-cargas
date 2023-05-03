@@ -54,4 +54,10 @@ export class AvisosRepository implements IAvisosRepository {
   async delete(ID: number): Promise<void> {
     await database("con_avisos").delete().where({ ID });
   }
+  async lastIdAviso(): Promise<IModelAvisos> {
+    return await database("con_avisos")
+      .select(["ID"])
+      .first()
+      .orderBy("DATA_CADASTRO", "desc");
+  }
 }

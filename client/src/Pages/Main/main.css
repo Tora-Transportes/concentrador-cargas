@@ -44,7 +44,7 @@
   width: 5rem;
 }
 
-div .style-p-title-main {
+.style-p-title-main {
   font-size: 2.4rem;
   color: #00652e;
   font-style: italic;
@@ -155,10 +155,9 @@ div .style-button-jogo:focus-visible {
   margin-top: 20vh;
   color: red;
 }
-
 div .versionamento {
   position: absolute;
-  bottom: -1%;
+  bottom: 0.2%;
   margin-left: 6px;
   color: #a70505;
   font-size: 13px;
@@ -203,6 +202,7 @@ div .versionamento {
 @media only screen and (max-width: 768px) {
   .style-p-title-main {
     font-size: 2rem;
+    margin-top: 4rem;
   }
   .button-avisos-style {
     position: absolute;
@@ -255,47 +255,19 @@ div .versionamento {
     margin-top: 10vh;
     color: red;
   }
-
-  /* div .versionamento {
-    position: relative;
-    bottom: -1%;
-    margin-left: 7px;
-    color: #a70505;
-    font-family: "Poppins", sans-serif;
-    font-size: 13px;
-    font-weight: 530;
-  } */
 }
 
 @media only screen and (min-width: 768px) and (max-width: 928px) {
   .style-p-title-main {
     font-size: 2rem;
+    margin-top: 4rem;
   }
-  /* div .versionamento {
-    position: relative;
-    bottom: -0.8%;
-    margin-left: 7px;
-    color: #a70505;
-    font-family: "Poppins", sans-serif;
-    font-size: 13px;
-    font-weight: 530;
-  } */
 }
 
 @media only screen and (min-width: 929px) and (max-width: 1339px) {
   .style-p-title-main {
     font-size: 2rem;
   }
-
-  /* div .versionamento {
-    position: relative;
-    bottom: -0.8%;
-    margin-left: 7px;
-    color: #a70505;
-    font-family: "Poppins", sans-serif;
-    font-size: 13px;
-    font-weight: 530;
-  } */
 
   .style-p-saudacao {
     font-size: 22px;
@@ -355,28 +327,23 @@ div .versionamento {
     margin-bottom: 2rem;
   }
 
-  /* div .versionamento {
+  .versionamento {
     position: absolute;
-    bottom: -0.8%;
-    margin-left: 6px;
-    color: #a70505;
-    font-size: 13px;
-    font-weight: 530;
-  } */
-}
-
-@media only screen and (min-width: 100px) and (max-width: 1555px) {
-  div .versionamento {
-    position: relative;
-    bottom: -0.9%;
+    bottom: 0.5%;
     margin-left: 6px;
     color: #a70505;
     font-size: 13px;
     font-weight: 530;
   }
 }
-@media only screen and (min-width: 1440px) {
+
+@media only screen and (min-width: 100px) and (max-width: 992px) {
   div .versionamento {
-    position: absolute;
+    position: relative;
+    bottom: -0.8%;
+    margin-left: 6px;
+    color: #a70505;
+    font-size: 13px;
+    font-weight: 530;
   }
 }

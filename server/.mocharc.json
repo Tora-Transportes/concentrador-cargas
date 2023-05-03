@@ -3,5 +3,6 @@
         "ts"
     ],
     "spec": "__tests__/**/*.spec.ts",
+    "test": "__tests__/integration/*.test.ts",
     "watch": true
 }

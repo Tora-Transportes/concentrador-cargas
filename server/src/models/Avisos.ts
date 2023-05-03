@@ -7,4 +7,5 @@ export default interface IModelAvisos {
   DATA_ATUALIZACAO?: Date | null;
   LIKE_ON: number;
   LIKE_OF: number;
+  RESPONSAVEL_EDICAO: string | null;
 }

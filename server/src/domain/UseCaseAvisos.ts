@@ -6,6 +6,7 @@ import AppError from "../models/AppError";
 import IModelAvisos from "../models/Avisos";
 import { factoryAvisos } from "../validations/AvisosValidator";
 import { AvisosRepository } from "./../repositories/AvisosRepository";
+import { notifyAll } from "../socketsRoutes";
 class VerificacaoExisteAviso {
   async run(id: number, avisosRepository: AvisosRepository) {
     const existeAviso = await avisosRepository.index(id);
@@ -15,8 +16,10 @@ class VerificacaoExisteAviso {
 }
 class UseCaseAddAvisos {
   private readonly avisosRepository: AvisosRepository;
+  private readonly notifyAllAviso: typeof notifyAll;
   constructor() {
     this.avisosRepository = new AvisosRepository();
+    this.notifyAllAviso = notifyAll;
   }
 
   async run(dataAviso: IModelAvisos): Promise<string> {
@@ -27,6 +30,11 @@ class UseCaseAddAvisos {
       stripUnknown: true,
     });
     await this.avisosRepository.create(dataAviso);
+    const { ID } = await this.avisosRepository.lastIdAviso();
+    this.notifyAllAviso({
+      name: "@aviso-create",
+      details: await this.avisosRepository.index(Number(ID)),
+    });
     return "Aviso criado com sucesso!";
   }
 }
@@ -61,16 +69,27 @@ export class UseCaseAllAvisos {
     );
   }
 }
+export class UseCaseLastIdAviso {
+  private readonly avisosRepository: AvisosRepository;
+  constructor() {
+    this.avisosRepository = new AvisosRepository();
+  }
+  async run() {
+    return await this.avisosRepository.lastIdAviso();
+  }
+}
 
 export class UseCaseUpdateAvisos {
   private readonly avisosRepository: AvisosRepository;
   private readonly verificaExisteAviso: VerificacaoExisteAviso;
+  private readonly notifyAllAviso: typeof notifyAll;
   constructor() {
     this.avisosRepository = new AvisosRepository();
     this.verificaExisteAviso = new VerificacaoExisteAviso();
+    this.notifyAllAviso = notifyAll;
   }
 
-  async run(id: number, dataAviso: IModelAvisos): Promise<IModelAvisos> {
+  async run(id: number, dataAviso: IModelAvisos): Promise<void> {
     await this.verificaExisteAviso.run(id, this.avisosRepository);
     const validator = factoryAvisos();
     dataAviso.DATA_ATUALIZACAO = new Date(dateAtualMoment());
@@ -79,7 +98,11 @@ export class UseCaseUpdateAvisos {
       stripUnknown: true,
     });
     await this.avisosRepository.update(id, dataAviso);
-    return dataAviso;
+    const { ID } = await this.avisosRepository.lastIdAviso();
+    this.notifyAllAviso({
+      name: "@aviso-update",
+      details: await this.avisosRepository.index(Number(ID)),
+    });
   }
 }
 export class UseCasePathUpdateAvisos {
@@ -115,6 +138,7 @@ export class UseCaseDeleteAvisos {
 const instancias = {
   useCaseAddAvisos: new UseCaseAddAvisos(),
   useCaseIndexAvisos: new UseCaseIndexAvisos(),
+  useCaseLastIdAviso: new UseCaseLastIdAviso(),
   useCaseAllAvisos: new UseCaseAllAvisos(),
   useCaseUpdateAvisos: new UseCaseUpdateAvisos(),
   useCasePathUpdateAvisos: new UseCasePathUpdateAvisos(),

@@ -1,0 +1,95 @@
+.body-hist-veic {
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+#title-hist-veic {
+  font-size: 40px;
+  font-weight: 500;
+  color: #00652e;
+  margin-top: 3rem;
+}
+.row-input-history {
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+#button-pesq-history {
+  background: #00652e;
+  border: none;
+  margin-top: 1rem;
+  width: 10rem;
+}
+
+#button-pesq-history :hover {
+  background-color: #03410b;
+  transition: 0.3ms;
+}
+
+.text-center .placa-consultada {
+  font-family: "Poppins", sans-serif;
+  /* text-align: left;
+  margin-top: 2rem;
+  margin-bottom: -2rem;
+  margin-left: -0.8rem; */
+}
+
+.span-placa {
+  color: #0069aa;
+}
+
+.table-br:not([size]) {
+  height: 3px;
+  margin: 13px 0 0 1vw;
+  width: 81vw;
+  background-color: #fff;
+}
+.table-historico {
+  max-height: 500px;
+  overflow-y: auto;
+  display: table-caption;
+  scroll-behavior: unset;
+}
+.head-table {
+  position: sticky;
+  top: 0;
+  left: 0;
+  color: #fff;
+  background-color: #04881c;
+  vertical-align: middle !important;
+}
+
+.head-table > tr > th {
+  font-weight: 400;
+}
+
+.body-table {
+  vertical-align: middle !important;
+}
+
+.table > :not(:first-child) {
+  border-top: none !important;
+}
+
+.selected {
+  background-color: #93ff98 !important;
+}
+
+.table-historico .body-table tr {
+  height: 11.5vh;
+}
+
+@media only screen and (max-width: 1164px) {
+  .table-historico .body-table tr {
+    height: auto;
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  div #title-hist-veic {
+    margin-top: 4rem;
+    margin-bottom: -1rem;
+  }
+}

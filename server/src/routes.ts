@@ -34,6 +34,7 @@ routes.post(
 );
 routes.get("/avisos/:id", AvisosController.index);
 routes.get("/avisos", AvisosController.search);
+routes.get("/avisos/ultimo/id", AvisosController.lastIdAviso);
 routes.patch("/avisos/:id", AvisosController.pathUpdate);
 routes.put(
   "/avisos/:id",
@@ -109,6 +110,16 @@ routes.put(
   HasPermission("ALTERAR_PERMISSOES"),
   UsuarioController.changePermissions
 );
+routes.put(
+  "/usuarios/permissoes/lote",
+  HasPermission("ALTERAR_PERMISSOES"),
+  UsuarioController.batchPermissions
+);
+routes.delete(
+  "/usuarios/permissoes/lote",
+  HasPermission("ALTERAR_PERMISSOES"),
+  UsuarioController.deleteAllPermissions
+);
 
 routes.get(
   "/relatorio/cargas",
@@ -166,6 +177,10 @@ routes.get(
 routes.get(
   "/coordenadas/:placa/history",
   CoordenadasController.historyTravelVeicleController
+);
+routes.get(
+  "/coordenadas/:placa/history/tempo",
+  CoordenadasController.historyTempVeicleController
 );
 routes.get(
   "/coordenadas/:placa/ultima_posicao_veiculo",

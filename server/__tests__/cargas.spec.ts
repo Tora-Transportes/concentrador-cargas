@@ -438,22 +438,4 @@ describe("Gerenciamento da carga", () => {
       }).placa_veiculo
     ).to.be.eq("1234ABC");
   });
-  //edição patch carga
-  // type TBody = {
-  //   ativo: number;
-  //   usuario: string;
-  //   fk_situacao: number;
-  // };
-  // it("Deve retornar mensagem de erro caso o usuário não exista", async () => {
-  //   const { mokUseCaseUpdateCargaPatch } = makeSut();
-  //   const request: Partial<TBody> = {
-  //     ativo: 2,
-  //     usuario: "moisess spec.ts",
-  //   };
-  //   const id = 22;
-  //   const expected = "A carga seleionada não existe";
-  //   const response = await mokUseCaseUpdateCargaPatch.run(id, request);
-
-  //   expect(response.mensagem).to.be(expected);
-  // });
 });

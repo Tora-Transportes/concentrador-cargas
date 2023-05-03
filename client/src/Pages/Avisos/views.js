@@ -8,12 +8,12 @@ import { Dialog } from "primereact/dialog";
 import { InputTextarea } from "primereact/inputtextarea";
 import { getClaims } from "src/MicrosoftAuthentication";
 import { Toast } from "primereact/toast";
+import { BsPencilSquare } from "react-icons/bs";
+import { HiOutlineTrash } from "react-icons/hi";
 
 import ServiceAvisos from "src/services/ServiceAvisos";
 import { Input } from "reactstrap";
 import { ContextUseDefault } from "./../../hooks/context/contextPagCargaCTE";
-import { BsPencilSquare } from "react-icons/bs";
-import { HiOutlineTrash } from "react-icons/hi";
 import ViewsLikeDislike from "./likeDislike";
 
 let emptyNotice = {
@@ -23,9 +23,12 @@ let emptyNotice = {
 	AUTOR: "",
 	LIKE_ON: null,
 	LIKE_OF: null,
+	DATA_ATUALIZACAO: null,
 };
 
-const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
+const ViewsAviso = ({ dataComponenteIndex }) => {
+	const { dadosAvisos, setDadosAvisos, setAtualizarAvisos, setAtivarRefresh } =
+		dataComponenteIndex;
 	const [userInformation, setuserInformation] = useState({});
 	const [isPermissionAviso, setPermissionAviso] = useState(false);
 	const [avisoDialog, setAvisoDialog] = useState(false);
@@ -35,12 +38,25 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 	const [titleAviso, setTitleAviso] = useState();
 	const toast = useRef(null);
 
-	const subtitle = (autor, dataCadastro) => (
-		<div className="div-resp-cad-aviso">
-			<h6>Responsável pelo Cadastro: {autor}</h6>
-			<h6>Data do cadastro: {dataCadastro}</h6>
-		</div>
-	);
+	const subtitle = (
+		autor,
+		dataCadastro,
+		dataAtualizacao,
+		responsavelAtualizacao
+	) => {
+		return (
+			<div className="div-resp-cad-aviso">
+				<h6>Responsável pelo Cadastro: {autor}</h6>
+				<h6>Data do cadastro: {dataCadastro}</h6>
+				{dataAtualizacao && (
+					<>
+						<h6>Responsável pela Atualização: {responsavelAtualizacao}</h6>
+						<h6>Data da atualização: {dataAtualizacao}</h6>
+					</>
+				)}
+			</div>
+		);
+	};
 
 	const openNewNotice = () => {
 		emptyNotice.AUTOR = String(getClaims().name);
@@ -51,10 +67,12 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 	};
 
 	const editNotice = (aviso) => {
+		const currentDate = new Date();
+		aviso.DATA_ATUALIZACAO = currentDate.toISOString();
 		const { TITULO, MENSAGEM } = aviso;
 		aviso.TITULO = String(TITULO);
 		aviso.MENSAGEM = String(MENSAGEM);
-		aviso.AUTOR = String(getClaims().name);
+		//aviso.AUTOR = String(getClaims().name);
 		setAviso({ ...aviso });
 		setAvisoDialog(true);
 		setTitleAviso("Editar Aviso:");
@@ -76,6 +94,7 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 				TITULO: aviso.TITULO,
 				MENSAGEM: aviso.MENSAGEM,
 				AUTOR: aviso.AUTOR,
+				DATA_ATUALIZACAO: aviso.DATA_ATUALIZACAO,
 			};
 
 			if (aviso.ID) {
@@ -87,7 +106,7 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 						detail: "As informações do aviso foram atualizadas.",
 						life: 3000,
 					});
-
+					setAtivarRefresh(false);
 					setAtualizarAvisos(true);
 				} catch (error) {
 					console.error(error);
@@ -166,16 +185,14 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 	};
 
 	const deleteAvisoFooter = (
-		<div>
+		<div className="div-footer-delete-aviso">
 			<Button
 				label="Voltar"
-				icon="pi pi-times"
 				className="button-voltar-delete"
 				onClick={hideDeleteAviso}
 			/>
 			<Button
 				label="Sim"
-				icon="pi pi-check"
 				className="button-sim-delete"
 				onClick={excluirAvisos}
 			/>
@@ -184,7 +201,7 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 
 	const converterData = (dataIso) => {
 		const dataTimeJs = new Date(dataIso);
-		return dataTimeJs.toLocaleString("pt-BR");
+		return dataIso !== null ? dataTimeJs.toLocaleString("pt-BR") : null;
 	};
 
 	const { isPermissionUser } = useContext(ContextUseDefault);
@@ -242,18 +259,6 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 				</p>
 			</div>
 			<div className="row-views-container">
-				<div className="div-pesquisa-aviso">
-					<FloatingLabel
-						label="Pesquisar aviso:"
-						className="float-pesquisa-aviso"
-					>
-						<FormControl
-							type="date"
-							max="9999-12-12T00:00"
-							onChange={(e) => filtrarPorData(e)}
-						></FormControl>
-					</FloatingLabel>
-				</div>
 				{isPermissionAviso && (
 					<Row className="button-add-aviso">
 						<Col>
@@ -266,6 +271,19 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 						</Col>
 					</Row>
 				)}
+				<div className="div-pesquisa-aviso">
+					<FloatingLabel
+						label="Pesquisar aviso:"
+						className="float-pesquisa-aviso"
+					>
+						<FormControl
+							type="date"
+							max="9999-12-12T00:00"
+							onChange={(e) => filtrarPorData(e)}
+						></FormControl>
+					</FloatingLabel>
+				</div>
+
 				<Row>
 					<Col>
 						{dadosAvisos?.length > 0 && (
@@ -309,7 +327,9 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 												<p className="p-mensagem-aviso">{item.MENSAGEM}</p>
 												{subtitle(
 													item.AUTOR,
-													converterData(item.DATA_CADASTRO)
+													converterData(item.DATA_CADASTRO),
+													converterData(item.DATA_ATUALIZACAO),
+													item.RESPONSAVEL_EDICAO
 												)}
 												<ViewsLikeDislike aviso={item} toast={toast} />
 											</Card>
@@ -322,10 +342,9 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 				</Row>
 				<Dialog
 					visible={avisoDialog}
-					style={{ width: "560px", fontSize: "16px" }}
 					header={titleAviso}
 					modal
-					className="p-fluid"
+					className="p-fluid dialog-cadastro-aviso"
 					onHide={hideNoticeDialog}
 				>
 					<div>
@@ -354,7 +373,7 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 							value={aviso.MENSAGEM}
 							onChange={(e) => onChangeInput(e, "MENSAGEM")}
 							required
-							rows={5}
+							rows={4}
 							cols={40}
 							autoFocus
 							className={classNames({
@@ -371,7 +390,6 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 					<div className="div-resp-cadastro">
 						<label> Responsável pelo cadastro:</label>
 						<Form.Control
-							style={{ width: "300px", border: "none" }}
 							className="form-resp-cadastro"
 							type="text"
 							placeholder={aviso?.AUTOR}
@@ -401,7 +419,7 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 				<Toast ref={toast} />
 				<Dialog
 					visible={deleteAviso}
-					style={{ width: "450px" }}
+					className="dialog-delete-aviso"
 					header="Deletar Aviso"
 					modal
 					footer={deleteAvisoFooter}
@@ -409,7 +427,7 @@ const ViewsAviso = ({ dadosAvisos, setDadosAvisos, setAtualizarAvisos }) => {
 				>
 					<i
 						className="pi pi-exclamation-triangle"
-						style={{ fontSize: "2rem", marginLeft: "42%" }}
+						style={{ fontSize: "2rem", marginLeft: "43%" }}
 					/>
 					<div className="confirmation-delete">
 						{aviso && (

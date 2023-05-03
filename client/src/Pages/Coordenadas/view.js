@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import TabelaCargas from "../Components/TabelaCargas";
 import { Button as ButtonReact } from "primereact/button";
 import { Sidebar } from "primereact/sidebar";
@@ -90,27 +90,21 @@ function ViewCoordenadas({
 					</h1>
 				</Row>
 				<Row>
-					<Col className="text-start">
-						<ButtonReact
-							id="botao-detalhe-tabela"
-							label="Opções da Tabela"
-							icon={<BiCog />}
-							onClick={() => setVisibleLeft(true)}
-						/>
-					</Col>
-					<Col
-						sm={6}
-						lg={6}
-						className="inicio-col-registros"
-						id="info-registros"
-					>
+					<div className="inicio-col-registros" id="info-registros">
 						{totalRegisters && (
 							<>
 								Total de <b>{totalRegisters}</b> registros
 							</>
 						)}
-					</Col>
-					<Col></Col>
+					</div>
+					<div className="text-start opcao-tabela-coord">
+						<ButtonReact
+							id="opcao-tabela-coordenadas"
+							label="Opções da Tabela"
+							icon={<BiCog />}
+							onClick={() => setVisibleLeft(true)}
+						/>
+					</div>
 				</Row>
 				<Row>
 					<Dialog
@@ -145,7 +139,7 @@ function ViewCoordenadas({
 						<ButtonReact
 							label="Voltar"
 							onClick={() => setVisibleLastLocation(false)}
-							className="dialog-btn-last-location"
+							className="dialog-btn-last-location mt-2"
 						/>
 					</Dialog>
 					<Sidebar

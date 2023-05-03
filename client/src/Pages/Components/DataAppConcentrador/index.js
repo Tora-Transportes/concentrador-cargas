@@ -12,6 +12,8 @@ export const envioCargaApp = async (body) => {
 		data_coleta,
 		tipo_carga,
 		quantidade,
+		acessorios_requisitos,
+		informacoes_restritivas,
 		observacao,
 	} = body;
 
@@ -30,21 +32,13 @@ export const envioCargaApp = async (body) => {
 		deliveryCity: cidadeEstadoDestino[2], // cidade destino
 		estimatedStartDate: data_coleta, // data coleta
 		estimatedEndDate: data_entrega, // data entrega
-		notes: observacao, // observação
+		observacao: observacao || "", // observação 3
+		acessorios_requisitos: acessorios_requisitos || "", // observação 1
+		informacoes_restritivas: informacoes_restritivas || "", // observação 2
 		weight: quantidade, // peso
 	};
 
-	try {
-		ServiceApp.envioCargaApp(bodyEnvioApp);
-		// const { data } = await ServiceApp.envioCargaApp(bodyEnvioApp);
-		// ServiceLogs.run({
-		// 	message: data.response.message,
-		// 	descricao: "Envio carga App com sucesso!",
-		// 	level: "info",
-		// 	nameFile: "sucess-carga-app",
-		// 	id: idCarga,
-		// });
-	} catch (error) {
+	const saveError = (error) => {
 		ServiceLogs.run({
 			message: String(error),
 			descricao: "Erro ao enviar carga App",
@@ -52,6 +46,12 @@ export const envioCargaApp = async (body) => {
 			nameFile: "error-envio-carga-app",
 			id: idCarga,
 		});
+	};
+
+	try {
+		await ServiceApp.envioCargaApp(bodyEnvioApp);
+	} catch (error) {
+		saveError(error);
 	}
 };
 export const cancelarCargaApp = async (
@@ -66,15 +66,7 @@ export const cancelarCargaApp = async (
 	};
 
 	try {
-		//const { data } = await ServiceApp.cancelarCargaApp(bodyEnvioApp);
 		ServiceApp.cancelarCargaApp(bodyEnvioApp);
-		// ServiceLogs.run({
-		// 	message: data.response.message,
-		// 	descricao: "Carga App Cancelada com sucesso!",
-		// 	level: "info",
-		// 	nameFile: "sucess-cancel-carga-app",
-		// 	id: idCarga,
-		// });
 	} catch (error) {
 		ServiceLogs.run({
 			message: String(error),

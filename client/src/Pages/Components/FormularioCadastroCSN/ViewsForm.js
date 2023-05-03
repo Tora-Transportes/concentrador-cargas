@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
+import "./formularioCadastroCSN.css";
 import {
 	Button,
 	Card,
@@ -15,44 +16,44 @@ import {
 } from "react-bootstrap";
 import { IoMdAdd, IoMdHelpCircle } from "react-icons/io";
 import AutocompleteInput from "../AutocompleteInput";
+
 import FilialSelect from "../FilialSelect";
 import InputCliente from "../InputCliente";
 import InputPlaca from "../InputPlaca";
 import InputsPontoPassagem from "./InputPontoPassagem";
-import "./formularioCadastroCSN.css";
 
-export default function ViewsForm({
-	formik,
-	buscarCargaComDocumentoDeTransporte,
-	handleSearchVehicle,
-	handleShowDetailsAboutVehicle,
-	handleShowDebitAboutVehicle,
-	produtos,
-	inputColeta5,
-	inputColeta6,
-	inputColeta7,
-	viewsButtonAddColeta,
-	functionInputs,
-	viewsButtonExcluir,
-	veiculo,
-	debitosVeiculo,
-	setDebitosVeiculo,
-	setVeiculo,
-	isDetalhesCarreta,
-	valorTotalDebito,
-	fkSituacao,
-	isPermissionUserEdit,
-	isDateErrorInput,
-	setDateErrorInput,
-	isViwsCargaApp,
-	isAlteracaoParcial,
-	isDisabledEnvioApp,
-	isCargaApp,
-	isDisabledPlaca,
-	setDisabledPlaca,
-}) {
+function ViewsForm({ dataComponenteFormulario }) {
+	const {
+		formik,
+		buscarCargaComDocumentoDeTransporte,
+		handleSearchVehicle,
+		handleShowDetailsAboutVehicle,
+		handleShowDebitAboutVehicle,
+		produtos,
+		inputColeta5,
+		inputColeta6,
+		inputColeta7,
+		viewsButtonAddColeta,
+		functionInputs,
+		viewsButtonExcluir,
+		veiculo,
+		debitosVeiculo,
+		setDebitosVeiculo,
+		setVeiculo,
+		isDetalhesCarreta,
+		valorTotalDebito,
+		fkSituacao,
+		isPermissionUserEdit,
+		isDateErrorInput,
+		setDateErrorInput,
+		isViwsCargaApp,
+		isAlteracaoParcial,
+		isDisabledEnvioApp,
+		isCargaApp,
+		isDisabledPlaca,
+		setDisabledPlaca,
+	} = dataComponenteFormulario;
 	const [isRequiredPlaca, setRequiredPlaca] = useState(true);
-
 	const handleEnter = (event) => {
 		if (event.key === "Enter") {
 			const form = event.target.form;
@@ -100,6 +101,17 @@ export default function ViewsForm({
 		? "Dados do Veículo / Dados Carreta"
 		: "Dados do Veículo";
 
+	const dataComponenteViews = {
+		formik,
+		inputColeta5,
+		inputColeta6,
+		inputColeta7,
+		fkSituacao,
+		isPermissionUserEdit,
+		setDateErrorInput,
+		isDateErrorInput,
+		isAlteracaoParcial,
+	};
 	return (
 		<div className="class-body-form">
 			<Row>
@@ -135,10 +147,10 @@ export default function ViewsForm({
 			</Row>
 			<Row>
 				<Col
-					sm={10}
 					md={6}
+					sm={12}
 					style={{ backgroundColor: fkSituacao ? "#e9ecef" : "#FFF" }}
-					className="col-cod-filial2"
+					className="codigo-filial-csn"
 				>
 					<label>*Código da Filial</label>
 					<FilialSelect
@@ -264,13 +276,11 @@ export default function ViewsForm({
 			</div>
 			{!formik.values.e_lote && (
 				<>
-					<Row className="mb-5">
+					<Row className="mb-3">
 						<Col sm={12}>
 							<h3 id="title-check-não">Dados do veículo</h3>
 						</Col>
-					</Row>
-					<Row className="mb-2">
-						<Form.Text muted className="fw-bold">
+						<Form.Text muted className="fw-bold mt-5">
 							Caso os dados vinculados à placa não estejam corretos realize a
 							alteração no SIT, depois volte a essa página clique dentro do
 							campo {`"Placa Cavalo"`} e clique fora para a pesquisa ser
@@ -278,127 +288,99 @@ export default function ViewsForm({
 							indisponível uma vez que o veículo for {`"Aprovado pelo GR"`}.
 						</Form.Text>
 					</Row>
-					<Row className="row-input-placa">
-						<Row>
-							<Col sm={12} md={6}>
-								<InputPlaca
-									className="input-placaCav"
-									id="Plca-cavalo"
-									readOnly={
-										formik.values.fk_situacao &&
-										![1, 2, 4].includes(Number(formik.values.fk_situacao))
+					<Row>
+						<Col sm={12} md={6}>
+							<InputPlaca
+								className="input-placaCav"
+								id="Plca-cavalo"
+								readOnly={
+									formik.values.fk_situacao &&
+									![1, 2, 4].includes(Number(formik.values.fk_situacao))
+								}
+								placeholder="Placa Veículo"
+								disabled={isDisabledPlaca}
+								type="text"
+								name="placa_veiculo"
+								value={formik.values.placa_veiculo || ""}
+								onChange={formik.handleChange}
+								onBlur={() => {
+									if (
+										!formik.values.fk_situacao ||
+										[1, 2, 4].includes(Number(formik.values.fk_situacao))
+									) {
+										handleSearchVehicle(formik.values.placa_veiculo);
 									}
-									placeholder="Placa Veículo"
-									disabled={isDisabledPlaca}
+								}}
+								required={isRequiredPlaca}
+							/>
+						</Col>
+						<Col sm={12} md={6}>
+							<InputGroup className="input-carreta mb-2">
+								<InputGroup.Text>Rastreador</InputGroup.Text>
+								<Form.Control
+									readOnly
+									placeholder="Rastreador Cavalo"
 									type="text"
-									name="placa_veiculo"
-									value={formik.values.placa_veiculo || ""}
-									onChange={formik.handleChange}
-									onBlur={() => {
-										if (
-											!formik.values.fk_situacao ||
-											[1, 2, 4].includes(Number(formik.values.fk_situacao))
-										) {
-											handleSearchVehicle(formik.values.placa_veiculo);
-										}
-									}}
-									required={isRequiredPlaca}
+									value={formik.values.rastreador || ""}
 								/>
-							</Col>
-							<Col sm={12} md={6}>
-								<InputGroup className="input-carreta mb-2">
-									<InputGroup.Text>Rastreador</InputGroup.Text>
-									<Form.Control
-										readOnly
-										placeholder="Rastreador Cavalo"
-										type="text"
-										value={formik.values.rastreador || ""}
-									/>
-								</InputGroup>
-							</Col>
-						</Row>
+							</InputGroup>
+						</Col>
 
-						<Row>
-							<Col sm={12} md={6}>
-								<InputGroup className="input-carreta mb-2">
-									<InputGroup.Text>Carreta</InputGroup.Text>
-									<Form.Control
-										readOnly
-										placeholder="Placa Carreta"
-										type="text"
-										value={formik.values.placa_carreta || ""}
-									/>
-								</InputGroup>
-							</Col>
-							<Col sm={12} md={6}>
-								<InputGroup className="input-carreta mb-2">
-									<InputGroup.Text>Rastreador Carreta</InputGroup.Text>
-									<Form.Control
-										readOnly
-										placeholder="Rastreador Carreta"
-										type="text"
-										value={formik.values.rastreador_carreta || ""}
-									/>
-								</InputGroup>
-							</Col>
-						</Row>
-						<Row>
-							<Col sm={12} md={6}>
-								<InputGroup className="class-input-moto">
-									<InputGroup.Text>Bitrem</InputGroup.Text>
-									<Form.Control
-										readOnly
-										placeholder="Placa Bitrem"
-										type="text"
-										value={formik.values.placa_bitrem || ""}
-									/>
-								</InputGroup>
-							</Col>
-							<Col>
-								<InputGroup className="input-bitrem mb-2">
-									<InputGroup.Text>Motorista</InputGroup.Text>
-									<Form.Control
-										readOnly
-										placeholder="Nome Motorista"
-										type="text"
-										value={
-											formik.values.codigo_motorista &&
-											formik.values.nome_motorista
-												? `${formik.values.codigo_motorista} - ${formik.values.nome_motorista}`
-												: ""
-										}
-									/>
-								</InputGroup>
-							</Col>
-						</Row>
-						<Row>
-							<Col className="col-buttons-inf-veiculos">
-								<Button
-									className="class-botao-Detalhes"
-									id="botao-detail-veiculo"
-									onClick={() =>
-										handleShowDetailsAboutVehicle(formik.values.placa_veiculo)
-									}
-								>
-									Detalhes veículo
-								</Button>
+						<Col sm={12} md={6}>
+							<InputGroup className="input-carreta mb-2">
+								<InputGroup.Text>Carreta</InputGroup.Text>
+								<Form.Control
+									readOnly
+									placeholder="Placa Carreta"
+									type="text"
+									value={formik.values.placa_carreta || ""}
+								/>
+							</InputGroup>
+						</Col>
+						<Col sm={12} md={6}>
+							<InputGroup className="input-carreta mb-2">
+								<InputGroup.Text>Rastreador Carreta</InputGroup.Text>
+								<Form.Control
+									readOnly
+									placeholder="Rastreador Carreta"
+									type="text"
+									value={formik.values.rastreador_carreta || ""}
+								/>
+							</InputGroup>
+						</Col>
 
-								<Button
-									className="class-botao-Debito"
-									id="botao-deb-veiculo"
-									onClick={() =>
-										handleShowDebitAboutVehicle(formik.values.placa_veiculo)
+						<Col sm={12} md={6}>
+							<InputGroup className="input-bitrem">
+								<InputGroup.Text>Bitrem</InputGroup.Text>
+								<Form.Control
+									readOnly
+									placeholder="Placa Bitrem"
+									type="text"
+									value={formik.values.placa_bitrem || ""}
+								/>
+							</InputGroup>
+						</Col>
+						<Col>
+							<InputGroup className="class-input-moto mt-3">
+								<InputGroup.Text>Motorista</InputGroup.Text>
+								<Form.Control
+									readOnly
+									placeholder="Nome Motorista"
+									type="text"
+									value={
+										formik.values.codigo_motorista &&
+										formik.values.nome_motorista
+											? `${formik.values.codigo_motorista} - ${formik.values.nome_motorista}`
+											: ""
 									}
-								>
-									Débitos veículo
-								</Button>
-							</Col>
-						</Row>
+								/>
+							</InputGroup>
+						</Col>
 					</Row>
 					<Row>
-						<Col>
+						<Col xs={12} sm={12} md={6} lg={6} xxl={8}>
 							{formik.values.observacao_gr && (
-								<FloatingLabel label="Observacao GR" className="mb-1 mt-3">
+								<FloatingLabel label="Observação GR" className="mt-3">
 									<Form.Control
 										as="textarea"
 										type="text"
@@ -409,7 +391,29 @@ export default function ViewsForm({
 								</FloatingLabel>
 							)}
 						</Col>
+
+						<Col className="col-buttons-inf-veiculos mt-3">
+							<Button
+								className="class-botao-Detalhes"
+								id="botao-detail-veiculo"
+								onClick={() =>
+									handleShowDetailsAboutVehicle(formik.values.placa_veiculo)
+								}
+							>
+								Detalhes veículo
+							</Button>
+							<Button
+								className="class-botao-Debito"
+								id="botao-deb-veiculo"
+								onClick={() =>
+									handleShowDebitAboutVehicle(formik.values.placa_veiculo)
+								}
+							>
+								Débitos veículo
+							</Button>
+						</Col>
 					</Row>
+					<hr></hr>
 				</>
 			)}
 			<Row className="mt-3">
@@ -429,7 +433,7 @@ export default function ViewsForm({
 				</Col>
 			</Row>
 			<Row>
-				<Col sm={12} md={6} lg={7}>
+				<Col sm={12} md={6} lg={6}>
 					<FloatingLabel label="Tipo de Material" className="mb-3">
 						<AutocompleteInput
 							keyDataList="tipo_carga"
@@ -473,20 +477,10 @@ export default function ViewsForm({
 					</Row>
 				</Col>
 			</Row>
-			<InputsPontoPassagem
-				formik={formik}
-				inputColeta5={inputColeta5}
-				inputColeta6={inputColeta6}
-				inputColeta7={inputColeta7}
-				fkSituacao={fkSituacao}
-				isPermissionUserEdit={isPermissionUserEdit}
-				setDateErrorInput={setDateErrorInput}
-				isDateErrorInput={isDateErrorInput}
-				isAlteracaoParcial={isAlteracaoParcial}
-			/>
+			<InputsPontoPassagem dataComponenteViews={dataComponenteViews} />
 
 			<Row className="row-button-local">
-				<Col>
+				<Col className="button-add-ponto-passagem">
 					{viewsButtonAddColeta && (
 						<Button
 							className="bg-success border border-white"
@@ -499,7 +493,7 @@ export default function ViewsForm({
 						</Button>
 					)}
 				</Col>
-				<Col className="text-end">
+				<Col className="button-excluir-ponto-passagem">
 					{viewsButtonExcluir && (
 						<Button
 							className="bg-secondary ms-2 border border-white"
@@ -524,7 +518,9 @@ export default function ViewsForm({
 						</Form.Label>
 						<Form.Control
 							placeholder="Adicione restrições e/ou acessórios do veículo caso necessário, exemplo(s): motorista necessita de treinamento atualizado no cliente, cinta, luvas, etc."
-							as="textarea"
+							//as="textarea"
+							type="text"
+							maxLength={160}
 							rows={3}
 							name="acessorios_requisitos"
 							value={formik.values.acessorios_requisitos || ""}
@@ -543,7 +539,9 @@ export default function ViewsForm({
 						<Form.Label>Informações restritivas do veículo</Form.Label>
 						<Form.Control
 							placeholder="Adicione as informções restritivas do veículo, se houver, exemplo: proibido entrada de rodotrem."
-							as="textarea"
+							//as="textarea"
+							type="text"
+							maxLength={160}
 							rows={3}
 							name="informacoes_restritivas"
 							value={formik.values.informacoes_restritivas || ""}
@@ -562,7 +560,9 @@ export default function ViewsForm({
 						<Form.Label>Observações complementares</Form.Label>
 						<Form.Control
 							placeholder="Adicione aqui as observações complementares, exemplo: frete será pago por peso."
-							as="textarea"
+							//as="textarea"
+							type="text"
+							maxLength={160}
 							rows={3}
 							name="observacao"
 							value={formik.values.observacao || ""}
@@ -575,7 +575,7 @@ export default function ViewsForm({
 			</Row>
 			<Modal show={veiculo !== null} size="lg" onHide={() => setVeiculo(null)}>
 				<Modal.Header closeButton>
-					<Modal.Title className="modal-title-csn">
+					<Modal.Title className="modal-detail-veic-title-csn">
 						{titleInfoPlaca}
 					</Modal.Title>
 				</Modal.Header>
@@ -683,3 +683,4 @@ export default function ViewsForm({
 		</div>
 	);
 }
+export default memo(ViewsForm);

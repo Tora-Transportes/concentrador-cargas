@@ -2,6 +2,12 @@ import { UsuarioRepository } from "../repositories/UsuarioRepository";
 import IUsuario from "../models/IUsuario";
 import AppError from "../models/AppError";
 
+type TPermissions = string[];
+export interface ISavePermission {
+  fk_usuario: string;
+  permissao: string;
+}
+
 export class UseCaseUpdateUsuario {
   async run(usuario: Record<string, unknown>) {
     const { oid, nome, email, permissoes } = usuario;
@@ -29,6 +35,55 @@ export class UseCaseUpdateUsuario {
 
     await usuarioRepository.update(String(oid), usuarioCompleto);
     return usuarioCompleto;
+  }
+}
+export class UseCaseBatchPermissions {
+  async run(permissoes: TPermissions): Promise<string> {
+    if (!permissoes.length)
+      throw new AppError(
+        "Dados do body incorretos, adicione uma ou mais permissão.",
+        400
+      );
+    const usuarioRepository = new UsuarioRepository();
+
+    const allFkUsuarios: TPermissions = (
+      await usuarioRepository.getAllFkUsuario()
+    ).map((item) => item.oid);
+
+    if (allFkUsuarios.length) {
+      await usuarioRepository.deleteAllPermissions(permissoes);
+      const permissionSave: ISavePermission[] = [];
+      allFkUsuarios.forEach((fk_usuario) => {
+        permissoes.map((permissao) => {
+          permissionSave.push({ fk_usuario, permissao });
+        });
+      });
+
+      if (permissionSave.length)
+        await usuarioRepository.insertAllPermissions(permissionSave);
+    }
+
+    return "Permissões adicionadas com sucesso.";
+  }
+}
+export class UseCaseDeleteAllPermissions {
+  async run(permissoes: TPermissions): Promise<string> {
+    if (!permissoes.length)
+      throw new AppError(
+        "Dados do body incorretos, adicione uma ou mais permissão.",
+        400
+      );
+    const usuarioRepository = new UsuarioRepository();
+
+    const allFkUsuarios: TPermissions = (
+      await usuarioRepository.getAllFkUsuario()
+    ).map((item) => item.oid);
+
+    if (allFkUsuarios.length) {
+      await usuarioRepository.deleteAllPermissions(permissoes);
+    }
+
+    return "Permissões deletadas com sucesso.";
   }
 }
 

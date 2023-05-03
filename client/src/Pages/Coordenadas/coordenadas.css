@@ -13,7 +13,7 @@ div .class-title-Coord {
   margin-bottom: 1rem;
 }
 
-#botao-detalhe-tabela {
+#opcao-tabela-coordenadas {
   font-size: 16px;
   margin-top: 2rem;
   margin-bottom: 0.5rem;
@@ -21,6 +21,10 @@ div .class-title-Coord {
   height: 5.5vh;
   background: #00652e;
   border: none;
+}
+
+.inicio-col-registros {
+  text-align: center;
 }
 .dialog-cte {
   width: 50%;
@@ -75,7 +79,7 @@ div .dialog-btn-voltar:active {
 
 div .ul_last-location {
   position: relative;
-  left: -2rem;
+  left: -5vh;
 }
 div .class-li-last-location {
   margin-left: 2vh;
@@ -145,8 +149,8 @@ div .dialog-btn-last-location:active {
 
 @media only screen and (min-width: 30px) and (max-width: 585px) {
   div .class-title-Coord {
-    font-size: 2rem !important;
-    margin-top: 2.5rem;
+    font-size: 2.2rem !important;
+    margin-top: 2rem;
   }
 
   .dialog-localidade-title {
@@ -157,12 +161,15 @@ div .dialog-btn-last-location:active {
     width: 110%;
   }
 }
-@media only screen and (min-width: 230px) and (max-width: 585px) {
-  #botao-detalhe-tabela {
-    margin-left: 20%;
+@media only screen and (min-width: 130px) and (max-width: 765px) {
+  .opcao-tabela-coord {
+    display: flex;
+    justify-content: center;
   }
   div .ul_last-location {
-    width: 100%;
+    width: 95%;
+    position: relative;
+    left: -1.5rem;
   }
 }
 
@@ -176,10 +183,6 @@ div .dialog-btn-last-location:active {
 @media only screen and (min-width: 130px) and (max-width: 1225px) {
   div .class-title-Coord {
     font-size: 2.5rem;
-  }
-  #botao-detalhe-tabela {
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
   }
 
   div .dialog-btn-voltar {

@@ -1,28 +1,30 @@
-import React, { useEffect, useState } from "react";
-import ServiceVeiculos from "src/services/ServiceVeiculos";
-import swal from "sweetalert";
+import React, { useEffect, useState, memo } from "react";
 import "./formularioCadastroCSN.css";
+import swal from "sweetalert";
+import Swal2 from "sweetalert2";
+
+import ServiceVeiculos from "src/services/ServiceVeiculos";
 import somaDebitoVeiculo from "src/Pages/Utils/somaDebitoVeiculo";
 import { funcInputPontoParada, mensagemPlacaEmUso } from "./management";
 import ViewsForm from "./ViewsForm";
 import ServiceCargas from "src/services/ServiceCargas";
-import Swal2 from "sweetalert2";
-function FormularioCadastroCSN({
-	formik,
-	produtos,
-	viewsInput,
-	buscarCargaComDocumentoDeTransporte,
-	history,
-	isPermissionUserEdit,
-	isDateErrorInput,
-	setDateErrorInput,
-	isViwsCargaApp,
-	isAlteracaoParcial,
-	status,
-	isCargaApp,
-	isDisabledPlaca,
-	setDisabledPlaca,
-}) {
+function FormularioCadastroCSN({ dataComponenteIndex }) {
+	const {
+		formik,
+		produtos,
+		viewsInput,
+		buscarCargaComDocumentoDeTransporte,
+		history,
+		isPermissionUserEdit,
+		isDateErrorInput,
+		setDateErrorInput,
+		isViwsCargaApp,
+		isAlteracaoParcial,
+		status,
+		isCargaApp,
+		isDisabledPlaca,
+		setDisabledPlaca,
+	} = dataComponenteIndex;
 	const [veiculo, setVeiculo] = useState(null);
 	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
 	const [isDetalhesCarreta, setDetalesCarreta] = useState(null);
@@ -63,7 +65,6 @@ function FormularioCadastroCSN({
 			swal("Placa inválida");
 			return;
 		}
-
 		let vehicleData;
 		if (isDetalhesVeiculo) {
 			vehicleData = isDetalhesVeiculo;
@@ -112,12 +113,10 @@ function FormularioCadastroCSN({
 				);
 
 				const detalhesVeiculos = await infoVeiculoPlaca(plate);
-				//detalhesVeiculos.RASTREADOR = "";
 				if (detalhesVeiculos?.RASTREADOR?.length > 2) {
 					await formik.setFieldValue("rastreador", detalhesVeiculos.RASTREADOR);
 				} else {
 					let rastreadorCarretaOrBitrem;
-					//vehicleDetails.placa_carreta = "";
 					if (vehicleDetails?.placa_carreta) {
 						rastreadorCarretaOrBitrem = await infoVeiculoPlaca(
 							vehicleDetails.placa_carreta
@@ -191,42 +190,41 @@ function FormularioCadastroCSN({
 		setInputColeta7
 	);
 
+	const dataComponenteFormulario = {
+		formik,
+		buscarCargaComDocumentoDeTransporte,
+		handleSearchVehicle,
+		handleShowDetailsAboutVehicle,
+		handleShowDebitAboutVehicle,
+		produtos,
+		inputColeta5,
+		inputColeta6,
+		inputColeta7,
+		viewsButtonAddColeta,
+		functionInputs,
+		viewsButtonExcluir,
+		veiculo,
+		debitosVeiculo,
+		setDebitosVeiculo,
+		setVeiculo,
+		isDetalhesCarreta,
+		valorTotalDebito,
+		fkSituacao,
+		isPermissionUserEdit,
+		setDateErrorInput,
+		isDateErrorInput,
+		isViwsCargaApp,
+		isAlteracaoParcial,
+		isDisabledEnvioApp,
+		isCargaApp,
+		isDisabledPlaca,
+		setDisabledPlaca,
+	};
 	return (
 		<div className="class-body-form">
-			<ViewsForm
-				formik={formik}
-				buscarCargaComDocumentoDeTransporte={
-					buscarCargaComDocumentoDeTransporte
-				}
-				handleSearchVehicle={handleSearchVehicle}
-				handleShowDetailsAboutVehicle={handleShowDetailsAboutVehicle}
-				handleShowDebitAboutVehicle={handleShowDebitAboutVehicle}
-				produtos={produtos}
-				inputColeta5={inputColeta5}
-				inputColeta6={inputColeta6}
-				inputColeta7={inputColeta7}
-				viewsButtonAddColeta={viewsButtonAddColeta}
-				functionInputs={functionInputs}
-				viewsButtonExcluir={viewsButtonExcluir}
-				veiculo={veiculo}
-				debitosVeiculo={debitosVeiculo}
-				setDebitosVeiculo={setDebitosVeiculo}
-				setVeiculo={setVeiculo}
-				isDetalhesCarreta={isDetalhesCarreta}
-				valorTotalDebito={valorTotalDebito}
-				fkSituacao={fkSituacao}
-				isPermissionUserEdit={isPermissionUserEdit}
-				setDateErrorInput={setDateErrorInput}
-				isDateErrorInput={isDateErrorInput}
-				isViwsCargaApp={isViwsCargaApp}
-				isAlteracaoParcial={isAlteracaoParcial}
-				isDisabledEnvioApp={isDisabledEnvioApp}
-				isCargaApp={isCargaApp}
-				isDisabledPlaca={isDisabledPlaca}
-				setDisabledPlaca={setDisabledPlaca}
-			/>
+			<ViewsForm dataComponenteFormulario={dataComponenteFormulario} />
 		</div>
 	);
 }
 
-export default FormularioCadastroCSN;
+export default memo(FormularioCadastroCSN);

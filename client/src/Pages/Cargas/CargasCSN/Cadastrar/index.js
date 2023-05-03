@@ -207,7 +207,7 @@ const CadastroCargaCSN = () => {
 						const ok = await swal("Sucesso!", messagemSucesso, "success", {
 							closeOnClickOutside: false,
 						});
-						//uncScrollTop(2, 2);
+						//funcScrollTop(2, 2);
 						setDisabledPlaca(false);
 						if (ok) resetForm();
 					}
@@ -264,7 +264,18 @@ const CadastroCargaCSN = () => {
 	function resetForm() {
 		window.location.reload();
 	}
-
+	const dataComponenteIndex = {
+		buscarCargaComDocumentoDeTransporte,
+		produtos,
+		formik,
+		history,
+		setDateErrorInput,
+		isDateErrorInput,
+		isViwsCargaApp,
+		isDisabledPlaca,
+		setDisabledPlaca,
+		status: "Cadastro",
+	};
 	return (
 		<>
 			<LoadingScreen />
@@ -274,20 +285,7 @@ const CadastroCargaCSN = () => {
 			</div>
 			<Container className="mb-5 mt-2" style={{ scrollBehavior: "none" }}>
 				<Form onSubmit={formik.handleSubmit}>
-					<FormularioCadastroCSN
-						buscarCargaComDocumentoDeTransporte={
-							buscarCargaComDocumentoDeTransporte
-						}
-						produtos={produtos}
-						formik={formik}
-						history={history}
-						setDateErrorInput={setDateErrorInput}
-						isDateErrorInput={isDateErrorInput}
-						isViwsCargaApp={isViwsCargaApp}
-						isDisabledPlaca={isDisabledPlaca}
-						setDisabledPlaca={setDisabledPlaca}
-						status={"Cadastro"}
-					/>
+					<FormularioCadastroCSN dataComponenteIndex={dataComponenteIndex} />
 					<Row>
 						<Col>
 							<Button variant="success" type="submit" id="botao-cadastrar-carg">

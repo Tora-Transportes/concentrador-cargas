@@ -6,19 +6,27 @@ import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 function LinkRelatorios() {
 	const [isPermissionCsn, setPermissionCsn] = useState(false);
 	const [isPermissionPadrao, setPermissionPadrao] = useState(false);
+	const [isPermissionHistorico, setPermissionHistorico] = useState(false);
 	const [isPermissionOperacionalApp, setPermissionOperacionalApp] =
 		useState(false);
 	const { isPermissionUser } = useContext(ContextUseDefault);
+
+	const permissions = {
+		CARGAS_PADRAO: setPermissionPadrao,
+		CARGAS_CSN: setPermissionCsn,
+		HISTORICO_VEICULOS_2: setPermissionHistorico,
+		ENVIAR_CARGA_APP: setPermissionOperacionalApp,
+	};
+
 	useEffect(() => {
-		if (isPermissionUser?.includes("CARGAS_PADRAO")) {
-			setPermissionPadrao(true);
-			setPermissionOperacionalApp(true);
+		if (isPermissionUser) {
+			for (const permission in permissions) {
+				if (isPermissionUser.includes(permission)) {
+					permissions[permission](true);
+				}
+			}
 		}
-		if (isPermissionUser?.includes("CARGAS_CSN")) {
-			setPermissionCsn(true);
-			setPermissionOperacionalApp(true);
-		}
-	}, [isPermissionUser]);
+	}, [isPermissionUser, permissions]);
 	let acc = document.getElementsByClassName("accordion");
 	let i;
 
@@ -75,6 +83,11 @@ function LinkRelatorios() {
 					<Button href="/veiculos/historico" id="button-relatorios">
 						Histórico Veículos
 					</Button>
+					{isPermissionHistorico && (
+						<Button href="/veiculos/historico/tempo" id="button-relatorios">
+							Histórico Veículos 2.0
+						</Button>
+					)}
 				</div>
 			</div>
 		</div>

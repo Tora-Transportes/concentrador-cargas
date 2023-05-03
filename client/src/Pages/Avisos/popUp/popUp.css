@@ -2,14 +2,12 @@
   display: flex;
 }
 
-div .div-toast-popup {
+.div-toast-popup {
   position: absolute;
-  top: 10%;
-  left: -1rem;
-  /* padding: 15px 10px; */
+  top: 9%;
+  left: -1.8rem;
   padding: 15px 15px;
   border-radius: 10px;
-  /* width: 15%; */
   height: 10%;
 }
 
@@ -37,12 +35,10 @@ div .div-toast-popup {
   border-width: 1.5px;
   margin-left: 58px;
   overflow: hidden;
-  /* margin-left: 7vw; */
 }
 
 .popup-redondo-h6 {
   text-align: center;
-  /* margin-top: 0.5px; */
   margin: 0.5px 2.5px 2.5px 2.5px;
   font-size: 13px;
   font-weight: bold;
@@ -75,25 +71,16 @@ div .div-toast-popup {
   animation: glowing 1800ms infinite;
 }
 
-@media only screen and (min-width: 100px) and (max-width: 299px) {
-  .div-toast-popup {
-    /* right: 10%; */
-    /* width: 55%; */
-    bottom: 10%;
-  }
+@media only screen and (min-width: 116px) and (max-width: 1354px) {
   div .div-toast-popup {
+    top: 6.5%;
     left: -2rem;
   }
 }
 
-@media only screen and (min-width: 300px) and (max-width: 965px) {
+@media only screen and (min-width: 1355px) {
   div .div-toast-popup {
-    left: -2rem;
-  }
-}
-
-@media only screen and (min-width: 966px) and (max-width: 1355px) {
-  div .div-toast-popup {
+    top: 8%;
     left: -2rem;
   }
 }

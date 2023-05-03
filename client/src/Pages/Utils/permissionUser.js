@@ -11,6 +11,7 @@ export const allTipoPermissoes = [
 	{ name: "EXPURGAR_CARGA" },
 	{ name: "FINALIZAR_CARGAS_CSN" },
 	{ name: "GERENCIAR_AVISOS" },
+	{ name: "HISTORICO_VEICULOS_2" },
 	{ name: "MANUTENCAO_TRAJETO_FINALIZADO" },
 	{ name: "REGISTRAR_JUSTIFICATIVA" },
 	{ name: "VINCULAR_PLACA" },

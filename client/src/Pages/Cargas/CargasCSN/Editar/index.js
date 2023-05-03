@@ -537,6 +537,22 @@ function EditarCargaCsn() {
 		}
 	};
 
+	const dataComponenteIndex = {
+		buscarCargaComDocumentoDeTransporte,
+		produtos,
+		formik,
+		viewsInput,
+		isPermissionUserEdit,
+		setDateErrorInput,
+		isDateErrorInput,
+		isAlteracaoParcial,
+		isViwsCargaApp,
+		status: "Edicao",
+		isCargaApp,
+		isDisabledPlaca,
+		setDisabledPlaca,
+	};
+
 	return (
 		<>
 			<LoadingScreen />
@@ -558,23 +574,7 @@ function EditarCargaCsn() {
 				</div>
 				<hr className="mt-0" />
 				<Form onSubmit={formik.handleSubmit}>
-					<FormularioCadastroCSN
-						buscarCargaComDocumentoDeTransporte={
-							buscarCargaComDocumentoDeTransporte
-						}
-						produtos={produtos}
-						formik={formik}
-						viewsInput={viewsInput}
-						isPermissionUserEdit={isPermissionUserEdit}
-						setDateErrorInput={setDateErrorInput}
-						isDateErrorInput={isDateErrorInput}
-						isAlteracaoParcial={isAlteracaoParcial}
-						isViwsCargaApp={isViwsCargaApp}
-						status={"Edicao"}
-						isCargaApp={isCargaApp}
-						isDisabledPlaca={isDisabledPlaca}
-						setDisabledPlaca={setDisabledPlaca}
-					/>
+					<FormularioCadastroCSN dataComponenteIndex={dataComponenteIndex} />
 					<div className="text-end">
 						<h6 className={showMsgCargaExpurgo}>Carga Expurgada!</h6>
 					</div>

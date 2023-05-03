@@ -12,6 +12,7 @@ import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import "./cadastroManual.css";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
 import { envioCargaApp } from "src/Pages/Components/DataAppConcentrador";
+import { funcScrollTop } from "src/Pages/Utils/scrollTop";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -19,6 +20,7 @@ function Manual() {
 	const [distancia, setDistancia] = useState(null);
 	const [isViwsCargaApp, setViwsCargaApp] = useState(false);
 	const [isDisabledPlaca, setDisabledPlaca] = useState(false);
+	const [isDisableColetaEntrega, setDisableColetaEntrega] = useState(false);
 	const { isPermissionUser } = useContext(ContextUseDefault);
 	const history = useHistory();
 
@@ -147,8 +149,10 @@ function Manual() {
 	}, [isPermissionUser]);
 
 	function resetForm() {
+		funcScrollTop(2, 2);
 		formik.resetForm();
 		formik.setFieldValue("id", "(gerado automaticamente)");
+		setDisableColetaEntrega(false);
 	}
 
 	return (
@@ -172,6 +176,8 @@ function Manual() {
 						isDisabledPlaca={isDisabledPlaca}
 						setDisabledPlaca={setDisabledPlaca}
 						status={"Cadastro"}
+						isDisableColetaEntrega={isDisableColetaEntrega}
+						setDisableColetaEntrega={setDisableColetaEntrega}
 					/>
 					<Row>
 						<Col>

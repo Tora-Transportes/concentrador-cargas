@@ -63,6 +63,45 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 
 	return (
 		<div className="class-body">
+			<Row>
+				<h1 className="title-veic-prox">Veículos Próximos</h1>
+
+				<div>
+					<Card className="class-card-raio">
+						<Form onSubmit={handleSubmit} className="form-view-veiculos">
+							<Form.Group controlId="formPlaca">
+								<Form.Label>Placa</Form.Label>
+								<Form.Control
+									className="form-placa-veic"
+									type="text"
+									name="placa"
+									value={fields.placa}
+									onChange={handleChange}
+									required
+								/>
+							</Form.Group>
+
+							<Form.Group controlId="formdistancia">
+								<Form.Label>Distância (KM)</Form.Label>
+								<Form.Control
+									className="form-distancia-veic"
+									type="number"
+									min="1"
+									name="distancia_km"
+									value={fields.distancia_km}
+									onChange={handleChange}
+									required
+								/>
+							</Form.Group>
+
+							<Button type="submit" id="button-pesq-veic-prox">
+								Pesquisar
+							</Button>
+						</Form>
+					</Card>
+				</div>
+			</Row>
+
 			<Container className="text-center mb-5 mt-4">
 				{raio && (
 					<MapContainer
@@ -91,44 +130,6 @@ function ViewRotasPendentes({ buscarVeiculosNoRaio, raio, clearRaio }) {
 						})}
 					</MapContainer>
 				)}
-				<Row>
-					<h1 className="class-title-raio mt-4">Veículos Próximos</h1>
-
-					<div>
-						<Card className="class-card-raio">
-							<Form onSubmit={handleSubmit} className="class-body-viewraio">
-								<Form.Group controlId="formPlaca">
-									<Form.Label>Placa</Form.Label>
-									<Form.Control
-										className="form-placa-veic"
-										type="text"
-										name="placa"
-										value={fields.placa}
-										onChange={handleChange}
-										required
-									/>
-								</Form.Group>
-
-								<Form.Group controlId="formdistancia">
-									<Form.Label>Distância (KM)</Form.Label>
-									<Form.Control
-										className="form-distancia-veic"
-										type="number"
-										min="1"
-										name="distancia_km"
-										value={fields.distancia_km}
-										onChange={handleChange}
-										required
-									/>
-								</Form.Group>
-
-								<Button type="submit" id="button-pesq-veic-prox">
-									Pesquisar
-								</Button>
-							</Form>
-						</Card>
-					</div>
-				</Row>
 
 				<Row>
 					{raio && (

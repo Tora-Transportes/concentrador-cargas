@@ -37,6 +37,8 @@ function FormularioCadastroManual({
 	isCargaApp,
 	setDisabledPlaca,
 	isDisabledPlaca,
+	isDisableColetaEntrega,
+	setDisableColetaEntrega,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
@@ -156,7 +158,9 @@ function FormularioCadastroManual({
 	};
 
 	const DetalhesCargaApp = (e) => {
+		console.log("RRR");
 		const decisaoEnvioCarga = e.target.checked;
+		setDisableColetaEntrega(decisaoEnvioCarga);
 		if (decisaoEnvioCarga) {
 			setTimeout(() => {
 				formik.setFieldValue("placa_veiculo", null);
@@ -396,45 +400,52 @@ function FormularioCadastroManual({
 						</Col>
 					</Row>
 
-					<div className="class-input-motorista">
-						<InputGroup id="style-ipunt-motorista" className="class-input-moto">
-							<InputGroup.Text>Motorista</InputGroup.Text>
-							<Form.Control
-								readOnly
-								placeholder="Motorista"
-								type="text"
-								value={
-									formik.values.codigo_motorista && formik.values.nome_motorista
-										? `${formik.values.codigo_motorista} - ${formik.values.nome_motorista}`
-										: ""
-								}
-							/>
-						</InputGroup>
-						<Button
-							className="class-botao-DetalhesV"
-							id="botao-detail-veiculo"
-							onClick={() =>
-								handleShowDetailsAboutVehicle(formik.values.placa_veiculo)
-							}
-						>
-							Detalhes veículo
-						</Button>
+					<Row className="row-input-motorista">
+						<Col sm={12} md={6} lg={6}>
+							<InputGroup
+								// id="style-ipunt-motorista"
+								className="class-input-moto"
+							>
+								<InputGroup.Text>Motorista</InputGroup.Text>
+								<Form.Control
+									readOnly
+									placeholder="Motorista"
+									type="text"
+									value={
+										formik.values.codigo_motorista &&
+										formik.values.nome_motorista
+											? `${formik.values.codigo_motorista} - ${formik.values.nome_motorista}`
+											: ""
+									}
+								/>
+							</InputGroup>
+						</Col>
 
-						<Button
-							className="class-botao-DetalhesV"
-							id="botao-deb-veiculo"
-							onClick={() =>
-								handleShowDebitAboutVehicle(formik.values.placa_veiculo)
-							}
-						>
-							Débitos veículo
-						</Button>
-					</div>
+						<Col className="col-info-veic-manual" id="detalhes-veiculo-manual">
+							<Button
+								className="button-info-veic-manual buttons-detail-veiculos"
+								onClick={() =>
+									handleShowDetailsAboutVehicle(formik.values.placa_veiculo)
+								}
+							>
+								Detalhes veículo
+							</Button>
+							<Button
+								className="button-info-veic-manual buttons-inf-veiculos"
+								// id="botao-deb-veiculo"
+								onClick={() =>
+									handleShowDebitAboutVehicle(formik.values.placa_veiculo)
+								}
+							>
+								Débitos veículo
+							</Button>
+						</Col>
+					</Row>
 
 					<Row>
 						<Col>
 							{formik.values.observacao_gr && (
-								<FloatingLabel label="Observacao GR" className="mb-3">
+								<FloatingLabel label="Observação GR" className="mb-3">
 									<Form.Control
 										as="textarea"
 										type="text"
@@ -492,7 +503,6 @@ function FormularioCadastroManual({
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							onBlur={() => handleSearchDistance(formik.values)}
-							className="text-primary"
 							required
 						/>
 					</FloatingLabel>
@@ -514,7 +524,7 @@ function FormularioCadastroManual({
 								} e ${
 									formik.values.destino_carga.split("/")[2]
 								} é de ${distancia} KM.`}
-								className="text-primary"
+								className="text-success"
 								readOnly
 							/>
 							<Form.Text id="passwordHelpBlock" muted>
@@ -538,6 +548,7 @@ function FormularioCadastroManual({
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
+							required={isDisableColetaEntrega}
 						/>
 					</FloatingLabel>
 				</Col>
@@ -551,13 +562,14 @@ function FormularioCadastroManual({
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
+							required={isDisableColetaEntrega}
 						/>
 					</FloatingLabel>
 				</Col>
 			</Row>
 			{!formik.values.e_lote && (
 				<Row>
-					<Col>
+					<Col sm={6}>
 						<FloatingLabel label="Janela coleta" className="mb-3">
 							<Form.Control
 								type="time"
@@ -599,7 +611,7 @@ function FormularioCadastroManual({
 				</Col>
 				<Col>
 					<Row>
-						<Col sm={6} md={6} lg={6}>
+						<Col sm={6} md={7} lg={6}>
 							<FloatingLabel label="*Unidade de medida" className="mb-3">
 								<Form.Control
 									type="text"
@@ -642,7 +654,9 @@ function FormularioCadastroManual({
 						</Form.Label>
 						<Form.Control
 							placeholder="Adicione restrições e/ou acessórios do veículo caso necessário, exemplo(s): motorista necessita de treinamento atualizado no cliente, cinta, luvas, etc."
-							as="textarea"
+							//as="textarea"
+							type="text"
+							maxLength={150}
 							rows={3}
 							name="acessorios_requisitos"
 							value={formik.values.acessorios_requisitos || ""}
@@ -660,7 +674,9 @@ function FormularioCadastroManual({
 						<Form.Label>Informações restritivas do veículo</Form.Label>
 						<Form.Control
 							placeholder="Adicione as informções restritivas do veículo, se houver, exemplo: proibido entrada de rodotrem."
-							as="textarea"
+							//as="textarea"
+							type="text"
+							maxLength={150}
 							rows={3}
 							name="informacoes_restritivas"
 							value={formik.values.informacoes_restritivas || ""}
@@ -678,7 +694,9 @@ function FormularioCadastroManual({
 						<Form.Label>Observações complementares</Form.Label>
 						<Form.Control
 							placeholder="Adicione aqui as observações complementares, exemplo: frete será pago por peso."
-							as="textarea"
+							//as="textarea"
+							type="text"
+							maxLength={150}
 							rows={3}
 							name="observacao"
 							value={formik.values.observacao || ""}

@@ -36,10 +36,12 @@
   color: #0e4f26;
   padding-top: 6px;
 }
+
 .input-config-tab {
   justify-content: center;
   display: flex;
 }
+
 .button-input-multiselect {
   display: flex;
   justify-content: center;
@@ -50,7 +52,7 @@
   color: white;
   background-color: #eefdec;
   border: 1px solid #e4e7e4;
-  height: 2.7em;
+  height: 3.13rem;
   margin-top: 5px;
 }
 
@@ -129,6 +131,7 @@
   .p-column-filter-element {
   height: 2.5em;
 }
+
 .datatable-responsive-gridCargas
   .p-datatable-responsive-grid
   .p-column-filter-row {
@@ -142,6 +145,7 @@
   .mb-3 {
   margin-bottom: 0;
 }
+
 .mb-3 .form-floating {
   margin-bottom: 0;
 }
@@ -150,6 +154,18 @@
 .p-column-filter-row .p-column-filter-clear-button {
   display: none;
 }
+
+@media only screen and (max-width: 303px) {
+  .input-config-tab {
+    justify-content: flex-start;
+    display: flex;
+    margin-left: -25px;
+  }
+  .button-input-multiselect {
+    display: none;
+  }
+}
+
 @media only screen and (max-width: 306px) {
   .footer-table Button {
     font-size: 0.84rem;
@@ -165,11 +181,8 @@
 
 @media only screen and (max-width: 585px) {
   .paginator-table-col {
+    margin-left: -10px;
     display: grid;
-  }
-
-  .button-input-multiselect {
-    display: none;
   }
 
   .col-paginator-itens {
@@ -186,6 +199,11 @@
 
   .header-table-col-buttons {
     display: grid;
+  }
+
+  .input-config-tab {
+    display: flex;
+    margin-left: -15px;
   }
 
   .footer-table {
