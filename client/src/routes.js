@@ -38,6 +38,7 @@ import EditarCargaCsn from "./Pages/Cargas/CargasCSN/Editar";
 import LinkRelatoriosApp from "./Pages/Components/MenuSuperior/LinkRelatoriosApp";
 import RelatoriosAppMain from "./Pages/Relatorios/TotalizadoresApp";
 import MainPopUp from "./Pages/Avisos/popUp";
+import SiteEmManutencao from "./Pages/SiteEmManutencao";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -132,6 +133,7 @@ export default function AllRoutes() {
 				{/* <Route path="/ajuda" exact component={Helper} /> */}
 				{/* <Route path="/ajuda/CSN" exact component={HelperCSN} /> */}
 				<Route path="/avisos" exact component={Avisos} />
+				<Route path="/manutencao" component={SiteEmManutencao} />
 				<Route path="*" exact component={Main} />
 			</Switch>
 
