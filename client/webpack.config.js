@@ -1,11 +1,9 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const WebpackMd5Hash = require("webpack-md5-hash");
 
 module.exports = {
-	entry: "./src/index.js",
+	// ...
 	output: {
-		path: path.resolve(__dirname, "dist"),
-		filename: "bundle.[contenthash].js",
+		filename: "[name].[chunkhash].js",
 	},
-	plugins: [new HtmlWebpackPlugin({ template: "./src/index.html" })],
+	plugins: [new WebpackMd5Hash()],
 };
