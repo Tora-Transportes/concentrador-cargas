@@ -7,7 +7,7 @@
   "scripts": {
     "start": "react-scripts start",
     "dev": "set HTTPS=true&&set SSL_CRT_FILE=../server/certificates/tora.crt&&set SSL_KEY_FILE=../server/certificates/tora.key&&yarn start",
-    "build": "react-scripts --max_old_space_size=4096 build",
+    "build": "react-scripts --max_old_space_size=4096 build && webpack --mode production",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -62,6 +62,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.26.1",
-    "prettier": "^2.4.1"
+    "prettier": "^2.4.1",
+    "webpack": "^5.82.0"
   }
 }
