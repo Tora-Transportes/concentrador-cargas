@@ -281,7 +281,7 @@ const CadastroCargaCSN = () => {
 			<LoadingScreen />
 			<Menusuperior />
 			<div>
-				<p id="title-cad-CSN">Cadastro de Carga - CSN me apague</p>
+				<p id="title-cad-CSN">Cadastro de Carga - CSN</p>
 			</div>
 			<Container className="mb-5 mt-2" style={{ scrollBehavior: "none" }}>
 				<Form onSubmit={formik.handleSubmit}>
