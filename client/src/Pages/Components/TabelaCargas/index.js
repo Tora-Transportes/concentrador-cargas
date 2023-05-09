@@ -14,10 +14,12 @@ function TabelaCargas({
 	get_data,
 	values,
 	hideHeader,
-	resetView,
 	setItensPerPage,
 	itensPerPage,
 	tipoDeBuscaPorPagina,
+	setModalFilterShow,
+	refValueFiltroDate,
+	showbuttonfilterDate,
 }) {
 	const [data, setData] = useState([]);
 	const [storage, setStorage] = useLocalStorage(tipoDeBuscaPorPagina, columns);
@@ -111,7 +113,6 @@ function TabelaCargas({
 			page: 1,
 		};
 
-		//columns
 		for (const i in formik.values) {
 			if (![undefined, null, ""].includes(formik.values[i])) {
 				options.filters[i] = formik.values[i];
@@ -129,6 +130,12 @@ function TabelaCargas({
 		//page
 		options.page = page;
 		options.countGetRota = isCountGetRota;
+		if (refValueFiltroDate?.current) {
+			options.filters = {
+				...options.filters,
+				...refValueFiltroDate.current,
+			};
+		}
 		await get_data(options);
 	}
 
@@ -211,12 +218,13 @@ function TabelaCargas({
 	const headerTable = hideHeader
 		? ""
 		: headerTableFunction(
-				resetView,
 				itensPerPage,
 				setItensPerPage,
 				selectedColumns,
 				columns,
-				onColumnToggle
+				onColumnToggle,
+				setModalFilterShow,
+				showbuttonfilterDate
 		  );
 
 	const footerTable = footerTableFunction(

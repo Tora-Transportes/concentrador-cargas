@@ -13,6 +13,7 @@ import { Sidebar } from "primereact/sidebar";
 import { columns } from "../CollumnsTables/ColumnsTemplate";
 import { SideBarFuncition } from "src/Pages/Utils/sideBar";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
+import ModalFiltroDataViewCarga from "../modal/filtroDataViewCarga";
 
 function VisualizarCargas({
 	handleExportExcel,
@@ -26,8 +27,12 @@ function VisualizarCargas({
 	tituloPag,
 	modalShowExcel,
 	setModalShowExcel,
+	isCamposFilter,
+	refValueFiltroDate,
+	showbuttonfilterDate,
 }) {
 	const [modalShow, setModalShow] = useState(false);
+	const [isModalFilterShow, setModalFilterShow] = useState(false);
 	const [visibleLeft, setVisibleLeft] = useState(false);
 
 	const exportExcelDate = (dataInicio, dataFim, codigoFilial) => {
@@ -50,6 +55,13 @@ function VisualizarCargas({
 					show={modalShowExcel}
 					exportExcelDate={exportExcelDate}
 					onHide={() => setModalShowExcel(false)}
+				/>
+				<ModalFiltroDataViewCarga
+					show={isModalFilterShow}
+					onHide={() => setModalFilterShow(false)}
+					isCamposFilter={isCamposFilter}
+					get_data={get_data}
+					refValueFiltroDate={refValueFiltroDate}
 				/>
 				<Row className="mt-3 text-center">
 					<Col>
@@ -105,6 +117,9 @@ function VisualizarCargas({
 							itensPerPage={itensPerPage}
 							setModalShow={setModalShow}
 							setModalShowExcel={setModalShowExcel}
+							setModalFilterShow={setModalFilterShow}
+							refValueFiltroDate={refValueFiltroDate}
+							showbuttonfilterDate={showbuttonfilterDate}
 							tipoDeBuscaPorPagina={
 								tituloPag === "Listagem de Cargas em Lote"
 									? "table-columns-lote"

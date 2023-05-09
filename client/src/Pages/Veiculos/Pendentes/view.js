@@ -2,7 +2,6 @@ import React from "react";
 import "./monitoramento.css";
 import { Container, Row, Col } from "react-bootstrap";
 import TabelaCargas from "../../Components/TabelaCargas";
-// import HandleClick from "./tooltipsMonitoramento";
 
 function ViewRotasPendentes({
 	columns = [],
@@ -19,12 +18,7 @@ function ViewRotasPendentes({
 		<div className="class-body-monitoramento">
 			<Container fluid className="text-center mt-4">
 				<Row className="class-title-monit">
-					<h1
-						id="title-monit"
-						// onClick={HandleClick}
-					>
-						{title}
-					</h1>
+					<h1 id="title-monit">{title}</h1>
 				</Row>
 				<Row>
 					<Col lg={1} className="text-center "></Col>

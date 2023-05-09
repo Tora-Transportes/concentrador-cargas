@@ -35,6 +35,11 @@ div .button-export-excel {
   border: none;
 }
 
+div .button-clear-filter {
+  background-color: #0c311d;
+  border: none;
+}
+
 #button-sair {
   font-size: 14px;
   margin-top: -2px;
@@ -96,6 +101,17 @@ label {
   font-weight: 600;
 }
 
+/* Modal de filtrar a data das views de carga  "ModalFiltroDataViewCarga" */
+
+.calendar-data-inicio button,
+.calendar-data-fim button {
+  background-color: #00652e;
+}
+.calendar-data-inicio button:enabled:hover,
+.calendar-data-fim button:enabled:hover {
+  background-color: #03ff74;
+}
+
 @media screen and (min-width: 176px) and (max-width: 329px) {
   .modal-situation-cargas {
     margin-top: 11rem;
@@ -106,6 +122,10 @@ label {
     width: 100%;
     margin-bottom: -1rem;
     border: #fff;
+  }
+
+  .button-sair {
+    margin-top: 5px !important;
   }
 }
 

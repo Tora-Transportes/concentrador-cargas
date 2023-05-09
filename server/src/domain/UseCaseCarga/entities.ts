@@ -12,6 +12,7 @@ import DateUtils from "../../Utils/date";
 import xlsx from "xlsx";
 //import EPermissions from "../../models/EPermissions";
 import { CargaValidationOperation } from "../../validations/CargaValidationOperation";
+import { calculateDiffDate } from "../../Utils/formatData";
 
 export interface IParadasRepository {
   clear(codigoCarga: number): Promise<void>;
@@ -74,19 +75,6 @@ export class UseCaseAddCarga {
         return true;
       },
     });
-    //Regra de negócio comentada pois  não se aplica a cadastro de carga
-    //if (carga.placa_veiculo) {
-    // Caso o oid nao esteja definido o bot de scraping é quem está enviando as cargas
-    // if (oid) {
-    //   const usuario = await this.userRepository.index(oid);
-    //   if (!usuario?.permissoes?.includes("DELETAR_CARGAS")) {
-    //     throw new AppError(
-    //       "O usuário atual não possui a permissão para Cadastrar cargas.",
-    //       403
-    //     );
-    //   }
-    // }
-    //}
 
     // Esse bloco funciona para a importacao de cargas
     if (carga.documento_transporte) {
@@ -353,6 +341,21 @@ export class UseCaseViewCargas {
   constructor(private cargaRepository: IRepositoryAddCarga) {}
 
   async run(filter: Record<string, any>) {
+    const { busca_inicio, busca_fim } = filter;
+
+    if (busca_inicio && busca_fim) {
+      const diferencaDate = await calculateDiffDate(
+        String(busca_inicio),
+        String(busca_fim)
+      );
+
+      if (diferencaDate > 30) {
+        throw new AppError(
+          "O período entre as datas não pode ser maior que 30 dias.",
+          400
+        );
+      }
+    } else if (busca_inicio && !busca_fim) delete filter.busca_inicio;
     return this.cargaRepository.search(
       { ...filter, ativo: 1, carga_csn: 0 },
       filter.page,

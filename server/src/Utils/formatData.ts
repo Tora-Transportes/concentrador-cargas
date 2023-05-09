@@ -33,3 +33,10 @@ export const verificarDataStringValida = (dateString: string) => {
   const pattern = /^\d{4}-\d{2}-\d{2}$/;
   return pattern.test(dateString);
 };
+// Retorno da função é do tipo Date.
+export const converterDataParaBrasil = (data: Date) => {
+  const dataBrasil = new Date(
+    data.toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
+  );
+  return dataBrasil;
+};

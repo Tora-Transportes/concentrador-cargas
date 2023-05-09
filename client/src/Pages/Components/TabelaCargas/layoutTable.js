@@ -5,6 +5,8 @@ import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
 import { TbSettings } from "react-icons/tb";
 import { Dropdown } from "primereact/dropdown";
 import "./tabelaCargas.css";
+import { Button as ButtonReact } from "primereact/button";
+import { MdOutlineFilterAlt } from "react-icons/md";
 
 const PaginatorTable = ({ itensPerPage, setItensPerPage, setVisibleLeft }) => {
 	const selectLines = { name: itensPerPage, code: itensPerPage };
@@ -35,12 +37,13 @@ const PaginatorTable = ({ itensPerPage, setItensPerPage, setVisibleLeft }) => {
 };
 
 export const headerTableFunction = (
-	resetView,
 	itensPerPage,
 	setItensPerPage,
 	selectedColumns,
 	columns,
-	onColumnToggle
+	onColumnToggle,
+	setModalFilterShow,
+	showbuttonfilterDate
 ) => (
 	<Container fluid>
 		<Row className="header-table">
@@ -50,8 +53,8 @@ export const headerTableFunction = (
 					setItensPerPage={setItensPerPage}
 				/>
 			</Col>
-			<Col className=" text-right">
-				<InputGroup className="input-config-tab">
+			<Col>
+				<InputGroup className="input-config-tab flex-nowrap">
 					<button type="submit" className="button-input-multiselect">
 						<TbSettings className="header-table-icon-button" />
 					</button>
@@ -71,6 +74,16 @@ export const headerTableFunction = (
 					/>
 				</InputGroup>
 			</Col>
+			{showbuttonfilterDate && (
+				<Col>
+					<ButtonReact
+						label="Filtro por data"
+						icon={<MdOutlineFilterAlt className="icon-export-table" />}
+						onClick={() => setModalFilterShow(true)}
+						className="btn-filtro-data border-0"
+					/>
+				</Col>
+			)}
 		</Row>
 	</Container>
 );

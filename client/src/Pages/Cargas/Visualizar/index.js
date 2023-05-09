@@ -26,8 +26,10 @@ function Visualizar() {
 	const [LoadingComponent, setLoading] = useLoadingScreen();
 	const [itensPerPage, setItensPerPage] = useState(10);
 	const [modalShowExcel, setModalShowExcel] = useState(false);
+	const [isCamposFilter, setCamposFilter] = useState();
 
 	const toast = useRef(null);
+	const refValueFiltroDate = useRef(null);
 	useEffect(() => {
 		const actionCargasCreate = (payload) => {
 			if (!payload.e_lote) {
@@ -107,11 +109,17 @@ function Visualizar() {
 	const get_data = useCallback(
 		async function (options) {
 			setLoading(true);
-
+			setCamposFilter(options);
 			try {
 				const { filters, orderBy, page, countGetRota } = options;
 				setFiltroAtual({ filters, orderBy, page });
 				if (countGetRota !== 1) {
+					if (filters.busca_inicio) {
+						refValueFiltroDate.current = {
+							busca_inicio: filters.busca_inicio,
+							busca_fim: filters.busca_fim,
+						};
+					}
 					const { data } = await ServiceCargas.search({
 						...filters,
 						page,
@@ -155,6 +163,9 @@ function Visualizar() {
 				tituloPag="Listagem de Cargas"
 				modalShowExcel={modalShowExcel}
 				setModalShowExcel={setModalShowExcel}
+				isCamposFilter={isCamposFilter}
+				refValueFiltroDate={refValueFiltroDate}
+				showbuttonfilterDate={true}
 			/>
 		</>
 	);

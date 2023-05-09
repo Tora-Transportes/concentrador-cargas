@@ -89,18 +89,6 @@ export class CoordenadaRepository {
       "con_dados_coordenadas.responsavel_placa"
     );
 
-    // query.modify(function (con_coordenadas_veiculos) {
-    //   if (date_execel_inicio && date_execel_fim) {
-    //     con_coordenadas_veiculos.andWhereBetween(
-    //       "con_coordenadas_veiculos.data_emissao_documento",
-    //       [
-    //         new Date(date_execel_inicio + "T00:00:00"),
-    //         new Date(date_execel_fim + "T23:59:59"),
-    //       ]
-    //     );
-    //   }
-    // });
-
     query.leftJoin(
       "VEICULO as VEI",
       "VEI.VEI_COD",
