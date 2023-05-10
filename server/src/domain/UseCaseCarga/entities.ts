@@ -341,26 +341,38 @@ export class UseCaseViewCargas {
   constructor(private cargaRepository: IRepositoryAddCarga) {}
 
   async run(filter: Record<string, any>) {
-    const { busca_inicio, busca_fim } = filter;
+    let { busca_inicio, busca_fim } = filter;
 
-    if (busca_inicio && busca_fim) {
-      const diferencaDate = await calculateDiffDate(
-        String(busca_inicio),
-        String(busca_fim)
+    if (Date.parse(busca_inicio) && Date.parse(busca_fim)) {
+      const diff = await calculateDiffDate(
+        busca_inicio.toDateString(),
+        busca_fim.toDateString()
       );
 
-      if (diferencaDate > 30) {
+      if (diff > 30) {
         throw new AppError(
           "O período entre as datas não pode ser maior que 30 dias.",
           400
         );
       }
-    } else if (busca_inicio && !busca_fim) delete filter.busca_inicio;
-    return this.cargaRepository.search(
-      { ...filter, ativo: 1, carga_csn: 0 },
-      filter.page,
-      filter.limit || 5
-    );
+
+      busca_inicio = new Date(busca_inicio);
+      busca_fim = new Date(busca_fim);
+
+      const dateObject = busca_fim;
+      dateObject.setHours(23);
+      dateObject.setMinutes(59);
+      filter.busca_inicio = busca_inicio;
+      filter.busca_fim = dateObject;
+    } else {
+      const dataAtual = new Date();
+      dataAtual.setDate(dataAtual.getDate() - 30);
+      filter.busca_inicio = new Date(new Date(dataAtual.toISOString()));
+      filter.busca_fim = new Date();
+    }
+
+    const busca = { ...filter, ativo: 1, carga_csn: 0 };
+    return this.cargaRepository.search(busca, filter.page, filter.limit ?? 5);
   }
 
   async index(id: number) {

@@ -1,4 +1,3 @@
-import { converterDataParaBrasil } from "./../Utils/formatData";
 import database from "../database";
 import { ICarga, ICargaCTE } from "../models/ICargas";
 import { Knex } from "knex";
@@ -143,13 +142,6 @@ export class CargaRepository {
   ): Promise<IPaginationResult<ICarga>> {
     const realPage = isNaN(Number(page)) || Number(page) < 1 ? 1 : Number(page);
 
-    if (!query.busca_inicio) {
-      const dataAtual = new Date();
-      dataAtual.setDate(dataAtual.getDate() - 30);
-      query.busca_inicio = new Date(new Date(dataAtual.toISOString()));
-      query.busca_fim = new Date();
-    }
-
     const total = database("con_cargas").count("id as total").first();
     const results = database("con_cargas")
       .select([
@@ -187,16 +179,8 @@ export class CargaRepository {
     const filterDbFunction = (qb: Knex.QueryBuilder) => {
       if (query?.busca_inicio) {
         qb.where((qB) => {
-          qB.andWhere(
-            "data_cadastro",
-            ">=",
-            converterDataParaBrasil(query.busca_inicio)
-          );
-          qB.andWhere(
-            "data_cadastro",
-            "<=",
-            converterDataParaBrasil(query.busca_fim)
-          );
+          qB.andWhere("data_cadastro", ">=", query.busca_inicio);
+          qB.andWhere("data_cadastro", "<=", query.busca_fim);
         });
       }
 

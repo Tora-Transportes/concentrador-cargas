@@ -67,6 +67,13 @@ export class CargaCsnInfoRepository {
       !["", null, undefined, "null", "undefined"].includes(value);
 
     const filterDbFunction = (qb: Knex.QueryBuilder) => {
+      if (query?.busca_inicio) {
+        qb.where((qB) => {
+          qB.andWhere("data_cadastro", ">=", query.busca_inicio);
+          qB.andWhere("data_cadastro", "<=", query.busca_fim);
+        });
+      }
+
       if (query?.data_cadastro) {
         const date = query.data_cadastro.split("T")[0];
         qb.andWhereBetween("data_cadastro", [

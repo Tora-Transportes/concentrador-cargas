@@ -28,7 +28,7 @@ export default function ModalFiltroDataViewCarga({
 		} else if (new Date(dataInicio) > new Date(dataFim)) {
 			const message = "Data de início deve ser menor ou igual a data fim!";
 			showToastMessage(toast, "warn", message, 7000);
-		} else if (diffiInDays(dataInicio, dataFim) > 31) {
+		} else if (diffiInDays(dataInicio, dataFim) > 30) {
 			const message =
 				"O período entre a data de início e fim não pode ser maior que 30 dias!";
 			showToastMessage(toast, "warn", message, 7000);
@@ -63,7 +63,7 @@ export default function ModalFiltroDataViewCarga({
 	};
 	const footer = (
 		<div>
-			<Button className="button-export-excel" onClick={filtrarPorData}>
+			<Button className="button-filtrar" onClick={filtrarPorData}>
 				Filtrar
 			</Button>
 			<Button className="button-clear-filter" onClick={clearfilter}>

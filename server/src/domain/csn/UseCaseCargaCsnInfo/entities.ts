@@ -7,6 +7,7 @@ import {
 } from "../../../repositories/CargaRepository";
 import { UseCaseUpdateCarga } from "../../UseCaseCarga/entities";
 import { UseCaseUpdatePontoParada } from "../../UseCasePontoParadas";
+import { calculateDiffDate } from "../../../Utils/formatData";
 
 export interface IRepositorySearchCsn {
   search(
@@ -24,10 +25,38 @@ export class UseCaseViewCargasCsnInfo {
   constructor(private cargaCsnInfoRepository: IRepositorySearchCsn) {}
 
   async run(filter: Record<string, any>) {
-    return this.cargaCsnInfoRepository.search(
-      { ...filter, ativo: 1, carga_csn: 1 },
+    let { busca_inicio, busca_fim } = filter;
+
+    if (Date.parse(busca_inicio) && Date.parse(busca_fim)) {
+      const diff = await calculateDiffDate(busca_inicio, busca_fim);
+
+      if (diff > 30) {
+        throw new AppError(
+          "O período entre as datas não pode ser maior que 30 dias.",
+          400
+        );
+      }
+
+      busca_inicio = new Date(busca_inicio);
+      busca_fim = new Date(busca_fim);
+
+      const dateObject = busca_fim;
+      dateObject.setHours(23);
+      dateObject.setMinutes(59);
+      filter.busca_inicio = busca_inicio;
+      filter.busca_fim = dateObject;
+    } else {
+      const dataAtual = new Date();
+      dataAtual.setDate(dataAtual.getDate() - 30);
+      filter.busca_inicio = new Date(new Date(dataAtual.toISOString()));
+      filter.busca_fim = new Date();
+    }
+
+    const busca = { ...filter, ativo: 1, carga_csn: 1 };
+    return await this.cargaCsnInfoRepository.search(
+      busca,
       filter.page,
-      filter.limit || 5
+      filter.limit ?? 5
     );
   }
 }

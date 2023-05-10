@@ -27,7 +27,9 @@ function VisualizarCsn() {
 	const [LoadingComponent, setLoading] = useLoadingScreen();
 	const [itensPerPage, setItensPerPage] = useState(10);
 	const [modalShowExcel, setModalShowExcel] = useState(false);
+	const [isCamposFilter, setCamposFilter] = useState();
 	const toast = useRef(null);
+	const refValueFiltroDate = useRef(null);
 	const refFuncionalidadeSocket = useRef(true);
 	useEffect(() => {
 		const actionCargasCreate = (payload) => {
@@ -59,7 +61,7 @@ function VisualizarCsn() {
 	const get_data = useCallback(
 		async function (options) {
 			setLoading(true);
-
+			setCamposFilter(options);
 			try {
 				const { filters, orderBy, page, countGetRota } = options;
 				setFiltroAtual({ filters, orderBy, page });
@@ -68,6 +70,12 @@ function VisualizarCsn() {
 					: true;
 
 				if (countGetRota !== 1) {
+					if (filters.busca_inicio) {
+						refValueFiltroDate.current = {
+							busca_inicio: filters.busca_inicio,
+							busca_fim: filters.busca_fim,
+						};
+					}
 					const { data } = await ServiceCargas.searchCsn({
 						...filters,
 						page,
@@ -159,6 +167,9 @@ function VisualizarCsn() {
 				totalRegisters={totalRegisters}
 				modalShowExcel={modalShowExcel}
 				setModalShowExcel={setModalShowExcel}
+				isCamposFilter={isCamposFilter}
+				refValueFiltroDate={refValueFiltroDate}
+				showbuttonfilterDate={true}
 			/>
 		</>
 	);

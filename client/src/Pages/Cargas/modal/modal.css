@@ -30,14 +30,28 @@
   border: #fff !important;
 }
 
-div .button-export-excel {
+div .button-filtrar {
   background-color: #00652e;
   border: none;
+}
+
+div .button-filtrar:hover,
+div .button-filtrar:focus,
+div .button-filtrar:active {
+  box-shadow: none;
+  background-color: #049947;
 }
 
 div .button-clear-filter {
   background-color: #0c311d;
   border: none;
+}
+
+div .button-clear-filter:hover,
+div .button-clear-filter:focus,
+div .button-clear-filter:active {
+  box-shadow: none;
+  background-color: #155030;
 }
 
 #button-sair {
@@ -109,7 +123,7 @@ label {
 }
 .calendar-data-inicio button:enabled:hover,
 .calendar-data-fim button:enabled:hover {
-  background-color: #03ff74;
+  background-color: #049947;
 }
 
 @media screen and (min-width: 176px) and (max-width: 329px) {

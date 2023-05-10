@@ -380,6 +380,8 @@ class ServiceCargas {
 		rastreador,
 		canal_comunicacao,
 		carga_app,
+		busca_inicio,
+		busca_fim,
 	}) {
 		return await api.get("/csn/cargas/info", {
 			params: {
@@ -407,6 +409,8 @@ class ServiceCargas {
 				rastreador,
 				canal_comunicacao,
 				carga_app,
+				busca_inicio,
+				busca_fim,
 			},
 		});
 	}

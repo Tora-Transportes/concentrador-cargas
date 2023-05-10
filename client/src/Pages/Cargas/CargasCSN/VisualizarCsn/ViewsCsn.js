@@ -12,6 +12,7 @@ import { Sidebar } from "primereact/sidebar";
 import { columns } from "./ColumsTableCsn";
 import { SideBarFuncition } from "src/Pages/Utils/sideBar";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
+import ModalFiltroDataViewCarga from "../../modal/filtroDataViewCarga";
 
 function ViewsCsn({
 	handleExportExcel,
@@ -24,9 +25,13 @@ function ViewsCsn({
 	totalRegisters = null,
 	modalShowExcel,
 	setModalShowExcel,
+	isCamposFilter,
+	refValueFiltroDate,
+	showbuttonfilterDate,
 }) {
 	const [modalShow, setModalShow] = useState(false);
 	const [visibleLeft, setVisibleLeft] = useState(false);
+	const [isModalFilterShow, setModalFilterShow] = useState(false);
 
 	const exportExcelDate = (dataInicio, dataFim, codigoFilial) => {
 		handleExportExcel(dataInicio, dataFim, codigoFilial);
@@ -47,6 +52,13 @@ function ViewsCsn({
 					show={modalShowExcel}
 					exportExcelDate={exportExcelDate}
 					onHide={() => setModalShowExcel(false)}
+				/>
+				<ModalFiltroDataViewCarga
+					show={isModalFilterShow}
+					onHide={() => setModalFilterShow(false)}
+					isCamposFilter={isCamposFilter}
+					get_data={get_data}
+					refValueFiltroDate={refValueFiltroDate}
 				/>
 				<Row className=" text-center">
 					<Col>
@@ -103,6 +115,9 @@ function ViewsCsn({
 							setModalShow={setModalShow}
 							setModalShowExcel={setModalShowExcel}
 							tipoDeBuscaPorPagina={"table-columns-csn"}
+							setModalFilterShow={setModalFilterShow}
+							refValueFiltroDate={refValueFiltroDate}
+							showbuttonfilterDate={showbuttonfilterDate}
 						/>
 					</Col>
 				</Row>
