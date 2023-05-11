@@ -68,19 +68,29 @@ label {
 
 .col-info-veic-manual {
   display: flex;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
 }
 
 div .button-info-veic-manual,
 div .button-info-veic-manual:hover {
-  background: #00652e;
+  background-color: #00652e;
   color: #ffff;
   border: none;
   margin-top: 16px;
 }
 
 .buttons-detail-veiculos {
-  margin-right: 1.5rem !important;
+  margin-right: 1.5rem;
+}
+
+.buttons-inf-manutencao {
+  margin-left: 1.5rem;
+}
+
+div .buttons-inf-manutencao:focus,
+div .buttons-inf-manutencao:active {
+  box-shadow: none;
+  background-color: #00652e;
 }
 
 @media only screen and (max-width: 342px) {

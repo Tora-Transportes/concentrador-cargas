@@ -14,16 +14,18 @@ import {
 	Modal,
 } from "react-bootstrap";
 import { IoMdHelpCircle } from "react-icons/io";
+import swal from "sweetalert";
+
 import InputLocalizacao from "../InputLocalizacao";
 import AutocompleteInput from "../AutocompleteInput";
 import InputCliente from "../InputCliente";
 import InputPlaca from "../InputPlaca";
 import FilialSelect from "../FilialSelect";
 import ServiceVeiculos from "src/services/ServiceVeiculos";
-import swal from "sweetalert";
 import ListAddItens from "../ListAddItens";
 import "../FormularioCadastroManual/formularioManual.css";
 import somaDebitoVeiculo from "src/Pages/Utils/somaDebitoVeiculo";
+import { verificarManutencaoVeiculo } from "./management";
 
 function FormularioCadastroManual({
 	formik,
@@ -114,6 +116,8 @@ function FormularioCadastroManual({
 				).data.data;
 				setDetalesVeiculo(detalhesVeiculos);
 
+				await verificarManutencaoVeiculo(plate, "alerta");
+
 				return;
 			} else {
 				swal("Não foi encontrado nenhum veículo com essa placa.");
@@ -158,7 +162,6 @@ function FormularioCadastroManual({
 	};
 
 	const DetalhesCargaApp = (e) => {
-		console.log("RRR");
 		const decisaoEnvioCarga = e.target.checked;
 		setDisableColetaEntrega(decisaoEnvioCarga);
 		if (decisaoEnvioCarga) {
@@ -177,6 +180,11 @@ function FormularioCadastroManual({
 			? cargaEnviarApp
 			: cargaNaoEnviarApp;
 		formik.setFieldValue("carga_app", valorCargaAppFormik);
+	};
+
+	const showInfoManutencaoVeiculo = async (plate) => {
+		if (!plate) return swal("Placa inválida");
+		await verificarManutencaoVeiculo(formik.values.placa_veiculo, "info");
 	};
 
 	const titleInfoPlaca = isDetalhesCarreta
@@ -438,6 +446,14 @@ function FormularioCadastroManual({
 								}
 							>
 								Débitos veículo
+							</Button>
+							<Button
+								className="button-info-veic-manual buttons-inf-manutencao"
+								onClick={() =>
+									showInfoManutencaoVeiculo(formik.values.placa_veiculo)
+								}
+							>
+								Manutenção veículo
 							</Button>
 						</Col>
 					</Row>

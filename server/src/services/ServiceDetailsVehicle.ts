@@ -1,4 +1,5 @@
 import database from "../database";
+import AppError from "../models/AppError";
 export default class ServiceDetailsVehicle {
   async index(placa: string) {
     const details = await database.raw(
@@ -207,7 +208,29 @@ export default class ServiceDetailsVehicle {
       [placa]
     );
   }
-}
 
-// const service = new ServiceDetailsVehicle();
-// service.index("GYI2802").then(console.log);
+  async maintenance(placa: string) {
+    if (!placa || placa.length !== 7)
+      throw new AppError("Placa não informada ou com formato incorreto.", 400);
+    const result = database.raw(
+      `
+    select
+      vei_placa,
+      vei_categoria,
+      vei_dt_manut,
+      vei_dt_manut_lub,
+      to_date(vei_dt_manut_lub) - to_date(sysdate) as qtde_dias,
+      case when to_date(vei_dt_manut_lub) is null THEN 'VEÍCULO SEM INFORMAÇÃO DE MANUTENÇÃO'
+           when to_date(vei_dt_manut_lub) -  to_date(sysdate) < 0 then 'MANUTENÇÃO VENCIDA'
+           when to_date(vei_dt_manut_lub) -  to_date(sysdate) > 0 then 'MANUTENÇÃO EM DIA'         
+           END as DESCRICAO
+  from veiculo
+  WHERE vei_dt_manut_lub IS NOT NULL
+  AND VEI_CATEGORIA IN ('F','A') AND ROWNUM = 1 AND vei_placa = ?
+    `,
+      [placa]
+    );
+    const rowResult = await result;
+    return rowResult[0];
+  }
+}
