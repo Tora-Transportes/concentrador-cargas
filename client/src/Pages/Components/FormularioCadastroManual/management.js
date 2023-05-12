@@ -3,16 +3,20 @@ import swal from "sweetalert2";
 import ServiceVeiculos from "../../../services/ServiceVeiculos";
 import utils from "../../Utils/date";
 
-export const verificarManutencaoVeiculo = async (plate, status) => {
+export const verificarManutencaoVeiculo = async (
+	plate,
+	status,
+	tipoVeiculo
+) => {
 	const infoManutencao = (await ServiceVeiculos.manutencao(plate)).data.data;
 
 	const showMsgInfoManutencao = () => {
 		const dias = infoManutencao.QTDE_DIAS?.toString().replace("-", "");
-		let title = "Veículo com manutenção vencida!";
+		let title = `${tipoVeiculo} com manutenção vencida!`;
 		let detalesVencimento = `Manutenção vencida a ${dias} dias!`;
 
 		if (status === "info") {
-			title = "Informações de Manutenção !";
+			title = `Informações de Manutenção ${tipoVeiculo}!`;
 			detalesVencimento = `Faltam ${dias} dias para a manutenção vencer!`;
 		}
 		const myhtml = document.createElement("div");
@@ -28,8 +32,9 @@ export const verificarManutencaoVeiculo = async (plate, status) => {
 				.split("-")[0]
 		},<br>  
     ${detalesVencimento}<br>
-    Categoria: ${categoria}.`;
-		swal.fire({
+    Categoria: ${categoria},<br>
+	Placa: ${plate}`;
+		return swal.fire({
 			title,
 			html: myhtml,
 			confirmButtonColor: "#00652e",
@@ -42,11 +47,11 @@ export const verificarManutencaoVeiculo = async (plate, status) => {
 		status === "alerta"
 	) {
 		showMsgInfoManutencao();
-	} else if (infoManutencao && status === "info") {
+	} else if (infoManutencao) {
 		showMsgInfoManutencao();
 	} else if (status === "info" && !infoManutencao)
-		swal.fire({
-			text: "VEÍCULO SEM INFORMAÇÃO DE MANUTENÇÃO.",
+		return swal.fire({
+			text: `${tipoVeiculo.toUpperCase()} SEM INFORMAÇÕES DE MANUTENÇÃO.`,
 			confirmButtonColor: "#00652e",
 			allowOutsideClick: false,
 		});

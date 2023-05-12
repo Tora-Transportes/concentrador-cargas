@@ -56,6 +56,19 @@
   border: none;
   margin-top: 1rem;
 }
+div .class-botao-manutencao {
+  background: #00652e;
+  border: none;
+  margin-top: 1rem;
+  margin-left: 22px;
+}
+
+div .class-botao-manutencao:focus,
+div .class-botao-manutencao:active {
+  box-shadow: none;
+  background-color: #00652e;
+}
+
 .list-group-flush {
   margin-top: 2rem;
 }
@@ -73,18 +86,6 @@
   margin-bottom: 15px;
   background: #f9faf8;
 }
-
-/* .row-input-placa {
-  padding-top: 15px;
-  box-shadow: 5px 10px #928a8a;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  margin-left: 2px !important;
-  margin-right: 1.5px !important;
-  margin-bottom: 15px;
-  background: #f9faf8;
-  padding-left: 16px !important;
-} */
 
 .col-cod-entrega {
   width: 48.9% !important;
@@ -230,6 +231,9 @@ label {
   .class-botao-Detalhes {
     margin: 0.5rem;
     width: 10rem;
+  }
+  div .class-botao-manutencao {
+    margin-left: 0;
   }
 }
 

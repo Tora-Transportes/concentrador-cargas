@@ -116,7 +116,13 @@ function FormularioCadastroManual({
 				).data.data;
 				setDetalesVeiculo(detalhesVeiculos);
 
-				await verificarManutencaoVeiculo(plate, "alerta");
+				await verificarManutencaoVeiculo(plate, "alerta", "Cavalo");
+				if (vehicleDetails.placa_carreta)
+					await verificarManutencaoVeiculo(
+						vehicleDetails.placa_carreta,
+						"alerta",
+						"Carreta"
+					);
 
 				return;
 			} else {
@@ -184,7 +190,17 @@ function FormularioCadastroManual({
 
 	const showInfoManutencaoVeiculo = async (plate) => {
 		if (!plate) return swal("Placa inválida");
-		await verificarManutencaoVeiculo(formik.values.placa_veiculo, "info");
+		await verificarManutencaoVeiculo(
+			formik.values.placa_veiculo,
+			"info",
+			"Cavalo"
+		);
+		if (formik.values.placa_carreta)
+			await verificarManutencaoVeiculo(
+				formik.values.placa_carreta,
+				"info",
+				"Carreta"
+			);
 	};
 
 	const titleInfoPlaca = isDetalhesCarreta

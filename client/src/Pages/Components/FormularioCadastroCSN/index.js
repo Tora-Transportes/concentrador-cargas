@@ -8,6 +8,7 @@ import somaDebitoVeiculo from "src/Pages/Utils/somaDebitoVeiculo";
 import { funcInputPontoParada, mensagemPlacaEmUso } from "./management";
 import ViewsForm from "./ViewsForm";
 import ServiceCargas from "src/services/ServiceCargas";
+import { verificarManutencaoVeiculo } from "../FormularioCadastroManual/management";
 function FormularioCadastroCSN({ dataComponenteIndex }) {
 	const {
 		formik,
@@ -102,6 +103,7 @@ function FormularioCadastroCSN({ dataComponenteIndex }) {
 		if (plate) {
 			setDetalesVeiculo(null);
 			setDetalesCarreta(null);
+			let exibirManutencao = true;
 			const vehicleDetails = (await ServiceVeiculos.get(plate)).data.data;
 			if (vehicleDetails) {
 				formik.setFieldValue("placa_carreta", vehicleDetails.placa_carreta);
@@ -147,10 +149,21 @@ function FormularioCadastroCSN({ dataComponenteIndex }) {
 
 				if (data.results?.length) {
 					const { id, fk_situacao } = data.results[0];
-					mensagemPlacaEmUso(id, fk_situacao, plate, history, formik);
+					exibirManutencao = false;
+					await mensagemPlacaEmUso(id, fk_situacao, plate, history, formik);
 				}
 
 				setDetalesVeiculo(detalhesVeiculos);
+				if (exibirManutencao) {
+					await verificarManutencaoVeiculo(plate, "alerta", "Cavalo");
+					if (vehicleDetails?.placa_carreta)
+						await verificarManutencaoVeiculo(
+							vehicleDetails.placa_carreta,
+							"alerta",
+							"Carreta"
+						);
+				}
+
 				return;
 			} else {
 				swal("Não foi encontrado nenhum veículo com essa placa.");

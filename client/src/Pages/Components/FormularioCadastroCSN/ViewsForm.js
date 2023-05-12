@@ -21,6 +21,8 @@ import FilialSelect from "../FilialSelect";
 import InputCliente from "../InputCliente";
 import InputPlaca from "../InputPlaca";
 import InputsPontoPassagem from "./InputPontoPassagem";
+import { verificarManutencaoVeiculo } from "../FormularioCadastroManual/management";
+import swal from "sweetalert";
 
 function ViewsForm({ dataComponenteFormulario }) {
 	const {
@@ -96,6 +98,20 @@ function ViewsForm({ dataComponenteFormulario }) {
 			setRequiredPlaca(false);
 		}
 	}, [isCargaApp]);
+	const showInfoManutencaoVeiculo = async (plate) => {
+		if (!plate) return swal("Placa inválida");
+		await verificarManutencaoVeiculo(
+			formik.values.placa_veiculo,
+			"info",
+			"Cavalo"
+		);
+		if (formik.values.placa_carreta)
+			await verificarManutencaoVeiculo(
+				formik.values.placa_carreta,
+				"info",
+				"Carreta"
+			);
+	};
 
 	const titleInfoPlaca = isDetalhesCarreta
 		? "Dados do Veículo / Dados Carreta"
@@ -392,7 +408,7 @@ function ViewsForm({ dataComponenteFormulario }) {
 							)}
 						</Col>
 
-						<Col className="col-buttons-inf-veiculos mt-3">
+						<Col md={12} className="col-buttons-inf-veiculos mt-3">
 							<Button
 								className="class-botao-Detalhes"
 								id="botao-detail-veiculo"
@@ -410,6 +426,15 @@ function ViewsForm({ dataComponenteFormulario }) {
 								}
 							>
 								Débitos veículo
+							</Button>
+							<Button
+								className="class-botao-manutencao"
+								id="botao-deb-veiculo"
+								onClick={() =>
+									showInfoManutencaoVeiculo(formik.values.placa_veiculo)
+								}
+							>
+								Manutenção veículo
 							</Button>
 						</Col>
 					</Row>
