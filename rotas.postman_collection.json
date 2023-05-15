@@ -1,0 +1,2369 @@
+{
+	"info": {
+		"_postman_id": "bab02fb6-5bec-402e-9afd-e6381ea03f0f",
+		"name": "concentradoCarga",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Routers Code",
+			"item": [
+				{
+					"name": "buscar coordenadas search",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}coordenadas?page=1&limit=10",
+							"host": [
+								"{{URL}}coordenadas"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar cargas",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}cargas/?e_lote=0&limit=10&busca_inicio=2023-03-02T03:00:00.000Z&busca_fim=2023-04-01T03:00:00.000Z",
+							"host": [
+								"{{URL}}cargas"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "e_lote",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "busca_inicio",
+									"value": "2023-03-02T03:00:00.000Z"
+								},
+								{
+									"key": "busca_fim",
+									"value": "2023-04-01T03:00:00.000Z"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar cnpj client",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}recomendacoes/organizacoes/?cidade=IPATINGA",
+							"host": [
+								"{{URL}}recomendacoes"
+							],
+							"path": [
+								"organizacoes",
+								""
+							],
+							"query": [
+								{
+									"key": "cidade",
+									"value": "IPATINGA"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar  dodos credenciais",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}credenciais",
+							"host": [
+								"{{url}}credenciais"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar  credenciais user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "4&transport=polling&t=O6LnotB",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}credenciais/usiminas/US204683",
+							"host": [
+								"{{url}}credenciais"
+							],
+							"path": [
+								"usiminas",
+								"US204683"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar veiculo por placa",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}veiculos/RGA4F55",
+							"host": [
+								"{{URL}}veiculos"
+							],
+							"path": [
+								"RGA4F55"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar detalhes veiculo por placa",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}veiculos/RGA4F55/detalhes",
+							"host": [
+								"{{URL}}veiculos"
+							],
+							"path": [
+								"RGA4F55",
+								"detalhes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar produtos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "4&transport=polling&t=O6LnotB",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}produtos",
+							"host": [
+								"{{url}}produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recomendações filiais",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"acessorios_requisitos\": \"Teste moi\",\r\n    \"canal_comunicacao\": \"manual\",\r\n    \"cliente\": \"\\tCERGRAN DISTRIBUIDORA ATACADISTA DE PRO - 08819789000119 - PASSOS/MG\",\r\n    \"codigo_motorista\": 135861001,\r\n    \"data_coleta\": \"2022-08-01\",\r\n    \"data_entrega\": \"2022-08-02\",\r\n    \"destino_carga\": \"BRASIL/MG/CONTAGEM\",\r\n    \"documento_transporte\": \"15074145\",\r\n    \"e_lote\": false,\r\n    \"fk_filial\": \"4\",\r\n    \"informacoes_restritivas\": \"Teste moi\",\r\n    \"janela_coleta\": \"\",\r\n    \"janela_entrega\": \"\",\r\n    \"locais\": [],\r\n    \"observacao\": \"Teste moi\",\r\n    \"origem_carga\": \"BRASIL/MG/BETIM\",\r\n    \"placa_bitrem\": null,\r\n    \"placa_carreta\": null,\r\n    \"placa_veiculo\": \"AKE2269\",\r\n    \"quantidade\": 1000,\r\n    \"responsavel_cadastro\": \"Moises Pires de Castro\",\r\n    \"tipo_carga\": \"ARGAMASSA\",\r\n    \"unidade_medida\": \"KG\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}recomendacoes/filiais",
+							"host": [
+								"{{URL}}recomendacoes"
+							],
+							"path": [
+								"filiais"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar recomendações localidade",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}recomendacoes/locais/?query=SP&sigla_estado=sp",
+							"host": [
+								"{{URL}}recomendacoes"
+							],
+							"path": [
+								"locais",
+								""
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "SP"
+								},
+								{
+									"key": "sigla_estado",
+									"value": "sp"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar recome localidade p uf",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}recomendacoes/locais/estado?uf=MG&cidade= PASSOS",
+							"host": [
+								"{{URL}}recomendacoes"
+							],
+							"path": [
+								"locais",
+								"estado"
+							],
+							"query": [
+								{
+									"key": "uf",
+									"value": "MG"
+								},
+								{
+									"key": "cidade",
+									"value": " PASSOS"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar recomendações Organizacoes",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}recomendacoes/organizacoes",
+							"host": [
+								"{{URL}}recomendacoes"
+							],
+							"path": [
+								"organizacoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar coordenadas",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}coordenadas/empresa/08819789000119/?distancia_km=20",
+							"host": [
+								"{{URL}}coordenadas"
+							],
+							"path": [
+								"empresa",
+								"08819789000119",
+								""
+							],
+							"query": [
+								{
+									"key": "distancia_km",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar destino da carga",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "4&transport=polling&t=O6LnotB",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}coordenadas/AKE2269/empresa/08819789000119",
+							"host": [
+								"{{url}}coordenadas"
+							],
+							"path": [
+								"AKE2269",
+								"empresa",
+								"08819789000119"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Permissão user index oid",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjY0OTY4MDMxLCJuYmYiOjE2NjQ5NjgwMzEsImV4cCI6MTY2NDk3MTkzMSwiYWlvIjoiQVdRQW0vOFRBQUFBVTI0S2ZQdmdCZE1OYmNveDZKTHE5bjVmMmFFbDNMSXo0NDNtcVBKRGxVT3FLd2JCV0FEc0R5Wmg4QndaaEtNY1ZaSFB6UmM3ZmI5amxrZFNSdllHem9mOWVvcmg2MCtmbUNEdXR6N3Q1TlhQSjhTMEloeWdvdG5hUkpibXA0bUwiLCJhbXIiOlsicHdkIiwicnNhIiwibWZhIl0sImZhbWlseV9uYW1lIjoiUGlyZXMgZGUgQ2FzdHJvIiwiZ2l2ZW5fbmFtZSI6Ik1vaXNlcyIsImlwYWRkciI6IjE4OS44MC4xMzkuMTAwIiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImZmMGZkZTkwLTI1MDMtNDY3NC1iYWViLWQ4NzM4ZGI4MzFmMyIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJMaWNfR0hPTWtVQzQ3QkhnTWp5c0FBIiwidmVyIjoiMS4wIn0.ahCRckkr-q2v33ThGLlBL_f8AoXNg-5gKta7LjVEaDBAWe205TBA2eTdAiVtsA74-nVQUznXIkoHHeTQXASxeRJKhfbU1JR63-7r-1jcX8l-4KbTNfYnoKABMhuJTgNnzuS5SjWuHl-bLnsh5OnR7fmLcsjc9KeM5sFQYGhjWUXThdLX3ez_6uqToIhAD5IhXoarbakPbzm0e6UeyznEpcDKbx6kzayrYz9A9I1IpSJSig1ZZd_9YaN6dfkBnQroPL0yZaCTdQ2jj-3L8DIV1oYJ1IPWk4bw8gSdWxjYQ2I0Ygsaa2PVkoqkc07ZAcrfTLatL2v9YjPv9JpCqBvAKQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/usuarios/8f557d71-04c6-4886-9f30-0bd7ecc91077",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"usuarios",
+								"8f557d71-04c6-4886-9f30-0bd7ecc91077"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Permissão user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjY0OTY4MDMxLCJuYmYiOjE2NjQ5NjgwMzEsImV4cCI6MTY2NDk3MTkzMSwiYWlvIjoiQVdRQW0vOFRBQUFBVTI0S2ZQdmdCZE1OYmNveDZKTHE5bjVmMmFFbDNMSXo0NDNtcVBKRGxVT3FLd2JCV0FEc0R5Wmg4QndaaEtNY1ZaSFB6UmM3ZmI5amxrZFNSdllHem9mOWVvcmg2MCtmbUNEdXR6N3Q1TlhQSjhTMEloeWdvdG5hUkpibXA0bUwiLCJhbXIiOlsicHdkIiwicnNhIiwibWZhIl0sImZhbWlseV9uYW1lIjoiUGlyZXMgZGUgQ2FzdHJvIiwiZ2l2ZW5fbmFtZSI6Ik1vaXNlcyIsImlwYWRkciI6IjE4OS44MC4xMzkuMTAwIiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImZmMGZkZTkwLTI1MDMtNDY3NC1iYWViLWQ4NzM4ZGI4MzFmMyIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJMaWNfR0hPTWtVQzQ3QkhnTWp5c0FBIiwidmVyIjoiMS4wIn0.ahCRckkr-q2v33ThGLlBL_f8AoXNg-5gKta7LjVEaDBAWe205TBA2eTdAiVtsA74-nVQUznXIkoHHeTQXASxeRJKhfbU1JR63-7r-1jcX8l-4KbTNfYnoKABMhuJTgNnzuS5SjWuHl-bLnsh5OnR7fmLcsjc9KeM5sFQYGhjWUXThdLX3ez_6uqToIhAD5IhXoarbakPbzm0e6UeyznEpcDKbx6kzayrYz9A9I1IpSJSig1ZZd_9YaN6dfkBnQroPL0yZaCTdQ2jj-3L8DIV1oYJ1IPWk4bw8gSdWxjYQ2I0Ygsaa2PVkoqkc07ZAcrfTLatL2v9YjPv9JpCqBvAKQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}usuarios/nome?q=padrao&page1",
+							"host": [
+								"{{URL}}usuarios"
+							],
+							"path": [
+								"nome"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "padrao"
+								},
+								{
+									"key": "page1",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar usuarios OID",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "4&transport=polling&t=O6LnotB",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}usuarios/5d55d306-13d6-45dd-9bc7-4e67b9b705d5",
+							"host": [
+								"{{url}}usuarios"
+							],
+							"path": [
+								"5d55d306-13d6-45dd-9bc7-4e67b9b705d5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Salvar carga cadastrada",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5MzU0NjczLCJuYmYiOjE2NTkzNTQ2NzMsImV4cCI6MTY1OTM1ODU3MywiYWlvIjoiQVZRQXEvOFRBQUFBakhGZXJvOHhMQ2w4Q251UWxHQXpVTndwYVlZYkF2dWFqWVEvMnhPYXBGNXFkWEh2ZE90Vlc1cGIycGNNdkwvZHpUVzh0S0FLcHdHUEJacG9CdTVmR20wRk9LVVcvTTIveUNpcWkvc0FXcGs9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6IjEzMTJiYjIyLWY0ZmUtNDQxZS05OTEzLTViNjBhODhhZjVhNCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJPLWtEck1LN3ZFaUMyNVlFMmlKY0FRIiwidmVyIjoiMS4wIn0.Xu0RWnWLlsvnFjswSkZnS_tq8W1jj628ZtkqN-jf1pSUahW7KF0EDKO29aw7xu-GsooAD7AYN7xAMc4a1--GCZhBLn3CwjE7EJsIgy6O4oVD2vlSQPKgEO6NSZN4ueQUQUlpVUXL428CSbZq51F7g35gzuQij6o-vD8ZsgYr6twTPHAlPwnFb4KD5bgHlCaPcnkNF4aUl1ThFcPTmNELK7H-3D62AyWC_CjNe8i6jsd4Ujod7uHecuW1oCEmje8b4b-2jD1V_i7m1pXjeg_xWLgnnRXFsdUrhZR3fprNG9O0SRZuF6-BAjOe7Vk70oBujMoiLCItkj2N5pt1JvZ8hg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"acessorios_requisitos\": \"Teste moi\",\r\n    \"canal_comunicacao\": \"manual\",\r\n    \"cliente\": \"\\tCERGRAN DISTRIBUIDORA ATACADISTA DE PRO - 08819789000119 - PASSOS/MG\",\r\n    \"codigo_motorista\": 135861001,\r\n    \"data_coleta\": \"2022-08-01\",\r\n    \"data_entrega\": \"2022-08-02\",\r\n    \"destino_carga\": \"BRASIL/MG/CONTAGEM\",\r\n    \"documento_transporte\": \"15074145\",\r\n    \"e_lote\": false,\r\n    \"fk_filial\": \"4\",\r\n    \"informacoes_restritivas\": \"Teste moi\",\r\n    \"janela_coleta\": \"\",\r\n    \"janela_entrega\": \"\",\r\n    \"locais\": [],\r\n    \"observacao\": \"Teste moi\",\r\n    \"origem_carga\": \"BRASIL/MG/BETIM\",\r\n    \"placa_bitrem\": null,\r\n    \"placa_carreta\": null,\r\n    \"placa_veiculo\": \"AKE2269\",\r\n    \"quantidade\": 1000,\r\n    \"responsavel_cadastro\": \"Moises Pires de Castro\",\r\n    \"tipo_carga\": \"ARGAMASSA\",\r\n    \"unidade_medida\": \"KG\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}cargas",
+							"host": [
+								"{{URL}}cargas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Salvar carga cadastrada csn",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5MzU0NjczLCJuYmYiOjE2NTkzNTQ2NzMsImV4cCI6MTY1OTM1ODU3MywiYWlvIjoiQVZRQXEvOFRBQUFBakhGZXJvOHhMQ2w4Q251UWxHQXpVTndwYVlZYkF2dWFqWVEvMnhPYXBGNXFkWEh2ZE90Vlc1cGIycGNNdkwvZHpUVzh0S0FLcHdHUEJacG9CdTVmR20wRk9LVVcvTTIveUNpcWkvc0FXcGs9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6IjEzMTJiYjIyLWY0ZmUtNDQxZS05OTEzLTViNjBhODhhZjVhNCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJPLWtEck1LN3ZFaUMyNVlFMmlKY0FRIiwidmVyIjoiMS4wIn0.Xu0RWnWLlsvnFjswSkZnS_tq8W1jj628ZtkqN-jf1pSUahW7KF0EDKO29aw7xu-GsooAD7AYN7xAMc4a1--GCZhBLn3CwjE7EJsIgy6O4oVD2vlSQPKgEO6NSZN4ueQUQUlpVUXL428CSbZq51F7g35gzuQij6o-vD8ZsgYr6twTPHAlPwnFb4KD5bgHlCaPcnkNF4aUl1ThFcPTmNELK7H-3D62AyWC_CjNe8i6jsd4Ujod7uHecuW1oCEmje8b4b-2jD1V_i7m1pXjeg_xWLgnnRXFsdUrhZR3fprNG9O0SRZuF6-BAjOe7Vk70oBujMoiLCItkj2N5pt1JvZ8hg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"acessorios_requisitos\": \"Teste moi\",\r\n    \"canal_comunicacao\": \"manual\",\r\n    \"cliente\": \"\\tCERGRAN DISTRIBUIDORA ATACADISTA DE PRO - 08819789000119 - PASSOS/MG\",\r\n    \"codigo_motorista\": 135861001,\r\n    \"data_coleta\": \"2022-08-01\",\r\n    \"data_entrega\": \"2022-08-02\",\r\n    \"destino_carga\": \"BRASIL/MG/CONTAGEM\",\r\n    \"documento_transporte\": \"15074145\",\r\n    \"e_lote\": false,\r\n    \"fk_filial\": \"4\",\r\n    \"informacoes_restritivas\": \"Teste moi\",\r\n    \"janela_coleta\": \"\",\r\n    \"janela_entrega\": \"\",\r\n    \"locais\": [],\r\n    \"observacao\": \"Teste moi\",\r\n    \"origem_carga\": \"BRASIL/MG/BETIM\",\r\n    \"placa_bitrem\": null,\r\n    \"placa_carreta\": null,\r\n    \"placa_veiculo\": \"AKE2269\",\r\n    \"quantidade\": 1000,\r\n    \"responsavel_cadastro\": \"Moises Pires de Castro\",\r\n    \"tipo_carga\": \"ARGAMASSA\",\r\n    \"unidade_medida\": \"KG\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}cargas",
+							"host": [
+								"{{URL}}cargas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar permissões user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"DELETAR_CARGAS\": \"DELETAR_CARGAS\",\r\n    \"ALTERAR_PERMISSOES\": \"ALTERAR_PERMISSOES\",\r\n    \"CADASTRAR_PRODUTOS\": \"CADASTRAR_PRODUTOS\",\r\n    \"APROVAR_VEICULOS\": \"APROVAR_VEICULOS\",\r\n    \"APROVAR_VIAGEM\": \"APROVAR_VIAGEM\",\r\n    \"VINCULAR_PLACA\": \"VINCULAR_PLACA\",\r\n    \"REGISTRAR_JUSTIFICATIVA\": \"REGISTRAR_JUSTIFICATIVA\",\r\n    \"CARGAS_CSN\": \"CARGAS_CSN\",\r\n    \"CARGAS_PADRAO\": \"CARGAS_PADRAO\",\r\n    \"FINALIZAR_CARGAS_CSN\": \"FINALIZAR_CARGAS_CSN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}usuarios/8f557d71-04c6-4886-9f30-0bd7ecc91077/permissoes",
+							"host": [
+								"{{URL}}usuarios"
+							],
+							"path": [
+								"8f557d71-04c6-4886-9f30-0bd7ecc91077",
+								"permissoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar relatorios do veiculo por placa",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}relatorio/producao_veiculo/AKE2269",
+							"host": [
+								"{{URL}}relatorio"
+							],
+							"path": [
+								"producao_veiculo",
+								"AKE2269"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar relatorios toalizador (Relatórios)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}relatorio/totalizadores?data_inicio=&data_final=&fk_filial=&carga_csn=1",
+							"host": [
+								"{{URL}}relatorio"
+							],
+							"path": [
+								"totalizadores"
+							],
+							"query": [
+								{
+									"key": "data_inicio",
+									"value": ""
+								},
+								{
+									"key": "data_final",
+									"value": ""
+								},
+								{
+									"key": "fk_filial",
+									"value": ""
+								},
+								{
+									"key": "carga_csn",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar detales veiculo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}veiculos/BSG9882/detalhes",
+							"host": [
+								"{{URL}}veiculos"
+							],
+							"path": [
+								"BSG9882",
+								"detalhes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar veiculo no raio de outro veiculo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}coordenadas/BSG9882/range?distancia_km=5",
+							"host": [
+								"{{URL}}coordenadas"
+							],
+							"path": [
+								"BSG9882",
+								"range"
+							],
+							"query": [
+								{
+									"key": "distancia_km",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Exportar excel de cargas",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}relatorio/cargas?e_lote=0&fk_filial=8&date_execel_inicio=2022-08-01&date_execel_fim=2022-08-17",
+							"host": [
+								"{{URL}}relatorio"
+							],
+							"path": [
+								"cargas"
+							],
+							"query": [
+								{
+									"key": "e_lote",
+									"value": "0"
+								},
+								{
+									"key": "fk_filial",
+									"value": "8"
+								},
+								{
+									"key": "date_execel_inicio",
+									"value": "2022-08-01"
+								},
+								{
+									"key": "date_execel_fim",
+									"value": "2022-08-17"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Exportar excel de cargas LOTE",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}relatorio/cargas?e_lote=1&fk_filial=92&date_execel_inicio=2022-02-01&date_execel_fim=2022-02-28",
+							"host": [
+								"{{URL}}relatorio"
+							],
+							"path": [
+								"cargas"
+							],
+							"query": [
+								{
+									"key": "e_lote",
+									"value": "1"
+								},
+								{
+									"key": "fk_filial",
+									"value": "92"
+								},
+								{
+									"key": "date_execel_inicio",
+									"value": "2022-02-01"
+								},
+								{
+									"key": "date_execel_fim",
+									"value": "2022-02-28"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Exportar excel de coordenadas",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}relatorio/coordenadas?categoria_veiculo=C&date_execel_inicio=2022-10-01&date_execel_fim=2022-10-05",
+							"host": [
+								"{{URL}}relatorio"
+							],
+							"path": [
+								"coordenadas"
+							],
+							"query": [
+								{
+									"key": "categoria_veiculo",
+									"value": "C"
+								},
+								{
+									"key": "date_execel_inicio",
+									"value": "2022-10-01"
+								},
+								{
+									"key": "date_execel_fim",
+									"value": "2022-10-05"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Exportar excel  pg relatorios",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjY0OTY4MDMxLCJuYmYiOjE2NjQ5NjgwMzEsImV4cCI6MTY2NDk3MTkzMSwiYWlvIjoiQVdRQW0vOFRBQUFBVTI0S2ZQdmdCZE1OYmNveDZKTHE5bjVmMmFFbDNMSXo0NDNtcVBKRGxVT3FLd2JCV0FEc0R5Wmg4QndaaEtNY1ZaSFB6UmM3ZmI5amxrZFNSdllHem9mOWVvcmg2MCtmbUNEdXR6N3Q1TlhQSjhTMEloeWdvdG5hUkpibXA0bUwiLCJhbXIiOlsicHdkIiwicnNhIiwibWZhIl0sImZhbWlseV9uYW1lIjoiUGlyZXMgZGUgQ2FzdHJvIiwiZ2l2ZW5fbmFtZSI6Ik1vaXNlcyIsImlwYWRkciI6IjE4OS44MC4xMzkuMTAwIiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImZmMGZkZTkwLTI1MDMtNDY3NC1iYWViLWQ4NzM4ZGI4MzFmMyIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJMaWNfR0hPTWtVQzQ3QkhnTWp5c0FBIiwidmVyIjoiMS4wIn0.ahCRckkr-q2v33ThGLlBL_f8AoXNg-5gKta7LjVEaDBAWe205TBA2eTdAiVtsA74-nVQUznXIkoHHeTQXASxeRJKhfbU1JR63-7r-1jcX8l-4KbTNfYnoKABMhuJTgNnzuS5SjWuHl-bLnsh5OnR7fmLcsjc9KeM5sFQYGhjWUXThdLX3ez_6uqToIhAD5IhXoarbakPbzm0e6UeyznEpcDKbx6kzayrYz9A9I1IpSJSig1ZZd_9YaN6dfkBnQroPL0yZaCTdQ2jj-3L8DIV1oYJ1IPWk4bw8gSdWxjYQ2I0Ygsaa2PVkoqkc07ZAcrfTLatL2v9YjPv9JpCqBvAKQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}relatorio/totalizadores/ativas?data_inicio=2022-09-01&data_final=2022-09-07&fk_filial=8",
+							"host": [
+								"{{URL}}relatorio"
+							],
+							"path": [
+								"totalizadores",
+								"ativas"
+							],
+							"query": [
+								{
+									"key": "data_inicio",
+									"value": "2022-09-01"
+								},
+								{
+									"key": "data_final",
+									"value": "2022-09-07"
+								},
+								{
+									"key": "fk_filial",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "New Routers",
+			"item": [
+				{
+					"name": "Rotas csn",
+					"item": [
+						{
+							"name": "buscar situação carga csn",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}csn/situacoes/cargas",
+									"host": [
+										"{{URL}}csn"
+									],
+									"path": [
+										"situacoes",
+										"cargas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar rotas Csn",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/csn/cargas",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"csn",
+										"cargas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar ponto parada por index",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}csn/ponto_parada",
+									"host": [
+										"{{URL}}csn"
+									],
+									"path": [
+										"ponto_parada"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar ponto parada por id carga",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}csn/ponto_parada/11374429",
+									"host": [
+										"{{URL}}csn"
+									],
+									"path": [
+										"ponto_parada",
+										"11374429"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar cargas Csn Info",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}csn/cargas/info?page=1&e_lote=0&limit=10&busca_inicio=2023-04-09T03:00:00.000Z&busca_fim=2023-05-10T03:00:00.000Z",
+									"host": [
+										"{{URL}}csn"
+									],
+									"path": [
+										"cargas",
+										"info"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "e_lote",
+											"value": "0"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "busca_inicio",
+											"value": "2023-04-09T03:00:00.000Z"
+										},
+										{
+											"key": "busca_fim",
+											"value": "2023-05-10T03:00:00.000Z"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar carca por fk_situacao",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}csn/cargas/placa?placa=RGA4F55",
+									"host": [
+										"{{URL}}csn"
+									],
+									"path": [
+										"cargas",
+										"placa"
+									],
+									"query": [
+										{
+											"key": "placa",
+											"value": "RGA4F55"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar cargas Csn Info index",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}/csn/cargas/info/11374259",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"csn",
+										"cargas",
+										"info",
+										"11374259"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Salvar rota CSN",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"DESCRICAO\": \"teste moises \",\r\n    \"LATITUDE\": \"-00000000000\",\r\n    \"LONGITUDE\": \"3455.122366968774412256\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}csn/cargas",
+									"host": [
+										"{{URL}}csn"
+									],
+									"path": [
+										"cargas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Salvar ponto parada relacional",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_carga\": 20363526,\r\n    \"ponto_passagem5\": {\r\n        \"client\": \"CDA INDUSTRIA E COMERCIO DE ACOS LTDA - 25291776000139 - MARACANAU/CE\",\r\n        \"entregaFinal\": 0,\r\n        \"latitude\": -3.86794,\r\n        \"longitude\": -38.60512,\r\n        \"ponto\": \"\",\r\n        \"previsao\": \"2023-04-26T15:41\",\r\n        \"previsaoSaida\": \"2023-04-26T15:42\",\r\n        \"tipoServico\": \"Entrega\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}csn/ponto_parada",
+									"host": [
+										"{{URL}}csn"
+									],
+									"path": [
+										"ponto_parada"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar carga csn index",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}csn/cargas/info?page=1&id=11373782&fk_situacao=1&carga_csn=1",
+									"host": [
+										"{{URL}}csn"
+									],
+									"path": [
+										"cargas",
+										"info"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "id",
+											"value": "11373782"
+										},
+										{
+											"key": "fk_situacao",
+											"value": "1"
+										},
+										{
+											"key": "carga_csn",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar rota CSN",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"DESCRICAO\": \"AAAAAPAGAR TESTE EDITADO\",\r\n    \"LATITUDE\": \"-22.505\",\r\n    \"LATITUDE2\": -22.506,\r\n    \"LONGITUDE\": -30.5562\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}csn/cargas/48",
+									"host": [
+										"{{URL}}csn"
+									],
+									"path": [
+										"cargas",
+										"48"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar ponto de parada relacional",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"acessorios_requisitos\": null,\r\n\"canal_comunicacao\": \"manual\",\r\n\"carga_csn\": 1,\r\n\"cliente\": \"COMPANHIA SIDERURGICA NACIONAL - 33042730001771 - VOLTA REDONDA/RJ\",\r\n\"codigo_motorista\": \"132583001\",\r\n\"data_atualizacao\": \"2023-01-23T09:35:49.000Z\",\r\n\"data_coleta\": \"2023-01-20T00:00:00.000Z\",\r\n\"data_entrega\": \"2023-01-20T00:00:00.000Z\",\r\n\"destino_carga\": \"BRASIL/SP/SANTOS\",\r\n\"documento_transporte\": \"2222000\",\r\n\"e_lote\": false,\r\n\"fk_filial\": 128,\r\n\"id\": 11374259,\r\n\"informacoes_restritivas\": null,\r\n\"janela_coleta\": null,\r\n\"janela_entrega\": null,\r\n\"observacao\": null,\r\n\"observacao_cancelamento\": null,\r\n\"observacao_gr\": \"tora\",\r\n\"origem_carga\": \"BRASIL/RJ/VOLTA REDONDA\",\r\n\"placa_bitrem\": null,\r\n\"placa_carreta\": \"NYV9143\",\r\n\"placa_veiculo\": \"RGA4F60\",\r\n\"quantidade\": 21,\r\n\"quantidade_atual\": 21,\r\n\"rastreador\": \"1556058\",\r\n\"responsavel_cadastro\": \"Moises Pires de Castro\",\r\n\"tipo_carga\": \"AÇO\",\r\n\"unidade_medida\": \"KG\",\r\n\"usuario\": \"Moises Pires de Castro\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}csn/cargas/info/11374259",
+									"host": [
+										"{{URL}}csn"
+									],
+									"path": [
+										"cargas",
+										"info",
+										"11374259"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edita ponto parada patch",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"COLETA_EFETIVA_POSTO30\": \"2023-02-03T13:00:00.000Z\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/csn/ponto_parada/1569",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"csn",
+										"ponto_parada",
+										"1569"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Editar ponto de parada relacional patch",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}apagar",
+									"host": [
+										"{{URL}}apagar"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete ponto parada (relacionamento)",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}csn/ponto_parada/24300",
+									"host": [
+										"{{URL}}csn"
+									],
+									"path": [
+										"ponto_parada",
+										"24300"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete rota CSN",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}csn/cargas/5",
+									"host": [
+										"{{URL}}csn"
+									],
+									"path": [
+										"cargas",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all router CSN",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{URL}}csn/cargas",
+									"host": [
+										"{{URL}}csn"
+									],
+									"path": [
+										"cargas"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Avisos",
+					"item": [
+						{
+							"name": "Criar avisos",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyIsImtpZCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjgzMDMzNjEwLCJuYmYiOjE2ODMwMzM2MTAsImV4cCI6MTY4MzAzNzUxMCwiYWlvIjoiQVRRQXkvOFRBQUFBV20vdmkrRzJ1K0tlUEN1Q2QyMXgwcThCWnN5VUhMUk4ybWFyeXdOQTVEV0FoWitDMDAzRDE1K1pacVpCcGZFayIsImFtciI6WyJwd2QiXSwiZmFtaWx5X25hbWUiOiJNYXJ0aW5zIGRhIFNpbHZhIiwiZ2l2ZW5fbmFtZSI6IkdhYnJpZWxsZSIsImlwYWRkciI6IjIwMS40OC4zMC43MyIsIm5hbWUiOiJHYWJyaWVsbGUgTWFydGlucyBkYSBTaWx2YSIsIm5vbmNlIjoiOWQ1ZWUzMWItYzcxOS00M2UzLTk4ODYtMjBiY2NlYzE2YWJiIiwib2lkIjoiMDQyYWY4ZDMtMzY2Zi00ZmFiLWEzOTEtYWZhOGJjYjI3ZGQ4Iiwib25wcmVtX3NpZCI6IlMtMS01LTIxLTIwMDc2NDczODctMTg3MzM2Mzk4OS0zNzYzOTM0MjQzLTI5MDM5IiwicmgiOiIwLkFROEFTYWZ0Vmw2NWRFcVQzdkFmMXJGaHpOdWZyTVNuMnJsRnVveWMwYnYwN0RnUEFPMC4iLCJzdWIiOiJYaU1GQ2Q2MDlkRkk5Q0VwLWVXREtIaXdZYjRQdTlCRXBTWF9iMld6MTIwIiwidGlkIjoiNTZlZGE3NDktYjk1ZS00YTc0LTkzZGUtZjAxZmQ2YjE2MWNjIiwidW5pcXVlX25hbWUiOiJnYWJyaWVsbGUubWFydGluc0B0b3JhLmNvbS5iciIsInVwbiI6ImdhYnJpZWxsZS5tYXJ0aW5zQHRvcmEuY29tLmJyIiwidXRpIjoiTFJzaDNKQ0Fja3FpaF8zY1JqQUZBUSIsInZlciI6IjEuMCJ9.TQ9KyGgRMDnCWIJT7ymoMtnaLwzARB4MzjmQr2wmPWh5EXykZ-hPX27blKd-gfJEhsiawuMpG_qnQJjS9xc7C0ys_lgERD6wuwLtiWQaxnxfqHzQXdZnrIIZmki9ykSljMX7FWedBQRFmfyEQIcQfho4zut7KKSUIHyidtwHNXPF10uMsSyBcWHUdbquaqVLhn1ldFdpQcoCsv-hJupFwf0mXWVh-fLKf56GRmE2kTHFc1S8yjgKvpvPqUGsgqZsAGbno9DHiCE993m0fuRvzXBvJ_1Bjy1eAiDOvTAuWxZRDf_gmPwUf6P98ON_DcN4ccyqO4NsD6KiPmaPk_lA9w",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"MENSAGEM\":  \"Testando o webSocket da rota de avisos em todas as telas.\",\r\n    \"AUTOR\": \"MOISES PIRES DE CASTRO\",\r\n    \"TITULO\": \"Testando webSocket 130 \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}avisos",
+									"host": [
+										"{{URL}}avisos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar avisos index",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"MENSAGEM\": \"Teste webSockt Moi 12-04, aviso atualizado.\",\r\n    \"AUTOR\": \"MOISES PIRES DE CASTRO\",\r\n    \"TITULO\": \"ESTE AVISO FOI ATUALIZADO TESTE 25\",\r\n    \"LIKE_OF\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}avisos/398",
+									"host": [
+										"{{URL}}avisos"
+									],
+									"path": [
+										"398"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "api bigMap",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "CljX85lOCKB5KGVF0c76~6FnU9jIK85YyfXs1f9p5tg~AgXlBzCfarsc8MZhJ8sIANMrra8JYsDtaI22OX5z0GCsdZna_fNVFYlMoj-xkzPu",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"origins\": [\r\n        {\r\n            \"latitude\": -22.4314051,\r\n            \"longitude\": -44.34552\r\n        }\r\n    ],\r\n    \"destinations\": [\r\n        {\r\n            \"latitude\": -20.454435999999998,\r\n            \"longitude\": -45.459337\r\n        }\r\n    ],\r\n    \"travelMode\": \"Driving\",\r\n    \"timeUnit\": \"second\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix?key=CljX85lOCKB5KGVF0c76~6FnU9jIK85YyfXs1f9p5tg~AgXlBzCfarsc8MZhJ8sIANMrra8JYsDtaI22OX5z0GCsdZna_fNVFYlMoj-xkzPu",
+									"protocol": "https",
+									"host": [
+										"dev",
+										"virtualearth",
+										"net"
+									],
+									"path": [
+										"REST",
+										"v1",
+										"Routes",
+										"DistanceMatrix"
+									],
+									"query": [
+										{
+											"key": "key",
+											"value": "CljX85lOCKB5KGVF0c76~6FnU9jIK85YyfXs1f9p5tg~AgXlBzCfarsc8MZhJ8sIANMrra8JYsDtaI22OX5z0GCsdZna_fNVFYlMoj-xkzPu"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deletar avisos",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"TITULO\": \"TESTE\",\r\n    \"MENSAGEM\": \"TESTANDO A ROTA DE AVISO\",\r\n    \"AUTOR\": \"MOISES TESTE\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}avisos/49",
+									"host": [
+										"{{URL}}avisos"
+									],
+									"path": [
+										"49"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar avisos",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyIsImtpZCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjgzMDMzNjEwLCJuYmYiOjE2ODMwMzM2MTAsImV4cCI6MTY4MzAzNzUxMCwiYWlvIjoiQVRRQXkvOFRBQUFBV20vdmkrRzJ1K0tlUEN1Q2QyMXgwcThCWnN5VUhMUk4ybWFyeXdOQTVEV0FoWitDMDAzRDE1K1pacVpCcGZFayIsImFtciI6WyJwd2QiXSwiZmFtaWx5X25hbWUiOiJNYXJ0aW5zIGRhIFNpbHZhIiwiZ2l2ZW5fbmFtZSI6IkdhYnJpZWxsZSIsImlwYWRkciI6IjIwMS40OC4zMC43MyIsIm5hbWUiOiJHYWJyaWVsbGUgTWFydGlucyBkYSBTaWx2YSIsIm5vbmNlIjoiOWQ1ZWUzMWItYzcxOS00M2UzLTk4ODYtMjBiY2NlYzE2YWJiIiwib2lkIjoiMDQyYWY4ZDMtMzY2Zi00ZmFiLWEzOTEtYWZhOGJjYjI3ZGQ4Iiwib25wcmVtX3NpZCI6IlMtMS01LTIxLTIwMDc2NDczODctMTg3MzM2Mzk4OS0zNzYzOTM0MjQzLTI5MDM5IiwicmgiOiIwLkFROEFTYWZ0Vmw2NWRFcVQzdkFmMXJGaHpOdWZyTVNuMnJsRnVveWMwYnYwN0RnUEFPMC4iLCJzdWIiOiJYaU1GQ2Q2MDlkRkk5Q0VwLWVXREtIaXdZYjRQdTlCRXBTWF9iMld6MTIwIiwidGlkIjoiNTZlZGE3NDktYjk1ZS00YTc0LTkzZGUtZjAxZmQ2YjE2MWNjIiwidW5pcXVlX25hbWUiOiJnYWJyaWVsbGUubWFydGluc0B0b3JhLmNvbS5iciIsInVwbiI6ImdhYnJpZWxsZS5tYXJ0aW5zQHRvcmEuY29tLmJyIiwidXRpIjoiTFJzaDNKQ0Fja3FpaF8zY1JqQUZBUSIsInZlciI6IjEuMCJ9.TQ9KyGgRMDnCWIJT7ymoMtnaLwzARB4MzjmQr2wmPWh5EXykZ-hPX27blKd-gfJEhsiawuMpG_qnQJjS9xc7C0ys_lgERD6wuwLtiWQaxnxfqHzQXdZnrIIZmki9ykSljMX7FWedBQRFmfyEQIcQfho4zut7KKSUIHyidtwHNXPF10uMsSyBcWHUdbquaqVLhn1ldFdpQcoCsv-hJupFwf0mXWVh-fLKf56GRmE2kTHFc1S8yjgKvpvPqUGsgqZsAGbno9DHiCE993m0fuRvzXBvJ_1Bjy1eAiDOvTAuWxZRDf_gmPwUf6P98ON_DcN4ccyqO4NsD6KiPmaPk_lA9w",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"MENSAGEM\": \"teste nome edição.\",\r\n    \"AUTOR\": \"MOISES PIRES DE CASTRO\",\r\n    \"TITULO\": \"ESTE AVISO FOI ATUALIZADO TESTE 25\",\r\n    \"LIKE_OF\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}avisos/437",
+									"host": [
+										"{{URL}}avisos"
+									],
+									"path": [
+										"437"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "path Atualizar avisos",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"LIKE_OF\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}avisos/52",
+									"host": [
+										"{{URL}}avisos"
+									],
+									"path": [
+										"52"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar avisos search",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyIsImtpZCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjc3NjA4MDUxLCJuYmYiOjE2Nzc2MDgwNTEsImV4cCI6MTY3NzYxMTk1MSwiYWlvIjoiQVRRQXkvOFRBQUFBNVdHZ2hYamNRMnhoT3lFbXhxMmhKdGswTmV1K1dTdUlJRDE0amNNMGVlQ3d2emJGaFAzTGVoelU5U1k0L2taNiIsImFtciI6WyJwd2QiXSwiZmFtaWx5X25hbWUiOiJkZSBDYXJnYXMiLCJnaXZlbl9uYW1lIjoiQ29uY2VudHJhZG9yIiwiaXBhZGRyIjoiMTg5LjgwLjEzOS4xMDAiLCJuYW1lIjoiQ29uY2VudHJhZG9yIGRlIENhcmdhcyIsIm5vbmNlIjoiMzNiMzUwNzAtYTI1YS00ZWJjLWEwYzMtYThhODVhN2EzMmZjIiwib2lkIjoiNjQ2NjU3MjktZDdkNi00NDQ2LWE5NTUtOTg3NjNlYjhkNjM0IiwicmgiOiIwLkFROEFTYWZ0Vmw2NWRFcVQzdkFmMXJGaHpOdWZyTVNuMnJsRnVveWMwYnYwN0RnUEFMUS4iLCJzdWIiOiJKOFlZVGhNbmlfeExGZUFGSkdoVUtfNUUzTl9aZmpyYXc0OHFZOHI0QmI0IiwidGlkIjoiNTZlZGE3NDktYjk1ZS00YTc0LTkzZGUtZjAxZmQ2YjE2MWNjIiwidW5pcXVlX25hbWUiOiJjb25jZW50cmFkb3IuY2FyZ2FzQHRvcmEuY29tLmJyIiwidXBuIjoiY29uY2VudHJhZG9yLmNhcmdhc0B0b3JhLmNvbS5iciIsInV0aSI6InZ4UGlDcjItcVVTX0d0OGF1QjlfQVEiLCJ2ZXIiOiIxLjAifQ.lmWzt6TsPoPM7ReLC_mMg4dNiwtMaaK3khGxrZ7nObPsp6TCAkHtnVqapWOsXurhBroqWyRJ03FaAgXzSTTryEW14iv-4rLL8V9bbz9CW9R3GA4fmYMTMDtkHu_KL1ql9ANp7OIb7Ftvy2pfTOobS1lXU5g7hzVy1zhSJhw49eCCIBj6PsqXO6bPvbhtHHzl4D3q0tnnVUNQG_SM09RKD0Y5viJIqAMTtyU4bz_Og9L_99EZ22zAg4CpfDPEzOnxy1m_Km4ehI1XIwmISfa6QaaM8Xh-gbXPhzcJOmhFXrysCsNRAhj6uYv4PchxaZ9U9GGNWEFeJOhz3iIogLLw5g",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"TITULO\": \"TESTE\",\r\n    \"MENSAGEM\": \"TESTANDO A ROTA DE AVISO\",\r\n    \"AUTOR\": \"MOISES TESTE\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}avisos",
+									"host": [
+										"{{URL}}avisos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar id ultimo aviso",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyIsImtpZCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjc3NjA4MDUxLCJuYmYiOjE2Nzc2MDgwNTEsImV4cCI6MTY3NzYxMTk1MSwiYWlvIjoiQVRRQXkvOFRBQUFBNVdHZ2hYamNRMnhoT3lFbXhxMmhKdGswTmV1K1dTdUlJRDE0amNNMGVlQ3d2emJGaFAzTGVoelU5U1k0L2taNiIsImFtciI6WyJwd2QiXSwiZmFtaWx5X25hbWUiOiJkZSBDYXJnYXMiLCJnaXZlbl9uYW1lIjoiQ29uY2VudHJhZG9yIiwiaXBhZGRyIjoiMTg5LjgwLjEzOS4xMDAiLCJuYW1lIjoiQ29uY2VudHJhZG9yIGRlIENhcmdhcyIsIm5vbmNlIjoiMzNiMzUwNzAtYTI1YS00ZWJjLWEwYzMtYThhODVhN2EzMmZjIiwib2lkIjoiNjQ2NjU3MjktZDdkNi00NDQ2LWE5NTUtOTg3NjNlYjhkNjM0IiwicmgiOiIwLkFROEFTYWZ0Vmw2NWRFcVQzdkFmMXJGaHpOdWZyTVNuMnJsRnVveWMwYnYwN0RnUEFMUS4iLCJzdWIiOiJKOFlZVGhNbmlfeExGZUFGSkdoVUtfNUUzTl9aZmpyYXc0OHFZOHI0QmI0IiwidGlkIjoiNTZlZGE3NDktYjk1ZS00YTc0LTkzZGUtZjAxZmQ2YjE2MWNjIiwidW5pcXVlX25hbWUiOiJjb25jZW50cmFkb3IuY2FyZ2FzQHRvcmEuY29tLmJyIiwidXBuIjoiY29uY2VudHJhZG9yLmNhcmdhc0B0b3JhLmNvbS5iciIsInV0aSI6InZ4UGlDcjItcVVTX0d0OGF1QjlfQVEiLCJ2ZXIiOiIxLjAifQ.lmWzt6TsPoPM7ReLC_mMg4dNiwtMaaK3khGxrZ7nObPsp6TCAkHtnVqapWOsXurhBroqWyRJ03FaAgXzSTTryEW14iv-4rLL8V9bbz9CW9R3GA4fmYMTMDtkHu_KL1ql9ANp7OIb7Ftvy2pfTOobS1lXU5g7hzVy1zhSJhw49eCCIBj6PsqXO6bPvbhtHHzl4D3q0tnnVUNQG_SM09RKD0Y5viJIqAMTtyU4bz_Og9L_99EZ22zAg4CpfDPEzOnxy1m_Km4ehI1XIwmISfa6QaaM8Xh-gbXPhzcJOmhFXrysCsNRAhj6uYv4PchxaZ9U9GGNWEFeJOhz3iIogLLw5g",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"TITULO\": \"TESTE\",\r\n    \"MENSAGEM\": \"TESTANDO A ROTA DE AVISO\",\r\n    \"AUTOR\": \"MOISES TESTE\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}avisos/ultimo/id",
+									"host": [
+										"{{URL}}avisos"
+									],
+									"path": [
+										"ultimo",
+										"id"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Logs error",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"message\":\"falha na execução do sistema\",\r\n    \"descricao\": \"Erro ao enviar carga App\",\r\n    \"level\": \"error\",\r\n    \"nameFile\": \"error-envio-carga-app\",\r\n    \"id\": 55\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}logs",
+							"host": [
+								"{{URL}}logs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gerar excel cargas csn",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}csn/relatorio/cargas/info?e_lote=0&fk_filial=128&date_execel_inicio=2023-03-01&date_execel_fim=2023-03-21",
+							"host": [
+								"{{URL}}csn"
+							],
+							"path": [
+								"relatorio",
+								"cargas",
+								"info"
+							],
+							"query": [
+								{
+									"key": "e_lote",
+									"value": "0"
+								},
+								{
+									"key": "fk_filial",
+									"value": "128"
+								},
+								{
+									"key": "date_execel_inicio",
+									"value": "2023-03-01"
+								},
+								{
+									"key": "date_execel_fim",
+									"value": "2023-03-21"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar historico do veiculo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}coordenadas/AET8909/history?date_inicio=2023-04-13&date_fim=2023-04-17",
+							"host": [
+								"{{URL}}coordenadas"
+							],
+							"path": [
+								"AET8909",
+								"history"
+							],
+							"query": [
+								{
+									"key": "date_inicio",
+									"value": "2023-04-13"
+								},
+								{
+									"key": "date_fim",
+									"value": "2023-04-17"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar historico sem duplicidade",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}coordenadas/RGA4F57/history/tempo?date_inicio=2023-04-11&date_fim=2023-04-18",
+							"host": [
+								"{{URL}}coordenadas"
+							],
+							"path": [
+								"RGA4F57",
+								"history",
+								"tempo"
+							],
+							"query": [
+								{
+									"key": "date_inicio",
+									"value": "2023-04-11"
+								},
+								{
+									"key": "date_fim",
+									"value": "2023-04-18"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar ultipa posição veiculo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}coordenadas/BSG9882/ultima_posicao_veiculo",
+							"host": [
+								"{{URL}}coordenadas"
+							],
+							"path": [
+								"BSG9882",
+								"ultima_posicao_veiculo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar carga por placa",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}cargas/placa/ASX6985",
+							"host": [
+								"{{URL}}cargas"
+							],
+							"path": [
+								"placa",
+								"ASX6985"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar carga por id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}cargas/11373770",
+							"host": [
+								"{{URL}}cargas"
+							],
+							"path": [
+								"11373770"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar nome user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}usuarios/nome?q=padrao",
+							"host": [
+								"{{URL}}usuarios"
+							],
+							"path": [
+								"nome"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "padrao"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "path cargas",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ativo\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}cargas/20",
+							"host": [
+								"{{URL}}cargas"
+							],
+							"path": [
+								"20"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save permission em lote",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"permissoes\": [\"CADASTRAR_PRODUTOS\",\"APROVAR_VEICULOS\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}usuarios/permissoes/lote",
+							"host": [
+								"{{URL}}usuarios"
+							],
+							"path": [
+								"permissoes",
+								"lote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete permission em lote",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"permissoes\": [\"ENVIAR_CARGA_APP\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}usuarios/permissoes/lote",
+							"host": [
+								"{{URL}}usuarios"
+							],
+							"path": [
+								"permissoes",
+								"lote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar manutenção veiculo por placa",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSIsImtpZCI6IjJaUXBKM1VwYmpBWVhZR2FYRUpsOGxWMFRPSSJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjU5NTIzODQzLCJuYmYiOjE2NTk1MjM4NDMsImV4cCI6MTY1OTUyNzc0MywiYWlvIjoiQVZRQXEvOFRBQUFBYUtoNkZJWXhGMEtFcEhJejJHUW5LWU9xUVBsTmhSbUdGUXcrTUY2MmIyeTNEc1NrVUtXU0NmeFRaZFFpa3B6ZUVxV0k1dnJneDlGR1ZRLzBYM01IbCtQTU9oRU1McGRjcmVXbno5NlZTN0k9IiwiYW1yIjpbInB3ZCIsIm1mYSJdLCJmYW1pbHlfbmFtZSI6IlBpcmVzIGRlIENhc3RybyIsImdpdmVuX25hbWUiOiJNb2lzZXMiLCJpcGFkZHIiOiIxODkuODAuMTI0LjI3IiwibmFtZSI6Ik1vaXNlcyBQaXJlcyBkZSBDYXN0cm8iLCJub25jZSI6ImI0YTZiYWM2LWNiYWEtNDYxZS1iNjdmLWQ1MDBiZGRhNGQ5ZCIsIm9pZCI6IjhmNTU3ZDcxLTA0YzYtNDg4Ni05ZjMwLTBiZDdlY2M5MTA3NyIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0yMDA3NjQ3Mzg3LTE4NzMzNjM5ODktMzc2MzkzNDI0My0yODg1MSIsInJoIjoiMC5BUThBU2FmdFZsNjVkRXFUM3ZBZjFyRmh6TnVmck1TbjJybEZ1b3ljMGJ2MDdEZ1BBRGsuIiwic3ViIjoiRzJXSGJBbDRXcXJNNnk0VUlNRml0WFhpamo3VDBtaTVnTW5Zdlp6XzNpYyIsInRpZCI6IjU2ZWRhNzQ5LWI5NWUtNGE3NC05M2RlLWYwMWZkNmIxNjFjYyIsInVuaXF1ZV9uYW1lIjoibW9pc2VzLmNhc3Ryb0B0b3JhLmNvbS5iciIsInVwbiI6Im1vaXNlcy5jYXN0cm9AdG9yYS5jb20uYnIiLCJ1dGkiOiJfOGRwVDhVUzkwbS0zaElJclhDSUFRIiwidmVyIjoiMS4wIn0.XUJXT7HAdVsGxn-Ub2S4Q4Moxr5bdxJu4OduR99bV90sV5F_DvHjTTyH56UoiN8jAQFTcXfGC2V3_6BtucWuqbTP-jOHxXTBlh0UIfjXueOGFCdvSWgux4d5U06kdn4ypdQ099NF6itrVLLmoAx-SGA-0tK_14PEPvb_WVXAK_UjrTx1m9IkTnIyitoGWUJAa6p0bQHGf17ZffWcPFC8YL5JdZCgl-mChLP1w_nkrXrCbY9aAJTOh9Yap7X9rsBAVRh_RIECbwi2tMmcK0l1FbquZSQ3psG7JL-3JAzV-i-7gUGKnVgxJduX79SVDK9WbwQEvjhZ9OLjxO-ss01NDg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}veiculos/RGA4F55/manutencao",
+							"host": [
+								"{{URL}}veiculos"
+							],
+							"path": [
+								"RGA4F55",
+								"manutencao"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "App de cargas",
+			"item": [
+				{
+					"name": "Criar carga App",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aXRsZSI6IkNvbWluaWNhw6fDo28gQ29uY2VudHJhZG9yIiwiaWF0IjoxNjc2NjU0OTAwfQ.S47Ct_6mU8UrB3RYMwe6sAJAkxnH7Ugy4_KRsGgaSdg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aXRsZSI6IkNvbWluaWNhw6fDo28gQ29uY2VudHJhZG9yIiwiaWF0IjoxNjc2NjU0OTAwfQ.S47Ct_6mU8UrB3RYMwe6sAJAkxnH7Ugy4_KRsGgaSdg",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"requestCode\": \"2222222\",\r\n    \"creationDate\": \"2023-04-06T13:43:48.232Z\",\r\n    \"deliveryCity\": \"MARACANAU\",\r\n    \"deliveryUF\": \"CE\",\r\n    \"estimatedEndDate\": \"2023-04-06T10:43\",\r\n    \"estimatedStartDate\": \"2023-04-06T10:48:18\",\r\n    \"observacoa\": \"O frete sera pago no momento da entrega; O motorista precisa ter permissões de carga perigosa para esta carga; O veiculo tem que ser trucado\",\r\n    \"operatorNumber\": \"8f557d71-04c6-4886-9f30-0bd7ecc91077\",\r\n    \"originCity\": \"VOLTA REDONDA\",\r\n    \"originCollection\": \"COMPANHIA SIDERURGICA NACIONAL\",\r\n    \"originUF\": \"RJ\",\r\n    \"product\": \"BARRO DE ACO\",\r\n    \"weight\": 2,\r\n    \"acessorios_requisitos\": \"teste observação acessorios_requisitos\",\r\n    \"informacoes_restritivas\": \"teste observação informacoes_restritivas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}adm/freight/createfreight",
+							"host": [
+								"{{URL}}adm"
+							],
+							"path": [
+								"freight",
+								"createfreight"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Info cancelamento app",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aXRsZSI6IkNvbWluaWNhw6fDo28gQ29uY2VudHJhZG9yIiwiaWF0IjoxNjc2NjU0OTAwfQ.S47Ct_6mU8UrB3RYMwe6sAJAkxnH7Ugy4_KRsGgaSdg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aXRsZSI6IkNvbWluaWNhw6fDo28gQ29uY2VudHJhZG9yIiwiaWF0IjoxNjc2NjU0OTAwfQ.S47Ct_6mU8UrB3RYMwe6sAJAkxnH7Ugy4_KRsGgaSdg",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"availableFreight\": \"20363276\",\r\n    \"concentradorUser\": \"8f557d71-04c6-4886-9f30-0bd7ecc91077\",\r\n    \"cancellationReason\": \"teste postman moises\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}adm/freight/cancel",
+							"host": [
+								"{{URL}}adm"
+							],
+							"path": [
+								"freight",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add placa e confirmar carga app",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aXRsZSI6IkNvbWluaWNhw6fDo28gQ29uY2VudHJhZG9yIiwiaWF0IjoxNjc2NjU0OTAwfQ.S47Ct_6mU8UrB3RYMwe6sAJAkxnH7Ugy4_KRsGgaSdg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aXRsZSI6IkNvbWluaWNhw6fDo28gQ29uY2VudHJhZG9yIiwiaWF0IjoxNjc2NjU0OTAwfQ.S47Ct_6mU8UrB3RYMwe6sAJAkxnH7Ugy4_KRsGgaSdg",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"placa\": \"FRW1G17\",\r\n    \"idCarga\": 20363604\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}adm/freight/cancel",
+							"host": [
+								"{{URL}}adm"
+							],
+							"path": [
+								"freight",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancelar carga",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyIsImtpZCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyJ9.eyJhdWQiOiJjNGFjOWZkYi1kYWE3LTQ1YjktYmE4Yy05Y2QxYmJmNGVjMzgiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC81NmVkYTc0OS1iOTVlLTRhNzQtOTNkZS1mMDFmZDZiMTYxY2MvIiwiaWF0IjoxNjc3NjA4MDUxLCJuYmYiOjE2Nzc2MDgwNTEsImV4cCI6MTY3NzYxMTk1MSwiYWlvIjoiQVRRQXkvOFRBQUFBNVdHZ2hYamNRMnhoT3lFbXhxMmhKdGswTmV1K1dTdUlJRDE0amNNMGVlQ3d2emJGaFAzTGVoelU5U1k0L2taNiIsImFtciI6WyJwd2QiXSwiZmFtaWx5X25hbWUiOiJkZSBDYXJnYXMiLCJnaXZlbl9uYW1lIjoiQ29uY2VudHJhZG9yIiwiaXBhZGRyIjoiMTg5LjgwLjEzOS4xMDAiLCJuYW1lIjoiQ29uY2VudHJhZG9yIGRlIENhcmdhcyIsIm5vbmNlIjoiMzNiMzUwNzAtYTI1YS00ZWJjLWEwYzMtYThhODVhN2EzMmZjIiwib2lkIjoiNjQ2NjU3MjktZDdkNi00NDQ2LWE5NTUtOTg3NjNlYjhkNjM0IiwicmgiOiIwLkFROEFTYWZ0Vmw2NWRFcVQzdkFmMXJGaHpOdWZyTVNuMnJsRnVveWMwYnYwN0RnUEFMUS4iLCJzdWIiOiJKOFlZVGhNbmlfeExGZUFGSkdoVUtfNUUzTl9aZmpyYXc0OHFZOHI0QmI0IiwidGlkIjoiNTZlZGE3NDktYjk1ZS00YTc0LTkzZGUtZjAxZmQ2YjE2MWNjIiwidW5pcXVlX25hbWUiOiJjb25jZW50cmFkb3IuY2FyZ2FzQHRvcmEuY29tLmJyIiwidXBuIjoiY29uY2VudHJhZG9yLmNhcmdhc0B0b3JhLmNvbS5iciIsInV0aSI6InZ4UGlDcjItcVVTX0d0OGF1QjlfQVEiLCJ2ZXIiOiIxLjAifQ.lmWzt6TsPoPM7ReLC_mMg4dNiwtMaaK3khGxrZ7nObPsp6TCAkHtnVqapWOsXurhBroqWyRJ03FaAgXzSTTryEW14iv-4rLL8V9bbz9CW9R3GA4fmYMTMDtkHu_KL1ql9ANp7OIb7Ftvy2pfTOobS1lXU5g7hzVy1zhSJhw49eCCIBj6PsqXO6bPvbhtHHzl4D3q0tnnVUNQG_SM09RKD0Y5viJIqAMTtyU4bz_Og9L_99EZ22zAg4CpfDPEzOnxy1m_Km4ehI1XIwmISfa6QaaM8Xh-gbXPhzcJOmhFXrysCsNRAhj6uYv4PchxaZ9U9GGNWEFeJOhz3iIogLLw5g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"placa\": \"QUH8382\",\r\n    \"idCarga\": 20363305\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}app/cancelar/carga",
+							"host": [
+								"{{URL}}app"
+							],
+							"path": [
+								"cancelar",
+								"carga"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

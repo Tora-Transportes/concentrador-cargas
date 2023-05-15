@@ -7,6 +7,8 @@ export const allTipoPermissoes = [
 	{ name: "CARGAS_CSN" },
 	{ name: "CARGAS_PADRAO" },
 	{ name: "DELETAR_CARGAS" },
+	{ name: "ENGATE_DESENGATE_CCA" },
+	{ name: "ENGATE_DESENGATE_CCA_ADIMIN" },
 	{ name: "ENVIAR_CARGA_APP" },
 	{ name: "EXPURGAR_CARGA" },
 	{ name: "FINALIZAR_CARGAS_CSN" },
