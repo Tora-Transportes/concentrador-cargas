@@ -1,0 +1,187 @@
+.cargas-container {
+  font-family: "Poppins", sans-serif;
+}
+
+.h1-title {
+  font-size: 2.4rem;
+  font-weight: 500;
+  color: #00652e;
+  margin-top: 6rem;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.fieldSet-title {
+  color: #00652e;
+}
+
+.button-icons {
+  display: flex;
+  grid-template-columns: auto auto;
+  justify-content: space-evenly;
+  align-items: center;
+  grid-gap: -5rem;
+  margin-top: 3rem;
+}
+
+div .title-ico-import,
+.title-icon-engate,
+div .title-icon-desengate {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.6rem;
+  color: #00652e;
+}
+
+.icon-engate {
+  display: grid;
+  margin-left: 0.7rem;
+  color: #00652e;
+  margin-top: 4.5rem;
+}
+
+.icon-desengate {
+  color: #00652e;
+  margin-top: 4.2rem;
+  margin-left: 1.6vw;
+}
+
+.title-ico-import:hover,
+.icon-engate:hover,
+.title-icon-engate:hover,
+div .title-icon-desengate:hover,
+.icon-desengate:hover {
+  transition: 0.5s;
+  -webkit-transform: scale(1.2);
+  transform: scale(1.1);
+  color: #009c08;
+}
+
+.icon-desengate:hover {
+  transition: 0.5s;
+  -webkit-transform: scale(1.2);
+  transform: scale(1.1);
+  color: #009c08;
+}
+
+/* Pagina de desengate */
+/* .h1-title-desengate {
+  font-size: 2.2rem;
+  font-weight: 500;
+  color: #00652e;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2vh;
+} */
+
+.row-main-desengate {
+  border-radius: 1px;
+  border-color: black;
+}
+
+.col-cavalo-desengate {
+  grid-template-columns: auto;
+}
+
+.checkbox-desengate {
+  display: flex;
+  align-items: center;
+}
+
+/* .col-cleckbox-um {
+  text-align: center;
+} */
+
+.button-submit-desengate {
+  background-color: #00652e;
+  height: 35px;
+}
+
+.button-submit-desengate:enabled:hover {
+  background-color: #009c08;
+}
+@media only screen and (max-width: 295px) {
+  .h1-title {
+    text-align: left;
+  }
+  div .title-ico-import {
+    text-align: center;
+  }
+}
+@media only screen and (max-width: 400px) {
+  div .button-icons {
+    text-align: flex;
+    position: absolute;
+    display: block;
+    margin-top: 1rem;
+    margin-left: 32%;
+  }
+
+  div .title-ico-import {
+    margin-left: -4.6rem;
+  }
+
+  div .title-icon-desengate {
+    margin-left: 0.6rem;
+  }
+  div .icon-desengate {
+    margin-left: 0.1rem;
+  }
+}
+
+@media only screen and (min-width: 401px) and (max-width: 620px) {
+  .cargas-container {
+    overflow: none;
+  }
+
+  .button-icons {
+    text-align: flex;
+    position: absolute;
+    display: block;
+    margin-top: 1rem;
+    margin-left: 35% !important;
+  }
+
+  div .title-ico-import {
+    margin-left: -4.6rem;
+  }
+
+  div .title-icon-desengate {
+    margin-left: 0.8rem;
+  }
+  div .icon-desengate {
+    margin-left: 0.2rem;
+  }
+}
+
+@media only screen and (min-width: 621px) and (max-width: 767px) {
+  .cargas-container {
+    overflow: none;
+  }
+  .button-icons {
+    text-align: flex;
+    position: absolute;
+    display: block;
+    margin-top: 1rem;
+    margin-left: 30%;
+  }
+
+  div .title-ico-import {
+    margin-left: -5rem;
+  }
+
+  div .title-icon-desengate {
+    margin-left: 0.8rem;
+  }
+  div .icon-desengate {
+    margin-left: 0.2rem;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  div .h1-title {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+}

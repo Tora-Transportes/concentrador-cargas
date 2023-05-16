@@ -39,6 +39,9 @@ import LinkRelatoriosApp from "./Pages/Components/MenuSuperior/LinkRelatoriosApp
 import RelatoriosAppMain from "./Pages/Relatorios/TotalizadoresApp";
 import MainPopUp from "./Pages/Avisos/popUp";
 import SiteEmManutencao from "./Pages/SiteEmManutencao";
+import EngateDesengate from "./Pages/EngateDesengateCCa/selecionarProcesso";
+import Engate from "./Pages/EngateDesengateCCa/engate";
+import Desengate from "./Pages/EngateDesengateCCa/desengate";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -47,9 +50,6 @@ export default function AllRoutes() {
 	if (limparCache == null || limparCache.toString() !== "version_13") {
 		localStorage.removeItem("table-columns-csn");
 		localStorage.removeItem("table-columns");
-		//localStorage.removeItem("table-columns-lote");
-		//localStorage.removeItem("coordenadas-table");
-		//localStorage.removeItem("viewsAviso");
 		localStorage.setItem("clear_Cache", "version_13");
 		window.location.reload(true);
 	}
@@ -129,9 +129,10 @@ export default function AllRoutes() {
 					component={LinkRelatoriosApp}
 				/>
 				<Route path="/credenciais" exact component={Credenciais} />
-				{/* <Route path="/producao" exact component={CalendarioProducao} /> */}
-				{/* <Route path="/ajuda" exact component={Helper} /> */}
-				{/* <Route path="/ajuda/CSN" exact component={HelperCSN} /> */}
+				<Route path="/opcao/engate" exact component={EngateDesengate} />
+				<Route path="/engate" exact component={Engate} />
+				<Route path="/desengate" exact component={Desengate} />
+
 				<Route path="/avisos" exact component={Avisos} />
 				<Route path="/manutencao" component={SiteEmManutencao} />
 				<Route path="*" exact component={Main} />
