@@ -186,3 +186,18 @@ USU_TORA;con_avisos; LIKE_ON; Indica que o usuario gostou do aviso ;;
 USU_TORA;con_avisos;LIKE_OF; Indica que o usuario não gostou do aviso ;;
 USU_TORA;con_avisos; DATA_CADASTRO; data do cadastro;;
 USU_TORA;con_avisos; DATA_ATUALIZACAO; data da atualizacao;;
+
+USU_TORA;con_engate; ID; Identificador do aviso;;
+USU_TORA;con_engate; PLACA_VEICULO; Placa do ve�culo que vai transportar a carga;;
+USU_TORA;con_engate; PLACA_CARRETA_UM; Placa do primeiro  ve�culo a engatar/desengatar;;
+USU_TORA;con_engate; PLACA_CARRETA_DOIS; Placa do segundo  ve�culo a engatar/desengatar;;
+USU_TORA;con_engate; PLACA_CARRETA_TRES; Placa do terceiro  ve�culo a engatar/desengatar;;
+USU_TORA;con_engate; STATUS; Status que indica o estagio do processo de engate/desengate;;
+USU_TORA;con_engate; DATA_CADASTRO; data do cadastro;;
+USU_TORA;con_engate; DATA_ATUALIZACAO; data da atualizacao;;
+USU_TORA;con_engate;RESPONSAVEL_CADASTRO; Indica que o responsavel pelo cadastro;;
+USU_TORA;con_engate; USUARIO; Nome do ultimo usuario que modificou a tabela;;
+USU_TORA;con_engate; FK_SITUACAO; indica o estagio do processo;;
+USU_TORA;con_engate; PDF; Arquivo .pdf comprimido;;
+
+

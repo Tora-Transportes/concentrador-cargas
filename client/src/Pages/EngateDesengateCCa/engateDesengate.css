@@ -101,6 +101,54 @@ div .title-icon-desengate:hover,
 .button-submit-desengate:enabled:hover {
   background-color: #009c08;
 }
+
+/* Pagina de Engate */
+
+.card-novo-engate {
+  background-color: rgb(245, 245, 245);
+}
+
+.col-novo-placa-carreta {
+  display: flex;
+}
+
+.buttons-nova-placa {
+  background-color: #305a34;
+  height: 37.45px;
+}
+.buttons-nova-placa:enabled:hover {
+  background-color: #13aa1b;
+}
+
+.button-export-aditivo {
+  height: 35px;
+  margin-top: 15px;
+  color: green;
+  border-radius: 2px;
+}
+
+/* .button-export-aditivo:enabled:hover {
+  background-color: #13aa1b;
+} */
+
+.col-cavalo-bitrem {
+  margin-top: 10px;
+}
+.col-cavalo-engate {
+  width: 30vw !important;
+  margin-right: 13px;
+}
+
+.input-pdf {
+  display: flex;
+}
+
+.visualizacao-pdf {
+  margin-top: 10px;
+  justify-content: center;
+  display: flex;
+}
+
 @media only screen and (max-width: 295px) {
   .h1-title {
     text-align: left;

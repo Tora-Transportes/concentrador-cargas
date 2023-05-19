@@ -24,8 +24,10 @@ import PontoParadaController from "./controllers/PontoParadaController";
 import CargasCsnInfoController from "./controllers/csn/CargasCsnInfoController";
 import LogsErrorControllers from "./controllers/LogsErrorControllers";
 import CargaAppController from "./controllers/AppTora/CargaAppController";
+import EngateControllers from "./controllers/EngateControllers";
 
 const routes = Router();
+const upload = multer({ dest: "uploads/" });
 
 routes.post(
   "/avisos",
@@ -222,6 +224,10 @@ routes.post(
 );
 
 routes.post("/logs", LogsErrorControllers.error);
+
+routes.post("/engate", upload.single("fileName"), EngateControllers.create);
+routes.get("/engate", EngateControllers.searchAll);
+routes.put("/engate/:id", EngateControllers.update);
 
 routes.put("/app/aprovar/carga", CargaAppController.aprovarCarga);
 routes.patch("/app/cancelar/carga", CargaAppController.cancelarCarga);

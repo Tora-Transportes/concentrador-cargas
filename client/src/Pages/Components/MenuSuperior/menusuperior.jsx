@@ -13,6 +13,7 @@ function Menusuperior() {
   const [isPermissionCsn, setPermissionCsn] = useState(false);
   const [isPermissionPadrao, setPermissionPadrao] = useState(false);
   const [isPermAlterarPerm, setPermAlterarPerm] = useState(false);
+  const [isPermEngate, setPermEngate] = useState(false);
   const [isColorHeader, setColorHeader] = useState("header");
   const { setPermissionUser } = useContext(ContextUseDefault);
   useEffect(() => {
@@ -27,6 +28,9 @@ function Menusuperior() {
 
       if (userPermission?.permissoes?.includes("ALTERAR_PERMISSOES"))
         setPermAlterarPerm(true);
+
+      if (userPermission?.permissoes?.includes("ENGATE_DESENGATE_CCA"))
+        setPermEngate(true);
     })();
     const tipoCorHeader =
       process.env.REACT_APP_COR_NAVEBAR === "DEV" ? "headerDev" : "header";
@@ -136,17 +140,19 @@ function Menusuperior() {
               Relatórios
             </a>
           </li>
-          <div className="class-li">
-            <div className="dropdown">
-              <button id="style-button-drop" className="dropbtn">
-                Engate/Desengate
-              </button>
-              <div id="myDropdown" className="dropdown-content">
-                <a href="/opcao/engate">Solicitar</a>
-                <a href="">Relatório</a>
+          {isPermEngate && (
+            <div className="class-li">
+              <div className="dropdown">
+                <button id="style-button-drop" className="dropbtn">
+                  Engate/Desengate
+                </button>
+                <div id="myDropdown" className="dropdown-content">
+                  <a href="/opcao/engate">Solicitar</a>
+                  <a href="">Relatório</a>
+                </div>
               </div>
             </div>
-          </div>
+          )}
           {isPermissionCsn && (
             <li className="class-li">
               <a id="style-a" href="/localizacao">
