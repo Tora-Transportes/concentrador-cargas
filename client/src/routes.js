@@ -38,6 +38,9 @@ import EditarCargaCsn from "./Pages/Cargas/CargasCSN/Editar";
 import LinkRelatoriosApp from "./Pages/Components/MenuSuperior/LinkRelatoriosApp";
 import RelatoriosAppMain from "./Pages/Relatorios/TotalizadoresApp";
 import MainPopUp from "./Pages/Avisos/popUp";
+import Estatisticas from "./Pages/PPO/Estatisticas";
+import Grupos from "./Pages/PPO/Grupos";
+import Parametros from "./Pages/PPO/Parametros";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -57,6 +60,10 @@ export default function AllRoutes() {
 		<BrowserRouter>
 			<Switch>
 				<Route path="/" exact component={Main} />
+
+				<Route path="/ppo/estatisticas" exact component={Estatisticas} />
+				<Route path="/ppo/grupos" exact component={Grupos} />
+				<Route path="/ppo/parametros" exact component={Parametros} />
 
 				<Route path="/cargas/visualizar" exact component={VisualizarCargas} />
 				<Route path="/lotes/visualizar" exact component={VisualizarLotes} />

@@ -24,6 +24,8 @@ import PontoParadaController from "./controllers/PontoParadaController";
 import CargasCsnInfoController from "./controllers/csn/CargasCsnInfoController";
 import LogsErrorControllers from "./controllers/LogsErrorControllers";
 import CargaAppController from "./controllers/AppTora/CargaAppController";
+import PPOController from "./controllers/PPOController";
+import PPOParametrosController from "./controllers/PPOParametrosController";
 
 const routes = Router();
 
@@ -224,4 +226,16 @@ routes.post("/logs", LogsErrorControllers.error);
 
 routes.put("/app/aprovar/carga", CargaAppController.aprovarCarga);
 routes.patch("/app/cancelar/carga", CargaAppController.cancelarCarga);
+
+//PPO
+routes.get("/ppo/avaliacoes", PPOController.avaliacoes);
+routes.get("/ppo/distancia", PPOController.distancia);
+routes.get("/ppo/infracoes", PPOController.infracoes);
+routes.get("/ppo/interjornadas", PPOController.interjornada);
+
+routes.get("/ppo/parametros", PPOParametrosController.index);
+routes.post("/ppo/parametros", PPOParametrosController.create);
+routes.patch("/ppo/parametros/:id", PPOParametrosController.update);
+routes.delete("/ppo/parametros/:id", PPOParametrosController.delete);
+
 export default routes;
