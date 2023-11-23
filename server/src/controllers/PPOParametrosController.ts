@@ -17,14 +17,21 @@ class PPOParametrosController implements IPPOParametrosController {
 
   async create(req: Request, res: Response): Promise<Response> {
     const ppoParametrosRepository = new PPOParametrosRepository();
-    const result = await ppoParametrosRepository.create(req.body);
+    const result = await ppoParametrosRepository.create(
+      req.body,
+      String(req.headers.authorization)
+    );
     return res.json({ data: result });
   }
 
   async update(req: Request, res: Response): Promise<Response> {
     const ppoParametrosRepository = new PPOParametrosRepository();
     const { id } = req.params;
-    const result = await ppoParametrosRepository.update(Number(id), req.body);
+    const result = await ppoParametrosRepository.update(
+      Number(id),
+      req.body,
+      String(req.headers.authorization)
+    );
     return res.json({ data: result });
   }
 

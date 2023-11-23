@@ -8,11 +8,12 @@ import { Column } from "primereact/column";
 import {
 	nameBodyTemplate,
 	opcoesTemplate,
-	situacaoBodyTemplate,
 	usuarioBodyTemplate,
 	renderHeader,
+	criadoBodyTemplate,
 } from "./components/templateDataTable";
 import swal from "sweetalert";
+import ServicePPOParametros from "src/services/ServicePPOParametros";
 
 const Parametros = () => {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -20,43 +21,79 @@ const Parametros = () => {
 	const [globalFilter, setGlobalFilter] = useState();
 	const dadosTabela = useRef(null);
 
+	async function loadParametros() {
+		setLoading(true);
+		ServicePPOParametros.list().then(({ data }) => {
+			setParametros(data.data);
+		});
+		setLoading(false);
+	}
+
 	const formik = useFormik({
 		initialValues: {
 			nome: "",
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
-			console.log(values);
-			setParametros([]);
+			try {
+				await ServicePPOParametros.create(values);
+				await loadParametros();
+				swal("Sucesso!", "O parâmetro foi cadastrado", "success");
+				formik.resetForm();
+			} catch (error) {
+				console.log(error);
+			}
 			setLoading(false);
 		},
 	});
 	useEffect(() => {
-		setLoading(true);
-		setLoading(false);
+		loadParametros();
 		setGlobalFilter("");
 	}, []);
 
 	async function handleDelete(nome, id) {
-		console.log(nome, id);
-	}
-
-	async function handleEnableProduto(id) {
-		console.log(id);
+		const observacao = await swal(
+			"Ops!",
+			`Tem certeza que deseja DELETAR o parâmetro ${nome}?`,
+			"warning",
+			{
+				buttons: ["Não", true],
+			}
+		);
+		if (observacao) {
+			try {
+				await ServicePPOParametros.delete({ id });
+				swal("Sucesso", "Parâmetro desativado!", "success");
+				await loadParametros();
+			} catch (error) {
+				console.log(error);
+			}
+		}
 	}
 
 	async function handleEditProduto(nome, id) {
-		console.log(nome, id);
+		const parametro = await swal(`Novo nome para o parâmetro '${nome}'`, {
+			content: "input",
+			buttons: ["Cancelar", true],
+		});
+		if (parametro === null) {
+			return;
+		}
+		if (!parametro) {
+			return swal("Nenhum dado foi atualizado");
+		}
+
+		try {
+			await ServicePPOParametros.update({ nome: parametro, id });
+			swal("Sucesso!", "Parâmetro atualizado", "success");
+			await loadParametros();
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	const getOpcoesTemplate = (rowData) => {
-		return opcoesTemplate(
-			rowData,
-			swal,
-			handleEditProduto,
-			handleDelete,
-			handleEnableProduto
-		);
+		return opcoesTemplate(rowData, swal, handleEditProduto, handleDelete);
 	};
 
 	const getRenderHeader = () => {
@@ -92,16 +129,16 @@ const Parametros = () => {
 								//className="table-column-nome"
 							/>
 							<Column
-								body={usuarioBodyTemplate}
-								field="usuario"
-								header="Atualizado por:"
+								body={criadoBodyTemplate}
+								field="cod_usu_create"
+								header="Criado por:"
 								className="table-column-email"
 							/>
 							<Column
-								body={situacaoBodyTemplate}
-								field="ativo"
-								className="table-column-permissoes"
-								header="Situação"
+								body={usuarioBodyTemplate}
+								field="cod_usu_update"
+								header="Atualizado por:"
+								className="table-column-email"
 							/>
 							<Column
 								header="Ações"
