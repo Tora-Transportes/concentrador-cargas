@@ -1,11 +1,13 @@
 import database, { mssqlPPO } from "../database";
 import IAvaliacao from "../models/IAvaliacao";
+import IAtributo from "../models/IAtributo";
 
 interface IPPORepository {
   avaliacoes(cpf: string): Promise<IAvaliacao[] | undefined>;
   distancia(id: number): Promise<void>;
   infracoes(id: number): Promise<void>;
   interjornada(id: number): Promise<void>;
+  atributos(): Promise<IAtributo[] | undefined>;
 }
 
 export class PPORepository implements IPPORepository {
@@ -29,5 +31,26 @@ export class PPORepository implements IPPORepository {
   }
   async interjornada(ID: number): Promise<void> {
     await database("con_avisos").delete().where({ ID });
+  }
+  async atributos(): Promise<IAtributo[] | undefined> {
+    return await mssqlPPO("INFORMATION_SCHEMA.COLUMNS AS COLUNAS")
+      .select(["TABELAS.TABLE_NAME as tabela", "COLUNAS.COLUMN_NAME as coluna"])
+      .innerJoin(
+        "INFORMATION_SCHEMA.TABLES  AS TABELAS",
+        "TABELAS.TABLE_NAME",
+        "COLUNAS.TABLE_NAME"
+      )
+      .whereNotIn("COLUNAS.COLUMN_NAME", [
+        "id",
+        "data_insercao",
+        "created_at",
+        "updated_at",
+      ])
+      .whereNotIn("TABELAS.TABLE_NAME", [
+        "ppo_grupos",
+        "ppo_parametros",
+        "ppo_parametros_grupo",
+      ])
+      .andWhere(" TABELAS.TABLE_TYPE", "BASE TABLE");
   }
 }
