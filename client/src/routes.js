@@ -41,6 +41,7 @@ import MainPopUp from "./Pages/Avisos/popUp";
 import Estatisticas from "./Pages/PPO/Estatisticas";
 import Grupos from "./Pages/PPO/Grupos";
 import Parametros from "./Pages/PPO/Parametros";
+import GruposParametros from "./Pages/PPO/GruposParametros";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -63,6 +64,11 @@ export default function AllRoutes() {
 
 				<Route path="/ppo/estatisticas" exact component={Estatisticas} />
 				<Route path="/ppo/grupos" exact component={Grupos} />
+				<Route
+					path="/ppo/grupos/:id/parametros"
+					exact
+					component={GruposParametros}
+				/>
 				<Route path="/ppo/parametros" exact component={Parametros} />
 
 				<Route path="/cargas/visualizar" exact component={VisualizarCargas} />

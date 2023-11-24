@@ -3,6 +3,7 @@ import { BsPencilSquare } from "react-icons/bs";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { Button, Form, InputGroup, FormControl } from "react-bootstrap";
 import { MdAddCircleOutline } from "react-icons/md";
+import { IoMdOptions } from "react-icons/io";
 
 export const renderHeader = (formik, globalFilter, setGlobalFilter) => {
 	return (
@@ -40,10 +41,21 @@ export const opcoesTemplate = (
 	rowData,
 	swal,
 	handleEditProduto,
-	handleDelete
+	handleDelete,
+	handleRedirect
 ) => {
 	return (
 		<div className="opcoes-table">
+			<Button
+				variant="outline-success"
+				onClick={(e) => {
+					e.preventDefault();
+					handleRedirect(rowData.id, rowData.nome);
+				}}
+			>
+				<IoMdOptions className="icon-editar" />
+				Parâmetros
+			</Button>
 			<Button
 				variant="outline-warning"
 				onClick={(e) => {

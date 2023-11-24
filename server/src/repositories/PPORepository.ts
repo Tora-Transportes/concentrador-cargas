@@ -32,8 +32,8 @@ export class PPORepository implements IPPORepository {
   async interjornada(ID: number): Promise<void> {
     await database("con_avisos").delete().where({ ID });
   }
-  async atributos(): Promise<IAtributo[] | undefined> {
-    return await mssqlPPO("INFORMATION_SCHEMA.COLUMNS AS COLUNAS")
+  async atributos(): Promise<any[] | undefined> {
+    const atributos = await mssqlPPO("INFORMATION_SCHEMA.COLUMNS AS COLUNAS")
       .select(["TABELAS.TABLE_NAME as tabela", "COLUNAS.COLUMN_NAME as coluna"])
       .innerJoin(
         "INFORMATION_SCHEMA.TABLES  AS TABELAS",
@@ -52,5 +52,23 @@ export class PPORepository implements IPPORepository {
         "ppo_parametros_grupo",
       ])
       .andWhere(" TABELAS.TABLE_TYPE", "BASE TABLE");
+    const tabelasAgrupadas: any = {};
+
+    atributos.forEach((objeto) => {
+      const tabela = objeto.tabela;
+      if (!tabelasAgrupadas[tabela]) {
+        tabelasAgrupadas[tabela] = [];
+      }
+      tabelasAgrupadas[tabela].push({ coluna: objeto.coluna });
+    });
+
+    const arrayDeTabelas = Object.entries(tabelasAgrupadas).map(
+      ([tabela, colunas]) => ({
+        tabela,
+        colunas,
+      })
+    );
+
+    return arrayDeTabelas;
   }
 }

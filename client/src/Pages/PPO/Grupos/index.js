@@ -14,8 +14,10 @@ import {
 } from "./components/templateDataTable";
 import swal from "sweetalert";
 import ServicePPOGrupos from "src/services/ServicePPOGrupos";
+import { useHistory } from "react-router-dom";
 
 const Grupos = () => {
+	const history = useHistory();
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [parametros, setParametros] = useState([]);
 	const [globalFilter, setGlobalFilter] = useState();
@@ -50,6 +52,10 @@ const Grupos = () => {
 		loadParametros();
 		setGlobalFilter("");
 	}, []);
+
+	async function handleRedirect(id, nome) {
+		history.push(`/ppo/grupos/${id}/parametros?nome=${nome}`);
+	}
 
 	async function handleDelete(nome, id) {
 		const observacao = await swal(
@@ -93,7 +99,13 @@ const Grupos = () => {
 	}
 
 	const getOpcoesTemplate = (rowData) => {
-		return opcoesTemplate(rowData, swal, handleEditProduto, handleDelete);
+		return opcoesTemplate(
+			rowData,
+			swal,
+			handleEditProduto,
+			handleDelete,
+			handleRedirect
+		);
 	};
 
 	const getRenderHeader = () => {
