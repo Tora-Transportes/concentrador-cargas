@@ -1,28 +1,75 @@
 import React from "react";
 import { BsPencilSquare } from "react-icons/bs";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { Button, Form, InputGroup, FormControl } from "react-bootstrap";
+import { Button, Form, InputGroup, FormControl, Modal } from "react-bootstrap";
 import { MdAddCircleOutline } from "react-icons/md";
 import { IoMdOptions } from "react-icons/io";
 
-export const renderHeader = (formik, globalFilter, setGlobalFilter) => {
+export const renderHeader = (
+	formik,
+	globalFilter,
+	setGlobalFilter,
+	open,
+	handleOpen
+) => {
 	return (
 		<div className="header-table-produto">
-			<div className="header-input-save">
-				<Form onSubmit={formik.handleSubmit}>
-					<InputGroup>
-						<button type="submit" className="button-header-save">
-							<MdAddCircleOutline className="header-table-icon-button" />
-						</button>
-						<FormControl
-							placeholder="Adicionar grupo"
-							name="nome"
-							onChange={formik.handleChange}
-							value={formik.values.nome.toUpperCase()}
-						/>
-					</InputGroup>
-				</Form>
-			</div>
+			<Button
+				onClick={handleOpen}
+				style={{ backgroundColor: "#00652e", borderColor: "#00652e" }}
+			>
+				<MdAddCircleOutline
+					style={{ marginBottom: "3px", marginRight: "3px" }}
+				/>
+				Adicionar
+			</Button>
+			<Modal show={open} onHide={handleOpen}>
+				<Modal.Header closeButton>
+					<Modal.Title>Adicionar Grupo</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Form>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+							<Form.Label>Grupo</Form.Label>
+							<Form.Control
+								name="nome"
+								onChange={formik.handleChange}
+								value={formik.values.nome}
+								type="text"
+								autoFocus
+							/>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+							<Form.Label>Empresa</Form.Label>
+							<Form.Control
+								name="empresa"
+								onChange={formik.handleChange}
+								value={formik.values.empresa}
+								type="text"
+								autoFocus
+							/>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
+							<Form.Label>Filial</Form.Label>
+							<Form.Control
+								name="filial"
+								onChange={formik.handleChange}
+								value={formik.values.filial}
+								type="text"
+								autoFocus
+							/>
+						</Form.Group>
+					</Form>
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleOpen}>
+						Fechar
+					</Button>
+					<Button variant="primary" onClick={formik.handleSubmit}>
+						Salvar
+					</Button>
+				</Modal.Footer>
+			</Modal>
 			<div className="header-table-filter-produto">
 				<InputGroup>
 					<FormControl
@@ -60,7 +107,7 @@ export const opcoesTemplate = (
 				variant="outline-warning"
 				onClick={(e) => {
 					e.preventDefault();
-					handleEditProduto(rowData.nome, rowData.id);
+					handleEditProduto(rowData, rowData.id);
 				}}
 			>
 				<BsPencilSquare className="icon-editar" />

@@ -6,6 +6,9 @@ class ServicePPO {
 			`/ppo/avaliacoes?cpf=${cpf}&data_inicio=${data_inicio}&data_fim=${data_fim}`
 		);
 	}
+	async atributos() {
+		return api.get(`/ppo/atributos`);
+	}
 }
 
 export default new ServicePPO();

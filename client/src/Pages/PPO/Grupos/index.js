@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import Menusuperior from "../../Components/MenuSuperior/menusuperior";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Button, Form, Modal } from "react-bootstrap";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import {
@@ -22,6 +22,15 @@ const Grupos = () => {
 	const [parametros, setParametros] = useState([]);
 	const [globalFilter, setGlobalFilter] = useState();
 	const dadosTabela = useRef(null);
+	const [open, setOpen] = useState(false);
+	const [openCreate, setOpenCreate] = useState(false);
+	const [idEdit, setIdEdit] = useState(null);
+	function handleOpen() {
+		setOpen(!open);
+	}
+	function handleOpenCreate() {
+		setOpenCreate(!openCreate);
+	}
 
 	async function loadParametros() {
 		setLoading(true);
@@ -34,12 +43,16 @@ const Grupos = () => {
 	const formik = useFormik({
 		initialValues: {
 			nome: "",
+			empresa: "",
+			filial: "",
 		},
 		onSubmit: async (values) => {
+			console.log(values);
 			setLoading(true);
 			try {
 				await ServicePPOGrupos.create(values);
 				await loadParametros();
+				handleOpen();
 				swal("Sucesso!", "O grupo foi cadastrado", "success");
 				formik.resetForm();
 			} catch (error) {
@@ -77,25 +90,24 @@ const Grupos = () => {
 		}
 	}
 
-	async function handleEditProduto(nome, id) {
-		const parametro = await swal(`Novo nome para o grupo '${nome}'`, {
-			content: "input",
-			buttons: ["Cancelar", true],
-		});
-		if (parametro === null) {
-			return;
-		}
-		if (!parametro) {
-			return swal("Nenhum dado foi atualizado");
-		}
-
+	async function submitEdit() {
 		try {
-			await ServicePPOGrupos.update({ nome: parametro, id });
-			swal("Sucesso!", "Grupo atualizado", "success");
+			await ServicePPOGrupos.update(idEdit, formik.values);
+			swal("Sucesso", "Grupo atualizado!", "success");
+			handleOpen();
 			await loadParametros();
+			formik.resetForm();
 		} catch (error) {
 			console.log(error);
 		}
+	}
+
+	async function handleEditProduto(objeto, id) {
+		setIdEdit(id);
+		formik.values.nome = objeto.nome;
+		formik.values.empresa = objeto.empresa;
+		formik.values.filial = objeto.filial;
+		handleOpen();
 	}
 
 	const getOpcoesTemplate = (rowData) => {
@@ -109,13 +121,66 @@ const Grupos = () => {
 	};
 
 	const getRenderHeader = () => {
-		return renderHeader(formik, globalFilter, setGlobalFilter);
+		return renderHeader(
+			formik,
+			globalFilter,
+			setGlobalFilter,
+			openCreate,
+			handleOpenCreate
+		);
 	};
 
 	return (
 		<>
 			<LoadingScreen />
 			<Menusuperior />
+			<Modal show={open} onHide={handleOpen}>
+				<Modal.Header closeButton>
+					<Modal.Title>Editando Grupo</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Form>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+							<Form.Label>Grupo</Form.Label>
+							<Form.Control
+								name="nome"
+								onChange={formik.handleChange}
+								value={formik.values.nome}
+								type="text"
+								autoFocus
+							/>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+							<Form.Label>Empresa</Form.Label>
+							<Form.Control
+								name="empresa"
+								onChange={formik.handleChange}
+								value={formik.values.empresa}
+								type="text"
+								autoFocus
+							/>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
+							<Form.Label>Filial</Form.Label>
+							<Form.Control
+								name="filial"
+								onChange={formik.handleChange}
+								value={formik.values.filial}
+								type="text"
+								autoFocus
+							/>
+						</Form.Group>
+					</Form>
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleOpen}>
+						Fechar
+					</Button>
+					<Button variant="primary" onClick={submitEdit}>
+						Salvar
+					</Button>
+				</Modal.Footer>
+			</Modal>
 			<Container className="pagina-produtos">
 				<Row>
 					<h1 className="class-title-produto">Grupos</h1>
@@ -137,6 +202,18 @@ const Grupos = () => {
 								body={nameBodyTemplate}
 								field="nome"
 								header="Nome"
+								bodyStyle={{ color: "red" }}
+								//className="table-column-nome"
+							/>
+							<Column
+								field="empresa"
+								header="Empresa"
+								bodyStyle={{ color: "red" }}
+								//className="table-column-nome"
+							/>
+							<Column
+								field="filial"
+								header="Filial"
 								bodyStyle={{ color: "red" }}
 								//className="table-column-nome"
 							/>

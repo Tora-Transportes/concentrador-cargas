@@ -32,7 +32,7 @@ export class PPOGruposRepository implements IPPOGruposRepository {
     const gp = await this.findByName(grupo.nome);
     grupo.cod_usu_update = TokenAd.getClaims(user).name;
     grupo.updated_at = new Date(dateAtualMoment());
-    if (gp != undefined && grupo.id != id) {
+    if (gp != undefined && gp.id != id) {
       throw new AppError("Esse nome já se encontra em uso", 400);
     } else {
       return mssqlPPO("dbo.ppo_grupos").update(grupo).where("id", id);

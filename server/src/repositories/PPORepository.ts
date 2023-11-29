@@ -1,6 +1,7 @@
 import database, { mssqlPPO } from "../database";
 import IAvaliacao from "../models/IAvaliacao";
 import IAtributo from "../models/IAtributo";
+import { object } from "yup";
 
 interface IPPORepository {
   avaliacoes(cpf: string): Promise<IAvaliacao[] | undefined>;
@@ -34,7 +35,11 @@ export class PPORepository implements IPPORepository {
   }
   async atributos(): Promise<any[] | undefined> {
     const atributos = await mssqlPPO("INFORMATION_SCHEMA.COLUMNS AS COLUNAS")
-      .select(["TABELAS.TABLE_NAME as tabela", "COLUNAS.COLUMN_NAME as coluna"])
+      .select([
+        "TABELAS.TABLE_SCHEMA as schema",
+        "TABELAS.TABLE_NAME as tabela",
+        "COLUNAS.COLUMN_NAME as coluna",
+      ])
       .innerJoin(
         "INFORMATION_SCHEMA.TABLES  AS TABELAS",
         "TABELAS.TABLE_NAME",
@@ -52,10 +57,19 @@ export class PPORepository implements IPPORepository {
         "ppo_parametros_grupo",
       ])
       .andWhere(" TABELAS.TABLE_TYPE", "BASE TABLE");
-    const tabelasAgrupadas: any = {};
+
+    const tabelasAgrupadas: any = [];
 
     atributos.forEach((objeto) => {
-      const tabela = objeto.tabela;
+      tabelasAgrupadas.push({
+        tabela: `${objeto.schema}.${objeto.tabela}`,
+        coluna: objeto.coluna,
+      });
+    });
+    /*     const tabelasAgrupadas: any = {};
+
+    atributos.forEach((objeto) => {
+      const tabela = `${objeto.schema}.${objeto.tabela}`;
       if (!tabelasAgrupadas[tabela]) {
         tabelasAgrupadas[tabela] = [];
       }
@@ -67,8 +81,8 @@ export class PPORepository implements IPPORepository {
         tabela,
         colunas,
       })
-    );
+    ) */
 
-    return arrayDeTabelas;
+    return tabelasAgrupadas;
   }
 }

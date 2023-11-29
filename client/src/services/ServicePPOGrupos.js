@@ -4,12 +4,12 @@ class ServicePPOGrupos {
 		return api.get("/ppo/grupos");
 	}
 
-	async create({ nome }) {
-		return api.post("/ppo/grupos", { nome });
+	async create(values) {
+		return api.post("/ppo/grupos", values);
 	}
 
-	async update({ id, nome }) {
-		return api.patch(`/ppo/grupos/${id}`, { nome });
+	async update(id, values) {
+		return api.patch(`/ppo/grupos/${id}`, values);
 	}
 
 	async delete({ id }) {

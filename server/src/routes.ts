@@ -27,6 +27,7 @@ import CargaAppController from "./controllers/AppTora/CargaAppController";
 import PPOController from "./controllers/PPOController";
 import PPOParametrosController from "./controllers/PPOParametrosController";
 import PPOGruposController from "./controllers/PPOGruposController";
+import PPOParametrosGrupoController from "./controllers/PPOParametrosGrupoController";
 
 const routes = Router();
 
@@ -244,5 +245,13 @@ routes.get("/ppo/grupos", PPOGruposController.index);
 routes.post("/ppo/grupos", PPOGruposController.create);
 routes.patch("/ppo/grupos/:id", PPOGruposController.update);
 routes.delete("/ppo/grupos/:id", PPOGruposController.delete);
+
+routes.get("/ppo/grupos/parametros", PPOParametrosGrupoController.index);
+routes.post("/ppo/grupos/parametros", PPOParametrosGrupoController.create);
+routes.patch("/ppo/grupos/parametros/:id", PPOParametrosGrupoController.update);
+routes.delete(
+  "/ppo/grupos/parametros/:id",
+  PPOParametrosGrupoController.delete
+);
 
 export default routes;
