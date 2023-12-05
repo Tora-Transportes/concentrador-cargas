@@ -61,8 +61,8 @@ export const renderHeader = (
 								<option value=">">Maior que</option>
 								<option value="<">Menor que</option>
 								<option value=">=">Maior ou igual</option>
-								<option value=">=">Menor ou igual</option>
-								<option value=">=">Igual</option>
+								<option value="<=">Menor ou igual</option>
+								<option value="=">Igual</option>
 								<option value="*">Multiplicar</option>
 							</Form.Select>
 						</Form.Group>
