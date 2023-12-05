@@ -247,7 +247,7 @@ const GruposParametros = () => {
 										key={index}
 										value={`${objeto.tabela};${objeto.coluna}`}
 									>
-										{objeto.tabela} | {objeto.coluna}
+										{objeto.rotulo}
 									</option>
 								))}
 							</Form.Select>

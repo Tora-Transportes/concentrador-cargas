@@ -34,55 +34,33 @@ export class PPORepository implements IPPORepository {
     await database("con_avisos").delete().where({ ID });
   }
   async atributos(): Promise<any[] | undefined> {
-    const atributos = await mssqlPPO("INFORMATION_SCHEMA.COLUMNS AS COLUNAS")
-      .select([
-        "TABELAS.TABLE_SCHEMA as schema",
-        "TABELAS.TABLE_NAME as tabela",
-        "COLUNAS.COLUMN_NAME as coluna",
-      ])
-      .innerJoin(
-        "INFORMATION_SCHEMA.TABLES  AS TABELAS",
-        "TABELAS.TABLE_NAME",
-        "COLUNAS.TABLE_NAME"
-      )
-      .whereNotIn("COLUNAS.COLUMN_NAME", [
-        "id",
-        "data_insercao",
-        "created_at",
-        "updated_at",
-      ])
-      .whereNotIn("TABELAS.TABLE_NAME", [
-        "ppo_grupos",
-        "ppo_parametros",
-        "ppo_parametros_grupo",
-      ])
-      .andWhere(" TABELAS.TABLE_TYPE", "BASE TABLE");
+    const atributos = await mssqlPPO.raw(`
+    SELECT 
+TABELAS.TABLE_SCHEMA AS schemas,
+TABELAS.TABLE_NAME as tabela,
+COLUNAS.COLUMN_NAME as coluna,
+pr.rotulo as rotulo
+FROM INFORMATION_SCHEMA.COLUMNS AS COLUNAS
+INNER JOIN INFORMATION_SCHEMA.TABLES  AS TABELAS ON TABELAS.TABLE_NAME = COLUNAS.TABLE_NAME
+INNER JOIN [dbo].[ppo_de_para_rotulo] AS pr ON pr.tabela = CONCAT ( TABELAS.TABLE_SCHEMA, '.',TABELAS.TABLE_NAME) and pr.campo = COLUNAS.COLUMN_NAME  
+    `);
 
     const tabelasAgrupadas: any = [];
 
-    atributos.forEach((objeto) => {
-      tabelasAgrupadas.push({
-        tabela: `${objeto.schema}.${objeto.tabela}`,
-        coluna: objeto.coluna,
-      });
-    });
-    /*     const tabelasAgrupadas: any = {};
-
-    atributos.forEach((objeto) => {
-      const tabela = `${objeto.schema}.${objeto.tabela}`;
-      if (!tabelasAgrupadas[tabela]) {
-        tabelasAgrupadas[tabela] = [];
+    atributos.forEach(
+      (objeto: {
+        schemas: string;
+        tabela: string;
+        coluna: string;
+        rotulo: string;
+      }) => {
+        tabelasAgrupadas.push({
+          tabela: `${objeto.schemas}.${objeto.tabela}`,
+          coluna: objeto.coluna,
+          rotulo: objeto.rotulo,
+        });
       }
-      tabelasAgrupadas[tabela].push({ coluna: objeto.coluna });
-    });
-
-    const arrayDeTabelas = Object.entries(tabelasAgrupadas).map(
-      ([tabela, colunas]) => ({
-        tabela,
-        colunas,
-      })
-    ) */
-
+    );
     return tabelasAgrupadas;
   }
 }
