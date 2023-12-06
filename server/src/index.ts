@@ -2,7 +2,7 @@ import "express-async-errors";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import https from "http";
+import https from "https";
 import fs from "fs";
 import path from "path";
 import "./jobs";
@@ -21,14 +21,14 @@ app.use(process.env.BASE_URL || "", routes);
 app.use(ErrorMiddleware);
 
 const server = https.createServer(
-/*   {
+   {
     key: fs.readFileSync(
       path.resolve(__dirname, "..", "certificates", "tora.key")
     ),
     cert: fs.readFileSync(
       path.resolve(__dirname, "..", "certificates", "tora.crt")
     ),
-  }, */
+  }, 
   app
 );
 
