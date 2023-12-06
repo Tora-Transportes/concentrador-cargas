@@ -82,6 +82,18 @@ function Menusuperior() {
           </li>
           <div className="class-li">
             <div className="dropdown">
+              <button id="style-button-drop" className="dropbtn">
+                PPO
+              </button>
+              <div id="myDropdown" className="dropdown-content">
+                <a href="/ppo/estatisticas">PPO Estátisticas</a>
+                <a href="/ppo/grupos">PPO Cadastro Grupo</a>
+                <a href="/ppo/parametros">PPO Cadastro Parâmetros</a>
+              </div>
+            </div>
+          </div>
+          <div className="class-li">
+            <div className="dropdown">
               {(isPermissionCsn || isPermissionPadrao) && (
                 <button id="style-button-drop" className="dropbtn">
                   Cargas

@@ -23,14 +23,14 @@ app.use(ErrorMiddleware);
 //app.use(ClearCachMiddleware);
 
 const server = https.createServer(
-  {
+ {
     key: fs.readFileSync(
       path.resolve(__dirname, "..", "certificates", "tora.key")
     ),
     cert: fs.readFileSync(
       path.resolve(__dirname, "..", "certificates", "tora.crt")
     ),
-  },
+  }, 
   app
 );
 

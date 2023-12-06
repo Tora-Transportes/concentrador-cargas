@@ -42,6 +42,10 @@ import SiteEmManutencao from "./Pages/SiteEmManutencao";
 import EngateDesengate from "./Pages/EngateDesengateCCa/selecionarProcesso";
 import Engate from "./Pages/EngateDesengateCCa/engate";
 import Desengate from "./Pages/EngateDesengateCCa/desengate";
+import Estatisticas from "./Pages/PPO/Estatisticas";
+import Grupos from "./Pages/PPO/Grupos";
+import Parametros from "./Pages/PPO/Parametros";
+import GruposParametros from "./Pages/PPO/GruposParametros";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -58,6 +62,15 @@ export default function AllRoutes() {
 		<BrowserRouter>
 			<Switch>
 				<Route path="/" exact component={Main} />
+
+				<Route path="/ppo/estatisticas" exact component={Estatisticas} />
+				<Route path="/ppo/grupos" exact component={Grupos} />
+				<Route
+					path="/ppo/grupos/:id/parametros"
+					exact
+					component={GruposParametros}
+				/>
+				<Route path="/ppo/parametros" exact component={Parametros} />
 
 				<Route path="/cargas/visualizar" exact component={VisualizarCargas} />
 				<Route path="/lotes/visualizar" exact component={VisualizarLotes} />

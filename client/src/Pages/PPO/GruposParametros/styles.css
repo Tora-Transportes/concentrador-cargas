@@ -1,0 +1,276 @@
+.class-body-produtos {
+  font-family: "Poppins", sans-serif;
+}
+
+.pagina-produtos {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+div .class-title-produto {
+  font-family: "Poppins", sans-serif;
+  color: #00652e;
+  font-size: 40px;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+#title-h1 {
+  font-family: "Poppins", sans-serif;
+  color: #00652e;
+  font-size: 40px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Table */
+.p-datatable .p-datatable-tbody > tr > td {
+  background-color: aliceblue;
+  padding: 0.5rem 0.5em;
+}
+
+.header-table-produto {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.header-table-filter-produto {
+  display: flex;
+  align-items: center;
+  background-color: #eefdec;
+  width: 28%;
+  border-radius: 0.25rem;
+  border: 1px solid #ced4da;
+  justify-content: space-between;
+  margin-left: 10px;
+}
+
+.header-table-filter-produto input {
+  border: none;
+  width: 100%;
+}
+
+.header-table-filter-produto i {
+  font-weight: 600;
+  color: green;
+  align-items: center;
+  display: flex;
+  width: 36px;
+  justify-content: center;
+}
+
+.header-input-save {
+  width: 30%;
+}
+
+Botton .button-acoes-table {
+  color: #ff0000;
+}
+
+.button-header-save {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  border-radius: 5px;
+  transition: 0.4s ease-in-out;
+  color: white;
+  background-color: #eefdec;
+  border: 1px solid #e4e7e4;
+}
+
+.button-header-save span {
+  font-weight: 500;
+  color: green;
+  margin-left: 4px;
+}
+
+.header-table-icon-button {
+  font-size: 20px;
+  color: green;
+}
+
+.button-header-save:hover {
+  background-color: rgba(49, 149, 6, 0.801);
+}
+
+.button-header-save:hover span {
+  color: #003601;
+  transition: 0.5s;
+}
+
+.table-column-acoes {
+  background-color: #eefdec;
+  color: #000000;
+}
+
+.table-column-faixa {
+  text-align: center;
+}
+
+.table-column-acoes .p-column-header-content .p-column-title {
+  margin-left: 35%;
+}
+
+.opcoes-table {
+  text-align: center;
+}
+
+.table-column-nome {
+  color: #000;
+  font-weight: 495;
+}
+
+.table .p-datatable-tbody .p-datatable table {
+  border-collapse: collapse;
+}
+
+/* Buttons */
+.opcoes-table button {
+  align-items: center;
+  flex-direction: row;
+  border: none;
+  border-radius: 5px;
+  transition: 0.4s ease-in-out;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.button-cancel {
+  color: red;
+}
+
+.opcoes-table .icon-editar {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.icon-info {
+  margin-right: 4px;
+}
+
+.icon-des {
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+
+@media only screen and (max-width: 480px) {
+  .class-title-produto {
+    margin-left: 3%;
+    font-size: 5.8vh;
+    transition: 0.5s;
+  }
+}
+
+@media only screen and (max-width: 604px) {
+  #title-h1 {
+    margin-top: 3rem;
+  }
+
+  div .class-title-produto {
+    font-family: "Poppins", sans-serif;
+    color: #00652e;
+    font-size: 40px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+@media only screen and (max-width: 961px) {
+  .class-title-produto {
+    display: flex;
+    justify-content: center;
+  }
+  .datatable-responsive-demoPermissoes
+    .p-datatable.p-datatable-responsive-demoPermissoes
+    .p-datatable-tbody
+    > tr
+    > td {
+    text-align: left;
+    display: block;
+    width: 100%;
+    float: left;
+    clear: left;
+    border: 0 none;
+  }
+
+  .header-input-save {
+    padding: 4px;
+    width: 100%;
+  }
+
+  .header-table-produto {
+    justify-content: inherit;
+    display: grid;
+  }
+
+  .header-table-filter-produto {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .input-group {
+    width: 100%;
+  }
+
+  .menu-header-table-permission {
+    width: 100%;
+  }
+}
+
+/* css nativa da tabela */
+.datatable-responsive-demoPermissoes
+  .p-datatable-responsive-demoPermissoes
+  .p-datatable-tbody
+  > tr
+  > td
+  .p-column-title {
+  display: none;
+}
+
+@media screen and (max-width: 50em) {
+  .datatable-responsive-demoPermissoes
+    .p-datatable.p-datatable-responsive-demoPermissoes
+    .p-datatable-thead
+    > tr
+    > th,
+  .datatable-responsive-demoPermissoes
+    .p-datatable.p-datatable-responsive-demoPermissoes
+    .p-datatable-tfoot
+    > tr
+    > td {
+    display: none !important;
+  }
+
+  .datatable-responsive-demoPermissoes
+    .p-datatable.p-datatable-responsive-demoPermissoes
+    .p-datatable-tbody
+    > tr
+    > td {
+    text-align: left;
+    display: grid;
+    width: 100%;
+    float: left;
+    clear: left;
+    border: 0 none;
+  }
+
+  .datatable-responsive-demoPermissoes
+    .p-datatable.p-datatable-responsive-demoPermissoes
+    .p-datatable-tbody
+    > tr
+    > td
+    .p-column-title {
+    padding: 0.4rem;
+    min-width: 30%;
+    display: inline-block;
+    margin: -0.4em 1em -0.4em -0.4rem;
+    font-weight: bold;
+  }
+
+  .p-datatable table {
+    background-color: #000;
+  }
+}
