@@ -21,7 +21,7 @@ app.use(process.env.BASE_URL || "", routes);
 app.use(ErrorMiddleware);
 
 const server = https.createServer(
-   {
+ {
     key: fs.readFileSync(
       path.resolve(__dirname, "..", "certificates", "tora.key")
     ),
