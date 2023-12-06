@@ -61,4 +61,22 @@ const configCoordenadas: Knex.Config = {
   },
 };
 
-export default { configMssql, configOracle, configCoordenadas };
+const configMssqlPPO: Knex.Config = {
+  client: "mssql",
+  connection: {
+    user: process.env.DB_MSSQL_PPO_USERNAME,
+    password: process.env.DB_MSSQL_PPO_PASSWORD,
+    server: process.env.DB_MSSQL_PPO_HOST,
+    database: process.env.DB_MSSQL_PPO_DATABASE,
+    debug: true,
+    connectTimeout: 90000,
+    ssl: { rejectUnauthorized: false },
+    options: {
+      encrypt: true,
+      enableArithAbort: true,
+      trustServerCertificate: true,
+    },
+  },
+};
+
+export default { configMssql, configOracle, configCoordenadas, configMssqlPPO };

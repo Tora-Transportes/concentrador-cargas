@@ -24,6 +24,10 @@ import PontoParadaController from "./controllers/PontoParadaController";
 import CargasCsnInfoController from "./controllers/csn/CargasCsnInfoController";
 import LogsErrorControllers from "./controllers/LogsErrorControllers";
 import CargaAppController from "./controllers/AppTora/CargaAppController";
+import PPOController from "./controllers/PPOController";
+import PPOParametrosController from "./controllers/PPOParametrosController";
+import PPOGruposController from "./controllers/PPOGruposController";
+import PPOParametrosGrupoController from "./controllers/PPOParametrosGrupoController";
 
 const routes = Router();
 
@@ -224,4 +228,30 @@ routes.post("/logs", LogsErrorControllers.error);
 
 routes.put("/app/aprovar/carga", CargaAppController.aprovarCarga);
 routes.patch("/app/cancelar/carga", CargaAppController.cancelarCarga);
+
+//PPO
+routes.get("/ppo/avaliacoes", PPOController.avaliacoes);
+routes.get("/ppo/distancia", PPOController.distancia);
+routes.get("/ppo/infracoes", PPOController.infracoes);
+routes.get("/ppo/interjornadas", PPOController.interjornada);
+routes.get("/ppo/atributos", PPOController.atributos);
+
+routes.get("/ppo/parametros", PPOParametrosController.index);
+routes.post("/ppo/parametros", PPOParametrosController.create);
+routes.patch("/ppo/parametros/:id", PPOParametrosController.update);
+routes.delete("/ppo/parametros/:id", PPOParametrosController.delete);
+
+routes.get("/ppo/grupos", PPOGruposController.index);
+routes.post("/ppo/grupos", PPOGruposController.create);
+routes.patch("/ppo/grupos/:id", PPOGruposController.update);
+routes.delete("/ppo/grupos/:id", PPOGruposController.delete);
+
+routes.get("/ppo/grupos/parametros", PPOParametrosGrupoController.index);
+routes.post("/ppo/grupos/parametros", PPOParametrosGrupoController.create);
+routes.patch("/ppo/grupos/parametros/:id", PPOParametrosGrupoController.update);
+routes.delete(
+  "/ppo/grupos/parametros/:id",
+  PPOParametrosGrupoController.delete
+);
+
 export default routes;

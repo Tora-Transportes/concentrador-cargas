@@ -1,0 +1,245 @@
+import React, { useEffect, useRef, useState } from "react";
+import { useFormik } from "formik";
+import useLoadingScreen from "../../Components/LoadingScreen";
+import Menusuperior from "../../Components/MenuSuperior/menusuperior";
+import { Container, Row, Button, Form, Modal } from "react-bootstrap";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import {
+	nameBodyTemplate,
+	opcoesTemplate,
+	usuarioBodyTemplate,
+	renderHeader,
+	criadoBodyTemplate,
+} from "./components/templateDataTable";
+import swal from "sweetalert";
+import ServicePPOGrupos from "src/services/ServicePPOGrupos";
+import { useHistory } from "react-router-dom";
+
+const Grupos = () => {
+	const history = useHistory();
+	const [LoadingScreen, setLoading] = useLoadingScreen();
+	const [parametros, setParametros] = useState([]);
+	const [globalFilter, setGlobalFilter] = useState();
+	const dadosTabela = useRef(null);
+	const [open, setOpen] = useState(false);
+	const [openCreate, setOpenCreate] = useState(false);
+	const [idEdit, setIdEdit] = useState(null);
+	function handleOpen() {
+		setOpen(!open);
+	}
+	function handleOpenCreate() {
+		setOpenCreate(!openCreate);
+	}
+
+	async function loadParametros() {
+		setLoading(true);
+		ServicePPOGrupos.list().then(({ data }) => {
+			setParametros(data.data);
+		});
+		setLoading(false);
+	}
+
+	const formik = useFormik({
+		initialValues: {
+			nome: "",
+			empresa: "",
+			filial: "",
+		},
+		onSubmit: async (values) => {
+			console.log(values);
+			setLoading(true);
+			try {
+				await ServicePPOGrupos.create(values);
+				await loadParametros();
+				handleOpen();
+				swal("Sucesso!", "O grupo foi cadastrado", "success");
+				formik.resetForm();
+			} catch (error) {
+				console.log(error);
+			}
+			setLoading(false);
+		},
+	});
+	useEffect(() => {
+		loadParametros();
+		setGlobalFilter("");
+	}, []);
+
+	async function handleRedirect(id, nome) {
+		history.push(`/ppo/grupos/${id}/parametros?nome=${nome}`);
+	}
+
+	async function handleDelete(nome, id) {
+		const observacao = await swal(
+			"Ops!",
+			`Tem certeza que deseja DELETAR o grupo ${nome}?`,
+			"warning",
+			{
+				buttons: ["Não", true],
+			}
+		);
+		if (observacao) {
+			try {
+				await ServicePPOGrupos.delete({ id });
+				swal("Sucesso", "Grupo deletado!", "success");
+				await loadParametros();
+			} catch (error) {
+				console.log(error);
+			}
+		}
+	}
+
+	async function submitEdit() {
+		try {
+			await ServicePPOGrupos.update(idEdit, formik.values);
+			swal("Sucesso", "Grupo atualizado!", "success");
+			handleOpen();
+			await loadParametros();
+			formik.resetForm();
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	async function handleEditProduto(objeto, id) {
+		setIdEdit(id);
+		formik.values.nome = objeto.nome;
+		formik.values.empresa = objeto.empresa;
+		formik.values.filial = objeto.filial;
+		handleOpen();
+	}
+
+	const getOpcoesTemplate = (rowData) => {
+		return opcoesTemplate(
+			rowData,
+			swal,
+			handleEditProduto,
+			handleDelete,
+			handleRedirect
+		);
+	};
+
+	const getRenderHeader = () => {
+		return renderHeader(
+			formik,
+			globalFilter,
+			setGlobalFilter,
+			openCreate,
+			handleOpenCreate
+		);
+	};
+
+	return (
+		<>
+			<LoadingScreen />
+			<Menusuperior />
+			<Modal show={open} onHide={handleOpen}>
+				<Modal.Header closeButton>
+					<Modal.Title>Editando Grupo</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Form>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+							<Form.Label>Grupo</Form.Label>
+							<Form.Control
+								name="nome"
+								onChange={formik.handleChange}
+								value={formik.values.nome}
+								type="text"
+								autoFocus
+							/>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+							<Form.Label>Empresa</Form.Label>
+							<Form.Control
+								name="empresa"
+								onChange={formik.handleChange}
+								value={formik.values.empresa}
+								type="text"
+								autoFocus
+							/>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
+							<Form.Label>Filial</Form.Label>
+							<Form.Control
+								name="filial"
+								onChange={formik.handleChange}
+								value={formik.values.filial}
+								type="text"
+								autoFocus
+							/>
+						</Form.Group>
+					</Form>
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleOpen}>
+						Fechar
+					</Button>
+					<Button variant="primary" onClick={submitEdit}>
+						Salvar
+					</Button>
+				</Modal.Footer>
+			</Modal>
+			<Container className="pagina-produtos">
+				<Row>
+					<h1 className="class-title-produto">Grupos</h1>
+					<div className="datatable-responsive-demoPermissoes">
+						<DataTable
+							className="p-datatable-responsive-demoPermissoes"
+							ref={dadosTabela}
+							globalFilter={globalFilter}
+							value={parametros}
+							header={getRenderHeader()}
+							paginator
+							rows={60}
+							paginatorTemplate=" PrevPageLink PageLinks NextPageLink  CurrentPageReport RowsPerPageDropdown"
+							emptyMessage="Não foram encontrados resultados nessa busca."
+							rowsPerPageOptions={[80, 100]}
+							stripedRows
+						>
+							<Column
+								body={nameBodyTemplate}
+								field="nome"
+								header="Nome"
+								bodyStyle={{ color: "red" }}
+								//className="table-column-nome"
+							/>
+							<Column
+								field="empresa"
+								header="Empresa"
+								bodyStyle={{ color: "red" }}
+								//className="table-column-nome"
+							/>
+							<Column
+								field="filial"
+								header="Filial"
+								bodyStyle={{ color: "red" }}
+								//className="table-column-nome"
+							/>
+							<Column
+								body={criadoBodyTemplate}
+								field="cod_usu_create"
+								header="Criado por:"
+								className="table-column-email"
+							/>
+							<Column
+								body={usuarioBodyTemplate}
+								field="cod_usu_update"
+								header="Atualizado por:"
+								className="table-column-email"
+							/>
+							<Column
+								header="Ações"
+								body={getOpcoesTemplate}
+								className="table-column-acoes"
+							/>
+						</DataTable>
+					</div>
+				</Row>
+			</Container>
+		</>
+	);
+};
+
+export default Grupos;
