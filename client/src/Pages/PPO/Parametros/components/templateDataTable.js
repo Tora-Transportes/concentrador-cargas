@@ -9,7 +9,7 @@ export const renderHeader = (formik, globalFilter, setGlobalFilter) => {
 		<div className="header-table-produto">
 			<div className="header-input-save">
 				<Form onSubmit={formik.handleSubmit}>
-					<InputGroup>
+					<InputGroup hasValidation>
 						<button type="submit" className="button-header-save">
 							<MdAddCircleOutline className="header-table-icon-button" />
 						</button>
@@ -18,7 +18,12 @@ export const renderHeader = (formik, globalFilter, setGlobalFilter) => {
 							name="nome"
 							onChange={formik.handleChange}
 							value={formik.values.nome.toUpperCase()}
+							isValid={formik.touched.nome && !formik.errors.nome}
+							required
 						/>
+						<Form.Control.Feedback type="invalid">
+							{formik.errors.nome}
+						</Form.Control.Feedback>
 					</InputGroup>
 				</Form>
 			</div>
