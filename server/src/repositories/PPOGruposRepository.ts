@@ -3,6 +3,7 @@ import IGrupo from "../models/IGrupo";
 import AppError from "../models/AppError";
 import TokenAd from "../models/TokenAd";
 import { dateAtualMoment } from "../Utils/formatData";
+import { compareValues } from "../Utils/utlis";
 
 interface IPPOGruposRepository {
   findByName(nome: string): Promise<IGrupo | undefined>;
@@ -40,7 +41,17 @@ export class PPOGruposRepository implements IPPOGruposRepository {
   }
 
   async delete(id: number): Promise<void> {
-    await mssqlPPO("dbo.ppo_grupos").delete().where({ id });
+    const params = await mssqlPPO("dbo.ppo_parametros_grupo")
+      .count("* as qtd_parms")
+      .where("grupo_id", id);
+    if (compareValues(params[0].qtd_parms, 0)) {
+      throw new AppError(
+        "Não foi possivel deletar esse grupo pois possuem parâmetros atrelados a ele",
+        400
+      );
+    } else {
+      await mssqlPPO("dbo.ppo_grupos").delete().where({ id });
+    }
   }
 
   async findByName(nome: string): Promise<IGrupo | undefined> {
