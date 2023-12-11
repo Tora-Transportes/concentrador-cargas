@@ -2,7 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import Menusuperior from "../../Components/MenuSuperior/menusuperior";
 import { useParams } from "react-router-dom";
 import "./styles.css";
-import { Container, Row, Button, Form, Modal } from "react-bootstrap";
+import {
+	Container,
+	Row,
+	Button,
+	Form,
+	Modal,
+	InputGroup,
+} from "react-bootstrap";
 import { useFormik } from "formik";
 import ServicePPOGruposParametros from "../../../services/ServicePPOGruposParametros";
 import ServicePPO from "src/services/ServicePPO";
@@ -19,8 +26,23 @@ import {
 	atualizadoBodyTemplate,
 	renderHeader,
 	faixaBodyTemplate,
+	premioBodyTemplate,
+	multiplicarBodyTemplate,
 	//atributoBodyTemplate,
 } from "./components/templateDataTable";
+import * as Yup from "yup";
+
+const GrupoParametroSchema = Yup.object().shape({
+	parametro_id: Yup.string().required("parâmetro é um campo obrigatório"),
+	tabela: Yup.string().required("comparador é um campo obrigatório"),
+	operador_logico_primario: Yup.string().required(
+		"operador lógico primário é um campo obrigatório"
+	),
+	valor_primario: Yup.string().required(
+		"valor primário é um campo obrigatório"
+	),
+	premio: Yup.number().required("prêmio é um campo obrigatório"),
+});
 
 const GruposParametros = () => {
 	const { id } = useParams();
@@ -31,9 +53,14 @@ const GruposParametros = () => {
 	const [parametros, setParametros] = useState([]);
 	const [globalFilter, setGlobalFilter] = useState();
 	const [open, setOpen] = useState(false);
+	const [openCreate, setOpenCreate] = useState(false);
 	const [idEdit, setIdEdit] = useState(null);
 	function handleOpen() {
 		setOpen(!open);
+	}
+
+	function handleOpenCreate() {
+		setOpenCreate(!openCreate);
 	}
 
 	const dadosTabela = useRef(null);
@@ -51,8 +78,10 @@ const GruposParametros = () => {
 			tabela: "",
 			campo: "",
 			faixa_valores: false,
+			multiplicar_premio: false,
 			ativo: true,
 		},
+		validationSchema: GrupoParametroSchema,
 		onChange: async (values) => {
 			console.log(values);
 		},
@@ -62,11 +91,16 @@ const GruposParametros = () => {
 			values.de_para_rotulo_id = tabelaCampo[0];
 			values.tabela = tabelaCampo[1];
 			values.campo = tabelaCampo[2];
+			if (!values.faixa_valores) {
+				values.operador_logico_secundaria = "";
+				values.valor_secundario = "";
+			}
 			setLoading(true);
 			try {
 				await ServicePPOGruposParametros.create(values);
 				loadListagem();
 				formik.resetForm();
+				handleOpenCreate();
 			} catch (error) {
 				console.log(error);
 			}
@@ -106,7 +140,12 @@ const GruposParametros = () => {
 
 	async function handleEditProduto(objeto, id) {
 		setIdEdit(id);
-		console.log(idEdit);
+		let premio = objeto.premio.toString().split(".");
+		if (premio.length > 1) {
+			if (premio[1].length == 1) {
+				objeto.premio = `${objeto.premio}0`;
+			}
+		}
 		formik.values.ativo = objeto.ativo;
 		formik.values.grupo_id = objeto.grupo_id;
 		formik.values.parametro_id = objeto.parametro_id;
@@ -120,6 +159,7 @@ const GruposParametros = () => {
 		formik.values.de_para_rotulo_id = objeto.de_para_rotulo_id;
 		formik.values.campo = objeto.campo;
 		formik.values.faixa_valores = objeto.faixa_valores;
+		formik.values.multiplicar_premio = objeto.multiplicar_premio;
 		formik.values.ativo = objeto.ativo;
 		handleOpen();
 	}
@@ -130,9 +170,14 @@ const GruposParametros = () => {
 			formik.values.de_para_rotulo_id = tabelaCampo[0];
 			formik.values.tabela = tabelaCampo[1];
 			formik.values.campo = tabelaCampo[2];
-			console.log(formik.values);
+			if (!formik.values.faixa_valores) {
+				formik.values.operador_logico_secundaria = "";
+				formik.values.valor_secundario = "";
+			}
 			await ServicePPOGruposParametros.update(idEdit, formik.values);
+			formik.resetForm();
 			handleOpen();
+			formik.resetForm();
 			await loadListagem();
 			formik.resetForm();
 			swal("Sucesso", "Parâmetro atualizado!", "success");
@@ -181,6 +226,8 @@ const GruposParametros = () => {
 	const getRenderHeader = () => {
 		return renderHeader(
 			formik,
+			openCreate,
+			handleOpenCreate,
 			globalFilter,
 			setGlobalFilter,
 			atributos,
@@ -205,14 +252,19 @@ const GruposParametros = () => {
 								name="parametro_id"
 								onChange={formik.handleChange}
 								value={formik.values.parametro_id}
+								isInvalid={!!formik.errors.parametro_id}
+								placeholder="Selecione um parâmetro"
 							>
-								<option>Selecione um parâmetro</option>
+								<option></option>
 								{parametros.map((objeto, index) => (
 									<option key={index} value={objeto.id}>
 										{objeto.nome}
 									</option>
 								))}
 							</Form.Select>
+							<Form.Control.Feedback type="invalid">
+								{formik.errors.parametro_id}
+							</Form.Control.Feedback>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 							<Form.Label>Operador Lógico:</Form.Label>
@@ -221,8 +273,10 @@ const GruposParametros = () => {
 								name="operador_logico_primario"
 								onChange={formik.handleChange}
 								value={formik.values.operador_logico_primario}
+								isInvalid={!!formik.errors.operador_logico_primario}
+								placeholder="Selecione operador lógico primário"
 							>
-								<option>Selecione operador lógico primário</option>
+								<option></option>
 								<option value=">">Maior que</option>
 								<option value="<">Menor que</option>
 								<option value=">=">Maior ou igual</option>
@@ -230,27 +284,38 @@ const GruposParametros = () => {
 								<option value="=">Igual</option>
 								<option value="*">Multiplicar</option>
 							</Form.Select>
+							<Form.Control.Feedback type="invalid">
+								{formik.errors.operador_logico_primario}
+							</Form.Control.Feedback>
 						</Form.Group>
-						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+						<Form.Group className="mb-3" controlId="validationFormikNomeEdit">
 							<Form.Label>Valor Primário:</Form.Label>
-							<Form.Control
-								name="valor_primario"
-								onChange={formik.handleChange}
-								value={formik.values.valor_primario}
-								type="text"
-								placeholder="10.000"
-								autoFocus
-							/>
+							<InputGroup hasValidation>
+								<Form.Control
+									type="text"
+									placeholder="10.000"
+									aria-describedby="inputGroupPrepend"
+									name="valor_primario"
+									value={formik.values.valor_primario}
+									onChange={formik.handleChange}
+									isInvalid={!!formik.errors.valor_primario}
+								/>
+								<Form.Control.Feedback type="invalid">
+									{formik.errors.valor_primario}
+								</Form.Control.Feedback>
+							</InputGroup>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
 							<Form.Label>Comparar com:</Form.Label>
 							<Form.Select
 								aria-label="Default select example"
 								name="tabela"
+								placeholder="Selecione um comparador"
 								onChange={formik.handleChange}
 								value={formik.values.tabela}
+								isInvalid={!!formik.errors.tabela}
 							>
-								<option>Selecione um comparador</option>
+								<option></option>
 								{atributos.map((objeto, index) => (
 									<option
 										key={index}
@@ -260,15 +325,28 @@ const GruposParametros = () => {
 									</option>
 								))}
 							</Form.Select>
+							<Form.Control.Feedback type="invalid">
+								{formik.errors.tabela}
+							</Form.Control.Feedback>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
-							<Form.Check // prettier-ignore
+							<Form.Check
 								type="switch"
 								name="faixa_valores"
 								label="Faixa de Valores"
 								onChange={formik.handleChange}
 								checked={formik.values.faixa_valores}
 								value={formik.values.faixa_valores}
+							/>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
+							<Form.Check
+								type="switch"
+								name="multiplicar_premio"
+								label="Multiplicar Prêmio"
+								onChange={formik.handleChange}
+								checked={formik.values.multiplicar_premio}
+								value={formik.values.multiplicar_premio}
 							/>
 						</Form.Group>
 						{formik.values.faixa_valores ? (
@@ -311,16 +389,22 @@ const GruposParametros = () => {
 						) : (
 							<></>
 						)}
-						<Form.Group className="mb-3" controlId="exampleForm.ControlInput7">
+						<Form.Group className="mb-3" controlId="validationFormikPremio">
 							<Form.Label>Prêmio:</Form.Label>
-							<Form.Control
-								name="premio"
-								onChange={formik.handleChange}
-								value={formik.values.premio}
-								type="text"
-								placeholder="10.000"
-								autoFocus
-							/>
+							<InputGroup hasValidation>
+								<Form.Control
+									type="text"
+									placeholder="10.000"
+									aria-describedby="inputGroupPrepend"
+									name="premio"
+									value={formik.values.premio}
+									onChange={formik.handleChange}
+									isInvalid={!!formik.errors.premio}
+								/>
+								<Form.Control.Feedback type="invalid">
+									{formik.errors.premio}
+								</Form.Control.Feedback>
+							</InputGroup>
 						</Form.Group>
 					</Form>
 				</Modal.Body>
@@ -374,6 +458,12 @@ const GruposParametros = () => {
 								style={{ textAlign: "center" }}
 							/>
 							<Column
+								body={multiplicarBodyTemplate}
+								field="multiplicar_premio"
+								header="Multiplicar Prêmio"
+								style={{ textAlign: "center" }}
+							/>
+							<Column
 								field="operador_logico_secundaria"
 								header="Operador Lógico S"
 								style={{ textAlign: "center" }}
@@ -384,6 +474,7 @@ const GruposParametros = () => {
 								//className="table-column-nome"
 							/>
 							<Column
+								body={premioBodyTemplate}
 								field="premio"
 								header="Valor Prêmio"
 								//className="table-column-nome"

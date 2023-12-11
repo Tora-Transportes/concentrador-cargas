@@ -2,6 +2,7 @@ export default interface IParametroGrupo {
   id: number;
   grupo_id: number;
   parametro_id: number;
+  de_para_rotulo_id: number;
   parametro_nome: string;
   operador_logico_primario: string;
   valor_primario: string;
@@ -11,6 +12,7 @@ export default interface IParametroGrupo {
   tabela: string;
   campo: string;
   faixa_valores: number;
+  multiplicar_premio: number;
   ativo: number;
   created_at: Date;
   cod_usu_create: string;
