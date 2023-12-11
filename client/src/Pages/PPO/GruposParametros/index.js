@@ -42,6 +42,7 @@ const GruposParametros = () => {
 		initialValues: {
 			grupo_id: id,
 			parametro_id: "",
+			de_para_rotulo_id: "",
 			operador_logico_primario: "",
 			valor_primario: "",
 			operador_logico_secundaria: "",
@@ -52,10 +53,15 @@ const GruposParametros = () => {
 			faixa_valores: false,
 			ativo: true,
 		},
+		onChange: async (values) => {
+			console.log(values);
+		},
+
 		onSubmit: async (values) => {
 			const tabelaCampo = values.tabela.split(";");
-			values.tabela = tabelaCampo[0];
-			values.campo = tabelaCampo[1];
+			values.de_para_rotulo_id = tabelaCampo[0];
+			values.tabela = tabelaCampo[1];
+			values.campo = tabelaCampo[2];
 			setLoading(true);
 			try {
 				await ServicePPOGruposParametros.create(values);
@@ -110,7 +116,8 @@ const GruposParametros = () => {
 			objeto.operador_logico_secundaria;
 		formik.values.valor_secundario = objeto.valor_secundario;
 		formik.values.premio = objeto.premio;
-		formik.values.tabela = `${objeto.tabela};${objeto.campo}`;
+		formik.values.tabela = `${objeto.de_para_rotulo_id};${objeto.tabela};${objeto.campo}`;
+		formik.values.de_para_rotulo_id = objeto.de_para_rotulo_id;
 		formik.values.campo = objeto.campo;
 		formik.values.faixa_valores = objeto.faixa_valores;
 		formik.values.ativo = objeto.ativo;
@@ -120,8 +127,10 @@ const GruposParametros = () => {
 	async function submitEdit() {
 		try {
 			const tabelaCampo = formik.values.tabela.split(";");
-			formik.values.tabela = tabelaCampo[0];
-			formik.values.campo = tabelaCampo[1];
+			formik.values.de_para_rotulo_id = tabelaCampo[0];
+			formik.values.tabela = tabelaCampo[1];
+			formik.values.campo = tabelaCampo[2];
+			console.log(formik.values);
 			await ServicePPOGruposParametros.update(idEdit, formik.values);
 			handleOpen();
 			await loadListagem();
@@ -245,7 +254,7 @@ const GruposParametros = () => {
 								{atributos.map((objeto, index) => (
 									<option
 										key={index}
-										value={`${objeto.tabela};${objeto.coluna}`}
+										value={`${objeto.id_rotulo};${objeto.tabela};${objeto.coluna}`}
 									>
 										{objeto.rotulo}
 									</option>
@@ -258,6 +267,7 @@ const GruposParametros = () => {
 								name="faixa_valores"
 								label="Faixa de Valores"
 								onChange={formik.handleChange}
+								checked={formik.values.faixa_valores}
 								value={formik.values.faixa_valores}
 							/>
 						</Form.Group>
@@ -274,7 +284,7 @@ const GruposParametros = () => {
 										onChange={formik.handleChange}
 										value={formik.values.operador_logico_secundaria}
 									>
-										<option>Selecione operador lógico secundário</option>
+										<option></option>
 										<option value=">">Maior que</option>
 										<option value="<">Menor que</option>
 										<option value=">=">Maior ou igual</option>

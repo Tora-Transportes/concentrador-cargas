@@ -89,7 +89,7 @@ export const renderHeader = (
 								{atributos.map((objeto, index) => (
 									<option
 										key={index}
-										value={`${objeto.tabela};${objeto.coluna}`}
+										value={`${objeto.id_rotulo};${objeto.tabela};${objeto.coluna}`}
 									>
 										{objeto.rotulo}
 									</option>
@@ -97,11 +97,12 @@ export const renderHeader = (
 							</Form.Select>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
-							<Form.Check // prettier-ignore
+							<Form.Check
 								type="switch"
 								name="faixa_valores"
 								label="Faixa de Valores"
 								onChange={formik.handleChange}
+								checked={formik.values.faixa_valores}
 								value={formik.values.faixa_valores}
 							/>
 						</Form.Group>
@@ -118,7 +119,7 @@ export const renderHeader = (
 										onChange={formik.handleChange}
 										value={formik.values.operador_logico_secundaria}
 									>
-										<option>Selecione operador lógico secundário</option>
+										<option></option>
 										<option value=">">Maior que</option>
 										<option value="<">Menor que</option>
 										<option value=">=">Maior ou igual</option>
