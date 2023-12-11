@@ -2,7 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import Menusuperior from "../../Components/MenuSuperior/menusuperior";
-import { Container, Row, Button, Form, Modal } from "react-bootstrap";
+import {
+	Container,
+	Row,
+	Button,
+	Form,
+	Modal,
+	InputGroup,
+} from "react-bootstrap";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import {
@@ -15,6 +22,13 @@ import {
 import swal from "sweetalert";
 import ServicePPOGrupos from "src/services/ServicePPOGrupos";
 import { useHistory } from "react-router-dom";
+import * as Yup from "yup";
+
+const GrupoSchema = Yup.object().shape({
+	nome: Yup.string().required("nome é um campo obrigatório"),
+	empresa: Yup.string().required("empresa é um campo obrigatório"),
+	filial: Yup.string().required("filial é um campo obrigatório"),
+});
 
 const Grupos = () => {
 	const history = useHistory();
@@ -46,13 +60,14 @@ const Grupos = () => {
 			empresa: "",
 			filial: "",
 		},
+		validationSchema: GrupoSchema,
 		onSubmit: async (values) => {
 			console.log(values);
 			setLoading(true);
 			try {
 				await ServicePPOGrupos.create(values);
 				await loadParametros();
-				handleOpen();
+				handleOpenCreate();
 				swal("Sucesso!", "O grupo foi cadastrado", "success");
 				formik.resetForm();
 			} catch (error) {
@@ -140,35 +155,59 @@ const Grupos = () => {
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
-						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-							<Form.Label>Grupo</Form.Label>
-							<Form.Control
-								name="nome"
-								onChange={formik.handleChange}
-								value={formik.values.nome}
-								type="text"
-								autoFocus
-							/>
+						<Form.Group className="mb-3" controlId="validationFormikNomeEdit">
+							<Form.Label>Nome</Form.Label>
+							<InputGroup hasValidation>
+								<Form.Control
+									type="text"
+									placeholder="Nome"
+									aria-describedby="inputGroupPrepend"
+									name="nome"
+									value={formik.values.nome}
+									onChange={formik.handleChange}
+									isInvalid={!!formik.errors.nome}
+								/>
+								<Form.Control.Feedback type="invalid">
+									{formik.errors.nome}
+								</Form.Control.Feedback>
+							</InputGroup>
 						</Form.Group>
-						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+						<Form.Group
+							className="mb-3"
+							controlId="validationFormikEmpresaEdit"
+						>
 							<Form.Label>Empresa</Form.Label>
-							<Form.Control
-								name="empresa"
-								onChange={formik.handleChange}
-								value={formik.values.empresa}
-								type="text"
-								autoFocus
-							/>
+							<InputGroup hasValidation>
+								<Form.Control
+									type="text"
+									placeholder="Empresa"
+									aria-describedby="inputGroupPrepend"
+									name="empresa"
+									value={formik.values.empresa}
+									onChange={formik.handleChange}
+									isInvalid={!!formik.errors.empresa}
+								/>
+								<Form.Control.Feedback type="invalid">
+									{formik.errors.empresa}
+								</Form.Control.Feedback>
+							</InputGroup>
 						</Form.Group>
-						<Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
+						<Form.Group className="mb-3" controlId="validationFormikFilialEdit">
 							<Form.Label>Filial</Form.Label>
-							<Form.Control
-								name="filial"
-								onChange={formik.handleChange}
-								value={formik.values.filial}
-								type="text"
-								autoFocus
-							/>
+							<InputGroup hasValidation>
+								<Form.Control
+									type="text"
+									placeholder="Filial"
+									aria-describedby="inputGroupPrepend"
+									name="filial"
+									value={formik.values.filial}
+									onChange={formik.handleChange}
+									isInvalid={!!formik.errors.filial}
+								/>
+								<Form.Control.Feedback type="invalid">
+									{formik.errors.filial}
+								</Form.Control.Feedback>
+							</InputGroup>
 						</Form.Group>
 					</Form>
 				</Modal.Body>

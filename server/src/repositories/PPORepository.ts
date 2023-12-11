@@ -36,25 +36,28 @@ export class PPORepository implements IPPORepository {
   async atributos(): Promise<any[] | undefined> {
     const atributos = await mssqlPPO.raw(`
     SELECT 
-TABELAS.TABLE_SCHEMA AS schemas,
-TABELAS.TABLE_NAME as tabela,
-COLUNAS.COLUMN_NAME as coluna,
-pr.rotulo as rotulo
-FROM INFORMATION_SCHEMA.COLUMNS AS COLUNAS
-INNER JOIN INFORMATION_SCHEMA.TABLES  AS TABELAS ON TABELAS.TABLE_NAME = COLUNAS.TABLE_NAME
-INNER JOIN [dbo].[ppo_de_para_rotulo] AS pr ON pr.tabela = CONCAT ( TABELAS.TABLE_SCHEMA, '.',TABELAS.TABLE_NAME) and pr.campo = COLUNAS.COLUMN_NAME  
+    pr.id as id_rotulo,
+    TABELAS.TABLE_SCHEMA AS schemas,
+    TABELAS.TABLE_NAME as tabela,
+    COLUNAS.COLUMN_NAME as coluna,
+    pr.rotulo as rotulo
+    FROM INFORMATION_SCHEMA.COLUMNS AS COLUNAS
+    INNER JOIN INFORMATION_SCHEMA.TABLES  AS TABELAS ON TABELAS.TABLE_NAME = COLUNAS.TABLE_NAME
+    INNER JOIN [dbo].[ppo_de_para_rotulo] AS pr ON pr.tabela = CONCAT ( TABELAS.TABLE_SCHEMA, '.',TABELAS.TABLE_NAME) and pr.campo = COLUNAS.COLUMN_NAME  
     `);
 
     const tabelasAgrupadas: any = [];
 
     atributos.forEach(
       (objeto: {
+        id_rotulo: number;
         schemas: string;
         tabela: string;
         coluna: string;
         rotulo: string;
       }) => {
         tabelasAgrupadas.push({
+          id_rotulo: objeto.id_rotulo,
           tabela: `${objeto.schemas}.${objeto.tabela}`,
           coluna: objeto.coluna,
           rotulo: objeto.rotulo,

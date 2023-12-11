@@ -13,7 +13,15 @@ import {
 	criadoBodyTemplate,
 } from "./components/templateDataTable";
 import swal from "sweetalert";
+import * as Yup from "yup";
 import ServicePPOParametros from "src/services/ServicePPOParametros";
+
+const ParametroSchema = Yup.object().shape({
+	nome: Yup.string()
+		.min(2, "Muito Pequeno!")
+		.max(100, "Muito Longo!")
+		.required("Requerido"),
+});
 
 const Parametros = () => {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -33,6 +41,7 @@ const Parametros = () => {
 		initialValues: {
 			nome: "",
 		},
+		validationSchema: ParametroSchema,
 		onSubmit: async (values) => {
 			setLoading(true);
 			try {
