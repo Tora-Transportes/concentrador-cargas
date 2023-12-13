@@ -242,6 +242,7 @@ routes.get("/ppo/distancia", PPOController.distancia);
 routes.get("/ppo/infracoes", PPOController.infracoes);
 routes.get("/ppo/interjornadas", PPOController.interjornada);
 routes.get("/ppo/atributos", PPOController.atributos);
+routes.get("/ppo/demonstrativo", PPOController.demonstrativo);
 
 routes.get("/ppo/parametros", PPOParametrosController.index);
 routes.post("/ppo/parametros", PPOParametrosController.create);

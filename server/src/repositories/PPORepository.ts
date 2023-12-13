@@ -1,7 +1,7 @@
 import database, { mssqlPPO } from "../database";
 import IAvaliacao from "../models/IAvaliacao";
 import IAtributo from "../models/IAtributo";
-import { object } from "yup";
+import AppError from "../models/AppError";
 
 interface IPPORepository {
   avaliacoes(cpf: string): Promise<IAvaliacao[] | undefined>;
@@ -9,6 +9,11 @@ interface IPPORepository {
   infracoes(id: number): Promise<void>;
   interjornada(id: number): Promise<void>;
   atributos(): Promise<IAtributo[] | undefined>;
+  resultado_ppo(
+    cpf: string,
+    mes: string,
+    ano: string
+  ): Promise<IAtributo[] | undefined>;
 }
 
 export class PPORepository implements IPPORepository {
@@ -33,7 +38,7 @@ export class PPORepository implements IPPORepository {
   async interjornada(ID: number): Promise<void> {
     await database("con_avisos").delete().where({ ID });
   }
-  async atributos(): Promise<any[] | undefined> {
+  async atributos(): Promise<any | undefined> {
     const atributos = await mssqlPPO.raw(`
     SELECT 
     pr.id as id_rotulo,
@@ -65,5 +70,52 @@ export class PPORepository implements IPPORepository {
       }
     );
     return tabelasAgrupadas;
+  }
+
+  async resultado_ppo(
+    cpf: string,
+    mes: string,
+    ano: string
+  ): Promise<any | undefined> {
+    const total = await mssqlPPO.raw(`
+      SELECT 'R$ '+CONVERT(VARCHAR, CAST(SUM(CAST(premio as float)) AS MONEY), 1) as valor FROM dbo.ppo_resultado
+      WHERE apto = 1
+      AND cpf = '${cpf}'
+      AND mes_avaliacao = '${mes}'
+      AND ano_avaliacao = '${ano}'
+      `);
+    const valores = await mssqlPPO.raw(` 
+      SELECT p.nome,r.dado_verificado,'R$ '+CONVERT(VARCHAR, CAST(r.premio AS MONEY), 1) as valor FROM dbo.ppo_resultado r
+      inner join dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
+      join dbo.ppo_parametros p on p.id =  pg.parametro_id
+      WHERE r.apto = 1
+      AND r.cpf = '${cpf}'
+      AND r.mes_avaliacao = '${mes}'
+      AND r.ano_avaliacao = '${ano}'
+    `);
+
+    const dados_motorista = await mssqlPPO.raw(` 
+    SELECT DISTINCT r.nome_motorista as nome
+    ,r.cpf
+    ,r.matricula
+    ,CASE WHEN r.ppo_cancelado = 1 THEN 'Sim' ELSE 'Não' END as cancelado
+    ,CONCAT(r.mes_avaliacao,'/',r.ano_avaliacao) as mes_ano
+    FROM dbo.ppo_resultado r
+    inner join dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
+    join dbo.ppo_parametros p on p.id =  pg.parametro_id
+    WHERE r.apto = 1
+    AND r.cpf = '${cpf}'
+    AND r.mes_avaliacao = '${mes}'
+    AND r.ano_avaliacao = '${ano}'
+  `);
+    if (dados_motorista.length == 0) {
+      throw new AppError("Sem dados para gerar demonstrativo", 400);
+    }
+
+    return {
+      dados_motorista: dados_motorista[0],
+      valores: valores,
+      total: total[0]["valor"],
+    };
   }
 }
