@@ -151,8 +151,6 @@ export class PPORepository implements IPPORepository {
       .andWhere("mes_avaliacao", mes)
       .andWhere("ano_avaliacao", ano);
 
-    console.log(decrypt(hash));
-
     return {
       dados_motorista: dados_motorista[0],
       valores: valores,
