@@ -283,6 +283,28 @@ class PPOController implements IPPOController {
             ],
           },
         },
+        {
+          text: "",
+          style: "assinaturaLinha",
+        },
+        {
+          style: "tableValores",
+          table: {
+            widths: [50, 450],
+            body: [
+              [
+                {
+                  text: "HASH",
+                  style: "hashTitle",
+                },
+                {
+                  text: result["hash"],
+                  style: "hash",
+                },
+              ],
+            ],
+          },
+        },
       ],
       styles: {
         header: {
@@ -333,6 +355,16 @@ class PPOController implements IPPOController {
         dataTopo: {
           alignment: "right",
           margin: [0, 0, 0, 10],
+        },
+        hash: {
+          alignment: "left",
+          fontSize: 14,
+          bold: true,
+          margin: [0, 8, 3, 5],
+        },
+        hashTitle: {
+          alignment: "center",
+          margin: [0, 15, 3, 10],
         },
       },
       images: {
