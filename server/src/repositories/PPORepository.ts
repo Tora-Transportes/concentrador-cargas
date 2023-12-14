@@ -2,7 +2,9 @@ import database, { mssqlPPO } from "../database";
 import IAvaliacao from "../models/IAvaliacao";
 import IAtributo from "../models/IAtributo";
 import AppError from "../models/AppError";
+import { encrypt } from "../Utils/utlis";
 import { Knex } from "knex";
+import { has } from "lodash";
 
 interface IPPORepository {
   avaliacoes(cpf: string): Promise<IAvaliacao[] | undefined>;
@@ -85,6 +87,28 @@ export class PPORepository implements IPPORepository {
     mes: string,
     ano: string
   ): Promise<any | undefined> {
+    const data_hash = await mssqlPPO.raw(`
+    SELECT 
+    CONCAT( r.cpf,'|',
+    RTRIM(LTRIM(r.matricula)),'|',
+    g.nome,'|',  g.empresa,'|',
+    sum(cast(r.premio as float)),'|',
+	  r.mes_avaliacao,'|',r.ano_avaliacao) as hash
+    FROM 
+    dbo.ppo_resultado r
+    INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
+    INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
+    INNER JOIN dbo.ppo_parametros p ON p.id = pg.parametro_id
+    WHERE 
+    r.apto = 1
+    AND r.cpf = '${cpf}'
+    AND r.mes_avaliacao = '${mes}'
+    AND r.ano_avaliacao = '${ano}'
+    GROUP BY 
+    r.cpf,r.matricula,g.nome, g.empresa, r.mes_avaliacao,
+    r.ano_avaliacao;
+    `);
+
     const total = await mssqlPPO.raw(`
       SELECT 'R$ '+CONVERT(VARCHAR, CAST(SUM(CAST(premio as float)) AS MONEY), 1) as valor FROM dbo.ppo_resultado
       WHERE apto = 1
@@ -119,11 +143,21 @@ export class PPORepository implements IPPORepository {
     if (dados_motorista.length == 0) {
       throw new AppError("Sem dados para gerar demonstrativo", 400);
     }
+    const hash = encrypt(data_hash[0]["hash"], dados_motorista[0]["cpf"]);
+
+    const update_hash = await mssqlPPO("dbo.ppo_resultado") //update hash
+      .update({ hash: hash })
+      .where("cpf", cpf)
+      .andWhere("mes_avaliacao", mes)
+      .andWhere("ano_avaliacao", ano);
+
+    console.log(update_hash);
 
     return {
       dados_motorista: dados_motorista[0],
       valores: valores,
       total: total[0]["valor"],
+      hash: hash,
     };
   }
 
