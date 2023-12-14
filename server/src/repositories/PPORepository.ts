@@ -2,7 +2,7 @@ import database, { mssqlPPO } from "../database";
 import IAvaliacao from "../models/IAvaliacao";
 import IAtributo from "../models/IAtributo";
 import AppError from "../models/AppError";
-import { encrypt } from "../Utils/utlis";
+import { decrypt, encrypt } from "../Utils/utlis";
 import { Knex } from "knex";
 import { has } from "lodash";
 
@@ -143,7 +143,7 @@ export class PPORepository implements IPPORepository {
     if (dados_motorista.length == 0) {
       throw new AppError("Sem dados para gerar demonstrativo", 400);
     }
-    const hash = encrypt(data_hash[0]["hash"], dados_motorista[0]["cpf"]);
+    const hash = encrypt(data_hash[0]["hash"]);
 
     const update_hash = await mssqlPPO("dbo.ppo_resultado") //update hash
       .update({ hash: hash })
@@ -151,7 +151,7 @@ export class PPORepository implements IPPORepository {
       .andWhere("mes_avaliacao", mes)
       .andWhere("ano_avaliacao", ano);
 
-    console.log(update_hash);
+    console.log(decrypt(hash));
 
     return {
       dados_motorista: dados_motorista[0],

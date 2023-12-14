@@ -1,5 +1,9 @@
 import * as crypto from "crypto";
 
+const ENC = "bf3c199c2470cb477d907b1e0917c17b";
+const IV = "5183666c72eec9e4";
+const ALGO = "aes-256-cbc";
+
 export const compareValues = (
   value1: string | number,
   value2: number
@@ -16,16 +20,15 @@ export const compareValues = (
   }
 };
 
-export const encrypt = (text: string, key: string): string => {
-  const cipher = crypto.createCipher("aes-256-cbc", key);
-  let encrypted = cipher.update(text, "utf-8", "hex");
-  encrypted += cipher.final("hex");
+export const encrypt = (text: string): string => {
+  const cipher = crypto.createCipheriv(ALGO, ENC, IV);
+  let encrypted = cipher.update(text, "utf8", "base64");
+  encrypted += cipher.final("base64");
   return encrypted;
 };
 
-export const decrypt = (encryptedText: string, key: string): string => {
-  const decipher = crypto.createDecipher("aes-256-cbc", key);
-  let decrypted = decipher.update(encryptedText, "hex", "utf-8");
-  decrypted += decipher.final("utf-8");
-  return decrypted;
+export const decrypt = (text: string): string => {
+  const decipher = crypto.createDecipheriv(ALGO, ENC, IV);
+  const decrypted = decipher.update(text, "base64", "utf8");
+  return decrypted + decipher.final("utf8");
 };
