@@ -290,11 +290,11 @@ class PPOController implements IPPOController {
         {
           style: "tableValores",
           table: {
-            widths: [50, 450],
+            widths: [200, 300],
             body: [
               [
                 {
-                  text: "HASH",
+                  text: "Esse demonstrativo foi assinado digitalmente sob o nro: ",
                   style: "hashTitle",
                 },
                 {
@@ -358,13 +358,14 @@ class PPOController implements IPPOController {
         },
         hash: {
           alignment: "left",
-          fontSize: 14,
+          fontSize: 10,
           bold: true,
-          margin: [0, 8, 3, 5],
+          margin: [0, 2, 3, 1],
         },
         hashTitle: {
+          fontSize: 10,
           alignment: "center",
-          margin: [0, 15, 3, 10],
+          margin: [0, 2, 0, 1],
         },
       },
       images: {
