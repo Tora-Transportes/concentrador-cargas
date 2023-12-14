@@ -1,10 +1,11 @@
-import { Request, Response, response } from "express";
+import { Request, Response } from "express";
 import { PPORepository } from "../repositories/PPORepository";
 import { TDocumentDefinitions } from "pdfmake/interfaces";
 import { format } from "date-fns";
 import PDFPrinter from "pdfmake";
+import xlsx from "xlsx";
 import fs from "fs";
-import { chunk } from "lodash";
+import AppError from "../models/AppError";
 
 const fonts = {
   Helvetica: {
@@ -22,9 +23,52 @@ interface IPPOController {
   interjornada(req: Request, res: Response): Promise<Response>;
   atributos(req: Request, res: Response): Promise<Response>;
   demonstrativo(req: Request, res: Response): Promise<any>;
+  relatorio(req: Request, res: Response): Promise<Response>;
+  relatorioExcel(req: Request, res: Response): Promise<Response>;
 }
 
 class PPOController implements IPPOController {
+  async relatorioExcel(req: Request, res: Response): Promise<Response> {
+    const ppoRepository = new PPORepository();
+    const filename = `RELATORIO-PPO_${new Date().getTime()}.xlsx`;
+    const searchResult = await ppoRepository.searchExcel(
+      { ...req.query },
+      1200000
+    );
+
+    if (searchResult.results.length == 0) {
+      throw new AppError(
+        "Não foram encontrados dados com essas informações no filtro de data.",
+        202
+      );
+    }
+
+    const workbook = xlsx.utils.book_new();
+    const sheet = xlsx.utils.json_to_sheet(searchResult.results);
+
+    xlsx.utils.book_append_sheet(workbook, sheet);
+
+    await xlsx.writeFile(workbook, filename, {
+      bookType: "xlsx",
+      type: "binary",
+    });
+
+    const stream = fs.createReadStream(filename);
+    stream.pipe(res);
+    if (fs.existsSync(filename)) fs.unlinkSync(filename);
+    return res;
+  }
+
+  async relatorio(req: Request, res: Response): Promise<Response> {
+    const ppoRepository = new PPORepository();
+    const result = await ppoRepository.relatorio_motoristas(
+      { ...req.query },
+      Number(req.query.page),
+      Number(req.query.limit) || 5
+    );
+    return res.json({ data: result });
+  }
+
   async avaliacoes(req: Request, res: Response): Promise<Response> {
     const { cpf } = req.query;
     const ppoRepository = new PPORepository();

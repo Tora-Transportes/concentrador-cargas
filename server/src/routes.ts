@@ -236,6 +236,8 @@ routes.get("/ppo/infracoes", PPOController.infracoes);
 routes.get("/ppo/interjornadas", PPOController.interjornada);
 routes.get("/ppo/atributos", PPOController.atributos);
 routes.get("/ppo/demonstrativo", PPOController.demonstrativo);
+routes.get("/ppo/relatorios/motoristas", PPOController.relatorio);
+routes.get("/ppo/relatorios/excel", PPOController.relatorioExcel);
 
 routes.get("/ppo/parametros", PPOParametrosController.index);
 routes.post("/ppo/parametros", PPOParametrosController.create);
