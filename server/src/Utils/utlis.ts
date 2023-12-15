@@ -2,7 +2,7 @@ import * as crypto from "crypto";
 
 const ENC = "bf3c199c2470cb477d907b1e0917c17b";
 const IV = "5183666c72eec9e4";
-const ALGO = "aes-256-cbc";
+const ALGO = "aes-256-ctr";
 
 export const compareValues = (
   value1: string | number,
