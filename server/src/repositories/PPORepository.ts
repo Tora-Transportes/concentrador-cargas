@@ -129,9 +129,7 @@ export class PPORepository implements IPPORepository {
     INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
     INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
     INNER JOIN dbo.ppo_parametros p ON p.id = pg.parametro_id
-    WHERE 
-    r.apto = 1
-    AND r.cpf = '${cpf}'
+    WHERE  r.cpf = '${cpf}'
     AND r.mes_avaliacao = '${mes}'
     AND r.ano_avaliacao = '${ano}'
     GROUP BY 
@@ -141,8 +139,8 @@ export class PPORepository implements IPPORepository {
 
     const total = await mssqlPPO.raw(`
       SELECT 'R$ '+CONVERT(VARCHAR, CAST(SUM(CAST(premio as float)) AS MONEY), 1) as valor FROM dbo.ppo_resultado
-      WHERE apto = 1
-      AND cpf = '${cpf}'
+      WHERE cpf = '${cpf}'
+      and apto = 1
       AND mes_avaliacao = '${mes}'
       AND ano_avaliacao = '${ano}'
       `);
@@ -161,12 +159,12 @@ export class PPORepository implements IPPORepository {
     ,r.cpf
     ,r.matricula
     ,CASE WHEN r.ppo_cancelado = 1 THEN 'Sim' ELSE 'Não' END as cancelado
+    ,CASE WHEN r.observacao is NULL THEN 'Sem Observação' ELSE r.observacao END as observacao
     ,CONCAT(r.mes_avaliacao,'/',r.ano_avaliacao) as mes_ano
     FROM dbo.ppo_resultado r
     inner join dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
     join dbo.ppo_parametros p on p.id =  pg.parametro_id
-    WHERE r.apto = 1
-    AND r.cpf = '${cpf}'
+    WHERE r.cpf = '${cpf}'
     AND r.mes_avaliacao = '${mes}'
     AND r.ano_avaliacao = '${ano}'
   `);
@@ -184,7 +182,7 @@ export class PPORepository implements IPPORepository {
     return {
       dados_motorista: dados_motorista[0],
       valores: valores,
-      total: total[0]["valor"],
+      total: total[0]["valor"] ? total[0]["valor"] : "R$ 0.00",
       hash: hash,
     };
   }
