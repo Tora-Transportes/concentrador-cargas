@@ -90,6 +90,7 @@ function Menusuperior() {
                 <a href="/ppo/grupos">PPO Cadastro Grupo</a>
                 <a href="/ppo/parametros">PPO Cadastro Parâmetros</a>
                 <a href="/ppo/relatorio/motoristas">Relatório de Motoristas</a>
+                <a href="/ppo/demonstrativos">Demonstrativo Motoristas</a>
               </div>
             </div>
           </div>

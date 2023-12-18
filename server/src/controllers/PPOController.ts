@@ -6,6 +6,7 @@ import PDFPrinter from "pdfmake";
 import xlsx from "xlsx";
 import fs from "fs";
 import AppError from "../models/AppError";
+import { formataCPF } from "../Utils/utlis";
 
 const fonts = {
   Helvetica: {
@@ -25,9 +26,16 @@ interface IPPOController {
   demonstrativo(req: Request, res: Response): Promise<any>;
   relatorio(req: Request, res: Response): Promise<Response>;
   relatorioExcel(req: Request, res: Response): Promise<Response>;
+  demonstrativos(req: Request, res: Response): Promise<Response>;
 }
 
 class PPOController implements IPPOController {
+  async demonstrativos(req: Request, res: Response): Promise<Response> {
+    const ppoRepository = new PPORepository();
+    const result = await ppoRepository.demonstrativos(req.query);
+    return res.json({ data: result });
+  }
+
   async relatorioExcel(req: Request, res: Response): Promise<Response> {
     const ppoRepository = new PPORepository();
     const filename = `RELATORIO-PPO_${new Date().getTime()}.xlsx`;
@@ -107,7 +115,7 @@ class PPOController implements IPPOController {
     const dataAtual = new Date();
     const dataFormatada = format(dataAtual, "dd/MM/yyyy HH:mm:ss");
     const result = await ppoRepository.resultado_ppo(
-      String(cpf),
+      formataCPF(String(cpf)),
       String(mes),
       String(ano)
     );
@@ -375,7 +383,7 @@ class PPOController implements IPPOController {
     };
     const printer = new PDFPrinter(fonts);
     const pdfDoc = printer.createPdfKitDocument(docDefinition);
-    //pdfDoc.pipe(fs.createWriteStream("demonstrativo.pdf"));
+    pdfDoc.pipe(fs.createWriteStream(`static/${cpf}${mes}${ano}.pdf`));
     const chunks: any = [];
 
     pdfDoc.on("data", (chunk) => {
@@ -385,8 +393,9 @@ class PPOController implements IPPOController {
     pdfDoc.end();
 
     pdfDoc.on("end", () => {
-      const result = Buffer.concat(chunks);
-      return res.end(result);
+      //const result = Buffer.concat(chunks);
+      //return res.end(result);
+      return res.json({ url: `static/${cpf}${mes}${ano}.pdf` });
     });
   }
 }

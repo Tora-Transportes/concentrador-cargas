@@ -47,6 +47,7 @@ import Grupos from "./Pages/PPO/Grupos";
 import Parametros from "./Pages/PPO/Parametros";
 import GruposParametros from "./Pages/PPO/GruposParametros";
 import RelatorioMotoristas from "./Pages/PPO/RelatorioMotoristas";
+import DemonstrativoMotoristas from "./Pages/PPO/DemostrativoMotoristas";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -76,6 +77,12 @@ export default function AllRoutes() {
 					path="/ppo/relatorio/motoristas"
 					exact
 					component={RelatorioMotoristas}
+				/>
+
+				<Route
+					path="/ppo/demonstrativos"
+					exact
+					component={DemonstrativoMotoristas}
 				/>
 
 				<Route path="/cargas/visualizar" exact component={VisualizarCargas} />

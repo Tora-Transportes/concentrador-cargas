@@ -82,6 +82,36 @@ export class PPORepository implements IPPORepository {
     return tabelasAgrupadas;
   }
 
+  async demonstrativos(filter: Record<string, any>): Promise<any | undefined> {
+    let clausula = "";
+
+    for (const i in filter) {
+      if (filter[i] !== undefined && filter[i] !== null) {
+        clausula = clausula + ` AND ${i} LIKE '%${filter[i]}%'`;
+      }
+    }
+
+    const query = mssqlPPO.raw(` 
+    SELECT DISTINCT r.nome_motorista as nome
+    ,r.cpf
+    ,r.mes_avaliacao
+    ,r.ano_avaliacao 
+    FROM dbo.ppo_resultado r
+    inner join dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
+    inner join dbo.ppo_parametros p on p.id =  pg.parametro_id
+    WHERE r.apto = 1
+    ${clausula}
+  `);
+
+    const data = await query;
+
+    if (data.length == 0) {
+      throw new AppError("Sem dados de demonstrativo", 400);
+    }
+
+    return data;
+  }
+
   async resultado_ppo(
     cpf: string,
     mes: string,

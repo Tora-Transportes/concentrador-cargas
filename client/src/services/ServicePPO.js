@@ -10,6 +10,26 @@ class ServicePPO {
 		return api.get(`/ppo/atributos`);
 	}
 
+	async downloadDemonstrativos({ cpf, mes_avaliacao, ano_avaliacao }) {
+		return api.get(`/ppo/demonstrativo`, {
+			params: {
+				cpf,
+				mes: mes_avaliacao,
+				ano: ano_avaliacao,
+			},
+		});
+	}
+
+	async demonstrativos({ cpf, mes_avaliacao, ano_avaliacao }) {
+		return api.get(`/ppo/motoristas/demonstrativos`, {
+			params: {
+				cpf,
+				mes_avaliacao,
+				ano_avaliacao,
+			},
+		});
+	}
+
 	async search({
 		page,
 		order_column,
