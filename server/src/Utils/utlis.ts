@@ -32,3 +32,8 @@ export const decrypt = (text: string): string => {
   const decrypted = decipher.update(text, "base64", "utf8");
   return decrypted + decipher.final("utf8");
 };
+
+export const formataCPF = (cpf: string): string => {
+  cpf = cpf.replace(/[^\d]/g, "");
+  return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+};

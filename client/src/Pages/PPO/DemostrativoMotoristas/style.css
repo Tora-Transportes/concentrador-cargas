@@ -1,0 +1,49 @@
+
+.icon-download {
+    margin-left: 1rem;
+    color: #00652e;
+    margin-top: 0.5rem;
+}
+  
+
+
+  .icon-download:hover,
+  #hand:hover,
+  #title-manual:hover,
+  div .title-CSN:hover,
+  .icon-csn:hover {
+    transition: 0.5s;
+    -webkit-transform: scale(1.2);
+    transform: scale(1.1);
+    color: #009c08;
+  }
+  
+
+  @media only screen and (max-width: 400px) {
+
+    .icon-download {
+      color: #00652e;
+      margin-top: 0.5rem;
+      margin-left: 0.6rem;
+    }
+  }
+  
+  @media only screen and (min-width: 401px) and (max-width: 620px) {
+
+  
+    .icon-download {
+      color: #00652e;
+      margin-top: 0.5rem;
+      margin-left: 0.6rem;
+    }
+}
+  
+  @media only screen and (min-width: 621px) and (max-width: 767px) {
+
+    .icon-download {
+      color: #00652e;
+      margin-top: 0.5rem;
+      margin-left: 0.6rem;
+    }
+  
+  }
