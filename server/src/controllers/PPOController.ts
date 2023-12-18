@@ -114,6 +114,9 @@ class PPOController implements IPPOController {
     const ppoRepository = new PPORepository();
     const dataAtual = new Date();
     const dataFormatada = format(dataAtual, "dd/MM/yyyy HH:mm:ss");
+    const date = new Date(`${mes}/01/${ano}`);
+    const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    const periodoApu = `01/${mes}/${ano} à ${lastDay.toLocaleDateString()}`;
     const result = await ppoRepository.resultado_ppo(
       formataCPF(String(cpf)),
       String(mes),
@@ -162,11 +165,31 @@ class PPOController implements IPPOController {
       ],
       [
         {
+          text: "Motivo Cancelamento",
+          style: "dadosMotorista",
+        },
+        {
+          text: result["dados_motorista"]["observacao"],
+          style: "dadosMotorista",
+        },
+      ],
+      [
+        {
           text: "Mês/Ano Demonstrativo",
           style: "dadosMotorista",
         },
         {
           text: result["dados_motorista"]["mes_ano"],
+          style: "dataDemonstrativo",
+        },
+      ],
+      [
+        {
+          text: "Período de Apuração",
+          style: "dadosMotorista",
+        },
+        {
+          text: periodoApu,
           style: "dataDemonstrativo",
         },
       ],
