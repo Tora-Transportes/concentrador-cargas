@@ -12,6 +12,12 @@ export const formatDate = (dataValor) => {
 	}
 };
 
+export const formatDateTimeZone = (inputDate) => {
+	const momentDate = moment(inputDate);
+	const formattedDate = momentDate.format("DD/MM/YYYY HH:mm:ss");
+	return formattedDate;
+};
+
 // Data atual mais 3 horas para conpensar o fuso horario
 export const formatDateAtual3HorasMais = (dataValor) => {
 	return moment(dataValor).add(3, "hour").format("DD/MM/YYYY HH:mm:ss");

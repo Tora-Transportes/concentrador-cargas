@@ -78,7 +78,7 @@ class PPOController implements IPPOController {
   }
 
   async avaliacoes(req: Request, res: Response): Promise<Response> {
-    const { cpf } = req.query;
+    const { cpf, data_inicio, data_fim } = req.query;
     const ppoRepository = new PPORepository();
     //const { id } = req.params;
     const result = await ppoRepository.avaliacoes(String(cpf));
@@ -86,20 +86,35 @@ class PPOController implements IPPOController {
   }
 
   async distancia(req: Request, res: Response): Promise<Response> {
-    //const { id } = req.params;
-    const result = {};
+    const { cpf, data_inicio, data_fim } = req.query;
+    const ppoRepository = new PPORepository();
+    const result = await ppoRepository.distancia(
+      String(cpf),
+      String(data_inicio),
+      String(data_fim)
+    );
     return res.json({ data: result });
   }
 
   async infracoes(req: Request, res: Response): Promise<Response> {
-    //const { id } = req.params;
-    const result = {};
+    const { cpf, data_inicio, data_fim } = req.query;
+    const ppoRepository = new PPORepository();
+    const result = await ppoRepository.infracoes(
+      String(cpf),
+      String(data_inicio),
+      String(data_fim)
+    );
     return res.json({ data: result });
   }
 
   async interjornada(req: Request, res: Response): Promise<Response> {
-    // const { id } = req.params;
-    const result = {};
+    const { cpf, data_inicio, data_fim } = req.query;
+    const ppoRepository = new PPORepository();
+    const result = await ppoRepository.interjornada(
+      String(cpf),
+      String(data_inicio),
+      String(data_fim)
+    );
     return res.json({ data: result });
   }
 
