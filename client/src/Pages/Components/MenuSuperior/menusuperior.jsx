@@ -16,9 +16,11 @@ function Menusuperior() {
   const [isPermEngate, setPermEngate] = useState(false);
   const [isColorHeader, setColorHeader] = useState("header");
   const { setPermissionUser } = useContext(ContextUseDefault);
+  const [permissoes, setPermissoes] = useState(null);
   useEffect(() => {
     (async () => {
       const userPermission = await validationPermissionUser();
+      setPermissoes(userPermission);
       setPermissionUser(userPermission?.permissoes);
       if (userPermission?.permissoes?.includes("CARGAS_PADRAO"))
         setPermissionPadrao(true);
@@ -82,15 +84,29 @@ function Menusuperior() {
           </li>
           <div className="class-li">
             <div className="dropdown">
-              <button id="style-button-drop" className="dropbtn">
-                PPO
-              </button>
+              {permissoes?.permissoes?.includes("PPO_MENU") && (
+                <button id="style-button-drop" className="dropbtn">
+                  PPO
+                </button>
+              )}
               <div id="myDropdown" className="dropdown-content">
-                <a href="/ppo/estatisticas">PPO Estátisticas</a>
-                <a href="/ppo/grupos">PPO Cadastro Grupo</a>
-                <a href="/ppo/parametros">PPO Cadastro Parâmetros</a>
-                <a href="/ppo/relatorio/motoristas">Relatório de Motoristas</a>
-                <a href="/ppo/demonstrativos">Demonstrativo Motoristas</a>
+                {permissoes?.permissoes?.includes("PPO_ESTATISTICA") && (
+                  <a href="/ppo/estatisticas">PPO Estátisticas</a>
+                )}
+                {permissoes?.permissoes?.includes("PPO_CAD_GRUPO") && (
+                  <a href="/ppo/grupos">PPO Cadastro Grupo</a>
+                )}
+                {permissoes?.permissoes?.includes("PPO_CAD_PARAMETROS") && (
+                  <a href="/ppo/parametros">PPO Cadastro Parâmetros</a>
+                )}
+                {permissoes?.permissoes?.includes("PPO_RELATORIO") && (
+                  <a href="/ppo/relatorio/motoristas">
+                    Relatório de Motoristas
+                  </a>
+                )}
+                {permissoes?.permissoes?.includes("PPO_DEMONSTRATIVO") && (
+                  <a href="/ppo/demonstrativos">Demonstrativo Motoristas</a>
+                )}
               </div>
             </div>
           </div>
