@@ -15,6 +15,7 @@ import useLoadingScreen from "../../Components/LoadingScreen";
 import Menusuperior from "../../Components/MenuSuperior/menusuperior";
 import ServicePPO from "src/services/ServicePPO";
 import swal2 from "sweetalert2";
+import { formatDateTimeZone } from "../../Utils/formatDate";
 
 const Estatisticas = () => {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -25,6 +26,9 @@ const Estatisticas = () => {
 		load4: 0,
 	});
 	const [avaliacoes, setAvaliacoes] = useState([]);
+	const [distancia, setDistancia] = useState([]);
+	const [infracoes, setInfracoes] = useState([]);
+	const [interjornada, setInterjornada] = useState([]);
 	const [loadBar, setLoadBar] = useState(false);
 	const [fields, setFields] = useState({
 		cpf: "",
@@ -38,6 +42,7 @@ const Estatisticas = () => {
 	}
 
 	async function buscarAvaliacoes(cpf, date_inicio, date_fim) {
+		setAvaliacoes([]);
 		setLoading(true);
 		setLoadBar(true);
 		setRandomValue((prevState) => ({ ...prevState, load1: 55 }));
@@ -45,9 +50,7 @@ const Estatisticas = () => {
 			const avaliacoes = (
 				await ServicePPO.avaliacoes(cpf, date_inicio, date_fim)
 			).data;
-			console.log(avaliacoes.data);
 			if (avaliacoes.data.length > 0) {
-				console.log(avaliacoes.data);
 				setAvaliacoes(avaliacoes.data);
 			} else {
 				await swal2.fire({
@@ -66,9 +69,94 @@ const Estatisticas = () => {
 		setLoadBar(false);
 	}
 
+	async function buscarDistancia(cpf, date_inicio, date_fim) {
+		setDistancia([]);
+		setLoading(true);
+		setLoadBar(true);
+		setRandomValue((prevState) => ({ ...prevState, load2: 55 }));
+		try {
+			const distancia = (await ServicePPO.distancia(cpf, date_inicio, date_fim))
+				.data;
+			if (distancia.data.length > 0) {
+				setDistancia(distancia.data);
+			} else {
+				await swal2.fire({
+					icon: "info",
+					title: "Atenção!",
+					text: "Distância não encontrada",
+				});
+			}
+		} catch (error) {
+			setRandomValue((prevState) => ({ ...prevState, load2: 100 }));
+			setLoading(false);
+			setLoadBar(false);
+		}
+		setRandomValue((prevState) => ({ ...prevState, load2: 100 }));
+		setLoading(false);
+		setLoadBar(false);
+	}
+
+	async function buscarInfracoes(cpf, date_inicio, date_fim) {
+		setInfracoes([]);
+		setLoading(true);
+		setLoadBar(true);
+		setRandomValue((prevState) => ({ ...prevState, load3: 55 }));
+		try {
+			const infracoes = (await ServicePPO.infracoes(cpf, date_inicio, date_fim))
+				.data;
+			if (infracoes.data.length > 0) {
+				setInfracoes(infracoes.data);
+			} else {
+				await swal2.fire({
+					icon: "info",
+					title: "Atenção!",
+					text: "Infrações não encontrada",
+				});
+			}
+		} catch (error) {
+			setRandomValue((prevState) => ({ ...prevState, load3: 100 }));
+			setLoading(false);
+			setLoadBar(false);
+		}
+		setRandomValue((prevState) => ({ ...prevState, load3: 100 }));
+		setLoading(false);
+		setLoadBar(false);
+	}
+
+	async function buscarInterjornada(cpf, date_inicio, date_fim) {
+		setInterjornada([]);
+		setLoading(true);
+		setLoadBar(true);
+		setRandomValue((prevState) => ({ ...prevState, load4: 55 }));
+		try {
+			const interjornada = (
+				await ServicePPO.interjornadas(cpf, date_inicio, date_fim)
+			).data;
+			if (interjornada.data.length > 0) {
+				setInterjornada(interjornada.data);
+			} else {
+				await swal2.fire({
+					icon: "info",
+					title: "Atenção!",
+					text: "Interjornadas não encontrada",
+				});
+			}
+		} catch (error) {
+			setRandomValue((prevState) => ({ ...prevState, load4: 100 }));
+			setLoading(false);
+			setLoadBar(false);
+		}
+		setRandomValue((prevState) => ({ ...prevState, load4: 100 }));
+		setLoading(false);
+		setLoadBar(false);
+	}
+
 	function handleSubmit(event) {
 		event.preventDefault();
 		buscarAvaliacoes(fields.cpf, fields.date_inicio, fields.date_fim);
+		buscarDistancia(fields.cpf, fields.date_inicio, fields.date_fim);
+		buscarInfracoes(fields.cpf, fields.date_inicio, fields.date_fim);
+		buscarInterjornada(fields.cpf, fields.date_inicio, fields.date_fim);
 	}
 
 	return (
@@ -141,7 +229,7 @@ const Estatisticas = () => {
 							<></>
 						)}
 						<Accordion.Header>
-							<b>Avaliação Condutor</b>
+							<b>Avaliação Condutor - {avaliacoes.length} </b>
 						</Accordion.Header>
 						<Accordion.Body>
 							{avaliacoes.length > 0 ? (
@@ -163,8 +251,8 @@ const Estatisticas = () => {
 												<td>{i.nome_motorista}</td>
 												<td>{i.cpf}</td>
 												<td>{i.pontuacao}</td>
-												<td>{i.periodo_inicial}</td>
-												<td>{i.periodo_final}</td>
+												<td>{formatDateTimeZone(i.periodo_inicial)}</td>
+												<td>{formatDateTimeZone(i.periodo_final)}</td>
 											</tr>
 										))}
 									</tbody>
@@ -183,9 +271,36 @@ const Estatisticas = () => {
 							<></>
 						)}
 						<Accordion.Header>
-							<b>Distância Percorrida</b>
+							<b>Distância Percorrida - {distancia.length}</b>
 						</Accordion.Header>
-						<Accordion.Body></Accordion.Body>
+						<Accordion.Body>
+							{distancia.length > 0 ? (
+								<Table>
+									<thead>
+										<tr>
+											<th>Nome</th>
+											<th>CPF</th>
+											<th>Veículo</th>
+											<th>Distância</th>
+										</tr>
+									</thead>
+									<tbody>
+										{distancia.map((i, idx) => (
+											<tr key={idx}>
+												<td>{i.nome}</td>
+												<td>{i.cpf}</td>
+												<td>{i.veiculo}</td>
+												<td>{i.distancia}</td>
+											</tr>
+										))}
+									</tbody>
+								</Table>
+							) : (
+								<>
+									<div> Sem informações...</div>
+								</>
+							)}
+						</Accordion.Body>
 					</Accordion.Item>
 					<Accordion.Item eventKey="2" style={{ marginTop: "15px" }}>
 						{loadBar ? (
@@ -194,9 +309,41 @@ const Estatisticas = () => {
 							<></>
 						)}
 						<Accordion.Header>
-							<b>Infrações Condutor</b>
+							<b>
+								Infrações Condutor - {infracoes.length} | Velocidade acima de
+								87km/h
+							</b>
 						</Accordion.Header>
-						<Accordion.Body></Accordion.Body>
+						<Accordion.Body>
+							{infracoes.length > 0 ? (
+								<Table>
+									<thead>
+										<tr>
+											<th>Nome</th>
+											<th>Matricula</th>
+											<th>Veículo</th>
+											<th>Velocidade</th>
+											<th>Evento</th>
+										</tr>
+									</thead>
+									<tbody>
+										{infracoes.map((i, idx) => (
+											<tr key={idx}>
+												<td>{i.nome}</td>
+												<td>{i.matricula}</td>
+												<td>{i.veiculo}</td>
+												<td>{i.velocidade}</td>
+												<td>{i.tipo_evento}</td>
+											</tr>
+										))}
+									</tbody>
+								</Table>
+							) : (
+								<>
+									<div> Sem informações...</div>
+								</>
+							)}
+						</Accordion.Body>
 					</Accordion.Item>
 					<Accordion.Item
 						eventKey="3"
@@ -208,9 +355,40 @@ const Estatisticas = () => {
 							<></>
 						)}
 						<Accordion.Header>
-							<b>Interjornada Condutor</b>
+							<b>Interjornada Condutor - {interjornada.length}</b>
 						</Accordion.Header>
-						<Accordion.Body></Accordion.Body>
+						<Accordion.Body>
+							{interjornada.length > 0 ? (
+								<Table>
+									<thead>
+										<tr>
+											<th>Nome</th>
+											<th>CPF</th>
+											<th>Data</th>
+											<th>Jornada Normal</th>
+											<th>Jornada Diária</th>
+											<th>Interjornada</th>
+										</tr>
+									</thead>
+									<tbody>
+										{interjornada.map((i, idx) => (
+											<tr key={idx}>
+												<td>{i.nome}</td>
+												<td>{i.cpf}</td>
+												<td>{formatDateTimeZone(i.data)}</td>
+												<td>{i.jornada_normal}</td>
+												<td>{i.jornada_diaria}</td>
+												<td>{i.interjornada}</td>
+											</tr>
+										))}
+									</tbody>
+								</Table>
+							) : (
+								<>
+									<div> Sem informações...</div>
+								</>
+							)}
+						</Accordion.Body>
 					</Accordion.Item>
 				</Accordion>
 			</Container>

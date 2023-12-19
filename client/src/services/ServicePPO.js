@@ -6,6 +6,25 @@ class ServicePPO {
 			`/ppo/avaliacoes?cpf=${cpf}&data_inicio=${data_inicio}&data_fim=${data_fim}`
 		);
 	}
+
+	async distancia(cpf, data_inicio, data_fim) {
+		return api.get(
+			`/ppo/distancia?cpf=${cpf}&data_inicio=${data_inicio}&data_fim=${data_fim}`
+		);
+	}
+
+	async infracoes(cpf, data_inicio, data_fim) {
+		return api.get(
+			`/ppo/infracoes?cpf=${cpf}&data_inicio=${data_inicio}&data_fim=${data_fim}`
+		);
+	}
+
+	async interjornadas(cpf, data_inicio, data_fim) {
+		return api.get(
+			`/ppo/interjornadas?cpf=${cpf}&data_inicio=${data_inicio}&data_fim=${data_fim}`
+		);
+	}
+
 	async atributos() {
 		return api.get(`/ppo/atributos`);
 	}

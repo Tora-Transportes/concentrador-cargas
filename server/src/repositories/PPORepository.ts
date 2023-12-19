@@ -1,16 +1,27 @@
-import database, { mssqlPPO } from "../database";
+import database, { mssqlPPO, mssqlPPOView } from "../database";
 import IAvaliacao from "../models/IAvaliacao";
 import IAtributo from "../models/IAtributo";
 import AppError from "../models/AppError";
-import { decrypt, encrypt } from "../Utils/utlis";
+import { encrypt } from "../Utils/utlis";
 import { Knex } from "knex";
-import { has } from "lodash";
 
 interface IPPORepository {
   avaliacoes(cpf: string): Promise<IAvaliacao[] | undefined>;
-  distancia(id: number): Promise<void>;
-  infracoes(id: number): Promise<void>;
-  interjornada(id: number): Promise<void>;
+  distancia(
+    cpf: string,
+    data_ini: string,
+    data_fim: string
+  ): Promise<any | undefined>;
+  infracoes(
+    cpf: string,
+    data_ini: string,
+    data_fim: string
+  ): Promise<any | undefined>;
+  interjornada(
+    cpf: string,
+    data_ini: string,
+    data_fim: string
+  ): Promise<any | undefined>;
   atributos(): Promise<IAtributo[] | undefined>;
   resultado_ppo(
     cpf: string,
@@ -39,15 +50,81 @@ export class PPORepository implements IPPORepository {
       ])
       .where("cpf", cpf);
   }
-  async distancia(ID: number): Promise<void> {
-    await database("con_avisos").delete().where({ ID });
+  async distancia(
+    cpf: string,
+    data_ini: string,
+    data_fim: string
+  ): Promise<any | undefined> {
+    const distancia = await mssqlPPO.raw(`
+    SELECT
+        SUBSTRING(motorista, 1, CHARINDEX('-', motorista) - 1) AS nome,
+        SUBSTRING(motorista, CHARINDEX('-', motorista) + 1, LEN(motorista)) AS cpf,
+        veiculo,
+        CONCAT(distancia,' KM') as distancia
+    FROM
+        [dbo].[ppo_distancia_percorrida_fleet]
+    WHERE
+        motorista LIKE '%${cpf}%'
+        AND data_ini BETWEEN '${data_ini}' AND '${data_fim}'
+        AND data_fim BETWEEN '${data_ini}' AND '${data_fim}'
+    ORDER BY
+    veiculo;
+    `);
+    return distancia;
   }
-  async infracoes(ID: number): Promise<void> {
-    await database("con_avisos").delete().where({ ID });
+  async infracoes(
+    cpf: string,
+    data_ini: string,
+    data_fim: string
+  ): Promise<any | undefined> {
+    const dados_motorista = await mssqlPPOView.raw(`
+    SELECT  
+      RTRIM(LTRIM(RA_NOME)) as nome
+      ,RA_CIC as cpf
+      ,RTRIM(LTRIM(RA_MAT)) as matricula
+      FROM dbo.VW_DADO_MOTORISTA_PPO
+      WHERE RA_CIC = '${cpf}'
+    `);
+    if (dados_motorista.length == 0) {
+      return [];
+    } else {
+      const infracoes = await mssqlPPO.raw(`
+      SELECT 
+         SUBSTRING(motorista, 1, CHARINDEX('-', motorista) - 1) AS nome,
+         SUBSTRING(motorista, CHARINDEX('-', motorista) + 2, LEN(motorista)) AS matricula
+        ,veiculo
+        ,CONCAT(velocidadekmh,' KM') as velocidade
+        ,tipo_evento
+      FROM [dbo].[ppo_sascar_velocidade]
+      WHERE velocidadekmh > 87 
+      AND (month(created_at)-1) = month('${data_ini}')
+      AND (month(created_at)-1) = month('${data_fim}')
+      AND motorista <> 'Sem Motorista'
+      AND SUBSTRING(motorista, 1, CHARINDEX('-', motorista) - 1) LIKE '%${dados_motorista[0]["nome"]}%'
+      AND SUBSTRING(motorista, CHARINDEX('-', motorista) + 2, LEN(motorista)) LIKE '%${dados_motorista[0]["matricula"]}%'
+      `);
+      return infracoes;
+    }
   }
-  async interjornada(ID: number): Promise<void> {
-    await database("con_avisos").delete().where({ ID });
+
+  async interjornada(
+    cpf: string,
+    data_ini: string,
+    data_fim: string
+  ): Promise<any | undefined> {
+    const interjornadas = await mssqlPPO.raw(`
+      SELECT [NomeMotorista] as nome
+        ,[cpf]
+        ,[Data] as data
+        ,[JornadaNormal] as jornada_normal
+        ,[JornadaDiaria] as jornada_diaria
+        ,[Interjornada] as interjornada
+      FROM [dbo].[ppo_interjornada]
+      WHERE Data BETWEEN '${data_ini}' AND '${data_fim}'
+      AND cpf LIKE '%${cpf}%'`);
+    return interjornadas;
   }
+
   async atributos(): Promise<any | undefined> {
     const atributos = await mssqlPPO.raw(`
     SELECT 
