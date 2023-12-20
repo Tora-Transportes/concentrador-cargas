@@ -192,8 +192,8 @@ const DemonstrativoMotoristas = () => {
 										<tr>
 											<th>Nome Motorista</th>
 											<th>CPF</th>
-											<th>Ano</th>
 											<th>Mês</th>
+											<th>Ano</th>
 											<th>Download</th>
 										</tr>
 									</thead>
