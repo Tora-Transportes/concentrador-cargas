@@ -7,6 +7,7 @@ import { Knex } from "knex";
 
 interface IPPORepository {
   avaliacoes(cpf: string): Promise<IAvaliacao[] | undefined>;
+  exporta_protheus(mes: string, ano: string): Promise<any | undefined>;
   distancia(
     cpf: string,
     data_ini: string,
@@ -38,6 +39,46 @@ const isValid = (value: string | null | undefined) =>
   !["", null, undefined, "null", "undefined"].includes(value);
 
 export class PPORepository implements IPPORepository {
+  async exporta_protheus(mes: string, ano: string): Promise<any | undefined> {
+    const exporta = await mssqlPPO.raw(`
+    SELECT 
+       x.filial
+       ,x.matricula
+       ,x.cod_verba
+       ,x.total
+       ,CONCAT(x.filial,x.matricula,x.cod_verba,x.total) as exporta_final
+    FROM (
+    SELECT 
+      REPLICATE('0', 2 -LEN(g.cod_filial))+RTRIM(g.cod_filial) as filial,
+      REPLICATE('0', 6 -LEN(r.matricula))+RTRIM(r.matricula) as matricula,
+      REPLICATE('0', 3 -LEN(g.cod_verba))+RTRIM(g.cod_verba) as cod_verba,
+      REPLICATE('0', 9 -LEN(CAST( FORMAT(SUM(CAST(r.premio AS FLOAT)), '0.00') AS varchar)))+RTRIM(CAST( FORMAT(SUM(CAST(r.premio AS FLOAT)), '0.00') AS varchar)) as total
+    FROM dbo.ppo_resultado r
+      INNER JOIN dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
+      INNER JOIN dbo.ppo_grupos g on g.id=pg.grupo_id
+      WHERE apto = 1
+      AND r.mes_avaliacao = '${mes}'
+      AND r.ano_avaliacao = '${ano}'
+    GROUP BY g.cod_filial,g.cod_verba,r.matricula
+    UNION
+    SELECT 
+      REPLICATE('0', 2 -LEN(g.cod_filial))+RTRIM(g.cod_filial) as filial,
+      REPLICATE('0', 6 -LEN(r.matricula))+RTRIM(r.matricula) as matricula,
+      REPLICATE('0', 3 -LEN(g.cod_verba))+RTRIM(g.cod_verba) as cod_verba,
+      REPLICATE('0', 9 -LEN(CAST( FORMAT(SUM(CAST(r.premio AS FLOAT)), '0.00') AS varchar)))+RTRIM(CAST( FORMAT(SUM(CAST(r.premio AS FLOAT)), '0.00') AS varchar)) AS total
+    FROM dbo.ppo_resultado r
+    INNER JOIN dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
+    INNER JOIN dbo.ppo_grupos g on g.id=pg.grupo_id
+    WHERE ppo_cancelado = 1
+    AND mes_avaliacao = '${mes}'
+    AND ano_avaliacao = '${ano}'
+    GROUP BY g.cod_filial,g.cod_verba,r.matricula
+    ) X
+  `);
+
+    return exporta;
+  }
+
   async avaliacoes(cpf: string): Promise<IAvaliacao[] | undefined> {
     return await mssqlPPO("dbo.ppo_rank_avaliacao_fleet")
       .select([

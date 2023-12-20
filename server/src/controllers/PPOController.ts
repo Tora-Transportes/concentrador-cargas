@@ -19,6 +19,8 @@ const fonts = {
 
 interface IPPOController {
   avaliacoes(req: Request, res: Response): Promise<Response>;
+  protheus(req: Request, res: Response): Promise<Response>;
+  protheusTxt(req: Request, res: Response): Promise<Response>;
   distancia(req: Request, res: Response): Promise<Response>;
   infracoes(req: Request, res: Response): Promise<Response>;
   interjornada(req: Request, res: Response): Promise<Response>;
@@ -83,6 +85,45 @@ class PPOController implements IPPOController {
     //const { id } = req.params;
     const result = await ppoRepository.avaliacoes(String(cpf));
     return res.json({ data: result });
+  }
+
+  async protheus(req: Request, res: Response): Promise<Response> {
+    const { mes, ano } = req.query;
+    const ppoRepository = new PPORepository();
+    const result = await ppoRepository.exporta_protheus(
+      String(mes),
+      String(ano)
+    );
+    return res.json({ data: result });
+  }
+
+  async protheusTxt(req: Request, res: Response): Promise<any> {
+    const { mes, ano } = req.query;
+    const ppoRepository = new PPORepository();
+    const result = await ppoRepository.exporta_protheus(
+      String(mes),
+      String(ano)
+    );
+    const data: any[] = [];
+    result.forEach((element: any) => {
+      data.push(element["exporta_final"]);
+    });
+    const dataAsString = data.join("\n") + "\n";
+    const filePath = "static/exported_protheus.txt";
+    fs.writeFile(filePath, dataAsString, (err) => {
+      if (err) {
+        console.error(err);
+        throw new AppError("Erro ao gerar txt", 400);
+      } else {
+        console.log("Data exported successfully");
+        return res.download(filePath, "exported_data.txt", () => {
+          fs.unlink(filePath, (err) => {
+            if (err) throw new AppError("Erro ao gerar txt", 400);
+            else console.log("File deleted successfully");
+          });
+        });
+      }
+    });
   }
 
   async distancia(req: Request, res: Response): Promise<Response> {

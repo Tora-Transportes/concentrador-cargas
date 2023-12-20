@@ -19,6 +19,25 @@ class ServicePPO {
 		);
 	}
 
+	async protheus(mes, ano) {
+		return api.get(`/ppo/protheus?mes=${mes}&ano=${ano}`);
+	}
+
+	async protheusTxt(mes, ano) {
+		return api
+			.get(`/ppo/protheus/txt?mes=${mes}&ano=${ano}`, { responseType: "blob" })
+			.then((response) => {
+				const blob = new Blob([response.data], { type: "text/plain" });
+				const link = document.createElement("a");
+				link.href = window.URL.createObjectURL(blob);
+				link.download = "exported_data.txt";
+				link.click();
+			})
+			.catch((error) => {
+				console.error("Error downloading file:", error);
+			});
+	}
+
 	async interjornadas(cpf, data_inicio, data_fim) {
 		return api.get(
 			`/ppo/interjornadas?cpf=${cpf}&data_inicio=${data_inicio}&data_fim=${data_fim}`

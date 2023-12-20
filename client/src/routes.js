@@ -48,6 +48,7 @@ import Parametros from "./Pages/PPO/Parametros";
 import GruposParametros from "./Pages/PPO/GruposParametros";
 import RelatorioMotoristas from "./Pages/PPO/RelatorioMotoristas";
 import DemonstrativoMotoristas from "./Pages/PPO/DemostrativoMotoristas";
+import ExportaProtheus from "./Pages/PPO/ExportaProtheus";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -83,6 +84,12 @@ export default function AllRoutes() {
 					path="/ppo/demonstrativos"
 					exact
 					component={DemonstrativoMotoristas}
+				/>
+
+				<Route
+					path="/ppo/exportar/protheus"
+					exact
+					component={ExportaProtheus}
 				/>
 
 				<Route path="/cargas/visualizar" exact component={VisualizarCargas} />

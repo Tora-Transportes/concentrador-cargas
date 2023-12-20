@@ -59,6 +59,8 @@ const Grupos = () => {
 			nome: "",
 			empresa: "",
 			filial: "",
+			cod_filial: "",
+			cod_verba: "",
 		},
 		validationSchema: GrupoSchema,
 		onSubmit: async (values) => {
@@ -122,6 +124,8 @@ const Grupos = () => {
 		formik.values.nome = objeto.nome;
 		formik.values.empresa = objeto.empresa;
 		formik.values.filial = objeto.filial;
+		formik.values.cod_filial = objeto.cod_filial;
+		formik.values.cod_verba = objeto.cod_verba;
 		handleOpen();
 	}
 
@@ -209,6 +213,46 @@ const Grupos = () => {
 								</Form.Control.Feedback>
 							</InputGroup>
 						</Form.Group>
+						<Form.Group
+							className="mb-3"
+							controlId="validationFormikCodFilialEdit"
+						>
+							<Form.Label>Cod. Filial</Form.Label>
+							<InputGroup hasValidation>
+								<Form.Control
+									type="text"
+									placeholder="Cod. Filial"
+									aria-describedby="inputGroupPrepend"
+									name="cod_filial"
+									value={formik.values.cod_filial}
+									onChange={formik.handleChange}
+									isInvalid={!!formik.errors.cod_filial}
+								/>
+								<Form.Control.Feedback type="invalid">
+									{formik.errors.cod_filial}
+								</Form.Control.Feedback>
+							</InputGroup>
+						</Form.Group>
+						<Form.Group
+							className="mb-3"
+							controlId="validationFormikCodVerbaEdit"
+						>
+							<Form.Label>Cod. Verba</Form.Label>
+							<InputGroup hasValidation>
+								<Form.Control
+									type="text"
+									placeholder="Cod. Verba"
+									aria-describedby="inputGroupPrepend"
+									name="cod_verba"
+									value={formik.values.cod_verba}
+									onChange={formik.handleChange}
+									isInvalid={!!formik.errors.cod_verba}
+								/>
+								<Form.Control.Feedback type="invalid">
+									{formik.errors.cod_verba}
+								</Form.Control.Feedback>
+							</InputGroup>
+						</Form.Group>
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
@@ -253,6 +297,18 @@ const Grupos = () => {
 							<Column
 								field="filial"
 								header="Filial"
+								bodyStyle={{ color: "red" }}
+								//className="table-column-nome"
+							/>
+							<Column
+								field="cod_filial"
+								header="Cod. Filial"
+								bodyStyle={{ color: "red" }}
+								//className="table-column-nome"
+							/>
+							<Column
+								field="cod_verba"
+								header="Cod. Verba"
 								bodyStyle={{ color: "red" }}
 								//className="table-column-nome"
 							/>
