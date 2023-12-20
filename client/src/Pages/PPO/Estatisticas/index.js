@@ -10,6 +10,7 @@ import {
 	Accordion,
 	ProgressBar,
 	Table,
+	Badge,
 } from "react-bootstrap";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import Menusuperior from "../../Components/MenuSuperior/menusuperior";
@@ -24,6 +25,12 @@ const Estatisticas = () => {
 		load2: 0,
 		load3: 0,
 		load4: 0,
+	});
+	const [hasdata, setHasData] = useState({
+		avaliacoes: 2,
+		distancia: 2,
+		infracoes: 2,
+		interjornada: 2,
 	});
 	const [avaliacoes, setAvaliacoes] = useState([]);
 	const [distancia, setDistancia] = useState([]);
@@ -51,13 +58,10 @@ const Estatisticas = () => {
 				await ServicePPO.avaliacoes(cpf, date_inicio, date_fim)
 			).data;
 			if (avaliacoes.data.length > 0) {
+				setHasData((prevState) => ({ ...prevState, avaliacoes: 1 }));
 				setAvaliacoes(avaliacoes.data);
 			} else {
-				await swal2.fire({
-					icon: "info",
-					title: "Atenção!",
-					text: "Avaliação não encontrada",
-				});
+				setHasData((prevState) => ({ ...prevState, avaliacoes: 0 }));
 			}
 		} catch (error) {
 			setRandomValue((prevState) => ({ ...prevState, load1: 100 }));
@@ -78,13 +82,10 @@ const Estatisticas = () => {
 			const distancia = (await ServicePPO.distancia(cpf, date_inicio, date_fim))
 				.data;
 			if (distancia.data.length > 0) {
+				setHasData((prevState) => ({ ...prevState, distancia: 1 }));
 				setDistancia(distancia.data);
 			} else {
-				await swal2.fire({
-					icon: "info",
-					title: "Atenção!",
-					text: "Distância não encontrada",
-				});
+				setHasData((prevState) => ({ ...prevState, distancia: 0 }));
 			}
 		} catch (error) {
 			setRandomValue((prevState) => ({ ...prevState, load2: 100 }));
@@ -105,13 +106,10 @@ const Estatisticas = () => {
 			const infracoes = (await ServicePPO.infracoes(cpf, date_inicio, date_fim))
 				.data;
 			if (infracoes.data.length > 0) {
+				setHasData((prevState) => ({ ...prevState, infracoes: 1 }));
 				setInfracoes(infracoes.data);
 			} else {
-				await swal2.fire({
-					icon: "info",
-					title: "Atenção!",
-					text: "Infrações não encontrada",
-				});
+				setHasData((prevState) => ({ ...prevState, infracoes: 0 }));
 			}
 		} catch (error) {
 			setRandomValue((prevState) => ({ ...prevState, load3: 100 }));
@@ -133,13 +131,15 @@ const Estatisticas = () => {
 				await ServicePPO.interjornadas(cpf, date_inicio, date_fim)
 			).data;
 			if (interjornada.data.length > 0) {
+				setHasData((prevState) => ({ ...prevState, interjornada: 1 }));
 				setInterjornada(interjornada.data);
 			} else {
-				await swal2.fire({
+				setHasData((prevState) => ({ ...prevState, interjornada: 0 }));
+				/* 				await swal2.fire({
 					icon: "info",
 					title: "Atenção!",
 					text: "Interjornadas não encontrada",
-				});
+				}); */
 			}
 		} catch (error) {
 			setRandomValue((prevState) => ({ ...prevState, load4: 100 }));
@@ -152,7 +152,23 @@ const Estatisticas = () => {
 	}
 
 	function handleSubmit(event) {
+		setHasData((prevState) => ({ ...prevState, avaliacoes: 2 }));
+		setHasData((prevState) => ({ ...prevState, distancia: 2 }));
+		setHasData((prevState) => ({ ...prevState, infracoes: 2 }));
+		setHasData((prevState) => ({ ...prevState, interjornada: 2 }));
 		event.preventDefault();
+		var inicio = new Date(fields.date_inicio);
+		var fim = new Date(fields.date_fim);
+		var diferencaEmMilissegundos = fim - inicio;
+		var diferencaEmDias = diferencaEmMilissegundos / (1000 * 60 * 60 * 24);
+		if (diferencaEmDias > 30) {
+			swal2.fire({
+				icon: "info",
+				title: "Atenção!",
+				text: "Intervalo entre as data não pode ser maior que 31",
+			});
+			return;
+		}
 		buscarAvaliacoes(fields.cpf, fields.date_inicio, fields.date_fim);
 		buscarDistancia(fields.cpf, fields.date_inicio, fields.date_fim);
 		buscarInfracoes(fields.cpf, fields.date_inicio, fields.date_fim);
@@ -226,7 +242,26 @@ const Estatisticas = () => {
 						{loadBar ? (
 							<ProgressBar variant="success" animated now={randomValue.load1} />
 						) : (
-							<></>
+							<div
+								style={{
+									display: "flex",
+									flexDirection: "row",
+									alignItems: "flex-start",
+									paddingTop: "5px",
+									paddingLeft: "5px",
+								}}
+							>
+								{hasdata.avaliacoes == 1 ? (
+									<Badge bg="success">Dados encontrados</Badge>
+								) : (
+									<></>
+								)}
+								{hasdata.avaliacoes == 0 ? (
+									<Badge bg="danger">Sem informações</Badge>
+								) : (
+									<></>
+								)}
+							</div>
 						)}
 						<Accordion.Header>
 							<b>Avaliação Condutor - {avaliacoes.length} </b>
@@ -268,7 +303,26 @@ const Estatisticas = () => {
 						{loadBar ? (
 							<ProgressBar variant="success" animated now={randomValue.load2} />
 						) : (
-							<></>
+							<div
+								style={{
+									display: "flex",
+									flexDirection: "row",
+									alignItems: "flex-start",
+									paddingTop: "5px",
+									paddingLeft: "5px",
+								}}
+							>
+								{hasdata.distancia == 1 ? (
+									<Badge bg="success">Dados encontrados</Badge>
+								) : (
+									<></>
+								)}
+								{hasdata.distancia == 0 ? (
+									<Badge bg="danger">Sem informações</Badge>
+								) : (
+									<></>
+								)}
+							</div>
 						)}
 						<Accordion.Header>
 							<b>Distância Percorrida - {distancia.length}</b>
@@ -306,7 +360,26 @@ const Estatisticas = () => {
 						{loadBar ? (
 							<ProgressBar variant="success" animated now={randomValue.load3} />
 						) : (
-							<></>
+							<div
+								style={{
+									display: "flex",
+									flexDirection: "row",
+									alignItems: "flex-start",
+									paddingTop: "5px",
+									paddingLeft: "5px",
+								}}
+							>
+								{hasdata.infracoes == 1 ? (
+									<Badge bg="success">Dados encontrados</Badge>
+								) : (
+									<></>
+								)}
+								{hasdata.infracoes == 0 ? (
+									<Badge bg="danger">Sem informações</Badge>
+								) : (
+									<></>
+								)}
+							</div>
 						)}
 						<Accordion.Header>
 							<b>
@@ -352,7 +425,26 @@ const Estatisticas = () => {
 						{loadBar ? (
 							<ProgressBar variant="success" animated now={randomValue.load4} />
 						) : (
-							<></>
+							<div
+								style={{
+									display: "flex",
+									flexDirection: "row",
+									alignItems: "flex-start",
+									paddingTop: "5px",
+									paddingLeft: "5px",
+								}}
+							>
+								{hasdata.interjornada == 1 ? (
+									<Badge bg="success">Dados encontrados</Badge>
+								) : (
+									<></>
+								)}
+								{hasdata.interjornada == 0 ? (
+									<Badge bg="danger">Sem informações</Badge>
+								) : (
+									<></>
+								)}
+							</div>
 						)}
 						<Accordion.Header>
 							<b>Interjornada Condutor - {interjornada.length}</b>

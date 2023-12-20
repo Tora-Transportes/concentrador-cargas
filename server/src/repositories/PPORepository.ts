@@ -217,7 +217,6 @@ export class PPORepository implements IPPORepository {
     FROM dbo.ppo_resultado r
     inner join dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
     inner join dbo.ppo_parametros p on p.id =  pg.parametro_id
-    WHERE r.apto = 1
     ${clausula}
   `);
 
