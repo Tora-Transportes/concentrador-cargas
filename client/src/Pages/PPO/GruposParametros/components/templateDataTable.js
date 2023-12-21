@@ -134,6 +134,44 @@ export const renderHeader = (
 								value={formik.values.multiplicar_premio}
 							/>
 						</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput90">
+							<Form.Check
+								type="switch"
+								name="multiplicar_premio_por_comparador"
+								label="Multiplicar Prêmio usando comparador"
+								onChange={formik.handleChange}
+								checked={formik.values.multiplicar_premio_por_comparador}
+								value={formik.values.multiplicar_premio_por_comparador}
+							/>
+						</Form.Group>
+						{formik.values.multiplicar_premio_por_comparador ? (
+							<Form.Group
+								className="mb-3"
+								controlId="exampleForm.ControlInput3"
+							>
+								<Form.Label>Multiplicar Por:</Form.Label>
+								<Form.Select
+									aria-label="Default select example"
+									name="comparador_multiplicador_id"
+									placeholder="Selecione um comparador"
+									onChange={formik.handleChange}
+									value={formik.values.comparador_multiplicador_id}
+									isInvalid={!!formik.errors.comparador_multiplicador_id}
+								>
+									<option></option>
+									{atributos.map((objeto, index) => (
+										<option key={index} value={objeto.id_rotulo}>
+											{objeto.rotulo}
+										</option>
+									))}
+								</Form.Select>
+								<Form.Control.Feedback type="invalid">
+									{formik.errors.comparador_multiplicador_id}
+								</Form.Control.Feedback>
+							</Form.Group>
+						) : (
+							<></>
+						)}
 						{formik.values.faixa_valores ? (
 							<>
 								<Form.Group

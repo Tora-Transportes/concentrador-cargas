@@ -17,6 +17,8 @@ class ServicePPOGruposParametros {
 		campo,
 		faixa_valores,
 		multiplicar_premio,
+		multiplicar_premio_por_comparador,
+		comparador_multiplicador_id,
 		ativo,
 	}) {
 		return api.post("/ppo/grupos/parametros", {
@@ -32,6 +34,8 @@ class ServicePPOGruposParametros {
 			campo,
 			faixa_valores,
 			multiplicar_premio,
+			multiplicar_premio_por_comparador,
+			comparador_multiplicador_id,
 			ativo,
 		});
 	}
