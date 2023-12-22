@@ -138,8 +138,7 @@ export class PPORepository implements IPPORepository {
         ,tipo_evento
       FROM [dbo].[ppo_sascar_velocidade]
       WHERE velocidadekmh > 87 
-      AND (month(created_at)-1) = month('${data_ini}')
-      AND (month(created_at)-1) = month('${data_fim}')
+      AND created_at BETWEEN '${data_ini}' AND '${data_fim}'
       AND motorista <> 'Sem Motorista'
       AND SUBSTRING(motorista, 1, CHARINDEX('-', motorista) - 1) LIKE '%${dados_motorista[0]["nome"]}%'
       AND SUBSTRING(motorista, CHARINDEX('-', motorista) + 2, LEN(motorista)) LIKE '%${dados_motorista[0]["matricula"]}%'
