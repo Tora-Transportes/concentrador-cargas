@@ -51,28 +51,30 @@ export class PPORepository implements IPPORepository {
     SELECT 
       REPLICATE('0', 2 -LEN(g.cod_filial))+RTRIM(g.cod_filial) as filial,
       REPLICATE('0', 6 -LEN(r.matricula))+RTRIM(r.matricula) as matricula,
-      REPLICATE('0', 3 -LEN(g.cod_verba))+RTRIM(g.cod_verba) as cod_verba,
+      REPLICATE('0', 3 -LEN(p.cod_verba))+RTRIM(p.cod_verba) as cod_verba,
       REPLICATE('0', 9 -LEN(CAST( FORMAT(SUM(CAST(r.premio AS FLOAT)), '0.00') AS varchar)))+RTRIM(CAST( FORMAT(SUM(CAST(r.premio AS FLOAT)), '0.00') AS varchar)) as total
     FROM dbo.ppo_resultado r
       INNER JOIN dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
       INNER JOIN dbo.ppo_grupos g on g.id=pg.grupo_id
+      INNER JOIN dbo.ppo_parametros p on p.id = pg.parametro_id
       WHERE apto = 1
       AND r.mes_avaliacao = '${mes}'
       AND r.ano_avaliacao = '${ano}'
-    GROUP BY g.cod_filial,g.cod_verba,r.matricula
+      GROUP BY r.matricula,g.cod_filial,p.cod_verba
     UNION
     SELECT 
       REPLICATE('0', 2 -LEN(g.cod_filial))+RTRIM(g.cod_filial) as filial,
       REPLICATE('0', 6 -LEN(r.matricula))+RTRIM(r.matricula) as matricula,
-      REPLICATE('0', 3 -LEN(g.cod_verba))+RTRIM(g.cod_verba) as cod_verba,
+      REPLICATE('0', 3 -LEN(p.cod_verba))+RTRIM(p.cod_verba) as cod_verba,
       REPLICATE('0', 9 -LEN(CAST( FORMAT(SUM(CAST(r.premio AS FLOAT)), '0.00') AS varchar)))+RTRIM(CAST( FORMAT(SUM(CAST(r.premio AS FLOAT)), '0.00') AS varchar)) AS total
     FROM dbo.ppo_resultado r
     INNER JOIN dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
     INNER JOIN dbo.ppo_grupos g on g.id=pg.grupo_id
+    INNER JOIN dbo.ppo_parametros p on p.id = pg.parametro_id
     WHERE ppo_cancelado = 1
     AND mes_avaliacao = '${mes}'
     AND ano_avaliacao = '${ano}'
-    GROUP BY g.cod_filial,g.cod_verba,r.matricula
+    GROUP BY r.matricula,g.cod_filial,p.cod_verba
     ) X
   `);
 
