@@ -28,7 +28,9 @@ const ParametroSchema = Yup.object().shape({
 		.min(2, "Muito Pequeno!")
 		.max(100, "Muito Longo!")
 		.required("Requerido"),
-	cod_verba: Yup.string().required("cod verba é um campo obrigatório"),
+	cod_verba: Yup.string()
+		.matches(/^\d{3}$/, "tem que ter 3 digitos")
+		.required("cod verba é um campo obrigatório"),
 });
 
 const Parametros = () => {
@@ -57,11 +59,19 @@ const Parametros = () => {
 		onSubmit: async (values) => {
 			setLoading(true);
 			try {
-				await ServicePPOParametros.create(values);
-				await loadParametros();
-				swal("Sucesso!", "O parâmetro foi cadastrado", "success");
-				formik.resetForm();
-				handleOpenCreate();
+				if (idEdit != null) {
+					await ServicePPOParametros.update(idEdit, values);
+					swal("Sucesso", "Parâmetro atualizado!", "success");
+					formik.resetForm();
+					await loadParametros();
+					handleOpen();
+				} else {
+					await ServicePPOParametros.create(values);
+					swal("Sucesso!", "O parâmetro foi cadastrado", "success");
+					formik.resetForm();
+					await loadParametros();
+					handleOpenCreate();
+				}
 			} catch (error) {
 				console.log(error);
 			}
@@ -73,6 +83,7 @@ const Parametros = () => {
 		setOpen(!open);
 	}
 	function handleOpenCreate() {
+		setIdEdit(null);
 		setOpenCreate(!openCreate);
 	}
 
@@ -108,7 +119,7 @@ const Parametros = () => {
 		handleOpen();
 	}
 
-	async function submitEdit() {
+	/* 	async function submitEdit() {
 		try {
 			await ServicePPOParametros.update(idEdit, formik.values);
 			swal("Sucesso", "Parâmetro atualizado!", "success");
@@ -117,7 +128,7 @@ const Parametros = () => {
 		} catch (error) {
 			console.log(error);
 		}
-	}
+	} */
 
 	const getOpcoesTemplate = (rowData) => {
 		return opcoesTemplate(rowData, handleEditParametro, handleDelete);
@@ -139,7 +150,7 @@ const Parametros = () => {
 			<Menusuperior />
 			<Modal show={open} onHide={handleOpen}>
 				<Modal.Header closeButton>
-					<Modal.Title>Editando Grupo</Modal.Title>
+					<Modal.Title>Editando Grupo </Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
@@ -186,7 +197,7 @@ const Parametros = () => {
 					<Button variant="secondary" onClick={handleOpen}>
 						Fechar
 					</Button>
-					<Button variant="primary" onClick={submitEdit}>
+					<Button variant="primary" onClick={formik.handleSubmit}>
 						Salvar
 					</Button>
 				</Modal.Footer>
