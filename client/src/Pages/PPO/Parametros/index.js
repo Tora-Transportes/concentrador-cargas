@@ -2,7 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import Menusuperior from "../../Components/MenuSuperior/menusuperior";
-import { Container, Row } from "react-bootstrap";
+import {
+	Container,
+	Row,
+	Button,
+	Form,
+	Modal,
+	InputGroup,
+} from "react-bootstrap";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import {
@@ -21,6 +28,7 @@ const ParametroSchema = Yup.object().shape({
 		.min(2, "Muito Pequeno!")
 		.max(100, "Muito Longo!")
 		.required("Requerido"),
+	cod_verba: Yup.string().required("cod verba é um campo obrigatório"),
 });
 
 const Parametros = () => {
@@ -28,6 +36,9 @@ const Parametros = () => {
 	const [parametros, setParametros] = useState([]);
 	const [globalFilter, setGlobalFilter] = useState();
 	const dadosTabela = useRef(null);
+	const [open, setOpen] = useState(false);
+	const [openCreate, setOpenCreate] = useState(false);
+	const [idEdit, setIdEdit] = useState(null);
 
 	async function loadParametros() {
 		setLoading(true);
@@ -40,6 +51,7 @@ const Parametros = () => {
 	const formik = useFormik({
 		initialValues: {
 			nome: "",
+			cod_verba: "",
 		},
 		validationSchema: ParametroSchema,
 		onSubmit: async (values) => {
@@ -49,12 +61,21 @@ const Parametros = () => {
 				await loadParametros();
 				swal("Sucesso!", "O parâmetro foi cadastrado", "success");
 				formik.resetForm();
+				handleOpenCreate();
 			} catch (error) {
 				console.log(error);
 			}
 			setLoading(false);
 		},
 	});
+
+	function handleOpen() {
+		setOpen(!open);
+	}
+	function handleOpenCreate() {
+		setOpenCreate(!openCreate);
+	}
+
 	useEffect(() => {
 		loadParametros();
 		setGlobalFilter("");
@@ -80,21 +101,18 @@ const Parametros = () => {
 		}
 	}
 
-	async function handleEditProduto(nome, id) {
-		const parametro = await swal(`Novo nome para o parâmetro '${nome}'`, {
-			content: "input",
-			buttons: ["Cancelar", true],
-		});
-		if (parametro === null) {
-			return;
-		}
-		if (!parametro) {
-			return swal("Nenhum dado foi atualizado");
-		}
+	async function handleEditParametro(objeto, id) {
+		setIdEdit(id);
+		formik.values.nome = objeto.nome;
+		formik.values.cod_verba = objeto.cod_verba;
+		handleOpen();
+	}
 
+	async function submitEdit() {
 		try {
-			await ServicePPOParametros.update({ nome: parametro, id });
-			swal("Sucesso!", "Parâmetro atualizado", "success");
+			await ServicePPOParametros.update(idEdit, formik.values);
+			swal("Sucesso", "Parâmetro atualizado!", "success");
+			handleOpen();
 			await loadParametros();
 		} catch (error) {
 			console.log(error);
@@ -102,17 +120,77 @@ const Parametros = () => {
 	}
 
 	const getOpcoesTemplate = (rowData) => {
-		return opcoesTemplate(rowData, swal, handleEditProduto, handleDelete);
+		return opcoesTemplate(rowData, handleEditParametro, handleDelete);
 	};
 
 	const getRenderHeader = () => {
-		return renderHeader(formik, globalFilter, setGlobalFilter);
+		return renderHeader(
+			formik,
+			globalFilter,
+			setGlobalFilter,
+			openCreate,
+			handleOpenCreate
+		);
 	};
 
 	return (
 		<>
 			<LoadingScreen />
 			<Menusuperior />
+			<Modal show={open} onHide={handleOpen}>
+				<Modal.Header closeButton>
+					<Modal.Title>Editando Grupo</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Form>
+						<Form.Group className="mb-3" controlId="validationFormikNomeEdit">
+							<Form.Label>Nome</Form.Label>
+							<InputGroup hasValidation>
+								<Form.Control
+									type="text"
+									placeholder="Nome"
+									aria-describedby="inputGroupPrepend"
+									name="nome"
+									value={formik.values.nome}
+									onChange={formik.handleChange}
+									isInvalid={!!formik.errors.nome}
+								/>
+								<Form.Control.Feedback type="invalid">
+									{formik.errors.nome}
+								</Form.Control.Feedback>
+							</InputGroup>
+						</Form.Group>
+						<Form.Group
+							className="mb-3"
+							controlId="validationFormikCodVerbaEdit"
+						>
+							<Form.Label>Cod. Verba</Form.Label>
+							<InputGroup hasValidation>
+								<Form.Control
+									type="text"
+									placeholder="Cod. Verba"
+									aria-describedby="inputGroupPrepend"
+									name="cod_verba"
+									value={formik.values.cod_verba}
+									onChange={formik.handleChange}
+									isInvalid={!!formik.errors.cod_verba}
+								/>
+								<Form.Control.Feedback type="invalid">
+									{formik.errors.cod_verba}
+								</Form.Control.Feedback>
+							</InputGroup>
+						</Form.Group>
+					</Form>
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleOpen}>
+						Fechar
+					</Button>
+					<Button variant="primary" onClick={submitEdit}>
+						Salvar
+					</Button>
+				</Modal.Footer>
+			</Modal>
 			<Container className="pagina-produtos">
 				<Row>
 					<h1 className="class-title-produto">Parâmetros</h1>
@@ -134,6 +212,12 @@ const Parametros = () => {
 								body={nameBodyTemplate}
 								field="nome"
 								header="Nome"
+								bodyStyle={{ color: "red" }}
+								//className="table-column-nome"
+							/>
+							<Column
+								field="cod_verba"
+								header="Cod. Verba"
 								bodyStyle={{ color: "red" }}
 								//className="table-column-nome"
 							/>
