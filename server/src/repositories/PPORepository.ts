@@ -51,28 +51,30 @@ export class PPORepository implements IPPORepository {
     SELECT 
       REPLICATE('0', 2 -LEN(g.cod_filial))+RTRIM(g.cod_filial) as filial,
       REPLICATE('0', 6 -LEN(r.matricula))+RTRIM(r.matricula) as matricula,
-      REPLICATE('0', 3 -LEN(g.cod_verba))+RTRIM(g.cod_verba) as cod_verba,
+      REPLICATE('0', 3 -LEN(p.cod_verba))+RTRIM(p.cod_verba) as cod_verba,
       REPLICATE('0', 9 -LEN(CAST( FORMAT(SUM(CAST(r.premio AS FLOAT)), '0.00') AS varchar)))+RTRIM(CAST( FORMAT(SUM(CAST(r.premio AS FLOAT)), '0.00') AS varchar)) as total
     FROM dbo.ppo_resultado r
       INNER JOIN dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
       INNER JOIN dbo.ppo_grupos g on g.id=pg.grupo_id
+      INNER JOIN dbo.ppo_parametros p on p.id = pg.parametro_id
       WHERE apto = 1
       AND r.mes_avaliacao = '${mes}'
       AND r.ano_avaliacao = '${ano}'
-    GROUP BY g.cod_filial,g.cod_verba,r.matricula
+      GROUP BY r.matricula,g.cod_filial,p.cod_verba
     UNION
     SELECT 
       REPLICATE('0', 2 -LEN(g.cod_filial))+RTRIM(g.cod_filial) as filial,
       REPLICATE('0', 6 -LEN(r.matricula))+RTRIM(r.matricula) as matricula,
-      REPLICATE('0', 3 -LEN(g.cod_verba))+RTRIM(g.cod_verba) as cod_verba,
+      REPLICATE('0', 3 -LEN(p.cod_verba))+RTRIM(p.cod_verba) as cod_verba,
       REPLICATE('0', 9 -LEN(CAST( FORMAT(SUM(CAST(r.premio AS FLOAT)), '0.00') AS varchar)))+RTRIM(CAST( FORMAT(SUM(CAST(r.premio AS FLOAT)), '0.00') AS varchar)) AS total
     FROM dbo.ppo_resultado r
     INNER JOIN dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
     INNER JOIN dbo.ppo_grupos g on g.id=pg.grupo_id
+    INNER JOIN dbo.ppo_parametros p on p.id = pg.parametro_id
     WHERE ppo_cancelado = 1
     AND mes_avaliacao = '${mes}'
     AND ano_avaliacao = '${ano}'
-    GROUP BY g.cod_filial,g.cod_verba,r.matricula
+    GROUP BY r.matricula,g.cod_filial,p.cod_verba
     ) X
   `);
 
@@ -275,7 +277,7 @@ export class PPORepository implements IPPORepository {
     ,r.cpf
     ,r.matricula
     ,CASE WHEN r.ppo_cancelado = 1 THEN 'Sim' ELSE 'Não' END as cancelado
-    ,CASE WHEN r.observacao is NULL THEN 'Sem Observação' ELSE r.observacao END as observacao
+    ,CASE WHEN r.ppo_cancelado = 1 THEN r.observacao ELSE 'Sem Observação' END as observacao
     ,CONCAT(r.mes_avaliacao,'/',r.ano_avaliacao) as mes_ano
     FROM dbo.ppo_resultado r
     inner join dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
@@ -310,91 +312,234 @@ export class PPORepository implements IPPORepository {
   ): Promise<any | undefined> {
     const realPage = isNaN(Number(page)) || Number(page) < 1 ? 1 : Number(page);
 
-    const filterDbFunction = (qb: Knex.QueryBuilder) => {
-      if (isValid(query?.cpf)) {
-        qb.andWhere("cpf", "like", `%${query.cpf}%`);
-      }
-      if (isValid(query?.matricula)) {
-        qb.andWhere("matricula", "like", `%${query.matricula}%`);
-      }
-      if (isValid(query?.nome_motorista)) {
-        qb.andWhere("nome_motorista", "like", `%${query.nome_motorista}%`);
-      }
-      if (isValid(query?.mes_avaliacao)) {
-        qb.andWhere("mes_avaliacao", "like", `%${query.mes_avaliacao}%`);
-      }
-      if (isValid(query?.ano_avaliacao)) {
-        qb.andWhere("ano_avaliacao", "like", `%${query.ano_avaliacao}%`);
-      }
-      if (isValid(query?.ppo_cancelado)) {
-        qb.andWhere("ppo_cancelado", "like", `%${query.ppo_cancelado}%`);
-      }
-    };
-    const total = mssqlPPO("dbo.ppo_resultado")
-      .count("id as total")
-      .andWhere(filterDbFunction)
-      .first();
+    let filtro = "";
 
-    const results = mssqlPPO("dbo.ppo_resultado")
-      .select([
-        "dbo.ppo_resultado.nome_motorista",
-        "dbo.ppo_resultado.cpf",
-        "dbo.ppo_resultado.matricula",
-        "dbo.ppo_grupos.nome as nome_grupo",
-        "dbo.ppo_grupos.empresa ",
-        "dbo.ppo_grupos.filial as filial",
-        "dbo.ppo_parametros.nome as parametro",
-        "dbo.ppo_resultado.dado_verificado as referencia",
-        "dbo.ppo_parametros_grupo.operador_logico_primario",
-        "dbo.ppo_parametros_grupo.valor_primario",
-        "dbo.ppo_parametros_grupo.faixa_valores as faixa_valores",
-        "dbo.ppo_resultado.dado_verificado as referencia_secundaria",
-        "dbo.ppo_parametros_grupo.operador_logico_secundaria",
-        "dbo.ppo_parametros_grupo.valor_secundario",
-        "dbo.ppo_parametros_grupo.multiplicar_premio as multiplicar_premio",
-        "dbo.ppo_parametros_grupo.premio as premio_referencia",
-        "dbo.ppo_resultado.premio as premio",
-        "dbo.ppo_resultado.apto",
-        "dbo.ppo_resultado.ppo_cancelado",
-        "dbo.ppo_resultado.observacao",
-        "dbo.ppo_resultado.mes_avaliacao",
-        "dbo.ppo_resultado.ano_avaliacao",
-      ])
-      .innerJoin(
-        "dbo.ppo_parametros_grupo",
-        "dbo.ppo_parametros_grupo.id",
-        "dbo.ppo_resultado.parametro_grupo_id"
-      )
-      .innerJoin(
-        "dbo.ppo_grupos",
-        "dbo.ppo_grupos.id",
-        "dbo.ppo_parametros_grupo.grupo_id"
-      )
-      .innerJoin(
-        "dbo.ppo_parametros",
-        "dbo.ppo_parametros.id",
-        "dbo.ppo_parametros_grupo.parametro_id"
-      )
-      .limit(pageSize)
-      .offset((realPage - 1) * pageSize)
-      .andWhere(filterDbFunction);
-
-    if (isValid(query?.order_column)) {
-      results.orderBy(
-        "ppo_resultado." + String(query.order_column),
-        String(query?.order_direction)
-      );
+    if (isValid(query?.cpf)) {
+      filtro = filtro + ` AND cpf LIKE '%${query.cpf}%'`;
     }
-    results.orderBy("ppo_resultado.id", "asc");
+    if (isValid(query?.matricula)) {
+      filtro = filtro + ` AND matricula LIKE '%${query.matricula}%'`;
+    }
+    if (isValid(query?.nome_motorista)) {
+      filtro = filtro + ` AND nome_motorista LIKE '%${query.nome_motorista}%'`;
+    }
+    if (isValid(query?.mes_avaliacao)) {
+      filtro = filtro + ` AND mes_avaliacao LIKE '%${query.mes_avaliacao}%'`;
+    }
+    if (isValid(query?.ano_avaliacao)) {
+      filtro = filtro + ` AND ano_avaliacao LIKE '%${query.ano_avaliacao}%'`;
+    }
+    if (isValid(query?.ppo_cancelado)) {
+      filtro = filtro + ` AND ppo_cancelado LIKE '%${query.ppo_cancelado}%'`;
+    }
 
-    const rows = await results;
-    const totalRegisters = Number((await total)?.total) || 0;
+    console.log(filtro);
+
+    const total = await mssqlPPO.raw(
+      `SELECT COUNT(DISTINCT cpf) as total FROM [dbo].[ppo_resultado]
+       WHERE mes_avaliacao LIKE '%${query.mes_avaliacao}%'
+       AND ano_avaliacao LIKE '%${query.ano_avaliacao}%'
+       ${filtro}
+      `
+    );
+
+    const sql = `
+    DECLARE @tabelaRelatorio TABLE
+    (
+    id int,
+    empresa NVARCHAR(255) NULL,
+    grupo NVARCHAR(255) NULL,
+    matricula  NVARCHAR(255) NULL,
+    cpf NVARCHAR(255) NULL,
+    nome_motorista NVARCHAR(255) NULL,
+    QtdeEventosInterjornada NVARCHAR(255) NULL,
+    QtdeEventosVelocidade  NVARCHAR(255) NULL,
+    NotaAvaliacaoMotorista NVARCHAR(255) NULL ,
+    KmRodado  NVARCHAR(255) NULL,
+    ValorInterjornada DECIMAL(10,2) NULL,
+    ValorVelocidade DECIMAL(10,2) NULL,
+    ValorAvaliacao DECIMAL(10,2) NULL,
+    ValorKMRodado DECIMAL(10,2) NULL,
+    Total DECIMAL(10,2) NULL,
+    ppo_cancelado BIT NULL,
+    observacao NVARCHAR(MAX) NULL,
+          mes_avaliacao NVARCHAR(10) NULL,
+          ano_avaliacao NVARCHAR(10) NULL
+   );
+
+DECLARE @CPF_MOT VARCHAR(20),
+        @Contador INT = 0,
+            @PPO_Cancelado INT,
+                @Column1 NVARCHAR(MAX),
+                @Column2 NVARCHAR(MAX),
+                @mes NVARCHAR(2) = '11',
+                @ano NVARCHAR(4) = '2023';
+
+DECLARE PPO_Cursor CURSOR FOR
+    SELECT DISTINCT cpf
+    FROM [dbo].[ppo_resultado]
+    WHERE mes_avaliacao = @mes
+        AND ano_avaliacao =  @ano
+
+OPEN PPO_Cursor;
+
+FETCH NEXT FROM PPO_Cursor INTO
+    @CPF_MOT;
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    SET @Contador = @Contador + 1; --id linha motorista
+
+        -- verificando se o ppo foi cancelado
+        SELECT  @PPO_Cancelado = COUNT(0) FROM [dbo].[ppo_resultado] WHERE cpf =  @CPF_MOT
+        AND ppo_cancelado = 1
+        AND mes_avaliacao = @mes
+        AND ano_avaliacao =  @ano
+
+    IF @PPO_Cancelado > 0
+      BEGIN
+        -- insert ppo cancelado
+                 INSERT INTO @tabelaRelatorio
+                 SELECT  @Contador,g.empresa,g.nome,r.matricula,r.cpf,r.nome_motorista,0,0,0,0,0,0,0,0,0,r.ppo_cancelado,r.observacao,r.mes_avaliacao,r.ano_avaliacao FROM [dbo].[ppo_resultado] r
+         INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
+         INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
+         WHERE cpf = @CPF_MOT
+         AND ppo_cancelado = 1
+                 AND mes_avaliacao = @mes
+             AND ano_avaliacao =  @ano
+      END
+    ELSE
+      BEGIN
+            -- insere dados motorista
+                INSERT INTO @tabelaRelatorio (id,Empresa,Grupo,matricula,cpf,nome_motorista,PPO_Cancelado,Observacao,mes_avaliacao,ano_avaliacao)
+        SELECT DISTINCT  @Contador,g.empresa,g.nome,r.matricula,r.cpf,r.nome_motorista,r.ppo_cancelado,NULL,r.mes_avaliacao,r.ano_avaliacao from [dbo].[ppo_resultado] r
+        INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
+        INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
+        WHERE cpf = @CPF_MOT
+                AND mes_avaliacao = @mes
+            AND ano_avaliacao =  @ano
+
+                --insere avalicao
+                SELECT
+          top 1
+          @Column1 = r.dado_verificado,
+          @Column2 = CASE WHEN apto = 1 THEN r.premio ELSE '0' END
+        FROM [dbo].[ppo_resultado] r
+        INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
+        INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
+        INNER JOIN dbo.ppo_parametros p ON p.id = pg.parametro_id
+        WHERE cpf = @CPF_MOT
+          AND p.nome = 'AVALIAÇÃO'
+              AND mes_avaliacao = @mes
+              AND ano_avaliacao =  @ano
+       ORDER BY apto DESC
+
+           UPDATE @tabelaRelatorio
+           SET NotaAvaliacaoMotorista = @Column1,
+           ValorAvaliacao  = @Column2
+           WHERE id =  @Contador
+           --fim insere avalicao
+
+           --insere INFRAÇÃO VELOCIDADE
+                SELECT
+          top 1
+          @Column1 = r.dado_verificado,
+          @Column2 = CASE WHEN apto = 1 THEN r.premio ELSE '0' END
+        FROM [dbo].[ppo_resultado] r
+        INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
+        INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
+        INNER JOIN dbo.ppo_parametros p ON p.id = pg.parametro_id
+        WHERE cpf = @CPF_MOT
+          AND p.nome = 'INFRAÇÃO VELOCIDADE'
+              AND mes_avaliacao = @mes
+              AND ano_avaliacao =  @ano
+       ORDER BY apto DESC
+
+           UPDATE @tabelaRelatorio
+           SET QtdeEventosVelocidade = @Column1,
+           ValorVelocidade  = @Column2
+           WHERE id =  @Contador
+           --fim insere INFRAÇÃO VELOCIDADE
+
+           --insere INFRAÇÃO DE INTERJORNADA
+                SELECT
+          top 1
+          @Column1 = r.dado_verificado,
+          @Column2 = CASE WHEN apto = 1 THEN r.premio ELSE '0' END
+        FROM [dbo].[ppo_resultado] r
+        INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
+        INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
+        INNER JOIN dbo.ppo_parametros p ON p.id = pg.parametro_id
+        WHERE cpf = @CPF_MOT
+          AND p.nome = 'INFRAÇÃO DE INTERJORNADA'
+              AND mes_avaliacao = @mes
+              AND ano_avaliacao = @ano
+       ORDER BY apto DESC
+
+           UPDATE @tabelaRelatorio
+           SET QtdeEventosInterjornada = @Column1,
+           ValorInterjornada  = @Column2
+           WHERE id =  @Contador
+           --fim insere INFRAÇÃO DE INTERJORNADA
+
+           --insere KM
+                SELECT
+          top 1
+          @Column1 = r.dado_verificado,
+          @Column2 = CASE WHEN apto = 1 THEN r.premio ELSE '0' END
+        FROM [dbo].[ppo_resultado] r
+        INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
+        INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
+        INNER JOIN dbo.ppo_parametros p ON p.id = pg.parametro_id
+        WHERE cpf = @CPF_MOT
+          AND p.nome = 'KM'
+              AND mes_avaliacao = @mes
+              AND ano_avaliacao = @ano
+       ORDER BY apto DESC
+
+           UPDATE @tabelaRelatorio
+           SET KmRodado = @Column1,
+           ValorKMRodado  = @Column2
+           WHERE id =  @Contador
+           --fim insere KM
+
+           -- INSERE TOTAL
+           SELECT
+          @Column1 = SUM(CAST(premio AS FLOAT))
+       FROM [dbo].[ppo_resultado]
+       WHERE cpf = @CPF_MOT
+           AND mes_avaliacao = @mes
+           AND ano_avaliacao = @ano
+       AND apto = 1
+
+           UPDATE @tabelaRelatorio
+             SET Total = @Column1
+           WHERE id =  @Contador
+           -- INSERE TOTAL
+
+      END
+
+    FETCH NEXT FROM PPO_Cursor INTO  -- Busque a próxima linha
+        @CPF_MOT;
+END
+CLOSE PPO_Cursor; -- Feche o cursor
+DEALLOCATE PPO_Cursor; -- Libere recursos do cursor
+
+select * from @tabelaRelatorio
+WHERE 1=1
+${filtro}
+ORDER BY id ASC
+OFFSET ${(realPage - 1) * pageSize} ROWS
+FETCH NEXT  ${pageSize} ROWS ONLY
+    `;
+    const results = await mssqlPPO.raw(sql);
+    const totalRegisters = Number(total[0]["total"]) || 0;
 
     return {
       page: realPage,
       total_pages: Math.ceil(totalRegisters / pageSize),
       total_registers: totalRegisters,
-      results: rows,
+      results: results,
     };
   }
 
@@ -402,87 +547,235 @@ export class PPORepository implements IPPORepository {
     query: Record<string, any>,
     pageSize = 5
   ): Promise<any | undefined> {
-    const filterDbFunction = (qb: Knex.QueryBuilder) => {
-      if (isValid(query?.cpf)) {
-        qb.andWhere("cpf", "like", `%${query.cpf}%`);
-      }
-      if (isValid(query?.matricula)) {
-        qb.andWhere("matricula", "like", `%${query.matricula}%`);
-      }
-      if (isValid(query?.nome_motorista)) {
-        qb.andWhere("nome_motorista", "like", `%${query.nome_motorista}%`);
-      }
-      if (isValid(query?.mes_avaliacao)) {
-        qb.andWhere("mes_avaliacao", "like", `%${query.mes_avaliacao}%`);
-      }
-      if (isValid(query?.ano_avaliacao)) {
-        qb.andWhere("ano_avaliacao", "like", `%${query.ano_avaliacao}%`);
-      }
-      if (isValid(query?.ppo_cancelado)) {
-        qb.andWhere("ppo_cancelado", "like", `%${query.ppo_cancelado}%`);
-      }
-      if (isValid(query?.date_execel_inicio)) {
-        qb.andWhere("mes_avaliacao", "like", `%${query.date_execel_inicio}%`);
-      }
-      if (isValid(query?.date_execel_fim)) {
-        qb.andWhere("ano_avaliacao", "like", `%${query.date_execel_fim}%`);
-      }
-    };
+    let filtro = "";
 
-    const results = mssqlPPO("dbo.ppo_resultado")
-      .select([
-        "dbo.ppo_resultado.nome_motorista as Nome Motorista",
-        "dbo.ppo_resultado.cpf as CPF",
-        "dbo.ppo_resultado.matricula as Matrícula",
-        "dbo.ppo_grupos.nome as nome_grupo as Grupo",
-        "dbo.ppo_grupos.empresa as Empresa",
-        "dbo.ppo_grupos.filial as filial as Filial",
-        "dbo.ppo_parametros.nome as parametro as Parâmetro",
-        "dbo.ppo_resultado.dado_verificado as Dado Comparado ",
-        "dbo.ppo_parametros_grupo.operador_logico_primario as Operador Primário",
-        "dbo.ppo_parametros_grupo.valor_primario as Valor Primário",
-        mssqlPPO.raw(
-          `CASE WHEN "dbo"."ppo_parametros_grupo"."faixa_valores"=1 THEN 'Sim' ELSE 'Não'END as "Faixa de Valores"`
-        ),
-        "dbo.ppo_resultado.dado_verificado as referencia_secundaria as Dado Comparado",
-        "dbo.ppo_parametros_grupo.operador_logico_secundaria as Operador Secundário",
-        "dbo.ppo_parametros_grupo.valor_secundario as Valor Secundário",
-        mssqlPPO.raw(
-          `CASE WHEN "dbo"."ppo_parametros_grupo"."multiplicar_premio"=1 THEN 'Sim' ELSE 'Não' END as "Multiplicar Prêmio"`
-        ),
-        mssqlPPO.raw(
-          `CONVERT(VARCHAR, CAST("dbo"."ppo_parametros_grupo"."premio" AS MONEY), 1) as "Prêmio Referência"`
-        ),
-        mssqlPPO.raw(
-          `CONVERT(VARCHAR, CAST((CASE WHEN "dbo"."ppo_resultado"."apto"=1 THEN "dbo"."ppo_resultado"."premio" ELSE "dbo"."ppo_parametros_grupo"."premio" END) AS MONEY), 1) as "Prêmio"`
-        ),
-        mssqlPPO.raw(
-          `CASE WHEN "dbo"."ppo_resultado"."apto"=1 THEN 'Sim' ELSE 'Não' END as "Apto"`
-        ),
-        mssqlPPO.raw(
-          `CASE WHEN "dbo"."ppo_resultado"."ppo_cancelado"=1 THEN 'Sim' ELSE 'Não' END as "PPO Cancelado"`
-        ),
-        "dbo.ppo_resultado.observacao as Observação",
-        "dbo.ppo_resultado.mes_avaliacao as Mês",
-        "dbo.ppo_resultado.ano_avaliacao as Ano",
-      ])
-      .innerJoin(
-        "dbo.ppo_parametros_grupo",
-        "dbo.ppo_parametros_grupo.id",
-        "dbo.ppo_resultado.parametro_grupo_id"
-      )
-      .innerJoin(
-        "dbo.ppo_grupos",
-        "dbo.ppo_grupos.id",
-        "dbo.ppo_parametros_grupo.grupo_id"
-      )
-      .innerJoin(
-        "dbo.ppo_parametros",
-        "dbo.ppo_parametros.id",
-        "dbo.ppo_parametros_grupo.parametro_id"
-      )
-      .limit(pageSize)
-      .andWhere(filterDbFunction);
+    if (isValid(query?.cpf)) {
+      filtro = filtro + ` AND cpf LIKE '%${query.cpf}%'`;
+    }
+    if (isValid(query?.matricula)) {
+      filtro = filtro + ` AND matricula LIKE '%${query.matricula}%'`;
+    }
+    if (isValid(query?.nome_motorista)) {
+      filtro = filtro + ` AND nome_motorista LIKE '%${query.nome_motorista}%'`;
+    }
+    if (isValid(query?.mes_avaliacao)) {
+      filtro = filtro + ` AND mes_avaliacao LIKE '%${query.mes_avaliacao}%'`;
+    }
+    if (isValid(query?.ano_avaliacao)) {
+      filtro = filtro + ` AND ano_avaliacao LIKE '%${query.ano_avaliacao}%'`;
+    }
+    if (isValid(query?.ppo_cancelado)) {
+      filtro = filtro + ` AND ppo_cancelado LIKE '%${query.ppo_cancelado}%'`;
+    }
+
+    const results = mssqlPPO.raw(`
+    DECLARE @tabelaRelatorio TABLE
+    (
+    id int,
+    empresa NVARCHAR(255) NULL,
+    grupo NVARCHAR(255) NULL,
+    matricula  NVARCHAR(255) NULL,
+    cpf NVARCHAR(255) NULL,
+    nome_motorista NVARCHAR(255) NULL,
+    QtdeEventosInterjornada NVARCHAR(255) NULL,
+    QtdeEventosVelocidade  NVARCHAR(255) NULL,
+    NotaAvaliacaoMotorista NVARCHAR(255) NULL ,
+    KmRodado  NVARCHAR(255) NULL,
+    ValorInterjornada DECIMAL(10,2) NULL,
+    ValorVelocidade DECIMAL(10,2) NULL,
+    ValorAvaliacao DECIMAL(10,2) NULL,
+    ValorKMRodado DECIMAL(10,2) NULL,
+    Total DECIMAL(10,2) NULL,
+    ppo_cancelado BIT NULL,
+    observacao NVARCHAR(MAX) NULL,
+          mes_avaliacao NVARCHAR(10) NULL,
+          ano_avaliacao NVARCHAR(10) NULL
+   );
+
+DECLARE @CPF_MOT VARCHAR(20),
+        @Contador INT = 0,
+            @PPO_Cancelado INT,
+                @Column1 NVARCHAR(MAX),
+                @Column2 NVARCHAR(MAX),
+                @mes NVARCHAR(2) = '11',
+                @ano NVARCHAR(4) = '2023';
+
+DECLARE PPO_Cursor CURSOR FOR
+    SELECT DISTINCT cpf
+    FROM [dbo].[ppo_resultado]
+    WHERE mes_avaliacao = @mes
+        AND ano_avaliacao =  @ano
+
+OPEN PPO_Cursor;
+
+FETCH NEXT FROM PPO_Cursor INTO
+    @CPF_MOT;
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    SET @Contador = @Contador + 1; --id linha motorista
+
+        -- verificando se o ppo foi cancelado
+        SELECT  @PPO_Cancelado = COUNT(0) FROM [dbo].[ppo_resultado] WHERE cpf =  @CPF_MOT
+        AND ppo_cancelado = 1
+        AND mes_avaliacao = @mes
+        AND ano_avaliacao =  @ano
+
+    IF @PPO_Cancelado > 0
+      BEGIN
+        -- insert ppo cancelado
+                 INSERT INTO @tabelaRelatorio
+                 SELECT  @Contador,g.empresa,g.nome,r.matricula,r.cpf,r.nome_motorista,0,0,0,0,0,0,0,0,0,r.ppo_cancelado,r.observacao,r.mes_avaliacao,r.ano_avaliacao FROM [dbo].[ppo_resultado] r
+         INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
+         INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
+         WHERE cpf = @CPF_MOT
+         AND ppo_cancelado = 1
+                 AND mes_avaliacao = @mes
+             AND ano_avaliacao =  @ano
+      END
+    ELSE
+      BEGIN
+            -- insere dados motorista
+                INSERT INTO @tabelaRelatorio (id,Empresa,Grupo,matricula,cpf,nome_motorista,PPO_Cancelado,Observacao,mes_avaliacao,ano_avaliacao)
+        SELECT DISTINCT  @Contador,g.empresa,g.nome,r.matricula,r.cpf,r.nome_motorista,r.ppo_cancelado,NULL,r.mes_avaliacao,r.ano_avaliacao from [dbo].[ppo_resultado] r
+        INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
+        INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
+        WHERE cpf = @CPF_MOT
+                AND mes_avaliacao = @mes
+            AND ano_avaliacao =  @ano
+
+                --insere avalicao
+                SELECT
+          top 1
+          @Column1 = r.dado_verificado,
+          @Column2 = CASE WHEN apto = 1 THEN r.premio ELSE '0' END
+        FROM [dbo].[ppo_resultado] r
+        INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
+        INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
+        INNER JOIN dbo.ppo_parametros p ON p.id = pg.parametro_id
+        WHERE cpf = @CPF_MOT
+          AND p.nome = 'AVALIAÇÃO'
+              AND mes_avaliacao = @mes
+              AND ano_avaliacao =  @ano
+       ORDER BY apto DESC
+
+           UPDATE @tabelaRelatorio
+           SET NotaAvaliacaoMotorista = @Column1,
+           ValorAvaliacao  = @Column2
+           WHERE id =  @Contador
+           --fim insere avalicao
+
+           --insere INFRAÇÃO VELOCIDADE
+                SELECT
+          top 1
+          @Column1 = r.dado_verificado,
+          @Column2 = CASE WHEN apto = 1 THEN r.premio ELSE '0' END
+        FROM [dbo].[ppo_resultado] r
+        INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
+        INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
+        INNER JOIN dbo.ppo_parametros p ON p.id = pg.parametro_id
+        WHERE cpf = @CPF_MOT
+          AND p.nome = 'INFRAÇÃO VELOCIDADE'
+              AND mes_avaliacao = @mes
+              AND ano_avaliacao =  @ano
+       ORDER BY apto DESC
+
+           UPDATE @tabelaRelatorio
+           SET QtdeEventosVelocidade = @Column1,
+           ValorVelocidade  = @Column2
+           WHERE id =  @Contador
+           --fim insere INFRAÇÃO VELOCIDADE
+
+           --insere INFRAÇÃO DE INTERJORNADA
+                SELECT
+          top 1
+          @Column1 = r.dado_verificado,
+          @Column2 = CASE WHEN apto = 1 THEN r.premio ELSE '0' END
+        FROM [dbo].[ppo_resultado] r
+        INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
+        INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
+        INNER JOIN dbo.ppo_parametros p ON p.id = pg.parametro_id
+        WHERE cpf = @CPF_MOT
+          AND p.nome = 'INFRAÇÃO DE INTERJORNADA'
+              AND mes_avaliacao = @mes
+              AND ano_avaliacao = @ano
+       ORDER BY apto DESC
+
+           UPDATE @tabelaRelatorio
+           SET QtdeEventosInterjornada = @Column1,
+           ValorInterjornada  = @Column2
+           WHERE id =  @Contador
+           --fim insere INFRAÇÃO DE INTERJORNADA
+
+           --insere KM
+                SELECT
+          top 1
+          @Column1 = r.dado_verificado,
+          @Column2 = CASE WHEN apto = 1 THEN r.premio ELSE '0' END
+        FROM [dbo].[ppo_resultado] r
+        INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
+        INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
+        INNER JOIN dbo.ppo_parametros p ON p.id = pg.parametro_id
+        WHERE cpf = @CPF_MOT
+          AND p.nome = 'KM'
+              AND mes_avaliacao = @mes
+              AND ano_avaliacao = @ano
+       ORDER BY apto DESC
+
+           UPDATE @tabelaRelatorio
+           SET KmRodado = @Column1,
+           ValorKMRodado  = @Column2
+           WHERE id =  @Contador
+           --fim insere KM
+
+           -- INSERE TOTAL
+           SELECT
+          @Column1 = SUM(CAST(premio AS FLOAT))
+       FROM [dbo].[ppo_resultado]
+       WHERE cpf = @CPF_MOT
+           AND mes_avaliacao = @mes
+           AND ano_avaliacao = @ano
+       AND apto = 1
+
+           UPDATE @tabelaRelatorio
+             SET Total = @Column1
+           WHERE id =  @Contador
+           -- INSERE TOTAL
+
+      END
+
+    FETCH NEXT FROM PPO_Cursor INTO  -- Busque a próxima linha
+        @CPF_MOT;
+END
+CLOSE PPO_Cursor; -- Feche o cursor
+DEALLOCATE PPO_Cursor; -- Libere recursos do cursor
+
+select 
+empresa as Empresa,
+grupo as Grupo,
+matricula as Matricula,
+cpf as CPF,
+nome_motorista AS 'Nome Motorista',
+QtdeEventosInterjornada 'Qtde. Eventos Interjornada' ,
+QtdeEventosVelocidade 'Qtde. Eventos Velocidade',
+NotaAvaliacaoMotorista 'Nota Avaliação Motorista',
+KmRodado as 'Km Rodados',
+CONVERT(VARCHAR, CAST(ValorInterjornada AS MONEY), 1) as 'Valor Interjornada',
+CONVERT(VARCHAR, CAST(ValorVelocidade AS MONEY), 1) as 'Valor Velocidade',
+CONVERT(VARCHAR, CAST(ValorAvaliacao AS MONEY), 1) as 'Valor Avaliação',
+CONVERT(VARCHAR, CAST(ValorKMRodado AS MONEY), 1) as 'Valor Km Rodado',
+Total,
+CASE WHEN ppo_cancelado=1 THEN 'Sim' ELSE 'Não'END as 'PPO Cancelado',
+CASE WHEN observacao is null THEN 'Sem Observação' ELSE observacao END 'Observação',
+mes_avaliacao as Mês,
+ano_avaliacao as Ano
+from @tabelaRelatorio
+WHERE 1=1
+${filtro}
+ORDER BY id ASC
+OFFSET 0 ROWS
+FETCH NEXT  ${pageSize} ROWS ONLY
+    `);
 
     const rows = await results;
     return {

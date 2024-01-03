@@ -18,24 +18,24 @@ export class PPOParametrosRepository implements IPPOParametrosRepository {
     return await mssqlPPO("dbo.ppo_parametros").first().where("id", id);
   }
 
-  async create(produto: IParametro, user: string) {
-    const parametro = await this.findByName(produto.nome);
-    produto.cod_usu_create = TokenAd.getClaims(user).name;
+  async create(iparametro: IParametro, user: string) {
+    const parametro = await this.findByName(iparametro.nome);
+    iparametro.cod_usu_create = TokenAd.getClaims(user).name;
     if (parametro != undefined) {
       throw new AppError("Esse nome já se encontra em uso", 400);
     } else {
-      return mssqlPPO("dbo.ppo_parametros").insert(produto);
+      return mssqlPPO("dbo.ppo_parametros").insert(iparametro);
     }
   }
 
-  async update(id: number, produto: IParametro, user: string) {
-    const parametro = await this.findByName(produto.nome);
-    produto.cod_usu_update = TokenAd.getClaims(user).name;
-    produto.updated_at = new Date(dateAtualMoment());
+  async update(id: number, iparametro: IParametro, user: string) {
+    const parametro = await this.findByName(iparametro.nome);
+    iparametro.cod_usu_update = TokenAd.getClaims(user).name;
+    iparametro.updated_at = new Date(dateAtualMoment());
     if (parametro != undefined && parametro.id != id) {
       throw new AppError("Esse nome já se encontra em uso", 400);
     } else {
-      return mssqlPPO("dbo.ppo_parametros").update(produto).where("id", id);
+      return mssqlPPO("dbo.ppo_parametros").update(iparametro).where("id", id);
     }
   }
 

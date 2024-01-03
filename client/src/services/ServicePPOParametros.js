@@ -4,12 +4,12 @@ class ServicePPOParametros {
 		return api.get("/ppo/parametros");
 	}
 
-	async create({ nome }) {
-		return api.post("/ppo/parametros", { nome });
+	async create(values) {
+		return api.post("/ppo/parametros", values);
 	}
 
-	async update({ id, nome }) {
-		return api.patch(`/ppo/parametros/${id}`, { nome });
+	async update(id, values) {
+		return api.patch(`/ppo/parametros/${id}`, values);
 	}
 
 	async delete({ id }) {

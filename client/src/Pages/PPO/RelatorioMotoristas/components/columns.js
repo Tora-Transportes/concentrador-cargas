@@ -21,101 +21,89 @@ export const getColumns = () => {
 			showFilter: true,
 		},
 		{
-			name: "nome_grupo",
+			name: "grupo",
 			description: "Grupo",
-			selector: (row) => row.nome_grupo,
+			selector: (row) => row.grupo,
 			showFilter: false,
 		},
 		{
 			name: "empresa",
-			description: "Cod. Empresa",
+			description: "Empresa",
 			selector: (row) => row.empresa,
 			showFilter: false,
 		},
 		{
-			name: "filial",
-			description: "Filial",
-			selector: (row) => row.filial,
+			name: "QtdeEventosInterjornada",
+			description: "Qtde Eventos Interjornada",
+			selector: (row) => row.QtdeEventosInterjornada,
 			showFilter: false,
 		},
 		{
-			name: "parametro",
-			description: "Nome Parâmetro",
-			selector: (row) => row.parametro,
+			name: "QtdeEventosVelocidade",
+			description: "Qtde Eventos Velocidade",
+			selector: (row) => row.QtdeEventosVelocidade,
 			showFilter: false,
 		},
 		{
-			name: "referencia",
-			description: "Valor Gerado",
-			selector: (row) => row.referencia,
+			name: "NotaAvaliacaoMotorista",
+			description: "Nota Avaliação Motorista",
+			selector: (row) => row.NotaAvaliacaoMotorista,
 			showFilter: false,
 		},
 		{
-			name: "operador_logico_primario",
-			description: "Operador Lógico - 1",
-			selector: (row) => row.operador_logico_primario,
+			name: "KmRodado",
+			description: "KM Rodado",
+			selector: (row) => row.KmRodado,
 			showFilter: false,
 		},
 		{
-			name: "valor_primario",
-			description: "Valor - 1",
-			selector: (row) => row.valor_primario,
-			showFilter: false,
-		},
-		{
-			name: "faixa_valores",
-			description: "Faixa de Valores",
-			selector: (row) => (row.faixa_valores === true ? "Sim" : "Não"),
-			showFilter: false,
-		},
-		{
-			name: "referencia_secundaria",
-			description: "Valor Gerado",
-			selector: (row) => row.referencia_secundaria,
-			showFilter: false,
-		},
-		{
-			name: "operador_logico_secundaria",
-			description: "Operador Lógico - 2",
-			selector: (row) => row.operador_logico_secundaria,
-			showFilter: false,
-		},
-		{
-			name: "valor_secundario",
-			description: "Valor - 2",
-			selector: (row) => row.valor_secundario,
-			showFilter: false,
-		},
-		{
-			name: "multiplicar_premio",
-			description: "Multiplicar Prêmio",
-			selector: (row) => (row.multiplicar_premio === true ? "Sim" : "Não"),
-			showFilter: false,
-		},
-		{
-			name: "premio_referencia",
-			description: "Valor de Referência Prêmio",
+			name: "ValorInterjornada",
+			description: "Valor Interjornada",
 			selector: (row) =>
-				row.premio_referencia.toLocaleString("pt-br", {
+				row.ValorInterjornada.toLocaleString("pt-br", {
 					style: "currency",
 					currency: "BRL",
 				}),
 			showFilter: false,
 		},
 		{
-			name: "premio",
-			description: "Valor Prêmio",
+			name: "ValorVelocidade",
+			description: "Valor Velocidade",
 			selector: (row) =>
-				parseFloat(row.premio).toLocaleString("pt-br", {
+				row.ValorVelocidade.toLocaleString("pt-br", {
 					style: "currency",
 					currency: "BRL",
 				}),
 			showFilter: false,
 		},
 		{
-			name: "apto",
-			description: "Apto a Receber",
-			selector: (row) => (row.apto === true ? "Sim" : "Não"),
+			name: "ValorAvaliacao",
+			description: "Valor Avaliação",
+			selector: (row) =>
+				row.ValorAvaliacao.toLocaleString("pt-br", {
+					style: "currency",
+					currency: "BRL",
+				}),
+			showFilter: false,
+		},
+		{
+			name: "ValorKMRodado",
+			description: "Valor KM Rodado",
+			selector: (row) =>
+				row.ValorKMRodado.toLocaleString("pt-br", {
+					style: "currency",
+					currency: "BRL",
+				}),
+			showFilter: false,
+		},
+		{
+			name: "Total",
+			description: "Total",
+			selector: (row) =>
+				row.Total.toLocaleString("pt-br", {
+					style: "currency",
+					currency: "BRL",
+				}),
 			showFilter: false,
 		},
 		{
@@ -144,7 +132,7 @@ export const getColumns = () => {
 			showFilter: true,
 		},
 		{
-			name: "anano_avaliacaoo",
+			name: "ano_avaliacao",
 			description: "Ano",
 			selector: (row) => row.ano_avaliacao,
 			showFilter: true,

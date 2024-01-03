@@ -28,6 +28,7 @@ const GrupoSchema = Yup.object().shape({
 	nome: Yup.string().required("nome é um campo obrigatório"),
 	empresa: Yup.string().required("empresa é um campo obrigatório"),
 	filial: Yup.string().required("filial é um campo obrigatório"),
+	cod_filial: Yup.string().required("cod filial é um campo obrigatório"),
 });
 
 const Grupos = () => {
@@ -125,7 +126,6 @@ const Grupos = () => {
 		formik.values.empresa = objeto.empresa;
 		formik.values.filial = objeto.filial;
 		formik.values.cod_filial = objeto.cod_filial;
-		formik.values.cod_verba = objeto.cod_verba;
 		handleOpen();
 	}
 
@@ -233,26 +233,6 @@ const Grupos = () => {
 								</Form.Control.Feedback>
 							</InputGroup>
 						</Form.Group>
-						<Form.Group
-							className="mb-3"
-							controlId="validationFormikCodVerbaEdit"
-						>
-							<Form.Label>Cod. Verba</Form.Label>
-							<InputGroup hasValidation>
-								<Form.Control
-									type="text"
-									placeholder="Cod. Verba"
-									aria-describedby="inputGroupPrepend"
-									name="cod_verba"
-									value={formik.values.cod_verba}
-									onChange={formik.handleChange}
-									isInvalid={!!formik.errors.cod_verba}
-								/>
-								<Form.Control.Feedback type="invalid">
-									{formik.errors.cod_verba}
-								</Form.Control.Feedback>
-							</InputGroup>
-						</Form.Group>
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
@@ -303,12 +283,6 @@ const Grupos = () => {
 							<Column
 								field="cod_filial"
 								header="Cod. Filial"
-								bodyStyle={{ color: "red" }}
-								//className="table-column-nome"
-							/>
-							<Column
-								field="cod_verba"
-								header="Cod. Verba"
 								bodyStyle={{ color: "red" }}
 								//className="table-column-nome"
 							/>

@@ -97,23 +97,6 @@ export const renderHeader = (
 								</Form.Control.Feedback>
 							</InputGroup>
 						</Form.Group>
-						<Form.Group className="mb-3" controlId="validationFormikCodVerba">
-							<Form.Label>Cod. Verba</Form.Label>
-							<InputGroup hasValidation>
-								<Form.Control
-									type="text"
-									placeholder="Cod. Verba"
-									aria-describedby="inputGroupPrepend"
-									name="cod_verba"
-									value={formik.values.cod_verba}
-									onChange={formik.handleChange}
-									isInvalid={!!formik.errors.cod_verba}
-								/>
-								<Form.Control.Feedback type="invalid">
-									{formik.errors.cod_verba}
-								</Form.Control.Feedback>
-							</InputGroup>
-						</Form.Group>
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>

@@ -40,7 +40,7 @@ class PPOController implements IPPOController {
 
   async relatorioExcel(req: Request, res: Response): Promise<Response> {
     const ppoRepository = new PPORepository();
-    const filename = `RELATORIO-PPO_${new Date().getTime()}.xlsx`;
+    const filename = `static/RELATORIO-PPO_${new Date().getTime()}.xlsx`;
     const searchResult = await ppoRepository.searchExcel(
       { ...req.query },
       1200000
@@ -64,8 +64,20 @@ class PPOController implements IPPOController {
     });
 
     const stream = fs.createReadStream(filename);
+
+    stream.once("end", () => {
+      // File reading is complete, now delete the file
+      if (fs.existsSync(filename)) {
+        fs.unlink(filename, (err) => {
+          if (err) {
+            console.error(err);
+          }
+        });
+      }
+    });
+
     stream.pipe(res);
-    if (fs.existsSync(filename)) fs.unlinkSync(filename);
+
     return res;
   }
 
