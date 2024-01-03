@@ -75,8 +75,8 @@ class ServicePPO {
 		nome_motorista,
 		cpf,
 		matricula,
-		mes_avaliacao,
-		ano_avaliacao,
+		mes_avaliacao = 11,
+		ano_avaliacao = 2023,
 		ppo_cancelado,
 	}) {
 		return api.get("/ppo/relatorios/motoristas", {
