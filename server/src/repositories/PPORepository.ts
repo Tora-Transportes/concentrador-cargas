@@ -333,8 +333,6 @@ export class PPORepository implements IPPORepository {
       filtro = filtro + ` AND ppo_cancelado LIKE '%${query.ppo_cancelado}%'`;
     }
 
-    console.log(filtro);
-
     const total = await mssqlPPO.raw(
       `SELECT COUNT(DISTINCT cpf) as total FROM [dbo].[ppo_resultado]
        WHERE mes_avaliacao LIKE '%${query.mes_avaliacao}%'
