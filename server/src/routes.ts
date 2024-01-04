@@ -29,6 +29,7 @@ import PPOController from "./controllers/PPOController";
 import PPOParametrosController from "./controllers/PPOParametrosController";
 import PPOGruposController from "./controllers/PPOGruposController";
 import PPOParametrosGrupoController from "./controllers/PPOParametrosGrupoController";
+import WebhookAutentiqueController from "./controllers/WebhookAutentiqueController";
 
 const routes = Router();
 const upload = multer({ dest: "uploads/" });
@@ -53,6 +54,7 @@ routes.delete(
   AvisosController.delete
 );
 
+routes.post("/webhook/autentique", WebhookAutentiqueController.assinado);
 routes.get("/credenciais", CredenciaisController.get);
 routes.post("/credenciais", CredenciaisController.post);
 routes.put("/credenciais/:portal/:user", CredenciaisController.put);

@@ -8,6 +8,7 @@ const mssql = knex(knexfile.configMssql);
 const mssqlCoordenadas = knex(knexfile.configCoordenadas);
 const mssqlPPO = knex(knexfile.configMssqlPPO);
 const mssqlPPOView = knex(knexfile.configMssqlPPOView);
+const mssqlAutentique = knex(knexfile.configMssqlAutentique);
 
 export default oracle;
-export { mssql, mssqlCoordenadas, mssqlPPO, mssqlPPOView };
+export { mssql, mssqlCoordenadas, mssqlPPO, mssqlPPOView, mssqlAutentique };

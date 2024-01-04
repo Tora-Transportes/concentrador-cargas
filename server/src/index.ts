@@ -11,11 +11,13 @@ import ErrorMiddleware from "./middlewares/Error";
 //import ClearCachMiddleware from "./middlewares/ClearCach";
 import Socket from "./socket";
 import socketsRoutes from "./socketsRoutes";
+import bodyParser from "body-parser";
 
 dotenv.config();
 
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json({ limit: "500mb" }));
 app.use(cors());
 app.use(process.env.BASE_URL || "", routes);
