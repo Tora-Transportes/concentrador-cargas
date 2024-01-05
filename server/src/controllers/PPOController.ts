@@ -184,8 +184,7 @@ class PPOController implements IPPOController {
     const dataFormatada = format(dataAtual, "dd/MM/yyyy HH:mm:ss");
     const date = new Date(`${mes}/01/${ano}`);
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    const lastDaySplit = lastDay.toLocaleDateString().split("-");
-    const periodoApu = `01/${mes}/${ano} à ${lastDaySplit[2]}/${lastDaySplit[1]}/${lastDaySplit[0]}`;
+    const periodoApu = `01/${mes}/${ano} à ${lastDay.toLocaleDateString()}`;
     const result = await ppoRepository.resultado_ppo(
       formataCPF(String(cpf)),
       String(mes),
