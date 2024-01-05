@@ -294,7 +294,10 @@ export class PPORepository implements IPPORepository {
     ,r.cpf
     ,r.matricula
     ,CASE WHEN r.ppo_cancelado = 1 THEN 'Sim' ELSE 'Não' END as cancelado
-    ,CASE WHEN r.ppo_cancelado = 1 THEN r.observacao+' | '+r.dado_verificado+' KM' ELSE 'Sem Observação' END as observacao
+    ,CASE WHEN r.ppo_cancelado = 1 THEN
+	    CASE WHEN r.dado_verificado is null THEN r.observacao
+		  ELSE r.observacao+' | '+r.dado_verificado+' KM' END
+	  ELSE 'Sem Observação' END as observacao
     ,CONCAT(r.mes_avaliacao,'/',r.ano_avaliacao) as mes_ano
     FROM dbo.ppo_resultado r
     inner join dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
