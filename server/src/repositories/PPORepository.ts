@@ -263,13 +263,30 @@ export class PPORepository implements IPPORepository {
       AND ano_avaliacao = '${ano}'
       `);
     const valores = await mssqlPPO.raw(` 
-      SELECT p.nome,r.dado_verificado,'R$ '+CONVERT(VARCHAR, CAST(r.premio AS MONEY), 1) as valor FROM dbo.ppo_resultado r
-      inner join dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
-      join dbo.ppo_parametros p on p.id =  pg.parametro_id
-      WHERE r.apto = 1
-      AND r.cpf = '${cpf}'
-      AND r.mes_avaliacao = '${mes}'
-      AND r.ano_avaliacao = '${ano}'
+    SELECT 
+    x.nome,
+    x.dado_verificado,
+    CASE WHEN x.ADICIONAL=1 and x.apto=0 THEN 'R$ 0.00' ELSE x.valor END as valor
+    FROM
+    (
+    SELECT 
+       p.nome,
+       ADICIONAL = case when p.nome = 'INFRAÇÃO VELOCIDADE' AND r.dado_verificado > 0 THEN  1
+                 when p.nome = 'INFRAÇÃO DE INTERJORNADA' AND r.dado_verificado > 0 THEN  1
+              ELSE 0
+              END ,
+       r.dado_verificado,
+       'R$ '+CONVERT(VARCHAR, CAST(r.premio AS MONEY), 1) as valor,
+       apto
+       FROM dbo.ppo_resultado r
+          inner join dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
+          join dbo.ppo_parametros p on p.id =  pg.parametro_id
+          WHERE r.cpf = '${cpf}'
+         AND r.mes_avaliacao = '${mes}'
+          AND r.ano_avaliacao = '${ano}'
+        ) X
+          WHERE ( x.ADICIONAL = 1
+        or X.apto = 1)
     `);
 
     const dados_motorista = await mssqlPPO.raw(` 
@@ -277,7 +294,7 @@ export class PPORepository implements IPPORepository {
     ,r.cpf
     ,r.matricula
     ,CASE WHEN r.ppo_cancelado = 1 THEN 'Sim' ELSE 'Não' END as cancelado
-    ,CASE WHEN r.ppo_cancelado = 1 THEN r.observacao ELSE 'Sem Observação' END as observacao
+    ,CASE WHEN r.ppo_cancelado = 1 THEN r.observacao+' | '+r.dado_verificado+' KM' ELSE 'Sem Observação' END as observacao
     ,CONCAT(r.mes_avaliacao,'/',r.ano_avaliacao) as mes_ano
     FROM dbo.ppo_resultado r
     inner join dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
