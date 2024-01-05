@@ -387,8 +387,8 @@ DECLARE @CPF_MOT VARCHAR(20),
             @PPO_Cancelado INT,
                 @Column1 NVARCHAR(MAX),
                 @Column2 NVARCHAR(MAX),
-                @mes NVARCHAR(2) = '11',
-                @ano NVARCHAR(4) = '2023';
+                @mes NVARCHAR(2) = '${query.mes_avaliacao}',
+                @ano NVARCHAR(4) = '${query.ano_avaliacao}';
 
 DECLARE PPO_Cursor CURSOR FOR
     SELECT DISTINCT cpf
@@ -612,8 +612,8 @@ DECLARE @CPF_MOT VARCHAR(20),
             @PPO_Cancelado INT,
                 @Column1 NVARCHAR(MAX),
                 @Column2 NVARCHAR(MAX),
-                @mes NVARCHAR(2) = '11',
-                @ano NVARCHAR(4) = '2023';
+                @mes NVARCHAR(2) = '${query.mes_avaliacao}',
+                @ano NVARCHAR(4) = '${query.ano_avaliacao}';
 
 DECLARE PPO_Cursor CURSOR FOR
     SELECT DISTINCT cpf
