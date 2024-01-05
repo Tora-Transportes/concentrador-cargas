@@ -264,29 +264,33 @@ export class PPORepository implements IPPORepository {
       `);
     const valores = await mssqlPPO.raw(` 
     SELECT 
-    x.nome,
-    x.dado_verificado,
-    CASE WHEN x.ADICIONAL=1 and x.apto=0 THEN 'R$ 0.00' ELSE x.valor END as valor
-    FROM
-    (
-    SELECT 
-       p.nome,
-       ADICIONAL = case when p.nome = 'INFRAÇÃO VELOCIDADE' AND r.dado_verificado > 0 THEN  1
-                 when p.nome = 'INFRAÇÃO DE INTERJORNADA' AND r.dado_verificado > 0 THEN  1
-              ELSE 0
-              END ,
-       r.dado_verificado,
-       'R$ '+CONVERT(VARCHAR, CAST(r.premio AS MONEY), 1) as valor,
-       apto
-       FROM dbo.ppo_resultado r
-          inner join dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
-          join dbo.ppo_parametros p on p.id =  pg.parametro_id
-          WHERE r.cpf = '${cpf}'
-         AND r.mes_avaliacao = '${mes}'
-          AND r.ano_avaliacao = '${ano}'
-        ) X
-          WHERE ( x.ADICIONAL = 1
-        or X.apto = 1)
+    DISTINCT
+      x.nome,
+      CASE WHEN  x.dado_verificado is NULL THEN 'Sem informação' ELSE x.dado_verificado END AS dado_verificado,
+      CASE WHEN x.ADICIONAL=1 and x.apto=0 THEN 'R$ 0.00' ELSE x.valor END as valor
+      FROM
+      (
+      SELECT 
+         p.nome,
+         ADICIONAL = case when p.nome = 'INFRAÇÃO VELOCIDADE' AND r.dado_verificado > 0 THEN  1
+                   when p.nome = 'INFRAÇÃO DE INTERJORNADA' AND r.dado_verificado > 0 THEN  1
+                ELSE 0
+                END ,
+      ADICIONAL_AVAL = case when p.nome = 'AVALIAÇÃO' AND r.dado_verificado IS NULL THEN  1
+                   when p.nome = 'AVALIAÇÃO' AND r.dado_verificado IS NULL THEN  1
+                ELSE 0
+                END ,
+         r.dado_verificado,
+       CASE WHEN r.dado_verificado is null THEN 'R$ 0.00' ELSE 'R$ '+CONVERT(VARCHAR, CAST(r.premio AS MONEY), 1) END AS valor,
+         apto
+         FROM dbo.ppo_resultado r
+            inner join dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
+            join dbo.ppo_parametros p on p.id =  pg.parametro_id
+            WHERE r.cpf = '${cpf}'
+            AND r.mes_avaliacao = '${mes}'
+            AND r.ano_avaliacao = '${ano}'
+          ) X
+            WHERE ( x.ADICIONAL = 1 or X.apto = 1 or x.ADICIONAL_AVAL = 1 )
     `);
 
     const dados_motorista = await mssqlPPO.raw(` 
