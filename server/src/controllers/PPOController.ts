@@ -405,7 +405,7 @@ class PPOController implements IPPOController {
           },
         },
         {
-          text: "Assinatura : _________________________________________________________________________________",
+          text: "Assinatura : __________________________________________________________________",
           style: "assinatura",
         },
       ],
