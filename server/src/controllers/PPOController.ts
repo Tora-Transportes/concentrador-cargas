@@ -404,6 +404,10 @@ class PPOController implements IPPOController {
             ],
           },
         },
+        {
+          text: "Assinatura : _________________________________________________________________________________",
+          style: "assinatura",
+        },
       ],
       styles: {
         header: {
@@ -444,8 +448,8 @@ class PPOController implements IPPOController {
           margin: [300, 0, 0, 0],
         },
         assinatura: {
-          margin: [0, 5, 0, 0],
-          alignment: "center",
+          margin: [0, 50, 0, 0],
+          alignment: "left",
         },
         assinaturaLinha: {
           margin: [0, 60, 0, 0],
