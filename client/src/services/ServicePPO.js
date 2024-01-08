@@ -75,7 +75,7 @@ class ServicePPO {
 		nome_motorista,
 		cpf,
 		matricula,
-		mes_avaliacao = 12,
+		mes_avaliacao = 11,
 		ano_avaliacao = 2023,
 		ppo_cancelado,
 	}) {
