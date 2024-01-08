@@ -94,8 +94,11 @@ class PPOController implements IPPOController {
   async avaliacoes(req: Request, res: Response): Promise<Response> {
     const { cpf, data_inicio, data_fim } = req.query;
     const ppoRepository = new PPORepository();
-    //const { id } = req.params;
-    const result = await ppoRepository.avaliacoes(String(cpf));
+    const result = await ppoRepository.avaliacoes(
+      String(cpf),
+      String(data_inicio),
+      String(data_fim)
+    );
     return res.json({ data: result });
   }
 

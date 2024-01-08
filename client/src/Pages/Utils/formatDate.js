@@ -14,7 +14,8 @@ export const formatDate = (dataValor) => {
 
 export const formatDateTimeZone = (inputDate) => {
 	const momentDate = moment(inputDate);
-	const formattedDate = momentDate.format("DD/MM/YYYY HH:mm:ss");
+	const gmtMinus3Date = momentDate.utcOffset(0);
+	const formattedDate = gmtMinus3Date.format("DD/MM/YYYY HH:mm:ss");
 	return formattedDate;
 };
 
