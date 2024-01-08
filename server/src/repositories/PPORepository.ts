@@ -571,6 +571,8 @@ FETCH NEXT  ${pageSize} ROWS ONLY
   ): Promise<any | undefined> {
     let filtro = "";
 
+    console.log(query);
+
     if (isValid(query?.cpf)) {
       filtro = filtro + ` AND cpf LIKE '%${query.cpf}%'`;
     }
@@ -619,8 +621,8 @@ DECLARE @CPF_MOT VARCHAR(20),
             @PPO_Cancelado INT,
                 @Column1 NVARCHAR(MAX),
                 @Column2 NVARCHAR(MAX),
-                @mes NVARCHAR(2) = '${query.mes_avaliacao}',
-                @ano NVARCHAR(4) = '${query.ano_avaliacao}';
+                @mes NVARCHAR(2) = '${query.date_execel_inicio}',
+                @ano NVARCHAR(4) = '${query.date_execel_fim}';
 
 DECLARE PPO_Cursor CURSOR FOR
     SELECT DISTINCT cpf
