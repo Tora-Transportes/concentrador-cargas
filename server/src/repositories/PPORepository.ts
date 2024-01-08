@@ -6,7 +6,11 @@ import { encrypt } from "../Utils/utlis";
 import { Knex } from "knex";
 
 interface IPPORepository {
-  avaliacoes(cpf: string): Promise<IAvaliacao[] | undefined>;
+  avaliacoes(
+    cpf: string,
+    data_ini: string,
+    data_fim: string
+  ): Promise<IAvaliacao[] | undefined>;
   exporta_protheus(mes: string, ano: string): Promise<any | undefined>;
   distancia(
     cpf: string,
@@ -81,17 +85,23 @@ export class PPORepository implements IPPORepository {
     return exporta;
   }
 
-  async avaliacoes(cpf: string): Promise<IAvaliacao[] | undefined> {
-    return await mssqlPPO("dbo.ppo_rank_avaliacao_fleet")
-      .select([
-        "classificacao",
-        "nome_motorista",
-        "cpf",
-        "pontuacao",
-        "periodo_inicial",
-        "periodo_final",
-      ])
-      .where("cpf", cpf);
+  async avaliacoes(
+    cpf: string,
+    data_ini: string,
+    data_fim: string
+  ): Promise<IAvaliacao[] | undefined> {
+    return await mssqlPPO.raw(`
+    select classificacao
+          ,nome_motorista
+          ,cpf
+          ,pontuacao
+          ,periodo_inicial
+          ,periodo_final 
+          from ppo_rank_avaliacao_fleet
+    where cpf = '${cpf}' 
+    AND periodo_inicial BETWEEN '${data_ini}' AND '${data_fim}'
+    AND periodo_final BETWEEN '${data_ini}' AND '${data_fim}'
+    `);
   }
   async distancia(
     cpf: string,
@@ -133,17 +143,21 @@ export class PPORepository implements IPPORepository {
     } else {
       const infracoes = await mssqlPPO.raw(`
       SELECT 
-         SUBSTRING(motorista, 1, CHARINDEX('-', motorista) - 1) AS nome,
-         SUBSTRING(motorista, CHARINDEX('-', motorista) + 2, LEN(motorista)) AS matricula
-        ,veiculo
-        ,CONCAT(velocidadekmh,' KM') as velocidade
-        ,tipo_evento
+      SUBSTRING(motorista, 1, CHARINDEX('-', motorista + '-') - 1) AS nome,
+      SUBSTRING(motorista, CHARINDEX('-', motorista) + 2, 
+              CASE WHEN CHARINDEX('-', motorista) > 0 THEN LEN(motorista) - CHARINDEX('-', motorista) 
+                   ELSE LEN(motorista) END) AS matricula,
+      veiculo,
+      CONCAT(velocidadekmh,' KM') as velocidade,
+      tipo_evento
       FROM [dbo].[ppo_sascar_velocidade]
       WHERE velocidadekmh > 87 
       AND created_at BETWEEN '${data_ini}' AND '${data_fim}'
       AND motorista <> 'Sem Motorista'
-      AND SUBSTRING(motorista, 1, CHARINDEX('-', motorista) - 1) LIKE '%${dados_motorista[0]["nome"]}%'
-      AND SUBSTRING(motorista, CHARINDEX('-', motorista) + 2, LEN(motorista)) LIKE '%${dados_motorista[0]["matricula"]}%'
+      AND SUBSTRING(motorista, 1, CHARINDEX('-', motorista + '-') - 1) LIKE '%${dados_motorista[0]["nome"]}%'
+      AND SUBSTRING(motorista, CHARINDEX('-', motorista) + 2, 
+                  CASE WHEN CHARINDEX('-', motorista) > 0 THEN LEN(motorista) - CHARINDEX('-', motorista) 
+                       ELSE LEN(motorista) END) LIKE '%${dados_motorista[0]["matricula"]}%'
       `);
       return infracoes;
     }
