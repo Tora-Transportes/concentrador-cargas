@@ -80,7 +80,7 @@ const GruposParametros = () => {
 			faixa_valores: false,
 			multiplicar_premio: false,
 			multiplicar_premio_por_comparador: false,
-			comparador_multiplicador_id: "",
+			comparador_multiplicador_id: null,
 			ativo: true,
 		},
 		validationSchema: GrupoParametroSchema,
