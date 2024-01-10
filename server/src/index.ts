@@ -23,18 +23,18 @@ app.use(process.env.BASE_URL || "", routes);
 app.use(ErrorMiddleware);
 
 const server = https.createServer(
- {
+  {
     key: fs.readFileSync(
       path.resolve(__dirname, "..", "certificates", "tora.key")
     ),
     cert: fs.readFileSync(
       path.resolve(__dirname, "..", "certificates", "tora.crt")
     ),
-  }, 
+  },
   app
 );
 
 Socket.createServer(server);
 Socket.handleUsersConnected(socketsRoutes);
-server.listen(process.env.PORT || 3333);
+server.listen(Number(process.env.PORT) || 3333, "0.0.0.0");
 //export default server;
