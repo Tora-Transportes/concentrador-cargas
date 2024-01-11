@@ -220,7 +220,7 @@ export class PPORepository implements IPPORepository {
 
     for (const i in filter) {
       if (filter[i] !== undefined && filter[i] !== null) {
-        clausula = clausula + ` AND ${i} LIKE '%${filter[i]}%'`;
+        clausula = clausula + ` AND r.${i} LIKE '%${filter[i]}%'`;
       }
     }
 
@@ -229,9 +229,20 @@ export class PPORepository implements IPPORepository {
     ,r.cpf
     ,r.mes_avaliacao
     ,r.ano_avaliacao 
+	  ,c.file_link_signed
     FROM dbo.ppo_resultado r
     inner join dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
     inner join dbo.ppo_parametros p on p.id =  pg.parametro_id
+	  left join ASSINADOR_DIGITAL.DBO.controle c on  CONCAT(
+        SUBSTRING(c.cpf, 1, 3), 
+        '.', 
+        SUBSTRING(c.cpf, 4, 3), 
+        '.', 
+        SUBSTRING(c.cpf, 7, 3), 
+        '-', 
+        SUBSTRING(c.cpf, 10, 2)
+    ) = r.cpf and  c.mes = r.mes_avaliacao and  c.ano = r.ano_avaliacao 
+    WHERE 1=1
     ${clausula}
   `);
 

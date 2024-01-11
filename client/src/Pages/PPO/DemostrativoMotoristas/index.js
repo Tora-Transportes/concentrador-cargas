@@ -14,6 +14,7 @@ import {
 import InputMask from "react-input-mask";
 import ServicePPO from "src/services/ServicePPO";
 import { SiGooglesheets } from "react-icons/si";
+import { FaFileSignature } from "react-icons/fa";
 import "./style.css";
 
 const DemonstrativoMotoristas = () => {
@@ -71,6 +72,16 @@ const DemonstrativoMotoristas = () => {
 			console.log(process.env.REACT_APP_API_URL + "/" + url);
 			setLoading(false);
 			window.open(process.env.REACT_APP_API_URL + "/" + url, "_blank");
+		} catch (error) {
+			setLoading(false);
+		}
+	}
+
+	async function openDocSign(url) {
+		setLoading(true);
+		try {
+			setLoading(false);
+			window.open(url, "_blank");
 		} catch (error) {
 			setLoading(false);
 		}
@@ -197,6 +208,7 @@ const DemonstrativoMotoristas = () => {
 											<th>Mês</th>
 											<th>Ano</th>
 											<th>Download</th>
+											<th>Assinado</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -215,6 +227,19 @@ const DemonstrativoMotoristas = () => {
 														}}
 													/>
 												</td>
+												{i.file_link_signed != null ? (
+													<td>
+														<FaFileSignature
+															size={40}
+															className="icon-assign"
+															onClick={() => {
+																openDocSign(i.file_link_signed);
+															}}
+														/>
+													</td>
+												) : (
+													<></>
+												)}
 											</tr>
 										))}
 									</tbody>
