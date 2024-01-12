@@ -305,6 +305,10 @@ export class PPORepository implements IPPORepository {
                    when p.nome = 'AVALIAÇÃO' AND r.dado_verificado IS NULL THEN  1
                 ELSE 0
                 END ,
+	  ADICIONAL_KM = case when p.nome = 'KM' AND r.dado_verificado IS NULL THEN  1
+                   when p.nome = 'KM' AND r.dado_verificado IS NULL THEN  1
+                ELSE 0
+                END ,
          r.dado_verificado,
        CASE WHEN r.dado_verificado is null THEN 'R$ 0.00' ELSE 'R$ '+CONVERT(VARCHAR, CAST(r.premio AS MONEY), 1) END AS valor,
          apto
@@ -315,7 +319,7 @@ export class PPORepository implements IPPORepository {
             AND r.mes_avaliacao = '${mes}'
             AND r.ano_avaliacao = '${ano}'
           ) X
-            WHERE ( x.ADICIONAL = 1 or X.apto = 1 or x.ADICIONAL_AVAL = 1 )
+          WHERE ( x.ADICIONAL = 1 or X.apto = 1 or x.ADICIONAL_AVAL = 1 or x.ADICIONAL_KM=1)
     `);
 
     const dados_motorista = await mssqlPPO.raw(` 
