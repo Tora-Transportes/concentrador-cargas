@@ -104,6 +104,13 @@ function Menusuperior() {
                     Relatório de Motoristas
                   </a>
                 )}
+                {permissoes?.permissoes?.includes(
+                  "PPO_RELATORIO_DOCUMENTOS"
+                ) && (
+                  <a href="/ppo/relatorio/documentos">
+                    Relatório de Documentos Assinados
+                  </a>
+                )}
                 {permissoes?.permissoes?.includes("PPO_DEMONSTRATIVO") && (
                   <a href="/ppo/demonstrativos">Demonstrativo Motoristas</a>
                 )}
