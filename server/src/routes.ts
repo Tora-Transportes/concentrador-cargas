@@ -239,7 +239,7 @@ routes.get("/ppo/interjornadas", PPOController.interjornada);
 routes.get("/ppo/atributos", PPOController.atributos);
 routes.get("/ppo/demonstrativo", PPOController.demonstrativo);
 routes.get(
-  "/ppo/autentique/demonstrativo",
+  "/autentique/ppo/demonstrativo",
   PPOController.demonstrativoAutentique
 );
 routes.get("/ppo/relatorios/motoristas", PPOController.relatorio);
