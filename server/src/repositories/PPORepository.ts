@@ -835,4 +835,153 @@ FETCH NEXT  ${pageSize} ROWS ONLY
       results: rows,
     };
   }
+
+  async relatorioDocumentosExcel(
+    query: Record<string, any>,
+    pageSize = 5
+  ): Promise<any | undefined> {
+    let filtro = "";
+
+    if (isValid(query?.cpf)) {
+      filtro =
+        filtro +
+        ` AND cpf LIKE '%${query.cpf
+          .replace(".", "")
+          .replace(".", "")
+          .replace("-", "")}%'`;
+    }
+    if (isValid(query?.viewed)) {
+      filtro = filtro + ` AND viewed ${query.viewed}`;
+    }
+    if (isValid(query?.signed)) {
+      filtro = filtro + ` AND signed ${query.signed}`;
+    }
+    if (isValid(query?.mes)) {
+      filtro = filtro + ` AND mes LIKE '%${query.date_execel_inicio}%'`;
+    }
+    if (isValid(query?.ano)) {
+      filtro = filtro + ` AND ano LIKE '%${query.date_execel_fim}%'`;
+    }
+    if (isValid(query?.rejected)) {
+      filtro = filtro + ` AND rejected ${query.rejected}`;
+    }
+
+    const results = mssqlPPO.raw(`
+    SELECT
+    CONCAT(
+        SUBSTRING(cpf, 1, 3), 
+        '.', 
+        SUBSTRING(cpf, 4, 3), 
+        '.', 
+        SUBSTRING(cpf, 7, 3), 
+        '-', 
+        SUBSTRING(cpf, 10, 2)) as CPF
+		,link AS 'LINK ASSINATURA'
+		,file_link_original AS 'LINK ARQUIVO ORIGINAL'
+		,file_link_signed AS 'LINK ARQUIVO ASSINADO'
+		,CASE WHEN viewed is null THEN 0 ELSE 1 END AS 'VISTO'
+		,viewed  AS 'DATA VISTO'
+		,CASE WHEN signed is null THEN 0 ELSE 1 END as 'ASSINADO'
+		,signed as 'DATA ASSINADO'
+		,CASE WHEN rejected is null THEN 0 ELSE 1 END as 'REJEITADO'
+		,rejected as 'DATA REJEITADO'
+		,mes as 'MES'
+		,ano AS 'ANO'
+		,created_at AS 'CRIADO'
+		,updated_at AS 'ATUALIZADO'
+    FROM ASSINADOR_DIGITAL.DBO.controle
+    WHERE 1=1
+    ${filtro}
+    ORDER BY id ASC
+    OFFSET 0 ROWS
+    FETCH NEXT  ${pageSize} ROWS ONLY
+    `);
+
+    const rows = await results;
+    return {
+      results: rows,
+    };
+  }
+
+  async relatorioDocumentos(
+    query: Record<string, any>,
+    page = 1,
+    pageSize = 5
+  ): Promise<any | undefined> {
+    const realPage = isNaN(Number(page)) || Number(page) < 1 ? 1 : Number(page);
+
+    let filtro = "";
+
+    if (isValid(query?.cpf)) {
+      filtro =
+        filtro +
+        ` AND cpf LIKE '%${query.cpf
+          .replace(".", "")
+          .replace(".", "")
+          .replace("-", "")}%'`;
+    }
+    if (isValid(query?.viewed)) {
+      filtro = filtro + ` AND viewed ${query.viewed}`;
+    }
+    if (isValid(query?.signed)) {
+      filtro = filtro + ` AND signed ${query.signed}`;
+    }
+    if (isValid(query?.mes)) {
+      filtro = filtro + ` AND mes LIKE '%${query.mes}%'`;
+    }
+    if (isValid(query?.ano)) {
+      filtro = filtro + ` AND ano LIKE '%${query.ano}%'`;
+    }
+    if (isValid(query?.rejected)) {
+      filtro = filtro + ` AND rejected ${query.rejected}`;
+    }
+
+    const total = await mssqlPPO.raw(
+      `SELECT COUNT(0) as total FROM ASSINADOR_DIGITAL.DBO.controle
+       WHERE mes LIKE '%${query.mes}%'
+       AND ano LIKE '%${query.ano}%'
+       ${filtro}
+      `
+    );
+
+    const sql = `
+    SELECT
+    CONCAT(
+            SUBSTRING(cpf, 1, 3), 
+            '.', 
+            SUBSTRING(cpf, 4, 3), 
+            '.', 
+            SUBSTRING(cpf, 7, 3), 
+            '-', 
+            SUBSTRING(cpf, 10, 2)) as cpf
+        ,link
+        ,file_link_original
+        ,file_link_signed
+        ,CASE WHEN viewed is null THEN 0 ELSE 1 END as viewed
+        ,viewed as viewed_data
+        ,CASE WHEN signed is null THEN 0 ELSE 1 END as signed
+        ,signed as signed_data
+        ,CASE WHEN rejected is null THEN 0 ELSE 1 END as rejected
+        ,rejected as rejected_data
+        ,mes
+        ,ano
+        ,created_at 
+        ,updated_at
+    FROM ASSINADOR_DIGITAL.DBO.controle
+    WHERE 1=1
+    ${filtro}
+    ORDER BY id ASC
+    OFFSET ${(realPage - 1) * pageSize} ROWS
+    FETCH NEXT  ${pageSize} ROWS ONLY
+    `;
+    const results = await mssqlPPO.raw(sql);
+    const totalRegisters = Number(total[0]["total"]) || 0;
+
+    return {
+      page: realPage,
+      total_pages: Math.ceil(totalRegisters / pageSize),
+      total_registers: totalRegisters,
+      results: results,
+    };
+  }
 }

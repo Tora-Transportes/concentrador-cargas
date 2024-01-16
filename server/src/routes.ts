@@ -244,6 +244,11 @@ routes.get(
 );
 routes.get("/ppo/relatorios/motoristas", PPOController.relatorio);
 routes.get("/ppo/relatorios/excel", PPOController.relatorioExcel);
+routes.get("/ppo/relatorios/documentos", PPOController.relatorioDocumentos);
+routes.get(
+  "/ppo/relatorios/documentos/excel",
+  PPOController.relatorioDocumentosExcel
+);
 routes.get("/ppo/motoristas/demonstrativos", PPOController.demonstrativos);
 routes.get("/ppo/protheus", PPOController.protheus);
 routes.get("/ppo/protheus/txt", PPOController.protheusTxt);

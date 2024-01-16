@@ -36,6 +36,8 @@ interface IPPOController {
   demonstrativoAutentique(req: Request, res: Response): Promise<any>;
   relatorio(req: Request, res: Response): Promise<Response>;
   relatorioExcel(req: Request, res: Response): Promise<Response>;
+  relatorioDocumentos(req: Request, res: Response): Promise<Response>;
+  relatorioDocumentosExcel(req: Request, res: Response): Promise<Response>;
   demonstrativos(req: Request, res: Response): Promise<Response>;
 }
 
@@ -89,9 +91,64 @@ class PPOController implements IPPOController {
     return res;
   }
 
+  async relatorioDocumentosExcel(
+    req: Request,
+    res: Response
+  ): Promise<Response> {
+    const ppoRepository = new PPORepository();
+    const filename = `static/RELATORIO-DOCUMENTOS-PPO_${new Date().getTime()}.xlsx`;
+    const searchResult = await ppoRepository.relatorioDocumentosExcel(
+      { ...req.query },
+      1200000
+    );
+
+    if (searchResult.results.length == 0) {
+      throw new AppError(
+        "Não foram encontrados dados com essas informações no filtro de data.",
+        202
+      );
+    }
+
+    const workbook = xlsx.utils.book_new();
+    const sheet = xlsx.utils.json_to_sheet(searchResult.results);
+
+    xlsx.utils.book_append_sheet(workbook, sheet);
+
+    await xlsx.writeFile(workbook, filename, {
+      bookType: "xlsx",
+      type: "binary",
+    });
+
+    const stream = fs.createReadStream(filename);
+
+    stream.once("end", () => {
+      // File reading is complete, now delete the file
+      if (fs.existsSync(filename)) {
+        fs.unlink(filename, (err) => {
+          if (err) {
+            console.error(err);
+          }
+        });
+      }
+    });
+
+    stream.pipe(res);
+
+    return res;
+  }
   async relatorio(req: Request, res: Response): Promise<Response> {
     const ppoRepository = new PPORepository();
     const result = await ppoRepository.relatorio_motoristas(
+      { ...req.query },
+      Number(req.query.page),
+      Number(req.query.limit) || 5
+    );
+    return res.json({ data: result });
+  }
+
+  async relatorioDocumentos(req: Request, res: Response): Promise<Response> {
+    const ppoRepository = new PPORepository();
+    const result = await ppoRepository.relatorioDocumentos(
       { ...req.query },
       Number(req.query.page),
       Number(req.query.limit) || 5

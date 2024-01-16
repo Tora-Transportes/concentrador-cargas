@@ -94,7 +94,56 @@ class ServicePPO {
 		});
 	}
 
+	async relatorioDocumentos({
+		page,
+		order_column,
+		order_direction,
+		cpf,
+		viewed,
+		signed,
+		rejected,
+		mes = 11,
+		ano = 2023,
+	}) {
+		return api.get("/ppo/relatorios/documentos", {
+			params: {
+				page,
+				order_column,
+				order_direction,
+				cpf,
+				viewed,
+				signed,
+				rejected,
+				mes,
+				ano,
+			},
+		});
+	}
+
 	async exportToXlsx({
+		nome_motorista,
+		cpf,
+		viewed,
+		signed,
+		rejected,
+		date_execel_inicio,
+		date_execel_fim,
+	}) {
+		return await api.get("/ppo/relatorios/excel", {
+			responseType: "arraybuffer",
+			params: {
+				nome_motorista,
+				cpf,
+				viewed,
+				signed,
+				rejected,
+				date_execel_inicio,
+				date_execel_fim,
+			},
+		});
+	}
+
+	async exportRelatorioDocumetosToXlsx({
 		nome_motorista,
 		cpf,
 		matricula,
@@ -104,7 +153,7 @@ class ServicePPO {
 		date_execel_inicio,
 		date_execel_fim,
 	}) {
-		return await api.get("/ppo/relatorios/excel", {
+		return await api.get("/ppo/relatorios/documentos/excel", {
 			responseType: "arraybuffer",
 			params: {
 				nome_motorista,
