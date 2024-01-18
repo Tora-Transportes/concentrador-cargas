@@ -50,6 +50,7 @@ import RelatorioMotoristas from "./Pages/PPO/RelatorioMotoristas";
 import DemonstrativoMotoristas from "./Pages/PPO/DemostrativoMotoristas";
 import ExportaProtheus from "./Pages/PPO/ExportaProtheus";
 import RelatorioDocumentos from "./Pages/PPO/RelatorioDocumentos";
+import Calculador from "./Pages/PPO/Calculador";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -85,6 +86,7 @@ export default function AllRoutes() {
 					exact
 					component={RelatorioDocumentos}
 				/>
+				<Route path="/ppo/calculador" exact component={Calculador} />
 				<Route
 					path="/ppo/demonstrativos"
 					exact

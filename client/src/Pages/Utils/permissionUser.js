@@ -25,4 +25,5 @@ export const allTipoPermissoes = [
 	{ name: "PPO_DEMONSTRATIVO" },
 	{ name: "PPO_EXPORTA_PROTHEUS" },
 	{ name: "PPO_RELATORIO_DOCUMENTOS" },
+	{ name: "PPO_CALCULADOR" },
 ];

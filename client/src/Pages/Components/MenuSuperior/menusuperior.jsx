@@ -117,6 +117,9 @@ function Menusuperior() {
                 {permissoes?.permissoes?.includes("PPO_EXPORTA_PROTHEUS") && (
                   <a href="/ppo/exportar/protheus">Exportação Protheus</a>
                 )}
+                {permissoes?.permissoes?.includes("PPO_CALCULADOR") && (
+                  <a href="/ppo/calculador">Calculador PPO</a>
+                )}
               </div>
             </div>
           </div>
