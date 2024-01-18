@@ -300,7 +300,7 @@ class PPOController implements IPPOController {
 
     const serviceAutentique = new ServiceAutentique();
     const response = await serviceAutentique.createDocument(body);
-    return res.status(response.status).send(response.data);
+    return res.status(response.status).send(response.data.data);
   }
 }
 
