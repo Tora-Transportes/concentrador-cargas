@@ -29,6 +29,7 @@ import PPOParametrosController from "./controllers/PPOParametrosController";
 import PPOGruposController from "./controllers/PPOGruposController";
 import PPOParametrosGrupoController from "./controllers/PPOParametrosGrupoController";
 import WebhookAutentiqueController from "./controllers/WebhookAutentiqueController";
+import PPOCalculadorController from "./controllers/PPOCalculadorController";
 
 const routes = Router();
 
@@ -262,6 +263,13 @@ routes.get("/ppo/grupos", PPOGruposController.index);
 routes.post("/ppo/grupos", PPOGruposController.create);
 routes.patch("/ppo/grupos/:id", PPOGruposController.update);
 routes.delete("/ppo/grupos/:id", PPOGruposController.delete);
+
+routes.get("/ppo/calculador/relatorio", PPOCalculadorController.relatorio);
+routes.get("/ppo/calculador/info", PPOCalculadorController.dash);
+routes.get("/ppo/calculador", PPOCalculadorController.index);
+routes.post("/ppo/calculador", PPOCalculadorController.create);
+routes.get("/ppo/calculador/execucao", PPOCalculadorController.emExecucao);
+routes.get("/ppo/calculador/blocos", PPOCalculadorController.blocos);
 
 routes.get("/ppo/grupos/parametros", PPOParametrosGrupoController.index);
 routes.post("/ppo/grupos/parametros", PPOParametrosGrupoController.create);
