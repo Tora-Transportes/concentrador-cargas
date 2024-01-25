@@ -8,14 +8,21 @@ interface IWebhookGitHubController {
 class WebhookGitHubController implements IWebhookGitHubController {
   async webhook(req: Request, res: Response): Promise<void> {
     axios
-      .post(String(process.env.URL_API_ASSINADOR), req)
+      .post(String(process.env.URL_JENKINS), req.body, {
+        headers: {
+          "x-github-event": String(req.headers["x-github-event"]),
+        },
+      })
       .then((response) => {
-        console.log("Redirecionado hook com sucesso!", response);
-        return { msg: "Redirecionado hook com sucesso ", erro: false };
+        console.log("Redirecionado hook com sucesso!");
+        return res.json({
+          msg: "Redirecionado hook com sucesso ",
+          erro: false,
+        });
       })
       .catch((error) => {
         console.error("Erro ao redirecionar hook :", error);
-        return { msg: "Erro ao redirecionar hook :", erro: false };
+        return res.json({ msg: "Erro ao redirecionar hook :", erro: false });
       });
   }
 }
