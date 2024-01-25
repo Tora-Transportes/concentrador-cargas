@@ -7,6 +7,7 @@ interface IWebhookAutentiqueController {
 
 class WebhookAutentiqueController implements IWebhookAutentiqueController {
   async assinado(req: Request, res: Response): Promise<Response> {
+    console.log("Webhook Autentique...");
     const webhookRepository = new WebhookAutentiqueRepository();
     const data = {
       id_file: req.body["documento[uuid]"] ?? "",
@@ -21,8 +22,10 @@ class WebhookAutentiqueController implements IWebhookAutentiqueController {
     };
     const result = await webhookRepository.update(data);
     if (result != 0) {
+      console.log("Webhook Autentique doc atualizado...");
       return res.json(data);
     } else {
+      console.log("Webhook Autentique doc não atualizado...");
       return res.json({ erro: true, message: "documento não atualizado" });
     }
   }
