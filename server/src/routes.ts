@@ -31,6 +31,7 @@ import PPOGruposController from "./controllers/PPOGruposController";
 import PPOParametrosGrupoController from "./controllers/PPOParametrosGrupoController";
 import WebhookAutentiqueController from "./controllers/WebhookAutentiqueController";
 import PPOCalculadorController from "./controllers/PPOCalculadorController";
+import WebhookGitHubController from "./controllers/WebhookGitHubController";
 
 const routes = Router();
 const upload = multer({ dest: "uploads/" });
@@ -56,6 +57,7 @@ routes.delete(
 );
 
 routes.post("/webhook/autentique", WebhookAutentiqueController.assinado);
+routes.post("/webhook/jenkins", WebhookGitHubController.webhook);
 routes.get("/credenciais", CredenciaisController.get);
 routes.post("/credenciais", CredenciaisController.post);
 routes.put("/credenciais/:portal/:user", CredenciaisController.put);
