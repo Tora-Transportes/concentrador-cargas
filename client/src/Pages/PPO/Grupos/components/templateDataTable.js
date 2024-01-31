@@ -29,35 +29,73 @@ export const renderHeader = (
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
-						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-							<Form.Label>Grupo</Form.Label>
-							<Form.Control
-								name="nome"
-								onChange={formik.handleChange}
-								value={formik.values.nome}
-								type="text"
-								autoFocus
-							/>
+						<Form.Group className="mb-3" controlId="validationFormikNome">
+							<Form.Label>Nome</Form.Label>
+							<InputGroup hasValidation>
+								<Form.Control
+									type="text"
+									placeholder="Nome"
+									aria-describedby="inputGroupPrepend"
+									name="nome"
+									value={formik.values.nome}
+									onChange={formik.handleChange}
+									isInvalid={!!formik.errors.nome}
+								/>
+								<Form.Control.Feedback type="invalid">
+									{formik.errors.nome}
+								</Form.Control.Feedback>
+							</InputGroup>
 						</Form.Group>
-						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+						<Form.Group className="mb-3" controlId="validationFormikEmpresa">
 							<Form.Label>Empresa</Form.Label>
-							<Form.Control
-								name="empresa"
-								onChange={formik.handleChange}
-								value={formik.values.empresa}
-								type="text"
-								autoFocus
-							/>
+							<InputGroup hasValidation>
+								<Form.Control
+									type="text"
+									placeholder="Empresa"
+									aria-describedby="inputGroupPrepend"
+									name="empresa"
+									value={formik.values.empresa}
+									onChange={formik.handleChange}
+									isInvalid={!!formik.errors.empresa}
+								/>
+								<Form.Control.Feedback type="invalid">
+									{formik.errors.empresa}
+								</Form.Control.Feedback>
+							</InputGroup>
 						</Form.Group>
-						<Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
+						<Form.Group className="mb-3" controlId="validationFormikFilial">
 							<Form.Label>Filial</Form.Label>
-							<Form.Control
-								name="filial"
-								onChange={formik.handleChange}
-								value={formik.values.filial}
-								type="text"
-								autoFocus
-							/>
+							<InputGroup hasValidation>
+								<Form.Control
+									type="text"
+									placeholder="Filial"
+									aria-describedby="inputGroupPrepend"
+									name="filial"
+									value={formik.values.filial}
+									onChange={formik.handleChange}
+									isInvalid={!!formik.errors.filial}
+								/>
+								<Form.Control.Feedback type="invalid">
+									{formik.errors.filial}
+								</Form.Control.Feedback>
+							</InputGroup>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="validationFormikCodFilial">
+							<Form.Label>Cod. Filial</Form.Label>
+							<InputGroup hasValidation>
+								<Form.Control
+									type="text"
+									placeholder="Cod. Filial"
+									aria-describedby="inputGroupPrepend"
+									name="cod_filial"
+									value={formik.values.cod_filial}
+									onChange={formik.handleChange}
+									isInvalid={!!formik.errors.cod_filial}
+								/>
+								<Form.Control.Feedback type="invalid">
+									{formik.errors.cod_filial}
+								</Form.Control.Feedback>
+							</InputGroup>
 						</Form.Group>
 					</Form>
 				</Modal.Body>

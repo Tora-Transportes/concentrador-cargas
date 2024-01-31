@@ -28,6 +28,9 @@ import PPOController from "./controllers/PPOController";
 import PPOParametrosController from "./controllers/PPOParametrosController";
 import PPOGruposController from "./controllers/PPOGruposController";
 import PPOParametrosGrupoController from "./controllers/PPOParametrosGrupoController";
+import WebhookAutentiqueController from "./controllers/WebhookAutentiqueController";
+import PPOCalculadorController from "./controllers/PPOCalculadorController";
+import WebhookGitHubController from "./controllers/WebhookGitHubController";
 
 const routes = Router();
 
@@ -51,6 +54,8 @@ routes.delete(
   AvisosController.delete
 );
 
+routes.post("/webhook/autentique", WebhookAutentiqueController.assinado);
+routes.post("/webhook/jenkins", WebhookGitHubController.webhook);
 routes.get("/credenciais", CredenciaisController.get);
 routes.post("/credenciais", CredenciaisController.post);
 routes.put("/credenciais/:portal/:user", CredenciaisController.put);
@@ -235,6 +240,21 @@ routes.get("/ppo/distancia", PPOController.distancia);
 routes.get("/ppo/infracoes", PPOController.infracoes);
 routes.get("/ppo/interjornadas", PPOController.interjornada);
 routes.get("/ppo/atributos", PPOController.atributos);
+routes.get("/ppo/demonstrativo", PPOController.demonstrativo);
+routes.get(
+  "/autentique/ppo/demonstrativo",
+  PPOController.demonstrativoAutentique
+);
+routes.get("/ppo/relatorios/motoristas", PPOController.relatorio);
+routes.get("/ppo/relatorios/excel", PPOController.relatorioExcel);
+routes.get("/ppo/relatorios/documentos", PPOController.relatorioDocumentos);
+routes.get(
+  "/ppo/relatorios/documentos/excel",
+  PPOController.relatorioDocumentosExcel
+);
+routes.get("/ppo/motoristas/demonstrativos", PPOController.demonstrativos);
+routes.get("/ppo/protheus", PPOController.protheus);
+routes.get("/ppo/protheus/txt", PPOController.protheusTxt);
 
 routes.get("/ppo/parametros", PPOParametrosController.index);
 routes.post("/ppo/parametros", PPOParametrosController.create);
@@ -245,6 +265,13 @@ routes.get("/ppo/grupos", PPOGruposController.index);
 routes.post("/ppo/grupos", PPOGruposController.create);
 routes.patch("/ppo/grupos/:id", PPOGruposController.update);
 routes.delete("/ppo/grupos/:id", PPOGruposController.delete);
+
+routes.get("/ppo/calculador/relatorio", PPOCalculadorController.relatorio);
+routes.get("/ppo/calculador/info", PPOCalculadorController.dash);
+routes.get("/ppo/calculador", PPOCalculadorController.index);
+routes.post("/ppo/calculador", PPOCalculadorController.create);
+routes.get("/ppo/calculador/execucao", PPOCalculadorController.emExecucao);
+routes.get("/ppo/calculador/blocos", PPOCalculadorController.blocos);
 
 routes.get("/ppo/grupos/parametros", PPOParametrosGrupoController.index);
 routes.post("/ppo/grupos/parametros", PPOParametrosGrupoController.create);

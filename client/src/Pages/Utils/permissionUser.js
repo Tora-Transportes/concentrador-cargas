@@ -15,4 +15,13 @@ export const allTipoPermissoes = [
 	{ name: "MANUTENCAO_TRAJETO_FINALIZADO" },
 	{ name: "REGISTRAR_JUSTIFICATIVA" },
 	{ name: "VINCULAR_PLACA" },
+	{ name: "PPO_MENU" },
+	{ name: "PPO_ESTATISTICA" },
+	{ name: "PPO_CAD_GRUPO" },
+	{ name: "PPO_CAD_PARAMETROS" },
+	{ name: "PPO_RELATORIO" },
+	{ name: "PPO_DEMONSTRATIVO" },
+	{ name: "PPO_EXPORTA_PROTHEUS" },
+	{ name: "PPO_RELATORIO_DOCUMENTOS" },
+	{ name: "PPO_CALCULADOR" },
 ];

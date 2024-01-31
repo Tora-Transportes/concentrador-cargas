@@ -7,6 +7,7 @@ class ServicePPOGruposParametros {
 	async create({
 		grupo_id,
 		parametro_id,
+		de_para_rotulo_id,
 		operador_logico_primario,
 		valor_primario,
 		operador_logico_secundaria,
@@ -15,11 +16,15 @@ class ServicePPOGruposParametros {
 		tabela,
 		campo,
 		faixa_valores,
+		multiplicar_premio,
+		multiplicar_premio_por_comparador,
+		comparador_multiplicador_id,
 		ativo,
 	}) {
 		return api.post("/ppo/grupos/parametros", {
 			grupo_id,
 			parametro_id,
+			de_para_rotulo_id,
 			operador_logico_primario,
 			valor_primario,
 			operador_logico_secundaria,
@@ -28,6 +33,9 @@ class ServicePPOGruposParametros {
 			tabela,
 			campo,
 			faixa_valores,
+			multiplicar_premio,
+			multiplicar_premio_por_comparador,
+			comparador_multiplicador_id,
 			ativo,
 		});
 	}

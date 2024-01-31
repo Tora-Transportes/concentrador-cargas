@@ -1,27 +1,78 @@
 import React from "react";
 import { BsPencilSquare } from "react-icons/bs";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { Button, Form, InputGroup, FormControl } from "react-bootstrap";
+import { Button, Form, InputGroup, FormControl, Modal } from "react-bootstrap";
 import { MdAddCircleOutline } from "react-icons/md";
 
-export const renderHeader = (formik, globalFilter, setGlobalFilter) => {
+export const renderHeader = (
+	formik,
+	globalFilter,
+	setGlobalFilter,
+	open,
+	handleOpen
+) => {
 	return (
 		<div className="header-table-produto">
-			<div className="header-input-save">
-				<Form onSubmit={formik.handleSubmit}>
-					<InputGroup>
-						<button type="submit" className="button-header-save">
-							<MdAddCircleOutline className="header-table-icon-button" />
-						</button>
-						<FormControl
-							placeholder="Adicionar parâmetro"
-							name="nome"
-							onChange={formik.handleChange}
-							value={formik.values.nome.toUpperCase()}
-						/>
-					</InputGroup>
-				</Form>
-			</div>
+			<Button
+				onClick={handleOpen}
+				style={{ backgroundColor: "#00652e", borderColor: "#00652e" }}
+			>
+				<MdAddCircleOutline
+					style={{ marginBottom: "3px", marginRight: "3px" }}
+				/>
+				Adicionar
+			</Button>
+			<Modal show={open} onHide={handleOpen}>
+				<Modal.Header closeButton>
+					<Modal.Title>Adicionar Parâmetro</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Form>
+						<Form.Group className="mb-3" controlId="validationFormikNome">
+							<Form.Label>Nome</Form.Label>
+							<InputGroup hasValidation>
+								<Form.Control
+									type="text"
+									placeholder="Nome"
+									aria-describedby="inputGroupPrepend"
+									name="nome"
+									value={formik.values.nome}
+									onChange={formik.handleChange}
+									isInvalid={!!formik.errors.nome}
+								/>
+								<Form.Control.Feedback type="invalid">
+									{formik.errors.nome}
+								</Form.Control.Feedback>
+							</InputGroup>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="validationFormikCodVerba">
+							<Form.Label>Cod. Verba</Form.Label>
+							<InputGroup hasValidation>
+								<Form.Control
+									type="text"
+									placeholder="Cod. Verba"
+									aria-describedby="inputGroupPrepend"
+									name="cod_verba"
+									value={formik.values.cod_verba}
+									onChange={formik.handleChange}
+									isInvalid={!!formik.errors.cod_verba}
+								/>
+								<Form.Control.Feedback type="invalid">
+									{formik.errors.cod_verba}
+								</Form.Control.Feedback>
+							</InputGroup>
+						</Form.Group>
+					</Form>
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleOpen}>
+						Fechar
+					</Button>
+					<Button variant="primary" onClick={formik.handleSubmit}>
+						Salvar
+					</Button>
+				</Modal.Footer>
+			</Modal>
 			<div className="header-table-filter-produto">
 				<InputGroup>
 					<FormControl
@@ -36,19 +87,14 @@ export const renderHeader = (formik, globalFilter, setGlobalFilter) => {
 	);
 };
 
-export const opcoesTemplate = (
-	rowData,
-	swal,
-	handleEditProduto,
-	handleDelete
-) => {
+export const opcoesTemplate = (rowData, handleEditProduto, handleDelete) => {
 	return (
 		<div className="opcoes-table">
 			<Button
 				variant="outline-warning"
 				onClick={(e) => {
 					e.preventDefault();
-					handleEditProduto(rowData.nome, rowData.id);
+					handleEditProduto(rowData, rowData.id);
 				}}
 			>
 				<BsPencilSquare className="icon-editar" />

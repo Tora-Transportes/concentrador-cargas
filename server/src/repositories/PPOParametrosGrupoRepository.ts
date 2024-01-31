@@ -20,15 +20,17 @@ export class PPOParametrosGPRepository
     return await mssqlPPO("dbo.ppo_parametros_grupo").first().where("id", id);
   }
 
-  async create(produto: IParametroGrupo, user: string) {
-    produto.cod_usu_create = TokenAd.getClaims(user).name;
-    return mssqlPPO("dbo.ppo_parametros_grupo").insert(produto);
+  async create(parametro_grupo: IParametroGrupo, user: string) {
+    parametro_grupo.cod_usu_create = TokenAd.getClaims(user).name;
+    return mssqlPPO("dbo.ppo_parametros_grupo").insert(parametro_grupo);
   }
 
-  async update(id: number, produto: IParametroGrupo, user: string) {
-    produto.cod_usu_update = TokenAd.getClaims(user).name;
-    produto.updated_at = new Date(dateAtualMoment());
-    return mssqlPPO("dbo.ppo_parametros_grupo").update(produto).where("id", id);
+  async update(id: number, parametro_grupo: IParametroGrupo, user: string) {
+    parametro_grupo.cod_usu_update = TokenAd.getClaims(user).name;
+    parametro_grupo.updated_at = new Date(dateAtualMoment());
+    return mssqlPPO("dbo.ppo_parametros_grupo")
+      .update(parametro_grupo)
+      .where("id", id);
   }
 
   async delete(id: number): Promise<void> {

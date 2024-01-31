@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BsCheckLg, BsPencilSquare } from "react-icons/bs";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { Button, Form, InputGroup, FormControl, Modal } from "react-bootstrap";
@@ -6,16 +6,13 @@ import { MdAddCircleOutline } from "react-icons/md";
 
 export const renderHeader = (
 	formik,
+	open,
+	handleOpen,
 	globalFilter,
 	setGlobalFilter,
 	atributos,
 	parametros
 ) => {
-	const [open, setOpen] = useState(false);
-	function handleOpen() {
-		setOpen(!open);
-	}
-
 	return (
 		<div className="header-table-produto">
 			<Button
@@ -40,14 +37,19 @@ export const renderHeader = (
 								name="parametro_id"
 								onChange={formik.handleChange}
 								value={formik.values.parametro_id}
+								isInvalid={!!formik.errors.parametro_id}
+								placeholder="Selecione um parâmetro"
 							>
-								<option>Selecione um parâmetro</option>
+								<option></option>
 								{parametros.map((objeto, index) => (
 									<option key={index} value={objeto.id}>
 										{objeto.nome}
 									</option>
 								))}
 							</Form.Select>
+							<Form.Control.Feedback type="invalid">
+								{formik.errors.parametro_id}
+							</Form.Control.Feedback>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 							<Form.Label>Operador Lógico:</Form.Label>
@@ -56,8 +58,10 @@ export const renderHeader = (
 								name="operador_logico_primario"
 								onChange={formik.handleChange}
 								value={formik.values.operador_logico_primario}
+								isInvalid={!!formik.errors.operador_logico_primario}
+								placeholder="Selecione operador lógico primário"
 							>
-								<option>Selecione operador lógico primário</option>
+								<option></option>
 								<option value=">">Maior que</option>
 								<option value="<">Menor que</option>
 								<option value=">=">Maior ou igual</option>
@@ -65,46 +69,109 @@ export const renderHeader = (
 								<option value="=">Igual</option>
 								<option value="*">Multiplicar</option>
 							</Form.Select>
+							<Form.Control.Feedback type="invalid">
+								{formik.errors.operador_logico_primario}
+							</Form.Control.Feedback>
 						</Form.Group>
-						<Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+						<Form.Group className="mb-3" controlId="validationFormikNomeEdit">
 							<Form.Label>Valor Primário:</Form.Label>
-							<Form.Control
-								name="valor_primario"
-								onChange={formik.handleChange}
-								value={formik.values.valor_primario}
-								type="text"
-								placeholder="10.000"
-								autoFocus
-							/>
+							<InputGroup hasValidation>
+								<Form.Control
+									type="text"
+									placeholder="10.000"
+									aria-describedby="inputGroupPrepend"
+									name="valor_primario"
+									value={formik.values.valor_primario}
+									onChange={formik.handleChange}
+									isInvalid={!!formik.errors.valor_primario}
+								/>
+								<Form.Control.Feedback type="invalid">
+									{formik.errors.valor_primario}
+								</Form.Control.Feedback>
+							</InputGroup>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
 							<Form.Label>Comparar com:</Form.Label>
 							<Form.Select
 								aria-label="Default select example"
 								name="tabela"
+								placeholder="Selecione um comparador"
 								onChange={formik.handleChange}
 								value={formik.values.tabela}
+								isInvalid={!!formik.errors.tabela}
 							>
-								<option>Selecione um comparador</option>
+								<option></option>
 								{atributos.map((objeto, index) => (
 									<option
 										key={index}
-										value={`${objeto.tabela};${objeto.coluna}`}
+										value={`${objeto.id_rotulo};${objeto.tabela};${objeto.coluna}`}
 									>
 										{objeto.rotulo}
 									</option>
 								))}
 							</Form.Select>
+							<Form.Control.Feedback type="invalid">
+								{formik.errors.tabela}
+							</Form.Control.Feedback>
 						</Form.Group>
 						<Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
-							<Form.Check // prettier-ignore
+							<Form.Check
 								type="switch"
 								name="faixa_valores"
 								label="Faixa de Valores"
 								onChange={formik.handleChange}
+								checked={formik.values.faixa_valores}
 								value={formik.values.faixa_valores}
 							/>
 						</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
+							<Form.Check
+								type="switch"
+								name="multiplicar_premio"
+								label="Multiplicar Prêmio"
+								onChange={formik.handleChange}
+								checked={formik.values.multiplicar_premio}
+								value={formik.values.multiplicar_premio}
+							/>
+						</Form.Group>
+						<Form.Group className="mb-3" controlId="exampleForm.ControlInput90">
+							<Form.Check
+								type="switch"
+								name="multiplicar_premio_por_comparador"
+								label="Multiplicar Prêmio usando comparador"
+								onChange={formik.handleChange}
+								checked={formik.values.multiplicar_premio_por_comparador}
+								value={formik.values.multiplicar_premio_por_comparador}
+							/>
+						</Form.Group>
+						{formik.values.multiplicar_premio_por_comparador ? (
+							<Form.Group
+								className="mb-3"
+								controlId="exampleForm.ControlInput3"
+							>
+								<Form.Label>Multiplicar Por:</Form.Label>
+								<Form.Select
+									aria-label="Default select example"
+									name="comparador_multiplicador_id"
+									placeholder="Selecione um comparador"
+									onChange={formik.handleChange}
+									value={formik.values.comparador_multiplicador_id}
+									isInvalid={!!formik.errors.comparador_multiplicador_id}
+								>
+									<option></option>
+									{atributos.map((objeto, index) => (
+										<option key={index} value={objeto.id_rotulo}>
+											{objeto.rotulo}
+										</option>
+									))}
+								</Form.Select>
+								<Form.Control.Feedback type="invalid">
+									{formik.errors.comparador_multiplicador_id}
+								</Form.Control.Feedback>
+							</Form.Group>
+						) : (
+							<></>
+						)}
 						{formik.values.faixa_valores ? (
 							<>
 								<Form.Group
@@ -118,7 +185,7 @@ export const renderHeader = (
 										onChange={formik.handleChange}
 										value={formik.values.operador_logico_secundaria}
 									>
-										<option>Selecione operador lógico secundário</option>
+										<option></option>
 										<option value=">">Maior que</option>
 										<option value="<">Menor que</option>
 										<option value=">=">Maior ou igual</option>
@@ -145,16 +212,22 @@ export const renderHeader = (
 						) : (
 							<></>
 						)}
-						<Form.Group className="mb-3" controlId="exampleForm.ControlInput7">
+						<Form.Group className="mb-3" controlId="validationFormikPremio">
 							<Form.Label>Prêmio:</Form.Label>
-							<Form.Control
-								name="premio"
-								onChange={formik.handleChange}
-								value={formik.values.premio}
-								type="text"
-								placeholder="10.000"
-								autoFocus
-							/>
+							<InputGroup hasValidation>
+								<Form.Control
+									type="text"
+									placeholder="10.000"
+									aria-describedby="inputGroupPrepend"
+									name="premio"
+									value={formik.values.premio}
+									onChange={formik.handleChange}
+									isInvalid={!!formik.errors.premio}
+								/>
+								<Form.Control.Feedback type="invalid">
+									{formik.errors.premio}
+								</Form.Control.Feedback>
+							</InputGroup>
 						</Form.Group>
 					</Form>
 				</Modal.Body>
@@ -254,8 +327,26 @@ export const faixaBodyTemplate = (rowData) => {
 	return <span>{label}</span>;
 };
 
+export const multiplicarBodyTemplate = (rowData) => {
+	const label = rowData.multiplicar_premio !== false ? "Sim" : "Não";
+	return <span>{label}</span>;
+};
+
 export const atributoBodyTemplate = (rowData) => {
 	return <span>{`${rowData.tabela}.${rowData.campo}`}</span>;
+};
+
+export const premioBodyTemplate = (rowData) => {
+	let premio = rowData.premio.toString().split(".");
+	if (premio.length > 1) {
+		if (premio[1].length == 1) {
+			return <span>{`${rowData.premio}0`}</span>;
+		} else {
+			return <span>{`${rowData.premio}`}</span>;
+		}
+	} else {
+		return <span>{`${rowData.premio}`}</span>;
+	}
 };
 
 export const criadoBodyTemplate = (rowData) => {
