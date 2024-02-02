@@ -5,4 +5,5 @@ export default interface IGrupo {
   cod_usu_create: string;
   updated_at: Date;
   cod_usu_update: string;
+  pdf_data: Buffer;
 }

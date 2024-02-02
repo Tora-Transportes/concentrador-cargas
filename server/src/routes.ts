@@ -262,8 +262,13 @@ routes.patch("/ppo/parametros/:id", PPOParametrosController.update);
 routes.delete("/ppo/parametros/:id", PPOParametrosController.delete);
 
 routes.get("/ppo/grupos", PPOGruposController.index);
-routes.post("/ppo/grupos", PPOGruposController.create);
-routes.patch("/ppo/grupos/:id", PPOGruposController.update);
+routes.get("/ppo/grupos/termos", PPOGruposController.termos);
+routes.post("/ppo/grupos", multer().single("file"), PPOGruposController.create);
+routes.patch(
+  "/ppo/grupos/:id",
+  multer().single("file"),
+  PPOGruposController.update
+);
 routes.delete("/ppo/grupos/:id", PPOGruposController.delete);
 
 routes.get("/ppo/calculador/relatorio", PPOCalculadorController.relatorio);

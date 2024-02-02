@@ -49,12 +49,16 @@ const DemonstrativoMotoristas = () => {
 			var dataAtual = new Date();
 			dataAtual.setMonth(dataAtual.getMonth() - 1);
 			setLoading(true);
-			const data = await ServicePPO.demonstrativos({
-				mes_avaliacao: dataAtual.getMonth() + 1,
-				ano_avaliacao: dataAtual.getFullYear(),
-			});
-			setDemonstrativos(data.data.data);
-			setLoading(false);
+			try {
+				const data = await ServicePPO.demonstrativos({
+					mes_avaliacao: dataAtual.getMonth() + 1,
+					ano_avaliacao: dataAtual.getFullYear(),
+				});
+				setDemonstrativos(data.data.data);
+				setLoading(false);
+			} catch (error) {
+				setLoading(false);
+			}
 		}
 
 		dados();

@@ -18,6 +18,7 @@ import {
 	usuarioBodyTemplate,
 	renderHeader,
 	criadoBodyTemplate,
+	termoBodyTemplate,
 } from "./components/templateDataTable";
 import swal from "sweetalert";
 import ServicePPOGrupos from "src/services/ServicePPOGrupos";
@@ -40,6 +41,7 @@ const Grupos = () => {
 	const [open, setOpen] = useState(false);
 	const [openCreate, setOpenCreate] = useState(false);
 	const [idEdit, setIdEdit] = useState(null);
+	const inputFile = useRef(null);
 	function handleOpen() {
 		setOpen(!open);
 	}
@@ -61,18 +63,25 @@ const Grupos = () => {
 			empresa: "",
 			filial: "",
 			cod_filial: "",
-			cod_verba: "",
 		},
 		validationSchema: GrupoSchema,
 		onSubmit: async (values) => {
-			console.log(values);
 			setLoading(true);
 			try {
-				await ServicePPOGrupos.create(values);
-				await loadParametros();
-				handleOpenCreate();
-				swal("Sucesso!", "O grupo foi cadastrado", "success");
-				formik.resetForm();
+				if (inputFile.current) {
+					console.log(inputFile.current);
+					const files = inputFile.current.files;
+					if (files.length === 0) {
+						swal("Ops!", "Nenhum arquivo foi selecionado.", "error");
+					} else {
+						await ServicePPOGrupos.create(files[0], values);
+						await loadParametros();
+						handleOpenCreate();
+						swal("Sucesso!", "O grupo foi cadastrado", "success");
+						formik.resetForm();
+						inputFile.current.value = "";
+					}
+				}
 			} catch (error) {
 				console.log(error);
 			}
@@ -110,10 +119,21 @@ const Grupos = () => {
 
 	async function submitEdit() {
 		try {
-			await ServicePPOGrupos.update(idEdit, formik.values);
-			swal("Sucesso", "Grupo atualizado!", "success");
-			handleOpen();
-			await loadParametros();
+			if (inputFile.current) {
+				console.log(inputFile.current);
+				const files = inputFile.current.files;
+				if (files.length === 0) {
+					await ServicePPOGrupos.update(idEdit, false, null, formik.values);
+					swal("Sucesso", "Grupo atualizado!", "success");
+					handleOpen();
+					await loadParametros();
+				} else {
+					await ServicePPOGrupos.update(idEdit, true, files[0], formik.values);
+					swal("Sucesso", "Grupo atualizado!", "success");
+					handleOpen();
+					await loadParametros();
+				}
+			}
 			formik.resetForm();
 		} catch (error) {
 			console.log(error);
@@ -141,6 +161,7 @@ const Grupos = () => {
 
 	const getRenderHeader = () => {
 		return renderHeader(
+			inputFile,
 			formik,
 			globalFilter,
 			setGlobalFilter,
@@ -233,6 +254,15 @@ const Grupos = () => {
 								</Form.Control.Feedback>
 							</InputGroup>
 						</Form.Group>
+						<Form.Group className="mb-3" controlId="validationFormikTermo">
+							<Form.Label>Termo</Form.Label>
+							<Form.Control
+								type="file"
+								accept=".pdf"
+								required
+								ref={inputFile}
+							/>
+						</Form.Group>
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
@@ -296,6 +326,12 @@ const Grupos = () => {
 								body={usuarioBodyTemplate}
 								field="cod_usu_update"
 								header="Atualizado por:"
+								className="table-column-email"
+							/>
+							<Column
+								body={termoBodyTemplate}
+								field="pdf_data"
+								header="Termo"
 								className="table-column-email"
 							/>
 							<Column
