@@ -4,8 +4,10 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import { Button, Form, InputGroup, FormControl, Modal } from "react-bootstrap";
 import { MdAddCircleOutline } from "react-icons/md";
 import { IoMdOptions } from "react-icons/io";
+import { BsInfoCircle } from "react-icons/bs";
 
 export const renderHeader = (
+	inputFile,
 	formik,
 	globalFilter,
 	setGlobalFilter,
@@ -97,6 +99,15 @@ export const renderHeader = (
 								</Form.Control.Feedback>
 							</InputGroup>
 						</Form.Group>
+						<Form.Group className="mb-3" controlId="validationFormikTermo">
+							<Form.Label>Termo</Form.Label>
+							<Form.Control
+								type="file"
+								accept=".pdf"
+								required
+								ref={inputFile}
+							/>
+						</Form.Group>
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
@@ -165,6 +176,22 @@ export const opcoesTemplate = (
 	);
 };
 
+function openBase64PdfInNewTab(base64String, fileName = "document.pdf") {
+	const byteCharacters = atob(base64String);
+
+	const byteNumbers = new Array(byteCharacters.length);
+	for (let i = 0; i < byteCharacters.length; i++) {
+		byteNumbers[i] = byteCharacters.charCodeAt(i);
+	}
+	const byteArray = new Uint8Array(byteNumbers);
+	const blob = new Blob([byteArray], { type: "application/pdf" });
+
+	const blobUrl = URL.createObjectURL(blob);
+	const newTab = window.open(blobUrl, "_blank");
+
+	newTab.document.title = fileName;
+}
+
 export const nameBodyTemplate = (rowData) => {
 	return <span style={{ color: "#000" }}>{rowData.nome}</span>;
 };
@@ -190,4 +217,23 @@ export const criadoBodyTemplate = (rowData) => {
 			.reverse()
 			.join("-")} às ${time.split(".")[0]}`}</span>
 	);
+};
+
+export const termoBodyTemplate = (rowData) => {
+	if (rowData.pdf_data != null) {
+		return (
+			<Button
+				variant="outline-primary"
+				onClick={(e) => {
+					e.preventDefault();
+					openBase64PdfInNewTab(rowData.pdf_data);
+				}}
+			>
+				<BsInfoCircle className="icon-info" />
+				Visualizar
+			</Button>
+		);
+	} else {
+		return <span>Sem Termo anexado</span>;
+	}
 };
