@@ -11,7 +11,12 @@ interface IPPORepository {
     data_ini: string,
     data_fim: string
   ): Promise<IAvaliacao[] | undefined>;
-  exporta_protheus(mes: string, ano: string): Promise<any | undefined>;
+  exporta_protheus(
+    mes: string,
+    ano: string,
+    cpf: string,
+    grupo_id: string
+  ): Promise<any | undefined>;
   distancia(
     cpf: string,
     data_ini: string,
@@ -43,8 +48,21 @@ const isValid = (value: string | null | undefined) =>
   !["", null, undefined, "null", "undefined"].includes(value);
 
 export class PPORepository implements IPPORepository {
-  async exporta_protheus(mes: string, ano: string): Promise<any | undefined> {
-    const exporta = await mssqlPPO.raw(`
+  async exporta_protheus(
+    mes: string,
+    ano: string,
+    cpf: string,
+    grupo_id: string
+  ): Promise<any | undefined> {
+    let filtro = "";
+    if (cpf != "undefined") {
+      filtro = filtro + ` AND r.cpf = '${cpf}' `;
+    }
+    if (grupo_id != "undefined") {
+      filtro = filtro + ` AND g.id = ${grupo_id} `;
+    }
+
+    const sql = `
     SELECT 
        x.filial
        ,x.matricula
@@ -64,6 +82,7 @@ export class PPORepository implements IPPORepository {
       WHERE apto = 1
       AND r.mes_avaliacao = '${mes}'
       AND r.ano_avaliacao = '${ano}'
+      ${filtro}
       GROUP BY r.matricula,g.cod_filial,p.cod_verba
     UNION
     SELECT 
@@ -78,9 +97,11 @@ export class PPORepository implements IPPORepository {
     WHERE ppo_cancelado = 1
     AND mes_avaliacao = '${mes}'
     AND ano_avaliacao = '${ano}'
+    ${filtro}
     GROUP BY r.matricula,g.cod_filial,p.cod_verba
     ) X
-  `);
+  `;
+    const exporta = await mssqlPPO.raw(sql);
 
     return exporta;
   }
