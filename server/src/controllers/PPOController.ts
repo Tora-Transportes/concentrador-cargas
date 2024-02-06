@@ -168,21 +168,25 @@ class PPOController implements IPPOController {
   }
 
   async protheus(req: Request, res: Response): Promise<Response> {
-    const { mes, ano } = req.query;
+    const { mes, ano, cpf, grupo_id } = req.query;
     const ppoRepository = new PPORepository();
     const result = await ppoRepository.exporta_protheus(
       String(mes),
-      String(ano)
+      String(ano),
+      String(cpf),
+      String(grupo_id)
     );
     return res.json({ data: result });
   }
 
   async protheusTxt(req: Request, res: Response): Promise<any> {
-    const { mes, ano } = req.query;
+    const { mes, ano, cpf, grupo_id } = req.query;
     const ppoRepository = new PPORepository();
     const result = await ppoRepository.exporta_protheus(
       String(mes),
-      String(ano)
+      String(ano),
+      String(cpf),
+      String(grupo_id)
     );
     const data: any[] = [];
     result.forEach((element: any) => {

@@ -19,13 +19,29 @@ class ServicePPO {
 		);
 	}
 
-	async protheus(mes, ano) {
-		return api.get(`/ppo/protheus?mes=${mes}&ano=${ano}`);
+	async protheus(values) {
+		console.log(values);
+		return api.get(`/ppo/protheus`, {
+			params: {
+				cpf: values.cpf,
+				mes: values.mes,
+				ano: values.ano,
+				grupo_id: values.grupo_id,
+			},
+		});
 	}
 
-	async protheusTxt(mes, ano) {
+	async protheusTxt(values) {
 		return api
-			.get(`/ppo/protheus/txt?mes=${mes}&ano=${ano}`, { responseType: "blob" })
+			.get(`/ppo/protheus/txt`, {
+				params: {
+					cpf: values.cpf,
+					mes: values.mes,
+					ano: values.ano,
+					grupo_id: values.grupo_id,
+				},
+				responseType: "blob",
+			})
 			.then((response) => {
 				const blob = new Blob([response.data], { type: "text/plain" });
 				const link = document.createElement("a");
@@ -58,12 +74,13 @@ class ServicePPO {
 		});
 	}
 
-	async demonstrativos({ cpf, mes_avaliacao, ano_avaliacao }) {
+	async demonstrativos({ cpf, mes_avaliacao, ano_avaliacao, assinado }) {
 		return api.get(`/ppo/motoristas/demonstrativos`, {
 			params: {
 				cpf,
 				mes_avaliacao,
 				ano_avaliacao,
+				assinado,
 			},
 		});
 	}

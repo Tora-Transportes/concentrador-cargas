@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import Menusuperior from "../../Components/MenuSuperior/menusuperior";
 import ServicePPO from "src/services/ServicePPO";
+import ServicePPOGrupos from "src/services/ServicePPOGrupos";
 import swal2 from "sweetalert2";
 import {
 	Container,
@@ -13,13 +14,19 @@ import {
 	Accordion,
 	Table,
 } from "react-bootstrap";
+import InputMask from "react-input-mask";
+import { useEffect } from "react";
+import { FaFileExport, FaSearch } from "react-icons/fa";
 
 const ExportaProtheus = () => {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [dados, setDados] = useState([]);
+	const [grupos, setGrupos] = useState([]);
 	const [fields, setFields] = useState({
+		cpf: undefined,
 		mes: "",
 		ano: "",
+		grupo_id: undefined,
 	});
 
 	function handleChange(event) {
@@ -27,7 +34,7 @@ const ExportaProtheus = () => {
 		setFields((prevState) => ({ ...prevState, [name]: value }));
 	}
 
-	async function buscaDataProtheus(mes, ano) {
+	async function buscaDataProtheus() {
 		if (!fields.mes || !fields.ano) {
 			await swal2.fire({
 				icon: "info",
@@ -37,8 +44,9 @@ const ExportaProtheus = () => {
 		} else {
 			setDados([]);
 			setLoading(true);
+			console.log(fields);
 			try {
-				const interjornada = (await ServicePPO.protheus(mes, ano)).data;
+				const interjornada = (await ServicePPO.protheus(fields)).data;
 				if (interjornada.data.length > 0) {
 					setDados(interjornada.data);
 				} else {
@@ -64,15 +72,25 @@ const ExportaProtheus = () => {
 				text: "Favor Selecionar mês e ano para exportação",
 			});
 		} else {
-			await ServicePPO.protheusTxt(fields.mes, fields.ano);
+			await ServicePPO.protheusTxt(fields);
 		}
 		setLoading(false);
 	}
 
 	function handleSubmit(event) {
 		event.preventDefault();
-		buscaDataProtheus(fields.mes, fields.ano);
+		buscaDataProtheus();
 	}
+
+	useEffect(() => {
+		setLoading(true);
+		async function dados() {
+			const data = await ServicePPOGrupos.list();
+			setGrupos(data.data.data);
+		}
+		dados();
+		setLoading(false);
+	}, []);
 
 	return (
 		<>
@@ -85,7 +103,42 @@ const ExportaProtheus = () => {
 				<Form onSubmit={handleSubmit}>
 					<Card className="mt-3">
 						<Row className="row-input-history">
+							<Col lg={2} sm={12}>
+								<Form.Group controlId="formCpf">
+									<Form.Label>CPF Motorista</Form.Label>
+									<Form.Control
+										as={InputMask}
+										mask="999.999.999-99"
+										className="ms-2"
+										type="text"
+										name="cpf"
+										value={fields.cpf}
+										onChange={handleChange}
+									/>
+								</Form.Group>
+							</Col>
 							<Col lg={3} sm={12}>
+								<Form.Group
+									className="mb-3"
+									controlId="exampleForm.ControlInput1"
+								>
+									<Form.Label>Grupo</Form.Label>
+									<Form.Select
+										aria-label="Default select example"
+										name="grupo_id"
+										onChange={handleChange}
+										value={fields.grupo_id}
+									>
+										<option></option>
+										{grupos.map((value, idx) => (
+											<option key={idx} value={value.id}>
+												{value.filial}
+											</option>
+										))}
+									</Form.Select>
+								</Form.Group>
+							</Col>
+							<Col lg={2} sm={12}>
 								<Form.Group
 									className="mb-3"
 									controlId="exampleForm.ControlInput1"
@@ -96,6 +149,7 @@ const ExportaProtheus = () => {
 										name="mes"
 										onChange={handleChange}
 										value={fields.mes}
+										required
 									>
 										<option></option>
 										<option value="1">Janeiro</option>
@@ -113,7 +167,7 @@ const ExportaProtheus = () => {
 									</Form.Select>
 								</Form.Group>
 							</Col>
-							<Col lg={3} sm={12}>
+							<Col lg={2} sm={12}>
 								<Form.Group
 									className="mb-3"
 									controlId="exampleForm.ControlInput2"
@@ -124,6 +178,7 @@ const ExportaProtheus = () => {
 										name="ano"
 										onChange={handleChange}
 										value={fields.ano}
+										required
 									>
 										<option></option>
 										<option value="2023">2023</option>
@@ -134,23 +189,29 @@ const ExportaProtheus = () => {
 									</Form.Select>
 								</Form.Group>
 							</Col>
-							<Col lg={2} sm={12}>
+							<Col lg={1} sm={12}>
 								<Button
-									style={{ marginTop: "37px" }}
+									style={{
+										marginTop: "37px",
+										backgroundColor: "#00652e",
+										borderColor: "#00652e",
+									}}
 									type="submit"
-									id="button-pesq-history"
 								>
-									Pesquisar
+									<FaSearch />
 								</Button>
 							</Col>
 
-							<Col lg={2} sm={12}>
+							<Col lg={1} sm={12}>
 								<Button
-									style={{ marginTop: "37px" }}
+									style={{
+										marginTop: "37px",
+										backgroundColor: "#00652e",
+										borderColor: "#00652e",
+									}}
 									onClick={downloadTxt}
-									id="button-pesq-history"
 								>
-									Exportar
+									<FaFileExport />
 								</Button>
 							</Col>
 						</Row>
