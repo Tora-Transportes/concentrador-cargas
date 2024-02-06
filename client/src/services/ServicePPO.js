@@ -74,12 +74,13 @@ class ServicePPO {
 		});
 	}
 
-	async demonstrativos({ cpf, mes_avaliacao, ano_avaliacao }) {
+	async demonstrativos({ cpf, mes_avaliacao, ano_avaliacao, assinado }) {
 		return api.get(`/ppo/motoristas/demonstrativos`, {
 			params: {
 				cpf,
 				mes_avaliacao,
 				ano_avaliacao,
+				assinado,
 			},
 		});
 	}

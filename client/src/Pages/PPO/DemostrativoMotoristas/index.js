@@ -24,6 +24,7 @@ const DemonstrativoMotoristas = () => {
 		cpf: "",
 		ano_avaliacao: "",
 		mes_avaliacao: "",
+		assinado: undefined,
 	});
 
 	function handleChange(event) {
@@ -43,25 +44,6 @@ const DemonstrativoMotoristas = () => {
 			...prevState,
 			["ano_avaliacao"]: dataAtual.getFullYear(),
 		}));
-		setLoading(true);
-
-		async function dados() {
-			var dataAtual = new Date();
-			dataAtual.setMonth(dataAtual.getMonth() - 1);
-			setLoading(true);
-			try {
-				const data = await ServicePPO.demonstrativos({
-					mes_avaliacao: dataAtual.getMonth() + 1,
-					ano_avaliacao: dataAtual.getFullYear(),
-				});
-				setDemonstrativos(data.data.data);
-				setLoading(false);
-			} catch (error) {
-				setLoading(false);
-			}
-		}
-
-		dados();
 	}, []);
 
 	async function downloadPdf({ cpf, mes_avaliacao, ano_avaliacao }) {
@@ -99,6 +81,7 @@ const DemonstrativoMotoristas = () => {
 				cpf: fields.cpf,
 				ano_avaliacao: fields.ano_avaliacao,
 				mes_avaliacao: fields.mes_avaliacao,
+				assinado: fields.assinado,
 			});
 			setDemonstrativos(data.data.data);
 			setLoading(false);
@@ -132,7 +115,7 @@ const DemonstrativoMotoristas = () => {
 									/>
 								</Form.Group>
 							</Col>
-							<Col lg={3} sm={12}>
+							<Col lg={2} sm={12}>
 								<Form.Group controlId="formdistancia">
 									<Form.Label>Mês</Form.Label>
 									<Form.Select
@@ -157,7 +140,7 @@ const DemonstrativoMotoristas = () => {
 									</Form.Select>
 								</Form.Group>
 							</Col>
-							<Col lg={3} sm={12}>
+							<Col lg={2} sm={12}>
 								<Form.Group controlId="formdistancia">
 									<Form.Label>Ano</Form.Label>
 									<Form.Select
@@ -178,6 +161,21 @@ const DemonstrativoMotoristas = () => {
 										<option value="2031">2031</option>
 										<option value="2032">2032</option>
 										<option value="2033">2033</option>
+									</Form.Select>
+								</Form.Group>
+							</Col>
+							<Col lg={3} sm={12}>
+								<Form.Group controlId="formdistancia">
+									<Form.Label>Assinado</Form.Label>
+									<Form.Select
+										name="assinado"
+										aria-label="Default select example"
+										onChange={handleChange}
+										value={fields.assinado}
+									>
+										<option>Selecione</option>
+										<option value="1">Sim</option>
+										<option value="0">Não</option>
 									</Form.Select>
 								</Form.Group>
 							</Col>
