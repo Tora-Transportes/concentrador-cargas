@@ -892,10 +892,10 @@ FETCH NEXT  ${pageSize} ROWS ONLY
       filtro = filtro + ` AND rejected ${query.rejected}`;
     }
     if (isValid(query?.filial)) {
-      filtro = filtro + ` AND m.filial ${query.filial}`;
+      filtro = filtro + ` AND m.filial LIKE '%${query.filial}%'`;
     }
     if (isValid(query?.nome)) {
-      filtro = filtro + ` AND m.motorista ${query.nome}`;
+      filtro = filtro + ` AND m.motorista LIKE '%${query.nome}%'`;
     }
 
     const results = mssqlPPO.raw(`
@@ -978,10 +978,10 @@ FETCH NEXT  ${pageSize} ROWS ONLY
       filtro = filtro + ` AND rejected ${query.rejected}`;
     }
     if (isValid(query?.filial)) {
-      filtro = filtro + ` AND m.filial ${query.filial}`;
+      filtro = filtro + ` AND m.filial LIKE '%${query.filial}%'`;
     }
     if (isValid(query?.nome)) {
-      filtro = filtro + ` AND m.motorista ${query.nome}`;
+      filtro = filtro + ` AND m.motorista LIKE '%${query.nome}%'`;
     }
 
     const total = await mssqlPPO.raw(

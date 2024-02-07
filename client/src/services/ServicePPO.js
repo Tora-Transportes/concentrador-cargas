@@ -123,6 +123,8 @@ class ServicePPO {
 		rejected,
 		mes = 11,
 		ano = 2023,
+		nome,
+		filial,
 	}) {
 		return api.get("/ppo/relatorios/documentos", {
 			params: {
@@ -135,6 +137,8 @@ class ServicePPO {
 				rejected,
 				mes,
 				ano,
+				nome,
+				filial,
 			},
 		});
 	}
