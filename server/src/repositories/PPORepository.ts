@@ -162,7 +162,7 @@ export class PPORepository implements IPPORepository {
     if (dados_motorista.length == 0) {
       return [];
     } else {
-      const infracoes = await mssqlPPO.raw(`
+      const sql = `
       SELECT 
       SUBSTRING(motorista, 1, CHARINDEX('-', motorista + '-') - 1) AS nome,
       SUBSTRING(motorista, CHARINDEX('-', motorista) + 2, 
@@ -172,14 +172,15 @@ export class PPORepository implements IPPORepository {
       CONCAT(velocidadekmh,' KM') as velocidade,
       tipo_evento
       FROM [dbo].[ppo_sascar_velocidade]
-      WHERE velocidadekmh > 87 
-      AND created_at BETWEEN '${data_ini}' AND '${data_fim}'
+      WHERE velocidadekmh > '87.0' 
+      AND CONVERT(date,data,105) BETWEEN '${data_ini}' AND '${data_fim}'
       AND motorista <> 'Sem Motorista'
       AND SUBSTRING(motorista, 1, CHARINDEX('-', motorista + '-') - 1) LIKE '%${dados_motorista[0]["nome"]}%'
       AND SUBSTRING(motorista, CHARINDEX('-', motorista) + 2, 
                   CASE WHEN CHARINDEX('-', motorista) > 0 THEN LEN(motorista) - CHARINDEX('-', motorista) 
                        ELSE LEN(motorista) END) LIKE '%${dados_motorista[0]["matricula"]}%'
-      `);
+      `;
+      const infracoes = await mssqlPPO.raw(sql);
       return infracoes;
     }
   }
