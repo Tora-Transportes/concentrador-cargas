@@ -416,14 +416,9 @@ export class PPORepository implements IPPORepository {
     if (isValid(query?.ppo_cancelado)) {
       filtro = filtro + ` AND ppo_cancelado LIKE '%${query.ppo_cancelado}%'`;
     }
-
-    const total = await mssqlPPO.raw(
-      `SELECT COUNT(DISTINCT cpf) as total FROM [dbo].[ppo_resultado]
-       WHERE mes_avaliacao LIKE '%${query.mes_avaliacao}%'
-       AND ano_avaliacao LIKE '%${query.ano_avaliacao}%'
-       ${filtro}
-      `
-    );
+    if (isValid(query?.grupo)) {
+      filtro = filtro + ` AND grupo LIKE '%${query.grupo}%'`;
+    }
 
     const sql = `
     DECLARE @tabelaRelatorio TABLE
@@ -610,12 +605,12 @@ DEALLOCATE PPO_Cursor; -- Libere recursos do cursor
 select * from @tabelaRelatorio
 WHERE 1=1
 ${filtro}
-ORDER BY id ASC
-OFFSET ${(realPage - 1) * pageSize} ROWS
-FETCH NEXT  ${pageSize} ROWS ONLY
     `;
-    const results = await mssqlPPO.raw(sql);
-    const totalRegisters = Number(total[0]["total"]) || 0;
+    const results = await mssqlPPO.raw(`${sql}  ORDER BY id ASC
+    OFFSET ${(realPage - 1) * pageSize} ROWS
+    FETCH NEXT  ${pageSize} ROWS ONLY`);
+    const total = await mssqlPPO.raw(`${sql}`);
+    const totalRegisters = Number(total.length) || 0;
 
     return {
       page: realPage,
