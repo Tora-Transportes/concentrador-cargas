@@ -73,24 +73,28 @@ const RelatorioDocumentos = () => {
 	const tableFetchData = useCallback(
 		async function (options) {
 			setLoading(true);
-			if (options !== lastOptions) {
-				setLastOptions(options);
+			try {
+				if (options !== lastOptions) {
+					setLastOptions(options);
+				}
+				const { column, direction } = options.orderBy ?? {};
+				const { filters, orderBy, page } = options;
+				setFiltroAtual({ filters, orderBy, page });
+				const { data } = await ServicePPO.relatorioDocumentos({
+					...options.filters,
+					page: options.page,
+					order_column: column,
+					order_direction: direction,
+				});
+				setLoading(false);
+				setTotalRegisters(data.data.total_registers);
+				dispatchCargas({
+					type: "SET",
+					payload: { ...data.data, current_page: data.data.page },
+				});
+			} catch (error) {
+				setLoading(false);
 			}
-			const { column, direction } = options.orderBy ?? {};
-			const { filters, orderBy, page } = options;
-			setFiltroAtual({ filters, orderBy, page });
-			const { data } = await ServicePPO.relatorioDocumentos({
-				...options.filters,
-				page: options.page,
-				order_column: column,
-				order_direction: direction,
-			});
-			setLoading(false);
-			setTotalRegisters(data.data.total_registers);
-			dispatchCargas({
-				type: "SET",
-				payload: { ...data.data, current_page: data.data.page },
-			});
 		},
 		[setLoading, dispatchCargas]
 	);

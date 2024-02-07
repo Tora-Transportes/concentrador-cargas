@@ -37,7 +37,6 @@ export const getColumns = () => {
 			Filter: (props) => (
 				<Form.Select {...props}>
 					<option></option>
-					<option value="2023"> 2023 </option>
 					<option value="2024"> 2024 </option>
 					<option value="2025"> 2025 </option>
 					<option value="2026"> 2026 </option>
@@ -49,6 +48,7 @@ export const getColumns = () => {
 					<option value="2032"> 2032 </option>
 					<option value="2033"> 2033 </option>
 					<option value="2034"> 2034 </option>
+					<option value="2035"> 2035 </option>
 				</Form.Select>
 			),
 			showFilter: true,
@@ -57,6 +57,18 @@ export const getColumns = () => {
 			name: "cpf",
 			description: "CPF",
 			selector: (row) => row.cpf,
+			showFilter: true,
+		},
+		{
+			name: "nome",
+			description: "Nome",
+			selector: (row) => row.nome,
+			showFilter: true,
+		},
+		{
+			name: "filial",
+			description: "Filial",
+			selector: (row) => row.filial,
 			showFilter: true,
 		},
 		{
