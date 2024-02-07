@@ -8,9 +8,94 @@ import {
 export const getColumns = () => {
 	const columnsRelatorio = [
 		{
+			name: "mes",
+			description: "Mês",
+			selector: (row) => row.mes,
+			Filter: (props) => (
+				<Form.Select {...props}>
+					<option></option>
+					<option value="01"> Janeiro </option>
+					<option value="02"> Fevereiro </option>
+					<option value="03"> Março </option>
+					<option value="04"> Abril </option>
+					<option value="05"> Maio </option>
+					<option value="06"> Junho </option>
+					<option value="07"> Julho </option>
+					<option value="08"> Agosto </option>
+					<option value="09"> Setembro </option>
+					<option value="10"> Outubro </option>
+					<option value="11"> Novembro </option>
+					<option value="12"> Dezembro </option>
+				</Form.Select>
+			),
+			showFilter: true,
+		},
+		{
+			name: "ano",
+			description: "Ano",
+			selector: (row) => row.ano,
+			Filter: (props) => (
+				<Form.Select {...props}>
+					<option></option>
+					<option value="2023"> 2023 </option>
+					<option value="2024"> 2024 </option>
+					<option value="2025"> 2025 </option>
+					<option value="2026"> 2026 </option>
+					<option value="2027"> 2027 </option>
+					<option value="2028"> 2028 </option>
+					<option value="2029"> 2029 </option>
+					<option value="2030"> 2030 </option>
+					<option value="2031"> 2031 </option>
+					<option value="2032"> 2032 </option>
+					<option value="2033"> 2033 </option>
+					<option value="2034"> 2034 </option>
+				</Form.Select>
+			),
+			showFilter: true,
+		},
+		{
 			name: "cpf",
 			description: "CPF",
 			selector: (row) => row.cpf,
+			showFilter: true,
+		},
+		{
+			name: "viewed",
+			description: "Visto",
+			selector: (row) => (row.viewed === 1 ? "Sim" : "Não"),
+			Filter: (props) => (
+				<Form.Select {...props}>
+					<option></option>
+					<option value="IS NOT NULL"> Sim </option>
+					<option value="IS NULL"> Não </option>
+				</Form.Select>
+			),
+			showFilter: true,
+		},
+		{
+			name: "signed",
+			description: "Assinado",
+			selector: (row) => (row.signed === 1 ? "Sim" : "Não"),
+			Filter: (props) => (
+				<Form.Select {...props}>
+					<option></option>
+					<option value="IS NOT NULL"> Sim </option>
+					<option value="IS NULL"> Não </option>
+				</Form.Select>
+			),
+			showFilter: true,
+		},
+		{
+			name: "rejected",
+			description: "Rejeitado",
+			selector: (row) => (row.rejected === 1 ? "Sim" : "Não"),
+			Filter: (props) => (
+				<Form.Select {...props}>
+					<option></option>
+					<option value="IS NOT NULL"> Sim </option>
+					<option value="IS NULL"> Não </option>
+				</Form.Select>
+			),
 			showFilter: true,
 		},
 		{
@@ -66,57 +151,6 @@ export const getColumns = () => {
 					</>
 				),
 			showFilter: false,
-		},
-		{
-			name: "viewed",
-			description: "Visto",
-			selector: (row) => (row.viewed === 1 ? "Sim" : "Não"),
-			Filter: (props) => (
-				<Form.Select {...props}>
-					<option></option>
-					<option value="IS NOT NULL"> Sim </option>
-					<option value="IS NULL"> Não </option>
-				</Form.Select>
-			),
-			showFilter: true,
-		},
-		{
-			name: "signed",
-			description: "Assinado",
-			selector: (row) => (row.signed === 1 ? "Sim" : "Não"),
-			Filter: (props) => (
-				<Form.Select {...props}>
-					<option></option>
-					<option value="IS NOT NULL"> Sim </option>
-					<option value="IS NULL"> Não </option>
-				</Form.Select>
-			),
-			showFilter: true,
-		},
-		{
-			name: "rejected",
-			description: "Rejeitado",
-			selector: (row) => (row.rejected === 1 ? "Sim" : "Não"),
-			Filter: (props) => (
-				<Form.Select {...props}>
-					<option></option>
-					<option value="IS NOT NULL"> Sim </option>
-					<option value="IS NULL"> Não </option>
-				</Form.Select>
-			),
-			showFilter: true,
-		},
-		{
-			name: "mes",
-			description: "Mês",
-			selector: (row) => row.mes,
-			showFilter: true,
-		},
-		{
-			name: "ano",
-			description: "Ano",
-			selector: (row) => row.ano,
-			showFilter: true,
 		},
 	];
 
