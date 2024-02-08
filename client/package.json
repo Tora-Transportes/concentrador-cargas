@@ -7,7 +7,7 @@
   "scripts": {
     "start": "react-scripts start",
     "dev": "set HTTPS=true&&set SSL_CRT_FILE=../server/certificates/tora.crt&&set SSL_KEY_FILE=../server/certificates/tora.key&&yarn start",
-    "build": "react-scripts --max_old_space_size=4096 build",
+    "build": "set \"GENERATE_SOURCEMAP=false\" && react-scripts --max_old_space_size=4096 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
