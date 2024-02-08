@@ -166,7 +166,7 @@ function TabelaCargas({
 					col.Filter ? (
 						<col.Filter
 							name={col.name}
-							value={formik.value}
+							value={formik.values[col.name]}
 							onChange={formik.handleChange}
 							className="w-100"
 						/>
@@ -174,6 +174,7 @@ function TabelaCargas({
 						col.static_column !== true && (
 							<Form.Control
 								name={col.name}
+								value={formik.values[col.name]}
 								onChange={formik.handleChange}
 								className="w-100"
 							/>

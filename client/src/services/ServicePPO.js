@@ -95,6 +95,7 @@ class ServicePPO {
 		mes_avaliacao = 11,
 		ano_avaliacao = 2023,
 		ppo_cancelado,
+		grupo,
 	}) {
 		return api.get("/ppo/relatorios/motoristas", {
 			params: {
@@ -107,6 +108,7 @@ class ServicePPO {
 				mes_avaliacao,
 				ano_avaliacao,
 				ppo_cancelado,
+				grupo,
 			},
 		});
 	}
@@ -121,6 +123,8 @@ class ServicePPO {
 		rejected,
 		mes = 11,
 		ano = 2023,
+		nome,
+		filial,
 	}) {
 		return api.get("/ppo/relatorios/documentos", {
 			params: {
@@ -133,6 +137,8 @@ class ServicePPO {
 				rejected,
 				mes,
 				ano,
+				nome,
+				filial,
 			},
 		});
 	}
