@@ -37,6 +37,11 @@ class CoordenadasController {
 
     const workbook = xlsx.utils.book_new();
     for (const i of data.results) {
+      if (i.data_emissao_documento) {
+        const dataInicial = new Date(i.data_emissao_documento);
+        dataInicial.setMinutes(dataInicial.getMinutes() + 1);
+        i.data_emissao_documento = dataInicial;
+      }
       if (!i.categoria_veiculo) continue;
       switch (i.categoria_veiculo) {
         case "A":
@@ -50,17 +55,32 @@ class CoordenadasController {
           break;
       }
     }
-    const sheet = xlsx.utils.json_to_sheet(data.results);
+    const sheet = xlsx.utils.json_to_sheet(data.results, {
+      cellDates: true,
+      dateNF: "DD/MM/YYYY",
+    });
     xlsx.utils.book_append_sheet(workbook, sheet);
 
-    xlsx.writeFile(workbook, filename, {
+    await xlsx.writeFile(workbook, filename, {
       bookType: "xlsx",
       type: "binary",
     });
 
     const stream = fs.createReadStream(filename);
+
+    stream.once("end", () => {
+      // File reading is complete, now delete the file
+      if (fs.existsSync(filename)) {
+        fs.unlink(filename, (err) => {
+          if (err) {
+            console.error(err);
+          }
+        });
+      }
+    });
+
     stream.pipe(res);
-    if (fs.existsSync(filename)) fs.unlinkSync(filename);
+
     return res;
   }
 
