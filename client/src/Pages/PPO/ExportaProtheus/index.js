@@ -45,6 +45,12 @@ const ExportaProtheus = () => {
 			setDados([]);
 			setLoading(true);
 			console.log(fields);
+			if (fields.grupo_id == "" || fields.grupo_id == undefined) {
+				fields.grupo_id = undefined;
+			}
+			if (fields.cpf == "" || fields.cpf == undefined) {
+				fields.cpf = undefined;
+			}
 			try {
 				const interjornada = (await ServicePPO.protheus(fields)).data;
 				if (interjornada.data.length > 0) {
