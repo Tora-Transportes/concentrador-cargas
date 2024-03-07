@@ -11,7 +11,12 @@ interface IPPORepository {
     data_ini: string,
     data_fim: string
   ): Promise<IAvaliacao[] | undefined>;
-  exporta_protheus(mes: string, ano: string): Promise<any | undefined>;
+  exporta_protheus(
+    mes: string,
+    ano: string,
+    cpf: string,
+    grupo_id: string
+  ): Promise<any | undefined>;
   distancia(
     cpf: string,
     data_ini: string,
@@ -43,8 +48,21 @@ const isValid = (value: string | null | undefined) =>
   !["", null, undefined, "null", "undefined"].includes(value);
 
 export class PPORepository implements IPPORepository {
-  async exporta_protheus(mes: string, ano: string): Promise<any | undefined> {
-    const exporta = await mssqlPPO.raw(`
+  async exporta_protheus(
+    mes: string,
+    ano: string,
+    cpf: string,
+    grupo_id: string
+  ): Promise<any | undefined> {
+    let filtro = "";
+    if (cpf != "undefined") {
+      filtro = filtro + ` AND r.cpf = '${cpf}' `;
+    }
+    if (grupo_id != "undefined") {
+      filtro = filtro + ` AND g.id = ${grupo_id} `;
+    }
+
+    const sql = `
     SELECT 
        x.filial
        ,x.matricula
@@ -64,6 +82,7 @@ export class PPORepository implements IPPORepository {
       WHERE apto = 1
       AND r.mes_avaliacao = '${mes}'
       AND r.ano_avaliacao = '${ano}'
+      ${filtro}
       GROUP BY r.matricula,g.cod_filial,p.cod_verba
     UNION
     SELECT 
@@ -78,9 +97,11 @@ export class PPORepository implements IPPORepository {
     WHERE ppo_cancelado = 1
     AND mes_avaliacao = '${mes}'
     AND ano_avaliacao = '${ano}'
+    ${filtro}
     GROUP BY r.matricula,g.cod_filial,p.cod_verba
     ) X
-  `);
+  `;
+    const exporta = await mssqlPPO.raw(sql);
 
     return exporta;
   }
@@ -141,7 +162,7 @@ export class PPORepository implements IPPORepository {
     if (dados_motorista.length == 0) {
       return [];
     } else {
-      const infracoes = await mssqlPPO.raw(`
+      const sql = `
       SELECT 
       SUBSTRING(motorista, 1, CHARINDEX('-', motorista + '-') - 1) AS nome,
       SUBSTRING(motorista, CHARINDEX('-', motorista) + 2, 
@@ -151,14 +172,15 @@ export class PPORepository implements IPPORepository {
       CONCAT(velocidadekmh,' KM') as velocidade,
       tipo_evento
       FROM [dbo].[ppo_sascar_velocidade]
-      WHERE velocidadekmh > 87 
-      AND created_at BETWEEN '${data_ini}' AND '${data_fim}'
+      WHERE velocidadekmh > '87.0' 
+      AND CONVERT(date,data,105) BETWEEN '${data_ini}' AND '${data_fim}'
       AND motorista <> 'Sem Motorista'
       AND SUBSTRING(motorista, 1, CHARINDEX('-', motorista + '-') - 1) LIKE '%${dados_motorista[0]["nome"]}%'
       AND SUBSTRING(motorista, CHARINDEX('-', motorista) + 2, 
                   CASE WHEN CHARINDEX('-', motorista) > 0 THEN LEN(motorista) - CHARINDEX('-', motorista) 
                        ELSE LEN(motorista) END) LIKE '%${dados_motorista[0]["matricula"]}%'
-      `);
+      `;
+      const infracoes = await mssqlPPO.raw(sql);
       return infracoes;
     }
   }
@@ -220,11 +242,21 @@ export class PPORepository implements IPPORepository {
 
     for (const i in filter) {
       if (filter[i] !== undefined && filter[i] !== null) {
-        clausula = clausula + ` AND r.${i} LIKE '%${filter[i]}%'`;
+        if (i != "assinado") {
+          clausula = clausula + ` AND r.${i} LIKE '%${filter[i]}%'`;
+        } else {
+          if (filter[i] != "undefined" || filter[i] != "") {
+            if (filter[i] == "1") {
+              clausula = clausula + "AND c.file_link_signed IS NOT NULL";
+            } else {
+              clausula = clausula + "AND c.file_link_signed IS NULL";
+            }
+          }
+        }
       }
     }
 
-    const query = mssqlPPO.raw(` 
+    const query = ` 
     SELECT DISTINCT r.nome_motorista as nome
     ,r.cpf
     ,r.mes_avaliacao
@@ -244,9 +276,9 @@ export class PPORepository implements IPPORepository {
     ) = r.cpf and  c.mes = r.mes_avaliacao and  c.ano = r.ano_avaliacao 
     WHERE 1=1
     ${clausula}
-  `);
+  `;
 
-    const data = await query;
+    const data = await mssqlPPO.raw(query);
 
     if (data.length == 0) {
       throw new AppError("Sem dados de demonstrativo", 400);
@@ -385,14 +417,9 @@ export class PPORepository implements IPPORepository {
     if (isValid(query?.ppo_cancelado)) {
       filtro = filtro + ` AND ppo_cancelado LIKE '%${query.ppo_cancelado}%'`;
     }
-
-    const total = await mssqlPPO.raw(
-      `SELECT COUNT(DISTINCT cpf) as total FROM [dbo].[ppo_resultado]
-       WHERE mes_avaliacao LIKE '%${query.mes_avaliacao}%'
-       AND ano_avaliacao LIKE '%${query.ano_avaliacao}%'
-       ${filtro}
-      `
-    );
+    if (isValid(query?.grupo)) {
+      filtro = filtro + ` AND grupo LIKE '%${query.grupo}%'`;
+    }
 
     const sql = `
     DECLARE @tabelaRelatorio TABLE
@@ -579,12 +606,12 @@ DEALLOCATE PPO_Cursor; -- Libere recursos do cursor
 select * from @tabelaRelatorio
 WHERE 1=1
 ${filtro}
-ORDER BY id ASC
-OFFSET ${(realPage - 1) * pageSize} ROWS
-FETCH NEXT  ${pageSize} ROWS ONLY
     `;
-    const results = await mssqlPPO.raw(sql);
-    const totalRegisters = Number(total[0]["total"]) || 0;
+    const results = await mssqlPPO.raw(`${sql}  ORDER BY id ASC
+    OFFSET ${(realPage - 1) * pageSize} ROWS
+    FETCH NEXT  ${pageSize} ROWS ONLY`);
+    const total = await mssqlPPO.raw(`${sql}`);
+    const totalRegisters = Number(total.length) || 0;
 
     return {
       page: realPage,
@@ -845,7 +872,7 @@ FETCH NEXT  ${pageSize} ROWS ONLY
     if (isValid(query?.cpf)) {
       filtro =
         filtro +
-        ` AND cpf LIKE '%${query.cpf
+        ` AND ass.cpf LIKE '%${query.cpf
           .replace(".", "")
           .replace(".", "")
           .replace("-", "")}%'`;
@@ -865,31 +892,47 @@ FETCH NEXT  ${pageSize} ROWS ONLY
     if (isValid(query?.rejected)) {
       filtro = filtro + ` AND rejected ${query.rejected}`;
     }
+    if (isValid(query?.filial)) {
+      filtro = filtro + ` AND m.filial LIKE '%${query.filial}%'`;
+    }
+    if (isValid(query?.nome)) {
+      filtro = filtro + ` AND m.motorista LIKE '%${query.nome}%'`;
+    }
 
     const results = mssqlPPO.raw(`
     SELECT
     CONCAT(
-        SUBSTRING(cpf, 1, 3), 
-        '.', 
-        SUBSTRING(cpf, 4, 3), 
-        '.', 
-        SUBSTRING(cpf, 7, 3), 
-        '-', 
-        SUBSTRING(cpf, 10, 2)) as CPF
-		,link AS 'LINK ASSINATURA'
-		,file_link_original AS 'LINK ARQUIVO ORIGINAL'
-		,file_link_signed AS 'LINK ARQUIVO ASSINADO'
-		,CASE WHEN viewed is null THEN 0 ELSE 1 END AS 'VISTO'
-		,viewed  AS 'DATA VISTO'
-		,CASE WHEN signed is null THEN 0 ELSE 1 END as 'ASSINADO'
-		,signed as 'DATA ASSINADO'
-		,CASE WHEN rejected is null THEN 0 ELSE 1 END as 'REJEITADO'
-		,rejected as 'DATA REJEITADO'
-		,mes as 'MES'
-		,ano AS 'ANO'
-		,created_at AS 'CRIADO'
-		,updated_at AS 'ATUALIZADO'
-    FROM ASSINADOR_DIGITAL.DBO.controle
+            SUBSTRING(ass.cpf, 1, 3), 
+            '.', 
+            SUBSTRING(ass.cpf, 4, 3), 
+            '.', 
+            SUBSTRING(ass.cpf, 7, 3), 
+            '-', 
+            SUBSTRING(ass.cpf, 10, 2)) as cpf
+        ,m.motorista as nome
+		,m.filial
+        ,link
+        ,file_link_original
+        ,file_link_signed
+        ,CASE WHEN viewed is null THEN 0 ELSE 1 END as viewed
+        ,viewed as viewed_data
+        ,CASE WHEN signed is null THEN 0 ELSE 1 END as signed
+        ,signed as signed_data
+        ,CASE WHEN rejected is null THEN 0 ELSE 1 END as rejected
+        ,rejected as rejected_data
+        ,mes
+        ,ano
+        ,created_at 
+        ,updated_at
+    FROM ASSINADOR_DIGITAL.DBO.controle ass
+	LEFT JOIN PPO.dbo.motoristas m on m.cpf =  CONCAT(
+            SUBSTRING(ass.cpf, 1, 3), 
+            '.', 
+            SUBSTRING(ass.cpf, 4, 3), 
+            '.', 
+            SUBSTRING(ass.cpf, 7, 3), 
+            '-', 
+            SUBSTRING(ass.cpf, 10, 2))
     WHERE 1=1
     ${filtro}
     ORDER BY id ASC
@@ -915,7 +958,7 @@ FETCH NEXT  ${pageSize} ROWS ONLY
     if (isValid(query?.cpf)) {
       filtro =
         filtro +
-        ` AND cpf LIKE '%${query.cpf
+        ` AND ass.cpf LIKE '%${query.cpf
           .replace(".", "")
           .replace(".", "")
           .replace("-", "")}%'`;
@@ -935,11 +978,24 @@ FETCH NEXT  ${pageSize} ROWS ONLY
     if (isValid(query?.rejected)) {
       filtro = filtro + ` AND rejected ${query.rejected}`;
     }
+    if (isValid(query?.filial)) {
+      filtro = filtro + ` AND m.filial LIKE '%${query.filial}%'`;
+    }
+    if (isValid(query?.nome)) {
+      filtro = filtro + ` AND m.motorista LIKE '%${query.nome}%'`;
+    }
 
     const total = await mssqlPPO.raw(
-      `SELECT COUNT(0) as total FROM ASSINADOR_DIGITAL.DBO.controle
-       WHERE mes LIKE '%${query.mes}%'
-       AND ano LIKE '%${query.ano}%'
+      `SELECT COUNT(0) as total FROM ASSINADOR_DIGITAL.DBO.controle ass
+       LEFT JOIN PPO.dbo.motoristas m on m.cpf =  CONCAT(
+        SUBSTRING(ass.cpf, 1, 3), 
+        '.', 
+        SUBSTRING(ass.cpf, 4, 3), 
+        '.', 
+        SUBSTRING(ass.cpf, 7, 3), 
+        '-', 
+        SUBSTRING(ass.cpf, 10, 2))
+       WHERE 1=1
        ${filtro}
       `
     );
@@ -947,13 +1003,15 @@ FETCH NEXT  ${pageSize} ROWS ONLY
     const sql = `
     SELECT
     CONCAT(
-            SUBSTRING(cpf, 1, 3), 
+            SUBSTRING(ass.cpf, 1, 3), 
             '.', 
-            SUBSTRING(cpf, 4, 3), 
+            SUBSTRING(ass.cpf, 4, 3), 
             '.', 
-            SUBSTRING(cpf, 7, 3), 
+            SUBSTRING(ass.cpf, 7, 3), 
             '-', 
-            SUBSTRING(cpf, 10, 2)) as cpf
+            SUBSTRING(ass.cpf, 10, 2)) as cpf
+        ,m.motorista as nome
+		,m.filial
         ,link
         ,file_link_original
         ,file_link_signed
@@ -967,7 +1025,15 @@ FETCH NEXT  ${pageSize} ROWS ONLY
         ,ano
         ,created_at 
         ,updated_at
-    FROM ASSINADOR_DIGITAL.DBO.controle
+    FROM ASSINADOR_DIGITAL.DBO.controle ass
+	LEFT JOIN PPO.dbo.motoristas m on m.cpf =  CONCAT(
+            SUBSTRING(ass.cpf, 1, 3), 
+            '.', 
+            SUBSTRING(ass.cpf, 4, 3), 
+            '.', 
+            SUBSTRING(ass.cpf, 7, 3), 
+            '-', 
+            SUBSTRING(ass.cpf, 10, 2))
     WHERE 1=1
     ${filtro}
     ORDER BY id ASC

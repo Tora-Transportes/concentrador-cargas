@@ -1,4 +1,10 @@
-import React, { useCallback, useReducer, useRef, useState } from "react";
+import React, {
+	useCallback,
+	useEffect,
+	useReducer,
+	useRef,
+	useState,
+} from "react";
 import Menusuperior from "../../Components/MenuSuperior/menusuperior";
 import ViewRelatorioMotorista from "./components/view";
 import { getColumns } from "./components/columns";
@@ -7,6 +13,7 @@ import factoryReducerCargas from "../../../hooks/storageCargas/factoryReducerCar
 import ServicePPO from "src/services/ServicePPO";
 import { Toast } from "primereact/toast";
 import { showToastMessage } from "src/Pages/Utils/toastMessage";
+import ServicePPOGrupos from "src/services/ServicePPOGrupos";
 
 const RelatorioMotoristas = () => {
 	const defaultCargas = {
@@ -23,8 +30,9 @@ const RelatorioMotoristas = () => {
 	const [itensPerPage, setItensPerPage] = useState(10);
 	const [totalRegisters, setTotalRegisters] = useState(0);
 	const [lastOptions, setLastOptions] = useState({});
+	const [grupos, setGrupos] = useState([]);
 
-	const columnsResult = getColumns();
+	const columnsResult = getColumns(grupos);
 	const columnsPadrao = columnsResult.columnsRelatorio;
 
 	function resetView() {
@@ -94,6 +102,14 @@ const RelatorioMotoristas = () => {
 		},
 		[setLoading, dispatchCargas]
 	);
+
+	useEffect(() => {
+		async function data() {
+			const values = await ServicePPOGrupos.list();
+			setGrupos(values.data.data);
+		}
+		data();
+	}, []);
 
 	return (
 		<>
