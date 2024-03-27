@@ -115,6 +115,24 @@ const configMssqlAutentique: Knex.Config = {
   },
 };
 
+const configMssqlConcV2: Knex.Config = {
+  client: "mssql",
+  connection: {
+    user: process.env.DB_MSSQL_CONCV2_USERNAME,
+    password: process.env.DB_MSSQL_CONCV2_PASSWORD,
+    server: process.env.DB_MSSQL_CONCV2_HOST,
+    database: process.env.DB_MSSQL_CONCV2_DATABASE,
+    debug: true,
+    connectTimeout: 90000,
+    ssl: { rejectUnauthorized: false },
+    options: {
+      encrypt: true,
+      enableArithAbort: true,
+      trustServerCertificate: true,
+    },
+  },
+};
+
 export default {
   configMssql,
   configOracle,
@@ -122,4 +140,5 @@ export default {
   configMssqlPPO,
   configMssqlPPOView,
   configMssqlAutentique,
+  configMssqlConcV2,
 };

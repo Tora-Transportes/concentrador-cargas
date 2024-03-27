@@ -31,6 +31,7 @@ import PPOParametrosGrupoController from "./controllers/PPOParametrosGrupoContro
 import WebhookAutentiqueController from "./controllers/WebhookAutentiqueController";
 import PPOCalculadorController from "./controllers/PPOCalculadorController";
 import WebhookGitHubController from "./controllers/WebhookGitHubController";
+import MenuController from "./controllers/MenuController";
 
 const routes = Router();
 
@@ -285,5 +286,8 @@ routes.delete(
   "/ppo/grupos/parametros/:id",
   PPOParametrosGrupoController.delete
 );
+
+//-------------------- NOVO CONCENTRADOR ----------------------
+routes.get("/menu", MenuController.index);
 
 export default routes;
