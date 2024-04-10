@@ -31,6 +31,7 @@ import PPOParametrosGrupoController from "./controllers/PPOParametrosGrupoContro
 import WebhookAutentiqueController from "./controllers/WebhookAutentiqueController";
 import PPOCalculadorController from "./controllers/PPOCalculadorController";
 import WebhookGitHubController from "./controllers/WebhookGitHubController";
+import PPOPermissoesVisualizacaoController from "./controllers/PPOPermissoesVisualizacaoController";
 
 const routes = Router();
 
@@ -284,6 +285,35 @@ routes.patch("/ppo/grupos/parametros/:id", PPOParametrosGrupoController.update);
 routes.delete(
   "/ppo/grupos/parametros/:id",
   PPOParametrosGrupoController.delete
+);
+
+routes.get(
+  "/ppo/permissoes-visualizacao/users",
+  PPOPermissoesVisualizacaoController.getAllUsers
+);
+routes.post(
+  "/ppo/permissoes-visualizacao",
+  PPOPermissoesVisualizacaoController.create
+);
+
+routes.get(
+  "/ppo/permissoes-visualizacao",
+  PPOPermissoesVisualizacaoController.index
+);
+
+routes.delete(
+  "/ppo/permissoes-visualizacao/users/:uid/grupos/:id",
+  PPOPermissoesVisualizacaoController.delete
+);
+
+routes.delete(
+  "/ppo/permissoes-visualizacao/users/:uid",
+  PPOPermissoesVisualizacaoController.deleteUser
+);
+
+routes.put(
+  "/ppo/permissoes-visualizacao/users/:uid",
+  PPOPermissoesVisualizacaoController.updateUser
 );
 
 export default routes;

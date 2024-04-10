@@ -116,6 +116,13 @@ function Menusuperior() {
                 {permissoes?.permissoes?.includes("PPO_CALCULADOR") && (
                   <a href="/ppo/calculador">Calculador PPO</a>
                 )}
+                {permissoes?.permissoes?.includes(
+                  "PPO_PERMISSOES_VISUALIZACAO"
+                ) && (
+                  <a href="/ppo/permissoes-visualizacao">
+                    Permissões para Visualização
+                  </a>
+                )}
               </div>
             </div>
           </div>
