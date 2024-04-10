@@ -316,4 +316,6 @@ routes.put(
   PPOPermissoesVisualizacaoController.updateUser
 );
 
+routes.get("/ppo/motoristas/grupos", PPOController.motorista_by_grupo);
+
 export default routes;

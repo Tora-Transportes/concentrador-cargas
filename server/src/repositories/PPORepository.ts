@@ -3,7 +3,6 @@ import IAvaliacao from "../models/IAvaliacao";
 import IAtributo from "../models/IAtributo";
 import AppError from "../models/AppError";
 import { encrypt } from "../Utils/utlis";
-import { Knex } from "knex";
 
 interface IPPORepository {
   avaliacoes(
@@ -43,6 +42,7 @@ interface IPPORepository {
     page?: number,
     pageSize?: number
   ): Promise<any | undefined>;
+  motorista_by_grupo(cpf: string, permissoes: string): Promise<any | undefined>;
 }
 const isValid = (value: string | null | undefined) =>
   !["", null, undefined, "null", "undefined"].includes(value);
@@ -1049,5 +1049,14 @@ FETCH NEXT  ${pageSize} ROWS ONLY
       total_registers: totalRegisters,
       results: results,
     };
+  }
+
+  async motorista_by_grupo(cpf: string, permissoes: string): Promise<any> {
+    const sql = `SELECT * FROM dbo.VW_DADO_MOTORISTA_PPO
+    WHERE RA_CIC = '${cpf}'
+    AND M0_FILIAL IN (${permissoes})
+    `;
+
+    return mssqlPPOView.raw(sql);
   }
 }

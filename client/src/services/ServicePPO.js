@@ -190,6 +190,17 @@ class ServicePPO {
 			},
 		});
 	}
+
+	async permissao_visualizacao(cpf, permissoes) {
+		const result = await api.get(
+			`/ppo/motoristas/grupos?cpf=${cpf}&permissoes=${permissoes}`
+		);
+		if (result.data.length >= 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
 
 export default new ServicePPO();
