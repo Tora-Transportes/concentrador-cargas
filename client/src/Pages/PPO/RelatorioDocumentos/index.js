@@ -1,4 +1,10 @@
-import React, { useCallback, useReducer, useRef, useState } from "react";
+import React, {
+	useCallback,
+	useEffect,
+	useReducer,
+	useRef,
+	useState,
+} from "react";
 import Menusuperior from "../../Components/MenuSuperior/menusuperior";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import ViewRelatorioDocumentos from "./components/view";
@@ -7,6 +13,10 @@ import factoryReducerCargas from "../../../hooks/storageCargas/factoryReducerCar
 import ServicePPO from "src/services/ServicePPO";
 import { Toast } from "primereact/toast";
 import { showToastMessage } from "src/Pages/Utils/toastMessage";
+import {
+	permissoesVisualizacaoPPO,
+	getPermissoesVisualizacaoPPO,
+} from "src/Pages/Utils/validationPermissionUser";
 
 const RelatorioDocumentos = () => {
 	const defaultCargas = {
@@ -32,15 +42,24 @@ const RelatorioDocumentos = () => {
 		location.reload();
 	}
 
+	useEffect(() => {
+		async function loadPermissoes() {
+			await permissoesVisualizacaoPPO();
+		}
+		loadPermissoes();
+	}, []);
+
 	async function handleExportExcel(date_execel_inicio, date_execel_fim) {
 		setLoading(true);
 		const { filters, orderBy } = filtroAtual;
+		const permissoes = await getPermissoesVisualizacaoPPO();
 		const options = {
 			...filters,
 			order_column: orderBy?.column,
 			order_direction: orderBy?.direction,
 			date_execel_inicio,
 			date_execel_fim,
+			permissoes,
 		};
 		const response = await ServicePPO.exportRelatorioDocumetosToXlsx(options);
 
@@ -80,11 +99,13 @@ const RelatorioDocumentos = () => {
 				const { column, direction } = options.orderBy ?? {};
 				const { filters, orderBy, page } = options;
 				setFiltroAtual({ filters, orderBy, page });
+				const permissoes = await getPermissoesVisualizacaoPPO();
 				const { data } = await ServicePPO.relatorioDocumentos({
 					...options.filters,
 					page: options.page,
 					order_column: column,
 					order_direction: direction,
+					permissoes: permissoes,
 				});
 				setLoading(false);
 				setTotalRegisters(data.data.total_registers);

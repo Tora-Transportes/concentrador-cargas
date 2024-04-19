@@ -899,6 +899,12 @@ FETCH NEXT  ${pageSize} ROWS ONLY
     if (isValid(query?.rejected)) {
       filtro = filtro + ` AND rejected ${query.rejected}`;
     }
+    if (isValid(query?.permissoes)) {
+      const position = query.permissoes.search("TODAS"); // se tiver essa permissão anula Filtro
+      if (position == -1) {
+        filtro = filtro + ` AND m.filial IN (${query.permissoes})`;
+      }
+    }
     if (isValid(query?.filial)) {
       filtro = filtro + ` AND m.filial LIKE '%${query.filial}%'`;
     }
@@ -985,6 +991,12 @@ FETCH NEXT  ${pageSize} ROWS ONLY
     if (isValid(query?.rejected)) {
       filtro = filtro + ` AND rejected ${query.rejected}`;
     }
+    if (isValid(query?.permissoes)) {
+      const position = query.permissoes.search("TODAS"); // se tiver essa permissão anula Filtro
+      if (position == -1) {
+        filtro = filtro + ` AND m.filial IN (${query.permissoes})`;
+      }
+    }
     if (isValid(query?.filial)) {
       filtro = filtro + ` AND m.filial LIKE '%${query.filial}%'`;
     }
@@ -1059,7 +1071,6 @@ FETCH NEXT  ${pageSize} ROWS ONLY
   }
 
   async motorista_by_grupo(cpf: string, permissoes: string): Promise<any> {
-    console.log(permissoes);
     const positionT = permissoes.search("TODAS");
     const positionH = permissoes.search("HISTORICO");
     if (positionT == -1 || positionH == -1) {

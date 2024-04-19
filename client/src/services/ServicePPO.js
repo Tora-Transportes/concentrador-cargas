@@ -132,6 +132,7 @@ class ServicePPO {
 		ano = 2023,
 		nome,
 		filial,
+		permissoes,
 	}) {
 		return api.get("/ppo/relatorios/documentos", {
 			params: {
@@ -146,6 +147,7 @@ class ServicePPO {
 				ano,
 				nome,
 				filial,
+				permissoes,
 			},
 		});
 	}
@@ -182,6 +184,7 @@ class ServicePPO {
 		ppo_cancelado,
 		date_execel_inicio,
 		date_execel_fim,
+		permissoes,
 	}) {
 		return await api.get("/ppo/relatorios/documentos/excel", {
 			responseType: "arraybuffer",
@@ -194,6 +197,7 @@ class ServicePPO {
 				ppo_cancelado,
 				date_execel_inicio,
 				date_execel_fim,
+				permissoes,
 			},
 		});
 	}
