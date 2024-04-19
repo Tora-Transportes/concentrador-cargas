@@ -16,6 +16,11 @@ import ServicePPO from "src/services/ServicePPO";
 import { SiGooglesheets } from "react-icons/si";
 import { FaFileSignature } from "react-icons/fa";
 import "./style.css";
+import {
+	permissoesVisualizacaoPPO,
+	getPermissoesVisualizacaoPPO,
+} from "src/Pages/Utils/validationPermissionUser";
+import swal2 from "sweetalert2";
 
 const DemonstrativoMotoristas = () => {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -31,6 +36,13 @@ const DemonstrativoMotoristas = () => {
 		const { name, value } = event.target;
 		setFields((prevState) => ({ ...prevState, [name]: value }));
 	}
+
+	useEffect(() => {
+		async function loadPermissoes() {
+			await permissoesVisualizacaoPPO();
+		}
+		loadPermissoes();
+	}, []);
 
 	useEffect(() => {
 		var dataAtual = new Date();
@@ -77,13 +89,40 @@ const DemonstrativoMotoristas = () => {
 		setLoading(true);
 		event.preventDefault();
 		try {
-			const data = await ServicePPO.demonstrativos({
-				cpf: fields.cpf,
-				ano_avaliacao: fields.ano_avaliacao,
-				mes_avaliacao: fields.mes_avaliacao,
-				assinado: fields.assinado,
-			});
-			setDemonstrativos(data.data.data);
+			const permissoes = await getPermissoesVisualizacaoPPO();
+			if (fields.cpf != "") {
+				const possue_permissao = await ServicePPO.permissao_visualizacao(
+					fields.cpf,
+					permissoes
+				);
+				if (possue_permissao) {
+					const data = await ServicePPO.demonstrativos({
+						cpf: fields.cpf,
+						ano_avaliacao: fields.ano_avaliacao,
+						mes_avaliacao: fields.mes_avaliacao,
+						assinado: fields.assinado,
+						permissoes: permissoes,
+					});
+					setDemonstrativos(data.data.data);
+					setLoading(false);
+				} else {
+					swal2.fire({
+						icon: "info",
+						title: "Atenção!",
+						text: "Você não tem permissão de visualização dos dados pois o mesmo está vinculado a um grupo no qual você não tem permissão",
+					});
+				}
+			} else {
+				const data = await ServicePPO.demonstrativos({
+					cpf: fields.cpf,
+					ano_avaliacao: fields.ano_avaliacao,
+					mes_avaliacao: fields.mes_avaliacao,
+					assinado: fields.assinado,
+					permissoes: permissoes,
+				});
+				setDemonstrativos(data.data.data);
+				setLoading(false);
+			}
 			setLoading(false);
 		} catch (error) {
 			setLoading(false);

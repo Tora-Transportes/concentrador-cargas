@@ -242,8 +242,13 @@ export class PPORepository implements IPPORepository {
 
     for (const i in filter) {
       if (filter[i] !== undefined && filter[i] !== null) {
-        if (i != "assinado") {
+        if (i != "assinado" && i != "permissoes") {
           clausula = clausula + ` AND r.${i} LIKE '%${filter[i]}%'`;
+        } else if (i == "permissoes") {
+          const position = filter[i].search("TODAS"); // se tiver essa permissão anula Filtro
+          if (position == -1) {
+            clausula = clausula + ` AND g.filial IN(${filter[i]})`;
+          }
         } else {
           if (filter[i] != "undefined" || filter[i] != "") {
             if (filter[i] == "1") {
@@ -262,9 +267,11 @@ export class PPORepository implements IPPORepository {
     ,r.mes_avaliacao
     ,r.ano_avaliacao 
 	  ,c.file_link_signed
+    ,g.filial
     FROM dbo.ppo_resultado r
     inner join dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
     inner join dbo.ppo_parametros p on p.id =  pg.parametro_id
+    inner join dbo.ppo_grupos g on g.id = pg.grupo_id
 	  left join ASSINADOR_DIGITAL.DBO.controle c on  CONCAT(
         SUBSTRING(c.cpf, 1, 3), 
         '.', 
@@ -1052,11 +1059,18 @@ FETCH NEXT  ${pageSize} ROWS ONLY
   }
 
   async motorista_by_grupo(cpf: string, permissoes: string): Promise<any> {
-    const sql = `SELECT * FROM dbo.VW_DADO_MOTORISTA_PPO
-    WHERE RA_CIC = '${cpf}'
-    AND M0_FILIAL IN (${permissoes})
-    `;
+    console.log(permissoes);
+    const positionT = permissoes.search("TODAS");
+    const positionH = permissoes.search("HISTORICO");
+    if (positionT == -1 || positionH == -1) {
+      const sql = `SELECT * FROM dbo.VW_DADO_MOTORISTA_PPO
+      WHERE RA_CIC = '${cpf}'
+      AND M0_FILIAL IN (${permissoes})
+      `;
 
-    return mssqlPPOView.raw(sql);
+      return mssqlPPOView.raw(sql);
+    } else {
+      return [{}];
+    }
   }
 }
