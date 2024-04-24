@@ -14,6 +14,10 @@ import ServicePPO from "src/services/ServicePPO";
 import { Toast } from "primereact/toast";
 import { showToastMessage } from "src/Pages/Utils/toastMessage";
 import ServicePPOGrupos from "src/services/ServicePPOGrupos";
+import {
+	permissoesVisualizacaoPPO,
+	getPermissoesVisualizacaoPPO,
+} from "src/Pages/Utils/validationPermissionUser";
 
 const RelatorioMotoristas = () => {
 	const defaultCargas = {
@@ -42,6 +46,7 @@ const RelatorioMotoristas = () => {
 
 	async function handleExportExcel(date_execel_inicio, date_execel_fim) {
 		setLoading(true);
+		const permissoes = await getPermissoesVisualizacaoPPO();
 		const { filters, orderBy } = filtroAtual;
 		const options = {
 			...filters,
@@ -49,6 +54,7 @@ const RelatorioMotoristas = () => {
 			order_direction: orderBy?.direction,
 			date_execel_inicio,
 			date_execel_fim,
+			permissoes: permissoes,
 		};
 		const response = await ServicePPO.exportToXlsx(options);
 
@@ -80,27 +86,31 @@ const RelatorioMotoristas = () => {
 
 	const tableFetchData = useCallback(
 		async function (options) {
-			setLoading(true);
-			if (options !== lastOptions) {
-				setLastOptions(options);
+			if (options.countGetRota == 0 || options.countGetRota > 1) {
+				setLoading(true);
+				if (options !== lastOptions) {
+					setLastOptions(options);
+				}
+				const permissoes = await getPermissoesVisualizacaoPPO();
+				const { column, direction } = options.orderBy ?? {};
+				const { filters, orderBy, page } = options;
+				setFiltroAtual({ filters, orderBy, page });
+				const { data } = await ServicePPO.search({
+					...options.filters,
+					page: options.page,
+					order_column: column,
+					order_direction: direction,
+					permissoes: permissoes,
+				});
+				setLoading(false);
+				setTotalRegisters(data.data.total_registers);
+				dispatchCargas({
+					type: "SET",
+					payload: { ...data.data, current_page: data.data.page },
+				});
 			}
-			const { column, direction } = options.orderBy ?? {};
-			const { filters, orderBy, page } = options;
-			setFiltroAtual({ filters, orderBy, page });
-			const { data } = await ServicePPO.search({
-				...options.filters,
-				page: options.page,
-				order_column: column,
-				order_direction: direction,
-			});
-			setLoading(false);
-			setTotalRegisters(data.data.total_registers);
-			dispatchCargas({
-				type: "SET",
-				payload: { ...data.data, current_page: data.data.page },
-			});
 		},
-		[setLoading, dispatchCargas]
+		[dispatchCargas]
 	);
 
 	useEffect(() => {
@@ -108,6 +118,10 @@ const RelatorioMotoristas = () => {
 			const values = await ServicePPOGrupos.list();
 			setGrupos(values.data.data);
 		}
+		async function loadPermissoes() {
+			await permissoesVisualizacaoPPO();
+		}
+		loadPermissoes();
 		data();
 	}, []);
 

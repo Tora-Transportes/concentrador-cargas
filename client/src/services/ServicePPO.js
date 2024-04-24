@@ -103,6 +103,7 @@ class ServicePPO {
 		ano_avaliacao = 2023,
 		ppo_cancelado,
 		grupo,
+		permissoes,
 	}) {
 		return api.get("/ppo/relatorios/motoristas", {
 			params: {
@@ -116,6 +117,7 @@ class ServicePPO {
 				ano_avaliacao,
 				ppo_cancelado,
 				grupo,
+				permissoes,
 			},
 		});
 	}
@@ -160,6 +162,7 @@ class ServicePPO {
 		rejected,
 		date_execel_inicio,
 		date_execel_fim,
+		permissoes,
 	}) {
 		return await api.get("/ppo/relatorios/excel", {
 			responseType: "arraybuffer",
@@ -171,6 +174,7 @@ class ServicePPO {
 				rejected,
 				date_execel_inicio,
 				date_execel_fim,
+				permissoes,
 			},
 		});
 	}

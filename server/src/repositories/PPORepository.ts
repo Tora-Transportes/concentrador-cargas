@@ -405,28 +405,56 @@ export class PPORepository implements IPPORepository {
     const realPage = isNaN(Number(page)) || Number(page) < 1 ? 1 : Number(page);
 
     let filtro = "";
+    let filtroTot = "";
 
     if (isValid(query?.cpf)) {
       filtro = filtro + ` AND cpf LIKE '%${query.cpf}%'`;
+      filtroTot = filtroTot + ` AND r.cpf LIKE '%${query.cpf}%'`;
     }
     if (isValid(query?.matricula)) {
       filtro = filtro + ` AND matricula LIKE '%${query.matricula}%'`;
+      filtroTot = filtroTot + ` AND r.matricula LIKE '%${query.matricula}%'`;
     }
     if (isValid(query?.nome_motorista)) {
       filtro = filtro + ` AND nome_motorista LIKE '%${query.nome_motorista}%'`;
+      filtroTot =
+        filtroTot + ` AND r.nome_motorista LIKE '%${query.nome_motorista}%'`;
     }
     if (isValid(query?.mes_avaliacao)) {
       filtro = filtro + ` AND mes_avaliacao LIKE '%${query.mes_avaliacao}%'`;
+      filtroTot =
+        filtroTot + ` AND r.mes_avaliacao LIKE '%${query.mes_avaliacao}%'`;
     }
     if (isValid(query?.ano_avaliacao)) {
       filtro = filtro + ` AND ano_avaliacao LIKE '%${query.ano_avaliacao}%'`;
+      filtroTot =
+        filtroTot + ` AND r.ano_avaliacao LIKE '%${query.ano_avaliacao}%'`;
     }
     if (isValid(query?.ppo_cancelado)) {
       filtro = filtro + ` AND ppo_cancelado LIKE '%${query.ppo_cancelado}%'`;
+      filtroTot =
+        filtroTot + ` AND r.ppo_cancelado LIKE '%${query.ppo_cancelado}%'`;
     }
     if (isValid(query?.grupo)) {
       filtro = filtro + ` AND grupo LIKE '%${query.grupo}%'`;
+      filtroTot = filtroTot + ` AND g.nome LIKE '%${query.grupo}%'`;
     }
+    if (isValid(query?.permissoes)) {
+      const position = query.permissoes.search("TODAS"); // se tiver essa permissão anula Filtro
+      if (position == -1) {
+        filtroTot = filtroTot + ` AND g.filial IN (${query.permissoes})`;
+      }
+    }
+
+    const sqlTot = `
+    select count(distinct(r.cpf)) as total from ppo_resultado r 
+      inner join ppo_parametros_grupo p on p.id = r.parametro_grupo_id
+      inner join ppo_grupos g on g.id=p.grupo_id
+      where 1=1
+      ${filtroTot}
+    `;
+
+    const tot = await mssqlPPO.raw(sqlTot);
 
     const sql = `
     DECLARE @tabelaRelatorio TABLE
@@ -461,10 +489,16 @@ DECLARE @CPF_MOT VARCHAR(20),
                 @ano NVARCHAR(4) = '${query.ano_avaliacao}';
 
 DECLARE PPO_Cursor CURSOR FOR
-    SELECT DISTINCT cpf
-    FROM [dbo].[ppo_resultado]
-    WHERE mes_avaliacao = @mes
-        AND ano_avaliacao =  @ano
+      SELECT DISTINCT (r.cpf) FROM ppo_resultado r 
+        INNER JOIN ppo_parametros_grupo p ON p.id = r.parametro_grupo_id
+        INNER JOIN ppo_grupos g ON g.id=p.grupo_id
+        where 1=1
+        ${filtroTot}
+        ORDER BY r.cpf ASC
+        OFFSET ${(realPage - 1) * pageSize} ROWS
+        FETCH NEXT  ${pageSize} ROWS ONLY
+        
+
 
 OPEN PPO_Cursor;
 
@@ -614,11 +648,9 @@ select * from @tabelaRelatorio
 WHERE 1=1
 ${filtro}
     `;
-    const results = await mssqlPPO.raw(`${sql}  ORDER BY id ASC
-    OFFSET ${(realPage - 1) * pageSize} ROWS
-    FETCH NEXT  ${pageSize} ROWS ONLY`);
-    const total = await mssqlPPO.raw(`${sql}`);
-    const totalRegisters = Number(total.length) || 0;
+
+    const results = await mssqlPPO.raw(sql);
+    const totalRegisters = Number(tot[0]["total"]) || 0;
 
     return {
       page: realPage,
@@ -654,12 +686,19 @@ ${filtro}
     if (isValid(query?.ppo_cancelado)) {
       filtro = filtro + ` AND ppo_cancelado LIKE '%${query.ppo_cancelado}%'`;
     }
+    if (isValid(query?.permissoes)) {
+      const position = query.permissoes.search("TODAS"); // se tiver essa permissão anula Filtro
+      if (position == -1) {
+        filtro = filtro + ` AND filial IN (${query.permissoes})`;
+      }
+    }
 
-    const results = mssqlPPO.raw(`
+    const sql = `
     DECLARE @tabelaRelatorio TABLE
     (
     id int,
     empresa NVARCHAR(255) NULL,
+    filial NVARCHAR(255) NULL,
     grupo NVARCHAR(255) NULL,
     matricula  NVARCHAR(255) NULL,
     cpf NVARCHAR(255) NULL,
@@ -712,7 +751,7 @@ BEGIN
       BEGIN
         -- insert ppo cancelado
                  INSERT INTO @tabelaRelatorio
-                 SELECT  @Contador,g.empresa,g.nome,r.matricula,r.cpf,r.nome_motorista,0,0,0,0,0,0,0,0,0,r.ppo_cancelado,r.observacao,r.mes_avaliacao,r.ano_avaliacao FROM [dbo].[ppo_resultado] r
+                 SELECT  @Contador,g.empresa,g.filial,g.nome,r.matricula,r.cpf,r.nome_motorista,0,0,0,0,0,0,0,0,0,r.ppo_cancelado,r.observacao,r.mes_avaliacao,r.ano_avaliacao FROM [dbo].[ppo_resultado] r
          INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
          INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
          WHERE cpf = @CPF_MOT
@@ -723,8 +762,8 @@ BEGIN
     ELSE
       BEGIN
             -- insere dados motorista
-                INSERT INTO @tabelaRelatorio (id,Empresa,Grupo,matricula,cpf,nome_motorista,PPO_Cancelado,Observacao,mes_avaliacao,ano_avaliacao)
-        SELECT DISTINCT  @Contador,g.empresa,g.nome,r.matricula,r.cpf,r.nome_motorista,r.ppo_cancelado,NULL,r.mes_avaliacao,r.ano_avaliacao from [dbo].[ppo_resultado] r
+                INSERT INTO @tabelaRelatorio (id,Empresa,filial,Grupo,matricula,cpf,nome_motorista,PPO_Cancelado,Observacao,mes_avaliacao,ano_avaliacao)
+        SELECT DISTINCT  @Contador,g.empresa,g.filial,g.nome,r.matricula,r.cpf,r.nome_motorista,r.ppo_cancelado,NULL,r.mes_avaliacao,r.ano_avaliacao from [dbo].[ppo_resultado] r
         INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
         INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
         WHERE cpf = @CPF_MOT
@@ -862,9 +901,9 @@ ${filtro}
 ORDER BY id ASC
 OFFSET 0 ROWS
 FETCH NEXT  ${pageSize} ROWS ONLY
-    `);
+    `;
 
-    const rows = await results;
+    const rows = await mssqlPPO.raw(sql);
     return {
       results: rows,
     };
