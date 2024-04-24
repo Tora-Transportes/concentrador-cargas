@@ -1,4 +1,5 @@
 import database from "../database";
+import { mssqlPPO } from "../database";
 import { Knex } from "knex";
 import IUsuario from "../models/IUsuario";
 import { ISavePermission } from "../domain/UseCaseUsuario";
@@ -34,11 +35,18 @@ export class UsuarioRepository {
     for (const i of usersAndPermissions) {
       const { oid, nome, email, permissao } = i;
       if (formattedUsersAndPermissions[oid] === undefined) {
+        const permissoes_visualizacao = await mssqlPPO.raw(`
+        SELECT G.id,G.nome,G.filial FROM ppo_visualizacao_usuarios_grupos VUG
+          INNER JOIN ppo_visualizacao_usuarios VU ON VU.id = VUG.id_ppo_visualizacao_usuario
+          INNER JOIN ppo_grupos G ON G.id = VUG.id_ppo_grupos
+        WHERE VU.oid = '${oid}'
+        `);
         outputUsers.push({
           oid,
           nome,
           email,
           permissoes: [],
+          permissoes_visualizacao: permissoes_visualizacao,
         });
         formattedUsersAndPermissions[oid] = outputUsers.length - 1;
       }

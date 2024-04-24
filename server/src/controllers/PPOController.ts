@@ -6,6 +6,8 @@ import AppError from "../models/AppError";
 import { formataCPF } from "../Utils/utlis";
 import ServiceDemonstrativo from "../services/ServiceDemonstrativo";
 import ServiceAutentique from "../services/ServiceAutentique";
+import { ParamsDictionary } from "express-serve-static-core";
+import { ParsedQs } from "qs";
 
 interface Position {
   x: string;
@@ -39,6 +41,7 @@ interface IPPOController {
   relatorioDocumentos(req: Request, res: Response): Promise<Response>;
   relatorioDocumentosExcel(req: Request, res: Response): Promise<Response>;
   demonstrativos(req: Request, res: Response): Promise<Response>;
+  motorista_by_grupo(req: Request, res: Response): Promise<any>;
 }
 
 class PPOController implements IPPOController {
@@ -305,6 +308,19 @@ class PPOController implements IPPOController {
     const serviceAutentique = new ServiceAutentique();
     const response = await serviceAutentique.createDocument(body);
     return res.status(response.status).send(response.data.data);
+  }
+
+  async motorista_by_grupo(req: Request, res: Response): Promise<any> {
+    const { cpf, permissoes } = req.query;
+    if (!cpf || !permissoes) {
+      throw new AppError("query parms cpf ou permissoes ausente", 400);
+    }
+    const ppoRepository = new PPORepository();
+    const result = await ppoRepository.motorista_by_grupo(
+      String(cpf),
+      String(permissoes)
+    );
+    return res.json(result);
   }
 }
 
