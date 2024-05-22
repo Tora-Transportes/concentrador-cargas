@@ -485,6 +485,7 @@ DECLARE @CPF_MOT VARCHAR(20),
             @PPO_Cancelado INT,
                 @Column1 NVARCHAR(MAX),
                 @Column2 NVARCHAR(MAX),
+                @ColumnKM NVARCHAR(MAX),
                 @mes NVARCHAR(2) = '${query.mes_avaliacao}',
                 @ano NVARCHAR(4) = '${query.ano_avaliacao}';
 
@@ -517,9 +518,24 @@ BEGIN
 
     IF @PPO_Cancelado > 0
       BEGIN
+
+      SET @ColumnKM = NULL;
+
+      -- busca KM
+        SELECT 
+            TOP 1
+              @ColumnKM =  distancia
+        FROM ppo_distancia_percorrida_fleet
+        WHERE motorista  like   ''+'%'+ @CPF_MOT+'%'+''
+            AND MONTH(created_at) = CONVERT(INT,@mes)+1
+            AND YEAR(created_at) = CONVERT(INT,@ano)
+            AND veiculo = 'Todos'
+        ORDER BY created_at DESC
+
+
         -- insert ppo cancelado
                  INSERT INTO @tabelaRelatorio
-                 SELECT  @Contador,g.empresa,g.nome,r.matricula,r.cpf,r.nome_motorista,0,0,0,0,0,0,0,0,0,r.ppo_cancelado,r.observacao,r.mes_avaliacao,r.ano_avaliacao FROM [dbo].[ppo_resultado] r
+                 SELECT  @Contador,g.empresa,g.nome,r.matricula,r.cpf,r.nome_motorista,0,0,0,CASE WHEN @ColumnKM IS NULL THEN 0 ELSE @ColumnKM END,0,0,0,0,0,r.ppo_cancelado,r.observacao,r.mes_avaliacao,r.ano_avaliacao FROM [dbo].[ppo_resultado] r
          INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
          INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
          WHERE cpf = @CPF_MOT
@@ -666,8 +682,6 @@ ${filtro}
   ): Promise<any | undefined> {
     let filtro = "";
 
-    console.log(query);
-
     if (isValid(query?.cpf)) {
       filtro = filtro + ` AND cpf LIKE '%${query.cpf}%'`;
     }
@@ -723,6 +737,7 @@ DECLARE @CPF_MOT VARCHAR(20),
             @PPO_Cancelado INT,
                 @Column1 NVARCHAR(MAX),
                 @Column2 NVARCHAR(MAX),
+                @ColumnKM NVARCHAR(MAX),
                 @mes NVARCHAR(2) = '${query.date_execel_inicio}',
                 @ano NVARCHAR(4) = '${query.date_execel_fim}';
 
@@ -749,9 +764,23 @@ BEGIN
 
     IF @PPO_Cancelado > 0
       BEGIN
+       
+      SET @ColumnKM = NULL;
+      
+      -- busca KM
+        SELECT 
+          TOP 1
+              @ColumnKM =  distancia
+        FROM ppo_distancia_percorrida_fleet
+        WHERE motorista  like   ''+'%'+ @CPF_MOT+'%'+''
+            AND MONTH(created_at) = CONVERT(INT,@mes)+1
+            AND YEAR(created_at) = CONVERT(INT,@ano)
+            AND veiculo = 'Todos'
+        ORDER BY created_at DESC
+
         -- insert ppo cancelado
                  INSERT INTO @tabelaRelatorio
-                 SELECT  @Contador,g.empresa,g.filial,g.nome,r.matricula,r.cpf,r.nome_motorista,0,0,0,0,0,0,0,0,0,r.ppo_cancelado,r.observacao,r.mes_avaliacao,r.ano_avaliacao FROM [dbo].[ppo_resultado] r
+                 SELECT  @Contador,g.empresa,g.filial,g.nome,r.matricula,r.cpf,r.nome_motorista,0,0,0,CASE WHEN @ColumnKM IS NULL THEN 0 ELSE @ColumnKM END,0,0,0,0,0,r.ppo_cancelado,r.observacao,r.mes_avaliacao,r.ano_avaliacao FROM [dbo].[ppo_resultado] r
          INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
          INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
          WHERE cpf = @CPF_MOT
