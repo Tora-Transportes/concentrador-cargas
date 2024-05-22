@@ -682,8 +682,6 @@ ${filtro}
   ): Promise<any | undefined> {
     let filtro = "";
 
-    console.log(query);
-
     if (isValid(query?.cpf)) {
       filtro = filtro + ` AND cpf LIKE '%${query.cpf}%'`;
     }
