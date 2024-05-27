@@ -74,13 +74,20 @@ class ServicePPO {
 		});
 	}
 
-	async demonstrativos({ cpf, mes_avaliacao, ano_avaliacao, assinado }) {
+	async demonstrativos({
+		cpf,
+		mes_avaliacao,
+		ano_avaliacao,
+		assinado,
+		permissoes,
+	}) {
 		return api.get(`/ppo/motoristas/demonstrativos`, {
 			params: {
 				cpf,
 				mes_avaliacao,
 				ano_avaliacao,
 				assinado,
+				permissoes,
 			},
 		});
 	}
@@ -96,6 +103,7 @@ class ServicePPO {
 		ano_avaliacao = 2023,
 		ppo_cancelado,
 		grupo,
+		permissoes,
 	}) {
 		return api.get("/ppo/relatorios/motoristas", {
 			params: {
@@ -109,6 +117,7 @@ class ServicePPO {
 				ano_avaliacao,
 				ppo_cancelado,
 				grupo,
+				permissoes,
 			},
 		});
 	}
@@ -125,6 +134,7 @@ class ServicePPO {
 		ano = 2023,
 		nome,
 		filial,
+		permissoes,
 	}) {
 		return api.get("/ppo/relatorios/documentos", {
 			params: {
@@ -139,6 +149,7 @@ class ServicePPO {
 				ano,
 				nome,
 				filial,
+				permissoes,
 			},
 		});
 	}
@@ -146,22 +157,28 @@ class ServicePPO {
 	async exportToXlsx({
 		nome_motorista,
 		cpf,
-		viewed,
-		signed,
-		rejected,
+		matricula,
+		mes_avaliacao,
+		ano_avaliacao,
+		ppo_cancelado,
+		grupo,
 		date_execel_inicio,
 		date_execel_fim,
+		permissoes,
 	}) {
 		return await api.get("/ppo/relatorios/excel", {
 			responseType: "arraybuffer",
 			params: {
 				nome_motorista,
 				cpf,
-				viewed,
-				signed,
-				rejected,
+				matricula,
+				mes_avaliacao,
+				ano_avaliacao,
+				ppo_cancelado,
+				grupo,
 				date_execel_inicio,
 				date_execel_fim,
+				permissoes,
 			},
 		});
 	}
@@ -175,6 +192,7 @@ class ServicePPO {
 		ppo_cancelado,
 		date_execel_inicio,
 		date_execel_fim,
+		permissoes,
 	}) {
 		return await api.get("/ppo/relatorios/documentos/excel", {
 			responseType: "arraybuffer",
@@ -187,8 +205,20 @@ class ServicePPO {
 				ppo_cancelado,
 				date_execel_inicio,
 				date_execel_fim,
+				permissoes,
 			},
 		});
+	}
+
+	async permissao_visualizacao(cpf, permissoes) {
+		const result = await api.get(
+			`/ppo/motoristas/grupos?cpf=${cpf}&permissoes=${permissoes}`
+		);
+		if (result.data.length >= 1) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 

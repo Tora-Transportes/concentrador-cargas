@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputMask from "react-input-mask";
 import {
 	Container,
@@ -17,6 +17,11 @@ import Menusuperior from "../../Components/MenuSuperior/menusuperior";
 import ServicePPO from "src/services/ServicePPO";
 import swal2 from "sweetalert2";
 import { formatDateTimeZone } from "../../Utils/formatDate";
+import {
+	permissoesVisualizacaoPPO,
+	getPermissoesVisualizacaoPPO,
+} from "src/Pages/Utils/validationPermissionUser";
+import { useFormik } from "formik";
 
 const Estatisticas = () => {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -37,16 +42,13 @@ const Estatisticas = () => {
 	const [infracoes, setInfracoes] = useState([]);
 	const [interjornada, setInterjornada] = useState([]);
 	const [loadBar, setLoadBar] = useState(false);
-	const [fields, setFields] = useState({
-		cpf: "",
-		date_inicio: new Date(),
-		date_fim: new Date(),
-	});
 
-	function handleChange(event) {
-		const { name, value } = event.target;
-		setFields((prevState) => ({ ...prevState, [name]: value }));
-	}
+	useEffect(() => {
+		async function loadPermissoes() {
+			await permissoesVisualizacaoPPO();
+		}
+		loadPermissoes();
+	}, []);
 
 	async function buscarAvaliacoes(cpf, date_inicio, date_fim) {
 		setAvaliacoes([]);
@@ -151,29 +153,59 @@ const Estatisticas = () => {
 		setLoadBar(false);
 	}
 
-	function handleSubmit(event) {
-		setHasData((prevState) => ({ ...prevState, avaliacoes: 2 }));
-		setHasData((prevState) => ({ ...prevState, distancia: 2 }));
-		setHasData((prevState) => ({ ...prevState, infracoes: 2 }));
-		setHasData((prevState) => ({ ...prevState, interjornada: 2 }));
-		event.preventDefault();
-		var inicio = new Date(fields.date_inicio);
-		var fim = new Date(fields.date_fim);
-		var diferencaEmMilissegundos = fim - inicio;
-		var diferencaEmDias = diferencaEmMilissegundos / (1000 * 60 * 60 * 24);
-		if (diferencaEmDias > 30) {
-			swal2.fire({
-				icon: "info",
-				title: "Atenção!",
-				text: "Intervalo entre as data não pode ser maior que 31",
-			});
-			return;
-		}
-		buscarAvaliacoes(fields.cpf, fields.date_inicio, fields.date_fim);
-		buscarDistancia(fields.cpf, fields.date_inicio, fields.date_fim);
-		buscarInfracoes(fields.cpf, fields.date_inicio, fields.date_fim);
-		buscarInterjornada(fields.cpf, fields.date_inicio, fields.date_fim);
-	}
+	const formik = useFormik({
+		initialValues: {
+			cpf: "",
+			date_inicio: new Date(),
+			date_fim: new Date(),
+		},
+		onSubmit: async (values) => {
+			setLoading(true);
+			try {
+				const permissoes = await getPermissoesVisualizacaoPPO();
+				const possue_permissao = await ServicePPO.permissao_visualizacao(
+					values.cpf,
+					permissoes
+				);
+
+				console.log(possue_permissao);
+				if (possue_permissao) {
+					setHasData((prevState) => ({ ...prevState, avaliacoes: 2 }));
+					setHasData((prevState) => ({ ...prevState, distancia: 2 }));
+					setHasData((prevState) => ({ ...prevState, infracoes: 2 }));
+					setHasData((prevState) => ({ ...prevState, interjornada: 2 }));
+					event.preventDefault();
+					var inicio = new Date(values.date_inicio);
+					var fim = new Date(values.date_fim);
+					var diferencaEmMilissegundos = fim - inicio;
+					var diferencaEmDias =
+						diferencaEmMilissegundos / (1000 * 60 * 60 * 24);
+					if (diferencaEmDias > 30) {
+						swal2.fire({
+							icon: "info",
+							title: "Atenção!",
+							text: "Intervalo entre as data não pode ser maior que 31",
+						});
+						return;
+					}
+					buscarAvaliacoes(values.cpf, values.date_inicio, values.date_fim);
+					buscarDistancia(values.cpf, values.date_inicio, values.date_fim);
+					buscarInfracoes(values.cpf, values.date_inicio, values.date_fim);
+					buscarInterjornada(values.cpf, values.date_inicio, values.date_fim);
+				} else {
+					swal2.fire({
+						icon: "info",
+						title: "Atenção!",
+						text: "Você não tem permissão de visualização dos dados pois o mesmo está vinculado a um grupo no qual você não tem permissão",
+					});
+				}
+				//formik.resetForm();
+			} catch (error) {
+				console.log(error);
+			}
+			setLoading(false);
+		},
+	});
 
 	return (
 		<>
@@ -183,7 +215,7 @@ const Estatisticas = () => {
 				<Row id="title-hist-veic">
 					<h1>Estatísticas PPO</h1>
 				</Row>
-				<Form onSubmit={handleSubmit}>
+				<Form>
 					<Card className="mt-3">
 						<Row className="row-input-history">
 							<Col lg={3} sm={12}>
@@ -195,8 +227,8 @@ const Estatisticas = () => {
 										className="ms-2"
 										type="text"
 										name="cpf"
-										value={fields.cpf}
-										onChange={handleChange}
+										value={formik.values.cpf}
+										onChange={formik.handleChange}
 										required
 									/>
 								</Form.Group>
@@ -208,7 +240,8 @@ const Estatisticas = () => {
 										className="ms-2"
 										type="date"
 										name="date_inicio"
-										onChange={handleChange}
+										value={formik.values.date_inicio}
+										onChange={formik.handleChange}
 										required
 									/>
 								</Form.Group>
@@ -220,13 +253,15 @@ const Estatisticas = () => {
 										className="ms-2"
 										type="date"
 										name="date_fim"
-										onChange={handleChange}
+										value={formik.values.date_fim}
+										onChange={formik.handleChange}
 										required
 									/>
 								</Form.Group>
 							</Col>
 							<Col lg={2} sm={12}>
 								<Button
+									onClick={formik.handleSubmit}
 									style={{ marginTop: "32px" }}
 									type="submit"
 									id="button-pesq-history"
@@ -280,8 +315,8 @@ const Estatisticas = () => {
 										</tr>
 									</thead>
 									<tbody>
-										{avaliacoes.map((i) => (
-											<tr key={i.id}>
+										{avaliacoes.map((i, index) => (
+											<tr key={index}>
 												<td>{i.classificacao}</td>
 												<td>{i.nome_motorista}</td>
 												<td>{i.cpf}</td>
