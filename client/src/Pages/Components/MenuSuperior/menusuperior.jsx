@@ -105,7 +105,16 @@ function Menusuperior() {
                   </a>
                 )}
                 {permissoes?.permissoes?.includes("PPO_EVENTOS_RELATORIO") && (
-                  <a href="/ppo_eventos/relatorio">Relatório Eventos</a>
+                  <a href="/ppo_eventos/relatorios/eventos">
+                    Relatório Eventos
+                  </a>
+                )}
+                {permissoes?.permissoes?.includes(
+                  "PPO_EVENTOS_RELATORIO_APROVACOES"
+                ) && (
+                  <a href="/ppo_eventos/relatorios/aprovacoes">
+                    Relatório Aprovações
+                  </a>
                 )}
               </div>
             </div>

@@ -52,6 +52,8 @@ import PermissoesVisualizacao from "../Pages/PPO/PermissoesVisualizacao";
 import Permissoes from "src/Pages/PPO_Eventos/Permissoes";
 import AprovacaoSupervisor from "src/Pages/PPO_Eventos/AprovacaoSupervisor";
 import AprovacaoGerente from "src/Pages/PPO_Eventos/AprovacaoGerente";
+import RelatorioEventos from "src/Pages/PPO_Eventos/RelatorioEventos";
+import RelatorioAprovacoes from "src/Pages/PPO_Eventos/RelatorioAprovacoes";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -82,6 +84,18 @@ export default function AllRoutes() {
 					component={AprovacaoGerente}
 				/>
 				<Routes path="/ppo_eventos/permissoes" exact component={Permissoes} />
+				<Routes
+					path="/ppo_eventos/relatorios/eventos"
+					exact
+					component={RelatorioEventos}
+				/>
+
+				<Routes
+					path="/ppo_eventos/relatorios/aprovacoes"
+					exact
+					component={RelatorioAprovacoes}
+				/>
+
 				<Routes
 					path="/ppo/permissoes-visualizacao"
 					exact
