@@ -49,6 +49,7 @@ import ExportaProtheus from "../Pages/PPO/ExportaProtheus";
 import RelatorioDocumentos from "../Pages/PPO/RelatorioDocumentos";
 import Calculador from "../Pages/PPO/Calculador";
 import PermissoesVisualizacao from "../Pages/PPO/PermissoesVisualizacao";
+import Permissoes from "src/Pages/PPO_Eventos/Permissoes";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -68,7 +69,7 @@ export default function AllRoutes() {
 		<BrowserRouter>
 			<Switch>
 				<Routes path="/" exact component={Main} />
-
+				<Routes path="/ppo_eventos/permissoes" exact component={Permissoes} />
 				<Routes
 					path="/ppo/permissoes-visualizacao"
 					exact

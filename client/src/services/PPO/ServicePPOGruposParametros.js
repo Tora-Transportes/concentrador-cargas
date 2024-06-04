@@ -1,4 +1,4 @@
-import api from "./api";
+import api from "../api";
 class ServicePPOGruposParametros {
 	async list(grupo_id) {
 		return api.get(`/ppo/grupos/parametros?grupo_id=${grupo_id}`);

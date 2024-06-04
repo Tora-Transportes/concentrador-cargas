@@ -24,14 +24,15 @@ import PontoParadaController from "./controllers/PontoParadaController";
 import CargasCsnInfoController from "./controllers/csn/CargasCsnInfoController";
 import LogsErrorControllers from "./controllers/LogsErrorControllers";
 import CargaAppController from "./controllers/AppTora/CargaAppController";
-import PPOController from "./controllers/PPOController";
-import PPOParametrosController from "./controllers/PPOParametrosController";
-import PPOGruposController from "./controllers/PPOGruposController";
-import PPOParametrosGrupoController from "./controllers/PPOParametrosGrupoController";
+import PPOController from "./controllers/PPO/PPOController";
+import PPOParametrosController from "./controllers/PPO/PPOParametrosController";
+import PPOGruposController from "./controllers/PPO/PPOGruposController";
+import PPOParametrosGrupoController from "./controllers/PPO/PPOParametrosGrupoController";
 import WebhookAutentiqueController from "./controllers/WebhookAutentiqueController";
-import PPOCalculadorController from "./controllers/PPOCalculadorController";
+import PPOCalculadorController from "./controllers/PPO/PPOCalculadorController";
 import WebhookGitHubController from "./controllers/WebhookGitHubController";
-import PPOPermissoesVisualizacaoController from "./controllers/PPOPermissoesVisualizacaoController";
+import PPOPermissoesVisualizacaoController from "./controllers/PPO/PPOPermissoesVisualizacaoController";
+import PPOEventosPermissoesController from "./controllers/PPO/PPOEventosPermissoesController";
 
 const routes = Router();
 
@@ -317,5 +318,23 @@ routes.put(
 );
 
 routes.get("/ppo/motoristas/grupos", PPOController.motorista_by_grupo);
+
+routes.get(
+  "/ppo_eventos/permissoes/users",
+  PPOEventosPermissoesController.getAllUsers
+);
+
+routes.get("/ppo_eventos/permissoes", PPOEventosPermissoesController.index);
+
+routes.post("/ppo_eventos/permissoes", PPOEventosPermissoesController.create);
+routes.delete(
+  "/ppo_eventos/permissoes/users/:oid",
+  PPOEventosPermissoesController.deleteUser
+);
+
+routes.put(
+  "/ppo_eventos/permissoes/users/:oid",
+  PPOEventosPermissoesController.updateUser
+);
 
 export default routes;

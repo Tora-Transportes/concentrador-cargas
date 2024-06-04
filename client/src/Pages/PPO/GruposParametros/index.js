@@ -11,9 +11,9 @@ import {
 	InputGroup,
 } from "react-bootstrap";
 import { useFormik } from "formik";
-import ServicePPOGruposParametros from "../../../services/ServicePPOGruposParametros";
-import ServicePPO from "src/services/ServicePPO";
-import ServicePPOParametros from "src/services/ServicePPOParametros";
+import ServicePPOGruposParametros from "../../../services/PPO/ServicePPOGruposParametros";
+import ServicePPO from "src/services/PPO/ServicePPO";
+import ServicePPOParametros from "src/services/PPO/ServicePPOParametros";
 import swal from "sweetalert";
 //import { getClaims } from "../../MicrosoftAuthentication";
 import useLoadingScreen from "../../Components/LoadingScreen";

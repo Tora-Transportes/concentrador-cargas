@@ -1,8 +1,8 @@
-import { mssqlPPO } from "../database";
-import IParametroGrupo from "../models/IParametroGrupo";
+import { mssqlPPO } from "../../database";
+import IParametroGrupo from "../../models/IParametroGrupo";
 //import AppError from "../models/AppError";
-import TokenAd from "../models/TokenAd";
-import { dateAtualMoment } from "../Utils/formatData";
+import TokenAd from "../../models/TokenAd";
+import { dateAtualMoment } from "../../Utils/formatData";
 
 interface IPPOParametrosGrupoRepository {
   findByName(nome: string): Promise<IParametroGrupo | undefined>;

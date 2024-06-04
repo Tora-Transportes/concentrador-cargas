@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PPOCalculadorRepository } from "../repositories/PPOCalculadorRepository";
+import { PPOCalculadorRepository } from "../../repositories/PPO/PPOCalculadorRepository";
 
 interface IPPOCalculadorController {
   index(req: Request, res: Response): Promise<Response>;

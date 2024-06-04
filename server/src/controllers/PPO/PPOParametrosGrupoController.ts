@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PPOParametrosGPRepository } from "../repositories/PPOParametrosGrupoRepository";
+import { PPOParametrosGPRepository } from "../../repositories/PPO/PPOParametrosGrupoRepository";
 
 interface IPPOParametrosGrupoController {
   index(req: Request, res: Response): Promise<Response>;

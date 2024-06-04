@@ -1,4 +1,4 @@
-import api from "./api";
+import api from "../api";
 class ServicePPOParametros {
 	async list() {
 		return api.get("/ppo/parametros");

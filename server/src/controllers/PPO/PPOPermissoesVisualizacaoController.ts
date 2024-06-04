@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PPOPermissoesVisualizacaoRepository } from "../repositories/PPOPermissoesVisualizacaoRepository";
+import { PPOPermissoesVisualizacaoRepository } from "../../repositories/PPO/PPOPermissoesVisualizacaoRepository";
 
 interface IPPOPermissoesVisualizacaoController {
   getAllUsers(req: Request, res: Response): Promise<Response>;

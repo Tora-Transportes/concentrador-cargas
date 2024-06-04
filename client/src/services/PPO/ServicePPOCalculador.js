@@ -1,4 +1,4 @@
-import api from "./api";
+import api from "../api";
 
 class ServicePPOCalculador {
 	async relatorio({ mes, ano, tipo, page, order_column, order_direction }) {

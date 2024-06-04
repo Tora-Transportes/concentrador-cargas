@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-import { PPORepository } from "../repositories/PPORepository";
+import { PPORepository } from "../../repositories/PPO/PPORepository";
 import xlsx from "xlsx";
 import fs from "fs";
-import AppError from "../models/AppError";
-import { formataCPF } from "../Utils/utlis";
-import ServiceDemonstrativo from "../services/ServiceDemonstrativo";
-import ServiceAutentique from "../services/ServiceAutentique";
+import AppError from "../../models/AppError";
+import { formataCPF } from "../../Utils/utlis";
+import ServiceDemonstrativo from "../../services/ServiceDemonstrativo";
+import ServiceAutentique from "../../services/ServiceAutentique";
 import { ParamsDictionary } from "express-serve-static-core";
 import { ParsedQs } from "qs";
 

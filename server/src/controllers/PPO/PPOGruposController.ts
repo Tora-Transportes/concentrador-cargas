@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PPOGruposRepository } from "../repositories/PPOGruposRepository";
+import { PPOGruposRepository } from "../../repositories/PPO/PPOGruposRepository";
 
 interface IPPOGruposController {
   index(req: Request, res: Response): Promise<Response>;

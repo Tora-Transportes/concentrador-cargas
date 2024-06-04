@@ -1,9 +1,9 @@
-import { mssqlPPO, mssqlPPOView } from "../database";
-import IGrupo from "../models/IGrupo";
-import AppError from "../models/AppError";
-import TokenAd from "../models/TokenAd";
-import { dateAtualMoment } from "../Utils/formatData";
-import { compareValues } from "../Utils/utlis";
+import { mssqlPPO, mssqlPPOView } from "../../database";
+import IGrupo from "../../models/IGrupo";
+import AppError from "../../models/AppError";
+import TokenAd from "../../models/TokenAd";
+import { dateAtualMoment } from "../../Utils/formatData";
+import { compareValues } from "../../Utils/utlis";
 import fs from "fs";
 
 interface IPPOGruposRepository {

@@ -1,8 +1,8 @@
-import database, { mssqlPPO, mssqlPPOView } from "../database";
-import IAvaliacao from "../models/IAvaliacao";
-import IAtributo from "../models/IAtributo";
-import AppError from "../models/AppError";
-import { encrypt } from "../Utils/utlis";
+import database, { mssqlPPO, mssqlPPOView } from "../../database";
+import IAvaliacao from "../../models/IAvaliacao";
+import IAtributo from "../../models/IAtributo";
+import AppError from "../../models/AppError";
+import { encrypt } from "../../Utils/utlis";
 
 interface IPPORepository {
   avaliacoes(

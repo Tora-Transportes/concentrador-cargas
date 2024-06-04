@@ -1,10 +1,9 @@
-import database from "../database";
-import IUsersGrupos from "../models/IUsersGrupos";
-import { IGrupos } from "../models/IUsersGrupos";
-import { mssqlPPO } from "../database";
-import TokenAd from "../models/TokenAd";
-import AppError from "../models/AppError";
-import { forEach } from "lodash";
+import database from "../../database";
+import IUsersGrupos from "../../models/IUsersGrupos";
+import { IGrupos } from "../../models/IUsersGrupos";
+import { mssqlPPO } from "../../database";
+import TokenAd from "../../models/TokenAd";
+import AppError from "../../models/AppError";
 
 interface IPPOPermissoesVisualizacaoRepository {
   findByOid(oid: string): Promise<any | undefined>;

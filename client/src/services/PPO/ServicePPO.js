@@ -1,4 +1,4 @@
-import api from "./api";
+import api from "../api";
 
 class ServicePPO {
 	async avaliacoes(cpf, data_inicio, data_fim) {

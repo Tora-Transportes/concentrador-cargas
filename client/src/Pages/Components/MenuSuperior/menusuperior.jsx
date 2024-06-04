@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Logo from "../../../assets/logotoraico.png";
 import "./menuSuperior.css";
+import "primeicons/primeicons.css";
 import { NavbarBrand } from "react-bootstrap";
 import { FaSignOutAlt } from "react-icons/fa";
 import { logout } from "../../../MicrosoftAuthentication";
@@ -78,6 +79,26 @@ function Menusuperior() {
               Início
             </a>
           </li>
+          <div className="class-li">
+            <div className="dropdown">
+              {permissoes?.permissoes?.includes("PPO_EVENTOS") && (
+                <button id="style-button-drop" className="dropbtn">
+                  PPO Eventos
+                </button>
+              )}
+              <div id="myDropdown" className="dropdown-content">
+                {permissoes?.permissoes?.includes("PPO_EVENTOS_PERMISSOES") && (
+                  <a href="/ppo_eventos/permissoes">Permissões Aprovação</a>
+                )}
+                {permissoes?.permissoes?.includes("PPO_EVENTOS_APROVACAO") && (
+                  <a href="/ppo_eventos/aprovacao">Aprovação Eventos</a>
+                )}
+                {permissoes?.permissoes?.includes("PPO_EVENTOS_RELATORIO") && (
+                  <a href="/ppo_eventos/relatorio">Relatório Eventos</a>
+                )}
+              </div>
+            </div>
+          </div>
           <div className="class-li">
             <div className="dropdown">
               {permissoes?.permissoes?.includes("PPO_MENU") && (
