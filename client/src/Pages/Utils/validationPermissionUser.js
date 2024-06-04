@@ -53,3 +53,43 @@ export const getPermissoesVisualizacaoPPO = async () => {
 	});
 	return permissoes;
 };
+
+export const possuiPermissaoPPOEventosAprovacao = async (permissao) => {
+	let permissions = localStorage.getItem("adal.user");
+	permissions = JSON.parse(permissions);
+	if (permissions.permissao_aprovacao_ppo_eventos) {
+		if (permissions.permissao_aprovacao_ppo_eventos.length == 0) {
+			Swal.fire({
+				title: "Sem Permissão?",
+				text: "Usuário não possui permissões de aprovação cadastradas, peça o responsável para efetuar o cadastro",
+				icon: "question",
+				confirmButtonText: "Tela início",
+			}).then((result) => {
+				if (result.isConfirmed) {
+					const url = window.location.href.split("/");
+					window.location.href = `${url[0]}//${url[2]}/`;
+				}
+			});
+		} else {
+			if (
+				permissions.permissao_aprovacao_ppo_eventos[0].permissao != permissao
+			) {
+				Swal.fire({
+					title: "Nível de permissão necessário",
+					text: "Usuário não possui o nível necessário para acessar esse recurso, peça o responsável para efetuar o cadastro ",
+					icon: "question",
+					confirmButtonText: "Tela início",
+				}).then((result) => {
+					if (result.isConfirmed) {
+						const url = window.location.href.split("/");
+						window.location.href = `${url[0]}//${url[2]}/`;
+					}
+				});
+			} else {
+				return permissions.permissao_aprovacao_ppo_eventos;
+			}
+		}
+	} else {
+		return [];
+	}
+};

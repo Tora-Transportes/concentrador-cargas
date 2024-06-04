@@ -90,8 +90,19 @@ function Menusuperior() {
                 {permissoes?.permissoes?.includes("PPO_EVENTOS_PERMISSOES") && (
                   <a href="/ppo_eventos/permissoes">Permissões Aprovação</a>
                 )}
-                {permissoes?.permissoes?.includes("PPO_EVENTOS_APROVACAO") && (
-                  <a href="/ppo_eventos/aprovacao">Aprovação Eventos</a>
+                {permissoes?.permissoes?.includes(
+                  "PPO_EVENTOS_APROVACAO_SUPERVISOR"
+                ) && (
+                  <a href="/ppo_eventos/aprovacao/supervisor">
+                    Aprovação de Eventos Supervisor
+                  </a>
+                )}
+                {permissoes?.permissoes?.includes(
+                  "PPO_EVENTOS_APROVACAO_GERENTE"
+                ) && (
+                  <a href="/ppo_eventos/aprovacao/gerente">
+                    Aprovação de Eventos Gerente
+                  </a>
                 )}
                 {permissoes?.permissoes?.includes("PPO_EVENTOS_RELATORIO") && (
                   <a href="/ppo_eventos/relatorio">Relatório Eventos</a>

@@ -27,6 +27,7 @@ export const allTipoPermissoes = [
 	{ name: "PPO_PERMISSOES_VISUALIZACAO" },
 	{ name: "PPO_EVENTOS" },
 	{ name: "PPO_EVENTOS_PERMISSOES" },
-	{ name: "PPO_EVENTOS_APROVACAO" },
+	{ name: "PPO_EVENTOS_APROVACAO_GERENTE" },
+	{ name: "PPO_EVENTOS_APROVACAO_SUPERVISOR" },
 	{ name: "PPO_EVENTOS_RELATORIO" },
 ];

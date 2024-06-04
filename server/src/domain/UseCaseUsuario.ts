@@ -88,9 +88,9 @@ export class UseCaseDeleteAllPermissions {
 }
 
 export class UseCaseViewUsuario {
-  async run(filter: Record<string, any>) {
+  async run(filter: Record<string, any>, more: boolean) {
     const usuarioRepository = new UsuarioRepository();
-    return usuarioRepository.search(filter);
+    return usuarioRepository.search(filter, more);
   }
 }
 export class UseCaseSearchName {
