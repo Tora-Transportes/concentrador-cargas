@@ -1,86 +1,15 @@
 import React from "react";
-import { BsPencilSquare } from "react-icons/bs";
+import { BsCheckCircleFill } from "react-icons/bs";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { Button, InputGroup, Form, FormControl, Modal } from "react-bootstrap";
-import { MdAddCircleOutline } from "react-icons/md";
-import Select from "react-select";
+import { Button, InputGroup, FormControl } from "react-bootstrap";
 
-export const renderHeader = (
-	users,
-	permissoes,
-	formik,
-	globalFilter,
-	setGlobalFilter,
-	open,
-	handleOpen
-) => {
+export const renderHeader = (globalFilter, setGlobalFilter) => {
 	return (
 		<div className="header-table-produto">
-			<Button
-				onClick={handleOpen}
-				style={{ backgroundColor: "#00652e", borderColor: "#00652e" }}
-			>
-				<MdAddCircleOutline
-					style={{ marginBottom: "3px", marginRight: "3px" }}
-				/>
-				Adicionar Usuário
-			</Button>
-			<Modal show={open} onHide={handleOpen}>
-				<Modal.Header closeButton>
-					<Modal.Title>Adicionar Usuário</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<Modal.Body>
-						<Form>
-							<Form.Group className="mb-3" controlId="validationFormikUsuario">
-								<Form.Label>Usuário</Form.Label>
-								<Select
-									id="users"
-									name="users"
-									placeholder="Selecionar Usuário"
-									options={users}
-									onChange={(option) => formik.setFieldValue("users", option)}
-									value={formik.values.users}
-								/>
-								{formik.errors.users && formik.touched.users && (
-									<div style={{ color: "red" }}>{formik.errors.users}</div>
-								)}
-							</Form.Group>
-							<Form.Group
-								className="mb-3"
-								controlId="validationFormikPermissao"
-							>
-								<Form.Label>Permissão</Form.Label>
-								<Select
-									id="permissao"
-									name="permissao"
-									placeholder="Selecionar Permissão"
-									options={permissoes}
-									onChange={(option) =>
-										formik.setFieldValue("permissao", option)
-									}
-									value={formik.values.permissao}
-								/>
-								{formik.errors.permissao && formik.touched.permissao && (
-									<div style={{ color: "red" }}>{formik.errors.permissao}</div>
-								)}
-							</Form.Group>
-						</Form>
-					</Modal.Body>
-					<Modal.Footer>
-						<Button variant="secondary" onClick={handleOpen}>
-							Fechar
-						</Button>
-						<Button variant="primary" onClick={formik.handleSubmit}>
-							Salvar
-						</Button>
-					</Modal.Footer>
-				</Modal.Body>
-			</Modal>
 			<div className="header-table-filter-produto">
 				<InputGroup>
 					<FormControl
-						placeholder="Pesquisar Usuário"
+						placeholder="Pesquisar Nome"
 						value={globalFilter}
 						onChange={(e) => setGlobalFilter(e.target.value)}
 					/>
@@ -91,33 +20,28 @@ export const renderHeader = (
 	);
 };
 
-export const opcoesTemplate = (
-	rowData,
-	swal,
-	handleEditProduto,
-	handleDelete
-) => {
+export const opcoesTemplate = (rowData, handleAprove, handleReject) => {
 	return (
 		<div className="opcoes-table">
 			<Button
-				variant="outline-warning"
+				variant="outline-success"
 				onClick={(e) => {
 					e.preventDefault();
-					handleEditProduto(rowData);
+					handleAprove(rowData);
 				}}
 			>
-				<BsPencilSquare className="icon-editar" />
-				Editar
+				<BsCheckCircleFill className="icon-editar" />
+				Aprovar
 			</Button>
 			<Button
 				variant="outline-danger"
 				onClick={(e) => {
 					e.preventDefault();
-					handleDelete(rowData);
+					handleReject(rowData);
 				}}
 			>
 				<IoIosCloseCircleOutline className="icon-des" />
-				Deletar
+				Rejeitar
 			</Button>
 		</div>
 	);
@@ -127,12 +51,21 @@ export const nameBodyTemplate = (rowData) => {
 	return <span style={{ color: "#000" }}>{rowData.nome}</span>;
 };
 
-export const permissaoBodyTemplate = (rowData) => {
-	if (rowData.permissao == 0) {
-		return <span style={{ color: "#000" }}>Supervisor</span>;
-	} else {
-		return <span style={{ color: "#000" }}>Gerente/Diretor</span>;
-	}
+export const horasBodyTemplate = (rowData) => {
+	return <span style={{ color: "#000" }}>{rowData.horas} horas</span>;
+};
+
+export const statusBodyTemplate = (rowData) => {
+	const status = [
+		"Aguardando aprovação supervisor",
+		"Aprovado Supervisor aguardando Gerente",
+		"Aprovado Supervisor e Gerente",
+		"Reprovado pelo Supervisor",
+		"Reprovado pelo Gerente",
+	];
+	return (
+		<span style={{ color: "#000" }}>{status[rowData.status_aprovacao]}</span>
+	);
 };
 
 export const criadoBodyTemplate = (rowData) => {

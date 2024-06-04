@@ -70,6 +70,7 @@ export const possuiPermissaoPPOEventosAprovacao = async (permissao) => {
 					window.location.href = `${url[0]}//${url[2]}/`;
 				}
 			});
+			return false;
 		} else {
 			if (
 				permissions.permissao_aprovacao_ppo_eventos[0].permissao != permissao
@@ -85,8 +86,9 @@ export const possuiPermissaoPPOEventosAprovacao = async (permissao) => {
 						window.location.href = `${url[0]}//${url[2]}/`;
 					}
 				});
+				return false;
 			} else {
-				return permissions.permissao_aprovacao_ppo_eventos;
+				return true;
 			}
 		}
 	} else {

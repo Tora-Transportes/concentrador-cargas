@@ -51,18 +51,19 @@ import Calculador from "../Pages/PPO/Calculador";
 import PermissoesVisualizacao from "../Pages/PPO/PermissoesVisualizacao";
 import Permissoes from "src/Pages/PPO_Eventos/Permissoes";
 import AprovacaoSupervisor from "src/Pages/PPO_Eventos/AprovacaoSupervisor";
+import AprovacaoGerente from "src/Pages/PPO_Eventos/AprovacaoGerente";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
 	// Tem que mudar a versão na pasta main linha 141 ...
 	const limparCache = localStorage.getItem("clear_Cache");
-	if (limparCache == null || limparCache.toString() !== "version_13") {
+	if (limparCache == null || limparCache.toString() !== "version_14.1") {
 		localStorage.removeItem("table-columns-csn");
 		localStorage.removeItem("table-columns");
 		//localStorage.removeItem("table-columns-lote");
 		//localStorage.removeItem("coordenadas-table");
 		//localStorage.removeItem("viewsAviso");
-		localStorage.setItem("clear_Cache", "version_13");
+		localStorage.setItem("clear_Cache", "version_14.1");
 		window.location.reload(true);
 	}
 
@@ -78,7 +79,7 @@ export default function AllRoutes() {
 				<Routes
 					path="/ppo_eventos/aprovacao/gerente"
 					exact
-					component={AprovacaoSupervisor}
+					component={AprovacaoGerente}
 				/>
 				<Routes path="/ppo_eventos/permissoes" exact component={Permissoes} />
 				<Routes

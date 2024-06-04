@@ -33,6 +33,7 @@ import PPOCalculadorController from "./controllers/PPO/PPOCalculadorController";
 import WebhookGitHubController from "./controllers/WebhookGitHubController";
 import PPOPermissoesVisualizacaoController from "./controllers/PPO/PPOPermissoesVisualizacaoController";
 import PPOEventosPermissoesController from "./controllers/PPO/PPOEventosPermissoesController";
+import PPOEventosAprovacaoController from "./controllers/PPO/PPOEventosAprovacaoController";
 
 const routes = Router();
 
@@ -336,5 +337,8 @@ routes.put(
   "/ppo_eventos/permissoes/users/:oid",
   PPOEventosPermissoesController.updateUser
 );
+
+routes.get("/ppo_eventos/aprovacoes", PPOEventosAprovacaoController.index);
+routes.put("/ppo_eventos/aprovacoes/:id", PPOEventosAprovacaoController.update);
 
 export default routes;
