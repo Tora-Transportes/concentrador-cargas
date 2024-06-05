@@ -34,6 +34,7 @@ import WebhookGitHubController from "./controllers/WebhookGitHubController";
 import PPOPermissoesVisualizacaoController from "./controllers/PPO/PPOPermissoesVisualizacaoController";
 import PPOEventosPermissoesController from "./controllers/PPO/PPOEventosPermissoesController";
 import PPOEventosAprovacaoController from "./controllers/PPO/PPOEventosAprovacaoController";
+import PPOEventosRelatoriosController from "./controllers/PPO/PPOEventosRelatoriosController";
 
 const routes = Router();
 
@@ -340,5 +341,15 @@ routes.put(
 
 routes.get("/ppo_eventos/aprovacoes", PPOEventosAprovacaoController.index);
 routes.put("/ppo_eventos/aprovacoes/:id", PPOEventosAprovacaoController.update);
+
+routes.get(
+  "/ppo_eventos/relatorios/aprovacoes",
+  PPOEventosRelatoriosController.relatorioAprovacoes
+);
+
+routes.get(
+  "/ppo_eventos/relatorios/aprovacoes/excel",
+  PPOEventosRelatoriosController.relatorioAprovacoesExcel
+);
 
 export default routes;

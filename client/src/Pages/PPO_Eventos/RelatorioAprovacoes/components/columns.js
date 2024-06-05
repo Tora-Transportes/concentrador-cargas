@@ -1,9 +1,12 @@
 import { Form } from "react-bootstrap";
-import {
-	FaFileDownload,
-	FaFileSignature,
-	FaCloudDownloadAlt,
-} from "react-icons/fa";
+
+const status = [
+	"Aguardando aprovação supervisor",
+	"Aprovado Supervisor aguardando Gerente",
+	"Aprovado Supervisor e Gerente",
+	"Reprovado pelo Supervisor",
+	"Reprovado pelo Gerente",
+];
 
 export const getColumns = () => {
 	const columnsRelatorio = [
@@ -66,102 +69,56 @@ export const getColumns = () => {
 			showFilter: true,
 		},
 		{
-			name: "filial",
-			description: "Filial",
-			selector: (row) => row.filial,
+			name: "matricula",
+			description: "Matricula",
+			selector: (row) => row.matricula,
 			showFilter: true,
 		},
 		{
-			name: "viewed",
-			description: "Visto",
-			selector: (row) => (row.viewed === 1 ? "Sim" : "Não"),
-			Filter: (props) => (
-				<Form.Select {...props}>
-					<option></option>
-					<option value="IS NOT NULL"> Sim </option>
-					<option value="IS NULL"> Não </option>
-				</Form.Select>
-			),
-			showFilter: true,
-		},
-		{
-			name: "signed",
-			description: "Assinado",
-			selector: (row) => (row.signed === 1 ? "Sim" : "Não"),
-			Filter: (props) => (
-				<Form.Select {...props}>
-					<option></option>
-					<option value="IS NOT NULL"> Sim </option>
-					<option value="IS NULL"> Não </option>
-				</Form.Select>
-			),
-			showFilter: true,
-		},
-		{
-			name: "rejected",
-			description: "Rejeitado",
-			selector: (row) => (row.rejected === 1 ? "Sim" : "Não"),
-			Filter: (props) => (
-				<Form.Select {...props}>
-					<option></option>
-					<option value="IS NOT NULL"> Sim </option>
-					<option value="IS NULL"> Não </option>
-				</Form.Select>
-			),
-			showFilter: true,
-		},
-		{
-			name: "link",
-			description: "Link para Assinar",
-			selector: (row) =>
-				row.link === null ? (
-					"SEM LINK"
-				) : (
-					<>
-						<FaFileSignature
-							size={26}
-							onClick={() => {
-								window.open(row.link, "_blank");
-							}}
-						/>
-					</>
-				),
+			name: "horas",
+			description: "Horas",
+			selector: (row) => `${row.horas} horas`,
 			showFilter: false,
 		},
 		{
-			name: "file_link_original",
-			description: "Link Arquivo Original",
-			selector: (row) =>
-				row.file_link_original === null ? (
-					"SEM LINK"
-				) : (
-					<>
-						<FaFileDownload
-							size={26}
-							onClick={() => {
-								window.open(row.file_link_original, "_blank");
-							}}
-						/>
-					</>
-				),
+			name: "status_aprovacao",
+			description: "Status",
+			selector: (row) => status[row.status_aprovacao],
+			Filter: (props) => (
+				<Form.Select {...props}>
+					<option></option>
+					<option value="0"> {status[0]} </option>
+					<option value="1"> {status[1]} </option>
+					<option value="2"> {status[2]} </option>
+					<option value="3"> {status[3]} </option>
+					<option value="4"> {status[4]} </option>
+				</Form.Select>
+			),
+			showFilter: true,
+		},
+		{
+			name: "aprovado",
+			description: "Aprovado",
+			selector: (row) => (row.aprovado ? "Sim" : "Não"),
+			Filter: (props) => (
+				<Form.Select {...props}>
+					<option></option>
+					<option value="1"> Sim </option>
+					<option value="0"> Não </option>
+				</Form.Select>
+			),
+			showFilter: true,
+		},
+		{
+			name: "obs_supervisor",
+			description: "Obs. Supervisor",
+			selector: (row) => row.obs_supervisor,
 			showFilter: false,
 		},
 		{
-			name: "file_link_signed",
-			description: "Link Arquivo Assinado",
-			selector: (row) =>
-				row.file_link_signed === null ? (
-					"SEM LINK"
-				) : (
-					<>
-						<FaCloudDownloadAlt
-							size={26}
-							onClick={() => {
-								window.open(row.file_link_signed, "_blank");
-							}}
-						/>
-					</>
-				),
+			name: "obs_gerente",
+			description: "Obs. Gerente",
+			selector: (row) => row.obs_gerente,
 			showFilter: false,
 		},
 	];

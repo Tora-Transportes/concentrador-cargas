@@ -7,10 +7,10 @@ import React, {
 } from "react";
 import Menusuperior from "../../Components/MenuSuperior/menusuperior";
 import useLoadingScreen from "../../Components/LoadingScreen";
-import ViewRelatorioDocumentos from "./components/view";
+import ViewRelatorioAprovacoes from "./components/view";
 import { getColumns } from "./components/columns";
 import factoryReducerCargas from "../../../hooks/storageCargas/factoryReducerCargas";
-import ServicePPO from "src/services/PPO/ServicePPO";
+import ServicePPOEventosRelatorios from "src/services/PPO/ServicePPOEventosRelatorios";
 import { Toast } from "primereact/toast";
 import { showToastMessage } from "src/Pages/Utils/toastMessage";
 import {
@@ -49,7 +49,7 @@ const RelatorioAprovacoes = () => {
 		loadPermissoes();
 	}, []);
 
-	async function handleExportExcel(date_execel_inicio, date_execel_fim) {
+	async function handleExportExcel(date_excel_inicio, date_excel_fim) {
 		setLoading(true);
 		const { filters, orderBy } = filtroAtual;
 		const permissoes = await getPermissoesVisualizacaoPPO();
@@ -57,11 +57,12 @@ const RelatorioAprovacoes = () => {
 			...filters,
 			order_column: orderBy?.column,
 			order_direction: orderBy?.direction,
-			date_execel_inicio,
-			date_execel_fim,
+			date_excel_inicio,
+			date_excel_fim,
 			permissoes,
 		};
-		const response = await ServicePPO.exportRelatorioDocumetosToXlsx(options);
+		const response =
+			await ServicePPOEventosRelatorios.exportRelatorioDocumetosToXlsx(options);
 
 		if (response.status === 202) {
 			const message =
@@ -81,7 +82,7 @@ const RelatorioAprovacoes = () => {
 			link.href = url;
 			link.setAttribute(
 				"download",
-				`RELATORIO-DOCUMENTOS-PPO_${new Date().getTime()}.xlsx`
+				`RELATORIO-PPO_EVENTOS_APROVACOES_${new Date().getTime()}.xlsx`
 			);
 			link.click();
 			setModalShowExcel(false);
@@ -100,7 +101,7 @@ const RelatorioAprovacoes = () => {
 				const { filters, orderBy, page } = options;
 				setFiltroAtual({ filters, orderBy, page });
 				const permissoes = await getPermissoesVisualizacaoPPO();
-				const { data } = await ServicePPO.relatorioDocumentos({
+				const { data } = await ServicePPOEventosRelatorios.relatorioDocumentos({
 					...options.filters,
 					page: options.page,
 					order_column: column,
@@ -125,7 +126,7 @@ const RelatorioAprovacoes = () => {
 			<LoadingScreen />
 			<Menusuperior />
 			<Toast ref={toast} className="w-25" position="top-center"></Toast>
-			<ViewRelatorioDocumentos
+			<ViewRelatorioAprovacoes
 				handleExportExcel={handleExportExcel}
 				get_data={tableFetchData}
 				columns={columnsPadrao}
