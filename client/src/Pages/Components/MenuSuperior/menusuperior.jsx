@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Logo from "../../../assets/logotoraico.png";
 import "./menuSuperior.css";
+import "primeicons/primeicons.css";
 import { NavbarBrand } from "react-bootstrap";
 import { FaSignOutAlt } from "react-icons/fa";
 import { logout } from "../../../MicrosoftAuthentication";
@@ -78,6 +79,46 @@ function Menusuperior() {
               Início
             </a>
           </li>
+          <div className="class-li">
+            <div className="dropdown">
+              {permissoes?.permissoes?.includes("PPO_EVENTOS") && (
+                <button id="style-button-drop" className="dropbtn">
+                  PPO Eventos
+                </button>
+              )}
+              <div id="myDropdown" className="dropdown-content">
+                {permissoes?.permissoes?.includes("PPO_EVENTOS_PERMISSOES") && (
+                  <a href="/ppo_eventos/permissoes">Permissões Aprovação</a>
+                )}
+                {permissoes?.permissoes?.includes(
+                  "PPO_EVENTOS_APROVACAO_SUPERVISOR"
+                ) && (
+                  <a href="/ppo_eventos/aprovacao/supervisor">
+                    Aprovação de Eventos Supervisor
+                  </a>
+                )}
+                {permissoes?.permissoes?.includes(
+                  "PPO_EVENTOS_APROVACAO_GERENTE"
+                ) && (
+                  <a href="/ppo_eventos/aprovacao/gerente">
+                    Aprovação de Eventos Gerente
+                  </a>
+                )}
+                {permissoes?.permissoes?.includes("PPO_EVENTOS_RELATORIO") && (
+                  <a href="/ppo_eventos/relatorios/eventos">
+                    Relatório Eventos
+                  </a>
+                )}
+                {permissoes?.permissoes?.includes(
+                  "PPO_EVENTOS_RELATORIO_APROVACOES"
+                ) && (
+                  <a href="/ppo_eventos/relatorios/aprovacoes">
+                    Relatório Aprovações
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
           <div className="class-li">
             <div className="dropdown">
               {permissoes?.permissoes?.includes("PPO_MENU") && (

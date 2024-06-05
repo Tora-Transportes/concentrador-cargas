@@ -12,7 +12,7 @@ import {
 	Table,
 } from "react-bootstrap";
 import InputMask from "react-input-mask";
-import ServicePPO from "src/services/ServicePPO";
+import ServicePPO from "src/services/PPO/ServicePPO";
 import { SiGooglesheets } from "react-icons/si";
 import { FaFileSignature } from "react-icons/fa";
 import "./style.css";

@@ -10,10 +10,10 @@ import ViewRelatorioMotorista from "./components/view";
 import { getColumns } from "./components/columns";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import factoryReducerCargas from "../../../hooks/storageCargas/factoryReducerCargas";
-import ServicePPO from "src/services/ServicePPO";
+import ServicePPO from "src/services/PPO/ServicePPO";
 import { Toast } from "primereact/toast";
 import { showToastMessage } from "src/Pages/Utils/toastMessage";
-import ServicePPOGrupos from "src/services/ServicePPOGrupos";
+import ServicePPOGrupos from "src/services/PPO/ServicePPOGrupos";
 import {
 	permissoesVisualizacaoPPO,
 	getPermissoesVisualizacaoPPO,
