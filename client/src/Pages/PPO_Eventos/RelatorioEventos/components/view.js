@@ -9,7 +9,7 @@ import { SideBarFuncition } from "../components/tabela/sideBar";
 import { Sidebar } from "primereact/sidebar";
 // import HandleClick from "./tooltipsMonitoramento";
 
-function ViewRelatorioDocumentos({
+function ViewRelatorioEventos({
 	columns = [],
 	get_data,
 	data,
@@ -38,7 +38,7 @@ function ViewRelatorioDocumentos({
 				/>
 				<Row className="mt-3 text-center">
 					<Col>
-						<h1 id="title-cargas-lote">Relatório Documentos Assinados</h1>
+						<h1 id="title-cargas-lote">Relatório de Eventos Sascar</h1>
 					</Col>
 				</Row>
 				<Row className="row-listagem-padrao">
@@ -87,4 +87,4 @@ function ViewRelatorioDocumentos({
 	);
 }
 
-export default ViewRelatorioDocumentos;
+export default ViewRelatorioEventos;

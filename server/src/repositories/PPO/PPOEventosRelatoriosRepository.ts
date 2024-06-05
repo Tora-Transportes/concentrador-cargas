@@ -7,7 +7,18 @@ interface IPPOEventosRelatoriosRepository {
     pageSize?: number
   ): Promise<any | undefined>;
 
+  relatorioEventos(
+    query: Record<string, any>,
+    page?: number,
+    pageSize?: number
+  ): Promise<any | undefined>;
+
   relatorioAprovacoesExcel(
+    query: Record<string, any>,
+    pageSize?: number
+  ): Promise<any | undefined>;
+
+  relatorioEventosExcel(
     query: Record<string, any>,
     pageSize?: number
   ): Promise<any | undefined>;
@@ -85,8 +96,6 @@ export class PPOEventosRelatoriosRepository
   ): Promise<any | undefined> {
     let filtro = "";
 
-    console.log(query);
-
     if (isValid(query?.cpf)) {
       filtro = filtro + ` AND cpf LIKE '%${query.cpf}%'`;
     }
@@ -139,6 +148,148 @@ export class PPOEventosRelatoriosRepository
 	  cod_usu_update as 'Atualizado por',
 	  updated_at as 'Horário atualizado'
     from ppo_sascar_eventos_aprovacao
+    WHERE 1=1
+    ${filtro}
+    ORDER BY id ASC
+    OFFSET 0 ROWS
+    FETCH NEXT  ${pageSize} ROWS ONLY
+    `);
+
+    const rows = await results;
+    return {
+      results: rows,
+    };
+  }
+
+  async relatorioEventos(
+    query: Record<string, any>,
+    page = 1,
+    pageSize = 5
+  ): Promise<any | undefined> {
+    const realPage = isNaN(Number(page)) || Number(page) < 1 ? 1 : Number(page);
+
+    let filtro = "";
+
+    if (isValid(query?.id_pacote)) {
+      filtro = filtro + ` AND id_pacote LIKE '%${query.id_pacote}%'`;
+    }
+    if (isValid(query?.cod_evento)) {
+      filtro = filtro + ` AND cod_evento LIKE '%${query.cod_evento}%'`;
+    }
+    if (isValid(query?.id_rastreador)) {
+      filtro = filtro + ` AND id_rastreador LIKE '%${query.id_rastreador}%'`;
+    }
+    if (isValid(query?.placa)) {
+      filtro = filtro + ` AND placa LIKE '%${query.placa}%'`;
+    }
+    if (isValid(query?.cpf)) {
+      filtro = filtro + ` AND cpf LIKE '%${query.cpf}%'`;
+    }
+    if (isValid(query?.matricula)) {
+      filtro = filtro + ` AND matricula LIKE '%${query.matricula}%'`;
+    }
+    if (isValid(query?.cidade)) {
+      filtro = filtro + ` AND cidade LIKE '%${query.cidade}%'`;
+    }
+    if (isValid(query?.uf)) {
+      filtro = filtro + ` AND uf = '${query.uf}'`;
+    }
+    if (isValid(query?.mes)) {
+      filtro = filtro + ` AND  MONTH(created_at) = ${query.mes}`;
+    }
+    if (isValid(query?.ano)) {
+      filtro = filtro + ` AND YEAR(created_at) = ${query.ano}`;
+    }
+
+    const total = await mssqlPPO.raw(
+      `SELECT COUNT(0) as total FROM [dbo].[ppo_sascar_eventos] WITH(NOLOCK)
+         WHERE 1=1
+         ${filtro}
+        `
+    );
+
+    const sql = `    
+    SELECT 
+    MONTH(created_at) as mes,
+    YEAR(created_at) as ano,
+    * FROM [dbo].[ppo_sascar_eventos] WITH(NOLOCK)
+    WHERE 1=1
+    ${filtro}
+    ORDER BY id ASC
+    OFFSET ${(realPage - 1) * pageSize} ROWS
+    FETCH NEXT  ${pageSize} ROWS ONLY
+    `;
+    const results = await mssqlPPO.raw(sql);
+    const totalRegisters = Number(total[0]["total"]) || 0;
+
+    return {
+      page: realPage,
+      total_pages: Math.ceil(totalRegisters / pageSize),
+      total_registers: totalRegisters,
+      results: results,
+    };
+  }
+
+  async relatorioEventosExcel(
+    query: Record<string, any>,
+    pageSize = 5
+  ): Promise<any | undefined> {
+    let filtro = "";
+
+    if (isValid(query?.id_pacote)) {
+      filtro = filtro + ` AND id_pacote LIKE '%${query.id_pacote}%'`;
+    }
+    if (isValid(query?.cod_evento)) {
+      filtro = filtro + ` AND cod_evento LIKE '%${query.cod_evento}%'`;
+    }
+    if (isValid(query?.id_rastreador)) {
+      filtro = filtro + ` AND id_rastreador LIKE '%${query.id_rastreador}%'`;
+    }
+    if (isValid(query?.placa)) {
+      filtro = filtro + ` AND placa LIKE '%${query.placa}%'`;
+    }
+    if (isValid(query?.cpf)) {
+      filtro = filtro + ` AND cpf LIKE '%${query.cpf}%'`;
+    }
+    if (isValid(query?.matricula)) {
+      filtro = filtro + ` AND matricula LIKE '%${query.matricula}%'`;
+    }
+    if (isValid(query?.cidade)) {
+      filtro = filtro + ` AND cidade LIKE '%${query.cidade}%'`;
+    }
+    if (isValid(query?.uf)) {
+      filtro = filtro + ` AND uf = '${query.uf}'`;
+    }
+    if (isValid(query?.mes)) {
+      filtro = filtro + ` AND  MONTH(created_at) = ${query.mes}`;
+    }
+    if (isValid(query?.ano)) {
+      filtro = filtro + ` AND YEAR(created_at) = ${query.ano}`;
+    }
+    if (isValid(query?.date_excel_inicio)) {
+      filtro = filtro + ` AND  MONTH(created_at) = ${query.date_excel_inicio}`;
+    }
+    if (isValid(query?.date_excel_fim)) {
+      filtro = filtro + ` AND YEAR(created_at) = ${query.date_excel_fim}`;
+    }
+
+    const results = mssqlPPO.raw(`
+    select 
+      MONTH(created_at) as mes,
+      YEAR(created_at) as ano,
+	    id_pacote as 'ID Pacote',
+	    data_pacote as 'Data Pacote',
+	    cod_evento as 'Cod. Evento',
+	    id_rastreador as 'ID Rastreador',
+	    placa as 'Placa',
+	    cpf as 'CPF',
+	    matricula as 'Matricula',
+	    cidade as 'Cidade',
+	    uf as 'UF',
+	    lat as 'Latitude',
+	    long as 'Longitude',
+	    ponto_ref as 'Ponto Referência'
+	  from [dbo].[ppo_sascar_eventos]
     WHERE 1=1
     ${filtro}
     ORDER BY id ASC

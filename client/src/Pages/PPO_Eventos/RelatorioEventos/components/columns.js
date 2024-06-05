@@ -1,9 +1,35 @@
 import { Form } from "react-bootstrap";
-import {
-	FaFileDownload,
-	FaFileSignature,
-	FaCloudDownloadAlt,
-} from "react-icons/fa";
+import { formatDateTimeZone } from "src/Pages/Utils/formatDate";
+
+const estadosBrasil = [
+	"AC", // Acre
+	"AL", // Alagoas
+	"AM", // Amazonas
+	"AP", // Amapá
+	"BA", // Bahia
+	"CE", // Ceará
+	"DF", // Distrito Federal
+	"ES", // Espírito Santo
+	"GO", // Goiás
+	"MA", // Maranhão
+	"MG", // Minas Gerais
+	"MS", // Mato Grosso do Sul
+	"MT", // Mato Grosso
+	"PA", // Pará
+	"PB", // Paraíba
+	"PE", // Pernambuco
+	"PI", // Piauí
+	"PR", // Paraná
+	"RJ", // Rio de Janeiro
+	"RN", // Rio Grande do Norte
+	"RO", // Rondônia
+	"RR", // Roraima
+	"RS", // Rio Grande do Sul
+	"SC", // Santa Catarina
+	"SE", // Sergipe
+	"SP", // São Paulo
+	"TO", // Tocantins
+];
 
 export const getColumns = () => {
 	const columnsRelatorio = [
@@ -54,115 +80,82 @@ export const getColumns = () => {
 			showFilter: true,
 		},
 		{
+			name: "id_pacote",
+			description: "ID Pacote",
+			selector: (row) => row.id_pacote,
+			showFilter: true,
+		},
+		{
+			name: "data_pacote",
+			description: "Data Pacote",
+			selector: (row) => formatDateTimeZone(row.data_pacote),
+		},
+		{
+			name: "cod_evento",
+			description: "Cod. Evento",
+			selector: (row) => row.cod_evento,
+			showFilter: true,
+		},
+		{
+			name: "id_rastreador",
+			description: "ID Rastreador",
+			selector: (row) => row.id_rastreador,
+			showFilter: true,
+		},
+		{
+			name: "placa",
+			description: "Placa",
+			selector: (row) => row.placa,
+			showFilter: true,
+		},
+		{
 			name: "cpf",
 			description: "CPF",
 			selector: (row) => row.cpf,
 			showFilter: true,
 		},
 		{
-			name: "nome",
-			description: "Nome",
-			selector: (row) => row.nome,
+			name: "matricula",
+			description: "Matricula",
+			selector: (row) => row.matricula,
 			showFilter: true,
 		},
 		{
-			name: "filial",
-			description: "Filial",
-			selector: (row) => row.filial,
+			name: "cidade",
+			description: "Cidade",
+			selector: (row) => row.cidade,
 			showFilter: true,
 		},
 		{
-			name: "viewed",
-			description: "Visto",
-			selector: (row) => (row.viewed === 1 ? "Sim" : "Não"),
+			name: "uf",
+			description: "UF",
+			selector: (row) => row.uf,
 			Filter: (props) => (
 				<Form.Select {...props}>
 					<option></option>
-					<option value="IS NOT NULL"> Sim </option>
-					<option value="IS NULL"> Não </option>
+					{estadosBrasil.map((uf) => (
+						<option key={uf} value={uf}>
+							{uf}
+						</option>
+					))}
 				</Form.Select>
 			),
 			showFilter: true,
 		},
 		{
-			name: "signed",
-			description: "Assinado",
-			selector: (row) => (row.signed === 1 ? "Sim" : "Não"),
-			Filter: (props) => (
-				<Form.Select {...props}>
-					<option></option>
-					<option value="IS NOT NULL"> Sim </option>
-					<option value="IS NULL"> Não </option>
-				</Form.Select>
-			),
-			showFilter: true,
+			name: "lat",
+			description: "Latitude",
+			selector: (row) => row.lat,
 		},
 		{
-			name: "rejected",
-			description: "Rejeitado",
-			selector: (row) => (row.rejected === 1 ? "Sim" : "Não"),
-			Filter: (props) => (
-				<Form.Select {...props}>
-					<option></option>
-					<option value="IS NOT NULL"> Sim </option>
-					<option value="IS NULL"> Não </option>
-				</Form.Select>
-			),
-			showFilter: true,
+			name: "long",
+			description: "Longitude",
+			selector: (row) => row.long,
 		},
 		{
-			name: "link",
-			description: "Link para Assinar",
-			selector: (row) =>
-				row.link === null ? (
-					"SEM LINK"
-				) : (
-					<>
-						<FaFileSignature
-							size={26}
-							onClick={() => {
-								window.open(row.link, "_blank");
-							}}
-						/>
-					</>
-				),
-			showFilter: false,
-		},
-		{
-			name: "file_link_original",
-			description: "Link Arquivo Original",
-			selector: (row) =>
-				row.file_link_original === null ? (
-					"SEM LINK"
-				) : (
-					<>
-						<FaFileDownload
-							size={26}
-							onClick={() => {
-								window.open(row.file_link_original, "_blank");
-							}}
-						/>
-					</>
-				),
-			showFilter: false,
-		},
-		{
-			name: "file_link_signed",
-			description: "Link Arquivo Assinado",
-			selector: (row) =>
-				row.file_link_signed === null ? (
-					"SEM LINK"
-				) : (
-					<>
-						<FaCloudDownloadAlt
-							size={26}
-							onClick={() => {
-								window.open(row.file_link_signed, "_blank");
-							}}
-						/>
-					</>
-				),
-			showFilter: false,
+			name: "ponto_ref",
+			description: "Ponto Referência",
+			selector: (row) => row.ponto_ref,
 		},
 	];
 
