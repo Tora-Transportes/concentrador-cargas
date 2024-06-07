@@ -336,8 +336,8 @@ export class PPORepository implements IPPORepository {
       (
       SELECT 
          p.nome,
-         ADICIONAL = case when p.nome = 'INFRAÇÃO VELOCIDADE' AND r.dado_verificado > 0 THEN  1
-                   when p.nome = 'INFRAÇÃO DE INTERJORNADA' AND r.dado_verificado > 0 THEN  1
+         ADICIONAL = case when p.nome = 'INFRAÇÃO VELOCIDADE' AND TRY_CAST(r.dado_verificado AS INT) > 0 THEN  1
+                   when p.nome = 'INFRAÇÃO DE INTERJORNADA' AND TRY_CAST(r.dado_verificado AS INT) > 0 THEN  1
                 ELSE 0
                 END ,
       ADICIONAL_AVAL = case when p.nome = 'AVALIAÇÃO' AND r.dado_verificado IS NULL THEN  1
