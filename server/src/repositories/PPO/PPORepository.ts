@@ -207,13 +207,13 @@ export class PPORepository implements IPPORepository {
     const atributos = await mssqlPPO.raw(`
     SELECT 
     pr.id as id_rotulo,
-    TABELAS.TABLE_SCHEMA AS schemas,
-    TABELAS.TABLE_NAME as tabela,
-    COLUNAS.COLUMN_NAME as coluna,
+    CASE WHEN TABELAS.TABLE_SCHEMA IS NULL THEN 'dbo' ELSE TABELAS.TABLE_SCHEMA END AS schemas,
+    CASE WHEN TABELAS.TABLE_NAME  IS NULL THEN pr.tabela ELSE TABELAS.TABLE_NAME END AS tabela,
+    CASE WHEN COLUNAS.COLUMN_NAME  IS NULL THEN pr.campo ELSE COLUNAS.COLUMN_NAME END AS coluna,
     pr.rotulo as rotulo
     FROM INFORMATION_SCHEMA.COLUMNS AS COLUNAS
     INNER JOIN INFORMATION_SCHEMA.TABLES  AS TABELAS ON TABELAS.TABLE_NAME = COLUNAS.TABLE_NAME
-    INNER JOIN [dbo].[ppo_de_para_rotulo] AS pr ON pr.tabela = CONCAT ( TABELAS.TABLE_SCHEMA, '.',TABELAS.TABLE_NAME) and pr.campo = COLUNAS.COLUMN_NAME  
+    RIGHT JOIN [dbo].[ppo_de_para_rotulo] AS pr ON pr.tabela = CONCAT ( TABELAS.TABLE_SCHEMA, '.',TABELAS.TABLE_NAME) and pr.campo = COLUNAS.COLUMN_NAME  
     `);
 
     const tabelasAgrupadas: any = [];
@@ -336,8 +336,8 @@ export class PPORepository implements IPPORepository {
       (
       SELECT 
          p.nome,
-         ADICIONAL = case when p.nome = 'INFRAÇÃO VELOCIDADE' AND r.dado_verificado > 0 THEN  1
-                   when p.nome = 'INFRAÇÃO DE INTERJORNADA' AND r.dado_verificado > 0 THEN  1
+         ADICIONAL = case when p.nome = 'INFRAÇÃO VELOCIDADE' AND TRY_CAST(r.dado_verificado AS INT) > 0 THEN  1
+                   when p.nome = 'INFRAÇÃO DE INTERJORNADA' AND TRY_CAST(r.dado_verificado AS INT) > 0 THEN  1
                 ELSE 0
                 END ,
       ADICIONAL_AVAL = case when p.nome = 'AVALIAÇÃO' AND r.dado_verificado IS NULL THEN  1

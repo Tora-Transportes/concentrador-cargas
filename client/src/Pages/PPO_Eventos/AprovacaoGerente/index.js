@@ -16,6 +16,7 @@ import {
 	atualzadoBodyTemplate,
 } from "./components/templateDataTable";
 import swal from "sweetalert";
+import swal2 from "sweetalert2";
 import ServicePPOEventosAprovacao from "src/services/PPO/ServicePPOEventosAprovacao";
 import { possuiPermissaoPPOEventosAprovacao } from "src/Pages/Utils/validationPermissionUser";
 
@@ -27,6 +28,67 @@ const AprovacaoGerente = () => {
 
 	async function loadList() {
 		return ServicePPOEventosAprovacao.list(1);
+	}
+
+	async function details(id_pacote_ini, id_pacote_fim) {
+		return ServicePPOEventosAprovacao.detalhes(id_pacote_ini, id_pacote_fim);
+	}
+
+	async function handleDetails(id_pacote_ini, id_pacote_fim) {
+		setLoading(true);
+		Promise.all([details(id_pacote_ini, id_pacote_fim)])
+			.then(function (values) {
+				const pacoteIni = values[0][0];
+				const pacoteFim = values[0][1];
+				const htmlContent = `
+				<div style="font-size: 14px; text-align: left;">
+					<h5>Pacote Início:</h5>
+					<div>
+						<div><strong>Placa:</strong> <span>${pacoteIni.placa}</span></div>
+						<div><strong>Pacote:</strong> <span>${pacoteIni.id_pacote}</span></div>
+						<div><strong>CPF:</strong> <span>${pacoteIni.cpf}</span></div>
+						<div><strong>Matrícula:</strong> <span>${pacoteIni.matricula}</span></div>
+						<div><strong>Cidade:</strong> <span>${pacoteIni.cidade}</span></div>
+						<div><strong>UF:</strong> <span>${pacoteIni.UF}</span></div>
+						<div><strong>Latitude:</strong> <span>${pacoteIni.lat}</span></div>
+						<div><strong>Longitude:</strong> <span>${pacoteIni.long}</span></div>
+						<div><strong>Data Pacote:</strong> <span>${new Date(
+							pacoteIni.data_pacote
+						).toLocaleString("pt-BR", { timeZone: "UTC" })}</span></div>
+						<div><strong>Ponto de Referência:</strong> <span>${
+							pacoteIni.ponto_ref
+						}</span></div>
+					</div>
+					<br/>
+					<h5>Pacote Fim:</h5>
+					<div>
+						<div><strong>Placa:</strong> <span>${pacoteFim.placa}</span></div>
+						<div><strong>Pacote:</strong> <span>${pacoteFim.id_pacote}</span></div>
+						<div><strong>CPF:</strong> <span>${pacoteFim.cpf}</span></div>
+						<div><strong>Matrícula:</strong> <span>${pacoteFim.matricula}</span></div>
+						<div><strong>Cidade:</strong> <span>${pacoteFim.cidade}</span></div>
+						<div><strong>UF:</strong> <span>${pacoteFim.UF}</span></div>
+						<div><strong>Latitude:</strong> <span>${pacoteFim.lat}</span></div>
+						<div><strong>Longitude:</strong> <span>${pacoteFim.long}</span></div>
+						<div><strong>Data Pacote:</strong> <span>${new Date(
+							pacoteFim.data_pacote
+						).toLocaleString("pt-BR", { timeZone: "UTC" })}</span></div>
+						<div><strong>Ponto de Referência:</strong> <span>${
+							pacoteFim.ponto_ref
+						}</span></div>
+					</div>
+				</div>
+			`;
+
+				// Exibindo o popup com os detalhes dos pacotes
+				swal2.fire({
+					html: htmlContent,
+				});
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+		setLoading(false);
 	}
 
 	useEffect(() => {
@@ -53,7 +115,7 @@ const AprovacaoGerente = () => {
 	}
 
 	const getOpcoesTemplate = (rowData) => {
-		return opcoesTemplate(rowData, handleAprove, handleReject);
+		return opcoesTemplate(rowData, handleAprove, handleReject, handleDetails);
 	};
 
 	const getRenderHeader = () => {
