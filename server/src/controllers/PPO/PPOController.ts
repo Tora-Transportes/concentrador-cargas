@@ -298,7 +298,12 @@ class PPOController implements IPPOController {
       ano: String(ano),
       positions: {
         x: "20.0",
-        y: dados["dados_motorista"]["cancelado"] == "Sim" ? "73.0" : "86.0",
+        y:
+          dados["dados_motorista"]["cancelado"] == "Sim"
+            ? "73.0"
+            : dados["valores"].length == 5 // se tiver complementar
+            ? "90.0"
+            : "86.0",
         z: "1",
       },
       url_file: "xpto",
