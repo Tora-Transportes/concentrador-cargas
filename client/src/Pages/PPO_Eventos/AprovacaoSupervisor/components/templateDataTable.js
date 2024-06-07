@@ -1,5 +1,5 @@
 import React from "react";
-import { BsCheckCircleFill } from "react-icons/bs";
+import { BsCheckCircleFill, BsReceiptCutoff } from "react-icons/bs";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { Button, InputGroup, FormControl } from "react-bootstrap";
 
@@ -20,9 +20,24 @@ export const renderHeader = (globalFilter, setGlobalFilter) => {
 	);
 };
 
-export const opcoesTemplate = (rowData, handleAprove, handleReject) => {
+export const opcoesTemplate = (
+	rowData,
+	handleAprove,
+	handleReject,
+	handleDetails
+) => {
 	return (
 		<div className="opcoes-table">
+			<Button
+				variant="outline-primary"
+				onClick={async (e) => {
+					e.preventDefault();
+					handleDetails(rowData.id_pacote_ini, rowData.id_pacote_fim);
+				}}
+			>
+				<BsReceiptCutoff className="icon-editar" />
+				Detalhes
+			</Button>
 			<Button
 				variant="outline-success"
 				onClick={(e) => {

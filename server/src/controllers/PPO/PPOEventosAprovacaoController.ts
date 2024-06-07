@@ -3,6 +3,7 @@ import { PPOEventosAprovacaoRepository } from "../../repositories/PPO/PPOEventos
 
 interface IPPOEventosAprovacaoController {
   index(req: Request, res: Response): Promise<Response>;
+  detalhes(req: Request, res: Response): Promise<Response>;
   update(req: Request, res: Response): Promise<Response>;
 }
 
@@ -20,6 +21,11 @@ class PPOEventosAprovacaoController implements IPPOEventosAprovacaoController {
       id,
       String(req.headers.authorization)
     );
+    return res.json({ data: result });
+  }
+  async detalhes(req: Request, res: Response): Promise<Response> {
+    const PEAR = new PPOEventosAprovacaoRepository();
+    const result = await PEAR.detalhes(req.query);
     return res.json({ data: result });
   }
 }

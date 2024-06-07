@@ -362,4 +362,9 @@ routes.get(
   PPOEventosRelatoriosController.relatorioEventosExcel
 );
 
+routes.get(
+  "/ppo_eventos/aprovacoes/detalhes",
+  PPOEventosAprovacaoController.detalhes
+);
+
 export default routes;
