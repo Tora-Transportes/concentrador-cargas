@@ -21,7 +21,7 @@ import {
 } from "./components/templateDataTable";
 import swal from "sweetalert";
 import * as Yup from "yup";
-import ServicePPOParametros from "src/services/ServicePPOParametros";
+import ServicePPOParametros from "src/services/PPO/ServicePPOParametros";
 
 const ParametroSchema = Yup.object().shape({
 	nome: Yup.string()

@@ -21,7 +21,7 @@ import {
 	termoBodyTemplate,
 } from "./components/templateDataTable";
 import swal from "sweetalert";
-import ServicePPOGrupos from "src/services/ServicePPOGrupos";
+import ServicePPOGrupos from "src/services/PPO/ServicePPOGrupos";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 

@@ -14,7 +14,7 @@ import {
 } from "react-bootstrap";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import Menusuperior from "../../Components/MenuSuperior/menusuperior";
-import ServicePPO from "src/services/ServicePPO";
+import ServicePPO from "src/services/PPO/ServicePPO";
 import swal2 from "sweetalert2";
 import { formatDateTimeZone } from "../../Utils/formatDate";
 import {

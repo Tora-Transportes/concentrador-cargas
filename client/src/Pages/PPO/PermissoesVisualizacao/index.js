@@ -14,7 +14,7 @@ import {
 } from "./components/templateDataTable";
 import swal from "sweetalert";
 import * as Yup from "yup";
-import ServicePPOPermissoesVisualizacao from "src/services/ServicePPOPermissoesVisualizacao";
+import ServicePPOPermissoesVisualizacao from "src/services/PPO/ServicePPOPermissoesVisualizacao";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";

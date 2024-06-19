@@ -3,7 +3,7 @@ import Menusuperior from "../../Components/MenuSuperior/menusuperior";
 import { makeStyles } from "@material-ui/core/styles";
 import StepperComponent from "./components/Stepper";
 import PainelComponent from "./components/Painel";
-import ServicePPOCalculador from "src/services/ServicePPOCalculador";
+import ServicePPOCalculador from "src/services/PPO/ServicePPOCalculador";
 import Swal from "sweetalert2";
 
 const useStyles = makeStyles(() => ({

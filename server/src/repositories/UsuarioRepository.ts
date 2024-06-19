@@ -4,7 +4,7 @@ import { Knex } from "knex";
 import IUsuario from "../models/IUsuario";
 import { ISavePermission } from "../domain/UseCaseUsuario";
 export class UsuarioRepository {
-  async search(filter: Record<string, any>, page = 1) {
+  async search(filter: Record<string, any>, more: boolean, page = 1) {
     const results = database("con_usuarios").select("*");
 
     const funcToFilter = (qb: Knex.QueryBuilder) => {
@@ -35,19 +35,33 @@ export class UsuarioRepository {
     for (const i of usersAndPermissions) {
       const { oid, nome, email, permissao } = i;
       if (formattedUsersAndPermissions[oid] === undefined) {
-        const permissoes_visualizacao = await mssqlPPO.raw(`
+        if (!more) {
+          const permissoes_visualizacao = await mssqlPPO.raw(`
         SELECT G.id,G.nome,G.filial FROM ppo_visualizacao_usuarios_grupos VUG
           INNER JOIN ppo_visualizacao_usuarios VU ON VU.id = VUG.id_ppo_visualizacao_usuario
           INNER JOIN ppo_grupos G ON G.id = VUG.id_ppo_grupos
         WHERE VU.oid = '${oid}'
         `);
-        outputUsers.push({
-          oid,
-          nome,
-          email,
-          permissoes: [],
-          permissoes_visualizacao: permissoes_visualizacao,
-        });
+          const permissao_aprovacao_ppo_eventos =
+            await mssqlPPO.raw(`SELECT oid,nome,email,permissao 
+        FROM [dbo].[ppo_sascar_eventos_usuarios_permissoes]
+        WHERE oid = '${oid}'`);
+          outputUsers.push({
+            oid,
+            nome,
+            email,
+            permissoes: [],
+            permissoes_visualizacao: permissoes_visualizacao,
+            permissao_aprovacao_ppo_eventos: permissao_aprovacao_ppo_eventos,
+          });
+        } else {
+          outputUsers.push({
+            oid,
+            nome,
+            email,
+            permissoes: [],
+          });
+        }
         formattedUsersAndPermissions[oid] = outputUsers.length - 1;
       }
       if (permissao) {
