@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PPOParametrosRepository } from "../repositories/PPOParametrosRepository";
+import { PPOParametrosRepository } from "../../repositories/PPO/PPOParametrosRepository";
 
 interface IPPOParametrosController {
   index(req: Request, res: Response): Promise<Response>;

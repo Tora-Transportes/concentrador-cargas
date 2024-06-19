@@ -1,8 +1,8 @@
-import { mssqlPPO } from "../database";
-import ICalculador from "../models/ICalculador";
+import { mssqlPPO } from "../../database";
+import ICalculador from "../../models/ICalculador";
 //import AppError from "../models/AppError";
-import TokenAd from "../models/TokenAd";
-import { dateAtualMoment } from "../Utils/formatData";
+import TokenAd from "../../models/TokenAd";
+import { dateAtualMoment } from "../../Utils/formatData";
 
 interface IPPOCalculadorRepository {
   create(calculador: ICalculador, user: string): Promise<any>;

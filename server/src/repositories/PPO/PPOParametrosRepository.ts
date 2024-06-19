@@ -1,8 +1,8 @@
-import { mssqlPPO } from "../database";
-import IParametro from "../models/IParametro";
-import AppError from "../models/AppError";
-import TokenAd from "../models/TokenAd";
-import { dateAtualMoment } from "../Utils/formatData";
+import { mssqlPPO } from "../../database";
+import IParametro from "../../models/IParametro";
+import AppError from "../../models/AppError";
+import TokenAd from "../../models/TokenAd";
+import { dateAtualMoment } from "../../Utils/formatData";
 
 interface IPPOParametrosRepository {
   findByName(nome: string): Promise<IParametro | undefined>;
