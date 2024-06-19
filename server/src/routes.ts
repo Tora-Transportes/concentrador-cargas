@@ -319,10 +319,8 @@ routes.put(
 
 routes.get("/ppo/motoristas/grupos", PPOController.motorista_by_grupo);
 
-routes.get("/cargas/pre-requisito", PreRequisitoController.list);
-routes.post("/cargas/pre-requisito", PreRequisitoController.create);
-routes.put("/cargas/pre-requisito", PreRequisitoController.update);
-routes.put("/cargas/pre-requisito:delete", PreRequisitoController.delete);
-routes.put("/cargas/pre-requisito:enable", PreRequisitoController.enable);
+routes.get("/pre-requisito", PreRequisitoController.list);
+routes.post("/pre-requisito", PreRequisitoController.create);
+routes.put("/pre-requisito/:id", PreRequisitoController.update);
 
 export default routes;

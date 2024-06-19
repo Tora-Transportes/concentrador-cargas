@@ -19,7 +19,13 @@ export class PreRequisitosRepository {
 
   async create(prerequisito: IPreRequisito, user: string) {
     prerequisito.cod_usu_create = TokenAd.getClaims(user).name;
-    return database("con_pre_requisito").insert(prerequisito);
+    const PR: IPreRequisito = {
+      nome: prerequisito.nome,
+      exige_quantidade: prerequisito.exige_quantidade,
+      ativo: 1,
+      cod_usu_create: TokenAd.getClaims(user).name,
+    };
+    return database("con_pre_requisito").insert(PR);
   }
 
   async update(id: number, prerequisito: IPreRequisito, user: string) {

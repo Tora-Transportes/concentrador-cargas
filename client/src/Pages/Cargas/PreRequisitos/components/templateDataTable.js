@@ -1,5 +1,5 @@
 import React from "react";
-import { BsPencilSquare } from "react-icons/bs";
+import { BsPencilSquare, BsCheckLg } from "react-icons/bs";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { Button, Form, InputGroup, FormControl, Modal } from "react-bootstrap";
 import { MdAddCircleOutline } from "react-icons/md";
@@ -36,7 +36,7 @@ export const renderHeader = (
 									placeholder="Nome"
 									aria-describedby="inputGroupPrepend"
 									name="nome"
-									value={formik.values.nome}
+									value={formik.values.nome || ""}
 									onChange={formik.handleChange}
 									isInvalid={!!formik.errors.nome}
 								/>
@@ -45,20 +45,26 @@ export const renderHeader = (
 								</Form.Control.Feedback>
 							</InputGroup>
 						</Form.Group>
-						<Form.Group className="mb-3" controlId="validationFormikEmpresa">
-							<Form.Label>Empresa</Form.Label>
+						<Form.Group
+							className="mb-3"
+							controlId="validationFormikExigeQuantidade"
+						>
+							<Form.Label>Exige Quantidade</Form.Label>
 							<InputGroup hasValidation>
 								<Form.Control
-									type="text"
-									placeholder="Empresa"
+									as="select"
 									aria-describedby="inputGroupPrepend"
-									name="empresa"
-									value={formik.values.empresa}
+									name="exige_quantidade"
+									value={formik.values.exige_quantidade || ""}
 									onChange={formik.handleChange}
-									isInvalid={!!formik.errors.empresa}
-								/>
+									isInvalid={!!formik.errors.exige_quantidade}
+								>
+									<option value="">Escolha uma opção</option>
+									<option value={1}>Sim</option>
+									<option value={0}>Não</option>
+								</Form.Control>
 								<Form.Control.Feedback type="invalid">
-									{formik.errors.empresa}
+									{formik.errors.exige_quantidade}
 								</Form.Control.Feedback>
 							</InputGroup>
 						</Form.Group>
@@ -74,42 +80,62 @@ export const renderHeader = (
 				</Modal.Footer>
 			</Modal>
 			<div className="header-table-filter-produto">
-				<InputGroup>
-					<FormControl
-						placeholder="Pesquisar nome"
-						value={globalFilter}
-						onChange={(e) => setGlobalFilter(e.target.value)}
-					/>
-					<i className="pi pi-search" />
-				</InputGroup>
+				<FormControl
+					placeholder="Pesquisar nome"
+					value={globalFilter || ""} // Ensure the value is never undefined
+					onChange={(e) => setGlobalFilter(e.target.value)}
+				/>
+				<i className="pi pi-search" />
 			</div>
 		</div>
 	);
 };
 
-export const opcoesTemplate = (rowData, handleEditProduto, handleDelete) => {
+export const opcoesTemplate = (
+	rowData,
+	handleEditProduto,
+	handleDelete,
+	handleEnable
+) => {
 	return (
 		<div className="opcoes-table">
-			<Button
-				variant="outline-warning"
-				onClick={(e) => {
-					e.preventDefault();
-					handleEditProduto(rowData, rowData.id);
-				}}
-			>
-				<BsPencilSquare className="icon-editar" />
-				Editar
-			</Button>
-			<Button
-				variant="outline-danger"
-				onClick={(e) => {
-					e.preventDefault();
-					handleDelete(rowData.nome, rowData.id);
-				}}
-			>
-				<IoIosCloseCircleOutline className="icon-des" />
-				Deletar
-			</Button>
+			{rowData.ativo !== "0" ? (
+				<>
+					<Button
+						variant="outline-warning"
+						onClick={(e) => {
+							e.preventDefault();
+							handleEditProduto(rowData, rowData.id);
+						}}
+					>
+						<BsPencilSquare className="icon-editar" />
+						Editar
+					</Button>
+					<Button
+						variant="outline-danger"
+						onClick={(e) => {
+							e.preventDefault();
+							handleDelete(rowData.nome, rowData.id);
+						}}
+					>
+						<IoIosCloseCircleOutline className="icon-des" />
+						Deletar
+					</Button>
+				</>
+			) : (
+				<>
+					<Button
+						variant="outline-info"
+						onClick={(e) => {
+							e.preventDefault();
+							handleEnable(rowData.id);
+						}}
+					>
+						<BsCheckLg fontSize={12} />
+						Ativar
+					</Button>
+				</>
+			)}
 		</div>
 	);
 };
@@ -117,6 +143,23 @@ export const opcoesTemplate = (rowData, handleEditProduto, handleDelete) => {
 export const nameBodyTemplate = (rowData) => {
 	return <span style={{ color: "#000" }}>{rowData.nome}</span>;
 };
+
+export const yesOrNoBodyTemplateAT = (rowData) => {
+	return (
+		<span style={{ color: "#000" }}>
+			{rowData.ativo == "0" ? "Não" : "Sim"}
+		</span>
+	);
+};
+
+export const yesOrNoBodyTemplateQT = (rowData) => {
+	return (
+		<span style={{ color: "#000" }}>
+			{rowData.exige_quantidade == "0" ? "Não" : "Sim"}
+		</span>
+	);
+};
+
 export const usuarioBodyTemplate = (rowData) => {
 	try {
 		const [data, time] = rowData.updated_at?.split("T");

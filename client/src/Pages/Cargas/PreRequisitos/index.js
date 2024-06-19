@@ -18,16 +18,18 @@ import {
 	usuarioBodyTemplate,
 	renderHeader,
 	criadoBodyTemplate,
+	yesOrNoBodyTemplateAT,
+	yesOrNoBodyTemplateQT,
 } from "./components/templateDataTable";
 import swal from "sweetalert";
-import ServicePPOGrupos from "src/services/ServicePPOGrupos";
+import ServicePreRequisitos from "src/services/ServicePreRequisitos";
 import * as Yup from "yup";
 
 const GrupoSchema = Yup.object().shape({
 	nome: Yup.string().required("nome é um campo obrigatório"),
-	empresa: Yup.string().required("empresa é um campo obrigatório"),
-	filial: Yup.string().required("filial é um campo obrigatório"),
-	cod_filial: Yup.string().required("cod filial é um campo obrigatório"),
+	exige_quantidade: Yup.number()
+		.oneOf([1, 0], "Opção inválida")
+		.required("Campo obrigatório"),
 });
 
 const PreRequisitos = () => {
@@ -38,7 +40,7 @@ const PreRequisitos = () => {
 	const [open, setOpen] = useState(false);
 	const [openCreate, setOpenCreate] = useState(false);
 	const [idEdit, setIdEdit] = useState(null);
-	const inputFile = useRef(null);
+
 	function handleOpen() {
 		setOpen(!open);
 	}
@@ -48,7 +50,7 @@ const PreRequisitos = () => {
 
 	async function loadParametros() {
 		setLoading(true);
-		ServicePPOGrupos.list().then(({ data }) => {
+		ServicePreRequisitos.list().then(({ data }) => {
 			setParametros(data.data);
 		});
 		setLoading(false);
@@ -57,26 +59,17 @@ const PreRequisitos = () => {
 	const formik = useFormik({
 		initialValues: {
 			nome: "",
-			exige_quantidade: false,
+			exige_quantidade: "",
 		},
 		validationSchema: GrupoSchema,
 		onSubmit: async (values) => {
 			setLoading(true);
 			try {
-				if (inputFile.current) {
-					console.log(inputFile.current);
-					const files = inputFile.current.files;
-					if (files.length === 0) {
-						swal("Ops!", "Nenhum arquivo foi selecionado.", "error");
-					} else {
-						await ServicePPOGrupos.create(files[0], values);
-						await loadParametros();
-						handleOpenCreate();
-						swal("Sucesso!", "O grupo foi cadastrado", "success");
-						formik.resetForm();
-						inputFile.current.value = "";
-					}
-				}
+				await ServicePreRequisitos.create(values);
+				await loadParametros();
+				handleOpenCreate();
+				swal("Sucesso!", "O requisito foi cadastrado", "success");
+				formik.resetForm();
 			} catch (error) {
 				console.log(error);
 			}
@@ -91,7 +84,7 @@ const PreRequisitos = () => {
 	async function handleDelete(nome, id) {
 		const observacao = await swal(
 			"Ops!",
-			`Tem certeza que deseja DELETAR o grupo ${nome}?`,
+			`Tem certeza que deseja DESATIVAR o requisito ${nome}?`,
 			"warning",
 			{
 				buttons: ["Não", true],
@@ -99,10 +92,13 @@ const PreRequisitos = () => {
 		);
 		if (observacao) {
 			try {
-				await ServicePPOGrupos.delete({ id });
-				swal("Sucesso", "Grupo deletado!", "success");
+				setLoading(true);
+				await ServicePreRequisitos.delete(id);
 				await loadParametros();
+				setLoading(false);
+				swal("Sucesso", "Requisito desativado!", "success");
 			} catch (error) {
+				setLoading(false);
 				console.log(error);
 			}
 		}
@@ -110,23 +106,15 @@ const PreRequisitos = () => {
 
 	async function submitEdit() {
 		try {
-			if (inputFile.current) {
-				console.log(inputFile.current);
-				const files = inputFile.current.files;
-				if (files.length === 0) {
-					await ServicePPOGrupos.update(idEdit, false, null, formik.values);
-					swal("Sucesso", "Grupo atualizado!", "success");
-					handleOpen();
-					await loadParametros();
-				} else {
-					await ServicePPOGrupos.update(idEdit, true, files[0], formik.values);
-					swal("Sucesso", "Grupo atualizado!", "success");
-					handleOpen();
-					await loadParametros();
-				}
-			}
+			setLoading(true);
+			await ServicePreRequisitos.update(idEdit, formik.values);
+			await loadParametros();
 			formik.resetForm();
+			handleOpen();
+			setLoading(false);
+			swal("Sucesso", "O requisito foi atualizado!", "success");
 		} catch (error) {
+			setLoading(false);
 			console.log(error);
 		}
 	}
@@ -134,14 +122,30 @@ const PreRequisitos = () => {
 	async function handleEditProduto(objeto, id) {
 		setIdEdit(id);
 		formik.values.nome = objeto.nome;
-		formik.values.empresa = objeto.empresa;
-		formik.values.filial = objeto.filial;
-		formik.values.cod_filial = objeto.cod_filial;
+		formik.values.exige_quantidade = objeto.exige_quantidade;
 		handleOpen();
 	}
 
+	async function handleEnable(id) {
+		try {
+			setLoading(true);
+			await ServicePreRequisitos.enable(id);
+			await loadParametros();
+			setLoading(false);
+			swal("Sucesso", "Requisito ativado!", "success");
+		} catch (error) {
+			setLoading(false);
+			console.log(error);
+		}
+	}
+
 	const getOpcoesTemplate = (rowData) => {
-		return opcoesTemplate(rowData, handleEditProduto, handleDelete);
+		return opcoesTemplate(
+			rowData,
+			handleEditProduto,
+			handleDelete,
+			handleEnable
+		);
 	};
 
 	const getRenderHeader = () => {
@@ -164,7 +168,7 @@ const PreRequisitos = () => {
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
-						<Form.Group className="mb-3" controlId="validationFormikNomeEdit">
+						<Form.Group className="mb-3" controlId="validationFormikNome">
 							<Form.Label>Nome</Form.Label>
 							<InputGroup hasValidation>
 								<Form.Control
@@ -172,7 +176,7 @@ const PreRequisitos = () => {
 									placeholder="Nome"
 									aria-describedby="inputGroupPrepend"
 									name="nome"
-									value={formik.values.nome}
+									value={formik.values.nome || ""}
 									onChange={formik.handleChange}
 									isInvalid={!!formik.errors.nome}
 								/>
@@ -183,69 +187,26 @@ const PreRequisitos = () => {
 						</Form.Group>
 						<Form.Group
 							className="mb-3"
-							controlId="validationFormikEmpresaEdit"
+							controlId="validationFormikExigeQuantidade"
 						>
-							<Form.Label>Empresa</Form.Label>
+							<Form.Label>Exige Quantidade</Form.Label>
 							<InputGroup hasValidation>
 								<Form.Control
-									type="text"
-									placeholder="Empresa"
+									as="select"
 									aria-describedby="inputGroupPrepend"
-									name="empresa"
-									value={formik.values.empresa}
+									name="exige_quantidade"
+									value={formik.values.exige_quantidade || ""}
 									onChange={formik.handleChange}
-									isInvalid={!!formik.errors.empresa}
-								/>
+									isInvalid={!!formik.errors.exige_quantidade}
+								>
+									<option value="">Escolha uma opção</option>
+									<option value={1}>Sim</option>
+									<option value={0}>Não</option>
+								</Form.Control>
 								<Form.Control.Feedback type="invalid">
-									{formik.errors.empresa}
+									{formik.errors.exige_quantidade}
 								</Form.Control.Feedback>
 							</InputGroup>
-						</Form.Group>
-						<Form.Group className="mb-3" controlId="validationFormikFilialEdit">
-							<Form.Label>Filial</Form.Label>
-							<InputGroup hasValidation>
-								<Form.Control
-									type="text"
-									placeholder="Filial"
-									aria-describedby="inputGroupPrepend"
-									name="filial"
-									value={formik.values.filial}
-									onChange={formik.handleChange}
-									isInvalid={!!formik.errors.filial}
-								/>
-								<Form.Control.Feedback type="invalid">
-									{formik.errors.filial}
-								</Form.Control.Feedback>
-							</InputGroup>
-						</Form.Group>
-						<Form.Group
-							className="mb-3"
-							controlId="validationFormikCodFilialEdit"
-						>
-							<Form.Label>Cod. Filial</Form.Label>
-							<InputGroup hasValidation>
-								<Form.Control
-									type="text"
-									placeholder="Cod. Filial"
-									aria-describedby="inputGroupPrepend"
-									name="cod_filial"
-									value={formik.values.cod_filial}
-									onChange={formik.handleChange}
-									isInvalid={!!formik.errors.cod_filial}
-								/>
-								<Form.Control.Feedback type="invalid">
-									{formik.errors.cod_filial}
-								</Form.Control.Feedback>
-							</InputGroup>
-						</Form.Group>
-						<Form.Group className="mb-3" controlId="validationFormikTermo">
-							<Form.Label>Termo</Form.Label>
-							<Form.Control
-								type="file"
-								accept=".pdf"
-								required
-								ref={inputFile}
-							/>
 						</Form.Group>
 					</Form>
 				</Modal.Body>
@@ -279,26 +240,17 @@ const PreRequisitos = () => {
 								body={nameBodyTemplate}
 								field="nome"
 								header="Nome"
-								bodyStyle={{ color: "red" }}
 								//className="table-column-nome"
 							/>
 							<Column
-								field="empresa"
-								header="Empresa"
-								bodyStyle={{ color: "red" }}
-								//className="table-column-nome"
+								body={yesOrNoBodyTemplateQT}
+								field="exige_quantidade"
+								header="Exige Quantidade"
 							/>
 							<Column
-								field="filial"
-								header="Filial"
-								bodyStyle={{ color: "red" }}
-								//className="table-column-nome"
-							/>
-							<Column
-								field="cod_filial"
-								header="Cod. Filial"
-								bodyStyle={{ color: "red" }}
-								//className="table-column-nome"
+								body={yesOrNoBodyTemplateAT}
+								field="ativo"
+								header="Ativo"
 							/>
 							<Column
 								body={criadoBodyTemplate}
