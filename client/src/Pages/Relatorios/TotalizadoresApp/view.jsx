@@ -14,7 +14,7 @@ import {
 import { FaBoxes, FaRobot, FaHandsHelping } from "react-icons/fa";
 import { BsDownload } from "react-icons/bs";
 import { MdEditCalendar } from "react-icons/md";
-import { GoMailRead } from "react-icons/go";
+import { MdMarkEmailRead } from "react-icons/md";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import FilialSelect from "src/Pages/Components/FilialSelect";
@@ -279,7 +279,7 @@ function ViewRotasPendentes({
 
                   <tr>
                     <td>
-                      <GoMailRead size={30} className="icons-success" />
+                      <MdMarkEmailRead size={30} className="icons-success" />
                     </td>
                     <td>
                       Cargas extraídas do <b>E-MAIL</b>

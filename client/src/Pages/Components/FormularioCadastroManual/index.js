@@ -24,6 +24,8 @@ import swal from "sweetalert";
 import ListAddItens from "../ListAddItens";
 import "../FormularioCadastroManual/formularioManual.css";
 import somaDebitoVeiculo from "src/Pages/Utils/somaDebitoVeiculo";
+import CurrencyInput from "react-currency-input-field";
+import Select from "react-select";
 
 function FormularioCadastroManual({
 	formik,
@@ -46,6 +48,22 @@ function FormularioCadastroManual({
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
 	const [valorTotalDebito, setValorTotal] = useState();
 	const [isDisabledEnvioApp, setDisabledEnvioApp] = useState(false);
+
+	const optionsForcaTrabalho = [
+		{ value: 1, label: "Agregado" },
+		{ value: 2, label: "Carreteiro" },
+		{ value: 3, label: "Ambos" },
+	];
+
+	const optionsViagem = [
+		{ value: 1, label: "Viagem" },
+		{ value: 2, label: "Pré-Viagem" },
+	];
+
+	const optionsEstiloCarga = [
+		{ value: 1, label: "Normal" },
+		{ value: 2, label: "Escoamento" },
+	];
 
 	async function handleShowDetailsAboutVehicle(plate) {
 		if (!plate) {
@@ -332,6 +350,183 @@ function FormularioCadastroManual({
 					</Col>
 				)}
 			</Row>
+			<div className="class-linha-title3">
+				<hr className="w-100"></hr>
+			</div>
+			<>
+				<Row className="mb-5">
+					<Col sm={12}>
+						<h3 id="title-check-não">Detalhes</h3>
+					</Col>
+				</Row>
+				<Row>
+					<Col sm={12} md={6}>
+						<Form.Group controlId="valor_frete">
+							<Form.Label>Valor Frete (R$)</Form.Label>
+							<CurrencyInput
+								id="valor_frete"
+								name="valor_frete"
+								value={formik.values.valor_frete}
+								decimalsLimit={2}
+								decimalSeparator=","
+								groupSeparator="."
+								prefix="R$ "
+								onValueChange={(value) =>
+									formik.setFieldValue("valor_frete", value)
+								}
+								defaultValue={formik.values.valor_frete}
+								className={`form-control ${
+									formik.touched.valor_frete && formik.errors.valor_frete
+										? "is-invalid"
+										: ""
+								}`}
+							/>
+						</Form.Group>
+					</Col>
+					<Col>
+						<Row>
+							<Col sm={6} md={7} lg={6}>
+								<Form.Group
+									className="mb-3"
+									controlId="validationFormikForcaTrabalho"
+								>
+									<Form.Label>Força de Trabalho</Form.Label>
+									<Select
+										id="forca_trabalho"
+										name="forca_trabalho"
+										placeholder="Selecione"
+										options={optionsForcaTrabalho}
+										onChange={(option) =>
+											formik.setFieldValue("forca_trabalho", option)
+										}
+										value={formik.values.forca_trabalho}
+										required
+									/>
+									{formik.errors.forca_trabalho &&
+										formik.touched.forca_trabalho && (
+											<div style={{ color: "red" }}>
+												{formik.errors.forca_trabalho}
+											</div>
+										)}
+								</Form.Group>
+							</Col>
+							<Col>
+								{formik.values.carga_app == 1 ? (
+									<Form.Group
+										className="mb-3"
+										controlId="validationFormikTipoDeViagem"
+									>
+										<Form.Label>Tipo Viagem</Form.Label>
+										<Select
+											id="tipo_viagem"
+											name="tipo_viagem"
+											placeholder="Selecione"
+											options={optionsViagem}
+											onChange={(option) =>
+												formik.setFieldValue("tipo_viagem", option)
+											}
+											value={
+												formik.values.tipo_viagem == 1
+													? optionsViagem[0]
+													: formik.values.tipo_viagem
+											}
+											required
+										/>
+										{formik.errors.tipo_viagem &&
+											formik.touched.tipo_viagem && (
+												<div style={{ color: "red" }}>
+													{formik.errors.tipo_viagem}
+												</div>
+											)}
+									</Form.Group>
+								) : (
+									<></>
+								)}
+							</Col>
+						</Row>
+					</Col>
+				</Row>
+				<Row>
+					<Col sm={12} md={6}>
+						<Form.Group
+							className="mb-3"
+							controlId="validationFormikEstiloCarga"
+						>
+							<Form.Label>Estilo Carga</Form.Label>
+							<Select
+								id="estilo_carga"
+								name="estilo_carga"
+								placeholder="Selecione"
+								options={optionsEstiloCarga}
+								onChange={(option) =>
+									formik.setFieldValue("estilo_carga", option)
+								}
+								value={
+									formik.values.estilo_carga == 1
+										? optionsEstiloCarga[0]
+										: formik.values.estilo_carga
+								}
+								required
+							/>
+							{formik.errors.estilo_carga && formik.touched.estilo_carga && (
+								<div style={{ color: "red" }}>{formik.errors.estilo_carga}</div>
+							)}
+						</Form.Group>
+					</Col>
+					<Col>
+						<Row>
+							<Col sm={6} md={7} lg={6}>
+								{formik.values.estilo_carga.value &&
+								formik.values.estilo_carga.value == 2 ? (
+									<Form.Group
+										className="mb-3"
+										controlId="validationFormikForcaTrabalho"
+									>
+										<Form.Label>Quantidade de Cargas</Form.Label>
+										<Form.Control
+											type="number"
+											min={1}
+											step={0.01}
+											placeholder=" "
+											name="quantidade_cargas"
+											value={formik.values.quantidade_cargas}
+											onKeyDown={handleEnter}
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+											disabled={disabledFields.includes("quantidade_cargas")}
+											required
+										/>
+									</Form.Group>
+								) : (
+									<></>
+								)}
+							</Col>
+							<Col>
+								{formik.values.estilo_carga.value &&
+								formik.values.estilo_carga.value == 2 ? (
+									<Form.Group
+										className="mb-3"
+										controlId="validationFormikDataLimiteOferta"
+									>
+										<Form.Label>Data Limite Oferta</Form.Label>
+										<Form.Control
+											type="date"
+											placeholder=" "
+											name="data_limite_oferta"
+											value={formik.values.data_limite_oferta}
+											onKeyDown={handleEnter}
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+										/>
+									</Form.Group>
+								) : (
+									<></>
+								)}
+							</Col>
+						</Row>
+					</Col>
+				</Row>
+			</>
 			<div className="class-linha-title3">
 				<hr className="w-100"></hr>
 			</div>
