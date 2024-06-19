@@ -47,9 +47,26 @@ function Manual() {
 			placa_veiculo: "",
 			documento_transporte: "",
 			carga_app: 0,
+			valor_frete: 0,
+			forca_trabalho: 0,
+			tipo_viagem: 1,
+			estilo_carga: 1,
+			quantidade_cargas: 0,
+			data_limite_oferta: "",
+			idCargaMae: null,
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
+
+			if (typeof values.forca_trabalho == "object") {
+				values.forca_trabalho = values.forca_trabalho.value;
+			}
+			if (typeof values.tipo_viagem == "object") {
+				values.tipo_viagem = values.tipo_viagem.value;
+			}
+			if (typeof values.estilo_carga == "object") {
+				values.estilo_carga = values.estilo_carga.value;
+			}
 			try {
 				values.fk_filial = await values.fk_filial.split("-")[0];
 				const { data } = await ServiceCargas.create({

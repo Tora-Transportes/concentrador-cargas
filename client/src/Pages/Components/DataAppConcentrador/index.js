@@ -15,6 +15,12 @@ export const envioCargaApp = async (body) => {
 		acessorios_requisitos,
 		informacoes_restritivas,
 		observacao,
+		valor_frete,
+		forca_trabalho,
+		tipo_viagem,
+		estilo_carga,
+		data_limite_oferta,
+		idCargaMae,
 	} = body;
 
 	const cidadeEstadoOrigem = origem_carga.split("/");
@@ -36,6 +42,12 @@ export const envioCargaApp = async (body) => {
 		acessorios_requisitos: acessorios_requisitos || "", // observação 1
 		informacoes_restritivas: informacoes_restritivas || "", // observação 2
 		weight: quantidade, // peso
+		valueFreight: valor_frete,
+		workforce: forca_trabalho,
+		typeTravel: tipo_viagem,
+		cargoStyle: estilo_carga,
+		offerDeadline: data_limite_oferta,
+		parentRequesCode: idCargaMae,
 	};
 
 	const saveError = (error) => {
@@ -60,7 +72,7 @@ export const cancelarCargaApp = async (
 	observacaoCancelamento
 ) => {
 	const bodyEnvioApp = {
-		availableFreight: String(idCarga), //codigo da carga
+		availableFreight: idCarga, //codigo da carga
 		concentradorUser: oid, // number user
 		cancellationReason: observacaoCancelamento,
 	};
