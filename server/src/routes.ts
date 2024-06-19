@@ -32,6 +32,7 @@ import WebhookAutentiqueController from "./controllers/WebhookAutentiqueControll
 import PPOCalculadorController from "./controllers/PPOCalculadorController";
 import WebhookGitHubController from "./controllers/WebhookGitHubController";
 import PPOPermissoesVisualizacaoController from "./controllers/PPOPermissoesVisualizacaoController";
+import PreRequisitoController from "./controllers/PreRequisitoController";
 
 const routes = Router();
 
@@ -317,5 +318,11 @@ routes.put(
 );
 
 routes.get("/ppo/motoristas/grupos", PPOController.motorista_by_grupo);
+
+routes.get("/cargas/pre-requisito", PreRequisitoController.list);
+routes.post("/cargas/pre-requisito", PreRequisitoController.create);
+routes.put("/cargas/pre-requisito", PreRequisitoController.update);
+routes.put("/cargas/pre-requisito:delete", PreRequisitoController.delete);
+routes.put("/cargas/pre-requisito:enable", PreRequisitoController.enable);
 
 export default routes;

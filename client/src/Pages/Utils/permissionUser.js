@@ -25,4 +25,5 @@ export const allTipoPermissoes = [
 	{ name: "PPO_RELATORIO_DOCUMENTOS" },
 	{ name: "PPO_CALCULADOR" },
 	{ name: "PPO_PERMISSOES_VISUALIZACAO" },
+	{ name: "PRE_REQUISITOS_CARGAS" },
 ];

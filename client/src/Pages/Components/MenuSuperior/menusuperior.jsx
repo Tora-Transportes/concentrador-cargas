@@ -144,6 +144,9 @@ function Menusuperior() {
                 {isPermissionCsn && (
                   <a href="/cargas/visualizar/csn">Listagem CSN</a>
                 )}
+                {permissoes?.permissoes?.includes("PRE_REQUISITOS_CARGAS") && (
+                  <a href="/cargas/pre-requisitos">Pré-requisitos</a>
+                )}
               </div>
             </div>
           </div>
