@@ -13,7 +13,7 @@ import {
 	Card,
 	Modal,
 } from "react-bootstrap";
-import { IoMdHelpCircle } from "react-icons/io";
+import { IoIosCloseCircleOutline, IoMdHelpCircle } from "react-icons/io";
 import InputLocalizacao from "../InputLocalizacao";
 import AutocompleteInput from "../AutocompleteInput";
 import InputCliente from "../InputCliente";
@@ -26,6 +26,8 @@ import "../FormularioCadastroManual/formularioManual.css";
 import somaDebitoVeiculo from "src/Pages/Utils/somaDebitoVeiculo";
 import CurrencyInput from "react-currency-input-field";
 import Select from "react-select";
+import ModalPreRequisito from "./components/ModalPreRequisito";
+import ServicePreRequisitos from "src/services/ServicePreRequisitos";
 
 function FormularioCadastroManual({
 	formik,
@@ -48,6 +50,69 @@ function FormularioCadastroManual({
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
 	const [valorTotalDebito, setValorTotal] = useState();
 	const [isDisabledEnvioApp, setDisabledEnvioApp] = useState(false);
+	const [open, setOpen] = useState(false);
+	const [prerequisito, setPreRequisito] = useState(null);
+	const [prerequisitos, setPreRequisitos] = useState([]);
+	const [quantidade, setQuantidade] = useState(0);
+
+	useEffect(() => {
+		async function carregaLista() {
+			const lista = await ServicePreRequisitos.listSelect();
+			setPreRequisitos(lista);
+		}
+		carregaLista();
+	}, []);
+
+	async function handleAddPreRequisito() {
+		console.log(quantidade, prerequisito);
+		if (
+			prerequisito &&
+			prerequisito.exige_quantidade == "1" &&
+			(quantidade == 0 || quantidade < 0)
+		) {
+			swal("Quantidade precisa ser maior que 0!");
+		} else {
+			if (prerequisito && prerequisito.exige_quantidade != "1") {
+				formik.values.prerequisitos.push({
+					id: prerequisito.value,
+					nome: prerequisito.label,
+					quantidade: 1,
+				});
+			} else {
+				formik.values.prerequisitos.push({
+					id: prerequisito.value,
+					nome: prerequisito.label,
+					quantidade: quantidade,
+				});
+			}
+			setPreRequisito(null);
+			setQuantidade(0);
+		}
+	}
+
+	async function handleOpen() {
+		setOpen(!open);
+	}
+
+	const acoesRequisito = (rowData) => {
+		return (
+			<div className="opcoes-table">
+				<Button
+					variant="outline-danger"
+					onClick={async (e) => {
+						e.preventDefault();
+						const updatedPrerequisitos = formik.values.prerequisitos.filter(
+							(item) => item.id !== rowData.id
+						);
+						formik.setFieldValue("prerequisitos", updatedPrerequisitos);
+					}}
+				>
+					<IoIosCloseCircleOutline className="icon-des" />
+					Deletar
+				</Button>
+			</div>
+		);
+	};
 
 	const optionsForcaTrabalho = [
 		{ value: 1, label: "Agregado" },
@@ -836,33 +901,41 @@ function FormularioCadastroManual({
 					</Row>
 				</Col>
 			</Row>
+			<Col>
+				<div className="class-linha-title6">
+					<hr className="w-100"></hr>
+				</div>
+				<Row className="mb-5">
+					<Col sm={12}>
+						<h3 id="title-check-não">Pré-requisitos</h3>
+					</Col>
+				</Row>
 
-			<div className="class-linha-title6">
-				<hr className="w-100"></hr>
-			</div>
+				<Form.Text muted className="fw-bold">
+					Adicione restrições e/ou acessórios do veículo caso necessário,
+					exemplo(s): motorista necessita de treinamento atualizado no cliente,
+					cinta, luvas, etc.
+				</Form.Text>
 
-			<Row>
-				<Col>
-					<Form.Group className="mb-3">
-						<Form.Label id="info-add">
-							Pré-requisitos e acessórios do veículo
-						</Form.Label>
-						<Form.Control
-							placeholder="Adicione restrições e/ou acessórios do veículo caso necessário, exemplo(s): motorista necessita de treinamento atualizado no cliente, cinta, luvas, etc."
-							//as="textarea"
-							type="text"
-							maxLength={150}
-							rows={3}
-							name="acessorios_requisitos"
-							value={formik.values.acessorios_requisitos || ""}
-							onKeyDown={handleEnter}
-							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
-						/>
-					</Form.Group>
-				</Col>
-			</Row>
+				<Row>
+					<ModalPreRequisito
+						prerequisitos={prerequisitos}
+						prerequisito={prerequisito}
+						setPreRequisito={setPreRequisito}
+						formik={formik}
+						open={open}
+						handleOpen={handleOpen}
+						handleAddPreRequisito={handleAddPreRequisito}
+						quantidade={quantidade}
+						setQuantidade={setQuantidade}
+						acoesRequisito={acoesRequisito}
+					/>
+				</Row>
 
+				<div className="class-linha-title6">
+					<hr className="w-100"></hr>
+				</div>
+			</Col>
 			<Row>
 				<Col>
 					<Form.Group className="mb-3">
