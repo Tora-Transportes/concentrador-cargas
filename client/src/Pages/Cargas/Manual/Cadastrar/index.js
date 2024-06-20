@@ -54,6 +54,7 @@ function Manual() {
 			quantidade_cargas: 0,
 			data_limite_oferta: "",
 			idCargaMae: null,
+			prerequisitos: [],
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
