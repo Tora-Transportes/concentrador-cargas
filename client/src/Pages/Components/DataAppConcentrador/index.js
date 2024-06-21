@@ -16,11 +16,13 @@ export const envioCargaApp = async (body) => {
 		informacoes_restritivas,
 		observacao,
 		valor_frete,
-		forca_trabalho,
-		tipo_viagem,
-		estilo_carga,
-		data_limite_oferta,
-		idCargaMae,
+		///forca_trabalho,
+		//tipo_viagem,
+		//estilo_carga,
+		//data_limite_oferta,
+		//idCargaMae,
+		placa_veiculo,
+		cpf_motorista,
 	} = body;
 
 	const cidadeEstadoOrigem = origem_carga.split("/");
@@ -42,12 +44,14 @@ export const envioCargaApp = async (body) => {
 		acessorios_requisitos: acessorios_requisitos || "", // observação 1
 		informacoes_restritivas: informacoes_restritivas || "", // observação 2
 		weight: quantidade, // peso
-		valueFreight: valor_frete,
-		workforce: forca_trabalho,
-		typeTravel: tipo_viagem,
-		cargoStyle: estilo_carga,
-		offerDeadline: data_limite_oferta,
-		parentRequesCode: idCargaMae,
+		valueFreight: valor_frete.replace(",", "."),
+		//workforce: forca_trabalho,
+		//typeTravel: tipo_viagem,
+		//cargoStyle: estilo_carga,
+		//offerDeadline: data_limite_oferta,
+		//parentRequesCode: idCargaMae,
+		placa_veiculo: placa_veiculo,
+		cpf_motorista: cpf_motorista,
 	};
 
 	const saveError = (error) => {

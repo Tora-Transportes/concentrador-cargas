@@ -55,6 +55,7 @@ function Manual() {
 			data_limite_oferta: "",
 			idCargaMae: null,
 			prerequisitos: [],
+			cpf_motorista: "",
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -196,6 +197,7 @@ function Manual() {
 						status={"Cadastro"}
 						isDisableColetaEntrega={isDisableColetaEntrega}
 						setDisableColetaEntrega={setDisableColetaEntrega}
+						setLoading={setLoading}
 					/>
 					<Row>
 						<Col>
