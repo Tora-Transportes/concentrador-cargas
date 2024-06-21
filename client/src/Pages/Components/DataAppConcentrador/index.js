@@ -23,10 +23,14 @@ export const envioCargaApp = async (body) => {
 		//idCargaMae,
 		placa_veiculo,
 		cpf_motorista,
+		janela_coleta,
+		janela_entrega,
 	} = body;
 
 	const cidadeEstadoOrigem = origem_carga.split("/");
 	const cidadeEstadoDestino = destino_carga.split("/");
+	const data_inicio = new Date(data_coleta + " " + janela_coleta);
+	const data_fim = new Date(data_entrega + " " + janela_entrega);
 	const nameClient = cliente.split("-")[0];
 	const bodyEnvioApp = {
 		requestCode: idCarga, //codigo da carga
@@ -38,8 +42,8 @@ export const envioCargaApp = async (body) => {
 		originCollection: nameClient?.trim(), // Origem coleta obs: cliente
 		deliveryUF: cidadeEstadoDestino[1], // uf destino
 		deliveryCity: cidadeEstadoDestino[2], // cidade destino
-		estimatedStartDate: data_coleta, // data coleta
-		estimatedEndDate: data_entrega, // data entrega
+		estimatedStartDate: data_inicio.toISOString(), // data coleta
+		estimatedEndDate: data_fim.toISOString(), // data entrega
 		observacao: observacao || "", // observação 3
 		acessorios_requisitos: acessorios_requisitos || "", // observação 1
 		informacoes_restritivas: informacoes_restritivas || "", // observação 2
