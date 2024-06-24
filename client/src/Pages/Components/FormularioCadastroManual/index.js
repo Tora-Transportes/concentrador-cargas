@@ -206,24 +206,41 @@ function FormularioCadastroManual({
 						formik.setFieldValue("cpf_motorista", null);
 						setLoading(false);
 					} else {
-						formik.setFieldValue("placa_carreta", vehicleDetails.placa_carreta);
-						formik.setFieldValue("placa_bitrem", vehicleDetails.placa_bitrem);
-						formik.setFieldValue(
-							"nome_motorista",
-							vehicleDetails.nome_motorista
+						const response = await ServiceApp.motoristaPossuiViagem(
+							vehicleDetails.cpf
 						);
-						formik.setFieldValue(
-							"codigo_motorista",
-							vehicleDetails.codigo_motorista
-						);
-						formik.setFieldValue("cpf_motorista", vehicleDetails.cpf);
+						if (response.err) {
+							swal(response.message);
+							formik.setFieldValue("placa_veiculo", null);
+							formik.setFieldValue("placa_carreta", null);
+							formik.setFieldValue("placa_bitrem", null);
+							formik.setFieldValue("codigo_motorista", null);
+							formik.setFieldValue("nome_motorista", null);
+							formik.setFieldValue("cpf_motorista", null);
+							setLoading(false);
+						} else {
+							formik.setFieldValue(
+								"placa_carreta",
+								vehicleDetails.placa_carreta
+							);
+							formik.setFieldValue("placa_bitrem", vehicleDetails.placa_bitrem);
+							formik.setFieldValue(
+								"nome_motorista",
+								vehicleDetails.nome_motorista
+							);
+							formik.setFieldValue(
+								"codigo_motorista",
+								vehicleDetails.codigo_motorista
+							);
+							formik.setFieldValue("cpf_motorista", vehicleDetails.cpf);
 
-						const detalhesVeiculos = (
-							await ServiceVeiculos.detalhesImpedimentos(plate)
-						).data.data;
-						setDetalesVeiculo(detalhesVeiculos);
-						setLoading(false);
-						return;
+							const detalhesVeiculos = (
+								await ServiceVeiculos.detalhesImpedimentos(plate)
+							).data.data;
+							setDetalesVeiculo(detalhesVeiculos);
+							setLoading(false);
+							return;
+						}
 					}
 				} else {
 					formik.setFieldValue("placa_carreta", vehicleDetails.placa_carreta);
