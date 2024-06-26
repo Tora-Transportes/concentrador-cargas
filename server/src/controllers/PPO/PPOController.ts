@@ -290,6 +290,24 @@ class PPOController implements IPPOController {
       String(ano)
     );
     const base64String = await serviceDemonstrativo.pdfToBase64(url);
+    let x_position = "";
+    if (dados["dados_motorista"]["cancelado"] == "Sim") {
+      // cancelado
+      x_position = "73.0";
+    }
+    if (dados["valores"].length == 1) {
+      // cancelado com complementar
+      x_position = "76.0";
+    }
+    if (dados["valores"].length == 4) {
+      //normal
+      x_position = "86.0";
+    }
+    if (dados["valores"].length == 5) {
+      //com complementar
+      x_position = "90.0";
+    }
+
     const body: DocumentData = {
       name: dados["dados_motorista"]["nome"],
       cpf: String(cpf),
@@ -298,12 +316,7 @@ class PPOController implements IPPOController {
       ano: String(ano),
       positions: {
         x: "20.0",
-        y:
-          dados["dados_motorista"]["cancelado"] == "Sim"
-            ? "73.0"
-            : dados["valores"].length == 5 // se tiver complementar
-            ? "90.0"
-            : "86.0",
+        y: x_position,
         z: "1",
       },
       url_file: "xpto",

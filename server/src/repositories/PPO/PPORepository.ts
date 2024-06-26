@@ -362,18 +362,33 @@ export class PPORepository implements IPPORepository {
     `);
 
     const dados_motorista = await mssqlPPO.raw(` 
-    SELECT DISTINCT r.nome_motorista as nome
-    ,r.cpf
-    ,r.matricula
-    ,CASE WHEN r.ppo_cancelado = 1 THEN 'Sim' ELSE 'Não' END as cancelado
-    ,CASE WHEN r.ppo_cancelado = 1 THEN
-	    CASE WHEN r.dado_verificado is null THEN r.observacao
-		  ELSE r.observacao+' | '+r.dado_verificado+' KM' END
-	  ELSE 'Sem Observação' END as observacao
-    ,CONCAT(r.mes_avaliacao,'/',r.ano_avaliacao) as mes_ano
-    FROM dbo.ppo_resultado r
-    inner join dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
-    join dbo.ppo_parametros p on p.id =  pg.parametro_id
+    SELECT DISTINCT 
+    r.nome_motorista AS nome,
+    r.cpf,
+    r.matricula,
+    CASE 
+        WHEN r.ppo_cancelado = 1 THEN 'Sim' 
+        ELSE 'Não' 
+    END AS cancelado,
+    CASE 
+        WHEN r.ppo_cancelado = 1 THEN 
+            CASE 
+                WHEN r.dado_verificado IS NULL THEN r.observacao
+                ELSE r.observacao + ' | ' + r.dado_verificado + ' KM' 
+            END
+        ELSE 
+            CASE 
+                WHEN r.observacao IS NOT NULL THEN r.observacao 
+                ELSE 'Sem Observação' 
+            END 
+    END AS observacao,
+    CONCAT(r.mes_avaliacao, '/', r.ano_avaliacao) AS mes_ano
+FROM 
+    dbo.ppo_resultado r
+INNER JOIN 
+    dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
+JOIN 
+    dbo.ppo_parametros p ON p.id = pg.parametro_id
     WHERE r.cpf = '${cpf}'
     AND r.mes_avaliacao = '${mes}'
     AND r.ano_avaliacao = '${ano}'
