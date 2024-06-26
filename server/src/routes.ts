@@ -31,10 +31,11 @@ import PPOParametrosGrupoController from "./controllers/PPO/PPOParametrosGrupoCo
 import WebhookAutentiqueController from "./controllers/WebhookAutentiqueController";
 import PPOCalculadorController from "./controllers/PPO/PPOCalculadorController";
 import WebhookGitHubController from "./controllers/WebhookGitHubController";
-import PPOPermissoesVisualizacaoController from "./controllers/PPO/PPOPermissoesVisualizacaoController";
 import PPOEventosPermissoesController from "./controllers/PPO/PPOEventosPermissoesController";
 import PPOEventosAprovacaoController from "./controllers/PPO/PPOEventosAprovacaoController";
 import PPOEventosRelatoriosController from "./controllers/PPO/PPOEventosRelatoriosController";
+import PPOPermissoesVisualizacaoController from "./controllers/PPO/PPOPermissoesVisualizacaoController";
+import PreRequisitoController from "./controllers/PreRequisitoController";
 
 const routes = Router();
 
@@ -236,7 +237,7 @@ routes.post(
 routes.post("/logs", LogsErrorControllers.error);
 
 routes.put("/app/aprovar/carga", CargaAppController.aprovarCarga);
-routes.patch("/app/cancelar/carga", CargaAppController.cancelarCarga);
+routes.patch("/app/carga:cancelar", CargaAppController.cancelarCarga);
 
 //PPO
 routes.get("/ppo/avaliacoes", PPOController.avaliacoes);
@@ -366,5 +367,9 @@ routes.get(
   "/ppo_eventos/aprovacoes/detalhes",
   PPOEventosAprovacaoController.detalhes
 );
+
+routes.get("/pre-requisito", PreRequisitoController.list);
+routes.post("/pre-requisito", PreRequisitoController.create);
+routes.put("/pre-requisito/:id", PreRequisitoController.update);
 
 export default routes;

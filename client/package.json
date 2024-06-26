@@ -37,6 +37,7 @@
     "react-awesome-calendar": "^1.0.14",
     "react-bootstrap": "^2.0.2",
     "react-chartjs-2": "^4.0.0",
+    "react-currency-input-field": "^3.8.0",
     "react-data-table-component": "^7.4.5",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
@@ -63,6 +64,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",
     "@babel/plugin-proposal-decorators": "^7.16.0",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.26.1",

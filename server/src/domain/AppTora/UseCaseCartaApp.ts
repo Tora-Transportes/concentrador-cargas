@@ -1,4 +1,3 @@
-import { IServiceSit } from "./../UseCaseCarga/entities";
 import CargaAppRepository from "./../../repositories/AppTora/CargasAppRespository";
 import AppError from "../../models/AppError";
 import { VeiculoRepository } from "../../repositories/VeiculoRepository";
@@ -11,6 +10,10 @@ import ServiceMigrarSIT from "../../services/ServiceMigrarSIT";
 
 interface IBodyAprovaCarga {
   placa: string;
+  idCarga: number;
+}
+
+interface IBodyCancelaCarga {
   idCarga: number;
 }
 
@@ -106,11 +109,8 @@ class UseCaseAppCancelarCarga {
     this.cargaRepository = new CargaRepository();
   }
 
-  async run({ placa, idCarga }: IBodyAprovaCarga): Promise<string> {
-    const cargaAtual = await AppToraValidator.validatorCancelamento(
-      placa,
-      idCarga
-    );
+  async run({ idCarga }: IBodyCancelaCarga): Promise<string> {
+    const cargaAtual = await AppToraValidator.validatorCancelamento(idCarga);
     if (cargaAtual.fk_situacao === 5)
       throw new AppError("Carga já se encontra cancelada!", 409);
     const fk_situacao = 5;

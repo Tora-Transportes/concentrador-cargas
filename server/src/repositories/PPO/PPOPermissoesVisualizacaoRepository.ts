@@ -4,6 +4,7 @@ import { IGrupos } from "../../models/IUsersGrupos";
 import { mssqlPPO } from "../../database";
 import TokenAd from "../../models/TokenAd";
 import AppError from "../../models/AppError";
+import { forEach } from "lodash";
 
 interface IPPOPermissoesVisualizacaoRepository {
   findByOid(oid: string): Promise<any | undefined>;
