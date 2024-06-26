@@ -13,8 +13,8 @@ import {
 } from "react-bootstrap";
 import { FaBoxes, FaRobot, FaHandsHelping } from "react-icons/fa";
 import { BsDownload } from "react-icons/bs";
-import { MdEditCalendar, MdMarkEmailRead } from "react-icons/md";
-
+import { MdEditCalendar } from "react-icons/md";
+import { MdMarkEmailRead } from "react-icons/md";
 import { RiTruckLine } from "react-icons/ri";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
