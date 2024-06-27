@@ -52,6 +52,7 @@ function Manual() {
 
 			fk_situacao: null,
 			carga_app: 0,
+			valor_frete: 0,
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -319,6 +320,7 @@ function Manual() {
 						isCargaApp={isCargaApp}
 						isDisabledPlaca={isDisabledPlaca}
 						setDisabledPlaca={setDisabledPlaca}
+						setLoading={setLoading}
 					/>
 					<div className="class-group-button">
 						<Button

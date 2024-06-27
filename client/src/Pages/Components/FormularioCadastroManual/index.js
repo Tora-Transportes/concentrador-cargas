@@ -603,7 +603,7 @@ function FormularioCadastroManual({
 							)}
 						</Form.Group>
 					</Col> */}
-					<Col>
+					{/* 					<Col>
 						<Row>
 							<Col sm={6} md={7} lg={6}>
 								{formik.values.estilo_carga.value &&
@@ -654,7 +654,7 @@ function FormularioCadastroManual({
 								)}
 							</Col>
 						</Row>
-					</Col>
+					</Col> */}
 				</Row>
 			</>
 			<div className="class-linha-title3">

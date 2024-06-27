@@ -51,6 +51,7 @@ export function factoryCargaValidator() {
     carga_csn: yup.number().nullable().notRequired(),
     rastreador: yup.string().nullable().notRequired(),
     carga_app: yup.number().nullable().notRequired(),
+    valor_frete: yup.number().nullable().notRequired(),
   });
 
   return cargaValidator;
