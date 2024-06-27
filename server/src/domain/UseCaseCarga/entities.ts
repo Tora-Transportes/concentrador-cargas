@@ -56,8 +56,6 @@ export class UseCaseAddCarga {
       stripUnknown: true,
     });
 
-    console.log(carga);
-
     if (Array.isArray(carga.locais)) {
       const locais = carga.locais;
 
