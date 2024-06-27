@@ -58,6 +58,7 @@ function Manual() {
 			setLoading(true);
 			try {
 				values.fk_filial = values.fk_filial.split("-")[0];
+				values.valor_frete = Number(values.valor_frete.replace(",", "."));
 				const { data } = await ServiceCargas.update({
 					...values,
 					responsavel_cadastro: String(getClaims().name),
