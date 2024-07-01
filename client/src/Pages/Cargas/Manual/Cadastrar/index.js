@@ -77,7 +77,7 @@ function Manual() {
 					canal_comunicacao: "manual",
 					carga_csn: 0,
 				});
-
+				values.valor_frete = String(values.valor_frete);
 				if (values.carga_app === 1 && data) {
 					const oid = getClaims().oid;
 					const idCarga = String(data.data.id);
