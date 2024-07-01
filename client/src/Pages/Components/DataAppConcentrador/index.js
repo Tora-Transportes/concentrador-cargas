@@ -48,7 +48,7 @@ export const envioCargaApp = async (body) => {
 		acessorios_requisitos: acessorios_requisitos || "", // observação 1
 		informacoes_restritivas: informacoes_restritivas || "", // observação 2
 		weight: quantidade, // peso
-		valueFreight: valor_frete.replace(",", "."),
+		valueFreight: valor_frete,
 		//workforce: forca_trabalho,
 		//typeTravel: tipo_viagem,
 		//cargoStyle: estilo_carga,
