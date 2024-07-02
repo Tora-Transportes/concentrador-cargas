@@ -69,6 +69,7 @@ function Manual() {
 			if (typeof values.estilo_carga == "object") {
 				values.estilo_carga = values.estilo_carga.value;
 			}
+			values.valor_frete = String(values.valor_frete);
 			values.valor_frete = Number(values.valor_frete.replace(",", "."));
 			try {
 				values.fk_filial = await values.fk_filial.split("-")[0];

@@ -32,6 +32,19 @@ export const envioCargaApp = async (body) => {
 	const data_inicio = new Date(data_coleta + " " + janela_coleta);
 	const data_fim = new Date(data_entrega + " " + janela_entrega);
 	const nameClient = cliente.split("-")[0];
+
+	// Ajustar o fuso horário
+	const offset = -3; // Offset em horas para GMT-3
+	const offsetInMs = offset * 60 * 60 * 1000; // Converter offset para milissegundos
+
+	// Ajustar a data para o fuso horário específico
+	const localDateIncio = new Date(data_inicio.getTime() + offsetInMs);
+	const localDateFim = new Date(data_fim.getTime() + offsetInMs);
+
+	// Formatar a data ajustada para o formato ISO
+	const isoDateStringInicio = localDateIncio.toISOString().split(".")[0] + "Z";
+	const isoDateStringFim = localDateFim.toISOString().split(".")[0] + "Z";
+
 	const bodyEnvioApp = {
 		requestCode: idCarga, //codigo da carga
 		operatorNumber: oid, // number user
@@ -42,8 +55,8 @@ export const envioCargaApp = async (body) => {
 		originCollection: nameClient?.trim(), // Origem coleta obs: cliente
 		deliveryUF: cidadeEstadoDestino[1], // uf destino
 		deliveryCity: cidadeEstadoDestino[2], // cidade destino
-		estimatedStartDate: data_inicio.toISOString(), // data coleta
-		estimatedEndDate: data_fim.toISOString(), // data entrega
+		estimatedStartDate: isoDateStringInicio, // data coleta
+		estimatedEndDate: isoDateStringFim, // data entrega
 		observacao: observacao || "", // observação 3
 		acessorios_requisitos: acessorios_requisitos || "", // observação 1
 		informacoes_restritivas: informacoes_restritivas || "", // observação 2
