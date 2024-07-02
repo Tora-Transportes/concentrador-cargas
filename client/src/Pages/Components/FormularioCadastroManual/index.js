@@ -326,6 +326,41 @@ function FormularioCadastroManual({
 		formik.setFieldValue("carga_app", valorCargaAppFormik);
 	};
 
+	useEffect(() => {
+		const today = new Date().toISOString().split("T")[0];
+
+		if (formik.values.data_coleta && formik.values.data_coleta < today) {
+			swal("A data de coleta não pode ser menor que a data atual");
+			formik.setFieldValue("data_coleta", "");
+		}
+
+		if (
+			formik.values.data_coleta &&
+			formik.values.data_entrega &&
+			formik.values.data_entrega < formik.values.data_coleta
+		) {
+			swal("A data de entrega deve ser maior ou igual à data de coleta");
+			formik.setFieldValue("data_entrega", "");
+		}
+		if (formik.values.data_coleta === formik.values.data_entrega) {
+			if (
+				formik.values.janela_coleta &&
+				formik.values.janela_entrega &&
+				formik.values.janela_entrega <= formik.values.janela_coleta
+			) {
+				swal(
+					"A hora de entrega deve ser maior que a de coleta quando as datas são iguais"
+				);
+				formik.setFieldValue("janela_entrega", "");
+			}
+		}
+	}, [
+		formik.values.data_coleta,
+		formik.values.data_entrega,
+		formik.values.janela_coleta,
+		formik.values.janela_entrega,
+	]);
+
 	const titleInfoPlaca = isDetalhesCarreta
 		? "Dados do Veículo / Dados Carreta"
 		: "Dados do Veículo";
