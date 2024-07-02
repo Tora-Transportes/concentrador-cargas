@@ -111,6 +111,13 @@ function Manual() {
 					id: formik.values.id,
 					observacao_exclusao: observacaoExclusao,
 				});
+				if (formik.values.carga_app === 1) {
+					await cancelarCargaApp(
+						formik.values.id,
+						getClaims().oid,
+						observacaoExclusao
+					);
+				}
 				await swal("Sucesso!", "Carga removida", "success");
 				handleCloseWindow(null, false);
 			} else {
