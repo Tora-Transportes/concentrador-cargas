@@ -8,6 +8,7 @@ import { DetalhesDialogParadas } from "./dialog";
 
 export default function ListAddItens({ onChange, value, name, formik }) {
 	const [list, setList] = useState([]);
+	const [isSubmitting, isSubmittingState] = useState(false);
 	const [visibleDialog, setVisibleDialog] = useState(false);
 	const [ultimaParadaIntermediaria, setUltimaParadaIntermediaria] =
 		useState("");
@@ -55,6 +56,16 @@ export default function ListAddItens({ onChange, value, name, formik }) {
 			setList(value);
 		}
 	}, [value]);
+
+	useEffect(() => {
+		if (formik.isSubmitting) {
+			isSubmittingState(true);
+		}
+		if (isSubmitting && !formik.isSubmitting) {
+			setList([]);
+			isSubmittingState(false);
+		}
+	}, [formik]);
 
 	useEffect(() => {
 		if (onChange && typeof onChange === "function") {
