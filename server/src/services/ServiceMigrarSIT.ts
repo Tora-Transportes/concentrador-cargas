@@ -1,7 +1,6 @@
 import { ICarga } from "../models/ICargas";
 import database from "../database";
 import { IServiceSit } from "../domain/UseCaseCarga/entities";
-import DateUtils from "../Utils/date";
 
 class ServiceMigrarSit implements IServiceSit {
   async consultarProprietarioVeiculo(placa: string) {
@@ -80,10 +79,7 @@ class ServiceMigrarSit implements IServiceSit {
     const ibgeOrigem = await this.consultaIBGE(uf_origem, cidade_origem);
     const ibgeDestino = await this.consultaIBGE(uf_destino, cidade_destino);
 
-    let dataAtualizacao = new Date(carga.data_atualizacao || "");
-    if (isNaN(Number(dataAtualizacao))) {
-      dataAtualizacao = DateUtils.getCurrentDate();
-    }
+    const dataAtualizacao = new Date();
 
     if (
       isNaN(Number(carga.fk_filial)) ||
@@ -132,7 +128,7 @@ class ServiceMigrarSit implements IServiceSit {
       HORA_PROGRAMACAO: dataAtualizacao,
       DATA_PROGRAMACAO: dataAtualizacao,
       DATA_HORA_PROGR: dataAtualizacao,
-      DATA_HORAINSERCAOSIT: DateUtils.getCurrentDate(),
+      DATA_HORAINSERCAOSIT: dataAtualizacao,
 
       COD_IBGE_ORI: ibgeOrigem?.codigo_ibge,
       COD_IBGE_DES: ibgeDestino?.codigo_ibge,
