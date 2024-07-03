@@ -376,6 +376,25 @@ function FormularioCadastroManual({
 		formik.values.janela_entrega,
 	]);
 
+	const foucusOut = (e) => {
+		const todayS = new Date().toISOString().split("T")[0];
+		if (e.target.name == "data_coleta") {
+			if (formik.values.data_coleta && formik.values.data_coleta < todayS) {
+				swal("A data de coleta não pode ser menor que a data atual");
+				formik.setFieldValue("data_coleta", "");
+			}
+		} else {
+			if (
+				formik.values.data_coleta &&
+				formik.values.data_entrega &&
+				formik.values.data_entrega < formik.values.data_coleta
+			) {
+				swal("A data de entrega deve ser maior ou igual à data de coleta");
+				formik.setFieldValue("data_entrega", "");
+			}
+		}
+	};
+
 	const titleInfoPlaca = isDetalhesCarreta
 		? "Dados do Veículo / Dados Carreta"
 		: "Dados do Veículo";
@@ -934,7 +953,10 @@ function FormularioCadastroManual({
 							value={formik.values.data_coleta}
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
+							onBlur={(e) => {
+								formik.handleBlur(e);
+								foucusOut(e);
+							}}
 							required={isDisableColetaEntrega}
 						/>
 					</FloatingLabel>
@@ -948,7 +970,10 @@ function FormularioCadastroManual({
 							value={formik.values.data_entrega}
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
+							onBlur={(e) => {
+								formik.handleBlur(e);
+								foucusOut(e);
+							}}
 							required={isDisableColetaEntrega}
 						/>
 					</FloatingLabel>
