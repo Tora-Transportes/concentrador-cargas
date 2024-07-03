@@ -60,7 +60,7 @@ export const envioCargaApp = async (body) => {
 		observacao: observacao || "", // observação 3
 		acessorios_requisitos: acessorios_requisitos || "", // observação 1
 		informacoes_restritivas: informacoes_restritivas || "", // observação 2
-		weight: "KG " + String(quantidade), // peso
+		weight: String(quantidade) + " KG", // peso
 		valueFreight: valor_frete,
 		//workforce: forca_trabalho,
 		//typeTravel: tipo_viagem,

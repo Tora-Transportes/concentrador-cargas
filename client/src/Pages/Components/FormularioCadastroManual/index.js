@@ -356,18 +356,6 @@ function FormularioCadastroManual({
 				swal("A data de entrega deve ser maior ou igual à data de coleta");
 				formik.setFieldValue("data_entrega", "");
 			}
-			if (formik.values.data_coleta === formik.values.data_entrega) {
-				if (
-					formik.values.janela_coleta &&
-					formik.values.janela_entrega &&
-					formik.values.janela_entrega <= formik.values.janela_coleta
-				) {
-					swal(
-						"A hora de entrega deve ser maior que a de coleta quando as datas são iguais"
-					);
-					formik.setFieldValue("janela_entrega", "");
-				}
-			}
 		}
 	}, [
 		formik.values.data_coleta,
@@ -377,13 +365,19 @@ function FormularioCadastroManual({
 	]);
 
 	const foucusOut = (e) => {
-		const todayS = new Date().toISOString().split("T")[0];
+		const offset = -3; // Offset em horas para GMT-3
+		const offsetInMs = offset * 60 * 60 * 1000; // Converter offset para milissegundos
+		const nowN = new Date();
+		const now = new Date(nowN.getTime() + offsetInMs);
+		const todayS = now.toISOString().split("T")[0];
+		const split_hour = now.toISOString().split("T")[1].split(":");
+
 		if (e.target.name == "data_coleta") {
 			if (formik.values.data_coleta && formik.values.data_coleta < todayS) {
 				swal("A data de coleta não pode ser menor que a data atual");
 				formik.setFieldValue("data_coleta", "");
 			}
-		} else {
+		} else if (e.target.name == "data_entrega") {
 			if (
 				formik.values.data_coleta &&
 				formik.values.data_entrega &&
@@ -392,6 +386,44 @@ function FormularioCadastroManual({
 				swal("A data de entrega deve ser maior ou igual à data de coleta");
 				formik.setFieldValue("data_entrega", "");
 			}
+		} else if (e.target.name == "janela_coleta") {
+			const split_janela_coleta = String(formik.values.janela_coleta).split(
+				":"
+			);
+			if (
+				(formik.values.data_coleta == todayS &&
+					Number(split_janela_coleta[0] < Number(split_hour[0])) &&
+					Number(split_janela_coleta[1] < Number(split_hour[1]))) ||
+				(formik.values.data_coleta == todayS &&
+					Number(split_janela_coleta[0] == Number(split_hour[0])) &&
+					Number(split_janela_coleta[1] < Number(split_hour[1])))
+			) {
+				swal(
+					"O horário da janela de coleta não poder ser inferior a hora atual quando a data de coleta for igual data atual"
+				);
+				formik.setFieldValue("janela_coleta", "");
+			}
+		} else if (e.target.name == "janela_entrega") {
+			if (formik.values.data_coleta === formik.values.data_entrega) {
+				const split_janela_coleta = String(formik.values.janela_coleta).split(
+					":"
+				);
+				const split_janela_entrega = String(formik.values.janela_entrega).split(
+					":"
+				);
+				if (
+					formik.values.data_entrega == todayS &&
+					Number(split_janela_coleta[0] == Number(split_janela_entrega[0])) &&
+					Number(split_janela_coleta[1] == Number(split_janela_entrega[1]))
+				) {
+					swal(
+						"A hora de entrega deve ser maior que a de coleta quando as datas são iguais"
+					);
+					formik.setFieldValue("janela_entrega", "");
+				}
+			}
+		} else {
+			console.log();
 		}
 	};
 
@@ -990,7 +1022,10 @@ function FormularioCadastroManual({
 								value={formik.values.janela_coleta}
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
+								onBlur={(e) => {
+									formik.handleBlur(e);
+									foucusOut(e);
+								}}
 							/>
 						</FloatingLabel>
 					</Col>
@@ -1003,7 +1038,10 @@ function FormularioCadastroManual({
 								value={formik.values.janela_entrega}
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
+								onBlur={(e) => {
+									formik.handleBlur(e);
+									foucusOut(e);
+								}}
 							/>
 						</FloatingLabel>
 					</Col>
