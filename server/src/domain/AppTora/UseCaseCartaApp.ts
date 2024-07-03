@@ -32,6 +32,8 @@ class UseCaseAppAprovacaoCarga {
       idCarga
     );
 
+    const Carga = await CargaAppRepository.indexId(idCarga);
+
     if (cargaAtual?.fk_situacao === 3) {
       throw new AppError(
         `Carga com id: ${idCarga} já se encontra aprovada em nossos sistemas!`,
@@ -66,7 +68,7 @@ class UseCaseAppAprovacaoCarga {
 
     const bodyUpdate = {
       data_atualizacao: DateUtils.getCurrentDate(),
-      usuario: "App_tora",
+      usuario: Carga.responsavel_cadastro,
       placa_veiculo: placa,
       observacao_gr: "Aprovação App Tora. ",
       e_lote: false,
