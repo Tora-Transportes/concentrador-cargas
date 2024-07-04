@@ -67,6 +67,7 @@ function EditarCargaCsn() {
 			nome_motorista: "",
 			finalizarCarga: "",
 			carga_app: 0,
+			valor_frete: 0,
 			ativo: "",
 			ponto_passagem: {
 				ponto: " 60 - POSTO - 30",
@@ -347,6 +348,7 @@ function EditarCargaCsn() {
 				}
 			);
 			if (observacaoCancelamento) {
+				formik.values.valor_frete = 0;
 				const { data } = await ServiceCargas.update({
 					...formik.values,
 					fk_situacao: 5,
@@ -517,6 +519,7 @@ function EditarCargaCsn() {
 	const showMsgCargaExpurgo = isCargaExpurgada ? "info-tilte" : "d-none";
 
 	const expurgarCarga = async () => {
+		formik.values.valor_frete = 0;
 		const result = await ServiceCargas.updatePatch(formik.values.id, {
 			ativo: 2,
 		});
