@@ -13,7 +13,7 @@ import {
 	Card,
 	Modal,
 } from "react-bootstrap";
-import { IoMdHelpCircle } from "react-icons/io";
+import { IoIosCloseCircleOutline, IoMdHelpCircle } from "react-icons/io";
 import InputLocalizacao from "../InputLocalizacao";
 import AutocompleteInput from "../AutocompleteInput";
 import InputCliente from "../InputCliente";
@@ -24,6 +24,11 @@ import swal from "sweetalert";
 import ListAddItens from "../ListAddItens";
 import "../FormularioCadastroManual/formularioManual.css";
 import somaDebitoVeiculo from "src/Pages/Utils/somaDebitoVeiculo";
+import CurrencyInput from "react-currency-input-field";
+//import Select from "react-select";
+import ModalPreRequisito from "./components/ModalPreRequisito";
+import ServicePreRequisitos from "src/services/ServicePreRequisitos";
+import ServiceApp from "src/services/ServiceApp";
 
 function FormularioCadastroManual({
 	formik,
@@ -39,6 +44,7 @@ function FormularioCadastroManual({
 	isDisabledPlaca,
 	isDisableColetaEntrega,
 	setDisableColetaEntrega,
+	setLoading,
 }) {
 	const [veiculo, setVeiculo] = useState(null);
 	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
@@ -46,10 +52,92 @@ function FormularioCadastroManual({
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
 	const [valorTotalDebito, setValorTotal] = useState();
 	const [isDisabledEnvioApp, setDisabledEnvioApp] = useState(false);
+	const [open, setOpen] = useState(false);
+	const [prerequisito, setPreRequisito] = useState(null);
+	const [prerequisitos, setPreRequisitos] = useState([]);
+	const [quantidade, setQuantidade] = useState(0);
+	const showPreRequisites = false;
+
+	useEffect(() => {
+		async function carregaLista() {
+			const lista = await ServicePreRequisitos.listSelect();
+			setPreRequisitos(lista);
+		}
+		carregaLista();
+	}, []);
+
+	async function handleAddPreRequisito() {
+		console.log(quantidade, prerequisito);
+		if (
+			prerequisito &&
+			prerequisito.exige_quantidade == "1" &&
+			(quantidade == 0 || quantidade < 0)
+		) {
+			swal("Quantidade precisa ser maior que 0!");
+		} else {
+			if (prerequisito && prerequisito.exige_quantidade != "1") {
+				formik.values.prerequisitos.push({
+					id: prerequisito.value,
+					nome: prerequisito.label,
+					quantidade: 1,
+				});
+			} else {
+				formik.values.prerequisitos.push({
+					id: prerequisito.value,
+					nome: prerequisito.label,
+					quantidade: quantidade,
+				});
+			}
+			setPreRequisito(null);
+			setQuantidade(0);
+		}
+	}
+
+	async function handleOpen() {
+		setOpen(!open);
+	}
+
+	const acoesRequisito = (rowData) => {
+		return (
+			<div className="opcoes-table">
+				<Button
+					variant="outline-danger"
+					onClick={async (e) => {
+						e.preventDefault();
+						const updatedPrerequisitos = formik.values.prerequisitos.filter(
+							(item) => item.id !== rowData.id
+						);
+						formik.setFieldValue("prerequisitos", updatedPrerequisitos);
+					}}
+				>
+					<IoIosCloseCircleOutline className="icon-des" />
+					Deletar
+				</Button>
+			</div>
+		);
+	};
+
+	/* 	const optionsForcaTrabalho = [
+		{ value: 1, label: "Agregado" },
+		{ value: 2, label: "Carreteiro" },
+		{ value: 3, label: "Ambos" },
+	];
+ */
+	/* 	const optionsViagem = [
+		{ value: 1, label: "Viagem" },
+		{ value: 2, label: "Pré-Viagem" },
+	]; */
+
+	/* 	const optionsEstiloCarga = [
+		{ value: 1, label: "Normal" },
+		{ value: 2, label: "Escoamento" },
+	]; */
 
 	async function handleShowDetailsAboutVehicle(plate) {
+		setLoading(true);
 		if (!plate) {
 			swal("Placa inválida");
+			setLoading(false);
 			return;
 		}
 
@@ -79,6 +167,7 @@ function FormularioCadastroManual({
 		if (resultCarreta) setDetalesCarreta(resultCarreta);
 
 		setVeiculo(vehicleData);
+		setLoading(false);
 	}
 
 	useEffect(() => {
@@ -96,25 +185,80 @@ function FormularioCadastroManual({
 	}, [isCargaApp]);
 
 	async function handleSearchVehicle(plate) {
+		setLoading(true);
 		if (plate) {
 			setDetalesVeiculo(null);
 			setDetalesCarreta(null);
 			const vehicleDetails = (await ServiceVeiculos.get(plate)).data.data;
 			if (vehicleDetails) {
-				formik.setFieldValue("placa_carreta", vehicleDetails.placa_carreta);
-				formik.setFieldValue("placa_bitrem", vehicleDetails.placa_bitrem);
-				formik.setFieldValue("nome_motorista", vehicleDetails.nome_motorista);
-				formik.setFieldValue(
-					"codigo_motorista",
-					vehicleDetails.codigo_motorista
-				);
+				if (formik.values.carga_app == 1) {
+					const response = await ServiceApp.motoristaExiste(
+						plate,
+						vehicleDetails.cpf
+					);
+					if (response.err) {
+						swal(response.message);
+						formik.setFieldValue("placa_veiculo", null);
+						formik.setFieldValue("placa_carreta", null);
+						formik.setFieldValue("placa_bitrem", null);
+						formik.setFieldValue("codigo_motorista", null);
+						formik.setFieldValue("nome_motorista", null);
+						formik.setFieldValue("cpf_motorista", null);
+						setLoading(false);
+					} else {
+						const response = await ServiceApp.motoristaPossuiViagem(
+							vehicleDetails.cpf
+						);
+						if (response.err) {
+							swal(response.message);
+							formik.setFieldValue("placa_veiculo", null);
+							formik.setFieldValue("placa_carreta", null);
+							formik.setFieldValue("placa_bitrem", null);
+							formik.setFieldValue("codigo_motorista", null);
+							formik.setFieldValue("nome_motorista", null);
+							formik.setFieldValue("cpf_motorista", null);
+							setLoading(false);
+						} else {
+							formik.setFieldValue(
+								"placa_carreta",
+								vehicleDetails.placa_carreta
+							);
+							formik.setFieldValue("placa_bitrem", vehicleDetails.placa_bitrem);
+							formik.setFieldValue(
+								"nome_motorista",
+								vehicleDetails.nome_motorista
+							);
+							formik.setFieldValue(
+								"codigo_motorista",
+								vehicleDetails.codigo_motorista
+							);
+							formik.setFieldValue("cpf_motorista", vehicleDetails.cpf);
 
-				const detalhesVeiculos = (
-					await ServiceVeiculos.detalhesImpedimentos(plate)
-				).data.data;
-				setDetalesVeiculo(detalhesVeiculos);
+							const detalhesVeiculos = (
+								await ServiceVeiculos.detalhesImpedimentos(plate)
+							).data.data;
+							setDetalesVeiculo(detalhesVeiculos);
+							setLoading(false);
+							return;
+						}
+					}
+				} else {
+					formik.setFieldValue("placa_carreta", vehicleDetails.placa_carreta);
+					formik.setFieldValue("placa_bitrem", vehicleDetails.placa_bitrem);
+					formik.setFieldValue("nome_motorista", vehicleDetails.nome_motorista);
+					formik.setFieldValue(
+						"codigo_motorista",
+						vehicleDetails.codigo_motorista
+					);
+					formik.setFieldValue("cpf_motorista", vehicleDetails.cpf);
 
-				return;
+					const detalhesVeiculos = (
+						await ServiceVeiculos.detalhesImpedimentos(plate)
+					).data.data;
+					setDetalesVeiculo(detalhesVeiculos);
+					setLoading(false);
+					return;
+				}
 			} else {
 				swal("Não foi encontrado nenhum veículo com essa placa.");
 			}
@@ -123,6 +267,8 @@ function FormularioCadastroManual({
 		formik.setFieldValue("placa_bitrem", null);
 		formik.setFieldValue("codigo_motorista", null);
 		formik.setFieldValue("nome_motorista", null);
+		formik.setFieldValue("cpf_motorista", null);
+		setLoading(false);
 	}
 
 	async function handleShowDebitAboutVehicle(plate) {
@@ -168,15 +314,117 @@ function FormularioCadastroManual({
 				formik.setFieldValue("placa_bitrem", null);
 				formik.setFieldValue("codigo_motorista", null);
 				formik.setFieldValue("nome_motorista", null);
+				formik.setFieldValue("cpf_motorista", null);
 			}, 500);
 		}
 		const cargaEnviarApp = 1;
 		const cargaNaoEnviarApp = 0;
-		setDisabledPlaca(decisaoEnvioCarga);
+		//setDisabledPlaca(decisaoEnvioCarga); #PLACA FICAR HABILITADA
 		const valorCargaAppFormik = decisaoEnvioCarga
 			? cargaEnviarApp
 			: cargaNaoEnviarApp;
 		formik.setFieldValue("carga_app", valorCargaAppFormik);
+	};
+
+	useEffect(() => {
+		const today = new Date();
+		const todayS = new Date().toISOString().split("T")[0];
+		const inputDateColeta = new Date(formik.values.data_coleta);
+		const inputDateEntrega = new Date(formik.values.data_entrega);
+
+		// Verifica se o ano da data de coleta é maior que o ano atual
+		if (
+			formik.values.data_coleta &&
+			inputDateColeta.getFullYear() >= today.getFullYear()
+		) {
+			if (formik.values.data_coleta && formik.values.data_coleta < todayS) {
+				swal("A data de coleta não pode ser menor que a data atual");
+				formik.setFieldValue("data_coleta", "");
+			}
+		}
+
+		// Verifica se o ano da data de entrega é maior que o ano atual
+		if (
+			formik.values.data_entrega &&
+			inputDateEntrega.getFullYear() >= today.getFullYear()
+		) {
+			if (
+				formik.values.data_coleta &&
+				formik.values.data_entrega &&
+				formik.values.data_entrega < formik.values.data_coleta
+			) {
+				swal("A data de entrega deve ser maior ou igual à data de coleta");
+				formik.setFieldValue("data_entrega", "");
+			}
+		}
+	}, [
+		formik.values.data_coleta,
+		formik.values.data_entrega,
+		formik.values.janela_coleta,
+		formik.values.janela_entrega,
+	]);
+
+	const foucusOut = (e) => {
+		const offset = -3; // Offset em horas para GMT-3
+		const offsetInMs = offset * 60 * 60 * 1000; // Converter offset para milissegundos
+		const nowN = new Date();
+		const now = new Date(nowN.getTime() + offsetInMs);
+		const todayS = now.toISOString().split("T")[0];
+		const split_hour = now.toISOString().split("T")[1].split(":");
+
+		if (e.target.name == "data_coleta") {
+			if (formik.values.data_coleta && formik.values.data_coleta < todayS) {
+				swal("A data de coleta não pode ser menor que a data atual");
+				formik.setFieldValue("data_coleta", "");
+			}
+		} else if (e.target.name == "data_entrega") {
+			if (
+				formik.values.data_coleta &&
+				formik.values.data_entrega &&
+				formik.values.data_entrega < formik.values.data_coleta
+			) {
+				swal("A data de entrega deve ser maior ou igual à data de coleta");
+				formik.setFieldValue("data_entrega", "");
+			}
+		} else if (e.target.name == "janela_coleta") {
+			const split_janela_coleta = String(formik.values.janela_coleta).split(
+				":"
+			);
+			if (
+				(formik.values.data_coleta == todayS &&
+					Number(split_janela_coleta[0] < Number(split_hour[0])) &&
+					Number(split_janela_coleta[1] < Number(split_hour[1]))) ||
+				(formik.values.data_coleta == todayS &&
+					Number(split_janela_coleta[0] == Number(split_hour[0])) &&
+					Number(split_janela_coleta[1] < Number(split_hour[1])))
+			) {
+				swal(
+					"O horário da janela de coleta não poder ser inferior a hora atual quando a data de coleta for igual data atual"
+				);
+				formik.setFieldValue("janela_coleta", "");
+			}
+		} else if (e.target.name == "janela_entrega") {
+			if (formik.values.data_coleta === formik.values.data_entrega) {
+				const split_janela_coleta = String(formik.values.janela_coleta).split(
+					":"
+				);
+				const split_janela_entrega = String(formik.values.janela_entrega).split(
+					":"
+				);
+				if (
+					formik.values.data_entrega == todayS &&
+					Number(split_janela_coleta[0] == Number(split_janela_entrega[0])) &&
+					Number(split_janela_coleta[1] == Number(split_janela_entrega[1]))
+				) {
+					swal(
+						"A hora de entrega deve ser maior que a de coleta quando as datas são iguais"
+					);
+					formik.setFieldValue("janela_entrega", "");
+				}
+			}
+		} else {
+			console.log();
+		}
 	};
 
 	const titleInfoPlaca = isDetalhesCarreta
@@ -332,6 +580,196 @@ function FormularioCadastroManual({
 					</Col>
 				)}
 			</Row>
+			<div className="class-linha-title3">
+				<hr className="w-100"></hr>
+			</div>
+			<>
+				<Row className="mb-5">
+					<Col sm={12}>
+						<h3 id="title-check-não">Detalhes</h3>
+					</Col>
+				</Row>
+				<Row>
+					<Col sm={12} md={6}>
+						<Form.Group controlId="valor_frete">
+							<Form.Label>Valor Frete (R$)</Form.Label>
+							<CurrencyInput
+								id="valor_frete"
+								name="valor_frete"
+								value={formik.values.valor_frete}
+								decimalsLimit={2}
+								decimalSeparator=","
+								groupSeparator="."
+								prefix="R$ "
+								onValueChange={(value) => {
+									try {
+										if (value !== undefined) {
+											formik.setFieldValue(
+												"valor_frete",
+												value.replace("-", "")
+											);
+										} else {
+											formik.setFieldValue("valor_frete", "0");
+										}
+									} catch (error) {
+										console.log(error);
+										formik.setFieldValue("valor_frete", value);
+									}
+								}}
+								defaultValue={formik.values.valor_frete}
+								className={`form-control ${
+									formik.touched.valor_frete && formik.errors.valor_frete
+										? "is-invalid"
+										: ""
+								}`}
+							/>
+						</Form.Group>
+					</Col>
+					<Col>
+						<Row>
+							{/* 							<Col sm={6} md={7} lg={6}>
+								<Form.Group
+									className="mb-3"
+									controlId="validationFormikForcaTrabalho"
+								>
+									<Form.Label>Força de Trabalho</Form.Label>
+									<Select
+										id="forca_trabalho"
+										name="forca_trabalho"
+										placeholder="Selecione"
+										options={optionsForcaTrabalho}
+										onChange={(option) =>
+											formik.setFieldValue("forca_trabalho", option)
+										}
+										value={formik.values.forca_trabalho}
+										required
+									/>
+									{formik.errors.forca_trabalho &&
+										formik.touched.forca_trabalho && (
+											<div style={{ color: "red" }}>
+												{formik.errors.forca_trabalho}
+											</div>
+										)}
+								</Form.Group>
+							</Col> */}
+							{/* 							<Col>
+								{formik.values.carga_app == 1 ? (
+									<Form.Group
+										className="mb-3"
+										controlId="validationFormikTipoDeViagem"
+									>
+										<Form.Label>Tipo Viagem</Form.Label>
+										<Select
+											id="tipo_viagem"
+											name="tipo_viagem"
+											placeholder="Selecione"
+											options={optionsViagem}
+											onChange={(option) =>
+												formik.setFieldValue("tipo_viagem", option)
+											}
+											value={
+												formik.values.tipo_viagem == 1
+													? optionsViagem[0]
+													: formik.values.tipo_viagem
+											}
+											hideSelectedOptions={true}
+											required
+										/>
+										{formik.errors.tipo_viagem &&
+											formik.touched.tipo_viagem && (
+												<div style={{ color: "red" }}>
+													{formik.errors.tipo_viagem}
+												</div>
+											)}
+									</Form.Group>
+								) : (
+									<></>
+								)}
+							</Col> */}
+						</Row>
+					</Col>
+				</Row>
+				<Row>
+					{/* 					<Col sm={12} md={6}>
+						<Form.Group
+							className="mb-3"
+							controlId="validationFormikEstiloCarga"
+						>
+							<Form.Label>Estilo Carga</Form.Label>
+							<Select
+								id="estilo_carga"
+								name="estilo_carga"
+								placeholder="Selecione"
+								options={optionsEstiloCarga}
+								onChange={(option) =>
+									formik.setFieldValue("estilo_carga", option)
+								}
+								value={
+									formik.values.estilo_carga == 1
+										? optionsEstiloCarga[0]
+										: formik.values.estilo_carga
+								}
+								required
+							/>
+							{formik.errors.estilo_carga && formik.touched.estilo_carga && (
+								<div style={{ color: "red" }}>{formik.errors.estilo_carga}</div>
+							)}
+						</Form.Group>
+					</Col> */}
+					{/* 					<Col>
+						<Row>
+							<Col sm={6} md={7} lg={6}>
+								{formik.values.estilo_carga.value &&
+								formik.values.estilo_carga.value == 2 ? (
+									<Form.Group
+										className="mb-3"
+										controlId="validationFormikForcaTrabalho"
+									>
+										<Form.Label>Quantidade de Cargas</Form.Label>
+										<Form.Control
+											type="number"
+											min={1}
+											step={0.01}
+											placeholder=" "
+											name="quantidade_cargas"
+											value={formik.values.quantidade_cargas}
+											onKeyDown={handleEnter}
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+											disabled={disabledFields.includes("quantidade_cargas")}
+											required
+										/>
+									</Form.Group>
+								) : (
+									<></>
+								)}
+							</Col>
+							<Col>
+								{formik.values.estilo_carga.value &&
+								formik.values.estilo_carga.value == 2 ? (
+									<Form.Group
+										className="mb-3"
+										controlId="validationFormikDataLimiteOferta"
+									>
+										<Form.Label>Data Limite Oferta</Form.Label>
+										<Form.Control
+											type="date"
+											placeholder=" "
+											name="data_limite_oferta"
+											value={formik.values.data_limite_oferta}
+											onKeyDown={handleEnter}
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+										/>
+									</Form.Group>
+								) : (
+									<></>
+								)}
+							</Col>
+						</Row>
+					</Col> */}
+				</Row>
+			</>
 			<div className="class-linha-title3">
 				<hr className="w-100"></hr>
 			</div>
@@ -547,7 +985,10 @@ function FormularioCadastroManual({
 							value={formik.values.data_coleta}
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
+							onBlur={(e) => {
+								formik.handleBlur(e);
+								foucusOut(e);
+							}}
 							required={isDisableColetaEntrega}
 						/>
 					</FloatingLabel>
@@ -561,7 +1002,10 @@ function FormularioCadastroManual({
 							value={formik.values.data_entrega}
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
+							onBlur={(e) => {
+								formik.handleBlur(e);
+								foucusOut(e);
+							}}
 							required={isDisableColetaEntrega}
 						/>
 					</FloatingLabel>
@@ -578,7 +1022,10 @@ function FormularioCadastroManual({
 								value={formik.values.janela_coleta}
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
+								onBlur={(e) => {
+									formik.handleBlur(e);
+									foucusOut(e);
+								}}
 							/>
 						</FloatingLabel>
 					</Col>
@@ -591,7 +1038,10 @@ function FormularioCadastroManual({
 								value={formik.values.janela_entrega}
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
+								onBlur={(e) => {
+									formik.handleBlur(e);
+									foucusOut(e);
+								}}
 							/>
 						</FloatingLabel>
 					</Col>
@@ -641,11 +1091,9 @@ function FormularioCadastroManual({
 					</Row>
 				</Col>
 			</Row>
-
 			<div className="class-linha-title6">
 				<hr className="w-100"></hr>
 			</div>
-
 			<Row>
 				<Col>
 					<Form.Group className="mb-3">
@@ -667,7 +1115,45 @@ function FormularioCadastroManual({
 					</Form.Group>
 				</Col>
 			</Row>
+			{showPreRequisites ? (
+				<Col>
+					<div className="class-linha-title6">
+						<hr className="w-100"></hr>
+					</div>
+					<Row className="mb-5">
+						<Col sm={12}>
+							<h3 id="title-check-não">Pré-requisitos</h3>
+						</Col>
+					</Row>
 
+					<Form.Text muted className="fw-bold">
+						Adicione restrições e/ou acessórios do veículo caso necessário,
+						exemplo(s): motorista necessita de treinamento atualizado no
+						cliente, cinta, luvas, etc.
+					</Form.Text>
+
+					<Row>
+						<ModalPreRequisito
+							prerequisitos={prerequisitos}
+							prerequisito={prerequisito}
+							setPreRequisito={setPreRequisito}
+							formik={formik}
+							open={open}
+							handleOpen={handleOpen}
+							handleAddPreRequisito={handleAddPreRequisito}
+							quantidade={quantidade}
+							setQuantidade={setQuantidade}
+							acoesRequisito={acoesRequisito}
+						/>
+					</Row>
+
+					<div className="class-linha-title6">
+						<hr className="w-100"></hr>
+					</div>
+				</Col>
+			) : (
+				<></>
+			)}
 			<Row>
 				<Col>
 					<Form.Group className="mb-3">

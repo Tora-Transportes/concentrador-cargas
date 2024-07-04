@@ -47,6 +47,7 @@ export interface ICarga {
   rastreador?: string | null;
   categoria_veiculo?: string | null;
   carga_app?: number | null;
+  valor_frete?: number | null;
 }
 
 export interface ICargaCTE {

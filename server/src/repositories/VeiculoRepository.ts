@@ -31,6 +31,7 @@ export class VeiculoRepository implements IVeiculoRepository {
         "BITREM.VEI_PLACA as placa_bitrem",
         "CADASTRO_GERAL.CG_NOME as nome_motorista",
         "CADASTRO_GERAL.CG_COD as codigo_motorista",
+        "CG_IDENTIFICACAO.CGI_NUM as cpf",
       ])
       .join("VEICULO", "VEICULO.TV_COD", "TIPO_VEICULO.TV_COD")
       .leftJoin(
@@ -44,7 +45,13 @@ export class VeiculoRepository implements IVeiculoRepository {
         "VEICULO.COD_BITREM"
       )
       .leftJoin("CADASTRO_GERAL", "VEICULO.CG_MOT", "CADASTRO_GERAL.CG_COD")
+      .leftJoin("CG_IDENTIFICACAO", "VEICULO.CG_MOT", "CG_IDENTIFICACAO.CG_COD")
       .where("VEICULO.VEI_PLACA", placa)
+      .andWhere(
+        "CG_IDENTIFICACAO.LOC_COD",
+        database.raw("CAST(CADASTRO_GERAL.LOC_COD AS VARCHAR2(255))")
+      )
+      .andWhere("CG_IDENTIFICACAO.TI_COD", 2)
       .first();
     return query;
   }

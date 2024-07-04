@@ -1,5 +1,5 @@
 import { TDocumentDefinitions } from "pdfmake/interfaces";
-import { format } from "date-fns";
+import { endOfMonth, format } from "date-fns";
 import PDFPrinter from "pdfmake";
 import fs from "fs";
 
@@ -23,8 +23,9 @@ class ServiceDemonstrativo {
       const dataAtual = new Date();
       const dataFormatada = format(dataAtual, "dd/MM/yyyy HH:mm:ss");
       const date = new Date(`${mes}/01/${ano}`);
-      const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-      const periodoApu = `01/${mes}/${ano} à ${lastDay.toLocaleDateString()}`;
+      const lastDayOfMonth = endOfMonth(date);
+      const formattedDate = format(lastDayOfMonth, "dd/MM/yyyy");
+      const periodoApu = `01/${mes}/${ano} à ${formattedDate}`;
       const body_dados_motorista = [
         [
           {

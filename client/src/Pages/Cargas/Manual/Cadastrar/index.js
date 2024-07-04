@@ -47,9 +47,30 @@ function Manual() {
 			placa_veiculo: "",
 			documento_transporte: "",
 			carga_app: 0,
+			valor_frete: 0,
+			forca_trabalho: 0,
+			tipo_viagem: 1,
+			estilo_carga: 1,
+			quantidade_cargas: 0,
+			data_limite_oferta: "",
+			idCargaMae: null,
+			prerequisitos: [],
+			cpf_motorista: "",
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
+
+			if (typeof values.forca_trabalho == "object") {
+				values.forca_trabalho = values.forca_trabalho.value;
+			}
+			if (typeof values.tipo_viagem == "object") {
+				values.tipo_viagem = values.tipo_viagem.value;
+			}
+			if (typeof values.estilo_carga == "object") {
+				values.estilo_carga = values.estilo_carga.value;
+			}
+			values.valor_frete = String(values.valor_frete);
+			values.valor_frete = Number(values.valor_frete.replace(",", "."));
 			try {
 				values.fk_filial = await values.fk_filial.split("-")[0];
 				const { data } = await ServiceCargas.create({
@@ -57,7 +78,7 @@ function Manual() {
 					canal_comunicacao: "manual",
 					carga_csn: 0,
 				});
-
+				values.valor_frete = String(values.valor_frete);
 				if (values.carga_app === 1 && data) {
 					const oid = getClaims().oid;
 					const idCarga = String(data.data.id);
@@ -178,6 +199,7 @@ function Manual() {
 						status={"Cadastro"}
 						isDisableColetaEntrega={isDisableColetaEntrega}
 						setDisableColetaEntrega={setDisableColetaEntrega}
+						setLoading={setLoading}
 					/>
 					<Row>
 						<Col>

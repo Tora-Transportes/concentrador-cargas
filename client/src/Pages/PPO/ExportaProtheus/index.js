@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import useLoadingScreen from "../../Components/LoadingScreen";
 import Menusuperior from "../../Components/MenuSuperior/menusuperior";
-import ServicePPO from "src/services/ServicePPO";
-import ServicePPOGrupos from "src/services/ServicePPOGrupos";
+import ServicePPO from "src/services/PPO/ServicePPO";
+import ServicePPOGrupos from "src/services/PPO/ServicePPOGrupos";
 import swal2 from "sweetalert2";
 import {
 	Container,

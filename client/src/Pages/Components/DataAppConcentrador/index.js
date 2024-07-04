@@ -15,11 +15,36 @@ export const envioCargaApp = async (body) => {
 		acessorios_requisitos,
 		informacoes_restritivas,
 		observacao,
+		valor_frete,
+		///forca_trabalho,
+		//tipo_viagem,
+		//estilo_carga,
+		//data_limite_oferta,
+		//idCargaMae,
+		placa_veiculo,
+		cpf_motorista,
+		janela_coleta,
+		janela_entrega,
 	} = body;
 
 	const cidadeEstadoOrigem = origem_carga.split("/");
 	const cidadeEstadoDestino = destino_carga.split("/");
+	const data_inicio = new Date(data_coleta + " " + janela_coleta);
+	const data_fim = new Date(data_entrega + " " + janela_entrega);
 	const nameClient = cliente.split("-")[0];
+
+	// Ajustar o fuso horário
+	const offset = -3; // Offset em horas para GMT-3
+	const offsetInMs = offset * 60 * 60 * 1000; // Converter offset para milissegundos
+
+	// Ajustar a data para o fuso horário específico
+	const localDateIncio = new Date(data_inicio.getTime() + offsetInMs);
+	const localDateFim = new Date(data_fim.getTime() + offsetInMs);
+
+	// Formatar a data ajustada para o formato ISO
+	const isoDateStringInicio = localDateIncio.toISOString().split(".")[0] + "Z";
+	const isoDateStringFim = localDateFim.toISOString().split(".")[0] + "Z";
+
 	const bodyEnvioApp = {
 		requestCode: idCarga, //codigo da carga
 		operatorNumber: oid, // number user
@@ -30,12 +55,20 @@ export const envioCargaApp = async (body) => {
 		originCollection: nameClient?.trim(), // Origem coleta obs: cliente
 		deliveryUF: cidadeEstadoDestino[1], // uf destino
 		deliveryCity: cidadeEstadoDestino[2], // cidade destino
-		estimatedStartDate: data_coleta, // data coleta
-		estimatedEndDate: data_entrega, // data entrega
+		estimatedStartDate: isoDateStringInicio, // data coleta
+		estimatedEndDate: isoDateStringFim, // data entrega
 		observacao: observacao || "", // observação 3
 		acessorios_requisitos: acessorios_requisitos || "", // observação 1
 		informacoes_restritivas: informacoes_restritivas || "", // observação 2
-		weight: quantidade, // peso
+		weight: String(quantidade) + " KG", // peso
+		valueFreight: valor_frete,
+		//workforce: forca_trabalho,
+		//typeTravel: tipo_viagem,
+		//cargoStyle: estilo_carga,
+		//offerDeadline: data_limite_oferta,
+		//parentRequesCode: idCargaMae,
+		placa_veiculo: placa_veiculo,
+		cpf_motorista: cpf_motorista,
 	};
 
 	const saveError = (error) => {
@@ -60,7 +93,7 @@ export const cancelarCargaApp = async (
 	observacaoCancelamento
 ) => {
 	const bodyEnvioApp = {
-		availableFreight: String(idCarga), //codigo da carga
+		availableFreight: idCarga, //codigo da carga
 		concentradorUser: oid, // number user
 		cancellationReason: observacaoCancelamento,
 	};

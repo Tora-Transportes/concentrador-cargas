@@ -11,7 +11,7 @@ import "./style.css";
 import ViewPPOCalculador from "../view";
 import { getColumns } from "../columns";
 import factoryReducerCargas from "../../../../../hooks/storageCargas/factoryReducerCargas";
-import ServicePPOCalculador from "src/services/ServicePPOCalculador";
+import ServicePPOCalculador from "src/services/PPO/ServicePPOCalculador";
 import useLoadingScreen from "../../../../Components/LoadingScreen";
 import { formatDateTimeZone } from "../../../../Utils/formatDate";
 

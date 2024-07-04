@@ -24,14 +24,18 @@ import PontoParadaController from "./controllers/PontoParadaController";
 import CargasCsnInfoController from "./controllers/csn/CargasCsnInfoController";
 import LogsErrorControllers from "./controllers/LogsErrorControllers";
 import CargaAppController from "./controllers/AppTora/CargaAppController";
-import PPOController from "./controllers/PPOController";
-import PPOParametrosController from "./controllers/PPOParametrosController";
-import PPOGruposController from "./controllers/PPOGruposController";
-import PPOParametrosGrupoController from "./controllers/PPOParametrosGrupoController";
+import PPOController from "./controllers/PPO/PPOController";
+import PPOParametrosController from "./controllers/PPO/PPOParametrosController";
+import PPOGruposController from "./controllers/PPO/PPOGruposController";
+import PPOParametrosGrupoController from "./controllers/PPO/PPOParametrosGrupoController";
 import WebhookAutentiqueController from "./controllers/WebhookAutentiqueController";
-import PPOCalculadorController from "./controllers/PPOCalculadorController";
+import PPOCalculadorController from "./controllers/PPO/PPOCalculadorController";
 import WebhookGitHubController from "./controllers/WebhookGitHubController";
-import PPOPermissoesVisualizacaoController from "./controllers/PPOPermissoesVisualizacaoController";
+import PPOEventosPermissoesController from "./controllers/PPO/PPOEventosPermissoesController";
+import PPOEventosAprovacaoController from "./controllers/PPO/PPOEventosAprovacaoController";
+import PPOEventosRelatoriosController from "./controllers/PPO/PPOEventosRelatoriosController";
+import PPOPermissoesVisualizacaoController from "./controllers/PPO/PPOPermissoesVisualizacaoController";
+import PreRequisitoController from "./controllers/PreRequisitoController";
 
 const routes = Router();
 
@@ -233,7 +237,7 @@ routes.post(
 routes.post("/logs", LogsErrorControllers.error);
 
 routes.put("/app/aprovar/carga", CargaAppController.aprovarCarga);
-routes.patch("/app/cancelar/carga", CargaAppController.cancelarCarga);
+routes.patch("/app/carga:cancelar", CargaAppController.cancelarCarga);
 
 //PPO
 routes.get("/ppo/avaliacoes", PPOController.avaliacoes);
@@ -317,5 +321,55 @@ routes.put(
 );
 
 routes.get("/ppo/motoristas/grupos", PPOController.motorista_by_grupo);
+
+routes.get(
+  "/ppo_eventos/permissoes/users",
+  PPOEventosPermissoesController.getAllUsers
+);
+
+routes.get("/ppo_eventos/permissoes", PPOEventosPermissoesController.index);
+
+routes.post("/ppo_eventos/permissoes", PPOEventosPermissoesController.create);
+routes.delete(
+  "/ppo_eventos/permissoes/users/:oid",
+  PPOEventosPermissoesController.deleteUser
+);
+
+routes.put(
+  "/ppo_eventos/permissoes/users/:oid",
+  PPOEventosPermissoesController.updateUser
+);
+
+routes.get("/ppo_eventos/aprovacoes", PPOEventosAprovacaoController.index);
+routes.put("/ppo_eventos/aprovacoes/:id", PPOEventosAprovacaoController.update);
+
+routes.get(
+  "/ppo_eventos/relatorios/aprovacoes",
+  PPOEventosRelatoriosController.relatorioAprovacoes
+);
+
+routes.get(
+  "/ppo_eventos/relatorios/aprovacoes/excel",
+  PPOEventosRelatoriosController.relatorioAprovacoesExcel
+);
+
+routes.get(
+  "/ppo_eventos/relatorios/eventos",
+  PPOEventosRelatoriosController.relatorioEventos
+);
+
+routes.get(
+  "/ppo_eventos/relatorios/eventos/excel",
+  PPOEventosRelatoriosController.relatorioEventosExcel
+);
+
+routes.get(
+  "/ppo_eventos/aprovacoes/detalhes",
+  PPOEventosAprovacaoController.detalhes
+);
+
+routes.get("/pre-requisito", PreRequisitoController.list);
+routes.post("/pre-requisito", PreRequisitoController.create);
+routes.put("/pre-requisito/:id", PreRequisitoController.update);
 
 export default routes;

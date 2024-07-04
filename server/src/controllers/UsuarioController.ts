@@ -10,9 +10,12 @@ import {
 class UsuarioController {
   async search(req: Request, res: Response) {
     const { q } = req.query;
-    const searchResult = await new UseCaseViewUsuario().run({
-      query: String(q),
-    });
+    const searchResult = await new UseCaseViewUsuario().run(
+      {
+        query: String(q),
+      },
+      true
+    );
 
     return res.json({ data: searchResult });
   }
@@ -27,7 +30,8 @@ class UsuarioController {
 
   async index(req: Request, res: Response) {
     const { oid } = req.params;
-    const user = (await new UseCaseViewUsuario().run({ oid })).results[0];
+    const user = (await new UseCaseViewUsuario().run({ oid }, false))
+      .results[0];
     return res.json({ data: user });
   }
 
