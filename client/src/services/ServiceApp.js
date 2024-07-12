@@ -1,12 +1,37 @@
 import { apiApp } from "./apiApp";
+import api from "./api";
 
 class ServiceApp {
 	async envioCargaApp(body) {
-		return await apiApp.post("/freight/createfreight", body);
+		const response = await apiApp.post("/freight/createfreight", body);
+
+		const bodyLog = {
+			metodo: "POST - CRIAR CARGA",
+			status: response.status.toString(),
+			json_envio: JSON.stringify(body),
+			json_retorno: JSON.stringify(response.data),
+			erro: response.status == 200 ? 0 : 1,
+		};
+
+		await api.post("/logs/app/integracao", bodyLog);
+
+		return response;
 	}
 
 	async cancelarCargaApp(body) {
-		return await apiApp.patch("/freight/cancel", body);
+		const response = await apiApp.patch("/freight/cancel", body);
+
+		const bodyLog = {
+			metodo: "PATCH - CANCELAR CARGA",
+			status: response.status.toString(),
+			json_envio: JSON.stringify(body),
+			json_retorno: JSON.stringify(response.data),
+			erro: response.status == 200 ? 0 : 1,
+		};
+
+		await api.post("/logs/app/integracao", bodyLog);
+
+		return response;
 	}
 
 	async motoristaExiste(placa, cpf) {
@@ -15,6 +40,16 @@ class ServiceApp {
 			licensePlate: placa,
 		};
 		const response = await apiApp.post("/driverExists", body);
+
+		const bodyLog = {
+			metodo: "POST - MOTORISTA EXISTE",
+			status: response.status.toString(),
+			json_envio: JSON.stringify(body),
+			json_retorno: JSON.stringify(response.data),
+			erro: response.status == 200 ? 0 : 1,
+		};
+
+		await api.post("/logs/app/integracao", bodyLog);
 
 		if (
 			response.data &&
@@ -38,6 +73,16 @@ class ServiceApp {
 			driverCpf: cpf,
 		};
 		const response = await apiApp.post("/driver/cpf/openFreight", body);
+
+		const bodyLog = {
+			metodo: "POST - MOTORISTA POSSUI VIAGEM",
+			status: response.status.toString(),
+			json_envio: JSON.stringify(body),
+			json_retorno: JSON.stringify(response.data),
+			erro: response.status == 200 ? 0 : 1,
+		};
+
+		await api.post("/logs/app/integracao", bodyLog);
 
 		if (
 			response.data &&
