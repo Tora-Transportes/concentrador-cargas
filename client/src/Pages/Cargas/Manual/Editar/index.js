@@ -150,7 +150,6 @@ function Manual() {
 					fk_filial: formik.values.fk_filial?.split("-")[0],
 					carga_csn: 0,
 				});
-				await swal("Sucesso!", "Carga cancelada.", "success");
 				await carregarCarga();
 				if (data.data && formik.values.carga_app === 1) {
 					cancelarCargaApp(
@@ -159,6 +158,7 @@ function Manual() {
 						observacaoCancelamento
 					);
 				}
+				await swal("Sucesso!", "Carga cancelada.", "success");
 			} else {
 				await swal("Nenhuma alteração realizada.");
 			}

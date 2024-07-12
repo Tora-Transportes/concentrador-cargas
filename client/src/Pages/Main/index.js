@@ -136,7 +136,7 @@ function Main() {
 		}
 	}, [levelGame]);
 
-	const numeroVersao = "V.14.1";
+	const numeroVersao = "V.14.2";
 	return (
 		<>
 			<ToastContainer />

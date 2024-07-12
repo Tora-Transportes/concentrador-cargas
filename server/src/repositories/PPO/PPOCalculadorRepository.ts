@@ -37,7 +37,12 @@ export class PPOCalculadorRepository implements IPPOCalculadorRepository {
 
   async blocos() {
     const blocos = await mssqlPPO.raw(
-      `select DISTINCT mes_avaliacao,ano_avaliacao from ppo_resultado`
+      `SELECT TOP 6 mes_avaliacao, ano_avaliacao
+      FROM (
+          SELECT DISTINCT mes_avaliacao, ano_avaliacao
+          FROM ppo_resultado
+      ) AS distinct_results
+      ORDER BY ano_avaliacao DESC, mes_avaliacao DESC;`
     );
     return blocos;
   }
