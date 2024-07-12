@@ -54,6 +54,7 @@ const CadastroCargaCSN = () => {
 			documento_transporte: "",
 			fk_filial: "128 - VOLTA REDONDA",
 			carga_app: 0,
+			valor_frete: 0,
 			ponto_passagem: {
 				ponto: " 60 - POSTO - 30",
 				tipoServico: "Coleta",
@@ -120,6 +121,7 @@ const CadastroCargaCSN = () => {
 			},
 		},
 		onSubmit: async (values) => {
+			values.valor_frete = 0;
 			setLoading(true);
 			const existInputErrado = isDateErrorInput.find(
 				(item) => item.error === true
