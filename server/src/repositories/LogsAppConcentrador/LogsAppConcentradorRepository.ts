@@ -96,6 +96,12 @@ export class LogsAppConcentradorRepository
     if (isValid(query?.erro)) {
       filtro = filtro + ` AND erro = ${query.erro}`;
     }
+    if (isValid(query?.cod_carga)) {
+      filtro =
+        filtro +
+        ` AND (JSON_VALUE(json_envio, '$.requestCode') = '${query.cod_carga}' 
+      OR  JSON_VALUE(json_envio, '$.availableFreight') = '${query.cod_carga}')`;
+    }
 
     const total = await mssqlLogs.raw(
       `SELECT COUNT(0) as total FROM logs_integracao
@@ -105,7 +111,13 @@ export class LogsAppConcentradorRepository
     );
 
     const sql = `
-    SELECT * FROM logs_integracao
+    SELECT 
+    CASE 
+      WHEN JSON_VALUE(json_envio, '$.availableFreight') IS NOT NULL THEN JSON_VALUE(json_envio, '$.availableFreight')
+      WHEN JSON_VALUE(json_envio, '$.requestCode') IS NOT NULL THEN JSON_VALUE(json_envio, '$.requestCode')
+      ELSE 'Sem código de carga'
+    END AS 'cod_carga',*
+    FROM logs_integracao
     WHERE 1=1
     ${filtro}
     ORDER BY id DESC
