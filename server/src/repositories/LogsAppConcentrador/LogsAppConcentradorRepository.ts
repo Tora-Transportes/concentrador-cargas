@@ -5,6 +5,7 @@ import TokenAd from "../../models/TokenAd";
 
 interface ILogsAppConcentradorRepository {
   create(calculador: ILogConcentradorApp, user: string): Promise<any>;
+  info(): Promise<any>;
   relatorio(
     query: Record<string, any>,
     page?: number,
@@ -23,6 +24,60 @@ export class LogsAppConcentradorRepository
     return mssqlLogs("dbo.logs_integracao").insert(calculador);
   }
 
+  async info() {
+    async function cargasMatch() {
+      return mssqlLogs.raw(`SELECT count(0) as total_cargas_match
+      FROM logs_integracao
+      WHERE JSON_VALUE(json_envio, '$.cpf_motorista') IS NOT NULL
+      AND metodo = 'POST - CRIAR CARGA'`);
+    }
+
+    async function cargasSemMatch() {
+      return mssqlLogs.raw(`SELECT count(0) as total_cargas_sem_match
+      FROM logs_integracao
+      WHERE JSON_VALUE(json_envio, '$.cpf_motorista') IS NULL
+      AND metodo = 'POST - CRIAR CARGA'`);
+    }
+
+    async function cargasTotal() {
+      return mssqlLogs.raw(`select count(0) as total_cargas from dbo.logs_integracao
+      where metodo = 'POST - CRIAR CARGA'`);
+    }
+
+    async function cargasCanceladas() {
+      return mssqlLogs.raw(`select count(0) as total_cargas_canceladas from dbo.logs_integracao
+      where metodo = 'PATCH - CANCELAR CARGA'`);
+    }
+
+    async function errosIntegracao() {
+      return mssqlLogs.raw(`select count(*) as integracoes_com_erro from dbo.logs_integracao
+       where erro = 1`);
+    }
+
+    async function integracaoSemErro() {
+      return mssqlLogs.raw(`select count(*) as integracoes_sem_erro from dbo.logs_integracao
+      where erro = 0`);
+    }
+
+    return Promise.all([
+      cargasMatch(),
+      cargasSemMatch(),
+      cargasTotal(),
+      cargasCanceladas(),
+      integracaoSemErro(),
+      errosIntegracao(),
+    ]).then((values) => {
+      return {
+        info_1: values[0][0],
+        info_2: values[1][0],
+        info_3: values[2][0],
+        info_4: values[3][0],
+        info_5: values[4][0],
+        info_6: values[5][0],
+      };
+    });
+  }
+
   async relatorio(
     query: Record<string, any>,
     page = 1,
@@ -32,14 +87,14 @@ export class LogsAppConcentradorRepository
 
     let filtro = "";
 
-    if (isValid(query?.mes)) {
-      filtro = filtro + ` AND mes LIKE '%${query.mes}%'`;
+    if (isValid(query?.metodo)) {
+      filtro = filtro + ` AND metodo LIKE '%${query.metodo}%'`;
     }
-    if (isValid(query?.ano)) {
-      filtro = filtro + ` AND ano LIKE '%${query.ano}%'`;
+    if (isValid(query?.status)) {
+      filtro = filtro + ` AND status LIKE '%${query.status}%'`;
     }
-    if (isValid(query?.tipo)) {
-      filtro = filtro + ` AND tipo LIKE '%${query.tipo}%'`;
+    if (isValid(query?.erro)) {
+      filtro = filtro + ` AND erro = ${query.erro}`;
     }
 
     const total = await mssqlLogs.raw(

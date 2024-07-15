@@ -1,0 +1,47 @@
+@keyframes pulse {
+    0% {
+      transform: scale(1);
+      background-color: #00652e;
+    }
+    50% {
+      transform: scale(1.2);
+      background-color: #00ff00; /* Verde */
+    }
+    100% {
+      transform: scale(1);
+      background-color: #00652e;
+    }
+  }
+
+  .pulsating-ball-green {
+    width: 20px;
+    height: 20px;
+    background-color: #00652e; /* Verde escuro */
+    border-radius: 50%;
+    animation: pulse 2s infinite; /* Duração da animação de 2 segundos e repetição infinita */
+  }
+
+
+
+  @keyframes pulse-standy {
+    0% {
+      transform: scale(1);
+      background-color: #e0c444;
+    }
+    50% {
+      transform: scale(1.2);
+      background-color: #ff9100; /* Verde */
+    }
+    100% {
+      transform: scale(1);
+      background-color: #e0c444;
+    }
+  }
+
+  .pulsating-ball-stady {
+    width: 20px;
+    height: 20px;
+    background-color: #ff9100; /* Verde escuro */
+    border-radius: 50%;
+    animation: pulse-standy 2s infinite; /* Duração da animação de 2 segundos e repetição infinita */
+  }
