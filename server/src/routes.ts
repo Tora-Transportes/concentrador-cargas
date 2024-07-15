@@ -374,5 +374,10 @@ routes.post("/pre-requisito", PreRequisitoController.create);
 routes.put("/pre-requisito/:id", PreRequisitoController.update);
 
 routes.post("/logs/app/integracao", LogsAppConcentradorController.create);
+routes.get("/logs/app/integracao/info", LogsAppConcentradorController.info);
+routes.get(
+  "/logs/app/integracao/relatorio",
+  LogsAppConcentradorController.relatorio
+);
 
 export default routes;

@@ -55,6 +55,7 @@ import AprovacaoGerente from "src/Pages/PPO_Eventos/AprovacaoGerente";
 import RelatorioEventos from "src/Pages/PPO_Eventos/RelatorioEventos";
 import RelatorioAprovacoes from "src/Pages/PPO_Eventos/RelatorioAprovacoes";
 import PreRequisitos from "src/Pages/Cargas/PreRequisitos";
+import IntegracaoConcentadorApp from "src/Pages/Cargas/IntegracaoConcentadorApp";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -149,6 +150,11 @@ export default function AllRoutes() {
 
 				<Routes path="/cargas/manual" exact component={CadastrarCargaManual} />
 				<Routes path="/cargas/pre-requisitos" exact component={PreRequisitos} />
+				<Routes
+					path="/cargas/integracao"
+					exact
+					component={IntegracaoConcentadorApp}
+				/>
 				<Routes path="/cargas/manual/:id" exact component={EditarCargaManual} />
 				<Routes path="/cargas/consulta/:id" exact component={ConsultaCarga} />
 				<Routes

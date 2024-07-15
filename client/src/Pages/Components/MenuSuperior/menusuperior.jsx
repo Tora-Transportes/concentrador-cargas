@@ -188,6 +188,11 @@ function Menusuperior() {
                 {permissoes?.permissoes?.includes("PRE_REQUISITOS_CARGAS") && (
                   <a href="/cargas/pre-requisitos">Pré-requisitos</a>
                 )}
+                {permissoes?.permissoes?.includes("INTEGRACAO_APP") && (
+                  <a href="/cargas/integracao">
+                    Integração Concentrador vs App
+                  </a>
+                )}
               </div>
             </div>
           </div>
