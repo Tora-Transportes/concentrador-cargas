@@ -12,6 +12,7 @@ class ServiceIntegracaoConcentradorApp {
 		metodo,
 		status,
 		erro,
+		cod_carga,
 	}) {
 		return await api.get("/logs/app/integracao/relatorio", {
 			params: {
@@ -21,6 +22,7 @@ class ServiceIntegracaoConcentradorApp {
 				metodo,
 				status,
 				erro,
+				cod_carga,
 			},
 		});
 	}

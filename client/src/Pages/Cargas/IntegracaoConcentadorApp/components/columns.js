@@ -18,6 +18,12 @@ export const getColumns = () => {
 			showFilter: true,
 		},
 		{
+			name: "cod_carga",
+			description: "Cod. Carga",
+			selector: (row) => row.cod_carga,
+			showFilter: true,
+		},
+		{
 			name: "erro",
 			description: "Erro",
 			selector: (row) => (row.erro === "true" ? "Sim" : "Não"),
