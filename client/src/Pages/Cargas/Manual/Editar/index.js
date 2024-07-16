@@ -52,11 +52,14 @@ function Manual() {
 
 			fk_situacao: null,
 			carga_app: 0,
+			valor_frete: 0,
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
 			try {
 				values.fk_filial = values.fk_filial.split("-")[0];
+				values.valor_frete = String(values.valor_frete);
+				values.valor_frete = Number(values.valor_frete.replace(",", "."));
 				const { data } = await ServiceCargas.update({
 					...values,
 					responsavel_cadastro: String(getClaims().name),
@@ -109,6 +112,13 @@ function Manual() {
 					id: formik.values.id,
 					observacao_exclusao: observacaoExclusao,
 				});
+				if (formik.values.carga_app === 1) {
+					await cancelarCargaApp(
+						formik.values.id,
+						getClaims().oid,
+						observacaoExclusao
+					);
+				}
 				await swal("Sucesso!", "Carga removida", "success");
 				handleCloseWindow(null, false);
 			} else {
@@ -140,7 +150,6 @@ function Manual() {
 					fk_filial: formik.values.fk_filial?.split("-")[0],
 					carga_csn: 0,
 				});
-				await swal("Sucesso!", "Carga cancelada.", "success");
 				await carregarCarga();
 				if (data.data && formik.values.carga_app === 1) {
 					cancelarCargaApp(
@@ -149,6 +158,7 @@ function Manual() {
 						observacaoCancelamento
 					);
 				}
+				await swal("Sucesso!", "Carga cancelada.", "success");
 			} else {
 				await swal("Nenhuma alteração realizada.");
 			}
@@ -319,6 +329,7 @@ function Manual() {
 						isCargaApp={isCargaApp}
 						isDisabledPlaca={isDisabledPlaca}
 						setDisabledPlaca={setDisabledPlaca}
+						setLoading={setLoading}
 					/>
 					<div className="class-group-button">
 						<Button

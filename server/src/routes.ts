@@ -36,6 +36,7 @@ import PPOEventosAprovacaoController from "./controllers/PPO/PPOEventosAprovacao
 import PPOEventosRelatoriosController from "./controllers/PPO/PPOEventosRelatoriosController";
 import PPOPermissoesVisualizacaoController from "./controllers/PPO/PPOPermissoesVisualizacaoController";
 import PreRequisitoController from "./controllers/PreRequisitoController";
+import LogsAppConcentradorController from "./controllers/LogsAppConcentrador/LogsAppConcentradorController";
 
 const routes = Router();
 
@@ -371,5 +372,12 @@ routes.get(
 routes.get("/pre-requisito", PreRequisitoController.list);
 routes.post("/pre-requisito", PreRequisitoController.create);
 routes.put("/pre-requisito/:id", PreRequisitoController.update);
+
+routes.post("/logs/app/integracao", LogsAppConcentradorController.create);
+routes.get("/logs/app/integracao/info", LogsAppConcentradorController.info);
+routes.get(
+  "/logs/app/integracao/relatorio",
+  LogsAppConcentradorController.relatorio
+);
 
 export default routes;

@@ -33,25 +33,21 @@ export class VeiculoRepository implements IVeiculoRepository {
         "CADASTRO_GERAL.CG_COD as codigo_motorista",
         "CG_IDENTIFICACAO.CGI_NUM as cpf",
       ])
-      .join("VEICULO", "VEICULO.TV_COD", "TIPO_VEICULO.TV_COD")
-      .leftJoin(
-        database("VEICULO").as("CARRETA"),
-        "CARRETA.VEI_COD",
-        "VEICULO.COD_CARRETA"
-      )
-      .leftJoin(
-        database("VEICULO").as("BITREM"),
-        "BITREM.VEI_COD",
-        "VEICULO.COD_BITREM"
-      )
+      .from("TIPO_VEICULO")
+      .innerJoin("VEICULO", "VEICULO.TV_COD", "TIPO_VEICULO.TV_COD")
+      .leftJoin("VEICULO as CARRETA", "CARRETA.VEI_COD", "VEICULO.COD_CARRETA")
+      .leftJoin("VEICULO as BITREM", "BITREM.VEI_COD", "VEICULO.COD_BITREM")
       .leftJoin("CADASTRO_GERAL", "VEICULO.CG_MOT", "CADASTRO_GERAL.CG_COD")
-      .leftJoin("CG_IDENTIFICACAO", "VEICULO.CG_MOT", "CG_IDENTIFICACAO.CG_COD")
+      .leftJoin("CG_IDENTIFICACAO", function () {
+        this.on("VEICULO.CG_MOT", "CG_IDENTIFICACAO.CG_COD")
+          .andOn(
+            database.raw(
+              "CG_IDENTIFICACAO.LOC_COD = CAST(CADASTRO_GERAL.LOC_COD AS VARCHAR2(255))"
+            )
+          )
+          .andOn("CG_IDENTIFICACAO.TI_COD", database.raw("?", ["2"]));
+      })
       .where("VEICULO.VEI_PLACA", placa)
-      .andWhere(
-        "CG_IDENTIFICACAO.LOC_COD",
-        database.raw("CAST(CADASTRO_GERAL.LOC_COD AS VARCHAR2(255))")
-      )
-      .andWhere("CG_IDENTIFICACAO.TI_COD", 2)
       .first();
     return query;
   }

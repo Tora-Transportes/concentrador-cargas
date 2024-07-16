@@ -326,6 +326,107 @@ function FormularioCadastroManual({
 		formik.setFieldValue("carga_app", valorCargaAppFormik);
 	};
 
+	useEffect(() => {
+		const today = new Date();
+		const todayS = new Date().toISOString().split("T")[0];
+		const inputDateColeta = new Date(formik.values.data_coleta);
+		const inputDateEntrega = new Date(formik.values.data_entrega);
+
+		// Verifica se o ano da data de coleta é maior que o ano atual
+		if (
+			formik.values.data_coleta &&
+			inputDateColeta.getFullYear() >= today.getFullYear()
+		) {
+			if (formik.values.data_coleta && formik.values.data_coleta < todayS) {
+				swal("A data de coleta não pode ser menor que a data atual");
+				formik.setFieldValue("data_coleta", "");
+			}
+		}
+
+		// Verifica se o ano da data de entrega é maior que o ano atual
+		if (
+			formik.values.data_entrega &&
+			inputDateEntrega.getFullYear() >= today.getFullYear()
+		) {
+			if (
+				formik.values.data_coleta &&
+				formik.values.data_entrega &&
+				formik.values.data_entrega < formik.values.data_coleta
+			) {
+				swal("A data de entrega deve ser maior ou igual à data de coleta");
+				formik.setFieldValue("data_entrega", "");
+			}
+		}
+	}, [
+		formik.values.data_coleta,
+		formik.values.data_entrega,
+		formik.values.janela_coleta,
+		formik.values.janela_entrega,
+	]);
+
+	const foucusOut = (e) => {
+		const offset = -3; // Offset em horas para GMT-3
+		const offsetInMs = offset * 60 * 60 * 1000; // Converter offset para milissegundos
+		const nowN = new Date();
+		const now = new Date(nowN.getTime() + offsetInMs);
+		const todayS = now.toISOString().split("T")[0];
+		const split_hour = now.toISOString().split("T")[1].split(":");
+
+		if (e.target.name == "data_coleta") {
+			if (formik.values.data_coleta && formik.values.data_coleta < todayS) {
+				swal("A data de coleta não pode ser menor que a data atual");
+				formik.setFieldValue("data_coleta", "");
+			}
+		} else if (e.target.name == "data_entrega") {
+			if (
+				formik.values.data_coleta &&
+				formik.values.data_entrega &&
+				formik.values.data_entrega < formik.values.data_coleta
+			) {
+				swal("A data de entrega deve ser maior ou igual à data de coleta");
+				formik.setFieldValue("data_entrega", "");
+			}
+		} else if (e.target.name == "janela_coleta") {
+			const split_janela_coleta = String(formik.values.janela_coleta).split(
+				":"
+			);
+			if (
+				(formik.values.data_coleta == todayS &&
+					Number(split_janela_coleta[0] < Number(split_hour[0])) &&
+					Number(split_janela_coleta[1] < Number(split_hour[1]))) ||
+				(formik.values.data_coleta == todayS &&
+					Number(split_janela_coleta[0] == Number(split_hour[0])) &&
+					Number(split_janela_coleta[1] < Number(split_hour[1])))
+			) {
+				swal(
+					"O horário da janela de coleta não poder ser inferior a hora atual quando a data de coleta for igual data atual"
+				);
+				formik.setFieldValue("janela_coleta", "");
+			}
+		} else if (e.target.name == "janela_entrega") {
+			if (formik.values.data_coleta === formik.values.data_entrega) {
+				const split_janela_coleta = String(formik.values.janela_coleta).split(
+					":"
+				);
+				const split_janela_entrega = String(formik.values.janela_entrega).split(
+					":"
+				);
+				if (
+					formik.values.data_entrega == todayS &&
+					Number(split_janela_coleta[0] == Number(split_janela_entrega[0])) &&
+					Number(split_janela_coleta[1] == Number(split_janela_entrega[1]))
+				) {
+					swal(
+						"A hora de entrega deve ser maior que a de coleta quando as datas são iguais"
+					);
+					formik.setFieldValue("janela_entrega", "");
+				}
+			}
+		} else {
+			console.log();
+		}
+	};
+
 	const titleInfoPlaca = isDetalhesCarreta
 		? "Dados do Veículo / Dados Carreta"
 		: "Dados do Veículo";
@@ -500,9 +601,21 @@ function FormularioCadastroManual({
 								decimalSeparator=","
 								groupSeparator="."
 								prefix="R$ "
-								onValueChange={(value) =>
-									formik.setFieldValue("valor_frete", value)
-								}
+								onValueChange={(value) => {
+									try {
+										if (value !== undefined) {
+											formik.setFieldValue(
+												"valor_frete",
+												value.replace("-", "")
+											);
+										} else {
+											formik.setFieldValue("valor_frete", "0");
+										}
+									} catch (error) {
+										console.log(error);
+										formik.setFieldValue("valor_frete", value);
+									}
+								}}
 								defaultValue={formik.values.valor_frete}
 								className={`form-control ${
 									formik.touched.valor_frete && formik.errors.valor_frete
@@ -603,7 +716,7 @@ function FormularioCadastroManual({
 							)}
 						</Form.Group>
 					</Col> */}
-					<Col>
+					{/* 					<Col>
 						<Row>
 							<Col sm={6} md={7} lg={6}>
 								{formik.values.estilo_carga.value &&
@@ -654,7 +767,7 @@ function FormularioCadastroManual({
 								)}
 							</Col>
 						</Row>
-					</Col>
+					</Col> */}
 				</Row>
 			</>
 			<div className="class-linha-title3">
@@ -872,7 +985,10 @@ function FormularioCadastroManual({
 							value={formik.values.data_coleta}
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
+							onBlur={(e) => {
+								formik.handleBlur(e);
+								foucusOut(e);
+							}}
 							required={isDisableColetaEntrega}
 						/>
 					</FloatingLabel>
@@ -886,7 +1002,10 @@ function FormularioCadastroManual({
 							value={formik.values.data_entrega}
 							onKeyDown={handleEnter}
 							onChange={formik.handleChange}
-							onBlur={formik.handleBlur}
+							onBlur={(e) => {
+								formik.handleBlur(e);
+								foucusOut(e);
+							}}
 							required={isDisableColetaEntrega}
 						/>
 					</FloatingLabel>
@@ -903,7 +1022,10 @@ function FormularioCadastroManual({
 								value={formik.values.janela_coleta}
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
+								onBlur={(e) => {
+									formik.handleBlur(e);
+									foucusOut(e);
+								}}
 							/>
 						</FloatingLabel>
 					</Col>
@@ -916,7 +1038,10 @@ function FormularioCadastroManual({
 								value={formik.values.janela_entrega}
 								onKeyDown={handleEnter}
 								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
+								onBlur={(e) => {
+									formik.handleBlur(e);
+									foucusOut(e);
+								}}
 							/>
 						</FloatingLabel>
 					</Col>

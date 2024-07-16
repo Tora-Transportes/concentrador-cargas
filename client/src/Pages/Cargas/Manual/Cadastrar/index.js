@@ -69,6 +69,8 @@ function Manual() {
 			if (typeof values.estilo_carga == "object") {
 				values.estilo_carga = values.estilo_carga.value;
 			}
+			values.valor_frete = String(values.valor_frete);
+			values.valor_frete = Number(values.valor_frete.replace(",", "."));
 			try {
 				values.fk_filial = await values.fk_filial.split("-")[0];
 				const { data } = await ServiceCargas.create({
@@ -76,7 +78,7 @@ function Manual() {
 					canal_comunicacao: "manual",
 					carga_csn: 0,
 				});
-
+				values.valor_frete = String(values.valor_frete);
 				if (values.carga_app === 1 && data) {
 					const oid = getClaims().oid;
 					const idCarga = String(data.data.id);

@@ -30,6 +30,7 @@ class ServiceCargas {
 		carga_csn,
 		rastreador,
 		carga_app,
+		valor_frete,
 	}) {
 		const carga = {
 			e_lote,
@@ -61,6 +62,7 @@ class ServiceCargas {
 			carga_csn,
 			rastreador,
 			carga_app,
+			valor_frete,
 		};
 		return await api.post("/cargas", carga);
 	}
@@ -170,6 +172,7 @@ class ServiceCargas {
 		carga_csn,
 		rastreador,
 		info_passagem,
+		valor_frete,
 	}) {
 		const carga = {
 			e_lote,
@@ -208,6 +211,7 @@ class ServiceCargas {
 			carga_csn,
 			rastreador,
 			info_passagem,
+			valor_frete,
 		};
 		carga;
 		return api.put(`/cargas/${id}`, carga);
