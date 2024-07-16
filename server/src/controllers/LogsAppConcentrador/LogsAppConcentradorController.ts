@@ -4,6 +4,7 @@ import { LogsAppConcentradorRepository } from "../../repositories/LogsAppConcent
 interface IPPOCalculadorController {
   relatorio(req: Request, res: Response): Promise<Response>;
   create(req: Request, res: Response): Promise<Response>;
+  info(req: Request, res: Response): Promise<Response>;
 }
 
 class PPOCalculadorController implements IPPOCalculadorController {
@@ -13,6 +14,12 @@ class PPOCalculadorController implements IPPOCalculadorController {
       req.body,
       String(req.headers.authorization)
     );
+    return res.json({ data: result });
+  }
+
+  async info(req: Request, res: Response): Promise<Response> {
+    const logsRepository = new LogsAppConcentradorRepository();
+    const result = await logsRepository.info();
     return res.json({ data: result });
   }
 

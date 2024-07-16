@@ -32,4 +32,5 @@ export const allTipoPermissoes = [
 	{ name: "PPO_EVENTOS_RELATORIO" },
 	{ name: "PPO_EVENTOS_RELATORIO_APROVACOES" },
 	{ name: "PRE_REQUISITOS_CARGAS" },
+	{ name: "INTEGRACAO_APP" },
 ];
