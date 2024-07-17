@@ -260,6 +260,9 @@ export class CargaRepository {
           qb.andWhere("carga_app", "=", Number(query.carga_app));
         }
       }
+      if (isValid(String(query?.exclude_cargas_app))) {
+        qb.andWhere("carga_app", "!=", 1);
+      }
     };
 
     total.andWhere(filterDbFunction);
