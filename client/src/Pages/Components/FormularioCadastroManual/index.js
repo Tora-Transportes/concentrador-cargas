@@ -190,6 +190,19 @@ function FormularioCadastroManual({
 			setDetalesVeiculo(null);
 			setDetalesCarreta(null);
 			const vehicleDetails = (await ServiceVeiculos.get(plate)).data.data;
+			if (vehicleDetails.cpf == null || vehicleDetails.cpf == undefined) {
+				formik.setFieldValue("placa_veiculo", null);
+				formik.setFieldValue("placa_carreta", null);
+				formik.setFieldValue("placa_bitrem", null);
+				formik.setFieldValue("codigo_motorista", null);
+				formik.setFieldValue("nome_motorista", null);
+				formik.setFieldValue("cpf_motorista", null);
+				swal(
+					`O veiculo da placa ${plate} não possui motorista vinculado no SIT!`
+				);
+				setLoading(false);
+				return;
+			}
 			if (vehicleDetails) {
 				if (formik.values.carga_app == 1) {
 					const response = await ServiceApp.motoristaExiste(
