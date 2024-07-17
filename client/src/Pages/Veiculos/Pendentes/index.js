@@ -117,6 +117,7 @@ function RotasPendentes() {
 				order_column: column,
 				order_direction: direction,
 				carga_csn: statusCargaId,
+				exclude_cargas_app: 1,
 			});
 			setLoading(false);
 			setTotalRegisters(data.data.total_registers);
