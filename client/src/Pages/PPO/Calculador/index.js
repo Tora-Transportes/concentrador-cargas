@@ -48,11 +48,13 @@ const Calculador = () => {
 	}
 
 	useEffect(() => {
-		const intervalId = setInterval(() => {
-			fetchData();
-		}, 5000);
+		if (!estado) {
+			const intervalId = setInterval(() => {
+				fetchData();
+			}, 10000);
 
-		return () => clearInterval(intervalId);
+			return () => clearInterval(intervalId);
+		}
 	}, []);
 
 	return (

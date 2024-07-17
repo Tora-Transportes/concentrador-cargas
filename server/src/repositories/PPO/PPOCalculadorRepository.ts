@@ -1,5 +1,6 @@
-import { mssqlPPO } from "../../database";
+import { mssqlPPO, mssqlPPOView } from "../../database";
 import ICalculador from "../../models/ICalculador";
+import IDTOCalculador from "../../models/ICalculador";
 //import AppError from "../models/AppError";
 import TokenAd from "../../models/TokenAd";
 import { dateAtualMoment } from "../../Utils/formatData";
@@ -18,6 +19,7 @@ interface IPPOCalculadorRepository {
   dash(): Promise<any>;
   blocos(): Promise<any>;
   emExecucao(): Promise<any>;
+  motoristas(): Promise<any>;
 }
 
 const isValid = (value: string | null | undefined) =>
@@ -29,10 +31,40 @@ export class PPOCalculadorRepository implements IPPOCalculadorRepository {
       .first()
       .where("id", id);
   }
+  async create(calculador: IDTOCalculador, user: string) {
+    let clausula = "";
 
-  async create(calculador: ICalculador, user: string) {
-    calculador.cod_usu_create = TokenAd.getClaims(user).name;
-    return mssqlPPO("dbo.ppo_calculador_controle").insert(calculador);
+    if (calculador.tipo_reprocessamento == "2") {
+      let grupos = "";
+      if (Array.isArray(calculador.grupos)) {
+        grupos = calculador.grupos
+          .map((element) => `${element.value}`)
+          .join(",");
+      }
+      clausula = grupos;
+    } else if (calculador.tipo_reprocessamento == "3") {
+      let cpfs = "";
+      if (Array.isArray(calculador.cpfs)) {
+        cpfs = calculador.cpfs.map((element) => `'${element.value}'`).join(",");
+      }
+      clausula = " IN (" + cpfs + ")";
+    } else {
+      clausula = "";
+    }
+
+    const data = {
+      tipo: calculador.tipo,
+      mes: calculador.mes,
+      ano: calculador.ano,
+      qtd_final: 0,
+      tipo_reprocessamento: Number(calculador.tipo_reprocessamento),
+      autentique_delete: 1, // valor fixo
+      clausula: clausula,
+      observacao: calculador.observacao,
+      cod_usu_create: TokenAd.getClaims(user).name,
+    };
+
+    return mssqlPPO("dbo.ppo_calculador_controle").insert(data);
   }
 
   async blocos() {
@@ -148,5 +180,12 @@ export class PPOCalculadorRepository implements IPPOCalculadorRepository {
       total_registers: totalRegisters,
       results: results,
     };
+  }
+
+  async motoristas() {
+    const motoristas =
+      await mssqlPPOView.raw(`SELECT RTRIM(RA_NOME) as nome,RA_CIC as cpf,RA_MAT as matricula ,M0_FILIAL as filial ,EMPRESA as empresa,CODIGO_EMPRESA as cod_empresa,TIPO_STATUS as tipo_status FROM dbo.VW_DADO_MOTORISTA_PPO
+   `);
+    return motoristas;
   }
 }

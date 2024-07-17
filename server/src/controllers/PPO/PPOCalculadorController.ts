@@ -8,7 +8,7 @@ interface IPPOCalculadorController {
   blocos(req: Request, res: Response): Promise<Response>;
   emExecucao(req: Request, res: Response): Promise<Response>;
   create(req: Request, res: Response): Promise<Response>;
-  //update(req: Request, res: Response): Promise<Response>;
+  motoristas(req: Request, res: Response): Promise<Response>;
   //delete(req: Request, res: Response): Promise<Response>;
 }
 
@@ -53,6 +53,12 @@ class PPOCalculadorController implements IPPOCalculadorController {
       Number(req.query.page),
       Number(req.query.limit) || 5
     );
+    return res.json({ data: result });
+  }
+
+  async motoristas(req: Request, res: Response): Promise<Response> {
+    const ppoCalculadorRepository = new PPOCalculadorRepository();
+    const result = await ppoCalculadorRepository.motoristas();
     return res.json({ data: result });
   }
 }

@@ -31,7 +31,19 @@ class ServicePPOCalculador {
 	}
 
 	async create(values) {
-		return api.post("/ppo/calculador", values);
+		return await api.post("/ppo/calculador", values);
+	}
+
+	async motoristas() {
+		const dados = await api.get("/ppo/calculador/motoristas");
+		const data = [];
+		dados.data.data.map((obj) => {
+			data.push({
+				value: obj.cpf,
+				label: obj.nome + " | " + obj.cpf + " | " + obj.tipo_status,
+			});
+		});
+		return data;
 	}
 }
 
