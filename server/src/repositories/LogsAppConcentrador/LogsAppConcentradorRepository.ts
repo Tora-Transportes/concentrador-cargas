@@ -1,11 +1,12 @@
 import { mssqlLogs } from "../../database";
+import oracle from "../../database";
 import ILogConcentradorApp from "../../models/ILogConcentradorApp";
 //import AppError from "../models/AppError";
 import TokenAd from "../../models/TokenAd";
 
 interface ILogsAppConcentradorRepository {
   create(calculador: ILogConcentradorApp, user: string): Promise<any>;
-  info(): Promise<any>;
+  info(query: Record<string, any>): Promise<any>;
   relatorio(
     query: Record<string, any>,
     page?: number,
@@ -24,7 +25,7 @@ export class LogsAppConcentradorRepository
     return mssqlLogs("dbo.logs_integracao").insert(calculador);
   }
 
-  async info() {
+  async info(query: Record<string, any>) {
     async function cargasMatch() {
       return mssqlLogs.raw(`SELECT count(0) as total_cargas_match
       FROM logs_integracao
@@ -59,6 +60,57 @@ export class LogsAppConcentradorRepository
       where erro = 0`);
     }
 
+    async function historico30diasApp() {
+      return mssqlLogs.raw(`
+WITH DateRange AS (
+    SELECT CAST(GETDATE() AS DATE) AS dia
+    UNION ALL
+    SELECT DATEADD(DAY, -1, dia)
+    FROM DateRange
+    WHERE DATEADD(DAY, -1, dia) >= DATEADD(DAY, -30, GETDATE())
+)
+
+SELECT 
+    d.dia,
+    COALESCE(SUM(CASE WHEN l.id IS NOT NULL AND JSON_VALUE(l.json_envio, '$.placa_veiculo') IS NULL THEN 1 ELSE 0 END), 0) AS total_sem_match,
+    COALESCE(SUM(CASE WHEN l.id IS NOT NULL AND JSON_VALUE(l.json_envio, '$.placa_veiculo') IS NOT NULL THEN 1 ELSE 0 END), 0) AS total_com_match,
+    'POST - CRIAR CARGA' AS metodo
+FROM 
+    DateRange d
+LEFT JOIN 
+    [dbo].[logs_integracao] l
+    ON CAST(l.created_at AS DATE) = d.dia
+    AND l.metodo = 'POST - CRIAR CARGA'
+    AND l.fk_filial = '${query.fk_filial}'
+WHERE 
+    d.dia >= DATEADD(DAY, -30, GETDATE())
+GROUP BY 
+    d.dia
+ORDER BY 
+    d.dia
+
+OPTION (MAXRECURSION 0);
+`);
+    }
+
+    async function historico30dias() {
+      return oracle.raw(`
+      SELECT 
+      COUNT(*) AS "total_registros",
+      TRUNC("data_cadastro") AS "dia"
+  FROM 
+      "con_cargas"
+  WHERE 
+      "data_cadastro" >= TRUNC(SYSDATE) - 30 
+      AND "carga_app" <> 1
+      AND "fk_filial" = ${query.fk_filial}
+  GROUP BY 
+      TRUNC("data_cadastro")
+  ORDER BY 
+      "dia"
+  `);
+    }
+
     return Promise.all([
       cargasMatch(),
       cargasSemMatch(),
@@ -66,7 +118,48 @@ export class LogsAppConcentradorRepository
       cargasCanceladas(),
       integracaoSemErro(),
       errosIntegracao(),
+      historico30diasApp(),
+      historico30dias(),
     ]).then((values) => {
+      const info_7 = values[6]; // historico30diasApp
+      const info_8 = values[7]; // historico30dias
+      const dadosMerged: any = [];
+
+      for (let i = 0; i < info_7.length; i++) {
+        const element7 = info_7[i];
+        const data = new Date(element7.dia);
+        const dateString7 = data.toISOString().substring(0, 10);
+
+        let achou = false;
+
+        for (let j = 0; j < info_8.length; j++) {
+          const element8 = info_8[j];
+          const data8 = new Date(element8.dia);
+          const dateString8 = data8.toISOString().substring(0, 10);
+
+          if (dateString7 === dateString8) {
+            dadosMerged.push({
+              dia: element7.dia,
+              total_sem_match: element7.total_sem_match,
+              total_com_match: element7.total_com_match,
+              total_fora_app: element8.total_registros,
+              metodo: "POST - CRIAR CARGA",
+            });
+            achou = true;
+            break; // Sai do loop interno
+          }
+        }
+        if (!achou) {
+          dadosMerged.push({
+            dia: element7.dia,
+            total_sem_match: element7.total_sem_match,
+            total_com_match: element7.total_com_match,
+            total_fora_app: 0,
+            metodo: "POST - CRIAR CARGA",
+          });
+        }
+      }
+
       return {
         info_1: values[0][0],
         info_2: values[1][0],
@@ -74,6 +167,7 @@ export class LogsAppConcentradorRepository
         info_4: values[3][0],
         info_5: values[4][0],
         info_6: values[5][0],
+        info_7: dadosMerged,
       };
     });
   }

@@ -324,6 +324,7 @@ class ServiceCargas {
 		fk_filial,
 		carga_csn,
 		carga_app,
+		exclude_cargas_app,
 	}) {
 		const url = carga_csn === 1 ? "csn/cargas/info" : "/cargas/";
 		return api.get(url, {
@@ -348,6 +349,7 @@ class ServiceCargas {
 				fk_filial,
 				carga_csn,
 				carga_app,
+				exclude_cargas_app,
 			},
 		});
 	}
