@@ -19,7 +19,7 @@ class PPOCalculadorController implements IPPOCalculadorController {
 
   async info(req: Request, res: Response): Promise<Response> {
     const logsRepository = new LogsAppConcentradorRepository();
-    const result = await logsRepository.info();
+    const result = await logsRepository.info(req.query);
     return res.json({ data: result });
   }
 

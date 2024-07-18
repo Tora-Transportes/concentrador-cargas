@@ -805,6 +805,7 @@ function FormularioCadastroManual({
 							<InputPlaca
 								className="input-placaCav"
 								id="Plca-cavalo"
+								maxLength={7}
 								readOnly={
 									formik.values.fk_situacao &&
 									![1, 2, 4].includes(Number(formik.values.fk_situacao))

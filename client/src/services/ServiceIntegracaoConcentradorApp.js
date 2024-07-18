@@ -1,8 +1,23 @@
 import api from "./api";
 
 class ServiceIntegracaoConcentradorApp {
-	async info() {
-		return await api.get("/logs/app/integracao/info");
+	async info(fk_filial) {
+		return await api.get(`/logs/app/integracao/info?fk_filial=${fk_filial}`);
+	}
+
+	async filiais() {
+		const ret = await api.get("/recomendacoes/filiais");
+		const data = [];
+
+		ret.data.data.forEach((element) => {
+			data.push({
+				value: element.FIL_COD,
+				label: element.FIL_DSC,
+			});
+		});
+
+		data.sort((a, b) => a.value - b.value);
+		return data;
 	}
 
 	async relatorio({

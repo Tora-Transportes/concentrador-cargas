@@ -10,6 +10,7 @@ import { getColumns } from "../columns";
 import factoryReducerCargas from "../../../../../hooks/storageCargas/factoryReducerCargas";
 import ServiceIntegracaoConcentradorApp from "src/services/ServiceIntegracaoConcentradorApp";
 import useLoadingScreen from "../../../../Components/LoadingScreen";
+import HistoryFreight from "../Graficos/historyFreight";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -73,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function PainelComponent({ data }) {
+function PainelComponent() {
 	const defaultCargas = {
 		page: 1,
 		total_pages: 1,
@@ -87,6 +88,32 @@ function PainelComponent({ data }) {
 	const [itensPerPage, setItensPerPage] = useState(10);
 	const [totalRegisters, setTotalRegisters] = useState(0);
 	const [lastOptions, setLastOptions] = useState({});
+	const [filial, setFilial] = useState(null);
+	const [filiais, setFiliais] = useState([]);
+	const [data, setData] = useState({});
+
+	const fetchData = async () => {
+		try {
+			const { data } = await ServiceIntegracaoConcentradorApp.info(
+				filial ? filial.value : 0
+			);
+			setData(data.data);
+		} catch (error) {
+			console.error("Error fetching data:", error);
+		}
+	};
+	useEffect(() => {
+		async function listFiliais() {
+			const retorno = await ServiceIntegracaoConcentradorApp.filiais();
+			setFiliais(retorno);
+		}
+		listFiliais();
+		fetchData();
+	}, []);
+
+	useEffect(() => {
+		fetchData();
+	}, [filial]);
 
 	const columnsResult = getColumns();
 	const columnsPadrao = columnsResult.columnsRelatorio;
@@ -299,6 +326,12 @@ function PainelComponent({ data }) {
 					</CardActionArea>
 				</Card>
 			</div>
+			<HistoryFreight
+				data={data.info_7 ? data.info_7 : []}
+				setFilial={setFilial}
+				filiais={filiais}
+				filial={filial}
+			></HistoryFreight>
 			<ViewHistoricoIntegracao
 				get_data={tableFetchData}
 				columns={columnsPadrao}
