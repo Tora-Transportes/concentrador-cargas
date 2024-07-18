@@ -2,7 +2,7 @@ import { apiApp } from "./apiApp";
 import api from "./api";
 
 class ServiceApp {
-	async envioCargaApp(body) {
+	async envioCargaApp(body, fk_filial) {
 		try {
 			const response = await apiApp.post("/freight/createfreight", body);
 
@@ -12,6 +12,7 @@ class ServiceApp {
 				json_envio: JSON.stringify(body),
 				json_retorno: JSON.stringify(response.data),
 				erro: response.status == 200 ? 0 : 1,
+				fk_filial: fk_filial,
 			};
 
 			await api.post("/logs/app/integracao", bodyLog);
@@ -27,6 +28,7 @@ class ServiceApp {
 					? JSON.stringify(error.response.data)
 					: "Erro de rede",
 				erro: 1,
+				fk_filial: fk_filial,
 			};
 
 			await api.post("/logs/app/integracao", bodyLog);

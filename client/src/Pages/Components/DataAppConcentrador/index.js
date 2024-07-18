@@ -25,6 +25,7 @@ export const envioCargaApp = async (body) => {
 		cpf_motorista,
 		janela_coleta,
 		janela_entrega,
+		fk_filial,
 	} = body;
 
 	const cidadeEstadoOrigem = origem_carga.split("/");
@@ -82,7 +83,7 @@ export const envioCargaApp = async (body) => {
 	};
 
 	try {
-		await ServiceApp.envioCargaApp(bodyEnvioApp);
+		await ServiceApp.envioCargaApp(bodyEnvioApp, fk_filial);
 	} catch (error) {
 		saveError(error);
 	}
