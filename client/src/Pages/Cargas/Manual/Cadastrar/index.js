@@ -72,7 +72,7 @@ function Manual() {
 			values.valor_frete = String(values.valor_frete);
 			values.valor_frete = Number(values.valor_frete.replace(",", "."));
 			try {
-				values.fk_filial = await values.fk_filial.split("-")[0];
+				values.fk_filial = values.fk_filial.split("-")[0];
 				const { data } = await ServiceCargas.create({
 					...values,
 					canal_comunicacao: "manual",
