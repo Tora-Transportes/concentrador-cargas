@@ -184,7 +184,7 @@ class UseCaseAppAprovacaoCarga {
         message:
           "Carga atualizada com sucesso! Carga foi aprovada | frete iniciado",
       }),
-      erro: 1,
+      erro: 0,
       fk_filial: String(cargaAtual.fk_filial),
     };
 
