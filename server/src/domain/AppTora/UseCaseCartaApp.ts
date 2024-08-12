@@ -7,6 +7,8 @@ import DateUtils from "../../Utils/date";
 import { CargaRepository } from "../../repositories/CargaRepository";
 import AppToraValidator from "../../validations/AppToraValidator";
 import ServiceMigrarSIT from "../../services/ServiceMigrarSIT";
+import { LogsAppConcentradorRepository } from "../../repositories/LogsAppConcentrador/LogsAppConcentradorRepository";
+import ILogConcentradorApp from "../../models/ILogConcentradorApp";
 
 interface IBodyAprovaCarga {
   placa: string;
@@ -21,12 +23,17 @@ class UseCaseAppAprovacaoCarga {
   private cargaCsnInfoRepository: CargaCsnInfoRepository;
   private cargaRepository: CargaRepository;
   private veiculoRepository: VeiculoRepository;
+  private logsAppConcentradorRepository: LogsAppConcentradorRepository;
   constructor() {
     this.cargaCsnInfoRepository = new CargaCsnInfoRepository();
     this.cargaRepository = new CargaRepository();
     this.veiculoRepository = new VeiculoRepository();
+    this.logsAppConcentradorRepository = new LogsAppConcentradorRepository();
   }
-  async run({ placa, idCarga }: IBodyAprovaCarga): Promise<string> {
+  async run(
+    { placa, idCarga }: IBodyAprovaCarga,
+    user: string
+  ): Promise<string> {
     const cargaAtual = await AppToraValidator.validatorAprovacao(
       placa,
       idCarga
@@ -35,6 +42,19 @@ class UseCaseAppAprovacaoCarga {
     const Carga = await CargaAppRepository.indexId(idCarga);
 
     if (cargaAtual?.fk_situacao === 3) {
+      const bodyLog = {
+        metodo: "PUT - APROVACAO | INICIAR FRETE",
+        status: "409",
+        json_envio: JSON.stringify({ requestCode: idCarga, placa: placa }),
+        json_retorno: JSON.stringify({
+          message: `Carga com id: ${idCarga} já se encontra aprovada em nossos sistemas!`,
+        }),
+        erro: 1,
+        fk_filial: String(cargaAtual.fk_filial),
+      };
+
+      await this.logsAppConcentradorRepository.create(bodyLog, user);
+
       throw new AppError(
         `Carga com id: ${idCarga} já se encontra aprovada em nossos sistemas!`,
         409
@@ -43,24 +63,65 @@ class UseCaseAppAprovacaoCarga {
 
     const existPlacaCadastrada = await this.veiculoRepository.search(placa);
 
-    if (!existPlacaCadastrada)
+    if (!existPlacaCadastrada) {
+      const bodyLog = {
+        metodo: "PUT - APROVACAO | INICIAR FRETE",
+        status: "404",
+        json_envio: JSON.stringify({ requestCode: idCarga, placa: placa }),
+        json_retorno: JSON.stringify({
+          message: "A placa informada não esta registrada em nosso sistema!",
+        }),
+        erro: 1,
+        fk_filial: String(cargaAtual.fk_filial),
+      };
+
+      await this.logsAppConcentradorRepository.create(bodyLog, user);
+
       throw new AppError(
         "A placa informada não esta registrada em nosso sistema!",
         404
       );
+    }
 
     if (!existPlacaCadastrada.codigo_motorista) {
+      const bodyLog = {
+        metodo: "PUT - APROVACAO | INICIAR FRETE",
+        status: "422",
+        json_envio: JSON.stringify({ requestCode: idCarga, placa: placa }),
+        json_retorno: JSON.stringify({
+          message: "Não é possível ter uma placa vinculada sem motorista!",
+        }),
+        erro: 1,
+        fk_filial: String(cargaAtual.fk_filial),
+      };
+
+      await this.logsAppConcentradorRepository.create(bodyLog, user);
+
       throw new AppError(
         "Não é possível ter uma placa vinculada sem motorista!",
         422
       );
     }
 
-    if (cargaAtual.ativo === 0 || cargaAtual.fk_situacao === 5)
+    if (cargaAtual.ativo === 0 || cargaAtual.fk_situacao === 5) {
+      const bodyLog = {
+        metodo: "PUT - APROVACAO | INICIAR FRETE",
+        status: "409",
+        json_envio: JSON.stringify({ requestCode: idCarga, placa: placa }),
+        json_retorno: JSON.stringify({
+          message: `Carga com id: ${idCarga} foi cancelada ou excluida!`,
+        }),
+        erro: 1,
+        fk_filial: String(cargaAtual.fk_filial),
+      };
+
+      await this.logsAppConcentradorRepository.create(bodyLog, user);
+
       throw new AppError(
         `Carga com id: ${idCarga} foi cancelada ou excluida!`,
         409
       );
+    }
 
     const fk_situacao = 3;
     const { placa_bitrem, placa_carreta, codigo_motorista } =
@@ -85,8 +146,22 @@ class UseCaseAppAprovacaoCarga {
       idCarga,
       bodyUpdate
     );
-    if (resultRepository === 0)
+    if (resultRepository === 0) {
+      const bodyLog = {
+        metodo: "PUT - APROVACAO | INICIAR FRETE",
+        status: "500",
+        json_envio: JSON.stringify({ requestCode: idCarga, placa: placa }),
+        json_retorno: JSON.stringify({
+          message: "Erro interno do servidor! A Carga não foi atualizada",
+        }),
+        erro: 1,
+        fk_filial: String(cargaAtual.fk_filial),
+      };
+
+      await this.logsAppConcentradorRepository.create(bodyLog, user);
+
       throw new AppError("Erro interno do servidor!", 500);
+    }
 
     if (cargaAtual.carga_csn !== 1) {
       notifyAll({
@@ -99,6 +174,20 @@ class UseCaseAppAprovacaoCarga {
         details: await this.cargaCsnInfoRepository.index(idCarga),
       });
     }
+
+    const bodyLog = {
+      metodo: "PUT - APROVACAO | INICIAR FRETE",
+      status: "200",
+      json_envio: JSON.stringify({ requestCode: idCarga, placa: placa }),
+      json_retorno: JSON.stringify({
+        message:
+          "Carga atualizada com sucesso! Carga foi aprovada | frete iniciado",
+      }),
+      erro: 1,
+      fk_filial: String(cargaAtual.fk_filial),
+    };
+
+    await this.logsAppConcentradorRepository.create(bodyLog, user);
 
     return "Carga atualizada com sucesso!";
   }
