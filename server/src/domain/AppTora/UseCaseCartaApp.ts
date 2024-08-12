@@ -141,7 +141,6 @@ class UseCaseAppAprovacaoCarga {
     };
 
     const cargaCompleta = { ...cargaAtual, ...bodyUpdate };
-    await ServiceMigrarSIT.migrar([cargaCompleta]);
     const resultRepository = await CargaAppRepository.updateFk_situacao(
       idCarga,
       bodyUpdate
@@ -161,6 +160,8 @@ class UseCaseAppAprovacaoCarga {
       await this.logsAppConcentradorRepository.create(bodyLog, user);
 
       throw new AppError("Erro interno do servidor!", 500);
+    } else {
+      await ServiceMigrarSIT.migrar([cargaCompleta]);
     }
 
     if (cargaAtual.carga_csn !== 1) {
