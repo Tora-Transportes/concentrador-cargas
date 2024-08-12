@@ -8,7 +8,10 @@ interface ICargaAppController {
 
 class CargaAppController implements ICargaAppController {
   async aprovarCarga(req: Request, res: Response): Promise<Response> {
-    const result = await domainAppCarga.useCaseAprovacaoCargaApp.run(req.body);
+    const result = await domainAppCarga.useCaseAprovacaoCargaApp.run(
+      req.body,
+      String(req.headers.authorization)
+    );
     return res.status(201).json({ data: result });
   }
   async cancelarCarga(req: Request, res: Response): Promise<Response> {
