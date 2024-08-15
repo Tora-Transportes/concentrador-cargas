@@ -8,6 +8,11 @@ class ServiceMigrarSit implements IServiceSit {
   constructor() {
     this.logsAppConcentradorRepository = new LogsAppConcentradorRepository();
   }
+
+  async carga_no_sit(idCarga: number) {
+    return database("PRE_VIAGEM_ATS").where("COD_AGENDAMENTO_ATS", idCarga);
+  }
+
   async consultarProprietarioVeiculo(placa: string) {
     return await database.raw(
       `

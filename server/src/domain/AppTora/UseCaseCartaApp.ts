@@ -38,26 +38,41 @@ class UseCaseAppAprovacaoCarga {
       idCarga
     );
 
-    const Carga = await CargaAppRepository.indexId(idCarga);
+    const cargaNoSit = await ServiceMigrarSIT.carga_no_sit(idCarga);
 
     if (cargaAtual?.fk_situacao === 3) {
-      const bodyLog = {
-        metodo: "PUT - APROVACAO | INICIAR FRETE",
-        status: "409",
-        json_envio: JSON.stringify({ requestCode: idCarga, placa: placa }),
-        json_retorno: JSON.stringify({
-          message: `Carga com id: ${idCarga} já se encontra aprovada em nossos sistemas!`,
-        }),
-        erro: 1,
-        fk_filial: String(cargaAtual.fk_filial),
-      };
+      if (cargaNoSit.length > 0) {
+        const bodyLog = {
+          metodo: "PUT - APROVACAO | INICIAR FRETE",
+          status: "200",
+          json_envio: JSON.stringify({ requestCode: idCarga, placa: placa }),
+          json_retorno: JSON.stringify({
+            message: `Carga com id: ${idCarga} já se encontra aprovada em nossos sistemas!`,
+          }),
+          erro: 0,
+          fk_filial: String(cargaAtual.fk_filial),
+        };
 
-      await this.logsAppConcentradorRepository.create(bodyLog, user);
+        await this.logsAppConcentradorRepository.create(bodyLog, user);
+        return `Carga com id: ${idCarga} já se encontra aprovada em nossos sistemas!`;
+      } else {
+        const bodyLog = {
+          metodo: "PUT - APROVACAO | INICIAR FRETE",
+          status: "409",
+          json_envio: JSON.stringify({ requestCode: idCarga, placa: placa }),
+          json_retorno: JSON.stringify({
+            message: `Carga com id: ${idCarga} já se encontra aprovada em nossos sistemas!`,
+          }),
+          erro: 1,
+          fk_filial: String(cargaAtual.fk_filial),
+        };
 
-      throw new AppError(
-        `Carga com id: ${idCarga} já se encontra aprovada em nossos sistemas!`,
-        409
-      );
+        await this.logsAppConcentradorRepository.create(bodyLog, user);
+        throw new AppError(
+          `Carga com id: ${idCarga} já se encontra aprovada em nossos sistemas!`,
+          409
+        );
+      }
     }
 
     const existPlacaCadastrada = await this.veiculoRepository.search(placa);
@@ -128,7 +143,7 @@ class UseCaseAppAprovacaoCarga {
 
     const bodyUpdate = {
       data_atualizacao: DateUtils.getCurrentDate(),
-      usuario: Carga.responsavel_cadastro,
+      usuario: cargaAtual.responsavel_cadastro,
       placa_veiculo: placa,
       observacao_gr: "Aprovação App Tora. ",
       e_lote: false,
