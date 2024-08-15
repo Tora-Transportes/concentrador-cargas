@@ -36,7 +36,8 @@ class CargaCsnInfoController {
 
     const updateResult = await useCasesCargaCsn.UseCaseUpdateInfoCarga.run(
       input,
-      claims.oid
+      claims.oid,
+      String(req.headers.authorization)
     );
 
     return res.json({ data: updateResult });

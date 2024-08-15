@@ -1,8 +1,13 @@
 import { ICarga } from "../models/ICargas";
 import database from "../database";
 import { IServiceSit } from "../domain/UseCaseCarga/entities";
+import { LogsAppConcentradorRepository } from "../repositories/LogsAppConcentrador/LogsAppConcentradorRepository";
 
 class ServiceMigrarSit implements IServiceSit {
+  private logsAppConcentradorRepository: LogsAppConcentradorRepository;
+  constructor() {
+    this.logsAppConcentradorRepository = new LogsAppConcentradorRepository();
+  }
   async consultarProprietarioVeiculo(placa: string) {
     return await database.raw(
       `
@@ -135,12 +140,34 @@ class ServiceMigrarSit implements IServiceSit {
     };
   }
 
-  async migrar(cargas: ICarga[]) {
+  async migrar(cargas: ICarga[], user: string) {
     const insercoes = [];
     for (const i of cargas) {
       insercoes.push(this.converter(i));
     }
-    await database("PRE_VIAGEM_ATS").insert(await Promise.all(insercoes));
+    try {
+      const insercoes = [];
+      for (const i of cargas) {
+        insercoes.push(this.converter(i));
+      }
+      await database("PRE_VIAGEM_ATS").insert(await Promise.all(insercoes));
+    } catch (error) {
+      const bodyLog = {
+        metodo: "SERVICE-MIGRAR-ATS",
+        status: "200",
+        json_envio: JSON.stringify({
+          requestCode: cargas[0].id ?? null,
+          placa: cargas[0].placa_veiculo ?? null,
+        }),
+        json_retorno: JSON.stringify({
+          message: "Carga já cadastrada na tabela pré viagem",
+        }),
+        erro: 0,
+        fk_filial: String(cargas[0].fk_filial ?? 1),
+      };
+
+      await this.logsAppConcentradorRepository.create(bodyLog, user);
+    }
   }
 
   async cancelar(cargas: ICarga[]) {
