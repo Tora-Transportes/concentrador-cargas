@@ -8,7 +8,6 @@ import { CargaRepository } from "../../repositories/CargaRepository";
 import AppToraValidator from "../../validations/AppToraValidator";
 import ServiceMigrarSIT from "../../services/ServiceMigrarSIT";
 import { LogsAppConcentradorRepository } from "../../repositories/LogsAppConcentrador/LogsAppConcentradorRepository";
-import ILogConcentradorApp from "../../models/ILogConcentradorApp";
 
 interface IBodyAprovaCarga {
   placa: string;
@@ -161,7 +160,7 @@ class UseCaseAppAprovacaoCarga {
 
       throw new AppError("Erro interno do servidor!", 500);
     } else {
-      await ServiceMigrarSIT.migrar([cargaCompleta]);
+      await ServiceMigrarSIT.migrar([cargaCompleta], user);
     }
 
     if (cargaAtual.carga_csn !== 1) {

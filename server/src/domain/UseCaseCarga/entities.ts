@@ -199,7 +199,7 @@ export class UseCaseAddCargaDerivada {
 }
 
 export interface IServiceSit {
-  migrar(cargas: ICarga[]): Promise<any>;
+  migrar(cargas: ICarga[], user: string): Promise<any>;
   cancelar(cargas: ICarga[]): Promise<any>;
 }
 export interface IServiceLogTime {
@@ -215,7 +215,7 @@ export class UseCaseUpdateCarga {
     private locaisRepository: IParadasRepository,
     private cargaCsnInfoRepository: IRepositoryCargaCsnInfoRepository
   ) {}
-  async run(cargaDTO: Record<string, any>, oid: string) {
+  async run(cargaDTO: Record<string, any>, oid: string, user: string) {
     const validator = factoryCargaValidator();
     const carga: ICarga = await validator.validate(cargaDTO, {
       abortEarly: false,
@@ -235,10 +235,10 @@ export class UseCaseUpdateCarga {
     carga.quantidade_atual = carga.quantidade_atual || carga.quantidade;
 
     const cargaCadastrada = await this.cargaRepository.index(carga.id);
-    const user = await this.userRepository.index(oid);
+    const users = await this.userRepository.index(oid);
     const operation = new CargaValidationOperation({
       has: (permission: string) => {
-        return user.permissoes.includes(permission);
+        return users.permissoes.includes(permission);
       },
     });
 
@@ -292,7 +292,7 @@ export class UseCaseUpdateCarga {
             1000
         );
       }
-      await this.serviceSit.migrar([cargaOficial]);
+      await this.serviceSit.migrar([cargaOficial], user);
       await this.serviceLogTime.create({
         fk_carga: cargaOficial.id,
         segundos: time,
