@@ -58,7 +58,8 @@ class CargaController {
 
     const updateResult = await useCasesCarga.UseCaseUpdateCarga.run(
       input,
-      claims.oid
+      claims.oid,
+      String(req.headers.authorization)
     );
 
     return res.json({ data: updateResult });
