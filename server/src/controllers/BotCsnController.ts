@@ -11,7 +11,7 @@ class BotCsnController implements IBotCsnController {
     axios
       .get(
         String(process.env.URL_API_BOT_CSN) +
-          `/bot/locais?nome=${req.query.nome}`
+          `/bot/locais?nome=${req.query.nome}&tipo_local=${req.query.tipo_local}`
       )
       .then((response) => {
         console.log("Redirecionado locais bot csn com sucesso!");
