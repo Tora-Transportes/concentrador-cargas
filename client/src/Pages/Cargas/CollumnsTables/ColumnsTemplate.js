@@ -48,14 +48,14 @@ export const columns = [
 	{
 		name: "placa_veiculo",
 		description: "Placa Veículo",
-		selector: (row) => row.placa_veiculo,
+		selector: (row) => row.placa_veiculo ?? "Sem placa",
 		sortable: "sortable",
 		showFilter: true,
 	},
 	{
 		name: "placa_carreta",
 		description: "Placa Carreta",
-		selector: (row) => row.placa_carreta,
+		selector: (row) => row.placa_carreta ?? "Sem placa",
 		sortable: "sortable",
 		showFilter: true,
 	},
