@@ -1,9 +1,12 @@
 import { AuthenticationContext, adalFetch, withAdalLogin } from "react-adal";
 
 const endpoint = process.env.REACT_APP_ENDPOINT;
-
-const redirectUri = `https://${window.location.hostname}${
-	window.location.port !== 80 ? ":" + window.location.port : ""
+const redirectUri = `${
+	process.env.NODE_ENV === "development" ? "http" : "https"
+}://${window.location.hostname}${
+	window.location.port !== "80" && window.location.port !== "443"
+		? ":" + window.location.port
+		: ""
 }`;
 
 const adalConfig = {

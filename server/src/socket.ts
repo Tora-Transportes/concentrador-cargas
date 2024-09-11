@@ -1,11 +1,12 @@
 import { Server, Socket } from "socket.io";
 import { Server as HttpsServer } from "https";
+import { Server as HttpServer } from "http";
 
 let io: Server | null = null;
 
 const users: Record<string, Socket> = {};
 
-function createServer(server: HttpsServer): Server {
+function createServer(server: HttpsServer | HttpServer): Server {
   io = new Server(server, {
     cors: {
       origin: "*",
