@@ -46,6 +46,20 @@ export const columns = [
 		showFilter: true,
 	},
 	{
+		name: "placa_veiculo",
+		description: "Placa Veículo",
+		selector: (row) => row.placa_veiculo,
+		sortable: "sortable",
+		showFilter: true,
+	},
+	{
+		name: "placa_carreta",
+		description: "Placa Carreta",
+		selector: (row) => row.placa_carreta,
+		sortable: "sortable",
+		showFilter: true,
+	},
+	{
 		name: "id",
 		description: "Código da carga",
 		selector: (row) => row.id,
