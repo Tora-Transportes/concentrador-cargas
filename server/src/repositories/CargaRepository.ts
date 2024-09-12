@@ -237,6 +237,9 @@ export class CargaRepository {
       if (isValid(String(query?.placa_veiculo))) {
         qb.andWhere("placa_veiculo", "like", `%${query.placa_veiculo}%`);
       }
+      if (isValid(String(query?.placa_carreta))) {
+        qb.andWhere("placa_carreta", "like", `%${query.placa_carreta}%`);
+      }
       if (!isNaN(Number(query?.ativo))) {
         qb.whereIn("ativo", [1, 2]);
       }
