@@ -381,5 +381,8 @@ routes.get(
   "/logs/app/integracao/relatorio",
   LogsAppConcentradorController.relatorio
 );
+routes.get("/bot/locais", BotCsnController.locais);
+routes.get("/bot/postos", BotCsnController.postos);
 
+routes.get("/motoristas/:cpf/categoria", MotoristaController.findByCpf);
 export default routes;
