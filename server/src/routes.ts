@@ -38,6 +38,7 @@ import PPOPermissoesVisualizacaoController from "./controllers/PPO/PPOPermissoes
 import PreRequisitoController from "./controllers/PreRequisitoController";
 import LogsAppConcentradorController from "./controllers/LogsAppConcentrador/LogsAppConcentradorController";
 import BotCsnController from "./controllers/BotCsnController";
+import MotoristaController from "./controllers/MotoristaController";
 
 const routes = Router();
 
@@ -380,7 +381,5 @@ routes.get(
   "/logs/app/integracao/relatorio",
   LogsAppConcentradorController.relatorio
 );
-routes.get("/bot/locais", BotCsnController.locais);
-routes.get("/bot/postos", BotCsnController.postos);
 
 export default routes;
