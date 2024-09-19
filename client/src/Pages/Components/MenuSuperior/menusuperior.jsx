@@ -81,6 +81,29 @@ function Menusuperior() {
           </li>
           <div className="class-li">
             <div className="dropdown">
+              {permissoes?.permissoes?.includes("GESTAO_MULTAS") && (
+                <button id="style-button-drop" className="dropbtn">
+                  Gestão de Multas
+                </button>
+              )}
+              <div id="myDropdown" className="dropdown-content">
+                {permissoes?.permissoes?.includes("GM_MULTAS") && (
+                  <a href="/ppo_eventos/permissoes">Multas</a>
+                )}
+                {permissoes?.permissoes?.includes("GM_NOTIFICACOES") && (
+                  <a href="/ppo_eventos/permissoes">Notificações</a>
+                )}
+                {permissoes?.permissoes?.includes("GM_PERMISSOES") && (
+                  <a href="/ppo_eventos/permissoes">Permissões do Módulo</a>
+                )}
+                {permissoes?.permissoes?.includes("GM_EMPRESAS") && (
+                  <a href="/ppo_eventos/permissoes">Empresas</a>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="class-li">
+            <div className="dropdown">
               {permissoes?.permissoes?.includes("PPO_EVENTOS") && (
                 <button id="style-button-drop" className="dropbtn">
                   PPO Eventos

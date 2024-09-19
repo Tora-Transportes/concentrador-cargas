@@ -33,4 +33,9 @@ export const allTipoPermissoes = [
 	{ name: "PPO_EVENTOS_RELATORIO_APROVACOES" },
 	{ name: "PRE_REQUISITOS_CARGAS" },
 	{ name: "INTEGRACAO_APP" },
+	{ name: "GESTAO_MULTAS" },
+	{ name: "GM_EMPRESAS" },
+	{ name: "GM_PERMISSOES" },
+	{ name: "GM_NOTIFICACOES" },
+	{ name: "GM_MULTAS" },
 ];
