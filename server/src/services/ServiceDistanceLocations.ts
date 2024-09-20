@@ -337,70 +337,78 @@ export class ServiceDistanceLocations {
     date_inicio: string,
     date_fim: string
   ): Promise<IResultHistoryVeicle> {
-    const query = await oracle("VEICULO")
-      .select(["VEI_REFERENCIA"])
-      .first()
-      .where("VEI_PLACA", plate);
-
-    if (!query) {
-      throw new AppError(
-        "A placa especificada não existe ou não possui coordenadas cadastradas!",
-        404
-      );
+    try {
+      const query = await oracle("VEICULO")
+        .select(["VEI_REFERENCIA"])
+        .first()
+        .where("VEI_PLACA", plate);
+  
+      if (!query) {
+        throw new AppError(
+          "A placa especificada não existe ou não possui coordenadas cadastradas!",
+          404
+        );
+      }
+  
+      date_inicio = moment(date_inicio).format("YYYY-MM-DDT00:00:00");
+      if (date_fim !== moment().format("YYYY-MM-DD")) {
+        date_fim = moment(date_fim).format("YYYY-MM-DDT23:59:59");
+      } else {
+        date_fim = moment().subtract(4, "minutes").format("YYYY-MM-DDTHH:mm:ss");
+      }
+  
+      const historyVeicle = await mssqlCoordenadas("REPORTES")
+        .select([
+          "ID",
+          "DISIMEI",
+          "LAT",
+          "LON",
+          "UF",
+          "ROD",
+          "RUA",
+          "MUN",
+          "LOC",
+          "DTINC",
+        ])
+        .where("DISIMEI", query?.VEI_REFERENCIA?.trim())
+        .andWhere("DTINC", ">=", date_inicio)
+        .andWhere("DTINC", "<=", date_fim);
+  
+      //retirando duplicidades do array
+      // const historicosSemDuplicidade: IHistoryTravelVehicle[] = [];
+      // historyVeicle.forEach((elem, index, arrayHistorico) => {
+      //   if (index > 0) {
+      //     const indexMenosUm = index - 1;
+      //     const latitudeArr = arrayHistorico[indexMenosUm].LAT;
+      //     const longitudeArr = arrayHistorico[indexMenosUm].LON;
+  
+      //     if (elem.LAT !== latitudeArr || elem.LON !== longitudeArr) {
+      //       historicosSemDuplicidade.push(elem);
+      //     }
+      //   } else {
+      //     historicosSemDuplicidade.push(elem);
+      //   }
+      // });
+  
+      //ordenação de historyVeicle DESC (se ordernar na query fica muito lento a busca);
+      function compare(a: IHistoryTravelVehicle, b: IHistoryTravelVehicle) {
+        if (a.ID > b.ID) return -1;
+        if (a.ID < b.ID) return 1;
+        return 0;
+      }
+      historyVeicle.sort(compare);
+  
+      return {
+        placa: plate,
+        posicao: historyVeicle,
+      };
+    } catch (err: any) {
+      if (err?.message?.includes('Undefined binding(s)')) {
+        throw new Error('Veículo sem rastreador vinculado no SIT')
+      } else {
+        throw new Error(err.message)
+      }
     }
-
-    date_inicio = moment(date_inicio).format("YYYY-MM-DDT00:00:00");
-    if (date_fim !== moment().format("YYYY-MM-DD")) {
-      date_fim = moment(date_fim).format("YYYY-MM-DDT23:59:59");
-    } else {
-      date_fim = moment().subtract(4, "minutes").format("YYYY-MM-DDTHH:mm:ss");
-    }
-
-    const historyVeicle = await mssqlCoordenadas("REPORTES")
-      .select([
-        "ID",
-        "DISIMEI",
-        "LAT",
-        "LON",
-        "UF",
-        "ROD",
-        "RUA",
-        "MUN",
-        "LOC",
-        "DTINC",
-      ])
-      .where("DISIMEI", query?.VEI_REFERENCIA?.trim())
-      .andWhere("DTINC", ">=", date_inicio)
-      .andWhere("DTINC", "<=", date_fim);
-
-    //retirando duplicidades do array
-    // const historicosSemDuplicidade: IHistoryTravelVehicle[] = [];
-    // historyVeicle.forEach((elem, index, arrayHistorico) => {
-    //   if (index > 0) {
-    //     const indexMenosUm = index - 1;
-    //     const latitudeArr = arrayHistorico[indexMenosUm].LAT;
-    //     const longitudeArr = arrayHistorico[indexMenosUm].LON;
-
-    //     if (elem.LAT !== latitudeArr || elem.LON !== longitudeArr) {
-    //       historicosSemDuplicidade.push(elem);
-    //     }
-    //   } else {
-    //     historicosSemDuplicidade.push(elem);
-    //   }
-    // });
-
-    //ordenação de historyVeicle DESC (se ordernar na query fica muito lento a busca);
-    function compare(a: IHistoryTravelVehicle, b: IHistoryTravelVehicle) {
-      if (a.ID > b.ID) return -1;
-      if (a.ID < b.ID) return 1;
-      return 0;
-    }
-    historyVeicle.sort(compare);
-
-    return {
-      placa: plate,
-      posicao: historyVeicle,
-    };
   }
 
   async historyTempVeicleService(
