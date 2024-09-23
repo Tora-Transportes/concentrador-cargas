@@ -85,6 +85,7 @@ export class UsuarioRepository {
         "con_usuarios.email as email",
       ])
       .leftJoin("con_usuarios", "con_usuarios.nome", "con_cargas.usuario")
+      .orderBy("con_cargas.usuario")
       .distinct();
     const funcToFilter = (qb: Knex.QueryBuilder) => {
       if (filter.query === "csn") {
