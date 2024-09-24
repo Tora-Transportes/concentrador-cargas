@@ -56,6 +56,11 @@ import RelatorioEventos from "src/Pages/PPO_Eventos/RelatorioEventos";
 import RelatorioAprovacoes from "src/Pages/PPO_Eventos/RelatorioAprovacoes";
 import PreRequisitos from "src/Pages/Cargas/PreRequisitos";
 import IntegracaoConcentadorApp from "src/Pages/Cargas/IntegracaoConcentadorApp";
+import Multas from "src/Pages/GestaoMultas/Multas";
+import Notificacoes from "src/Pages/GestaoMultas/Notificacoes";
+import Empresas from "src/Pages/GestaoMultas/Empresas";
+import PermissoesGestaoMultas from "src/Pages/GestaoMultas/Permissoes";
+import EmpresasEditar from "src/Pages/GestaoMultas/Empresas/Editar";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -222,6 +227,24 @@ export default function AllRoutes() {
 				{/* <Routes path="/ajuda" exact component={Helper} /> */}
 				{/* <Routes path="/ajuda/CSN" exact component={HelperCSN} /> */}
 				<Routes path="/avisos" exact component={Avisos} />
+				{/* */}
+				<Routes path="/gestao-multas/multas" exact component={Multas} />
+				<Routes
+					path="/gestao-multas/notificacoes"
+					exact
+					component={Notificacoes}
+				/>
+				<Routes path="/gestao-multas/empresas" exact component={Empresas} />
+				<Routes
+					path="/gestao-multas/empresas/:id"
+					exact
+					component={EmpresasEditar}
+				/>
+				<Routes
+					path="/gestao-multas/permissoes"
+					exact
+					component={PermissoesGestaoMultas}
+				/>
 				<Routes path="*" exact component={Main} />
 			</Switch>
 
