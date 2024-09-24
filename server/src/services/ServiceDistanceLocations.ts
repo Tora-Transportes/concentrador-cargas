@@ -280,7 +280,7 @@ export class ServiceDistanceLocations {
 
     if (!enterpriseCoordinates) {
       throw new AppError(
-        "O cnpj especificado ou não existe ou não possui coordenadas cadastradas!",
+        "O cnpj especificado não existe ou não possui coordenadas cadastradas!",
         404
       );
     }
@@ -313,7 +313,12 @@ export class ServiceDistanceLocations {
     const infoSetorVeiculo = await database.raw(
       `SELECT VEI_CATEGORIA, SVI.SV_DSC, VEI_PLACA  FROM VEICULO VEI INNER JOIN SETOR_VEICULO SVI
               ON SVI.SV_COD = VEI.SV_COD WHERE VEI_PLACA IN (${placas})`
-    );
+    ).catch(error => {
+      throw new AppError(
+        "Não foram encontrados veículos que atendam os requisitos!",
+        404
+      );
+    });
 
     vehicles.forEach((elem) => {
       return infoSetorVeiculo.filter((filtroData: IInfoSetorVeiculo) => {
