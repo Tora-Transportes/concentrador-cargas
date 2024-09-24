@@ -13,6 +13,11 @@
   font-weight: bold;
 }
 
+.class-group-button button {
+   width: 150px;
+   height: 40px;
+}
+
 .botao-gravar {
   background-color: #00652e !important;
 }
