@@ -408,116 +408,124 @@ export class ServiceDistanceLocations {
     date_inicio: string,
     date_fim: string
   ): Promise<IResultHistoryVeicle> {
-    const query = await oracle("VEICULO")
-      .select(["VEI_REFERENCIA"])
-      .first()
-      .where("VEI_PLACA", plate);
+    try {
+      const query = await oracle("VEICULO")
+        .select(["VEI_REFERENCIA"])
+        .first()
+        .where("VEI_PLACA", plate);
 
-    if (!query) {
-      throw new AppError(
-        "A placa especificada não existe ou não possui coordenadas cadastradas!",
-        404
-      );
-    }
-
-    date_inicio = moment(date_inicio).format("YYYY-MM-DDT00:00:00");
-    if (plate.length !== 7) {
-      throw new AppError("Placa inválida", 400);
-    }
-
-    if (!date_inicio || !date_fim) {
-      throw new AppError(
-        "Query param date_inicio ou date_fim não informado",
-        400
-      );
-    } else {
-      const diferencaDate = await calculateDiffDate(
-        String(date_inicio),
-        String(date_fim)
-      );
-
-      if (diferencaDate > 7) {
+      if (!query) {
         throw new AppError(
-          "O período entre as datas não pode ser maior que 07 dias.",
-          400
+          "A placa especificada não existe ou não possui coordenadas cadastradas!",
+          404
         );
       }
-    }
-    if (date_fim !== moment().format("YYYY-MM-DD")) {
-      date_fim = moment(date_fim).format("YYYY-MM-DDT23:59:59");
-    } else {
-      date_fim = moment().subtract(4, "minutes").format("YYYY-MM-DDTHH:mm:ss");
-    }
 
-    const historyVeicle = await mssqlCoordenadas("REPORTES")
-      .select([
-        "ID",
-        "DISIMEI",
-        "LAT",
-        "LON",
-        "UF",
-        "ROD",
-        "RUA",
-        "MUN",
-        "LOC",
-        "DTINC",
-      ])
-      .where("DISIMEI", query?.VEI_REFERENCIA?.trim())
-      .andWhere("DTINC", ">=", date_inicio)
-      .andWhere("DTINC", "<=", date_fim);
+      date_inicio = moment(date_inicio).format("YYYY-MM-DDT00:00:00");
+      if (plate.length !== 7) {
+        throw new AppError("Placa inválida", 400);
+      }
 
-    let objAnterior: IHistoryTravelVehicle = historyVeicle[0];
-    let totalTime = 0;
+      if (!date_inicio || !date_fim) {
+        throw new AppError(
+          "Query param date_inicio ou date_fim não informado",
+          400
+        );
+      } else {
+        const diferencaDate = await calculateDiffDate(
+          String(date_inicio),
+          String(date_fim)
+        );
 
-    //retirando os duplicados e adicionando o tempo parada do veiculo;
-    const historicos: IHistoryTravelVehicle[] = [];
-    historyVeicle.push({
-      ID: "0",
-      DISIMEI: "00",
-      LAT: "-0",
-      LON: "-0",
-      UF: "0",
-      DTINC: "2023-04-13T11:30:50.267Z",
-    });
-
-    lodash.forEach(
-      historyVeicle,
-      (dadosPositionAtual, index, arrayHistorico) => {
-        if (
-          dadosPositionAtual.LAT !== objAnterior.LAT ||
-          dadosPositionAtual.LON !== objAnterior.LON
-        ) {
-          const positionIndice = index > 0 ? index - 1 : index;
-          const dataInicioParado = objAnterior.DTINC;
-          const dataFinParado = arrayHistorico[positionIndice].DTINC;
-
-          totalTime = dataFinParado.getTime() - dataInicioParado.getTime();
-          objAnterior.DOWNTIME = Math.floor(totalTime / (1000 * 60));
-
-          historicos.push(objAnterior);
-          objAnterior = dadosPositionAtual;
-          totalTime = 0;
+        if (diferencaDate > 7) {
+          throw new AppError(
+            "O período entre as datas não pode ser maior que 07 dias.",
+            400
+          );
         }
       }
-    );
+      if (date_fim !== moment().format("YYYY-MM-DD")) {
+        date_fim = moment(date_fim).format("YYYY-MM-DDT23:59:59");
+      } else {
+        date_fim = moment().subtract(4, "minutes").format("YYYY-MM-DDTHH:mm:ss");
+      }
 
-    // Remove duplicatas usando a função uniqWith da lodash
-    const historicosSemDuplicidade: IHistoryTravelVehicle[] = lodash.uniqWith(
-      historicos,
-      lodash.isEqual
-    );
+      const historyVeicle = await mssqlCoordenadas("REPORTES")
+        .select([
+          "ID",
+          "DISIMEI",
+          "LAT",
+          "LON",
+          "UF",
+          "ROD",
+          "RUA",
+          "MUN",
+          "LOC",
+          "DTINC",
+        ])
+        .where("DISIMEI", query?.VEI_REFERENCIA?.trim())
+        .andWhere("DTINC", ">=", date_inicio)
+        .andWhere("DTINC", "<=", date_fim);
 
-    //ordenação de historyVeicle DESC;
-    const historicosSemDuplicidadeOrdenado = orderBy(
-      historicosSemDuplicidade,
-      ["ID"],
-      ["desc"]
-    );
+      let objAnterior: IHistoryTravelVehicle = historyVeicle[0];
+      let totalTime = 0;
 
-    return {
-      placa: plate,
-      posicao: historicosSemDuplicidadeOrdenado,
-    };
+      //retirando os duplicados e adicionando o tempo parada do veiculo;
+      const historicos: IHistoryTravelVehicle[] = [];
+      historyVeicle.push({
+        ID: "0",
+        DISIMEI: "00",
+        LAT: "-0",
+        LON: "-0",
+        UF: "0",
+        DTINC: "2023-04-13T11:30:50.267Z",
+      });
+
+      lodash.forEach(
+        historyVeicle,
+        (dadosPositionAtual, index, arrayHistorico) => {
+          if (
+            dadosPositionAtual.LAT !== objAnterior.LAT ||
+            dadosPositionAtual.LON !== objAnterior.LON
+          ) {
+            const positionIndice = index > 0 ? index - 1 : index;
+            const dataInicioParado = objAnterior.DTINC;
+            const dataFinParado = arrayHistorico[positionIndice].DTINC;
+
+            totalTime = dataFinParado.getTime() - dataInicioParado.getTime();
+            objAnterior.DOWNTIME = Math.floor(totalTime / (1000 * 60));
+
+            historicos.push(objAnterior);
+            objAnterior = dadosPositionAtual;
+            totalTime = 0;
+          }
+        }
+      );
+
+      // Remove duplicatas usando a função uniqWith da lodash
+      const historicosSemDuplicidade: IHistoryTravelVehicle[] = lodash.uniqWith(
+        historicos,
+        lodash.isEqual
+      );
+
+      //ordenação de historyVeicle DESC;
+      const historicosSemDuplicidadeOrdenado = orderBy(
+        historicosSemDuplicidade,
+        ["ID"],
+        ["desc"]
+      );
+
+      return {
+        placa: plate,
+        posicao: historicosSemDuplicidadeOrdenado,
+      };
+    } catch (err: any) {
+      if (err?.message?.includes('Undefined binding(s)')) {
+        throw new Error('Veículo sem rastreador vinculado no SIT')
+      } else {
+        throw new Error(err.message)
+      }
+    }
   }
 
   async lastPositionService(plate: string): Promise<ILastLocations> {
