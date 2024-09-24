@@ -88,16 +88,16 @@ function Menusuperior() {
               )}
               <div id="myDropdown" className="dropdown-content">
                 {permissoes?.permissoes?.includes("GM_MULTAS") && (
-                  <a href="/ppo_eventos/permissoes">Multas</a>
+                  <a href="/gestao-multas/multas">Multas</a>
                 )}
                 {permissoes?.permissoes?.includes("GM_NOTIFICACOES") && (
-                  <a href="/ppo_eventos/permissoes">Notificações</a>
+                  <a href="/gestao-multas/notificacoes">Notificações</a>
                 )}
                 {permissoes?.permissoes?.includes("GM_PERMISSOES") && (
-                  <a href="/ppo_eventos/permissoes">Permissões do Módulo</a>
+                  <a href="/gestao-multas/permissoes">Permissões do Módulo</a>
                 )}
                 {permissoes?.permissoes?.includes("GM_EMPRESAS") && (
-                  <a href="/ppo_eventos/permissoes">Empresas</a>
+                  <a href="/gestao-multas/empresas">Empresas</a>
                 )}
               </div>
             </div>

@@ -37,6 +37,7 @@ import PPOEventosRelatoriosController from "./controllers/PPO/PPOEventosRelatori
 import PPOPermissoesVisualizacaoController from "./controllers/PPO/PPOPermissoesVisualizacaoController";
 import PreRequisitoController from "./controllers/PreRequisitoController";
 import LogsAppConcentradorController from "./controllers/LogsAppConcentrador/LogsAppConcentradorController";
+import GMEmpresaController from "./controllers/GestaoMultas/Empresa/GMEmpresaController";
 
 const routes = Router();
 
@@ -379,5 +380,10 @@ routes.get(
   "/logs/app/integracao/relatorio",
   LogsAppConcentradorController.relatorio
 );
+
+routes.post("/gestao-multas/empresas", GMEmpresaController.create);
+routes.get("/gestao-multas/empresas", GMEmpresaController.list);
+routes.put("/gestao-multas/empresas/:id", GMEmpresaController.update);
+routes.delete("/gestao-multas/empresas/:id", GMEmpresaController.delete);
 
 export default routes;
