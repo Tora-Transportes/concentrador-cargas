@@ -5,6 +5,10 @@ class ServiceGMEmpresas {
 		return await api.get("/gestao-multas/empresas", { params: query });
 	}
 
+	async index(id) {
+		return await api.get(`/gestao-multas/empresas/${id}`);
+	}
+
 	async create(values) {
 		return api.post("/gestao-multas/empresas", values);
 	}

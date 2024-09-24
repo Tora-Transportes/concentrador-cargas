@@ -6,8 +6,10 @@ import { Button as ButtonReact } from "primereact/button";
 import { BiCog } from "react-icons/bi";
 import { SideBarFuncition } from "../components/tabela/sideBar";
 import { Sidebar } from "primereact/sidebar";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 function ViewEmpresas({
+	handleOpen,
 	get_data,
 	data,
 	totalRegisters = 0,
@@ -35,14 +37,24 @@ function ViewEmpresas({
 							</>
 						)}
 					</div>
-					<div className="opcao-tabela-padrao">
-						<ButtonReact
-							label="Opções da Tabela"
-							id="button-opcoes-tabela"
-							icon={<BiCog />}
-							onClick={() => setVisibleLeft(true)}
-						/>
-					</div>
+					<Row>
+						<div className="opcao-tabela-padrao">
+							<ButtonReact
+								label="Opções da Tabela"
+								id="button-opcoes-tabela"
+								icon={<BiCog />}
+								onClick={() => setVisibleLeft(true)}
+							/>
+						</div>
+						<div className="adicionar-empresa">
+							<ButtonReact
+								label="Adicionar"
+								id="button-opcoes-tabela"
+								icon={<IoMdAddCircleOutline />}
+								onClick={handleOpen}
+							/>
+						</div>
+					</Row>
 				</Row>
 				<Row>
 					<Sidebar

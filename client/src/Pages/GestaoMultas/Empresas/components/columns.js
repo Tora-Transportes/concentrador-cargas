@@ -49,9 +49,12 @@ export const getColumns = (notify) => {
 			name: "editar",
 			description: "Editar",
 			static_column: true,
-			selector: () => (
+			selector: (row) => (
 				<Button
 					style={{ backgroundColor: "transparent", borderColor: "transparent" }}
+					onClick={() => {
+						window.open(`/gestao-multas/empresas/${row.id}`, "_blank");
+					}}
 				>
 					<BsPencilSquare style={{ color: "#00652E" }} size={18} />
 				</Button>

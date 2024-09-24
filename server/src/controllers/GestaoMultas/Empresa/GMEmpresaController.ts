@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 
 interface IGMEmpresaController {
   create(req: Request, res: Response): Promise<any>;
+  index(req: Request, res: Response): Promise<any>;
   update(req: Request, res: Response): Promise<any>;
   list(req: Request, res: Response): Promise<any>;
   delete(req: Request, res: Response): Promise<any>;
@@ -13,6 +14,7 @@ class GMEmpresaController implements IGMEmpresaController {
   constructor() {
     this.handleError = this.handleError.bind(this);
     this.create = this.create.bind(this);
+    this.index = this.index.bind(this);
     this.update = this.update.bind(this);
     this.list = this.list.bind(this);
     this.delete = this.delete.bind(this);
@@ -39,6 +41,18 @@ class GMEmpresaController implements IGMEmpresaController {
       const response = await axios.post(
         `${String(process.env.URL_GESTAO_MULTAS)}/empresas`,
         req.body
+      );
+      const { data, status } = response;
+      return res.status(status).json(data);
+    } catch (error) {
+      return this.handleError(error, res);
+    }
+  }
+  async index(req: Request, res: Response): Promise<any> {
+    const { id } = req.params;
+    try {
+      const response = await axios.get(
+        `${String(process.env.URL_GESTAO_MULTAS)}/empresas/${id}`
       );
       const { data, status } = response;
       return res.status(status).json(data);

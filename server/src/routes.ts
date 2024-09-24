@@ -385,5 +385,6 @@ routes.post("/gestao-multas/empresas", GMEmpresaController.create);
 routes.get("/gestao-multas/empresas", GMEmpresaController.list);
 routes.put("/gestao-multas/empresas/:id", GMEmpresaController.update);
 routes.delete("/gestao-multas/empresas/:id", GMEmpresaController.delete);
+routes.get("/gestao-multas/empresas/:id", GMEmpresaController.index);
 
 export default routes;
