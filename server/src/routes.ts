@@ -37,6 +37,8 @@ import PPOEventosRelatoriosController from "./controllers/PPO/PPOEventosRelatori
 import PPOPermissoesVisualizacaoController from "./controllers/PPO/PPOPermissoesVisualizacaoController";
 import PreRequisitoController from "./controllers/PreRequisitoController";
 import LogsAppConcentradorController from "./controllers/LogsAppConcentrador/LogsAppConcentradorController";
+import BotCsnController from "./controllers/BotCsnController";
+import MotoristaController from "./controllers/MotoristaController";
 
 const routes = Router();
 
