@@ -1,0 +1,164 @@
+.col-cod-filial {
+  height: 3.6rem;
+  border-radius: 4px;
+  font-size: 14px;
+  border: 1px solid #ced4da;
+  padding-top: 5px;
+  margin-left: 12px;
+}
+label {
+  opacity: 0.65;
+}
+.input-cod-filial {
+  border: none;
+  display: grid;
+  width: 100%;
+  padding: -1rem;
+  outline-color: #fff;
+}
+#filiaisDataList:focus {
+  outline: none;
+}
+.sub-cagas-total {
+  font-size: 0.85rem;
+  bottom: -2px;
+}
+
+.input-placaCav,
+.input-carreta,
+.input-bitrem,
+.class-input-moto {
+  margin-top: 1rem;
+}
+
+.row-input-motorista {
+  /* display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 0.8rem; */
+  margin-bottom: 1.5rem;
+}
+
+.class-input-placaCav {
+  display: grid;
+  grid-template-columns: auto;
+}
+
+/* div #style-input-motorista {
+  width: 95%;
+  height: 2rem;
+} */
+
+#title-check-não {
+  margin-bottom: -20px;
+}
+
+.modal-debitos-veiculo {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+}
+.list-group-flush {
+  margin-top: 2rem;
+}
+
+/* #botao-deb-veiculo,
+#botao-detail-veiculo {
+  background: #00652e;
+  border: none;
+} */
+
+.col-info-veic-manual {
+  display: flex;
+  justify-content: flex-end;
+}
+
+div .button-info-veic-manual,
+div .button-info-veic-manual:hover {
+  background: #00652e;
+  color: #ffff;
+  border: none;
+  margin-top: 16px;
+}
+
+.buttons-detail-veiculos {
+  margin-right: 1.5rem !important;
+}
+
+@media only screen and (max-width: 342px) {
+  .col-info-veic-manual {
+    display: block;
+    text-align: center;
+  }
+
+  .buttons-detail-veiculos {
+    margin-right: 0.2rem !important;
+    width: 9rem;
+  }
+  .buttons-inf-veiculos {
+    width: 9rem;
+  }
+}
+
+@media only screen and (max-width: 353px) {
+  .col-cod-filial {
+    margin-bottom: 1rem;
+    width: 92% !important;
+  }
+}
+
+@media only screen and (min-width: 354px) and (max-width: 575px) {
+  .col-cod-filial {
+    margin-bottom: 1rem;
+    width: 95% !important;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .button-info-veic-manual {
+    margin-left: 10px;
+  }
+  .col-info-veic-manual {
+    justify-content: center;
+  }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 991px) {
+  .button-info-veic-manual {
+    margin-left: 10px;
+  }
+  .col-info-veic-manual {
+    justify-content: flex-end;
+  }
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .button-info-veic-manual {
+    margin: 1rem 8px 1px -6px;
+  }
+}
+@media only screen and (max-width: 1100px) {
+  .row-input-motorista {
+    display: grid;
+    position: relative;
+    grid-template-columns: auto;
+  }
+  .col-cod-filial {
+    margin-left: 11px;
+    margin-bottom: 1rem;
+    display: grid;
+    position: relative;
+  }
+
+  .input-cod-filial {
+    margin-top: 1.8rem;
+    margin-left: 0.5rem;
+    width: 95%;
+    position: absolute !important;
+    border: none;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  div .button-info-veic-manual {
+    background: #00652e;
+    color: #ffff;
+    border: none;
+  }
+}

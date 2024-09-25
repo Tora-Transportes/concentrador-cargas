@@ -24,6 +24,19 @@ export const formatDateAtual3HorasMais = (dataValor) => {
 	return moment(dataValor).add(3, "hour").format("DD/MM/YYYY HH:mm:ss");
 };
 
+export const formatDateAtual = (dataValor) => {
+	try {
+		const data = moment(dataValor).format("DD/MM/YYYY HH:mm:ss");
+		if (data == "Invalid date") {
+			return "Sem Informação";
+		} else {
+			return data;
+		}
+	} catch {
+		return "Sem Informação";
+	}
+};
+
 //Data com opção de add horas
 export const formatDateAddminutes = (dataValor, addHour) => {
 	let data1 = new Date(dataValor);

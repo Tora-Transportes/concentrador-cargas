@@ -39,6 +39,8 @@ import PreRequisitoController from "./controllers/PreRequisitoController";
 import LogsAppConcentradorController from "./controllers/LogsAppConcentrador/LogsAppConcentradorController";
 import BotCsnController from "./controllers/BotCsnController";
 import MotoristaController from "./controllers/MotoristaController";
+import GMEmpresaController from "./controllers/GestaoMultas/Empresa/GMEmpresaController";
+import GMPermissoesController from "./controllers/GestaoMultas/Permissoes/GMPermissoesController";
 
 const routes = Router();
 
@@ -381,5 +383,27 @@ routes.get(
   "/logs/app/integracao/relatorio",
   LogsAppConcentradorController.relatorio
 );
+routes.get("/bot/locais", BotCsnController.locais);
+routes.get("/bot/postos", BotCsnController.postos);
 
+routes.post("/gestao-multas/empresas", GMEmpresaController.create);
+routes.get("/gestao-multas/empresas", GMEmpresaController.list);
+routes.put("/gestao-multas/empresas/:id", GMEmpresaController.update);
+routes.delete("/gestao-multas/empresas/:id", GMEmpresaController.delete);
+routes.get("/gestao-multas/empresas/:id", GMEmpresaController.index);
+
+routes.post("/gestao-multas/usuarios", GMPermissoesController.create);
+routes.get("/gestao-multas/usuarios", GMPermissoesController.list);
+routes.put("/gestao-multas/usuarios/:id", GMPermissoesController.update);
+routes.delete("/gestao-multas/usuarios/:id", GMPermissoesController.delete);
+routes.delete(
+  "/gestao-multas/usuarios/:id/permissoes/:id_permissao",
+  GMPermissoesController.deletePermissioUser
+);
+routes.get(
+  "/gestao-multas/usuarios/:id/permissoes",
+  GMPermissoesController.index
+);
+
+routes.get("/motoristas/:cpf/categoria", MotoristaController.findByCpf);
 export default routes;
