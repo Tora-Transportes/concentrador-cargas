@@ -82,10 +82,12 @@ export const getColumns = () => {
 			name: "valor_a_pagar",
 			description: "Valor a Pagar",
 			selector: (row) =>
-				row.valor_a_pagar.toLocaleString("pt-br", {
-					style: "currency",
-					currency: "BRL",
-				}),
+				row.valor_a_pagar
+					? row.valor_a_pagar.toLocaleString("pt-br", {
+							style: "currency",
+							currency: "BRL",
+					  })
+					: "Sem Informação",
 			showFilter: false,
 		},
 		{
