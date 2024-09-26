@@ -41,6 +41,7 @@ import BotCsnController from "./controllers/BotCsnController";
 import MotoristaController from "./controllers/MotoristaController";
 import GMEmpresaController from "./controllers/GestaoMultas/Empresa/GMEmpresaController";
 import GMPermissoesController from "./controllers/GestaoMultas/Permissoes/GMPermissoesController";
+import GMNotificacoesController from "./controllers/GestaoMultas/Notificacoes/GMNotificacoesController";
 
 const routes = Router();
 
@@ -404,6 +405,8 @@ routes.get(
   "/gestao-multas/usuarios/:id/permissoes",
   GMPermissoesController.index
 );
+
+routes.get("/gestao-multas/notificacoes", GMNotificacoesController.list);
 
 routes.get("/motoristas/:cpf/categoria", MotoristaController.findByCpf);
 export default routes;
