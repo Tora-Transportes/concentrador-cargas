@@ -1,0 +1,12 @@
+.font-sidebar {
+    margin-left: -1rem !important;
+    font-size: 14.5px !important;
+  }
+  
+  .icon-leg,
+  .icon-import,
+  .icon-export-table,
+  .icon-redef {
+    margin-left: -0.5rem;
+  }
+  
