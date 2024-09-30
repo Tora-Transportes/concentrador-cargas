@@ -4,12 +4,14 @@ import { Request, Response } from "express";
 
 interface IGMNotificacoesController {
   list(req: Request, res: Response): Promise<any>;
+  index(req: Request, res: Response): Promise<any>;
 }
 
 class GMNotificacoesController implements IGMNotificacoesController {
   constructor() {
     this.handleError = this.handleError.bind(this);
     this.list = this.list.bind(this);
+    this.index = this.index.bind(this);
   }
 
   private handleError(error: any, res: Response) {
@@ -34,6 +36,19 @@ class GMNotificacoesController implements IGMNotificacoesController {
         {
           params: req.query,
         }
+      );
+      const { data, status } = response;
+      return res.status(status).json(data);
+    } catch (error) {
+      return this.handleError(error, res);
+    }
+  }
+
+  async index(req: Request, res: Response): Promise<any> {
+    const { ait } = req.params;
+    try {
+      const response = await axios.get(
+        `${String(process.env.URL_GESTAO_MULTAS)}/notificacoes/${ait}`
       );
       const { data, status } = response;
       return res.status(status).json(data);

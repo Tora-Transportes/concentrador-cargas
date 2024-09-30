@@ -407,6 +407,7 @@ routes.get(
 );
 
 routes.get("/gestao-multas/notificacoes", GMNotificacoesController.list);
+routes.get("/gestao-multas/notificacoes/:ait", GMNotificacoesController.index);
 
 routes.get("/motoristas/:cpf/categoria", MotoristaController.findByCpf);
 export default routes;

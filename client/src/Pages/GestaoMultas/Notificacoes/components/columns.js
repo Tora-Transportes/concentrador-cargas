@@ -14,7 +14,7 @@ export const getColumns = () => {
 				<Button
 					style={{ backgroundColor: "transparent", borderColor: "transparent" }}
 					onClick={() => {
-						window.open(`/gestao-multas/empresas/${row.id}`, "_blank");
+						window.open(`/gestao-multas/notificacoes/${row.ait}`, "_blank");
 					}}
 				>
 					<BsPencilSquare style={{ color: "#00652E" }} size={18} />

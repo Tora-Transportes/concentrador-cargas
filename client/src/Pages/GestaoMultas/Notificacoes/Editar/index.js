@@ -8,24 +8,61 @@ import { getClaims } from "../../../../MicrosoftAuthentication";
 
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import "./style.css";
-import FormularioEmpresa from "../components/formulario";
-import ServiceEmpresas from "src/services/GestaoMultas/ServiceEmpresas";
+import FormularioNotificacao from "../components/formulario";
+import ServiceGMNotificacoes from "src/services/GestaoMultas/ServiceNotificacoes";
 import { formatDateAtual } from "src/Pages/Utils/formatDate";
 
-function EmpresasEditar() {
+function NotificacoesEditar() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const { id } = useParams();
 
 	const formik = useFormik({
 		initialValues: {
-			id: id,
-			nome: "",
-			token: "",
+			id: "",
+			empresa_id: "",
+			placa: "",
+			renavam: "",
+			ait: "",
+			ait_originaria: "",
+			data_infracao: "",
+			hora: "",
+			local: "",
+			valor_a_pagar: "",
+			municipio: "",
+			codigo_municipio: "",
+			uf: "",
+			descricao: "",
+			codigo_infracao: "",
+			desdobramento: "",
+			pontuacao: "",
+			codigo_orgao: "",
+			orgao_autuador: "",
+			orgao_pesquisa: "",
+			prazo_indicacao: "",
+			data_pesquisa: "",
+			notificacao: "",
+			screenshot: "",
+			boleto: "",
+			nit: "",
+			codigo_boleto: "",
+			situacao_boleto: "",
+			descricao_boleto: "",
+			boleto_valor: "",
+			linha_digitavel: "",
+			boleto_vencimento: "",
+			confirmacao_pagamento: false, // booleano, false é o valor padrão
+			motorista_nome: "",
+			motorista_matricula: "",
+			tipo_notificacao: "",
+			created_at: "",
+			cod_usu_create: "",
+			updated_at: "",
+			cod_usu_update: "",
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
 			try {
-				const { data } = await ServiceEmpresas.update(id, {
+				const { data } = await ServiceGMNotificacoes.update(values.id, {
 					...values,
 					cod_user: String(getClaims().name),
 				});
@@ -38,6 +75,7 @@ function EmpresasEditar() {
 			setLoading(false);
 		},
 	});
+
 	async function handleCloseWindow(e, askPermission = true) {
 		if (e) {
 			e.preventDefault();
@@ -61,7 +99,7 @@ function EmpresasEditar() {
 
 	async function carregarEmpresa() {
 		try {
-			const carga = (await ServiceEmpresas.index(id)).data;
+			const carga = (await ServiceGMNotificacoes.index(id)).data;
 			for (let i in carga) {
 				let nonNullValue = carga[i] === null ? "" : carga[i];
 				if (i.indexOf("created_at") !== -1 || i.indexOf("updated_at") !== -1) {
@@ -94,10 +132,10 @@ function EmpresasEditar() {
 			<LoadingScreen />
 			<Menusuperior />
 			<Container className="mb-5 mt-5">
-				<p id="style-title-editorCarga">Editar Empresa</p>
+				<p id="style-title-editorCarga">Notificação</p>
 				<hr />
 				<Form onSubmit={formik.handleSubmit}>
-					<FormularioEmpresa formik={formik}></FormularioEmpresa>
+					<FormularioNotificacao formik={formik}></FormularioNotificacao>
 					<div className="class-group-button">
 						<Button
 							variant="success"
@@ -122,4 +160,4 @@ function EmpresasEditar() {
 	);
 }
 
-export default EmpresasEditar;
+export default NotificacoesEditar;
