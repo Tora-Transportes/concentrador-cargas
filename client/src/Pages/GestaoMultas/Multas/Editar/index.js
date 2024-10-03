@@ -18,47 +18,89 @@ function MultasEditar() {
 
 	const formik = useFormik({
 		initialValues: {
-			id: "",
-			empresa_id: "",
-			placa: "",
-			renavam: "",
-			ait: "",
-			ait_originaria: "",
-			data_infracao: "",
-			hora: "",
-			local: "",
-			valor_a_pagar: "",
-			municipio: "",
-			codigo_municipio: "",
-			uf: "",
-			descricao: "",
-			codigo_infracao: "",
-			desdobramento: "",
-			pontuacao: "",
-			codigo_orgao: "",
-			orgao_autuador: "",
-			orgao_pesquisa: "",
-			prazo_indicacao: "",
-			data_pesquisa: "",
-			notificacao: "",
-			screenshot: "",
-			boleto: "",
-			penalidade: "",
-			nit: "",
-			codigo_boleto: "",
-			situacao_boleto: "",
-			descricao_boleto: "",
-			boleto_valor: "",
-			linha_digitavel: "",
-			boleto_vencimento: "",
-			confirmacao_pagamento: false, // booleano, false é o valor padrão
-			motorista_nome: "",
-			motorista_matricula: "",
-			tipo_notificacao: "",
-			created_at: "",
-			cod_usu_create: "",
-			updated_at: "",
-			cod_usu_update: "",
+			multa: {
+				id: "",
+				empresa_id: "",
+				placa: "",
+				renavam: "",
+				ait: "",
+				ait_originaria: "",
+				data_infracao: "",
+				hora: "",
+				local: "",
+				municipio: "",
+				uf: "",
+				descricao: "",
+				codigo_infracao: "",
+				vencimento_infracao: "",
+				data_pesquisa: "",
+				servico: "",
+				orgao_autuador: "",
+				reincidencia_nic: "",
+				valor_a_pagar: "",
+				valor_com_desconto: "",
+				desconto_perdido: "",
+				guia: "",
+				boleto: "",
+				extrato: "",
+				desdobramento: "",
+				codigo_orgao: "",
+				motorista_nome: "",
+				motorista_matricula: "",
+				orgao: "",
+				penalidade: "",
+				pontuacao: "",
+				codigo_boleto: "",
+				situacao_boleto: "",
+				descricao_boleto: "",
+				boleto_valor: "",
+				linha_digitavel: "",
+				boleto_vencimento: "",
+				confirmacao_pagamento: "",
+				notificacao: "",
+				tipo_multa: "",
+				created_at: "",
+				cod_usu_create: "",
+				updated_at: "",
+				cod_usu_update: "",
+				empresa: {
+					nome: "",
+				},
+			},
+			status: {
+				id: "",
+				ait: "",
+				renavam: "",
+				placa: "",
+				status: "",
+				data_vencimento: "",
+				valor_a_pagar: "",
+				boleto_url: "",
+				codigo_boleto: "",
+				situacao_boleto: "",
+				descricao_boleto: "",
+				boleto_valor: "",
+				linha_digitavel: "",
+				boleto_vencimento: "",
+				confirmacao_pagamento: "",
+				valor_pago: "",
+				motorista_nome: "",
+				motorista_matricula: "",
+				created_at: "",
+				cod_usu_create: "",
+				updated_at: "",
+				cod_usu_update: "",
+			},
+			statusHistorico: [
+				{
+					id: "",
+					ait: "",
+					status: "",
+					created_at: "",
+					cod_usu_create: "",
+				},
+			],
+			observacao: "",
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -100,20 +142,57 @@ function MultasEditar() {
 
 	async function carregarMulta() {
 		try {
-			const multa = (await ServiceGMMultas.index(id)).data.multa;
+			const multaResponse = (await ServiceGMMultas.index(id)).data;
+			const multa = multaResponse.multa;
+
 			for (let i in multa) {
 				let nonNullValue = multa[i] === null ? "" : multa[i];
-				if (i.indexOf("created_at") !== -1 || i.indexOf("updated_at") !== -1) {
-					formik.setFieldValue(i, formatDateAtual(nonNullValue));
+				if (i === "created_at" || i === "updated_at") {
+					formik.setFieldValue(`multa.${i}`, formatDateAtual(nonNullValue));
+				} else if (typeof multa[i] === "object" && multa[i] !== null) {
+					for (let j in multa[i]) {
+						let nestedNonNullValue = multa[i][j] === null ? "" : multa[i][j];
+						formik.setFieldValue(`multa.${i}.${j}`, nestedNonNullValue);
+					}
 				} else {
-					formik.setFieldValue(i, nonNullValue);
+					formik.setFieldValue(`multa.${i}`, nonNullValue);
 				}
 			}
+			const status = multaResponse.status;
+			for (let i in status) {
+				let nonNullValue = status[i] === null ? "" : status[i];
+
+				if (i === "created_at" || i === "updated_at") {
+					formik.setFieldValue(`status.${i}`, formatDateAtual(nonNullValue));
+				} else {
+					formik.setFieldValue(`status.${i}`, nonNullValue);
+				}
+			}
+			const statusHistorico = multaResponse.statusHistorico || [];
+			statusHistorico.forEach((item, index) => {
+				for (let i in item) {
+					let nonNullValue = item[i] === null ? "" : item[i];
+					if (i === "created_at") {
+						formik.setFieldValue(
+							`statusHistorico[${index}].${i}`,
+							formatDateAtual(nonNullValue)
+						);
+					} else {
+						formik.setFieldValue(
+							`statusHistorico[${index}].${i}`,
+							nonNullValue
+						);
+					}
+				}
+			});
+
+			formik.setFieldValue("observacao", multaResponse.observacao || "");
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 			history.push("");
 		}
 	}
+
 	useEffect(() => {
 		let isMounted = true;
 		setLoading(true);

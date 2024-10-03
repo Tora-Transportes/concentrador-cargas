@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Row, Col, FloatingLabel } from "react-bootstrap";
+import { Form, Row, Col, FloatingLabel, Table } from "react-bootstrap";
 import { FaDownload, FaExclamationTriangle } from "react-icons/fa";
 
 function FormularioMulta({ formik }) {
@@ -13,7 +13,7 @@ function FormularioMulta({ formik }) {
 							type="text"
 							placeholder=" "
 							name="ait"
-							value={formik.values.ait}
+							value={formik.values.multa.ait}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							required
@@ -28,7 +28,7 @@ function FormularioMulta({ formik }) {
 							type="text"
 							placeholder=" "
 							name="empresa.nome"
-							value={formik.values.empresa?.nome || ""}
+							value={formik.values.multa.empresa?.nome || ""}
 							disabled
 						/>
 					</FloatingLabel>
@@ -43,7 +43,7 @@ function FormularioMulta({ formik }) {
 							type="text"
 							placeholder=" "
 							name="placa"
-							value={formik.values.placa}
+							value={formik.values.multa.placa}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							required
@@ -57,7 +57,7 @@ function FormularioMulta({ formik }) {
 							type="text"
 							placeholder=" "
 							name="renavam"
-							value={formik.values.renavam}
+							value={formik.values.multa.renavam}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							required
@@ -73,7 +73,7 @@ function FormularioMulta({ formik }) {
 							id="data_infracao"
 							type="date"
 							name="data_infracao"
-							value={formik.values.data_infracao}
+							value={formik.values.multa.data_infracao}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							required
@@ -86,7 +86,7 @@ function FormularioMulta({ formik }) {
 							id="hora"
 							type="time"
 							name="hora"
-							value={formik.values.hora}
+							value={formik.values.multa.hora}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							required
@@ -100,7 +100,7 @@ function FormularioMulta({ formik }) {
 							type="text"
 							placeholder=" "
 							name="local"
-							value={formik.values.local}
+							value={formik.values.multa.local}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							required
@@ -119,7 +119,7 @@ function FormularioMulta({ formik }) {
 							type="text"
 							placeholder=" "
 							name="municipio"
-							value={formik.values.municipio}
+							value={formik.values.multa.municipio}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							required
@@ -133,7 +133,7 @@ function FormularioMulta({ formik }) {
 							type="text"
 							placeholder=" "
 							name="uf"
-							value={formik.values.uf}
+							value={formik.values.multa.uf}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							required
@@ -147,7 +147,7 @@ function FormularioMulta({ formik }) {
 							type="text"
 							placeholder=" "
 							name="codigo_infracao"
-							value={formik.values.codigo_infracao}
+							value={formik.values.multa.codigo_infracao}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							required
@@ -161,7 +161,7 @@ function FormularioMulta({ formik }) {
 							type="number"
 							placeholder=" "
 							name="pontuacao"
-							value={formik.values.pontuacao}
+							value={formik.values.multa.pontuacao}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							required
@@ -175,7 +175,7 @@ function FormularioMulta({ formik }) {
 							type="number"
 							placeholder=" "
 							name="valor_a_pagar"
-							value={formik.values.valor_a_pagar}
+							value={formik.values.multa.valor_a_pagar}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							required
@@ -191,7 +191,7 @@ function FormularioMulta({ formik }) {
 							type="text"
 							placeholder=" "
 							name="orgao_autuador"
-							value={formik.values.orgao_autuador}
+							value={formik.values.multa.orgao_autuador}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							required
@@ -204,7 +204,7 @@ function FormularioMulta({ formik }) {
 							id="prazo_indicacao"
 							type="date"
 							name="prazo_indicacao"
-							value={formik.values.prazo_indicacao}
+							value={formik.values.multa.prazo_indicacao}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							required
@@ -215,9 +215,9 @@ function FormularioMulta({ formik }) {
 
 			<Row>
 				<Col style={{ paddingBottom: "10px" }}>
-					{formik.values.notificacao ? (
+					{formik.values.multa.notificacao ? (
 						<a
-							href={formik.values.notificacao}
+							href={formik.values.multa.notificacao}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="btn btn-link"
@@ -233,9 +233,9 @@ function FormularioMulta({ formik }) {
 					)}
 				</Col>
 				<Col>
-					{formik.values.penalidade ? (
+					{formik.values.multa.penalidade ? (
 						<a
-							href={formik.values.penalidade}
+							href={formik.values.multa.penalidade}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="btn btn-link"
@@ -251,9 +251,9 @@ function FormularioMulta({ formik }) {
 					)}
 				</Col>
 				<Col>
-					{formik.values.boleto ? (
+					{formik.values.multa.boleto ? (
 						<a
-							href={formik.values.boleto}
+							href={formik.values.multa.boleto}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="btn btn-link"
@@ -277,7 +277,7 @@ function FormularioMulta({ formik }) {
 							type="text"
 							placeholder=" "
 							name="situacao_boleto"
-							value={formik.values.situacao_boleto}
+							value={formik.values.multa.situacao_boleto}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							required
@@ -291,7 +291,7 @@ function FormularioMulta({ formik }) {
 							type="text"
 							placeholder=" "
 							name="linha_digitavel"
-							value={formik.values.linha_digitavel}
+							value={formik.values.multa.linha_digitavel}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							required
@@ -308,13 +308,181 @@ function FormularioMulta({ formik }) {
 							type="text"
 							placeholder=" "
 							name="motorista_nome"
-							value={formik.values.motorista_nome}
+							value={formik.values.multa.motorista_nome}
 							onChange={formik.handleChange}
 							onBlur={formik.handleBlur}
 							required
 						/>
 					</FloatingLabel>
 				</Col>
+			</Row>
+
+			{/* Seção para os dados de Status */}
+			<Row style={{ marginTop: "40px" }}>
+				<h4>Status</h4>
+				<hr />
+				<Col>
+					<FloatingLabel label="ID Status" className="mb-3">
+						<Form.Control
+							id="status.id"
+							type="text"
+							placeholder=" "
+							name="status.id"
+							value={formik.values.status?.id || ""}
+							disabled
+						/>
+					</FloatingLabel>
+				</Col>
+				<Col>
+					<FloatingLabel label="AIT" className="mb-3">
+						<Form.Control
+							id="status.ait"
+							type="text"
+							placeholder=" "
+							name="status.ait"
+							value={formik.values.status?.ait || ""}
+							disabled
+						/>
+					</FloatingLabel>
+				</Col>
+			</Row>
+
+			<Row>
+				<Col>
+					<FloatingLabel label="Renavam" className="mb-3">
+						<Form.Control
+							id="status.renavam"
+							type="text"
+							placeholder=" "
+							name="status.renavam"
+							value={formik.values.status?.renavam || ""}
+							disabled
+						/>
+					</FloatingLabel>
+				</Col>
+				<Col>
+					<FloatingLabel label="Placa" className="mb-3">
+						<Form.Control
+							id="status.placa"
+							type="text"
+							placeholder=" "
+							name="status.placa"
+							value={formik.values.status?.placa || ""}
+							disabled
+						/>
+					</FloatingLabel>
+				</Col>
+			</Row>
+
+			<Row>
+				<Col>
+					<FloatingLabel label="Status" className="mb-3">
+						<Form.Control
+							id="status.status"
+							type="text"
+							placeholder=" "
+							name="status.status"
+							value={formik.values.status?.status || ""}
+							disabled
+						/>
+					</FloatingLabel>
+				</Col>
+				<Col>
+					<FloatingLabel label="Data Vencimento" className="mb-3">
+						<Form.Control
+							id="status.data_vencimento"
+							type="date"
+							name="status.data_vencimento"
+							value={formik.values.status?.data_vencimento || ""}
+							disabled
+						/>
+					</FloatingLabel>
+				</Col>
+			</Row>
+
+			<Row>
+				<Col>
+					<FloatingLabel label="Valor a Pagar" className="mb-3">
+						<Form.Control
+							id="status.valor_a_pagar"
+							type="number"
+							placeholder=" "
+							name="status.valor_a_pagar"
+							value={formik.values.status?.valor_a_pagar || ""}
+							disabled
+						/>
+					</FloatingLabel>
+				</Col>
+				<Col>
+					{formik.values.status?.boleto_url ? (
+						<a
+							href={formik.values.status?.boleto_url}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="btn btn-link"
+							title="Download Boleto PDF"
+						>
+							<FaDownload size={24} /> Download Boleto PDF
+						</a>
+					) : (
+						<div className="text-muted">
+							<FaExclamationTriangle size={24} color="gray" /> PDF de boleto não
+							disponível
+						</div>
+					)}
+				</Col>
+			</Row>
+
+			<Row>
+				<Col>
+					<FloatingLabel label="Código Boleto" className="mb-3">
+						<Form.Control
+							id="status.codigo_boleto"
+							type="text"
+							placeholder=" "
+							name="status.codigo_boleto"
+							value={formik.values.status?.codigo_boleto || ""}
+							disabled
+						/>
+					</FloatingLabel>
+				</Col>
+				<Col>
+					<FloatingLabel label="Situação Boleto" className="mb-3">
+						<Form.Control
+							id="status.situacao_boleto"
+							type="text"
+							placeholder=" "
+							name="status.situacao_boleto"
+							value={formik.values.status?.situacao_boleto || ""}
+							disabled
+						/>
+					</FloatingLabel>
+				</Col>
+			</Row>
+
+			<Row style={{ marginTop: "40px" }}>
+				<h4>Status Histórico</h4>
+				<hr />
+				<Table striped bordered hover>
+					<thead>
+						<tr>
+							<th>AIT</th>
+							<th>Status</th>
+							<th>Hora</th>
+							<th>Usuário</th>
+						</tr>
+					</thead>
+					<tbody>
+						{formik.values.statusHistorico.map((historico, index) => (
+							<tr key={index}>
+								<td>{historico.ait}</td>
+								<td>{historico.status}</td>
+								<td>{historico.created_at}</td>
+								<td>{historico.cod_usu_create}</td>
+							</tr>
+						))}
+					</tbody>
+				</Table>
 			</Row>
 		</div>
 	);
