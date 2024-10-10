@@ -74,7 +74,10 @@ class BotCsnController implements IBotCsnController {
   async operacoesLocais(req: Request, res: Response): Promise<void> {
     const { operacao } = req.params;
     axios
-      .get(String(process.env.URL_API_BOT_CSN) + `/bot/operacoes/${operacao}`)
+      .get(
+        String(process.env.URL_API_BOT_CSN) +
+          `/bot/operacoes/${operacao}/locais`
+      )
       .then((response) => {
         console.log("Redirecionado operacoesLocais bot csn com sucesso!");
         return res.json(response.data);
