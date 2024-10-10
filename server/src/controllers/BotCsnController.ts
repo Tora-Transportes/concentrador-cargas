@@ -7,6 +7,7 @@ interface IBotCsnController {
   operacoes(req: Request, res: Response): Promise<void>;
   posicoes(req: Request, res: Response): Promise<void>;
   operacoesVeiculos(req: Request, res: Response): Promise<void>;
+  operacoesLocais(req: Request, res: Response): Promise<void>;
 }
 
 class BotCsnController implements IBotCsnController {
@@ -67,6 +68,23 @@ class BotCsnController implements IBotCsnController {
       .catch((error) => {
         console.error("Erro ao  operacoes bot csn :", error);
         return res.json({ msg: "Erro ao  operacoes bot csn :", erro: false });
+      });
+  }
+
+  async operacoesLocais(req: Request, res: Response): Promise<void> {
+    const { operacao } = req.params;
+    axios
+      .get(String(process.env.URL_API_BOT_CSN) + `/bot/operacoes/${operacao}`)
+      .then((response) => {
+        console.log("Redirecionado operacoesLocais bot csn com sucesso!");
+        return res.json(response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao  operacoesLocais bot csn :", error);
+        return res.json({
+          msg: "Erro ao  operacoesLocais bot csn :",
+          erro: false,
+        });
       });
   }
 

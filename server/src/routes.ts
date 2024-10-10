@@ -388,6 +388,7 @@ routes.get(
 routes.get("/bot/locais", BotCsnController.locais);
 routes.get("/bot/postos", BotCsnController.postos);
 routes.get("/bot/operacoes", BotCsnController.operacoes);
+routes.get("/bot/operacoes/:operacao", BotCsnController.operacoesLocais);
 routes.get("/bot/operacoes/veiculos", BotCsnController.operacoesVeiculos);
 routes.get("/bot/posicoes", BotCsnController.posicoes);
 
