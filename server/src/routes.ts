@@ -43,6 +43,8 @@ import GMEmpresaController from "./controllers/GestaoMultas/Empresa/GMEmpresaCon
 import GMPermissoesController from "./controllers/GestaoMultas/Permissoes/GMPermissoesController";
 import GMNotificacoesController from "./controllers/GestaoMultas/Notificacoes/GMNotificacoesController";
 import GMMultasController from "./controllers/GestaoMultas/Multas/GMMultasController";
+import SqedController from "./controllers/Sqed/SqedController";
+import TokenSqedMiddleware from "./middlewares/TokenSqed";
 
 const routes = Router();
 
@@ -66,6 +68,9 @@ routes.delete(
   AvisosController.delete
 );
 
+routes.get("/sqed/users", TokenSqedMiddleware, SqedController.getUsers);
+routes.put("/sqed/users", TokenSqedMiddleware, SqedController.updateUsers);
+routes.delete("/sqed/users", TokenSqedMiddleware, SqedController.deleteUsers);
 routes.post("/webhook/autentique", WebhookAutentiqueController.assinado);
 routes.post("/webhook/jenkins", WebhookGitHubController.webhook);
 routes.get("/credenciais", CredenciaisController.get);
