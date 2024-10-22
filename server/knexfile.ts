@@ -133,6 +133,24 @@ const configMssqlLogs: Knex.Config = {
   },
 };
 
+const configMssqlProtheus: Knex.Config = {
+  client: "mssql",
+  connection: {
+    user: process.env.DB_MSSQL_PROTHEUS_USERNAME,
+    password: process.env.DB_MSSQL_PROTHEUS_PASSWORD,
+    server: process.env.DB_MSSQL_PROTHEUS_HOST,
+    database: process.env.DB_MSSQL_PROTHEUS_DATABASE,
+    debug: true,
+    connectTimeout: 90000,
+    ssl: { rejectUnauthorized: false },
+    options: {
+      encrypt: true,
+      enableArithAbort: true,
+      trustServerCertificate: true,
+    },
+  },
+};
+
 export default {
   configMssql,
   configOracle,
@@ -141,4 +159,5 @@ export default {
   configMssqlPPOView,
   configMssqlAutentique,
   configMssqlLogs,
+  configMssqlProtheus,
 };
