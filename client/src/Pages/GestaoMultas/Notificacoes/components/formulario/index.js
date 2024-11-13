@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Row, Col, FloatingLabel } from "react-bootstrap";
 import { FaDownload, FaExclamationTriangle } from "react-icons/fa";
+import PaginatedTableInfratores from "../Infratores";
 
 function FormularioNotificacao({ formik }) {
 	return (
@@ -298,6 +299,10 @@ function FormularioNotificacao({ formik }) {
 					</FloatingLabel>
 				</Col>
 			</Row>
+
+			<PaginatedTableInfratores
+				data={formik.values?.infratores || []}
+			></PaginatedTableInfratores>
 		</div>
 	);
 }

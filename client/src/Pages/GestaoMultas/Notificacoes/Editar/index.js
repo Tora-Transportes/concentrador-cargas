@@ -58,6 +58,7 @@ function NotificacoesEditar() {
 			cod_usu_create: "",
 			updated_at: "",
 			cod_usu_update: "",
+			infratores: null,
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -67,7 +68,7 @@ function NotificacoesEditar() {
 					cod_user: String(getClaims().name),
 				});
 				swal("Sucesso!", `A empresa ${data.id} foi atualizada!`, "success");
-				await carregarEmpresa();
+				await carregarNotificacao();
 				setLoading(false);
 			} catch (error) {
 				console.log(error);
@@ -97,17 +98,22 @@ function NotificacoesEditar() {
 		}
 	}
 
-	async function carregarEmpresa() {
+	async function carregarNotificacao() {
 		try {
-			const carga = (await ServiceGMNotificacoes.index(id)).data;
-			for (let i in carga) {
-				let nonNullValue = carga[i] === null ? "" : carga[i];
+			let notificacao = (await ServiceGMNotificacoes.index(id)).data;
+			const infratores = notificacao.infratores;
+			notificacao = notificacao.notificacao;
+			formik.setFieldValue("infratores", infratores);
+			for (let i in notificacao) {
+				let nonNullValue = notificacao[i] === null ? "" : notificacao[i];
 				if (i.indexOf("created_at") !== -1 || i.indexOf("updated_at") !== -1) {
 					formik.setFieldValue(i, formatDateAtual(nonNullValue));
 				} else {
 					formik.setFieldValue(i, nonNullValue);
 				}
 			}
+
+			console.log(formik.values);
 		} catch (error) {
 			console.log(error);
 			history.push("");
@@ -117,7 +123,7 @@ function NotificacoesEditar() {
 		let isMounted = true;
 		setLoading(true);
 
-		carregarEmpresa().finally(() => {
+		carregarNotificacao().finally(() => {
 			if (isMounted) {
 				setLoading(false);
 			}
