@@ -7,6 +7,14 @@ class ServiceGMNotificacoes {
 	async index(ait) {
 		return await api.get(`/gestao-multas/notificacoes/${ait}`);
 	}
+
+	async indicarInfrator(values) {
+		return api.post("/gestao-multas/notificacoes/infrator", values);
+	}
+
+	async excluirInfrator(values) {
+		return api.post(`/gestao-multas/notificacoes/infrator:excluir`, values);
+	}
 }
 
 export default new ServiceGMNotificacoes();

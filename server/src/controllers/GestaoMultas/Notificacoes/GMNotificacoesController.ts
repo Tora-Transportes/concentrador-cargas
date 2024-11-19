@@ -5,6 +5,8 @@ import { Request, Response } from "express";
 interface IGMNotificacoesController {
   list(req: Request, res: Response): Promise<any>;
   index(req: Request, res: Response): Promise<any>;
+  indicarInfrator(req: Request, res: Response): Promise<any>;
+  excluirInfrator(req: Request, res: Response): Promise<any>;
 }
 
 class GMNotificacoesController implements IGMNotificacoesController {
@@ -12,6 +14,8 @@ class GMNotificacoesController implements IGMNotificacoesController {
     this.handleError = this.handleError.bind(this);
     this.list = this.list.bind(this);
     this.index = this.index.bind(this);
+    this.indicarInfrator = this.indicarInfrator.bind(this);
+    this.excluirInfrator = this.excluirInfrator.bind(this);
   }
 
   private handleError(error: any, res: Response) {
@@ -27,6 +31,32 @@ class GMNotificacoesController implements IGMNotificacoesController {
       message: "Erro interno no servidor.",
       details: error.message || {},
     });
+  }
+
+  async indicarInfrator(req: Request, res: Response): Promise<any> {
+    try {
+      const response = await axios.post(
+        `${String(process.env.URL_GESTAO_MULTAS)}/infrator`,
+        req.body
+      );
+      const { data, status } = response;
+      return res.status(status).json(data);
+    } catch (error) {
+      return this.handleError(error, res);
+    }
+  }
+
+  async excluirInfrator(req: Request, res: Response): Promise<any> {
+    try {
+      const response = await axios.post(
+        `${String(process.env.URL_GESTAO_MULTAS)}/infrator/excluir`,
+        req.body
+      );
+      const { data, status } = response;
+      return res.status(status).json(data);
+    } catch (error) {
+      return this.handleError(error, res);
+    }
   }
 
   async list(req: Request, res: Response): Promise<any> {

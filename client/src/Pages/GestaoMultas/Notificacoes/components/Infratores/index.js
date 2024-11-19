@@ -15,6 +15,7 @@ import { FaStar } from "react-icons/fa";
 import { MdModeOfTravel } from "react-icons/md";
 import { FaTruckArrowRight } from "react-icons/fa6";
 import { IoIosHelpCircle } from "react-icons/io";
+import { BsAppIndicator } from "react-icons/bs";
 import swal from "sweetalert";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "react-bootstrap";
@@ -25,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	rowHighlighted: {
 		backgroundColor: theme.palette.action.hover,
+	},
+	infrator: {
+		backgroundColor: "#6ef5a4",
 	},
 	iconHighlight: {
 		color: theme.palette.warning.main,
@@ -41,7 +45,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function PaginatedTableInfratores({ data }) {
+export default function PaginatedTableInfratores({
+	data,
+	notificacao,
+	indicarCondutor,
+}) {
 	const classes = useStyles();
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -55,6 +63,10 @@ export default function PaginatedTableInfratores({ data }) {
 		setPage(0);
 	};
 
+	async function indicaInfrator(infrator) {
+		await indicarCondutor({ infrator: infrator, notificacao: notificacao });
+	}
+
 	const slicedData = data.slice(
 		page * rowsPerPage,
 		page * rowsPerPage + rowsPerPage
@@ -66,9 +78,15 @@ export default function PaginatedTableInfratores({ data }) {
 				<Table className={classes.table} stickyHeader>
 					<TableHead>
 						<TableRow>
+							{!notificacao.existeInfrator ? (
+								<TableCell className={classes.tableHead}>Indicar</TableCell>
+							) : (
+								<></>
+							)}
 							<TableCell className={classes.tableHead}>Viagem</TableCell>
 							<TableCell className={classes.tableHead}>Veículo</TableCell>
 							<TableCell className={classes.tableHead}>Nome</TableCell>
+							<TableCell className={classes.tableHead}>Categoria</TableCell>
 							<TableCell className={classes.tableHead}>Data Infração</TableCell>
 							<TableCell className={classes.tableHead}>Data Emissao</TableCell>
 							<TableCell className={classes.tableHead}>Data Previsão</TableCell>
@@ -82,9 +100,46 @@ export default function PaginatedTableInfratores({ data }) {
 							<TableRow
 								key={row.id}
 								className={
-									row.possivel_sugestao_infrator ? classes.rowHighlighted : ""
+									row.infrator == 1
+										? classes.infrator
+										: row.possivel_sugestao_infrator
+										? classes.rowHighlighted
+										: ""
 								}
 							>
+								{!notificacao.existeInfrator ? (
+									<TableCell>
+										<Button
+											variant="text"
+											onClick={async (e) => {
+												e.preventDefault();
+												const resultOk = await swal(
+													`Certeza que deseja indicar o infrator ${row.nome}?`,
+													{
+														dangerMode: true,
+														buttons: ["Cancelar", true],
+														icon: "warning",
+													}
+												);
+												if (resultOk) {
+													indicaInfrator(row);
+												}
+											}}
+											style={{
+												color: "black",
+												border: "none",
+												padding: 0,
+												backgroundColor: "transparent",
+												boxShadow: "none",
+											}}
+										>
+											<BsAppIndicator size={25} className="icon-info" />
+										</Button>
+									</TableCell>
+								) : (
+									<></>
+								)}
+
 								<TableCell>
 									{" "}
 									<Button
@@ -135,7 +190,7 @@ export default function PaginatedTableInfratores({ data }) {
 										<IoIosHelpCircle size={25} className="icon-info" />
 									</Button>
 								</TableCell>
-
+								<TableCell>{row.categoria_motorista}</TableCell>
 								<TableCell>
 									{new Date(row.data_infracao).toLocaleDateString()}
 								</TableCell>
