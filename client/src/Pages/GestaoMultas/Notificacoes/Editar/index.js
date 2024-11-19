@@ -11,6 +11,7 @@ import "./style.css";
 import FormularioNotificacao from "../components/formulario";
 import ServiceGMNotificacoes from "src/services/GestaoMultas/ServiceNotificacoes";
 import { formatDateAtual } from "src/Pages/Utils/formatDate";
+import BtnRefresh from "../components/btnAtualizar";
 
 function NotificacoesEditar() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -272,7 +273,14 @@ function NotificacoesEditar() {
 			<Menusuperior />
 			<LoadingScreen />
 			<Container className="mb-5 mt-5">
-				<p id="style-title-editorCarga">Notificação</p>
+				<BtnRefresh
+					callback={() => {
+						setTimeout(() => {}, 3000);
+					}}
+					params={{}}
+					textoHeader={"Notificação"}
+					texto={"Forçar Atualização"}
+				></BtnRefresh>
 				<hr />
 				<Form onSubmit={formik.handleSubmit}>
 					<FormularioNotificacao

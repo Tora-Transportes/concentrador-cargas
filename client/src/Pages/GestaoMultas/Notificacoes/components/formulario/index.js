@@ -4,6 +4,7 @@ import { FaDownload, FaExclamationTriangle } from "react-icons/fa";
 import PaginatedTableInfratores from "../Infratores";
 import { FaRegTrashAlt } from "react-icons/fa";
 import swal from "sweetalert";
+import BtnRefresh from "../btnAtualizar";
 
 function FormularioNotificacao({ formik, indicarCondutor, excluirCondutor }) {
 	async function removerCondutor(condutor) {
@@ -364,7 +365,15 @@ function FormularioNotificacao({ formik, indicarCondutor, excluirCondutor }) {
 				</Col>
 			</Row>
 			<Row style={{ marginTop: "40px" }}>
-				<h4>Infratores</h4>
+				<BtnRefresh
+					callback={() => {
+						setTimeout(() => {}, 3000);
+					}}
+					params={{}}
+					textoHeader={"Infratores"}
+					texto={"Atualizar Infratores"}
+					titulo={false}
+				></BtnRefresh>
 				<hr />
 				<PaginatedTableInfratores
 					data={formik.values?.infratores || []}
@@ -374,7 +383,15 @@ function FormularioNotificacao({ formik, indicarCondutor, excluirCondutor }) {
 			</Row>
 			{/* Seção para os dados de Status */}
 			<Row style={{ marginTop: "40px" }}>
-				<h4>Status - SMARTEC</h4>
+				<BtnRefresh
+					callback={() => {
+						setTimeout(() => {}, 3000);
+					}}
+					params={{}}
+					textoHeader={"Status - SMARTEC"}
+					texto={"Forçar Atualização Status"}
+					titulo={false}
+				></BtnRefresh>
 				<hr />
 				<Col>
 					<FloatingLabel label="ID Status" className="mb-3">
