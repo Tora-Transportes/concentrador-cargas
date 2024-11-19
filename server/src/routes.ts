@@ -418,6 +418,14 @@ routes.get(
 
 routes.get("/gestao-multas/notificacoes", GMNotificacoesController.list);
 routes.get("/gestao-multas/notificacoes/:ait", GMNotificacoesController.index);
+routes.post(
+  "/gestao-multas/notificacoes/infrator",
+  GMNotificacoesController.indicarInfrator
+);
+routes.post(
+  "/gestao-multas/notificacoes/infrator:excluir",
+  GMNotificacoesController.excluirInfrator
+);
 
 routes.get("/gestao-multas/multas", GMMultasController.list);
 routes.get("/gestao-multas/multas/:ait", GMMultasController.index);
