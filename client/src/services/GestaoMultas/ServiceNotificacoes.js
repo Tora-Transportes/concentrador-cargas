@@ -15,6 +15,10 @@ class ServiceGMNotificacoes {
 	async excluirInfrator(values) {
 		return api.post(`/gestao-multas/notificacoes/infrator:excluir`, values);
 	}
+
+	async regerarInfratores(values) {
+		return api.post(`/gestao-multas/notificacoes/infrator/regerar`, values);
+	}
 }
 
 export default new ServiceGMNotificacoes();

@@ -7,6 +7,7 @@ interface IGMNotificacoesController {
   index(req: Request, res: Response): Promise<any>;
   indicarInfrator(req: Request, res: Response): Promise<any>;
   excluirInfrator(req: Request, res: Response): Promise<any>;
+  regerarInfratores(req: Request, res: Response): Promise<any>;
 }
 
 class GMNotificacoesController implements IGMNotificacoesController {
@@ -16,6 +17,7 @@ class GMNotificacoesController implements IGMNotificacoesController {
     this.index = this.index.bind(this);
     this.indicarInfrator = this.indicarInfrator.bind(this);
     this.excluirInfrator = this.excluirInfrator.bind(this);
+    this.regerarInfratores = this.regerarInfratores.bind(this);
   }
 
   private handleError(error: any, res: Response) {
@@ -50,6 +52,19 @@ class GMNotificacoesController implements IGMNotificacoesController {
     try {
       const response = await axios.post(
         `${String(process.env.URL_GESTAO_MULTAS)}/infrator/excluir`,
+        req.body
+      );
+      const { data, status } = response;
+      return res.status(status).json(data);
+    } catch (error) {
+      return this.handleError(error, res);
+    }
+  }
+
+  async regerarInfratores(req: Request, res: Response): Promise<any> {
+    try {
+      const response = await axios.post(
+        `${String(process.env.URL_GESTAO_MULTAS)}/viagem/infratores:regerar`,
         req.body
       );
       const { data, status } = response;
