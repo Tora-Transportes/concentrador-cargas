@@ -11,6 +11,7 @@ function FormularioNotificacao({
 	indicarCondutor,
 	excluirCondutor,
 	regerarInfratores,
+	atualizarNotificacao,
 }) {
 	async function removerCondutor(condutor) {
 		excluirCondutor(condutor);
@@ -387,10 +388,8 @@ function FormularioNotificacao({
 			{/* Seção para os dados de Status */}
 			<Row style={{ marginTop: "40px" }}>
 				<BtnRefresh
-					callback={() => {
-						setTimeout(() => {}, 3000);
-					}}
-					params={{}}
+					callback={atualizarNotificacao}
+					params={formik.values.ait}
 					textoHeader={"Status - SMARTEC"}
 					texto={"Forçar Atualização Status"}
 					titulo={false}

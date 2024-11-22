@@ -418,6 +418,10 @@ routes.get(
 
 routes.get("/gestao-multas/notificacoes", GMNotificacoesController.list);
 routes.get("/gestao-multas/notificacoes/:ait", GMNotificacoesController.index);
+routes.get(
+  "/gestao-multas/smartec/notificacoes/:ait",
+  GMNotificacoesController.atualizar
+);
 routes.post(
   "/gestao-multas/notificacoes/infrator",
   GMNotificacoesController.indicarInfrator

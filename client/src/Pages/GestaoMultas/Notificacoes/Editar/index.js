@@ -287,16 +287,38 @@ function NotificacoesEditar() {
 		}
 	}
 
+	async function atualizarNotificacao(ait) {
+		try {
+			setLoading(true);
+			await ServiceGMNotificacoes.atualizar(ait);
+
+			await refreshPage();
+
+			await swal(
+				"Sucesso!",
+				"Notificação/Status atualizadados com sucesso",
+				"success"
+			);
+		} catch (error) {
+			console.error("Erro ao atualizar Notificação/Status :", error);
+			await swal(
+				"Erro!",
+				"Houve um problema ao atualizar  Notificação/Status",
+				"error"
+			);
+		} finally {
+			setLoading(false);
+		}
+	}
+
 	return (
 		<>
 			<Menusuperior />
 			<LoadingScreen />
 			<Container className="mb-5 mt-5">
 				<BtnRefresh
-					callback={() => {
-						setTimeout(() => {}, 3000);
-					}}
-					params={{}}
+					callback={atualizarNotificacao}
+					params={formik.values.ait}
 					textoHeader={"Notificação"}
 					texto={"Forçar Atualização"}
 				></BtnRefresh>
@@ -307,6 +329,7 @@ function NotificacoesEditar() {
 						indicarCondutor={indicarCondutor}
 						excluirCondutor={excluirCondutor}
 						regerarInfratores={regerarInfratores}
+						atualizarNotificacao={atualizarNotificacao}
 					></FormularioNotificacao>
 					<div className="class-group-button">
 						<Button
