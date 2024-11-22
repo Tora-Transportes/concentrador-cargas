@@ -177,7 +177,7 @@ export default function PaginatedTableInfratores({
 										variant="text"
 										onClick={(e) => {
 											e.preventDefault();
-											swal(`CPF : ${row.cpf} `);
+											swal(`CPF : ${row.cpf}  \n CNH : ${row.cnh}`);
 										}}
 										style={{
 											color: "black",
