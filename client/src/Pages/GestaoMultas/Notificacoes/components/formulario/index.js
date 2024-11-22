@@ -6,7 +6,12 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import swal from "sweetalert";
 import BtnRefresh from "../btnAtualizar";
 
-function FormularioNotificacao({ formik, indicarCondutor, excluirCondutor }) {
+function FormularioNotificacao({
+	formik,
+	indicarCondutor,
+	excluirCondutor,
+	regerarInfratores,
+}) {
 	async function removerCondutor(condutor) {
 		excluirCondutor(condutor);
 	}
@@ -366,10 +371,8 @@ function FormularioNotificacao({ formik, indicarCondutor, excluirCondutor }) {
 			</Row>
 			<Row style={{ marginTop: "40px" }}>
 				<BtnRefresh
-					callback={() => {
-						setTimeout(() => {}, 3000);
-					}}
-					params={{}}
+					callback={regerarInfratores}
+					params={formik.values}
 					textoHeader={"Infratores"}
 					texto={"Atualizar Infratores"}
 					titulo={false}

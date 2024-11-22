@@ -426,6 +426,10 @@ routes.post(
   "/gestao-multas/notificacoes/infrator:excluir",
   GMNotificacoesController.excluirInfrator
 );
+routes.post(
+  "/gestao-multas/notificacoes/infrator/regerar",
+  GMNotificacoesController.regerarInfratores
+);
 
 routes.get("/gestao-multas/multas", GMMultasController.list);
 routes.get("/gestao-multas/multas/:ait", GMMultasController.index);

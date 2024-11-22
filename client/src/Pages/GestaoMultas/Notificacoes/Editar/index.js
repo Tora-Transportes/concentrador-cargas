@@ -5,7 +5,6 @@ import { useFormik } from "formik";
 import useLoadingScreen from "../../../Components/LoadingScreen";
 import swal from "sweetalert";
 import { getClaims } from "../../../../MicrosoftAuthentication";
-
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import "./style.css";
 import FormularioNotificacao from "../components/formulario";
@@ -268,6 +267,26 @@ function NotificacoesEditar() {
 		}
 	}
 
+	async function regerarInfratores(notificacao) {
+		try {
+			setLoading(true);
+			await ServiceGMNotificacoes.regerarInfratores({
+				ait: notificacao.ait,
+				placa: notificacao.placa,
+				data_infracao: notificacao.data_infracao,
+			});
+
+			await refreshPage();
+
+			await swal("Sucesso!", "Infratores atualizados com sucesso", "success");
+		} catch (error) {
+			console.error("Erro ao atualizar infratores:", error);
+			await swal("Erro!", "Houve um problema ao atualizar infratores", "error");
+		} finally {
+			setLoading(false);
+		}
+	}
+
 	return (
 		<>
 			<Menusuperior />
@@ -287,6 +306,7 @@ function NotificacoesEditar() {
 						formik={formik}
 						indicarCondutor={indicarCondutor}
 						excluirCondutor={excluirCondutor}
+						regerarInfratores={regerarInfratores}
 					></FormularioNotificacao>
 					<div className="class-group-button">
 						<Button
