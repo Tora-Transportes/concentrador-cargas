@@ -8,6 +8,10 @@ class ServiceGMNotificacoes {
 		return await api.get(`/gestao-multas/notificacoes/${ait}`);
 	}
 
+	async atualizar(ait) {
+		return await api.get(`/gestao-multas/smartec/notificacoes/${ait}`);
+	}
+
 	async indicarInfrator(values) {
 		return api.post("/gestao-multas/notificacoes/infrator", values);
 	}
