@@ -1,8 +1,9 @@
 import React from "react";
 import { BsInfoCircle, BsPencilSquare } from "react-icons/bs";
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import swal from "sweetalert";
 import { FaFileDownload } from "react-icons/fa";
+import Chip from "@material-ui/core/Chip";
 
 export const getColumns = () => {
 	const columnsRelatorio = [
@@ -20,6 +21,50 @@ export const getColumns = () => {
 					<BsPencilSquare style={{ color: "#00652E" }} size={18} />
 				</Button>
 			),
+		},
+		{
+			name: "status_interno",
+			description: "Status Interno",
+			selector: (row) => (
+				<>
+					<Chip
+						label={
+							row.status_interno ? row.status_interno.status : "INDEFINIDO"
+						}
+						color="primary"
+					></Chip>
+				</>
+			),
+			Filter: (props) => (
+				<Form.Select {...props}>
+					<option></option>
+					<option value="CADASTRADO"> CADASTRADO </option>
+					<option value="MOTORISTA IDENTIFICADO">MOTORISTA IDENTIFICADO</option>
+					<option value="AGUARDANDO ASSINATURA">AGUARDANDO ASSINATURA</option>
+					<option value="TERMO DE IDENTIFICAÇÃO ASSINADO">
+						TERMO DE IDENTIFICAÇÃO ASSINADO
+					</option>
+					<option value="TERMO DE DESCONTO ASSINADO">
+						TERMO DE DESCONTO ASSINADO
+					</option>
+					<option value="DESC LANÇADO SIT">DESC LANÇADO SIT</option>
+					<option value="DESC LANÇADO FOLHA">DESC LANÇADO FOLHA</option>
+					<option value="AG BOLETO">AG BOLETO</option>
+					<option value="AG GERAR FINANCEIRO">AG GERAR FINANCEIRO</option>
+					<option value="CONCLUÍDO">CONCLUÍDO</option>
+					<option value="RECORRIDO">RECORRIDO</option>
+					<option value="RESPONS EMPRESA">RESPONS EMPRESA</option>
+					<option value="VINCULADO NIC">VINCULADO NIC</option>
+					<option value="ANULADO">ANULADO</option>
+				</Form.Select>
+			),
+			showFilter: true,
+		},
+		{
+			name: "status_smartec",
+			description: "Status Smartec",
+			selector: (row) => row.status_smartec.status,
+			showFilter: false,
 		},
 		{
 			name: "empresa",

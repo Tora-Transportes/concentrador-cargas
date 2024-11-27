@@ -12,6 +12,7 @@ function FormularioNotificacao({
 	excluirCondutor,
 	regerarInfratores,
 	atualizarNotificacao,
+	atualizarStatus,
 }) {
 	async function removerCondutor(condutor) {
 		excluirCondutor(condutor);
@@ -44,6 +45,47 @@ function FormularioNotificacao({
 							value={formik.values.empresa?.nome || ""}
 							disabled
 						/>
+					</FloatingLabel>
+				</Col>
+				<Col>
+					<FloatingLabel label="Status" className="mb-3">
+						<Form.Select
+							id="statusInterno.status"
+							name="statusInterno.status"
+							value={formik.values.statusInterno?.status || ""}
+							onChange={async (e) => {
+								const selectedStatus = e.target.value;
+								formik.setFieldValue("statusInterno.status", selectedStatus);
+								if (selectedStatus) {
+									await atualizarStatus(selectedStatus);
+								}
+							}}
+							onBlur={formik.handleBlur}
+						>
+							<option value="">Selecione o status</option>
+							<option value="CADASTRADO">CADASTRADO</option>
+							<option value="MOTORISTA IDENTIFICADO">
+								MOTORISTA IDENTIFICADO
+							</option>
+							<option value="AGUARDANDO ASSINATURA">
+								AGUARDANDO ASSINATURA
+							</option>
+							<option value="TERMO DE IDENTIFICAÇÃO ASSINADO">
+								TERMO DE IDENTIFICAÇÃO ASSINADO
+							</option>
+							<option value="TERMO DE DESCONTO ASSINADO">
+								TERMO DE DESCONTO ASSINADO
+							</option>
+							<option value="DESC LANÇADO SIT">DESC LANÇADO SIT</option>
+							<option value="DESC LANÇADO FOLHA">DESC LANÇADO FOLHA</option>
+							<option value="AG BOLETO">AG BOLETO</option>
+							<option value="AG GERAR FINANCEIRO">AG GERAR FINANCEIRO</option>
+							<option value="CONCLUÍDO">CONCLUÍDO</option>
+							<option value="RECORRIDO">RECORRIDO</option>
+							<option value="RESPONS EMPRESA">RESPONS EMPRESA</option>
+							<option value="VINCULADO NIC">VINCULADO NIC</option>
+							<option value="ANULADO">ANULADO</option>
+						</Form.Select>
 					</FloatingLabel>
 				</Col>
 			</Row>

@@ -94,6 +94,28 @@ function NotificacoesEditar() {
 					cod_usu_create: "",
 				},
 			],
+
+			statusInterno: [
+				{
+					id: "",
+					ait: "",
+					status: "",
+					created_at: "",
+					cod_usu_create: "",
+					updated_at: "",
+					cod_usu_update: "",
+				},
+			],
+
+			statusInternoHistorico: [
+				{
+					id: "",
+					ait: "",
+					status: "",
+					created_at: "",
+					cod_usu_create: "",
+				},
+			],
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -185,6 +207,29 @@ function NotificacoesEditar() {
 				}
 			});
 
+			const statusInterno = notificacaoResponse.statusInterno;
+
+			formik.setFieldValue(`statusInterno`, statusInterno);
+
+			const statusInternoHistorico =
+				notificacaoResponse.statusInternoHistorico || [];
+			statusInternoHistorico.forEach((item, index) => {
+				for (let i in item) {
+					let nonNullValue = item[i] === null ? "" : item[i];
+					if (i === "created_at") {
+						formik.setFieldValue(
+							`statusInternoHistorico[${index}].${i}`,
+							formatDateAtual(nonNullValue)
+						);
+					} else {
+						formik.setFieldValue(
+							`statusInternoHistorico[${index}].${i}`,
+							nonNullValue
+						);
+					}
+				}
+			});
+
 			console.log(formik.values);
 		} catch (error) {
 			console.log(error);
@@ -241,6 +286,27 @@ function NotificacoesEditar() {
 		} catch (error) {
 			console.error("Erro ao indicar condutor:", error);
 			await swal("Erro!", "Houve um problema ao indicar o infrator", "error");
+		} finally {
+			setLoading(false);
+		}
+	}
+
+	async function atualizarStatus(status) {
+		try {
+			setLoading(true);
+
+			await ServiceGMNotificacoes.atualizarStatus({
+				ait: formik.values.ait,
+				status: status,
+				cod_usu_update: String(getClaims().name),
+			});
+
+			await refreshPage();
+
+			await swal("Sucesso!", "Status Atualizado com sucesso", "success");
+		} catch (error) {
+			console.error("Erro ao atualizar status:", error);
+			await swal("Erro!", "Houve um problema ao atualizar status", "error");
 		} finally {
 			setLoading(false);
 		}
@@ -319,7 +385,7 @@ function NotificacoesEditar() {
 				<BtnRefresh
 					callback={atualizarNotificacao}
 					params={formik.values.ait}
-					textoHeader={"Notificação"}
+					textoHeader={`Notificação`}
 					texto={"Forçar Atualização"}
 				></BtnRefresh>
 				<hr />
@@ -330,6 +396,7 @@ function NotificacoesEditar() {
 						excluirCondutor={excluirCondutor}
 						regerarInfratores={regerarInfratores}
 						atualizarNotificacao={atualizarNotificacao}
+						atualizarStatus={atualizarStatus}
 					></FormularioNotificacao>
 					<div className="class-group-button">
 						<Button

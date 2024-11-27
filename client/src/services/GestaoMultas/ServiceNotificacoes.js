@@ -23,6 +23,10 @@ class ServiceGMNotificacoes {
 	async regerarInfratores(values) {
 		return api.post(`/gestao-multas/notificacoes/infrator/regerar`, values);
 	}
+
+	async atualizarStatus(values) {
+		return api.post(`/gestao-multas/notificacoes/status`, values);
+	}
 }
 
 export default new ServiceGMNotificacoes();
