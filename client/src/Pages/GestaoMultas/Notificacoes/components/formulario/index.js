@@ -600,6 +600,31 @@ function FormularioNotificacao({
 					</tbody>
 				</Table>
 			</Row>
+
+			<Row style={{ marginTop: "40px" }}>
+				<h4>Status Histórico - INTERNO</h4>
+				<hr />
+				<Table striped bordered hover>
+					<thead>
+						<tr>
+							<th>AIT</th>
+							<th>Status</th>
+							<th>Hora</th>
+							<th>Usuário</th>
+						</tr>
+					</thead>
+					<tbody>
+						{formik.values.statusInternoHistorico.map((historico, index) => (
+							<tr key={index}>
+								<td>{historico.ait}</td>
+								<td>{historico.status}</td>
+								<td>{historico.created_at}</td>
+								<td>{historico.cod_usu_create}</td>
+							</tr>
+						))}
+					</tbody>
+				</Table>
+			</Row>
 		</div>
 	);
 }
