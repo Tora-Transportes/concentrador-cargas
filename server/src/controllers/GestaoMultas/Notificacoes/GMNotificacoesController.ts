@@ -9,6 +9,7 @@ interface IGMNotificacoesController {
   excluirInfrator(req: Request, res: Response): Promise<any>;
   regerarInfratores(req: Request, res: Response): Promise<any>;
   atualizar(req: Request, res: Response): Promise<any>;
+  atualizarStatus(req: Request, res: Response): Promise<any>;
 }
 
 class GMNotificacoesController implements IGMNotificacoesController {
@@ -20,6 +21,7 @@ class GMNotificacoesController implements IGMNotificacoesController {
     this.excluirInfrator = this.excluirInfrator.bind(this);
     this.regerarInfratores = this.regerarInfratores.bind(this);
     this.atualizar = this.atualizar.bind(this);
+    this.atualizarStatus = this.atualizarStatus.bind(this);
   }
 
   private handleError(error: any, res: Response) {
@@ -109,6 +111,19 @@ class GMNotificacoesController implements IGMNotificacoesController {
     try {
       const response = await axios.get(
         `${String(process.env.URL_GESTAO_MULTAS)}/smartec/notificacoes/${ait}`
+      );
+      const { data, status } = response;
+      return res.status(status).json(data);
+    } catch (error) {
+      return this.handleError(error, res);
+    }
+  }
+
+  async atualizarStatus(req: Request, res: Response): Promise<any> {
+    try {
+      const response = await axios.post(
+        `${String(process.env.URL_GESTAO_MULTAS)}/status-interno`,
+        req.body
       );
       const { data, status } = response;
       return res.status(status).json(data);
