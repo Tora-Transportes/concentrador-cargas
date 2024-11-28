@@ -436,6 +436,11 @@ routes.get(
   GMNotificacoesController.gerarFici
 );
 
+routes.post(
+  "/gestao-multas/notificacoes/boletos/gerar-solicitacao",
+  GMNotificacoesController.solicitarBoleto
+);
+
 routes.get("/gestao-multas/multas", GMMultasController.list);
 routes.get("/gestao-multas/multas/:ait", GMMultasController.index);
 

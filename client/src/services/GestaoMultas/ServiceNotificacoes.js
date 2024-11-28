@@ -37,6 +37,13 @@ class ServiceGMNotificacoes {
 			}
 		);
 	}
+
+	async solicitarBoleto(values) {
+		return api.post(
+			"/gestao-multas/notificacoes/boletos/gerar-solicitacao",
+			values
+		);
+	}
 }
 
 export default new ServiceGMNotificacoes();
