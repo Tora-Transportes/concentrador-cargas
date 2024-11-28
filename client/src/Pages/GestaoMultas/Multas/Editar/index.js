@@ -11,6 +11,7 @@ import "./style.css";
 import FormularioMulta from "../components/formulario";
 import ServiceGMMultas from "src/services/GestaoMultas/ServiceMultas";
 import { formatDateAtual } from "src/Pages/Utils/formatDate";
+import ServiceGMNotificacoes from "src/services/GestaoMultas/ServiceNotificacoes";
 
 function MultasEditar() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -187,6 +188,28 @@ function MultasEditar() {
 			});
 
 			formik.setFieldValue("observacao", multaResponse.observacao || "");
+
+			const statusInterno = multaResponse.statusInterno;
+
+			formik.setFieldValue(`statusInterno`, statusInterno);
+
+			const statusInternoHistorico = multaResponse.statusInternoHistorico || [];
+			statusInternoHistorico.forEach((item, index) => {
+				for (let i in item) {
+					let nonNullValue = item[i] === null ? "" : item[i];
+					if (i === "created_at") {
+						formik.setFieldValue(
+							`statusInternoHistorico[${index}].${i}`,
+							formatDateAtual(nonNullValue)
+						);
+					} else {
+						formik.setFieldValue(
+							`statusInternoHistorico[${index}].${i}`,
+							nonNullValue
+						);
+					}
+				}
+			});
 		} catch (error) {
 			console.error(error);
 			history.push("");
@@ -207,6 +230,43 @@ function MultasEditar() {
 		};
 	}, []);
 
+	async function refreshPage() {
+		let isMounted = true;
+		setLoading(true);
+		try {
+			await carregarMulta();
+		} finally {
+			if (isMounted) {
+				setLoading(false);
+			}
+		}
+
+		return () => {
+			isMounted = false;
+		};
+	}
+
+	async function atualizarStatus(status) {
+		try {
+			setLoading(true);
+
+			await ServiceGMNotificacoes.atualizarStatus({
+				ait: formik.values.multa.ait,
+				status: status,
+				cod_usu_update: String(getClaims().name),
+			});
+
+			await refreshPage();
+
+			await swal("Sucesso!", "Status Atualizado com sucesso", "success");
+		} catch (error) {
+			console.error("Erro ao atualizar status:", error);
+			await swal("Erro!", "Houve um problema ao atualizar status", "error");
+		} finally {
+			setLoading(false);
+		}
+	}
+
 	return (
 		<>
 			<LoadingScreen />
@@ -215,7 +275,10 @@ function MultasEditar() {
 				<p id="style-title-editorCarga">Multa</p>
 				<hr />
 				<Form onSubmit={formik.handleSubmit}>
-					<FormularioMulta formik={formik}></FormularioMulta>
+					<FormularioMulta
+						formik={formik}
+						atualizarStatus={atualizarStatus}
+					></FormularioMulta>
 					<div className="class-group-button">
 						<Button
 							variant="success"
