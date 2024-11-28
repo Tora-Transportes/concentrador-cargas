@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { FaSyncAlt } from "react-icons/fa";
-import { useMediaQuery } from "@mui/material";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const BtnRefresh = ({
 	textoHeader,
