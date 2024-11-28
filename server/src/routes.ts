@@ -440,6 +440,11 @@ routes.post(
   GMNotificacoesController.atualizarStatus
 );
 
+routes.get(
+  "/gestao-multas/notificacoes/infrator/gerar-formulario",
+  GMNotificacoesController.gerarFici
+);
+
 routes.get("/gestao-multas/multas", GMMultasController.list);
 routes.get("/gestao-multas/multas/:ait", GMMultasController.index);
 

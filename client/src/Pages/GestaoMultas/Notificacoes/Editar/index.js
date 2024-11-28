@@ -11,6 +11,9 @@ import FormularioNotificacao from "../components/formulario";
 import ServiceGMNotificacoes from "src/services/GestaoMultas/ServiceNotificacoes";
 import { formatDateAtual } from "src/Pages/Utils/formatDate";
 import BtnRefresh from "../components/btnAtualizar";
+import MultiButton from "../components/multiBtn";
+import { FaFileInvoiceDollar } from "react-icons/fa6";
+import { FaFileContract } from "react-icons/fa6";
 
 function NotificacoesEditar() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -377,6 +380,56 @@ function NotificacoesEditar() {
 		}
 	}
 
+	async function gerarFici() {
+		try {
+			setLoading(true);
+			const pdf = await ServiceGMNotificacoes.gerarFici({
+				empresa_id: formik.values.empresa_id,
+				ait: formik.values.ait,
+				codigo_orgao: formik.values.codigo_orgao,
+			});
+
+			console.log(pdf);
+
+			const pdfBlob = new Blob([pdf.data], { type: "application/pdf" });
+
+			const pdfUrl = URL.createObjectURL(pdfBlob);
+
+			const link = document.createElement("a");
+			link.href = pdfUrl;
+			link.download = `FICI-AIT-${formik.values.ait}`;
+
+			link.click();
+
+			URL.revokeObjectURL(pdfUrl);
+		} catch (error) {
+			console.error(error);
+		} finally {
+			setLoading(false);
+		}
+	}
+
+	async function gerarBoleto() {
+		await swal(
+			"Em desenvolvimento",
+			"Essa funcionalidade está em desenvolvimento",
+			"info"
+		);
+	}
+
+	const buttons = [
+		{
+			label: "Gerar FICI",
+			onClick: () => gerarFici(),
+			icon: <FaFileContract size={18} />,
+		},
+		{
+			label: "Gerar Boleto",
+			onClick: () => gerarBoleto(),
+			icon: <FaFileInvoiceDollar size={18} />,
+		},
+	];
+
 	return (
 		<>
 			<Menusuperior />
@@ -387,6 +440,7 @@ function NotificacoesEditar() {
 					params={formik.values.ait}
 					textoHeader={`Notificação`}
 					texto={"Forçar Atualização"}
+					multiButton={<MultiButton buttons={buttons} />}
 				></BtnRefresh>
 				<hr />
 				<Form onSubmit={formik.handleSubmit}>

@@ -10,6 +10,7 @@ interface IGMNotificacoesController {
   regerarInfratores(req: Request, res: Response): Promise<any>;
   atualizar(req: Request, res: Response): Promise<any>;
   atualizarStatus(req: Request, res: Response): Promise<any>;
+  gerarFici(req: Request, res: Response): Promise<any>;
 }
 
 class GMNotificacoesController implements IGMNotificacoesController {
@@ -22,13 +23,20 @@ class GMNotificacoesController implements IGMNotificacoesController {
     this.regerarInfratores = this.regerarInfratores.bind(this);
     this.atualizar = this.atualizar.bind(this);
     this.atualizarStatus = this.atualizarStatus.bind(this);
+    this.gerarFici = this.gerarFici.bind(this);
   }
 
   private handleError(error: any, res: Response) {
     if (axios.isAxiosError(error)) {
       const { response } = error;
       if (response) {
-        return res.status(response.status).json(response.data || {});
+        if (response.data instanceof Buffer) {
+          return res
+            .status(response.status)
+            .json(JSON.parse(response.data.toString("utf8")) || {});
+        } else {
+          return res.status(response.status).json(response.data || {});
+        }
       }
     }
 
@@ -73,6 +81,32 @@ class GMNotificacoesController implements IGMNotificacoesController {
       );
       const { data, status } = response;
       return res.status(status).json(data);
+    } catch (error) {
+      return this.handleError(error, res);
+    }
+  }
+
+  async gerarFici(req: Request, res: Response): Promise<any> {
+    try {
+      const response = await axios.get(
+        `${String(process.env.URL_GESTAO_MULTAS)}/infrator/gerar-formulario`,
+        {
+          params: req.query,
+          responseType: "arraybuffer",
+        }
+      );
+
+      const { data, status, headers } = response;
+      if (headers["content-type"] === "application/pdf") {
+        res.setHeader(
+          "Content-Disposition",
+          'attachment; filename="documento.pdf"'
+        );
+        res.setHeader("Content-Type", "application/pdf");
+        res.status(status).send(data);
+      } else {
+        return res.status(status).json(JSON.parse(data.toString("utf8")));
+      }
     } catch (error) {
       return this.handleError(error, res);
     }

@@ -27,6 +27,16 @@ class ServiceGMNotificacoes {
 	async atualizarStatus(values) {
 		return api.post(`/gestao-multas/notificacoes/status`, values);
 	}
+
+	async gerarFici(query) {
+		return await api.get(
+			"/gestao-multas/notificacoes/infrator/gerar-formulario",
+			{
+				params: query,
+				responseType: "arraybuffer",
+			}
+		);
+	}
 }
 
 export default new ServiceGMNotificacoes();

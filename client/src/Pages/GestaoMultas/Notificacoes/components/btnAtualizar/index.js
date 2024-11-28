@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { FaSyncAlt } from "react-icons/fa";
+import { useMediaQuery } from "@mui/material";
 
 const BtnRefresh = ({
 	textoHeader,
@@ -8,8 +9,11 @@ const BtnRefresh = ({
 	params,
 	texto,
 	titulo = true,
+	multiButton = <></>,
 }) => {
 	const [isRotating, setIsRotating] = useState(false);
+
+	const isMobile = useMediaQuery("(max-width:800px)");
 
 	async function callbackFuction() {
 		setIsRotating(true);
@@ -21,7 +25,7 @@ const BtnRefresh = ({
 		<div
 			style={{
 				display: "flex",
-				flexDirection: "row",
+				flexDirection: isMobile ? "column" : "row",
 				justifyContent: "space-between",
 				alignItems: "center",
 			}}
@@ -34,25 +38,35 @@ const BtnRefresh = ({
 				</div>
 			)}
 
-			<Button
-				variant="outline-primary"
-				onClick={callbackFuction}
+			<div
 				style={{
 					display: "flex",
+					flexDirection: isMobile ? "column" : "row",
+					justifyContent: "space-between",
 					alignItems: "center",
-					gap: "0.5rem",
-					marginBottom: titulo ? "0px" : "20px",
 				}}
 			>
-				<FaSyncAlt
-					size={20}
+				{multiButton}
+				<Button
+					variant="outline-primary"
+					onClick={callbackFuction}
 					style={{
-						transition: "transform 0.5s ease-in-out",
-						transform: isRotating ? "rotate(360deg)" : "rotate(0deg)",
+						display: "flex",
+						alignItems: "center",
+						gap: "0.5rem",
+						marginBottom: titulo ? "0px" : "20px",
 					}}
-				/>
-				{texto}
-			</Button>
+				>
+					<FaSyncAlt
+						size={20}
+						style={{
+							transition: "transform 0.5s ease-in-out",
+							transform: isRotating ? "rotate(360deg)" : "rotate(0deg)",
+						}}
+					/>
+					{texto}
+				</Button>
+			</div>
 		</div>
 	);
 };
