@@ -11,6 +11,7 @@ interface IGMNotificacoesController {
   atualizar(req: Request, res: Response): Promise<any>;
   atualizarStatus(req: Request, res: Response): Promise<any>;
   gerarFici(req: Request, res: Response): Promise<any>;
+  solicitarBoleto(req: Request, res: Response): Promise<any>;
 }
 
 class GMNotificacoesController implements IGMNotificacoesController {
@@ -24,6 +25,7 @@ class GMNotificacoesController implements IGMNotificacoesController {
     this.atualizar = this.atualizar.bind(this);
     this.atualizarStatus = this.atualizarStatus.bind(this);
     this.gerarFici = this.gerarFici.bind(this);
+    this.solicitarBoleto = this.solicitarBoleto.bind(this);
   }
 
   private handleError(error: any, res: Response) {
@@ -157,6 +159,19 @@ class GMNotificacoesController implements IGMNotificacoesController {
     try {
       const response = await axios.post(
         `${String(process.env.URL_GESTAO_MULTAS)}/status-interno`,
+        req.body
+      );
+      const { data, status } = response;
+      return res.status(status).json(data);
+    } catch (error) {
+      return this.handleError(error, res);
+    }
+  }
+
+  async solicitarBoleto(req: Request, res: Response): Promise<any> {
+    try {
+      const response = await axios.post(
+        `${String(process.env.URL_GESTAO_MULTAS)}/boletos/gerar-solicitacao`,
         req.body
       );
       const { data, status } = response;

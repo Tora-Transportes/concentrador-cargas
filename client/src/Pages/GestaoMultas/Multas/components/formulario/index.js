@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Row, Col, FloatingLabel, Table } from "react-bootstrap";
 import { FaDownload, FaExclamationTriangle } from "react-icons/fa";
 
-function FormularioMulta({ formik }) {
+function FormularioMulta({ formik, atualizarStatus }) {
 	return (
 		<div className="class-body-form">
 			<Row>
@@ -31,6 +31,47 @@ function FormularioMulta({ formik }) {
 							value={formik.values.multa.empresa?.nome || ""}
 							disabled
 						/>
+					</FloatingLabel>
+				</Col>
+				<Col>
+					<FloatingLabel label="Status" className="mb-3">
+						<Form.Select
+							id="statusInterno.status"
+							name="statusInterno.status"
+							value={formik.values.statusInterno?.status || ""}
+							onChange={async (e) => {
+								const selectedStatus = e.target.value;
+								formik.setFieldValue("statusInterno.status", selectedStatus);
+								if (selectedStatus) {
+									await atualizarStatus(selectedStatus);
+								}
+							}}
+							onBlur={formik.handleBlur}
+						>
+							<option value="">Selecione o status</option>
+							<option value="CADASTRADO">CADASTRADO</option>
+							<option value="MOTORISTA IDENTIFICADO">
+								MOTORISTA IDENTIFICADO
+							</option>
+							<option value="AGUARDANDO ASSINATURA">
+								AGUARDANDO ASSINATURA
+							</option>
+							<option value="TERMO DE IDENTIFICAÇÃO ASSINADO">
+								TERMO DE IDENTIFICAÇÃO ASSINADO
+							</option>
+							<option value="TERMO DE DESCONTO ASSINADO">
+								TERMO DE DESCONTO ASSINADO
+							</option>
+							<option value="DESC LANÇADO SIT">DESC LANÇADO SIT</option>
+							<option value="DESC LANÇADO FOLHA">DESC LANÇADO FOLHA</option>
+							<option value="AG BOLETO">AG BOLETO</option>
+							<option value="AG GERAR FINANCEIRO">AG GERAR FINANCEIRO</option>
+							<option value="CONCLUÍDO">CONCLUÍDO</option>
+							<option value="RECORRIDO">RECORRIDO</option>
+							<option value="RESPONS EMPRESA">RESPONS EMPRESA</option>
+							<option value="VINCULADO NIC">VINCULADO NIC</option>
+							<option value="ANULADO">ANULADO</option>
+						</Form.Select>
 					</FloatingLabel>
 				</Col>
 			</Row>
@@ -474,6 +515,31 @@ function FormularioMulta({ formik }) {
 					</thead>
 					<tbody>
 						{formik.values.statusHistorico.map((historico, index) => (
+							<tr key={index}>
+								<td>{historico.ait}</td>
+								<td>{historico.status}</td>
+								<td>{historico.created_at}</td>
+								<td>{historico.cod_usu_create}</td>
+							</tr>
+						))}
+					</tbody>
+				</Table>
+			</Row>
+
+			<Row style={{ marginTop: "40px" }}>
+				<h4>Status Histórico - INTERNO</h4>
+				<hr />
+				<Table striped bordered hover>
+					<thead>
+						<tr>
+							<th>AIT</th>
+							<th>Status</th>
+							<th>Hora</th>
+							<th>Usuário</th>
+						</tr>
+					</thead>
+					<tbody>
+						{formik.values.statusInternoHistorico.map((historico, index) => (
 							<tr key={index}>
 								<td>{historico.ait}</td>
 								<td>{historico.status}</td>

@@ -232,8 +232,6 @@ function NotificacoesEditar() {
 					}
 				}
 			});
-
-			console.log(formik.values);
 		} catch (error) {
 			console.log(error);
 			history.push("");
@@ -410,11 +408,58 @@ function NotificacoesEditar() {
 	}
 
 	async function gerarBoleto() {
-		await swal(
-			"Em desenvolvimento",
-			"Essa funcionalidade está em desenvolvimento",
-			"info"
-		);
+		const result = await swal({
+			title: "Escolha o tipo de boleto",
+			text:
+				"Selecione uma das opções abaixo:\n\n" +
+				"✔ **40% de desconto**: Reconhecimento da infração.\n" +
+				"✔ **20% de desconto**: Sem reconhecimento da infração.\n\n" +
+				"ℹ **Observação**: Os boletos ficam disponíveis em até 72 horas de acordo com as especificações do SNE.",
+			icon: "info",
+			buttons: {
+				cancel: {
+					text: "Cancelar",
+					value: null,
+					visible: true,
+					className: "btn-secondary",
+					closeModal: true,
+				},
+				noDiscount: {
+					text: "20% desconto",
+					value: false,
+					visible: true,
+					className: "btn-danger",
+					closeModal: true,
+				},
+				confirm: {
+					text: "40% desconto",
+					value: true,
+					visible: true,
+					className: "btn-success",
+					closeModal: true,
+				},
+			},
+		});
+
+		if (result != null) {
+			try {
+				setLoading(true);
+				await ServiceGMNotificacoes.solicitarBoleto({
+					empresa_id: formik.values.empresa_id,
+					ait: formik.values.ait,
+					cod_infracao: formik.values.codigo_infracao,
+					reconhece_infracao: result ? true : false,
+				});
+
+				await refreshPage();
+
+				await swal("Sucesso!", "Solicitação efetuada com sucesso", "success");
+			} catch (error) {
+				console.error("Erro ao solicitar boleto :", error);
+			} finally {
+				setLoading(false);
+			}
+		}
 	}
 
 	const buttons = [
