@@ -27,23 +27,53 @@ api.interceptors.request.use(
 		return Promise.reject(error);
 	}
 );
+function arrayBufferToJson(arrayBuffer) {
+	// Step 1: Convert ArrayBuffer to a string (UTF-8 encoded)
+	const decoder = new TextDecoder("utf-8");
+	const decodedString = decoder.decode(arrayBuffer);
+
+	// Step 2: Parse the decoded string as JSON
+	try {
+		const jsonData = JSON.parse(decodedString);
+		console.log("Parsed JSON:", jsonData);
+		return jsonData;
+	} catch (error) {
+		console.error("Failed to parse JSON from ArrayBuffer:", error);
+		return null;
+	}
+}
 
 api.interceptors.response.use(
 	(response) => {
 		return response;
 	},
 	async (error) => {
-		const allErrors = error?.response?.data?.errors
-			?.map((i) => `❌${i}`)
-			?.join("\n");
-		const message =
-			error?.response?.data?.message ||
-			"Erro desconhecido verifique sua conexão com a rede";
-		await swal("Ops!", message, "error");
-		if (allErrors?.length > 0) {
-			swal("Detalhes", allErrors);
+		if (error?.response?.data instanceof ArrayBuffer) {
+			const jsonData = arrayBufferToJson(error?.response?.data);
+			const allErrors = error?.response?.data?.errors
+				?.map((i) => `❌${i}`)
+				?.join("\n");
+			const message =
+				jsonData.message ||
+				"Erro desconhecido verifique sua conexão com a rede";
+			await swal("Ops!", message, "error");
+			if (allErrors?.length > 0) {
+				swal("Detalhes", allErrors);
+			}
+			throw error;
+		} else {
+			const allErrors = error?.response?.data?.errors
+				?.map((i) => `❌${i}`)
+				?.join("\n");
+			const message =
+				error?.response?.data?.message ||
+				"Erro desconhecido verifique sua conexão com a rede";
+			await swal("Ops!", message, "error");
+			if (allErrors?.length > 0) {
+				swal("Detalhes", allErrors);
+			}
+			throw error;
 		}
-		throw error;
 	}
 );
 
