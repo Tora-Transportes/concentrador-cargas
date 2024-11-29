@@ -10,13 +10,23 @@ export const getColumns = () => {
 	const columnsRelatorio = [
 		{
 			name: "Status",
-			description: "Novo",
+			description: "Status do Registro",
 			selector: (row) => (
 				<span
 					className={
-						row.new == true ? "status-bubble pulsating" : "status-bubble static"
+						row.new === 1
+							? "status-bubble pulsating"
+							: row.new === 2
+							? "status-bubble pulsating-alert"
+							: "status-bubble static"
 					}
-					title={row.new ? "Novo Registro" : "Registro Antigo"}
+					title={
+						row.new === 1
+							? "Novo Registro"
+							: row.new === 2
+							? "Atualizações Recentes"
+							: "Registro Antigo"
+					}
 				/>
 			),
 			showFilter: false,
