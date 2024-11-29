@@ -4,9 +4,23 @@ import { Button, Form } from "react-bootstrap";
 import swal from "sweetalert";
 import { FaFileDownload } from "react-icons/fa";
 import Chip from "@material-ui/core/Chip";
+import "./style.css";
 
 export const getColumns = () => {
 	const columnsRelatorio = [
+		{
+			name: "Status",
+			description: "Novo",
+			selector: (row) => (
+				<span
+					className={
+						row.new == true ? "status-bubble pulsating" : "status-bubble static"
+					}
+					title={row.new ? "Novo Registro" : "Registro Antigo"}
+				/>
+			),
+			showFilter: false,
+		},
 		{
 			name: "editar",
 			description: "Editar",
@@ -67,6 +81,12 @@ export const getColumns = () => {
 			showFilter: false,
 		},
 		{
+			name: "ait",
+			description: "AIT",
+			selector: (row) => row.ait,
+			showFilter: true,
+		},
+		{
 			name: "empresa",
 			description: "Empresa",
 			selector: (row) => row.empresa.nome,
@@ -82,12 +102,6 @@ export const getColumns = () => {
 			name: "renavam",
 			description: "Renavam",
 			selector: (row) => row.renavam,
-			showFilter: true,
-		},
-		{
-			name: "ait",
-			description: "AIT",
-			selector: (row) => row.ait,
 			showFilter: true,
 		},
 		{

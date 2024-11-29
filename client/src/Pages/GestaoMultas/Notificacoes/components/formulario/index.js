@@ -589,7 +589,7 @@ function FormularioNotificacao({
 						</tr>
 					</thead>
 					<tbody>
-						{formik.values.statusHistorico.map((historico, index) => (
+						{formik.values?.statusHistorico?.map((historico, index) => (
 							<tr key={index}>
 								<td>{historico.ait}</td>
 								<td>{historico.status}</td>
@@ -614,7 +614,7 @@ function FormularioNotificacao({
 						</tr>
 					</thead>
 					<tbody>
-						{formik.values.statusInternoHistorico.map((historico, index) => (
+						{formik.values?.statusInternoHistorico?.map((historico, index) => (
 							<tr key={index}>
 								<td>{historico.ait}</td>
 								<td>{historico.status}</td>
