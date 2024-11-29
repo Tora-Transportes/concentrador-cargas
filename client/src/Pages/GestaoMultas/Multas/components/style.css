@@ -18,6 +18,13 @@
     animation: pulse 1.5s infinite ease-in-out;
 }
 
+/* Bolinha pulsante alerta*/
+.status-bubble.pulsating {
+    background-color: rgb(193, 210, 61);
+    box-shadow: 0 0 0 rgba(218, 183, 67, 0.607);
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
 /* Animação de pulsação */
 @keyframes pulse {
     0% {
