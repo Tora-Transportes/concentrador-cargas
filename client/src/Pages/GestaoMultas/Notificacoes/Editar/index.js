@@ -14,6 +14,7 @@ import BtnRefresh from "../components/btnAtualizar";
 import MultiButton from "../components/multiBtn";
 import { FaFileInvoiceDollar } from "react-icons/fa6";
 import { FaFileContract } from "react-icons/fa6";
+import { possuiPermissaoGestaoMultas } from "src/Pages/Utils/validationPermissionUser";
 
 function NotificacoesEditar() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -269,195 +270,220 @@ function NotificacoesEditar() {
 	}, []);
 
 	async function indicarCondutor(data) {
-		try {
-			setLoading(true);
-
-			await ServiceGMNotificacoes.indicarInfrator({
-				EMPRESA_ID: data.notificacao.empresa_id,
-				NOME: data.infrator.nome,
-				AIT: data.notificacao.ait,
-				CNH: data.infrator.cnh,
-				CODIGOORGAO: data.notificacao.codigo_orgao,
-				id_infrator: data.infrator.id.toString(),
-			});
-
-			await refreshPage();
-
-			await swal("Sucesso!", "Infrator indicado com sucesso", "success");
-		} catch (error) {
-			console.error("Erro ao indicar condutor:", error);
-			await swal("Erro!", "Houve um problema ao indicar o infrator", "error");
-		} finally {
-			setLoading(false);
-		}
-	}
-
-	async function atualizarStatus(status) {
-		try {
-			setLoading(true);
-
-			await ServiceGMNotificacoes.atualizarStatus({
-				ait: formik.values.ait,
-				status: status,
-				cod_usu_update: String(getClaims().name),
-			});
-
-			await refreshPage();
-
-			await swal("Sucesso!", "Status Atualizado com sucesso", "success");
-		} catch (error) {
-			console.error("Erro ao atualizar status:", error);
-			await swal("Erro!", "Houve um problema ao atualizar status", "error");
-		} finally {
-			setLoading(false);
-		}
-	}
-
-	async function excluirCondutor(notificacao) {
-		try {
-			setLoading(true);
-			console.log(notificacao);
-			await ServiceGMNotificacoes.excluirInfrator({
-				EMPRESA_ID: notificacao.empresa_id,
-				AIT: notificacao.ait,
-				CODIGOORGAO: notificacao.codigo_orgao,
-			});
-
-			await refreshPage();
-
-			await swal("Sucesso!", "Infrator excluído com sucesso", "success");
-		} catch (error) {
-			console.error("Erro ao excluir infrator:", error);
-			await swal("Erro!", "Houve um problema ao excluir o infrator", "error");
-		} finally {
-			setLoading(false);
-		}
-	}
-
-	async function regerarInfratores(notificacao) {
-		try {
-			setLoading(true);
-			await ServiceGMNotificacoes.regerarInfratores({
-				ait: notificacao.ait,
-				placa: notificacao.placa,
-				data_infracao: notificacao.data_infracao,
-			});
-
-			await refreshPage();
-
-			await swal("Sucesso!", "Infratores atualizados com sucesso", "success");
-		} catch (error) {
-			console.error("Erro ao atualizar infratores:", error);
-			await swal("Erro!", "Houve um problema ao atualizar infratores", "error");
-		} finally {
-			setLoading(false);
-		}
-	}
-
-	async function atualizarNotificacao(ait) {
-		try {
-			setLoading(true);
-			await ServiceGMNotificacoes.atualizar(ait);
-
-			await refreshPage();
-
-			await swal(
-				"Sucesso!",
-				"Notificação/Status atualizadados com sucesso",
-				"success"
-			);
-		} catch (error) {
-			console.error("Erro ao atualizar Notificação/Status :", error);
-			await swal(
-				"Erro!",
-				"Houve um problema ao atualizar  Notificação/Status",
-				"error"
-			);
-		} finally {
-			setLoading(false);
-		}
-	}
-
-	async function gerarFici() {
-		try {
-			setLoading(true);
-			const pdf = await ServiceGMNotificacoes.gerarFici({
-				empresa_id: formik.values.empresa_id,
-				ait: formik.values.ait,
-				codigo_orgao: formik.values.codigo_orgao,
-			});
-
-			console.log(pdf);
-
-			const pdfBlob = new Blob([pdf.data], { type: "application/pdf" });
-
-			const pdfUrl = URL.createObjectURL(pdfBlob);
-
-			const link = document.createElement("a");
-			link.href = pdfUrl;
-			link.download = `FICI-AIT-${formik.values.ait}`;
-
-			link.click();
-
-			URL.revokeObjectURL(pdfUrl);
-		} catch (error) {
-			console.error(error);
-		} finally {
-			setLoading(false);
-		}
-	}
-
-	async function gerarBoleto() {
-		const result = await swal({
-			title: "Escolha o tipo de boleto",
-			text:
-				"Selecione uma das opções abaixo:\n\n" +
-				"✔ **40% de desconto**: Reconhecimento da infração.\n" +
-				"✔ **20% de desconto**: Sem reconhecimento da infração.\n\n" +
-				"ℹ **Observação**: Os boletos ficam disponíveis em até 72 horas de acordo com as especificações do SNE.",
-			icon: "info",
-			buttons: {
-				cancel: {
-					text: "Cancelar",
-					value: null,
-					visible: true,
-					className: "btn-secondary",
-					closeModal: true,
-				},
-				noDiscount: {
-					text: "20% desconto",
-					value: false,
-					visible: true,
-					className: "btn-danger",
-					closeModal: true,
-				},
-				confirm: {
-					text: "40% desconto",
-					value: true,
-					visible: true,
-					className: "btn-success",
-					closeModal: true,
-				},
-			},
-		});
-
-		if (result != null) {
+		const possui = await possuiPermissaoGestaoMultas("Permissão N2");
+		if (possui) {
 			try {
 				setLoading(true);
-				await ServiceGMNotificacoes.solicitarBoleto({
-					empresa_id: formik.values.empresa_id,
-					ait: formik.values.ait,
-					cod_infracao: formik.values.codigo_infracao,
-					reconhece_infracao: result ? true : false,
+
+				await ServiceGMNotificacoes.indicarInfrator({
+					EMPRESA_ID: data.notificacao.empresa_id,
+					NOME: data.infrator.nome,
+					AIT: data.notificacao.ait,
+					CNH: data.infrator.cnh,
+					CODIGOORGAO: data.notificacao.codigo_orgao,
+					id_infrator: data.infrator.id.toString(),
 				});
 
 				await refreshPage();
 
-				await swal("Sucesso!", "Solicitação efetuada com sucesso", "success");
+				await swal("Sucesso!", "Infrator indicado com sucesso", "success");
 			} catch (error) {
-				console.error("Erro ao solicitar boleto :", error);
+				console.error("Erro ao indicar condutor:", error);
+				await swal("Erro!", "Houve um problema ao indicar o infrator", "error");
 			} finally {
 				setLoading(false);
+			}
+		}
+	}
+
+	async function atualizarStatus(status) {
+		const possui = await possuiPermissaoGestaoMultas("Permissão N2");
+		if (possui) {
+			try {
+				setLoading(true);
+
+				await ServiceGMNotificacoes.atualizarStatus({
+					ait: formik.values.ait,
+					status: status,
+					cod_usu_update: String(getClaims().name),
+				});
+
+				await refreshPage();
+
+				await swal("Sucesso!", "Status Atualizado com sucesso", "success");
+			} catch (error) {
+				console.error("Erro ao atualizar status:", error);
+				await swal("Erro!", "Houve um problema ao atualizar status", "error");
+			} finally {
+				setLoading(false);
+			}
+		}
+	}
+
+	async function excluirCondutor(notificacao) {
+		const possui = await possuiPermissaoGestaoMultas("Permissão N2");
+		if (possui) {
+			try {
+				setLoading(true);
+				console.log(notificacao);
+				await ServiceGMNotificacoes.excluirInfrator({
+					EMPRESA_ID: notificacao.empresa_id,
+					AIT: notificacao.ait,
+					CODIGOORGAO: notificacao.codigo_orgao,
+				});
+
+				await refreshPage();
+
+				await swal("Sucesso!", "Infrator excluído com sucesso", "success");
+			} catch (error) {
+				console.error("Erro ao excluir infrator:", error);
+				await swal("Erro!", "Houve um problema ao excluir o infrator", "error");
+			} finally {
+				setLoading(false);
+			}
+		}
+	}
+
+	async function regerarInfratores(notificacao) {
+		const possui = await possuiPermissaoGestaoMultas("Permissão N2");
+		if (possui) {
+			try {
+				setLoading(true);
+				await ServiceGMNotificacoes.regerarInfratores({
+					ait: notificacao.ait,
+					placa: notificacao.placa,
+					data_infracao: notificacao.data_infracao,
+				});
+
+				await refreshPage();
+
+				await swal("Sucesso!", "Infratores atualizados com sucesso", "success");
+			} catch (error) {
+				console.error("Erro ao atualizar infratores:", error);
+				await swal(
+					"Erro!",
+					"Houve um problema ao atualizar infratores",
+					"error"
+				);
+			} finally {
+				setLoading(false);
+			}
+		}
+	}
+
+	async function atualizarNotificacao(ait) {
+		const possui = await possuiPermissaoGestaoMultas("Permissão N2");
+		if (possui) {
+			try {
+				setLoading(true);
+				await ServiceGMNotificacoes.atualizar(ait);
+
+				await refreshPage();
+
+				await swal(
+					"Sucesso!",
+					"Notificação/Status atualizadados com sucesso",
+					"success"
+				);
+			} catch (error) {
+				console.error("Erro ao atualizar Notificação/Status :", error);
+				await swal(
+					"Erro!",
+					"Houve um problema ao atualizar  Notificação/Status",
+					"error"
+				);
+			} finally {
+				setLoading(false);
+			}
+		}
+	}
+
+	async function gerarFici() {
+		const possui = await possuiPermissaoGestaoMultas("Permissão N2");
+		if (possui) {
+			try {
+				setLoading(true);
+				const pdf = await ServiceGMNotificacoes.gerarFici({
+					empresa_id: formik.values.empresa_id,
+					ait: formik.values.ait,
+					codigo_orgao: formik.values.codigo_orgao,
+				});
+
+				console.log(pdf);
+
+				const pdfBlob = new Blob([pdf.data], { type: "application/pdf" });
+
+				const pdfUrl = URL.createObjectURL(pdfBlob);
+
+				const link = document.createElement("a");
+				link.href = pdfUrl;
+				link.download = `FICI-AIT-${formik.values.ait}`;
+
+				link.click();
+
+				URL.revokeObjectURL(pdfUrl);
+			} catch (error) {
+				console.error(error);
+			} finally {
+				setLoading(false);
+			}
+		}
+	}
+
+	async function gerarBoleto() {
+		const possui = await possuiPermissaoGestaoMultas("Permissão N2");
+		if (possui) {
+			const result = await swal({
+				title: "Escolha o tipo de boleto",
+				text:
+					"Selecione uma das opções abaixo:\n\n" +
+					"✔ **40% de desconto**: Reconhecimento da infração.\n" +
+					"✔ **20% de desconto**: Sem reconhecimento da infração.\n\n" +
+					"ℹ **Observação**: Os boletos ficam disponíveis em até 72 horas de acordo com as especificações do SNE.",
+				icon: "info",
+				buttons: {
+					cancel: {
+						text: "Cancelar",
+						value: null,
+						visible: true,
+						className: "btn-secondary",
+						closeModal: true,
+					},
+					noDiscount: {
+						text: "20% desconto",
+						value: false,
+						visible: true,
+						className: "btn-danger",
+						closeModal: true,
+					},
+					confirm: {
+						text: "40% desconto",
+						value: true,
+						visible: true,
+						className: "btn-success",
+						closeModal: true,
+					},
+				},
+			});
+
+			if (result != null) {
+				try {
+					setLoading(true);
+					await ServiceGMNotificacoes.solicitarBoleto({
+						empresa_id: formik.values.empresa_id,
+						ait: formik.values.ait,
+						cod_infracao: formik.values.codigo_infracao,
+						reconhece_infracao: result ? true : false,
+					});
+
+					await refreshPage();
+
+					await swal("Sucesso!", "Solicitação efetuada com sucesso", "success");
+				} catch (error) {
+					console.error("Erro ao solicitar boleto :", error);
+				} finally {
+					setLoading(false);
+				}
 			}
 		}
 	}
