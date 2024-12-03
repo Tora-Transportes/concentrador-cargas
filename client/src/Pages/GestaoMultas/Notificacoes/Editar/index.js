@@ -472,7 +472,7 @@ function NotificacoesEditar() {
 					await ServiceGMNotificacoes.solicitarBoleto({
 						empresa_id: formik.values.empresa_id,
 						ait: formik.values.ait,
-						cod_infracao: formik.values.codigo_orgao,
+						cod_orgao: formik.values.codigo_orgao,
 						reconhece_infracao: result ? true : false,
 					});
 
