@@ -3,6 +3,7 @@ import { mssqlPPO } from "../database";
 import { Knex } from "knex";
 import IUsuario from "../models/IUsuario";
 import { ISavePermission } from "../domain/UseCaseUsuario";
+import GMPermissoesController from "../controllers/GestaoMultas/Permissoes/GMPermissoesController";
 export class UsuarioRepository {
   async search(filter: Record<string, any>, more: boolean, page = 1) {
     const results = database("con_usuarios").select("*");
@@ -36,6 +37,9 @@ export class UsuarioRepository {
       const { oid, nome, email, permissao } = i;
       if (formattedUsersAndPermissions[oid] === undefined) {
         if (!more) {
+          const gestao_multas = await GMPermissoesController.permissionsUser(
+            oid
+          );
           const permissoes_visualizacao = await mssqlPPO.raw(`
         SELECT G.id,G.nome,G.filial FROM ppo_visualizacao_usuarios_grupos VUG
           INNER JOIN ppo_visualizacao_usuarios VU ON VU.id = VUG.id_ppo_visualizacao_usuario
@@ -53,6 +57,7 @@ export class UsuarioRepository {
             permissoes: [],
             permissoes_visualizacao: permissoes_visualizacao,
             permissao_aprovacao_ppo_eventos: permissao_aprovacao_ppo_eventos,
+            gestao_multas: gestao_multas,
           });
         } else {
           outputUsers.push({

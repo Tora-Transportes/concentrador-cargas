@@ -5,6 +5,7 @@ import ViewMultas from "./components/view";
 import factoryReducerCargas from "../../../hooks/storageCargas/factoryReducerCargas";
 import ServiceGMMultas from "../../../services/GestaoMultas/ServiceMultas";
 import { Toast } from "primereact/toast";
+import { possuiPermissaoGestaoMultas } from "src/Pages/Utils/validationPermissionUser";
 
 const Multas = () => {
 	const defaultCargas = {
@@ -28,26 +29,29 @@ const Multas = () => {
 
 	const tableFetchData = useCallback(
 		async function (options) {
-			setLoading(true);
-			try {
-				if (options !== lastOptions) {
-					setLastOptions(options);
+			const possui = await possuiPermissaoGestaoMultas("Permissão N1");
+			if (possui) {
+				setLoading(true);
+				try {
+					if (options !== lastOptions) {
+						setLastOptions(options);
+					}
+					const { column, direction } = options.orderBy ?? {};
+					const { data } = await ServiceGMMultas.list({
+						...options.filters,
+						page: options.page,
+						order_column: column,
+						order_direction: direction,
+					});
+					setLoading(false);
+					setTotalRegisters(data.total_registers);
+					dispatchCargas({
+						type: "SET",
+						payload: { ...data, current_page: data.page },
+					});
+				} catch (error) {
+					setLoading(false);
 				}
-				const { column, direction } = options.orderBy ?? {};
-				const { data } = await ServiceGMMultas.list({
-					...options.filters,
-					page: options.page,
-					order_column: column,
-					order_direction: direction,
-				});
-				setLoading(false);
-				setTotalRegisters(data.total_registers);
-				dispatchCargas({
-					type: "SET",
-					payload: { ...data, current_page: data.page },
-				});
-			} catch (error) {
-				setLoading(false);
 			}
 		},
 		[setLoading, dispatchCargas]

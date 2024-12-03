@@ -12,6 +12,7 @@ import FormularioMulta from "../components/formulario";
 import ServiceGMMultas from "src/services/GestaoMultas/ServiceMultas";
 import { formatDateAtual } from "src/Pages/Utils/formatDate";
 import ServiceGMNotificacoes from "src/services/GestaoMultas/ServiceNotificacoes";
+import { possuiPermissaoGestaoMultas } from "src/Pages/Utils/validationPermissionUser";
 
 function MultasEditar() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -247,23 +248,26 @@ function MultasEditar() {
 	}
 
 	async function atualizarStatus(status) {
-		try {
-			setLoading(true);
+		const possui = await possuiPermissaoGestaoMultas("Permissão N2");
+		if (possui) {
+			try {
+				setLoading(true);
 
-			await ServiceGMNotificacoes.atualizarStatus({
-				ait: formik.values.multa.ait,
-				status: status,
-				cod_usu_update: String(getClaims().name),
-			});
+				await ServiceGMNotificacoes.atualizarStatus({
+					ait: formik.values.multa.ait,
+					status: status,
+					cod_usu_update: String(getClaims().name),
+				});
 
-			await refreshPage();
+				await refreshPage();
 
-			await swal("Sucesso!", "Status Atualizado com sucesso", "success");
-		} catch (error) {
-			console.error("Erro ao atualizar status:", error);
-			await swal("Erro!", "Houve um problema ao atualizar status", "error");
-		} finally {
-			setLoading(false);
+				await swal("Sucesso!", "Status Atualizado com sucesso", "success");
+			} catch (error) {
+				console.error("Erro ao atualizar status:", error);
+				await swal("Erro!", "Houve um problema ao atualizar status", "error");
+			} finally {
+				setLoading(false);
+			}
 		}
 	}
 
