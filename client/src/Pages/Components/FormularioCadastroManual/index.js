@@ -320,7 +320,7 @@ function FormularioCadastroManual({
 		console.log("RRR");
 		const decisaoEnvioCarga = e.target.checked;
 		setDisableColetaEntrega(decisaoEnvioCarga);
-		if (decisaoEnvioCarga) {
+		/* 		if (decisaoEnvioCarga) {
 			setTimeout(() => {
 				formik.setFieldValue("placa_veiculo", null);
 				formik.setFieldValue("placa_carreta", null);
@@ -329,7 +329,7 @@ function FormularioCadastroManual({
 				formik.setFieldValue("nome_motorista", null);
 				formik.setFieldValue("cpf_motorista", null);
 			}, 500);
-		}
+		} */
 		const cargaEnviarApp = 1;
 		const cargaNaoEnviarApp = 0;
 		//setDisabledPlaca(decisaoEnvioCarga); #PLACA FICAR HABILITADA
