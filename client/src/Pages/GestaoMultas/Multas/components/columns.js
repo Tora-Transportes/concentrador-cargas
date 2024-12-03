@@ -62,6 +62,7 @@ export const getColumns = () => {
 			Filter: (props) => (
 				<Form.Select {...props}>
 					<option></option>
+					<option value="null"> INDEFINIDO </option>
 					<option value="CADASTRADO"> CADASTRADO </option>
 					<option value="MOTORISTA IDENTIFICADO">MOTORISTA IDENTIFICADO</option>
 					<option value="AGUARDANDO ASSINATURA">AGUARDANDO ASSINATURA</option>
