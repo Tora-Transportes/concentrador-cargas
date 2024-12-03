@@ -469,7 +469,7 @@ function NotificacoesEditar() {
 			if (result != null) {
 				try {
 					setLoading(true);
-					await ServiceGMNotificacoes.solicitarBoleto({
+					const response = await ServiceGMNotificacoes.solicitarBoleto({
 						empresa_id: formik.values.empresa_id,
 						ait: formik.values.ait,
 						cod_orgao: formik.values.codigo_orgao,
@@ -478,7 +478,14 @@ function NotificacoesEditar() {
 
 					await refreshPage();
 
-					await swal("Sucesso!", "Solicitação efetuada com sucesso", "success");
+					await swal({
+						title: "Sucesso!",
+						text: `Solicitação efetuada com sucesso. \n
+					Status: ${response.data.Mensagem} \n
+					Observação: ${response.data.Observacao} \n
+					Vencimento: ${response.data.VencimentoBoleto}`,
+						icon: "success",
+					});
 				} catch (error) {
 					console.error("Erro ao solicitar boleto :", error);
 				} finally {
