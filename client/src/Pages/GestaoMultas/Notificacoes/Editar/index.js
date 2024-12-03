@@ -481,9 +481,9 @@ function NotificacoesEditar() {
 					await swal({
 						title: "Sucesso!",
 						text: `Solicitação efetuada com sucesso. \n
-					Status: ${response.data.Mensagem} \n
-					Observação: ${response.data.Observacao} \n
-					Vencimento: ${response.data.VencimentoBoleto}`,
+					Status: ${response.data.Mensagem ?? "N/D"} \n
+					Observação: ${response.data.Observacao ?? "N/D"} \n
+					Vencimento: ${response.data.VencimentoBoleto ?? "N/D"}`,
 						icon: "success",
 					});
 				} catch (error) {
