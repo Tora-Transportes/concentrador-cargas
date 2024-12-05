@@ -13,6 +13,9 @@ import ServiceGMMultas from "src/services/GestaoMultas/ServiceMultas";
 import { formatDateAtual } from "src/Pages/Utils/formatDate";
 import ServiceGMNotificacoes from "src/services/GestaoMultas/ServiceNotificacoes";
 import { possuiPermissaoGestaoMultas } from "src/Pages/Utils/validationPermissionUser";
+import { FaFileExport } from "react-icons/fa";
+import BtnRefresh from "../components/btnAtualizar";
+import MultiButton from "../components/multiBtn";
 
 function MultasEditar() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -271,12 +274,29 @@ function MultasEditar() {
 		}
 	}
 
+	const buttons = [
+		{
+			label: "Notificação",
+			onClick: () => {
+				window.location.href = `/gestao-multas/notificacoes/${formik.values.multa.ait}`;
+			},
+			icon: <FaFileExport size={18} />,
+		},
+	];
+
 	return (
 		<>
 			<LoadingScreen />
 			<Menusuperior />
 			<Container className="mb-5 mt-5">
-				<p id="style-title-editorCarga">Multa</p>
+				<BtnRefresh
+					disable={true}
+					callback={() => {}}
+					params={formik.values.ait}
+					textoHeader={`Multa`}
+					texto={"Forçar Atualização"}
+					multiButton={<MultiButton buttons={buttons} />}
+				></BtnRefresh>
 				<hr />
 				<Form onSubmit={formik.handleSubmit}>
 					<FormularioMulta
