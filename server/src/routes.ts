@@ -390,6 +390,10 @@ routes.get(
 );
 routes.get("/bot/locais", BotCsnController.locais);
 routes.get("/bot/postos", BotCsnController.postos);
+routes.get("/bot/operacoes", BotCsnController.operacoes);
+routes.get("/bot/operacoes/:operacao/locais", BotCsnController.operacoesLocais);
+routes.get("/bot/operacoes/veiculos", BotCsnController.operacoesVeiculos);
+routes.get("/bot/posicoes", BotCsnController.posicoes);
 
 routes.post("/gestao-multas/empresas", GMEmpresaController.create);
 routes.get("/gestao-multas/empresas", GMEmpresaController.list);
