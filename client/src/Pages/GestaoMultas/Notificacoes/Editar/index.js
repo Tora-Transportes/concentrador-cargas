@@ -14,6 +14,7 @@ import BtnRefresh from "../components/btnAtualizar";
 import MultiButton from "../components/multiBtn";
 import { FaFileInvoiceDollar } from "react-icons/fa6";
 import { FaFileContract } from "react-icons/fa6";
+import { FaFileExport } from "react-icons/fa";
 import { possuiPermissaoGestaoMultas } from "src/Pages/Utils/validationPermissionUser";
 
 function NotificacoesEditar() {
@@ -496,6 +497,13 @@ function NotificacoesEditar() {
 	}
 
 	const buttons = [
+		{
+			label: "Multa",
+			onClick: () => {
+				window.location.href = `/gestao-multas/multas/${formik.values.ait}`;
+			},
+			icon: <FaFileExport size={18} />,
+		},
 		{
 			label: "Gerar FICI",
 			onClick: () => gerarFici(),

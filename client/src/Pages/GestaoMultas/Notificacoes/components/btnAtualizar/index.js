@@ -4,6 +4,7 @@ import { FaSyncAlt } from "react-icons/fa";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const BtnRefresh = ({
+	disable = false,
 	textoHeader,
 	callback,
 	params,
@@ -47,25 +48,29 @@ const BtnRefresh = ({
 				}}
 			>
 				{multiButton}
-				<Button
-					variant="outline-primary"
-					onClick={callbackFuction}
-					style={{
-						display: "flex",
-						alignItems: "center",
-						gap: "0.5rem",
-						marginBottom: titulo ? "0px" : "20px",
-					}}
-				>
-					<FaSyncAlt
-						size={20}
+				{!disable ? (
+					<Button
+						variant="outline-primary"
+						onClick={callbackFuction}
 						style={{
-							transition: "transform 0.5s ease-in-out",
-							transform: isRotating ? "rotate(360deg)" : "rotate(0deg)",
+							display: "flex",
+							alignItems: "center",
+							gap: "0.5rem",
+							marginBottom: titulo ? "0px" : "20px",
 						}}
-					/>
-					{texto}
-				</Button>
+					>
+						<FaSyncAlt
+							size={20}
+							style={{
+								transition: "transform 0.5s ease-in-out",
+								transform: isRotating ? "rotate(360deg)" : "rotate(0deg)",
+							}}
+						/>
+						{texto}
+					</Button>
+				) : (
+					<></>
+				)}
 			</div>
 		</div>
 	);
