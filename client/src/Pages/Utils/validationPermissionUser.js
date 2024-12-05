@@ -95,3 +95,45 @@ export const possuiPermissaoPPOEventosAprovacao = async (permissao) => {
 		return [];
 	}
 };
+
+export const possuiPermissaoGestaoMultas = async (permissao) => {
+	let permissions = localStorage.getItem("adal.user");
+	permissions = JSON.parse(permissions);
+	if (permissions.gestao_multas) {
+		if (permissions.gestao_multas.length == 0) {
+			Swal.fire({
+				title: "Sem Permissão?",
+				text: "Usuário não possui permissões cadastradas, peça o responsável para efetuar o cadastro",
+				icon: "question",
+				confirmButtonText: "Tela início",
+			}).then((result) => {
+				if (result.isConfirmed) {
+					const url = window.location.href.split("/");
+					window.location.href = `${url[0]}//${url[2]}/`;
+				}
+			});
+			return false;
+		} else {
+			if (
+				!permissions.gestao_multas.some((item) => item.permissao === permissao)
+			) {
+				Swal.fire({
+					title: `Nível de permissão:${permissao} necessário`,
+					text: "Usuário não possui o nível necessário para acessar esse recurso, peça o responsável para efetuar o cadastro ",
+					icon: "question",
+					confirmButtonText: "Tela início",
+				}).then((result) => {
+					if (result.isConfirmed) {
+						const url = window.location.href.split("/");
+						window.location.href = `${url[0]}//${url[2]}/`;
+					}
+				});
+				return false;
+			} else {
+				return true;
+			}
+		}
+	} else {
+		return [];
+	}
+};

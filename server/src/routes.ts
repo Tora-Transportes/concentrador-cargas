@@ -43,6 +43,8 @@ import GMEmpresaController from "./controllers/GestaoMultas/Empresa/GMEmpresaCon
 import GMPermissoesController from "./controllers/GestaoMultas/Permissoes/GMPermissoesController";
 import SqedController from "./controllers/Sqed/SqedController";
 import TokenSqedMiddleware from "./middlewares/TokenSqed";
+import GMNotificacoesController from "./controllers/GestaoMultas/Notificacoes/GMNotificacoesController";
+import GMMultasController from "./controllers/GestaoMultas/Multas/GMMultasController";
 
 const routes = Router();
 
@@ -413,6 +415,43 @@ routes.get(
   "/gestao-multas/usuarios/:id/permissoes",
   GMPermissoesController.index
 );
+
+routes.get("/gestao-multas/notificacoes", GMNotificacoesController.list);
+routes.get("/gestao-multas/notificacoes/:ait", GMNotificacoesController.index);
+routes.get(
+  "/gestao-multas/smartec/notificacoes/:ait",
+  GMNotificacoesController.atualizar
+);
+routes.post(
+  "/gestao-multas/notificacoes/infrator",
+  GMNotificacoesController.indicarInfrator
+);
+routes.post(
+  "/gestao-multas/notificacoes/infrator:excluir",
+  GMNotificacoesController.excluirInfrator
+);
+routes.post(
+  "/gestao-multas/notificacoes/infrator/regerar",
+  GMNotificacoesController.regerarInfratores
+);
+
+routes.post(
+  "/gestao-multas/notificacoes/status",
+  GMNotificacoesController.atualizarStatus
+);
+
+routes.get(
+  "/gestao-multas/notificacoes/infrator/gerar-formulario",
+  GMNotificacoesController.gerarFici
+);
+
+routes.post(
+  "/gestao-multas/notificacoes/boletos/gerar-solicitacao",
+  GMNotificacoesController.solicitarBoleto
+);
+
+routes.get("/gestao-multas/multas", GMMultasController.list);
+routes.get("/gestao-multas/multas/:ait", GMMultasController.index);
 
 routes.get("/motoristas/:cpf/categoria", MotoristaController.findByCpf);
 export default routes;

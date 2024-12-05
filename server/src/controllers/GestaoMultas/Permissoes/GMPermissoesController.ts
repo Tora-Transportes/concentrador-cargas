@@ -9,6 +9,7 @@ interface IGMPermissoesController {
   list(req: Request, res: Response): Promise<any>;
   delete(req: Request, res: Response): Promise<any>;
   deletePermissioUser(req: Request, res: Response): Promise<any>;
+  permissionsUser(oid: string): Promise<any>;
 }
 
 class GMPermissoesController implements IGMPermissoesController {
@@ -20,6 +21,7 @@ class GMPermissoesController implements IGMPermissoesController {
     this.list = this.list.bind(this);
     this.delete = this.delete.bind(this);
     this.deletePermissioUser = this.deletePermissioUser.bind(this);
+    this.permissionsUser = this.permissionsUser.bind(this);
   }
 
   private handleError(error: any, res: Response) {
@@ -121,6 +123,20 @@ class GMPermissoesController implements IGMPermissoesController {
       });
     } catch (error) {
       return this.handleError(error, res);
+    }
+  }
+
+  async permissionsUser(oid: string): Promise<any> {
+    try {
+      const response = await axios.get(
+        `${String(
+          process.env.URL_GESTAO_MULTAS
+        )}/usuarios/oid/${oid}/permissoes`
+      );
+      const { data } = response;
+      return data;
+    } catch (error) {
+      return [];
     }
   }
 }

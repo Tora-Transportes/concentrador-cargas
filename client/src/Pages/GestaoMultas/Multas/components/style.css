@@ -1,0 +1,42 @@
+/* Estilo base da bolinha */
+.status-bubble {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* Bolinha estática */
+.status-bubble.static {
+    background-color: gray;
+}
+
+/* Bolinha pulsante */
+.status-bubble.pulsating {
+    background-color: green;
+    box-shadow: 0 0 0 rgba(0, 255, 0, 0.5);
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Bolinha pulsante alerta*/
+.status-bubble.pulsating {
+    background-color: rgb(193, 210, 61);
+    box-shadow: 0 0 0 rgba(218, 183, 67, 0.607);
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Animação de pulsação */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.7);
+    }
+    50% {
+        transform: scale(1.2);
+        box-shadow: 0 0 15px 5px rgba(0, 255, 0, 0.2);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 255, 0, 0);
+    }
+}

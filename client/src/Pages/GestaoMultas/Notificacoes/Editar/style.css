@@ -1,0 +1,30 @@
+#style-title-editorCarga {
+  font-family: "Poppins", sans-serif;
+  color: #00652e;
+  font-size: 2.5rem;
+}
+
+.class-group-button {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  grid-gap: 3rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+}
+
+.class-group-button button {
+   width: 150px;
+   height: 40px;
+}
+
+.botao-gravar {
+  background-color: #00652e !important;
+}
+
+@media only screen and (max-width: 420px) {
+  #style-title-editorCarga {
+    font-size: 2.1rem;
+    margin-top: 4rem;
+  }
+}
