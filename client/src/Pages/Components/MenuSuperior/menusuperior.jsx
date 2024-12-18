@@ -99,6 +99,9 @@ function Menusuperior() {
                 {permissoes?.permissoes?.includes("GM_EMPRESAS") && (
                   <a href="/gestao-multas/empresas">Empresas</a>
                 )}
+                {permissoes?.permissoes?.includes("GM_IMPEDIMENTOS") && (
+                  <a href="/gestao-multas/impedimentos">Impedimentos</a>
+                )}
               </div>
             </div>
           </div>

@@ -45,6 +45,7 @@ import GMNotificacoesController from "./controllers/GestaoMultas/Notificacoes/GM
 import GMMultasController from "./controllers/GestaoMultas/Multas/GMMultasController";
 import SqedController from "./controllers/Sqed/SqedController";
 import TokenSqedMiddleware from "./middlewares/TokenSqed";
+import GMImpedimentosController from "./controllers/GestaoMultas/Impedimentos/GMImpedimentosController";
 
 const routes = Router();
 
@@ -454,6 +455,10 @@ routes.post(
   "/gestao-multas/notificacoes/despesas",
   GMNotificacoesController.gerarDespesa
 );
+
+routes.get("/gestao-multas/impedimentos", GMImpedimentosController.list);
+routes.post("/gestao-multas/impedimentos", GMImpedimentosController.create);
+routes.put("/gestao-multas/impedimentos/:id", GMImpedimentosController.update);
 
 routes.get("/gestao-multas/multas", GMMultasController.list);
 routes.get("/gestao-multas/multas/:ait", GMMultasController.index);

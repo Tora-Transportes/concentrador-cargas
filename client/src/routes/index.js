@@ -63,6 +63,7 @@ import PermissoesGestaoMultas from "src/Pages/GestaoMultas/Permissoes";
 import EmpresasEditar from "src/Pages/GestaoMultas/Empresas/Editar";
 import NotificacoesEditar from "src/Pages/GestaoMultas/Notificacoes/Editar";
 import MultasEditar from "src/Pages/GestaoMultas/Multas/Editar";
+import Impedimentos from "src/Pages/GestaoMultas/Impedimentos";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -256,6 +257,12 @@ export default function AllRoutes() {
 					path="/gestao-multas/permissoes"
 					exact
 					component={PermissoesGestaoMultas}
+				/>
+
+				<Routes
+					path="/gestao-multas/impedimentos"
+					exact
+					component={Impedimentos}
 				/>
 				<Routes path="*" exact component={Main} />
 			</Switch>

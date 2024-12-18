@@ -9,6 +9,7 @@ import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import "./style.css";
 import FormularioNotificacao from "../components/formulario";
 import ServiceGMNotificacoes from "src/services/GestaoMultas/ServiceNotificacoes";
+import ServiceGMImpendimentos from "src/services/GestaoMultas/ServiceImpedimentos";
 import { formatDateAtual } from "src/Pages/Utils/formatDate";
 import BtnRefresh from "../components/btnAtualizar";
 import MultiButton from "../components/multiBtn";
@@ -16,6 +17,7 @@ import { FaFileInvoiceDollar } from "react-icons/fa6";
 import { FaFileContract } from "react-icons/fa6";
 import { FaFileExport } from "react-icons/fa";
 import { possuiPermissaoGestaoMultas } from "src/Pages/Utils/validationPermissionUser";
+import Swal from "sweetalert2";
 
 function NotificacoesEditar() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -629,6 +631,84 @@ function NotificacoesEditar() {
 		}
 	}
 
+	async function gerarImpedimento() {
+		const possui = await possuiPermissaoGestaoMultas("Permissão N2");
+		if (possui) {
+			const result = await Swal.fire({
+				title: "Solicitar Impedimento do Transportador",
+				html: `
+			  <div style="text-align: left;">
+				<div><strong>Nome do Motorista:</strong> ${formik.values.infrator.nome}</div>
+				<div><strong>CPF:</strong> ${formik.values.infrator.cpf}</div>
+				<div><strong>Empresa:</strong> ${formik.values.empresa?.nome || ""}</div>
+				<div><strong>AIT:</strong> ${formik.values.infrator.ait}</div>
+			  </div>
+			  <p style="font-style: italic; color: gray; margin-top: 15px;">
+				Por favor, revise as informações acima antes de prosseguir.
+			  </p>
+			  <label style="font-weight: bold; margin-top: 15px; display: block;">Observação:</label>
+			  <textarea
+				id="observacao"
+				maxlength="200"
+				placeholder="Adicione uma observação (máximo de 200 caracteres)"
+				style="width: 100%; height: 60px; margin-top: 5px; padding: 5px; font-size: 16px; resize: none;"
+			  ></textarea>
+			`,
+				showCancelButton: true,
+				cancelButtonText: "Cancelar",
+				confirmButtonText: "Confirmar",
+				preConfirm: () => {
+					const observacaoInput = document.getElementById("observacao");
+					const observacao = observacaoInput.value.trim();
+					if (!observacao) {
+						Swal.showValidationMessage("Por favor, adicione uma observação.");
+						return false;
+					}
+					return observacao;
+				},
+			});
+
+			if (result.isConfirmed) {
+				try {
+					const observacao = result.value;
+
+					setLoading(true);
+
+					const body = {
+						nome_motorista: formik.values.infrator.nome,
+						cpf: formik.values.infrator.cpf,
+						empresa: formik.values.empresa?.nome || "",
+						placa: formik.values.placa,
+						ait: formik.values.infrator.ait,
+						status: 4,
+						processado: 0,
+						observacao: observacao,
+						cod_user_create: String(getClaims().name),
+					};
+
+					console.log(body);
+					await ServiceGMImpendimentos.create(body);
+
+					await refreshPage();
+
+					await Swal.fire({
+						title: "Sucesso!",
+						text: `Solicitação de impedimento feita com sucesso.`,
+						icon: "success",
+					});
+				} catch (error) {
+					await Swal.fire({
+						title: "Erro!",
+						text: "Ocorreu um erro ao gerar a solicitação de impedimento. Tente novamente.",
+						icon: "error",
+					});
+				} finally {
+					setLoading(false);
+				}
+			}
+		}
+	}
+
 	const buttons = [
 		{
 			label: "Multa",
@@ -671,6 +751,7 @@ function NotificacoesEditar() {
 						atualizarNotificacao={atualizarNotificacao}
 						atualizarStatus={atualizarStatus}
 						gerarDespesa={gerarDespesa}
+						gerarImpedimento={gerarImpedimento}
 					></FormularioNotificacao>
 					<div className="class-group-button">
 						<Button

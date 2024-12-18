@@ -38,4 +38,5 @@ export const allTipoPermissoes = [
 	{ name: "GM_PERMISSOES" },
 	{ name: "GM_NOTIFICACOES" },
 	{ name: "GM_MULTAS" },
+	{ name: "GM_IMPEDIMENTOS" },
 ];

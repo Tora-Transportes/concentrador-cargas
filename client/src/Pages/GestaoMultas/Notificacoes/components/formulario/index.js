@@ -8,6 +8,7 @@ import BtnRefresh from "../btnAtualizar";
 import { GiExpense } from "react-icons/gi";
 import MultiButton from "src/Pages/GestaoMultas/Multas/components/multiBtn";
 import { formatDateAtual } from "src/Pages/Utils/formatDate";
+import { FaUserTimes } from "react-icons/fa";
 
 function FormularioNotificacao({
 	formik,
@@ -17,6 +18,7 @@ function FormularioNotificacao({
 	atualizarNotificacao,
 	atualizarStatus,
 	gerarDespesa,
+	gerarImpedimento,
 }) {
 	async function removerCondutor(condutor) {
 		excluirCondutor(condutor);
@@ -27,6 +29,11 @@ function FormularioNotificacao({
 			label: "Gerar Despesa",
 			onClick: () => gerarDespesa(),
 			icon: <GiExpense size={22} />,
+		},
+		{
+			label: "Gerar Impedimento",
+			onClick: () => gerarImpedimento(),
+			icon: <FaUserTimes size={22} />,
 		},
 	];
 
