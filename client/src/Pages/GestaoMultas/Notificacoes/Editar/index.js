@@ -18,6 +18,7 @@ import { FaFileContract } from "react-icons/fa6";
 import { FaFileExport } from "react-icons/fa";
 import { possuiPermissaoGestaoMultas } from "src/Pages/Utils/validationPermissionUser";
 import Swal from "sweetalert2";
+import DocumentosGMList from "../../components/DocumentsComponent";
 
 function NotificacoesEditar() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -753,6 +754,9 @@ function NotificacoesEditar() {
 						gerarDespesa={gerarDespesa}
 						gerarImpedimento={gerarImpedimento}
 					></FormularioNotificacao>
+					<div>
+						<DocumentosGMList ait={id}></DocumentosGMList>
+					</div>
 					<div className="class-group-button">
 						<Button
 							variant="success"

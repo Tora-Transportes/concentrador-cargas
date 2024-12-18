@@ -16,6 +16,7 @@ import { possuiPermissaoGestaoMultas } from "src/Pages/Utils/validationPermissio
 import { FaFileExport } from "react-icons/fa";
 import BtnRefresh from "../components/btnAtualizar";
 import MultiButton from "../components/multiBtn";
+import DocumentosGMList from "../../components/DocumentsComponent";
 
 function MultasEditar() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -303,6 +304,9 @@ function MultasEditar() {
 						formik={formik}
 						atualizarStatus={atualizarStatus}
 					></FormularioMulta>
+					<div>
+						<DocumentosGMList ait={id}></DocumentosGMList>
+					</div>
 					<div className="class-group-button">
 						<Button
 							variant="success"

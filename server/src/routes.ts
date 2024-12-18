@@ -44,6 +44,7 @@ import GMPermissoesController from "./controllers/GestaoMultas/Permissoes/GMPerm
 import GMNotificacoesController from "./controllers/GestaoMultas/Notificacoes/GMNotificacoesController";
 import GMMultasController from "./controllers/GestaoMultas/Multas/GMMultasController";
 import GMImpedimentosController from "./controllers/GestaoMultas/Impedimentos/GMImpedimentosController";
+import GMDocumentosController from "./controllers/GestaoMultas/Documentos/GMDocumentosController";
 
 const routes = Router();
 
@@ -453,6 +454,28 @@ routes.put("/gestao-multas/impedimentos/:id", GMImpedimentosController.update);
 
 routes.get("/gestao-multas/multas", GMMultasController.list);
 routes.get("/gestao-multas/multas/:ait", GMMultasController.index);
+
+routes.post(
+  "/gestao-multas/documentos",
+  multer().single("arquivo"),
+  GMDocumentosController.create
+);
+routes.get(
+  "/gestao-multas/documentos/ait/:ait",
+  GMDocumentosController.listByAit
+);
+routes.get(
+  "/gestao-multas/documentos/ait/:ait/logs",
+  GMDocumentosController.logs
+);
+routes.get(
+  "/gestao-multas/documentos/:id/download",
+  GMDocumentosController.download
+);
+routes.delete(
+  "/gestao-multas/documentos/:id/user/:user",
+  GMDocumentosController.delete
+);
 
 routes.get("/motoristas/:cpf/categoria", MotoristaController.findByCpf);
 export default routes;
