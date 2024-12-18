@@ -10,6 +10,7 @@ const BtnRefresh = ({
 	params,
 	texto,
 	titulo = true,
+	subtituloBtn = false,
 	multiButton = <></>,
 }) => {
 	const [isRotating, setIsRotating] = useState(false);
@@ -56,7 +57,7 @@ const BtnRefresh = ({
 							display: "flex",
 							alignItems: "center",
 							gap: "0.5rem",
-							marginBottom: titulo ? "0px" : "20px",
+							marginBottom: titulo ? "0px" : subtituloBtn ? "0px" : "20px",
 						}}
 					>
 						<FaSyncAlt

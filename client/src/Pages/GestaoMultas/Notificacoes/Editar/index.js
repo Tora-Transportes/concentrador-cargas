@@ -121,6 +121,8 @@ function NotificacoesEditar() {
 					cod_usu_create: "",
 				},
 			],
+
+			despesasHistorico: [],
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -206,6 +208,24 @@ function NotificacoesEditar() {
 					} else {
 						formik.setFieldValue(
 							`statusHistorico[${index}].${i}`,
+							nonNullValue
+						);
+					}
+				}
+			});
+
+			const despesasHistorico = notificacaoResponse.despesasHistorico || [];
+			despesasHistorico.forEach((item, index) => {
+				for (let i in item) {
+					let nonNullValue = item[i] === null ? "" : item[i];
+					if (i === "created_at") {
+						formik.setFieldValue(
+							`despesasHistorico[${index}].${i}`,
+							formatDateAtual(nonNullValue)
+						);
+					} else {
+						formik.setFieldValue(
+							`despesasHistorico[${index}].${i}`,
 							nonNullValue
 						);
 					}
@@ -496,6 +516,119 @@ function NotificacoesEditar() {
 		}
 	}
 
+	async function gerarDespesa() {
+		const possui = await possuiPermissaoGestaoMultas("Permissão N2");
+		if (possui) {
+			const dadosFormatados = `
+	            Nome do Motorista: ${formik.values.infrator.nome}
+	            Empresa: ${formik.values.empresa?.nome || ""}
+	            AIT: ${formik.values.infrator.ait}
+	            Valor: R$ ${formik.values.valor_a_pagar}
+	            Data da Multa: ${formatDateAtual(formik.values.data_infracao)}
+	        `;
+
+			const options = Array.from({ length: 12 }, (_, i) => i + 1)
+				.map(
+					(value) =>
+						`<option value="${value}">${value} ${
+							value === 1 ? "vez" : "vezes"
+						}</option>`
+				)
+				.join("");
+
+			const result = await swal({
+				title: "Dados da Infração e Parcelamento",
+				content: {
+					element: "div",
+					attributes: {
+						innerHTML: `
+						<p style="text-align: left; white-space: pre-wrap;">${dadosFormatados}</p>
+						<p style="font-style: italic; color: gray;">
+							Por favor, revise as informações acima antes de prosseguir.
+						</p>
+						<label style="font-weight: bold;">Escolha o número de parcelas:</label>
+						<select id="parcelas" style="margin-top: 10px; padding: 5px; width: 100%; font-size: 16px;">
+							${options}
+						</select>
+						<label style="font-weight: bold; margin-top: 15px; display: block;">Observação:</label>
+						<textarea
+							id="observacao"
+							maxlength="200"
+							placeholder="Adicione uma observação (máximo de 200 caracteres)"
+							style="width: 100%; height: 60px; margin-top: 5px; padding: 5px; font-size: 16px; resize: none;"
+						></textarea>
+					`,
+					},
+				},
+				buttons: {
+					cancel: {
+						text: "Cancelar",
+						value: null,
+						visible: true,
+						className: "btn-secondary",
+						closeModal: true,
+					},
+					confirm: {
+						text: "Confirmar",
+						value: true,
+						visible: true,
+						className: "btn-success",
+						closeModal: true,
+					},
+				},
+			});
+
+			if (result) {
+				try {
+					const seletorParcelas = document.getElementById("parcelas");
+					const observacaoInput = document.getElementById("observacao");
+
+					const qtdeParcelas = parseInt(seletorParcelas.value, 10);
+					const observacao = observacaoInput.value.trim();
+
+					setLoading(true);
+
+					const body = {
+						nome_motorista: formik.values.infrator.nome,
+						cpf: formik.values.infrator.cpf,
+						empresa: formik.values.empresa?.nome || "",
+						placa_cavalo: formik.values.infrator.cavalo,
+						placa_carreta: formik.values.infrator.carreta,
+						placa_bitrem: formik.values.infrator.bitrem,
+						ait: formik.values.infrator.ait,
+						valor: formik.values.valor_a_pagar,
+						data_multa: formik.values.data_infracao,
+						local: formik.values.local,
+						status: 1,
+						qtde_parcelas: qtdeParcelas,
+						observacao: observacao,
+						cod_user_create: "GESTAO_MULTAS_SERVICE",
+					};
+
+					console.log(body);
+					await ServiceGMNotificacoes.gerarDespesa(body);
+
+					await refreshPage();
+
+					await swal({
+						title: "Sucesso!",
+						text: `Despesa inserida com sucesso\n\n`,
+						icon: "success",
+					});
+				} catch (error) {
+					console.error("Erro ao gerar despesa:", error);
+					await swal({
+						title: "Erro!",
+						text: "Ocorreu um erro ao gerar a despesa. Tente novamente.",
+						icon: "error",
+					});
+				} finally {
+					setLoading(false);
+				}
+			}
+		}
+	}
+
 	const buttons = [
 		{
 			label: "Multa",
@@ -537,6 +670,7 @@ function NotificacoesEditar() {
 						regerarInfratores={regerarInfratores}
 						atualizarNotificacao={atualizarNotificacao}
 						atualizarStatus={atualizarStatus}
+						gerarDespesa={gerarDespesa}
 					></FormularioNotificacao>
 					<div className="class-group-button">
 						<Button

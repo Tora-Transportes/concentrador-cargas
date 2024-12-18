@@ -12,6 +12,7 @@ interface IGMNotificacoesController {
   atualizarStatus(req: Request, res: Response): Promise<any>;
   gerarFici(req: Request, res: Response): Promise<any>;
   solicitarBoleto(req: Request, res: Response): Promise<any>;
+  gerarDespesa(req: Request, res: Response): Promise<any>;
 }
 
 class GMNotificacoesController implements IGMNotificacoesController {
@@ -26,6 +27,7 @@ class GMNotificacoesController implements IGMNotificacoesController {
     this.atualizarStatus = this.atualizarStatus.bind(this);
     this.gerarFici = this.gerarFici.bind(this);
     this.solicitarBoleto = this.solicitarBoleto.bind(this);
+    this.gerarDespesa = this.gerarDespesa.bind(this);
   }
 
   private handleError(error: any, res: Response) {
@@ -172,6 +174,24 @@ class GMNotificacoesController implements IGMNotificacoesController {
     try {
       const response = await axios.post(
         `${String(process.env.URL_GESTAO_MULTAS)}/boletos/gerar-solicitacao`,
+        req.body
+      );
+      const { data, status } = response;
+      return res.status(status).json(data);
+    } catch (error) {
+      return this.handleError(error, res);
+    }
+  }
+
+  async gerarDespesa(req: Request, res: Response): Promise<any> {
+    try {
+      const date = new Date(req.body.data_multa);
+      const formattedDate = `${date.getUTCFullYear()}-${(date.getUTCMonth() + 1)
+        .toString()
+        .padStart(2, "0")}-${date.getUTCDate().toString().padStart(2, "0")}`;
+      req.body.data_multa = formattedDate;
+      const response = await axios.post(
+        `${String(process.env.URL_GESTAO_MULTAS)}/despesas`,
         req.body
       );
       const { data, status } = response;
