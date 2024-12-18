@@ -44,6 +44,10 @@ class ServiceGMNotificacoes {
 			values
 		);
 	}
+
+	async gerarDespesa(values) {
+		return api.post("/gestao-multas/notificacoes/despesas", values);
+	}
 }
 
 export default new ServiceGMNotificacoes();

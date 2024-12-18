@@ -441,6 +441,11 @@ routes.post(
   GMNotificacoesController.solicitarBoleto
 );
 
+routes.post(
+  "/gestao-multas/notificacoes/despesas",
+  GMNotificacoesController.gerarDespesa
+);
+
 routes.get("/gestao-multas/multas", GMMultasController.list);
 routes.get("/gestao-multas/multas/:ait", GMMultasController.index);
 

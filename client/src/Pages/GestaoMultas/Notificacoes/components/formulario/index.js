@@ -5,6 +5,9 @@ import PaginatedTableInfratores from "../Infratores";
 import { FaRegTrashAlt } from "react-icons/fa";
 import swal from "sweetalert";
 import BtnRefresh from "../btnAtualizar";
+import { GiExpense } from "react-icons/gi";
+import MultiButton from "src/Pages/GestaoMultas/Multas/components/multiBtn";
+import { formatDateAtual } from "src/Pages/Utils/formatDate";
 
 function FormularioNotificacao({
 	formik,
@@ -13,10 +16,20 @@ function FormularioNotificacao({
 	regerarInfratores,
 	atualizarNotificacao,
 	atualizarStatus,
+	gerarDespesa,
 }) {
 	async function removerCondutor(condutor) {
 		excluirCondutor(condutor);
 	}
+
+	const buttons = [
+		{
+			label: "Gerar Despesa",
+			onClick: () => gerarDespesa(),
+			icon: <GiExpense size={22} />,
+		},
+	];
+
 	return (
 		<div className="class-body-form">
 			<Row>
@@ -413,12 +426,22 @@ function FormularioNotificacao({
 				</Col>
 			</Row>
 			<Row style={{ marginTop: "40px" }}>
+				{" "}
+				{/* TODO */}
 				<BtnRefresh
 					callback={regerarInfratores}
 					params={formik.values}
 					textoHeader={"Infratores"}
 					texto={"Atualizar Infratores"}
+					multiButton={
+						formik.values.existeInfrator ? (
+							<MultiButton buttons={buttons} />
+						) : (
+							<></>
+						)
+					}
 					titulo={false}
+					subtituloBtn={true}
 				></BtnRefresh>
 				<hr />
 				<PaginatedTableInfratores
@@ -620,6 +643,33 @@ function FormularioNotificacao({
 								<td>{historico.status}</td>
 								<td>{historico.created_at}</td>
 								<td>{historico.cod_usu_create}</td>
+							</tr>
+						))}
+					</tbody>
+				</Table>
+			</Row>
+
+			<Row style={{ marginTop: "40px" }}>
+				<h4>Histórico Despesas Veículo</h4>
+				<hr />
+				<Table striped bordered hover>
+					<thead>
+						<tr>
+							<th>AIT</th>
+							<th>Empresa</th>
+							<th>Nome Motorista</th>
+							<th>Valor</th>
+							<th>Data Infração</th>
+						</tr>
+					</thead>
+					<tbody>
+						{formik.values?.despesasHistorico?.map((historico, index) => (
+							<tr key={index}>
+								<td>{historico.ait}</td>
+								<td>{historico.empresa}</td>
+								<td>{historico.nome_motorista}</td>
+								<td>R$ {historico.valor}</td>
+								<td>{formatDateAtual(historico.data_multa)}</td>
 							</tr>
 						))}
 					</tbody>
