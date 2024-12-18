@@ -602,7 +602,7 @@ function NotificacoesEditar() {
 						status: 1,
 						qtde_parcelas: qtdeParcelas,
 						observacao: observacao,
-						cod_user_create: "GESTAO_MULTAS_SERVICE",
+						cod_user_create: String(getClaims().name),
 					};
 
 					console.log(body);
