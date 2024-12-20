@@ -457,6 +457,36 @@ function FormularioNotificacao({
 					indicarCondutor={indicarCondutor}
 				></PaginatedTableInfratores>
 			</Row>
+			{/* Seção Histórico Infrator */}
+			<Row style={{ marginTop: "40px" }}>
+				<h4>Histórico Infrator</h4>
+				<hr />
+				<Table striped bordered hover>
+					<thead>
+						<tr>
+							<th>AIT</th>
+							<th>Ação</th>
+							<th>Nome Motorista</th>
+							<th>CPF</th>
+							<th>Data</th>
+							<th>Usuário Ação</th>
+						</tr>
+					</thead>
+					<tbody>
+						{formik.values?.infratorHistorico?.map((historico, index) => (
+							<tr key={index}>
+								<td>{historico.ait}</td>
+								<td>{historico.status}</td>
+								<td>{historico.nome}</td>
+								<td>{historico.cpf}</td>
+								<td>{historico.created_at}</td>
+								<td>{historico.cod_usu_create}</td>
+							</tr>
+						))}
+					</tbody>
+				</Table>
+			</Row>
+			{/* todo */}
 			{/* Seção para os dados de Status */}
 			<Row style={{ marginTop: "40px" }}>
 				<BtnRefresh

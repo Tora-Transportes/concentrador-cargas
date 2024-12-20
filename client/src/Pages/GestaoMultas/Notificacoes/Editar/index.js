@@ -126,6 +126,7 @@ function NotificacoesEditar() {
 			],
 
 			despesasHistorico: [],
+			infratorHistorico: [],
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -257,6 +258,24 @@ function NotificacoesEditar() {
 					}
 				}
 			});
+
+			const infratorHistorico = notificacaoResponse.infratorHistorico || [];
+			infratorHistorico.forEach((item, index) => {
+				for (let i in item) {
+					let nonNullValue = item[i] === null ? "" : item[i];
+					if (i === "created_at") {
+						formik.setFieldValue(
+							`infratorHistorico[${index}].${i}`,
+							formatDateAtual(nonNullValue)
+						);
+					} else {
+						formik.setFieldValue(
+							`infratorHistorico[${index}].${i}`,
+							nonNullValue
+						);
+					}
+				}
+			});
 		} catch (error) {
 			console.log(error);
 			history.push("");
@@ -306,6 +325,7 @@ function NotificacoesEditar() {
 					CNH: data.infrator.cnh,
 					CODIGOORGAO: data.notificacao.codigo_orgao,
 					id_infrator: data.infrator.id.toString(),
+					cod_user_created: String(getClaims().name),
 				});
 
 				await refreshPage();
@@ -354,6 +374,7 @@ function NotificacoesEditar() {
 					EMPRESA_ID: notificacao.empresa_id,
 					AIT: notificacao.ait,
 					CODIGOORGAO: notificacao.codigo_orgao,
+					cod_user_created: String(getClaims().name),
 				});
 
 				await refreshPage();
