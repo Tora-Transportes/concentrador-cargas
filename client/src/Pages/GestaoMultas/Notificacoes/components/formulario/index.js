@@ -9,6 +9,7 @@ import { GiExpense } from "react-icons/gi";
 import MultiButton from "src/Pages/GestaoMultas/Multas/components/multiBtn";
 import { formatDateAtual } from "src/Pages/Utils/formatDate";
 import { FaUserTimes } from "react-icons/fa";
+import { FaFileDownload } from "react-icons/fa";
 
 function FormularioNotificacao({
 	formik,
@@ -19,6 +20,7 @@ function FormularioNotificacao({
 	atualizarStatus,
 	gerarDespesa,
 	gerarImpedimento,
+	gerarTermo,
 }) {
 	async function removerCondutor(condutor) {
 		excluirCondutor(condutor);
@@ -34,6 +36,11 @@ function FormularioNotificacao({
 			label: "Gerar Impedimento",
 			onClick: () => gerarImpedimento(),
 			icon: <FaUserTimes size={22} />,
+		},
+		{
+			label: "Gerar Termo",
+			onClick: () => gerarTermo(),
+			icon: <FaFileDownload size={22} />,
 		},
 	];
 
