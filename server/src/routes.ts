@@ -477,5 +477,10 @@ routes.delete(
   GMDocumentosController.delete
 );
 
+routes.get(
+  "/gestao-multas/termos/ait/:ait/download",
+  GMNotificacoesController.gerarTermo
+);
+
 routes.get("/motoristas/:cpf/categoria", MotoristaController.findByCpf);
 export default routes;

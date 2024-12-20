@@ -732,6 +732,86 @@ function NotificacoesEditar() {
 		}
 	}
 
+	async function gerarTermo() {
+		try {
+			const mesesPorExtenso = [
+				"Janeiro",
+				"Fevereiro",
+				"Março",
+				"Abril",
+				"Maio",
+				"Junho",
+				"Julho",
+				"Agosto",
+				"Setembro",
+				"Outubro",
+				"Novembro",
+				"Dezembro",
+			];
+
+			const { value: formValues } = await Swal.fire({
+				title: "Insira o mês e o ano",
+				html: `
+			  <p>Os valores de mês e ano indicam o início do desconto.</p>
+			  <div style="display: flex; flex-direction: column; gap: 10px;">
+				<input id="input-mes" class="swal2-input" placeholder="Mês (1-12)" type="number" min="1" max="12" />
+				<input id="input-ano" class="swal2-input" placeholder="Ano (ex: 2024)" type="number" min="1900" max="2100" />
+			  </div>
+			`,
+				focusConfirm: false,
+				preConfirm: () => {
+					const mes = document.getElementById("input-mes").value;
+					const ano = document.getElementById("input-ano").value;
+
+					if (!mes || mes < 1 || mes > 12) {
+						Swal.showValidationMessage(
+							"Por favor, insira um mês válido (1 a 12)."
+						);
+						return null;
+					}
+
+					if (!ano || ano < 1900 || ano > 2100) {
+						Swal.showValidationMessage(
+							"Por favor, insira um ano válido (1900 a 2100)."
+						);
+						return null;
+					}
+
+					return { mes: parseInt(mes), ano: parseInt(ano) };
+				},
+			});
+
+			if (!formValues) {
+				return;
+			}
+
+			const { mes, ano } = formValues;
+			const mesPorExtenso = mesesPorExtenso[mes - 1];
+
+			setLoading(true);
+
+			const response = await ServiceGMNotificacoes.downloadTermo(
+				id,
+				mesPorExtenso,
+				ano
+			);
+			const blob = new Blob([response.data], {
+				type: "application/octet-stream",
+			});
+			const url = window.URL.createObjectURL(blob);
+			const a = document.createElement("a");
+			a.href = url;
+			a.download = `${id}.docx`;
+			a.click();
+			Swal.fire("Sucesso", "O documento está sendo baixado", "success");
+		} catch (error) {
+			setLoading(false);
+			Swal.fire("Erro", "Não foi possível baixar o documento", "error");
+		} finally {
+			setLoading(false);
+		}
+	}
+
 	const buttons = [
 		{
 			label: "Multa",
@@ -775,6 +855,7 @@ function NotificacoesEditar() {
 						atualizarStatus={atualizarStatus}
 						gerarDespesa={gerarDespesa}
 						gerarImpedimento={gerarImpedimento}
+						gerarTermo={gerarTermo}
 					></FormularioNotificacao>
 					<div>
 						<DocumentosGMList ait={id}></DocumentosGMList>
