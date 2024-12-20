@@ -719,6 +719,7 @@ function NotificacoesEditar() {
 						icon: "success",
 					});
 				} catch (error) {
+					setLoading(false);
 					await Swal.fire({
 						title: "Erro!",
 						text: "Ocorreu um erro ao gerar a solicitação de impedimento. Tente novamente.",
