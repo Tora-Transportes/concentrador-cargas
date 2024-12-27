@@ -11,6 +11,14 @@ export interface IResultExcel<T> {
   results: T[];
 }
 export class CargaRepository {
+  async searchLoteCargas(id: number): Promise<ICarga[]> {
+    return database.raw(`
+      SELECT * FROM "con_cargas"
+          WHERE "carga_filha" IS NOT NULL
+          AND "id" = ${id} 
+          OR "carga_mae_id" = ${id}`);
+  }
+
   async nextId(): Promise<number> {
     return Number(
       (await database("DUAL").select("seq_con_cargas.NEXTVAL as id"))[0].id

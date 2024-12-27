@@ -31,6 +31,7 @@ export interface IRepositoryAddCarga {
   ): Promise<IPaginationResult<ICarga>>;
   bulkCreate(cargas: ICarga[]): Promise<any>;
   nextId(): Promise<number>;
+  searchLoteCargas(id: number): Promise<ICarga[]>;
 }
 
 export interface IRepositoryCargaCsnInfoRepository {
@@ -447,29 +448,74 @@ export class UseCaseDeleteCarga {
     if (!carga) {
       throw new AppError("Carga não encontrada", 404);
     }
-    const validator = factoryCargaValidator();
-    const cargaAtualizada = {
-      ...validator.cast(carga, { stripUnknown: true }),
-      ativo: 0,
-      usuario,
-      data_atualizacao: DateUtils.getCurrentDate(),
-      observacao_exclusao: observacaoExclusao,
-      locais: undefined,
-    };
-
-    await this.cargaRepository.update(carga.id, cargaAtualizada as ICarga);
-    if (cargaAtualizada.carga_csn !== 1) {
-      this.notifyAll({
-        name: "@carga-delete-csn",
-        details: { id },
-      });
-    } else {
-      this.notifyAll({
-        name: "@carga-delete-csn",
-        details: { id },
-      });
+    if (carga.carga_filha == 1) {
+      throw new AppError(
+        `Essa carga é derivada de um lote, para efetuar e exclusão dela favor excluir a carga mãe de número: ${carga.carga_mae_id}`,
+        409
+      );
     }
-    return cargaAtualizada;
+
+    // verifica se é carga lote
+    const carga_lote = await this.cargaRepository.searchLoteCargas(carga.id);
+
+    if (carga_lote.length > 1) {
+      //carga lote
+
+      const cargasAtualizadas = [];
+
+      for (let index = 0; index < carga_lote.length; index++) {
+        const carga = carga_lote[index];
+
+        const validator = factoryCargaValidator();
+        const cargaAtualizada = {
+          ...validator.cast(carga, { stripUnknown: true }),
+          ativo: 0,
+          usuario,
+          data_atualizacao: DateUtils.getCurrentDate(),
+          observacao_exclusao: observacaoExclusao,
+          locais: undefined,
+        };
+        cargasAtualizadas.push(cargaAtualizada);
+        await this.cargaRepository.update(carga.id, cargaAtualizada as ICarga);
+        if (cargaAtualizada.carga_csn !== 1) {
+          this.notifyAll({
+            name: "@carga-delete-csn",
+            details: { id },
+          });
+        } else {
+          this.notifyAll({
+            name: "@carga-delete-csn",
+            details: { id },
+          });
+        }
+      }
+
+      return cargasAtualizadas;
+    } else {
+      const validator = factoryCargaValidator();
+      const cargaAtualizada = {
+        ...validator.cast(carga, { stripUnknown: true }),
+        ativo: 0,
+        usuario,
+        data_atualizacao: DateUtils.getCurrentDate(),
+        observacao_exclusao: observacaoExclusao,
+        locais: undefined,
+      };
+
+      await this.cargaRepository.update(carga.id, cargaAtualizada as ICarga);
+      if (cargaAtualizada.carga_csn !== 1) {
+        this.notifyAll({
+          name: "@carga-delete-csn",
+          details: { id },
+        });
+      } else {
+        this.notifyAll({
+          name: "@carga-delete-csn",
+          details: { id },
+        });
+      }
+      return cargaAtualizada;
+    }
   }
 }
 

@@ -29,6 +29,8 @@ import Select from "react-select";
 import ModalPreRequisito from "./components/ModalPreRequisito";
 import ServicePreRequisitos from "src/services/ServicePreRequisitos";
 import ServiceApp from "src/services/ServiceApp";
+import { Chip, Link } from "@material-ui/core";
+import { BsPencilSquare } from "react-icons/bs";
 
 function FormularioCadastroManual({
 	formik,
@@ -46,6 +48,7 @@ function FormularioCadastroManual({
 	setDisableColetaEntrega,
 	setLoading,
 	isPermissionUser = [],
+	fieldsDisable = [],
 }) {
 	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
 	const [veiculo, setVeiculo] = useState(null);
@@ -605,6 +608,36 @@ function FormularioCadastroManual({
 				</Row>
 				<Row>
 					<Col sm={12} md={6}>
+						<Form.Group controlId="tipo_carga">
+							<Chip
+								label={
+									formik.values.carga_filha == null
+										? "CARGA MÃE"
+										: formik.values.carga_filha == 0
+										? "CARGA MÃE"
+										: "CARGA FILHA"
+								}
+								color="primary"
+							></Chip>
+						</Form.Group>
+					</Col>
+					<Col sm={12} md={6}>
+						<Form.Group controlId="valor_frete">
+							<Link
+								to={`/cargas/manual/${formik.values.carga_mae_id}`}
+								target="_blank"
+								rel="noopener"
+							>
+								<BsPencilSquare style={{ color: "#00652E" }} size={15} />
+							</Link>
+						</Form.Group>
+					</Col>
+				</Row>
+				<div className="class-linha-title3">
+					<hr className="w-100"></hr>
+				</div>
+				<Row>
+					<Col sm={12} md={6}>
 						<Form.Group controlId="valor_frete">
 							<Form.Label>Valor Frete (R$)</Form.Label>
 							<CurrencyInput
@@ -630,6 +663,7 @@ function FormularioCadastroManual({
 										formik.setFieldValue("valor_frete", value);
 									}
 								}}
+								disabled={fieldsDisable.includes("valor_frete")}
 								defaultValue={formik.values.valor_frete}
 								className={`form-control ${
 									formik.touched.valor_frete && formik.errors.valor_frete
@@ -660,7 +694,7 @@ function FormularioCadastroManual({
 												? optionsForcaTrabalho[0]
 												: formik.values.forca_trabalho
 										}
-										required
+										isDisabled={fieldsDisable.includes("forca_trabalho")}
 									/>
 									{formik.errors.forca_trabalho &&
 										formik.touched.forca_trabalho && (
@@ -685,6 +719,7 @@ function FormularioCadastroManual({
 											onKeyDown={handleEnter}
 											onChange={formik.handleChange}
 											onBlur={formik.handleBlur}
+											disabled={fieldsDisable.includes("data_limite_oferta")}
 										/>
 									</Form.Group>
 								</Col>
@@ -747,9 +782,9 @@ function FormularioCadastroManual({
 									value={
 										formik.values.estilo_carga == 1
 											? optionsEstiloCarga[0]
-											: formik.values.estilo_carga
+											: optionsEstiloCarga[formik.values.estilo_carga - 1]
 									}
-									required
+									isDisabled={fieldsDisable.includes("estilo_carga")}
 								/>
 								{formik.errors.estilo_carga && formik.touched.estilo_carga && (
 									<div style={{ color: "red" }}>
@@ -788,8 +823,7 @@ function FormularioCadastroManual({
 												);
 											}}
 											onBlur={formik.handleBlur}
-											disabled={disabledFields.includes("quantidade_cargas")}
-											required
+											disabled={fieldsDisable.includes("quantidade_cargas")}
 										/>
 									</Form.Group>
 								) : (

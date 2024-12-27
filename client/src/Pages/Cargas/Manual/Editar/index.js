@@ -337,6 +337,14 @@ function Manual() {
 						isDisabledPlaca={isDisabledPlaca}
 						setDisabledPlaca={setDisabledPlaca}
 						setLoading={setLoading}
+						isPermissionUser={isPermissionUser}
+						fieldsDisable={[
+							"data_limite_oferta",
+							"quantidade_cargas",
+							"estilo_carga",
+							"forca_trabalho",
+							"valor_frete",
+						]}
 					/>
 					<div className="class-group-button">
 						<Button
