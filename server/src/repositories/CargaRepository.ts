@@ -228,6 +228,7 @@ export class CargaRepository {
       }
       if (isValid(query?.id)) {
         qb.andWhere("con_cargas.id", "like", `%${query.id}%`);
+        qb.orWhere("con_cargas.carga_mae_id", "like", `%${query.id}%`);
       }
       if (isValid(String(query?.e_lote))) {
         qb.andWhere("e_lote", "=", `${query.e_lote}`);
@@ -273,6 +274,13 @@ export class CargaRepository {
       }
       if (isValid(String(query?.exclude_cargas_app))) {
         qb.andWhere("carga_app", "!=", 1);
+      }
+      if (isValid(String(query?.estilo_carga))) {
+        if (Number(query.estilo_carga) !== 2) {
+          qb.andWhere("estilo_carga", "!=", 2);
+        } else {
+          qb.andWhere("estilo_carga", "=", 2);
+        }
       }
     };
 

@@ -29,8 +29,8 @@ import Select from "react-select";
 import ModalPreRequisito from "./components/ModalPreRequisito";
 import ServicePreRequisitos from "src/services/ServicePreRequisitos";
 import ServiceApp from "src/services/ServiceApp";
-import { Chip, Link } from "@material-ui/core";
-import { BsPencilSquare } from "react-icons/bs";
+import { Chip } from "@material-ui/core";
+import { GiCargoCrate } from "react-icons/gi";
 
 function FormularioCadastroManual({
 	formik,
@@ -601,41 +601,48 @@ function FormularioCadastroManual({
 				<hr className="w-100"></hr>
 			</div>
 			<>
-				<Row className="mb-5">
-					<Col sm={12}>
-						<h3 id="title-check-não">Detalhes </h3>
+				<Row className="align-items-center mb-5">
+					<Col xs="auto" className="text-center text-md-start">
+						<h3 id="title-check-não" className="mb-0">
+							Detalhes
+						</h3>
 					</Col>
-				</Row>
-				<Row>
-					<Col sm={12} md={6}>
+					<Col xs="auto" className="text-center text-md-start">
 						<Form.Group controlId="tipo_carga">
 							<Chip
 								label={
-									formik.values.carga_filha == null
-										? "CARGA MÃE"
-										: formik.values.carga_filha == 0
-										? "CARGA MÃE"
-										: "CARGA FILHA"
+									formik.values.carga_filha == null ||
+									formik.values.carga_filha == 0
+										? "Tipo : CARGA MÃE"
+										: "Tipo : CARGA FILHA"
 								}
-								color="primary"
-							></Chip>
+								color="default"
+							/>
 						</Form.Group>
 					</Col>
-					<Col sm={12} md={6}>
-						<Form.Group controlId="valor_frete">
-							<Link
-								to={`/cargas/manual/${formik.values.carga_mae_id}`}
-								target="_blank"
-								rel="noopener"
+					<Col xs="auto" className="text-center text-md-start">
+						{formik.values.carga_mae_id && (
+							<Button
+								style={{
+									backgroundColor: "#fff",
+									borderColor: "#fff",
+									borderRadius: "25px",
+									padding: "0",
+								}}
+								onClick={() =>
+									(window.location.href = `/cargas/manual/${formik.values.carga_mae_id}`)
+								}
 							>
-								<BsPencilSquare style={{ color: "#00652E" }} size={15} />
-							</Link>
-						</Form.Group>
+								<Chip
+									label="CARGA MÃE"
+									icon={<GiCargoCrate size={20} />}
+									color="primary"
+								/>
+							</Button>
+						)}
 					</Col>
 				</Row>
-				<div className="class-linha-title3">
-					<hr className="w-100"></hr>
-				</div>
+
 				<Row>
 					<Col sm={12} md={6}>
 						<Form.Group controlId="valor_frete">

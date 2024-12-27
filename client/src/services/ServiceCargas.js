@@ -334,6 +334,7 @@ class ServiceCargas {
 		carga_csn,
 		carga_app,
 		exclude_cargas_app,
+		estilo_carga,
 	}) {
 		const url = carga_csn === 1 ? "csn/cargas/info" : "/cargas/";
 		return api.get(url, {
@@ -360,6 +361,7 @@ class ServiceCargas {
 				carga_csn,
 				carga_app,
 				exclude_cargas_app,
+				estilo_carga,
 			},
 		});
 	}
