@@ -25,7 +25,7 @@ import ListAddItens from "../ListAddItens";
 import "../FormularioCadastroManual/formularioManual.css";
 import somaDebitoVeiculo from "src/Pages/Utils/somaDebitoVeiculo";
 import CurrencyInput from "react-currency-input-field";
-//import Select from "react-select";
+import Select from "react-select";
 import ModalPreRequisito from "./components/ModalPreRequisito";
 import ServicePreRequisitos from "src/services/ServicePreRequisitos";
 import ServiceApp from "src/services/ServiceApp";
@@ -45,9 +45,10 @@ function FormularioCadastroManual({
 	isDisableColetaEntrega,
 	setDisableColetaEntrega,
 	setLoading,
+	isPermissionUser = [],
 }) {
-	const [veiculo, setVeiculo] = useState(null);
 	const [isDetalhesVeiculo, setDetalesVeiculo] = useState(null);
+	const [veiculo, setVeiculo] = useState(null);
 	const [isDetalhesCarreta, setDetalesCarreta] = useState(null);
 	const [debitosVeiculo, setDebitosVeiculo] = useState(null);
 	const [valorTotalDebito, setValorTotal] = useState();
@@ -117,21 +118,21 @@ function FormularioCadastroManual({
 		);
 	};
 
-	/* 	const optionsForcaTrabalho = [
-		{ value: 1, label: "Agregado" },
-		{ value: 2, label: "Carreteiro" },
-		{ value: 3, label: "Ambos" },
+	const optionsForcaTrabalho = [
+		{ value: 1, label: "Ambos" },
+		{ value: 2, label: "Agregado" },
+		{ value: 3, label: "Carreteiro" },
 	];
- */
+
 	/* 	const optionsViagem = [
 		{ value: 1, label: "Viagem" },
 		{ value: 2, label: "Pré-Viagem" },
 	]; */
 
-	/* 	const optionsEstiloCarga = [
+	const optionsEstiloCarga = [
 		{ value: 1, label: "Normal" },
 		{ value: 2, label: "Escoamento" },
-	]; */
+	];
 
 	async function handleShowDetailsAboutVehicle(plate) {
 		setLoading(true);
@@ -599,7 +600,7 @@ function FormularioCadastroManual({
 			<>
 				<Row className="mb-5">
 					<Col sm={12}>
-						<h3 id="title-check-não">Detalhes</h3>
+						<h3 id="title-check-não">Detalhes </h3>
 					</Col>
 				</Row>
 				<Row>
@@ -640,7 +641,7 @@ function FormularioCadastroManual({
 					</Col>
 					<Col>
 						<Row>
-							{/* 							<Col sm={6} md={7} lg={6}>
+							<Col sm={6} md={7} lg={6}>
 								<Form.Group
 									className="mb-3"
 									controlId="validationFormikForcaTrabalho"
@@ -651,10 +652,14 @@ function FormularioCadastroManual({
 										name="forca_trabalho"
 										placeholder="Selecione"
 										options={optionsForcaTrabalho}
-										onChange={(option) =>
-											formik.setFieldValue("forca_trabalho", option)
+										onChange={(option) => {
+											formik.setFieldValue("forca_trabalho", option);
+										}}
+										value={
+											formik.values.forca_trabalho == 1
+												? optionsForcaTrabalho[0]
+												: formik.values.forca_trabalho
 										}
-										value={formik.values.forca_trabalho}
 										required
 									/>
 									{formik.errors.forca_trabalho &&
@@ -664,7 +669,28 @@ function FormularioCadastroManual({
 											</div>
 										)}
 								</Form.Group>
-							</Col> */}
+							</Col>
+							{isPermissionUser?.includes("CARGAS_DATA_OFERTA_LIMITE") ? (
+								<Col>
+									<Form.Group
+										className="mb-3"
+										controlId="validationFormikDataLimiteOferta"
+									>
+										<Form.Label>Data Limite Oferta</Form.Label>
+										<Form.Control
+											type="date"
+											placeholder=" "
+											name="data_limite_oferta"
+											value={formik.values.data_limite_oferta}
+											onKeyDown={handleEnter}
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+										/>
+									</Form.Group>
+								</Col>
+							) : (
+								<></>
+							)}
 							{/* 							<Col>
 								{formik.values.carga_app == 1 ? (
 									<Form.Group
@@ -703,33 +729,39 @@ function FormularioCadastroManual({
 					</Col>
 				</Row>
 				<Row>
-					{/* 					<Col sm={12} md={6}>
-						<Form.Group
-							className="mb-3"
-							controlId="validationFormikEstiloCarga"
-						>
-							<Form.Label>Estilo Carga</Form.Label>
-							<Select
-								id="estilo_carga"
-								name="estilo_carga"
-								placeholder="Selecione"
-								options={optionsEstiloCarga}
-								onChange={(option) =>
-									formik.setFieldValue("estilo_carga", option)
-								}
-								value={
-									formik.values.estilo_carga == 1
-										? optionsEstiloCarga[0]
-										: formik.values.estilo_carga
-								}
-								required
-							/>
-							{formik.errors.estilo_carga && formik.touched.estilo_carga && (
-								<div style={{ color: "red" }}>{formik.errors.estilo_carga}</div>
-							)}
-						</Form.Group>
-					</Col> */}
-					{/* 					<Col>
+					{isPermissionUser?.includes("CARGAS_ESTILO_CARGA") ? (
+						<Col sm={12} md={6}>
+							<Form.Group
+								className="mb-3"
+								controlId="validationFormikEstiloCarga"
+							>
+								<Form.Label>Estilo Carga</Form.Label>
+								<Select
+									id="estilo_carga"
+									name="estilo_carga"
+									placeholder="Selecione"
+									options={optionsEstiloCarga}
+									onChange={(option) =>
+										formik.setFieldValue("estilo_carga", option)
+									}
+									value={
+										formik.values.estilo_carga == 1
+											? optionsEstiloCarga[0]
+											: formik.values.estilo_carga
+									}
+									required
+								/>
+								{formik.errors.estilo_carga && formik.touched.estilo_carga && (
+									<div style={{ color: "red" }}>
+										{formik.errors.estilo_carga}
+									</div>
+								)}
+							</Form.Group>
+						</Col>
+					) : (
+						<></>
+					)}
+					<Col>
 						<Row>
 							<Col sm={6} md={7} lg={6}>
 								{formik.values.estilo_carga.value &&
@@ -738,16 +770,23 @@ function FormularioCadastroManual({
 										className="mb-3"
 										controlId="validationFormikForcaTrabalho"
 									>
-										<Form.Label>Quantidade de Cargas</Form.Label>
+										<Form.Label>Quantidade de Cargas Filhas</Form.Label>
 										<Form.Control
 											type="number"
 											min={1}
-											step={0.01}
+											step={1} // Ajuste o step para aceitar apenas inteiros
 											placeholder=" "
 											name="quantidade_cargas"
 											value={formik.values.quantidade_cargas}
 											onKeyDown={handleEnter}
-											onChange={formik.handleChange}
+											onChange={(e) => {
+												// Permite apenas números inteiros
+												const value = parseInt(e.target.value, 10);
+												formik.setFieldValue(
+													"quantidade_cargas",
+													isNaN(value) ? "" : value
+												);
+											}}
 											onBlur={formik.handleBlur}
 											disabled={disabledFields.includes("quantidade_cargas")}
 											required
@@ -757,30 +796,8 @@ function FormularioCadastroManual({
 									<></>
 								)}
 							</Col>
-							<Col>
-								{formik.values.estilo_carga.value &&
-								formik.values.estilo_carga.value == 2 ? (
-									<Form.Group
-										className="mb-3"
-										controlId="validationFormikDataLimiteOferta"
-									>
-										<Form.Label>Data Limite Oferta</Form.Label>
-										<Form.Control
-											type="date"
-											placeholder=" "
-											name="data_limite_oferta"
-											value={formik.values.data_limite_oferta}
-											onKeyDown={handleEnter}
-											onChange={formik.handleChange}
-											onBlur={formik.handleBlur}
-										/>
-									</Form.Group>
-								) : (
-									<></>
-								)}
-							</Col>
 						</Row>
-					</Col> */}
+					</Col>
 				</Row>
 			</>
 			<div className="class-linha-title3">

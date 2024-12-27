@@ -104,10 +104,31 @@ export class UseCaseAddCarga {
         );
       }
     }
-
+    const cargasFilhas = [];
+    carga.carga_mae_id = null;
+    carga.carga_filha = 0;
+    const qtd_cargas_filhas = carga.quantidade_cargas ?? 0;
+    delete carga.quantidade_cargas;
     const cargaOficial = operation.validate(null, carga);
 
     await this.cargaRepository.create(cargaOficial);
+    cargasFilhas.push(cargaOficial);
+
+    if (carga.estilo_carga == 2) {
+      // 1 Normal | 2 Escoamento
+      for (let idx = 0; idx < qtd_cargas_filhas; idx++) {
+        const cargaFilha = carga;
+        delete cargaFilha.quantidade_cargas;
+        const novo_id = await this.cargaRepository.nextId();
+        cargaFilha.id = novo_id;
+        cargaFilha.carga_mae_id = cargaOficial.id;
+        cargaFilha.carga_filha = 1;
+        const cargaOficialFilha = operation.validate(null, cargaFilha);
+        await this.cargaRepository.create(cargaFilha);
+        cargasFilhas.push(cargaOficialFilha);
+      }
+    }
+
     if (cargaOficial.carga_csn !== 1) {
       this.notifyAll({
         name: "@carga-create",
@@ -119,7 +140,7 @@ export class UseCaseAddCarga {
         details: await this.cargaCsnInfoRepository.index(cargaOficial.id),
       });
     }
-    return carga;
+    return cargasFilhas;
   }
 }
 export interface IRepositoryUpdateCarga extends IRepositoryAddCarga {

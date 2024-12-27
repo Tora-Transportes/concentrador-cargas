@@ -83,7 +83,7 @@ routes.post("/portal/cargas", CargaController.createByImport);
 
 routes.use("/static/", express.static(path.resolve(__dirname, "..", "static")));
 routes.use(TokenMiddleware);
-routes.use(LogMiddleware);
+//routes.use(LogMiddleware);
 routes.use(ConvertFieldsToDate);
 routes.get("/cargas", CargaController.search);
 routes.post("/cargas", CargaController.create);

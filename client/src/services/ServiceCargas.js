@@ -31,6 +31,10 @@ class ServiceCargas {
 		rastreador,
 		carga_app,
 		valor_frete,
+		forca_trabalho,
+		estilo_carga,
+		quantidade_cargas,
+		data_limite_oferta,
 	}) {
 		const carga = {
 			e_lote,
@@ -63,6 +67,10 @@ class ServiceCargas {
 			rastreador,
 			carga_app,
 			valor_frete,
+			forca_trabalho,
+			estilo_carga,
+			quantidade_cargas,
+			data_limite_oferta,
 		};
 		return await api.post("/cargas", carga);
 	}
