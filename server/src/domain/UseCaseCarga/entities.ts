@@ -126,6 +126,9 @@ export class UseCaseAddCarga {
         cargaFilha.carga_filha = 1;
         const cargaOficialFilha = operation.validate(null, cargaFilha);
         await this.cargaRepository.create(cargaFilha);
+        if (cargaFilha.locais == undefined) {
+          await this.locaisRepository.clear(cargaFilha.id);
+        }
         cargasFilhas.push(cargaOficialFilha);
       }
     }
