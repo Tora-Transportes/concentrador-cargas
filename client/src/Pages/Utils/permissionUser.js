@@ -39,4 +39,6 @@ export const allTipoPermissoes = [
 	{ name: "GM_NOTIFICACOES" },
 	{ name: "GM_MULTAS" },
 	{ name: "GM_IMPEDIMENTOS" },
+	{ name: "CARGAS_ESTILO_CARGA" },
+	{ name: "CARGAS_DATA_OFERTA_LIMITE" },
 ];

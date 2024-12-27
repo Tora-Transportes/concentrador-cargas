@@ -48,7 +48,7 @@ function Manual() {
 			documento_transporte: "",
 			carga_app: 0,
 			valor_frete: 0,
-			forca_trabalho: 0,
+			forca_trabalho: 1,
 			tipo_viagem: 1,
 			estilo_carga: 1,
 			quantidade_cargas: 0,
@@ -69,6 +69,13 @@ function Manual() {
 			if (typeof values.estilo_carga == "object") {
 				values.estilo_carga = values.estilo_carga.value;
 			}
+
+			if (values.estilo_carga == 2) {
+				//escoamento
+				values.placa_veiculo = null;
+				values.placa_bitrem = null;
+				values.placa_carreta = null;
+			}
 			values.valor_frete = String(values.valor_frete);
 			values.valor_frete = Number(values.valor_frete.replace(",", "."));
 			try {
@@ -81,19 +88,31 @@ function Manual() {
 				values.valor_frete = String(values.valor_frete);
 				if (values.carga_app === 1 && data) {
 					const oid = getClaims().oid;
-					const idCarga = String(data.data.id);
-					const bodyApp = {
-						...values,
+
+					envioCargaApp(
+						data.data,
 						oid,
-						idCarga,
-					};
-					envioCargaApp(bodyApp);
+						data.data.length == 1 ? values.cpf_motorista : ""
+					);
 				}
-				swal(
-					"Sucesso!",
-					`Carga cadastrada com o identificador ${data.data.id}!`,
-					"success"
-				);
+				const cargaPrincipal = data.data[0];
+				const cargasFilhas = data.data.slice(1);
+
+				const idsCargasFilhas = cargasFilhas
+					.map((carga) => carga.id)
+					.join(", ");
+
+				const mensagem = `
+					Carga cadastrada com sucesso!
+					Identificador da carga principal: ${cargaPrincipal.id}
+					${
+						cargasFilhas.length > 0
+							? `Identificadores das cargas filhas: ${idsCargasFilhas}`
+							: ""
+					}
+				`;
+
+				swal("Sucesso!", mensagem, "success");
 				setDisabledPlaca(false);
 				resetForm();
 			} catch (error) {
@@ -200,6 +219,7 @@ function Manual() {
 						isDisableColetaEntrega={isDisableColetaEntrega}
 						setDisableColetaEntrega={setDisableColetaEntrega}
 						setLoading={setLoading}
+						isPermissionUser={isPermissionUser}
 					/>
 					<Row>
 						<Col>

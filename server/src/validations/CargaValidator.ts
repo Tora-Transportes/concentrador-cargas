@@ -52,6 +52,12 @@ export function factoryCargaValidator() {
     rastreador: yup.string().nullable().notRequired(),
     carga_app: yup.number().nullable().notRequired(),
     valor_frete: yup.number().nullable().notRequired(),
+    forca_trabalho: yup.number().nullable().notRequired(),
+    estilo_carga: yup.number().nullable().notRequired(),
+    quantidade_cargas: yup.number().nullable().notRequired(),
+    data_limite_oferta: yup.date().nullable().notRequired(),
+    carga_mae_id: yup.number().nullable().notRequired(),
+    carga_filha: yup.number().nullable().notRequired(),
   });
 
   return cargaValidator;

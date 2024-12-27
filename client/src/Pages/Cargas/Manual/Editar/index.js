@@ -53,6 +53,13 @@ function Manual() {
 			fk_situacao: null,
 			carga_app: 0,
 			valor_frete: 0,
+			tipo_viagem: 1,
+			estilo_carga: 1,
+			quantidade_cargas: 0,
+			data_limite_oferta: "",
+			idCargaMae: null,
+			prerequisitos: [],
+			cpf_motorista: "",
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -330,6 +337,14 @@ function Manual() {
 						isDisabledPlaca={isDisabledPlaca}
 						setDisabledPlaca={setDisabledPlaca}
 						setLoading={setLoading}
+						isPermissionUser={isPermissionUser}
+						fieldsDisable={[
+							"data_limite_oferta",
+							"quantidade_cargas",
+							"estilo_carga",
+							"forca_trabalho",
+							"valor_frete",
+						]}
 					/>
 					<div className="class-group-button">
 						<Button

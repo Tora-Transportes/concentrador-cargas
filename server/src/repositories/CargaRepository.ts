@@ -11,6 +11,14 @@ export interface IResultExcel<T> {
   results: T[];
 }
 export class CargaRepository {
+  async searchLoteCargas(id: number): Promise<ICarga[]> {
+    return database.raw(`
+      SELECT * FROM "con_cargas"
+          WHERE "carga_filha" IS NOT NULL
+          AND "id" = ${id} 
+          OR "carga_mae_id" = ${id}`);
+  }
+
   async nextId(): Promise<number> {
     return Number(
       (await database("DUAL").select("seq_con_cargas.NEXTVAL as id"))[0].id
@@ -220,6 +228,7 @@ export class CargaRepository {
       }
       if (isValid(query?.id)) {
         qb.andWhere("con_cargas.id", "like", `%${query.id}%`);
+        qb.orWhere("con_cargas.carga_mae_id", "like", `%${query.id}%`);
       }
       if (isValid(String(query?.e_lote))) {
         qb.andWhere("e_lote", "=", `${query.e_lote}`);
@@ -265,6 +274,13 @@ export class CargaRepository {
       }
       if (isValid(String(query?.exclude_cargas_app))) {
         qb.andWhere("carga_app", "!=", 1);
+      }
+      if (isValid(String(query?.estilo_carga))) {
+        if (Number(query.estilo_carga) !== 2) {
+          qb.andWhere("estilo_carga", "!=", 2);
+        } else {
+          qb.andWhere("estilo_carga", "=", 2);
+        }
       }
     };
 

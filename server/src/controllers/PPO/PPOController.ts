@@ -316,7 +316,7 @@ class PPOController implements IPPOController {
       ano: String(ano),
       positions: {
         x: "20.0",
-        y: x_position,
+        y: x_position == "" ? "92.0" : x_position,
         z: "1",
       },
       url_file: "xpto",
