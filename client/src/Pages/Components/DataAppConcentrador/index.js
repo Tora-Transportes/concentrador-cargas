@@ -106,7 +106,14 @@ export const envioCargaApp = async (cargas, oid, cpf_motorista) => {
 		});
 
 		// Enviar todas as cargas em uma única requisição
-		await ServiceApp.envioCargaApp(bodyEnvioAppList);
+		console.log(bodyEnvioAppList);
+		if (bodyEnvioAppList[0].estilo_carga == 1) {
+			await ServiceApp.envioCargaApp(bodyEnvioAppList[0]);
+		} else {
+			await ServiceApp.envioCargaLoteApp({
+				freights: bodyEnvioAppList,
+			});
+		}
 	} catch (error) {
 		console.log(error);
 		saveError(error);

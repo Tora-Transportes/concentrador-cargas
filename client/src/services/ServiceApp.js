@@ -42,6 +42,46 @@ class ServiceApp {
 		}
 	}
 
+	async envioCargaLoteApp(body, fk_filial) {
+		try {
+			const response = await apiApp.post("/freightBatch", body);
+
+			const bodyLog = {
+				metodo: "POST - CRIAR CARGA LOTE",
+				status: response.status.toString(),
+				json_envio: JSON.stringify(body),
+				json_retorno: JSON.stringify(response.data),
+				erro: response.status == 200 ? 0 : 1,
+				fk_filial: fk_filial,
+			};
+
+			await api.post("/logs/app/integracao", bodyLog);
+
+			return response;
+		} catch (error) {
+			// Captura e log de erros
+			const bodyLog = {
+				metodo: "POST - CRIAR CARGA LOTE",
+				status: error.response ? error.response.status.toString() : "500",
+				json_envio: JSON.stringify(body),
+				json_retorno: error.response
+					? JSON.stringify(error.response.data)
+					: "Erro de rede",
+				erro: 1,
+				fk_filial: fk_filial,
+			};
+
+			await api.post("/logs/app/integracao", bodyLog);
+
+			return {
+				status: error.response ? error.response.status : 500,
+				data: error.response
+					? error.response.data
+					: "Erro de rede ao criar a carga",
+			};
+		}
+	}
+
 	async cancelarCargaApp(body) {
 		try {
 			const response = await apiApp.patch("/freight/cancel", body);
