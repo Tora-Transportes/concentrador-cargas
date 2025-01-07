@@ -119,6 +119,57 @@ function FormularioNotificacao({
 
 			<Row>
 				<Col>
+					<FloatingLabel label="AIT Originária" className="mb-3">
+						<Form.Control
+							id="ait_originaria"
+							type="text"
+							placeholder=" "
+							name="ait_originaria"
+							value={formik.values.ait_originaria}
+							onChange={formik.handleChange}
+							onBlur={formik.handleBlur}
+							required
+							disabled
+						/>
+					</FloatingLabel>
+				</Col>
+				<Col>
+					<FloatingLabel label="AIT SNE" className="mb-3">
+						<Form.Control
+							id="ait_sne"
+							type="text"
+							placeholder=" "
+							name="ait_sne"
+							value={formik.values.ait_sne}
+							onChange={formik.handleChange}
+							onBlur={formik.handleBlur}
+							required
+							disabled
+						/>
+					</FloatingLabel>
+				</Col>
+			</Row>
+
+			<Row>
+				<Col>
+					<FloatingLabel label="Descrição Multa" className="mb-3">
+						<Form.Control
+							id="descricao"
+							type="text"
+							placeholder=" "
+							name="descricao"
+							value={formik.values.descricao}
+							onChange={formik.handleChange}
+							onBlur={formik.handleBlur}
+							required
+							disabled
+						/>
+					</FloatingLabel>
+				</Col>
+			</Row>
+
+			<Row>
+				<Col>
 					<FloatingLabel label="Placa" className="mb-3">
 						<Form.Control
 							id="placa"
