@@ -44,7 +44,7 @@ class ServiceApp {
 
 	async envioCargaLoteApp(body, fk_filial) {
 		try {
-			const response = await apiApp.post("/freightBatch", body);
+			const response = await apiApp.post("/freight/freightBatch", body);
 
 			const bodyLog = {
 				metodo: "POST - CRIAR CARGA LOTE",
