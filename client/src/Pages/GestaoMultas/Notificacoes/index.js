@@ -6,6 +6,7 @@ import factoryReducerCargas from "../../../hooks/storageCargas/factoryReducerCar
 import ServiceGMNotificacoes from "../../../services/GestaoMultas/ServiceNotificacoes";
 import { Toast } from "primereact/toast";
 import { possuiPermissaoGestaoMultas } from "src/Pages/Utils/validationPermissionUser";
+import { showToastMessage } from "src/Pages/Utils/toastMessage";
 
 const Notificacoes = () => {
 	const defaultCargas = {
@@ -57,12 +58,46 @@ const Notificacoes = () => {
 		[setLoading, dispatchCargas]
 	);
 
+	async function handleExportExcel() {
+		setLoading(true);
+
+		const response = await ServiceGMNotificacoes.gerarExcel({
+			...lastOptions.filters,
+		});
+
+		if (response.status === 202) {
+			const message =
+				"Não foram encontrados dados com essas informações no filtro de data.";
+			await showToastMessage(toast, "warn", message, 7000);
+			setLoading(false);
+			setModalShowExcel(true);
+		} else if (response.data.byteLength < 14493) {
+			const message =
+				"Não foram encontrados dados com essas informações no filtro de data.";
+			await showToastMessage(toast, "warn", message, 7000);
+			setLoading(false);
+			setModalShowExcel(true);
+		} else {
+			const url = window.URL.createObjectURL(new Blob([response.data]));
+			const link = document.createElement("a");
+			link.href = url;
+			link.setAttribute(
+				"download",
+				`notificacoes_${new Date().getTime()}.xlsx`
+			);
+			link.click();
+			setModalShowExcel(false);
+			setLoading(false);
+		}
+	}
+
 	return (
 		<div>
 			<Menusuperior />
 			<LoadingScreen />
 			<Toast ref={toast} className="w-25" position="top-center"></Toast>
 			<ViewNotificacoes
+				handleExportExcel={handleExportExcel}
 				get_data={tableFetchData}
 				data={cargas}
 				itensPerPage={itensPerPage}
