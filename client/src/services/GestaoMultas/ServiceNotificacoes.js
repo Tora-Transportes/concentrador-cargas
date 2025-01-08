@@ -57,6 +57,13 @@ class ServiceGMNotificacoes {
 			}
 		);
 	}
+
+	async gerarExcel(query) {
+		return await api.get("/gestao-multas/notificacoes/excel", {
+			params: query,
+			responseType: "arraybuffer",
+		});
+	}
 }
 
 export default new ServiceGMNotificacoes();

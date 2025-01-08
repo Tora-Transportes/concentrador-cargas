@@ -410,6 +410,10 @@ routes.get(
 );
 
 routes.get("/gestao-multas/notificacoes", GMNotificacoesController.list);
+routes.get(
+  "/gestao-multas/notificacoes/excel",
+  GMNotificacoesController.gerarExcel
+);
 routes.get("/gestao-multas/notificacoes/:ait", GMNotificacoesController.index);
 routes.get(
   "/gestao-multas/smartec/notificacoes/:ait",
@@ -452,6 +456,7 @@ routes.get("/gestao-multas/impedimentos", GMImpedimentosController.list);
 routes.post("/gestao-multas/impedimentos", GMImpedimentosController.create);
 routes.put("/gestao-multas/impedimentos/:id", GMImpedimentosController.update);
 
+routes.get("/gestao-multas/multas/excel", GMMultasController.gerarExcel);
 routes.get("/gestao-multas/multas", GMMultasController.list);
 routes.get("/gestao-multas/multas/:ait", GMMultasController.index);
 
