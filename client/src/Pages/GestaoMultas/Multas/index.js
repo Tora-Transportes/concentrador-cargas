@@ -65,15 +65,8 @@ const Multas = () => {
 			...lastOptions.filters,
 		});
 
-		if (response.status === 202) {
-			const message =
-				"Não foram encontrados dados com essas informações no filtro de data.";
-			await showToastMessage(toast, "warn", message, 7000);
-			setLoading(false);
-			setModalShowExcel(true);
-		} else if (response.data.byteLength < 14493) {
-			const message =
-				"Não foram encontrados dados com essas informações no filtro de data.";
+		if (response.status === 404) {
+			const message = "Não foram encontrados dados com esse filtro.";
 			await showToastMessage(toast, "warn", message, 7000);
 			setLoading(false);
 			setModalShowExcel(true);
