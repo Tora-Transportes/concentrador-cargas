@@ -448,25 +448,20 @@ function NotificacoesEditar() {
 		if (possui) {
 			try {
 				setLoading(true);
-				const pdf = await ServiceGMNotificacoes.gerarFici({
+				const response = await ServiceGMNotificacoes.gerarFici({
 					empresa_id: formik.values.empresa_id,
 					ait: formik.values.ait,
 					codigo_orgao: formik.values.codigo_orgao,
 				});
 
-				console.log(pdf);
-
-				const pdfBlob = new Blob([pdf.data], { type: "application/pdf" });
-
-				const pdfUrl = URL.createObjectURL(pdfBlob);
-
-				const link = document.createElement("a");
-				link.href = pdfUrl;
-				link.download = `FICI-AIT-${formik.values.ait}`;
-
-				link.click();
-
-				URL.revokeObjectURL(pdfUrl);
+				const blob = new Blob([response.data], {
+					type: "application/octet-stream",
+				});
+				const url = window.URL.createObjectURL(blob);
+				const a = document.createElement("a");
+				a.href = url;
+				a.download = `fici-${id}.docx`;
+				a.click();
 			} catch (error) {
 				console.error(error);
 			} finally {

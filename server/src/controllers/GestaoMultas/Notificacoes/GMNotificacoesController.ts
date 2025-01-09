@@ -105,7 +105,10 @@ class GMNotificacoesController implements IGMNotificacoesController {
       );
 
       const { data, status, headers } = response;
-      if (headers["content-type"] === "application/pdf") {
+      if (
+        headers["content-type"] ===
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      ) {
         res.setHeader(
           "Content-Disposition",
           'attachment; filename="documento.pdf"'
