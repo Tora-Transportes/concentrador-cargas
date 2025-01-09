@@ -9,6 +9,7 @@ import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import "./style.css";
 import FormularioNotificacao from "../components/formulario";
 import ServiceGMNotificacoes from "src/services/GestaoMultas/ServiceNotificacoes";
+import ServiceGMImpendimentos from "src/services/GestaoMultas/ServiceImpedimentos";
 import { formatDateAtual } from "src/Pages/Utils/formatDate";
 import BtnRefresh from "../components/btnAtualizar";
 import MultiButton from "../components/multiBtn";
@@ -16,6 +17,8 @@ import { FaFileInvoiceDollar } from "react-icons/fa6";
 import { FaFileContract } from "react-icons/fa6";
 import { FaFileExport } from "react-icons/fa";
 import { possuiPermissaoGestaoMultas } from "src/Pages/Utils/validationPermissionUser";
+import Swal from "sweetalert2";
+import DocumentosGMList from "../../components/DocumentsComponent";
 
 function NotificacoesEditar() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -121,6 +124,9 @@ function NotificacoesEditar() {
 					cod_usu_create: "",
 				},
 			],
+
+			despesasHistorico: [],
+			infratorHistorico: [],
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -212,6 +218,24 @@ function NotificacoesEditar() {
 				}
 			});
 
+			const despesasHistorico = notificacaoResponse.despesasHistorico || [];
+			despesasHistorico.forEach((item, index) => {
+				for (let i in item) {
+					let nonNullValue = item[i] === null ? "" : item[i];
+					if (i === "created_at") {
+						formik.setFieldValue(
+							`despesasHistorico[${index}].${i}`,
+							formatDateAtual(nonNullValue)
+						);
+					} else {
+						formik.setFieldValue(
+							`despesasHistorico[${index}].${i}`,
+							nonNullValue
+						);
+					}
+				}
+			});
+
 			const statusInterno = notificacaoResponse.statusInterno;
 
 			formik.setFieldValue(`statusInterno`, statusInterno);
@@ -229,6 +253,24 @@ function NotificacoesEditar() {
 					} else {
 						formik.setFieldValue(
 							`statusInternoHistorico[${index}].${i}`,
+							nonNullValue
+						);
+					}
+				}
+			});
+
+			const infratorHistorico = notificacaoResponse.infratorHistorico || [];
+			infratorHistorico.forEach((item, index) => {
+				for (let i in item) {
+					let nonNullValue = item[i] === null ? "" : item[i];
+					if (i === "created_at") {
+						formik.setFieldValue(
+							`infratorHistorico[${index}].${i}`,
+							formatDateAtual(nonNullValue)
+						);
+					} else {
+						formik.setFieldValue(
+							`infratorHistorico[${index}].${i}`,
 							nonNullValue
 						);
 					}
@@ -283,6 +325,7 @@ function NotificacoesEditar() {
 					CNH: data.infrator.cnh,
 					CODIGOORGAO: data.notificacao.codigo_orgao,
 					id_infrator: data.infrator.id.toString(),
+					cod_user_created: String(getClaims().name),
 				});
 
 				await refreshPage();
@@ -331,6 +374,7 @@ function NotificacoesEditar() {
 					EMPRESA_ID: notificacao.empresa_id,
 					AIT: notificacao.ait,
 					CODIGOORGAO: notificacao.codigo_orgao,
+					cod_user_created: String(getClaims().name),
 				});
 
 				await refreshPage();
@@ -496,6 +540,278 @@ function NotificacoesEditar() {
 		}
 	}
 
+	async function gerarDespesa() {
+		const possui = await possuiPermissaoGestaoMultas("Permissão N2");
+		if (possui) {
+			const dadosFormatados = `
+	            Nome do Motorista: ${formik.values.infrator.nome}
+	            Empresa: ${formik.values.empresa?.nome || ""}
+	            AIT: ${formik.values.infrator.ait}
+	            Valor: R$ ${formik.values.valor_a_pagar}
+	            Data da Multa: ${formatDateAtual(formik.values.data_infracao)}
+	        `;
+
+			const options = Array.from({ length: 12 }, (_, i) => i + 1)
+				.map(
+					(value) =>
+						`<option value="${value}">${value} ${
+							value === 1 ? "vez" : "vezes"
+						}</option>`
+				)
+				.join("");
+
+			const result = await swal({
+				title: "Dados da Infração e Parcelamento",
+				content: {
+					element: "div",
+					attributes: {
+						innerHTML: `
+						<p style="text-align: left; white-space: pre-wrap;">${dadosFormatados}</p>
+						<p style="font-style: italic; color: gray;">
+							Por favor, revise as informações acima antes de prosseguir.
+						</p>
+						<label style="font-weight: bold;">Escolha o número de parcelas:</label>
+						<select id="parcelas" style="margin-top: 10px; padding: 5px; width: 100%; font-size: 16px;">
+							${options}
+						</select>
+						<label style="font-weight: bold; margin-top: 15px; display: block;">Observação:</label>
+						<textarea
+							id="observacao"
+							maxlength="200"
+							placeholder="Adicione uma observação (máximo de 200 caracteres)"
+							style="width: 100%; height: 60px; margin-top: 5px; padding: 5px; font-size: 16px; resize: none;"
+						></textarea>
+					`,
+					},
+				},
+				buttons: {
+					cancel: {
+						text: "Cancelar",
+						value: null,
+						visible: true,
+						className: "btn-secondary",
+						closeModal: true,
+					},
+					confirm: {
+						text: "Confirmar",
+						value: true,
+						visible: true,
+						className: "btn-success",
+						closeModal: true,
+					},
+				},
+			});
+
+			if (result) {
+				try {
+					const seletorParcelas = document.getElementById("parcelas");
+					const observacaoInput = document.getElementById("observacao");
+
+					const qtdeParcelas = parseInt(seletorParcelas.value, 10);
+					const observacao = observacaoInput.value.trim();
+
+					setLoading(true);
+
+					const body = {
+						nome_motorista: formik.values.infrator.nome,
+						cpf: formik.values.infrator.cpf,
+						empresa: formik.values.empresa?.nome || "",
+						placa_cavalo: formik.values.infrator.cavalo,
+						placa_carreta: formik.values.infrator.carreta,
+						placa_bitrem: formik.values.infrator.bitrem,
+						ait: formik.values.infrator.ait,
+						valor: formik.values.valor_a_pagar,
+						data_multa: formik.values.data_infracao,
+						local: formik.values.local,
+						status: 1,
+						qtde_parcelas: qtdeParcelas,
+						observacao: observacao,
+						cod_user_create: String(getClaims().name),
+					};
+
+					console.log(body);
+					await ServiceGMNotificacoes.gerarDespesa(body);
+
+					await refreshPage();
+
+					await swal({
+						title: "Sucesso!",
+						text: `Despesa inserida com sucesso\n\n`,
+						icon: "success",
+					});
+				} catch (error) {
+					console.error("Erro ao gerar despesa:", error);
+					await swal({
+						title: "Erro!",
+						text: "Ocorreu um erro ao gerar a despesa. Tente novamente.",
+						icon: "error",
+					});
+				} finally {
+					setLoading(false);
+				}
+			}
+		}
+	}
+
+	async function gerarImpedimento() {
+		const possui = await possuiPermissaoGestaoMultas("Permissão N2");
+		if (possui) {
+			const result = await Swal.fire({
+				title: "Solicitar Impedimento do Transportador",
+				html: `
+			  <div style="text-align: left;">
+				<div><strong>Nome do Motorista:</strong> ${formik.values.infrator.nome}</div>
+				<div><strong>CPF:</strong> ${formik.values.infrator.cpf}</div>
+				<div><strong>Empresa:</strong> ${formik.values.empresa?.nome || ""}</div>
+				<div><strong>AIT:</strong> ${formik.values.infrator.ait}</div>
+			  </div>
+			  <p style="font-style: italic; color: gray; margin-top: 15px;">
+				Por favor, revise as informações acima antes de prosseguir.
+			  </p>
+			  <label style="font-weight: bold; margin-top: 15px; display: block;">Observação:</label>
+			  <textarea
+				id="observacao"
+				maxlength="200"
+				placeholder="Adicione uma observação (máximo de 200 caracteres)"
+				style="width: 100%; height: 60px; margin-top: 5px; padding: 5px; font-size: 16px; resize: none;"
+			  ></textarea>
+			`,
+				showCancelButton: true,
+				cancelButtonText: "Cancelar",
+				confirmButtonText: "Confirmar",
+				preConfirm: () => {
+					const observacaoInput = document.getElementById("observacao");
+					const observacao = observacaoInput.value.trim();
+					if (!observacao) {
+						Swal.showValidationMessage("Por favor, adicione uma observação.");
+						return false;
+					}
+					return observacao;
+				},
+			});
+
+			if (result.isConfirmed) {
+				try {
+					const observacao = result.value;
+
+					setLoading(true);
+
+					const body = {
+						nome_motorista: formik.values.infrator.nome,
+						cpf: formik.values.infrator.cpf,
+						empresa: formik.values.empresa?.nome || "",
+						placa: formik.values.placa,
+						ait: formik.values.infrator.ait,
+						status: 4,
+						processado: 0,
+						observacao: observacao,
+						cod_user_create: String(getClaims().name),
+					};
+
+					console.log(body);
+					await ServiceGMImpendimentos.create(body);
+
+					await refreshPage();
+
+					await Swal.fire({
+						title: "Sucesso!",
+						text: `Solicitação de impedimento feita com sucesso.`,
+						icon: "success",
+					});
+				} catch (error) {
+					setLoading(false);
+					await Swal.fire({
+						title: "Erro!",
+						text: "Ocorreu um erro ao gerar a solicitação de impedimento. Tente novamente.",
+						icon: "error",
+					});
+				} finally {
+					setLoading(false);
+				}
+			}
+		}
+	}
+
+	async function gerarTermo() {
+		try {
+			const mesesPorExtenso = [
+				"Janeiro",
+				"Fevereiro",
+				"Março",
+				"Abril",
+				"Maio",
+				"Junho",
+				"Julho",
+				"Agosto",
+				"Setembro",
+				"Outubro",
+				"Novembro",
+				"Dezembro",
+			];
+
+			const { value: formValues } = await Swal.fire({
+				title: "Insira o mês e o ano",
+				html: `
+			  <p>Os valores de mês e ano indicam o início do desconto.</p>
+			  <div style="display: flex; flex-direction: column; gap: 10px;">
+				<input id="input-mes" class="swal2-input" placeholder="Mês (1-12)" type="number" min="1" max="12" />
+				<input id="input-ano" class="swal2-input" placeholder="Ano (ex: 2024)" type="number" min="1900" max="2100" />
+			  </div>
+			`,
+				focusConfirm: false,
+				preConfirm: () => {
+					const mes = document.getElementById("input-mes").value;
+					const ano = document.getElementById("input-ano").value;
+
+					if (!mes || mes < 1 || mes > 12) {
+						Swal.showValidationMessage(
+							"Por favor, insira um mês válido (1 a 12)."
+						);
+						return null;
+					}
+
+					if (!ano || ano < 1900 || ano > 2100) {
+						Swal.showValidationMessage(
+							"Por favor, insira um ano válido (1900 a 2100)."
+						);
+						return null;
+					}
+
+					return { mes: parseInt(mes), ano: parseInt(ano) };
+				},
+			});
+
+			if (!formValues) {
+				return;
+			}
+
+			const { mes, ano } = formValues;
+			const mesPorExtenso = mesesPorExtenso[mes - 1];
+
+			setLoading(true);
+
+			const response = await ServiceGMNotificacoes.downloadTermo(
+				id,
+				mesPorExtenso,
+				ano
+			);
+			const blob = new Blob([response.data], {
+				type: "application/octet-stream",
+			});
+			const url = window.URL.createObjectURL(blob);
+			const a = document.createElement("a");
+			a.href = url;
+			a.download = `${id}.docx`;
+			a.click();
+			Swal.fire("Sucesso", "O documento está sendo baixado", "success");
+		} catch (error) {
+			setLoading(false);
+			Swal.fire("Erro", "Não foi possível baixar o documento", "error");
+		} finally {
+			setLoading(false);
+		}
+	}
+
 	const buttons = [
 		{
 			label: "Multa",
@@ -537,7 +853,13 @@ function NotificacoesEditar() {
 						regerarInfratores={regerarInfratores}
 						atualizarNotificacao={atualizarNotificacao}
 						atualizarStatus={atualizarStatus}
+						gerarDespesa={gerarDespesa}
+						gerarImpedimento={gerarImpedimento}
+						gerarTermo={gerarTermo}
 					></FormularioNotificacao>
+					<div>
+						<DocumentosGMList ait={id}></DocumentosGMList>
+					</div>
 					<div className="class-group-button">
 						<Button
 							variant="success"

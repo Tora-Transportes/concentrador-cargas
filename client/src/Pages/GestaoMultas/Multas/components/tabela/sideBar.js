@@ -39,6 +39,7 @@ export const SideBarFuncition = ({
 	setModalShowExcel,
 	setVisibleLeft,
 	resetView,
+	handleExportExcel,
 }) => {
 	const showLegendaCarga = () => {
 		setModalShow(true);
@@ -47,6 +48,7 @@ export const SideBarFuncition = ({
 
 	const downloadExel = () => {
 		setModalShowExcel(true);
+		handleExportExcel();
 		setVisibleLeft(false);
 	};
 

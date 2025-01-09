@@ -5,6 +5,11 @@ import PaginatedTableInfratores from "../Infratores";
 import { FaRegTrashAlt } from "react-icons/fa";
 import swal from "sweetalert";
 import BtnRefresh from "../btnAtualizar";
+import { GiExpense } from "react-icons/gi";
+import MultiButton from "src/Pages/GestaoMultas/Multas/components/multiBtn";
+import { formatDateAtual } from "src/Pages/Utils/formatDate";
+import { FaUserTimes } from "react-icons/fa";
+import { FaFileDownload } from "react-icons/fa";
 
 function FormularioNotificacao({
 	formik,
@@ -13,10 +18,32 @@ function FormularioNotificacao({
 	regerarInfratores,
 	atualizarNotificacao,
 	atualizarStatus,
+	gerarDespesa,
+	gerarImpedimento,
+	gerarTermo,
 }) {
 	async function removerCondutor(condutor) {
 		excluirCondutor(condutor);
 	}
+
+	const buttons = [
+		{
+			label: "Gerar Despesa",
+			onClick: () => gerarDespesa(),
+			icon: <GiExpense size={22} />,
+		},
+		{
+			label: "Gerar Impedimento",
+			onClick: () => gerarImpedimento(),
+			icon: <FaUserTimes size={22} />,
+		},
+		{
+			label: "Gerar Termo",
+			onClick: () => gerarTermo(),
+			icon: <FaFileDownload size={22} />,
+		},
+	];
+
 	return (
 		<div className="class-body-form">
 			<Row>
@@ -86,6 +113,57 @@ function FormularioNotificacao({
 							<option value="VINCULADO NIC">VINCULADO NIC</option>
 							<option value="ANULADO">ANULADO</option>
 						</Form.Select>
+					</FloatingLabel>
+				</Col>
+			</Row>
+
+			<Row>
+				<Col>
+					<FloatingLabel label="AIT Originária" className="mb-3">
+						<Form.Control
+							id="ait_originaria"
+							type="text"
+							placeholder=" "
+							name="ait_originaria"
+							value={formik.values.ait_originaria}
+							onChange={formik.handleChange}
+							onBlur={formik.handleBlur}
+							required
+							disabled
+						/>
+					</FloatingLabel>
+				</Col>
+				<Col>
+					<FloatingLabel label="AIT SNE" className="mb-3">
+						<Form.Control
+							id="ait_sne"
+							type="text"
+							placeholder=" "
+							name="ait_sne"
+							value={formik.values.ait_sne}
+							onChange={formik.handleChange}
+							onBlur={formik.handleBlur}
+							required
+							disabled
+						/>
+					</FloatingLabel>
+				</Col>
+			</Row>
+
+			<Row>
+				<Col>
+					<FloatingLabel label="Descrição Multa" className="mb-3">
+						<Form.Control
+							id="descricao"
+							type="text"
+							placeholder=" "
+							name="descricao"
+							value={formik.values.descricao}
+							onChange={formik.handleChange}
+							onBlur={formik.handleBlur}
+							required
+							disabled
+						/>
 					</FloatingLabel>
 				</Col>
 			</Row>
@@ -413,12 +491,22 @@ function FormularioNotificacao({
 				</Col>
 			</Row>
 			<Row style={{ marginTop: "40px" }}>
+				{" "}
+				{/* TODO */}
 				<BtnRefresh
 					callback={regerarInfratores}
 					params={formik.values}
 					textoHeader={"Infratores"}
 					texto={"Atualizar Infratores"}
+					multiButton={
+						formik.values.existeInfrator ? (
+							<MultiButton buttons={buttons} />
+						) : (
+							<></>
+						)
+					}
 					titulo={false}
+					subtituloBtn={true}
 				></BtnRefresh>
 				<hr />
 				<PaginatedTableInfratores
@@ -427,6 +515,36 @@ function FormularioNotificacao({
 					indicarCondutor={indicarCondutor}
 				></PaginatedTableInfratores>
 			</Row>
+			{/* Seção Histórico Infrator */}
+			<Row style={{ marginTop: "40px" }}>
+				<h4>Histórico Infrator</h4>
+				<hr />
+				<Table striped bordered hover>
+					<thead>
+						<tr>
+							<th>AIT</th>
+							<th>Ação</th>
+							<th>Nome Motorista</th>
+							<th>CPF</th>
+							<th>Data</th>
+							<th>Usuário Ação</th>
+						</tr>
+					</thead>
+					<tbody>
+						{formik.values?.infratorHistorico?.map((historico, index) => (
+							<tr key={index}>
+								<td>{historico.ait}</td>
+								<td>{historico.status}</td>
+								<td>{historico.nome}</td>
+								<td>{historico.cpf}</td>
+								<td>{historico.created_at}</td>
+								<td>{historico.cod_usu_create}</td>
+							</tr>
+						))}
+					</tbody>
+				</Table>
+			</Row>
+			{/* todo */}
 			{/* Seção para os dados de Status */}
 			<Row style={{ marginTop: "40px" }}>
 				<BtnRefresh
@@ -620,6 +738,33 @@ function FormularioNotificacao({
 								<td>{historico.status}</td>
 								<td>{historico.created_at}</td>
 								<td>{historico.cod_usu_create}</td>
+							</tr>
+						))}
+					</tbody>
+				</Table>
+			</Row>
+
+			<Row style={{ marginTop: "40px" }}>
+				<h4>Histórico Despesas Veículo</h4>
+				<hr />
+				<Table striped bordered hover>
+					<thead>
+						<tr>
+							<th>AIT</th>
+							<th>Empresa</th>
+							<th>Nome Motorista</th>
+							<th>Valor</th>
+							<th>Data Infração</th>
+						</tr>
+					</thead>
+					<tbody>
+						{formik.values?.despesasHistorico?.map((historico, index) => (
+							<tr key={index}>
+								<td>{historico.ait}</td>
+								<td>{historico.empresa}</td>
+								<td>{historico.nome_motorista}</td>
+								<td>R$ {historico.valor}</td>
+								<td>{formatDateAtual(historico.data_multa)}</td>
 							</tr>
 						))}
 					</tbody>

@@ -12,6 +12,9 @@ interface IGMNotificacoesController {
   atualizarStatus(req: Request, res: Response): Promise<any>;
   gerarFici(req: Request, res: Response): Promise<any>;
   solicitarBoleto(req: Request, res: Response): Promise<any>;
+  gerarDespesa(req: Request, res: Response): Promise<any>;
+  gerarTermo(req: Request, res: Response): Promise<any>;
+  gerarExcel(req: Request, res: Response): Promise<any>;
 }
 
 class GMNotificacoesController implements IGMNotificacoesController {
@@ -26,6 +29,9 @@ class GMNotificacoesController implements IGMNotificacoesController {
     this.atualizarStatus = this.atualizarStatus.bind(this);
     this.gerarFici = this.gerarFici.bind(this);
     this.solicitarBoleto = this.solicitarBoleto.bind(this);
+    this.gerarDespesa = this.gerarDespesa.bind(this);
+    this.gerarTermo = this.gerarTermo.bind(this);
+    this.gerarExcel = this.gerarExcel.bind(this);
   }
 
   private handleError(error: any, res: Response) {
@@ -176,6 +182,83 @@ class GMNotificacoesController implements IGMNotificacoesController {
       );
       const { data, status } = response;
       return res.status(status).json(data);
+    } catch (error) {
+      return this.handleError(error, res);
+    }
+  }
+
+  async gerarDespesa(req: Request, res: Response): Promise<any> {
+    try {
+      const date = new Date(req.body.data_multa);
+      const formattedDate = `${date.getUTCFullYear()}-${(date.getUTCMonth() + 1)
+        .toString()
+        .padStart(2, "0")}-${date.getUTCDate().toString().padStart(2, "0")}`;
+      req.body.data_multa = formattedDate;
+      const response = await axios.post(
+        `${String(process.env.URL_GESTAO_MULTAS)}/despesas`,
+        req.body
+      );
+      const { data, status } = response;
+      return res.status(status).json(data);
+    } catch (error) {
+      return this.handleError(error, res);
+    }
+  }
+
+  async gerarTermo(req: Request, res: Response): Promise<any> {
+    const { ait } = req.params;
+    try {
+      const response = await axios.get(
+        `${String(process.env.URL_GESTAO_MULTAS)}/termos/ait/${ait}/download`,
+        {
+          responseType: "arraybuffer",
+          params: req.query,
+        }
+      );
+
+      const { data, status, headers } = response;
+      if (
+        headers["content-type"] ===
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      ) {
+        res.setHeader(
+          "Content-Disposition",
+          'attachment; filename="documento.pdf"'
+        );
+        res.setHeader("Content-Type", "application/pdf");
+        res.status(status).send(data);
+      } else {
+        return res.status(status).json(JSON.parse(data.toString("utf8")));
+      }
+    } catch (error) {
+      return this.handleError(error, res);
+    }
+  }
+
+  async gerarExcel(req: Request, res: Response): Promise<any> {
+    try {
+      const response = await axios.get(
+        `${String(process.env.URL_GESTAO_MULTAS)}/notificacoes/excel`,
+        {
+          responseType: "arraybuffer",
+          params: req.query,
+        }
+      );
+
+      const { data, status, headers } = response;
+      if (
+        headers["content-type"] ===
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      ) {
+        res.setHeader(
+          "Content-Disposition",
+          'attachment; filename="documento.pdf"'
+        );
+        res.setHeader("Content-Type", "application/pdf");
+        res.status(status).send(data);
+      } else {
+        return res.status(status).json(JSON.parse(data.toString("utf8")));
+      }
     } catch (error) {
       return this.handleError(error, res);
     }

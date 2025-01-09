@@ -44,6 +44,26 @@ class ServiceGMNotificacoes {
 			values
 		);
 	}
+
+	async gerarDespesa(values) {
+		return api.post("/gestao-multas/notificacoes/despesas", values);
+	}
+
+	async downloadTermo(ait, mes, ano) {
+		return await api.get(
+			`/gestao-multas/termos/ait/${ait}/download?mes=${mes}&ano=${ano}`,
+			{
+				responseType: "arraybuffer",
+			}
+		);
+	}
+
+	async gerarExcel(query) {
+		return await api.get("/gestao-multas/notificacoes/excel", {
+			params: query,
+			responseType: "arraybuffer",
+		});
+	}
 }
 
 export default new ServiceGMNotificacoes();

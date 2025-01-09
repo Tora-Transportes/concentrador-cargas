@@ -45,6 +45,8 @@ import SqedController from "./controllers/Sqed/SqedController";
 import TokenSqedMiddleware from "./middlewares/TokenSqed";
 import GMNotificacoesController from "./controllers/GestaoMultas/Notificacoes/GMNotificacoesController";
 import GMMultasController from "./controllers/GestaoMultas/Multas/GMMultasController";
+import GMImpedimentosController from "./controllers/GestaoMultas/Impedimentos/GMImpedimentosController";
+import GMDocumentosController from "./controllers/GestaoMultas/Documentos/GMDocumentosController";
 
 const routes = Router();
 
@@ -417,6 +419,10 @@ routes.get(
 );
 
 routes.get("/gestao-multas/notificacoes", GMNotificacoesController.list);
+routes.get(
+  "/gestao-multas/notificacoes/excel",
+  GMNotificacoesController.gerarExcel
+);
 routes.get("/gestao-multas/notificacoes/:ait", GMNotificacoesController.index);
 routes.get(
   "/gestao-multas/smartec/notificacoes/:ait",
@@ -450,8 +456,45 @@ routes.post(
   GMNotificacoesController.solicitarBoleto
 );
 
+routes.post(
+  "/gestao-multas/notificacoes/despesas",
+  GMNotificacoesController.gerarDespesa
+);
+
+routes.get("/gestao-multas/impedimentos", GMImpedimentosController.list);
+routes.post("/gestao-multas/impedimentos", GMImpedimentosController.create);
+routes.put("/gestao-multas/impedimentos/:id", GMImpedimentosController.update);
+
+routes.get("/gestao-multas/multas/excel", GMMultasController.gerarExcel);
 routes.get("/gestao-multas/multas", GMMultasController.list);
 routes.get("/gestao-multas/multas/:ait", GMMultasController.index);
+
+routes.post(
+  "/gestao-multas/documentos",
+  multer().single("arquivo"),
+  GMDocumentosController.create
+);
+routes.get(
+  "/gestao-multas/documentos/ait/:ait",
+  GMDocumentosController.listByAit
+);
+routes.get(
+  "/gestao-multas/documentos/ait/:ait/logs",
+  GMDocumentosController.logs
+);
+routes.get(
+  "/gestao-multas/documentos/:id/download",
+  GMDocumentosController.download
+);
+routes.delete(
+  "/gestao-multas/documentos/:id/user/:user",
+  GMDocumentosController.delete
+);
+
+routes.get(
+  "/gestao-multas/termos/ait/:ait/download",
+  GMNotificacoesController.gerarTermo
+);
 
 routes.get("/motoristas/:cpf/categoria", MotoristaController.findByCpf);
 export default routes;
