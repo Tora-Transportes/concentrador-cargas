@@ -389,6 +389,48 @@ function NotificacoesEditar() {
 		}
 	}
 
+	function validarCPF(cpf) {
+		cpf = cpf.replace(/[^\d]+/g, "");
+		if (cpf.length !== 11) return false;
+		return true;
+	}
+
+	function inserirInfrator() {
+		Swal.fire({
+			title: "Digite o CPF do infrator",
+			input: "text",
+			inputAttributes: {
+				maxlength: 11,
+				autocapitalize: "off",
+				autocorrect: "off",
+			},
+			showCancelButton: true,
+			confirmButtonText: "Confirmar",
+			showLoaderOnConfirm: true,
+			preConfirm: (cpf) => {
+				if (!validarCPF(cpf)) {
+					Swal.showValidationMessage("CPF inválido");
+				}
+				return cpf;
+			},
+			allowOutsideClick: () => !Swal.isLoading(),
+		}).then(async (result) => {
+			if (result.isConfirmed && result.value) {
+				const cpf = result.value;
+				try {
+					setLoading(true);
+					const retorno = await ServiceGMNotificacoes.inserirInfrator(cpf, id);
+					await refreshPage();
+					await swal("Sucesso!", retorno.data.message, "success");
+				} catch (error) {
+					console.error("Erro ao inserir infrator:", error);
+				} finally {
+					setLoading(false);
+				}
+			}
+		});
+	}
+
 	async function regerarInfratores(notificacao) {
 		const possui = await possuiPermissaoGestaoMultas("Permissão N2");
 		if (possui) {
@@ -851,6 +893,7 @@ function NotificacoesEditar() {
 						gerarDespesa={gerarDespesa}
 						gerarImpedimento={gerarImpedimento}
 						gerarTermo={gerarTermo}
+						inserirInfrator={inserirInfrator}
 					></FormularioNotificacao>
 					<div>
 						<DocumentosGMList ait={id}></DocumentosGMList>
