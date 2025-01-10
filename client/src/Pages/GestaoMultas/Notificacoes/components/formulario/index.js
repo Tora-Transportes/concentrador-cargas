@@ -10,6 +10,7 @@ import MultiButton from "src/Pages/GestaoMultas/Multas/components/multiBtn";
 import { formatDateAtual } from "src/Pages/Utils/formatDate";
 import { FaUserTimes } from "react-icons/fa";
 import { FaFileDownload } from "react-icons/fa";
+import { IoIosPersonAdd } from "react-icons/io";
 
 function FormularioNotificacao({
 	formik,
@@ -21,6 +22,7 @@ function FormularioNotificacao({
 	gerarDespesa,
 	gerarImpedimento,
 	gerarTermo,
+	inserirInfrator,
 }) {
 	async function removerCondutor(condutor) {
 		excluirCondutor(condutor);
@@ -430,6 +432,32 @@ function FormularioNotificacao({
 						/>
 					</FloatingLabel>
 				</Col>
+				{!formik.values.existeInfrator ? (
+					<div style={{ width: "40px", marginRight: "35px" }}>
+						<Button
+							variant="outline-primary"
+							color=""
+							onClick={inserirInfrator}
+							style={{
+								color: "black",
+								borderColor: "black",
+								backgroundColor: "transparent",
+							}}
+						>
+							<IoIosPersonAdd
+								size={28}
+								style={{
+									marginLeft: "5px",
+									marginTop: "10px",
+									marginBottom: "5px",
+								}}
+								className="icon-info"
+							/>
+						</Button>
+					</div>
+				) : (
+					<></>
+				)}
 				{formik.values.existeInfrator ? (
 					<div style={{ width: "40px", marginRight: "35px" }}>
 						<Button

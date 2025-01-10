@@ -195,7 +195,9 @@ export default function PaginatedTableInfratores({
 									{new Date(row.data_infracao).toLocaleDateString()}
 								</TableCell>
 								<TableCell>
-									{new Date(row.emissao).toLocaleDateString()}
+									{row.emissao
+										? new Date(row.emissao).toLocaleDateString()
+										: "N/A"}
 								</TableCell>
 								<TableCell>
 									{row.previsao
