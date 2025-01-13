@@ -15,6 +15,7 @@ interface IGMNotificacoesController {
   gerarDespesa(req: Request, res: Response): Promise<any>;
   gerarTermo(req: Request, res: Response): Promise<any>;
   gerarExcel(req: Request, res: Response): Promise<any>;
+  infratorManual(req: Request, res: Response): Promise<any>;
 }
 
 class GMNotificacoesController implements IGMNotificacoesController {
@@ -32,6 +33,7 @@ class GMNotificacoesController implements IGMNotificacoesController {
     this.gerarDespesa = this.gerarDespesa.bind(this);
     this.gerarTermo = this.gerarTermo.bind(this);
     this.gerarExcel = this.gerarExcel.bind(this);
+    this.infratorManual = this.infratorManual.bind(this);
   }
 
   private handleError(error: any, res: Response) {
@@ -105,7 +107,10 @@ class GMNotificacoesController implements IGMNotificacoesController {
       );
 
       const { data, status, headers } = response;
-      if (headers["content-type"] === "application/pdf") {
+      if (
+        headers["content-type"] ===
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      ) {
         res.setHeader(
           "Content-Disposition",
           'attachment; filename="documento.pdf"'
@@ -259,6 +264,21 @@ class GMNotificacoesController implements IGMNotificacoesController {
       } else {
         return res.status(status).json(JSON.parse(data.toString("utf8")));
       }
+    } catch (error) {
+      return this.handleError(error, res);
+    }
+  }
+
+  async infratorManual(req: Request, res: Response): Promise<any> {
+    const { cpf, ait } = req.params;
+    try {
+      const response = await axios.get(
+        `${String(
+          process.env.URL_GESTAO_MULTAS
+        )}/viagem/infratores/${cpf}/ait/${ait}`
+      );
+      const { data, status } = response;
+      return res.status(status).json(data);
     } catch (error) {
       return this.handleError(error, res);
     }

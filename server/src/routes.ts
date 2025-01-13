@@ -441,6 +441,11 @@ routes.post(
   GMNotificacoesController.regerarInfratores
 );
 
+routes.get(
+  "/gestao-multas/notificacoes/infratores/:cpf/ait/:ait",
+  GMNotificacoesController.infratorManual
+);
+
 routes.post(
   "/gestao-multas/notificacoes/status",
   GMNotificacoesController.atualizarStatus

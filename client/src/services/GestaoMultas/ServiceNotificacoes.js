@@ -64,6 +64,12 @@ class ServiceGMNotificacoes {
 			responseType: "arraybuffer",
 		});
 	}
+
+	async inserirInfrator(cpf, ait) {
+		return await api.get(
+			`/gestao-multas/notificacoes/infratores/${cpf}/ait/${ait}`
+		);
+	}
 }
 
 export default new ServiceGMNotificacoes();
