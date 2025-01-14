@@ -71,6 +71,20 @@ function FormularioMulta({ formik, atualizarStatus }) {
 							<option value="RESPONS EMPRESA">RESPONS EMPRESA</option>
 							<option value="VINCULADO NIC">VINCULADO NIC</option>
 							<option value="ANULADO">ANULADO</option>
+							<option value="IDENTIFICAÇÃO ENVIADA AO ORGÃO">
+								IDENTIFICAÇÃO ENVIADA AO ORGÃO
+							</option>
+							<option value="OPTOU POR NÃO IDENTIFICAR">
+								OPTOU POR NÃO IDENTIFICAR
+							</option>
+							<option value="COBRADO EM DUPLICIDADE">
+								COBRADO EM DUPLICIDADE
+							</option>
+							<option value="COBRADO NO DESLIGAMENTO">
+								COBRADO NO DESLIGAMENTO
+							</option>
+							<option value="TERMO NÃO ASSINADO">TERMO NÃO ASSINADO</option>
+							<option value="INFRATOR AUSENTE">INFRATOR AUSENTE</option>
 						</Form.Select>
 					</FloatingLabel>
 				</Col>
