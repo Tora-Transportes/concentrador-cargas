@@ -14,7 +14,7 @@ export const envioCargaApp = async (cargas, oid, cpf_motorista) => {
 	try {
 		// Construir o array com todas as cargas
 		const bodyEnvioAppList = cargas.map((body) => {
-			const {
+			let {
 				id,
 				cliente,
 				origem_carga,
@@ -36,6 +36,14 @@ export const envioCargaApp = async (cargas, oid, cpf_motorista) => {
 				carga_mae_id,
 				carga_filha,
 			} = body;
+
+			if (!janela_coleta) {
+				janela_coleta = "00:00";
+			}
+
+			if (!janela_entrega) {
+				janela_entrega = "00:00";
+			}
 
 			// Validar e verificar valores de data
 			if (!data_coleta || !data_entrega || !janela_coleta || !janela_entrega) {
