@@ -140,13 +140,33 @@ export const cancelarCargaApp = async (
 	};
 
 	try {
-		ServiceApp.cancelarCargaApp(bodyEnvioApp);
+		const retorno = await ServiceApp.cancelarCargaApp(bodyEnvioApp);
+		return retorno;
 	} catch (error) {
 		ServiceLogs.run({
 			message: String(error),
 			descricao: "Erro ao cancelar carga App",
 			level: "error",
 			nameFile: "error-cancel-carga-app",
+			id: idCarga,
+		});
+		return { status: 500, data: { message: "erro ao cancelar carga" } };
+	}
+};
+
+export const desabilitarCargaLote = async (idCarga) => {
+	const bodyEnvioApp = {
+		freightId: idCarga,
+	};
+
+	try {
+		ServiceApp.desabilitarCargaLoteApp(bodyEnvioApp);
+	} catch (error) {
+		ServiceLogs.run({
+			message: String(error),
+			descricao: "Erro ao desabilitarCargaLoteApp carga App",
+			level: "error",
+			nameFile: "error-desabilitar-carga-lote",
 			id: idCarga,
 		});
 	}
