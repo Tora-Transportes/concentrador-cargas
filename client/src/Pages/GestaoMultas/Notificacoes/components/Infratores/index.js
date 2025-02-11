@@ -185,7 +185,16 @@ export default function PaginatedTableInfratores({
 										variant="text"
 										onClick={(e) => {
 											e.preventDefault();
-											swal(`CPF : ${row.cpf}  \n CNH : ${row.cnh}`);
+											swal(
+												`CPF : ${row.cpf}  \n CNH : ${row.cnh}  \n FILIAL: ${
+													row.filial ?? "N/A"
+												} \n COD CENTRO CUSTO : ${
+													row.cod_centro_custo ?? "N/A"
+												} \n CENTRO CUSTO : ${
+													row.descricao_centro_custo ?? "N/A"
+												}
+												`
+											);
 										}}
 										style={{
 											color: "black",
