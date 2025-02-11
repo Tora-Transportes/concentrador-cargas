@@ -11,7 +11,10 @@ import FormularioCadastroManual from "src/Pages/Components/FormularioCadastroMan
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import "../Editar/style.css";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
-import { cancelarCargaApp } from "src/Pages/Components/DataAppConcentrador";
+import {
+	cancelarCargaApp,
+	desabilitarCargaLote,
+} from "src/Pages/Components/DataAppConcentrador";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -115,18 +118,69 @@ function Manual() {
 				icon: "warning",
 			});
 			if (observacaoExclusao) {
+				if (formik.values.carga_app === 1) {
+					const retorno = await cancelarCargaApp(
+						formik.values.id,
+						getClaims().oid,
+						observacaoExclusao
+					);
+					if (retorno.status == 200) {
+						await ServiceCargas.delete({
+							id: formik.values.id,
+							observacao_exclusao: observacaoExclusao,
+						});
+						await swal("Sucesso!", "Carga removida", "success");
+						handleCloseWindow(null, false);
+					} else if (retorno.status == 409) {
+						await swal(
+							"Error",
+							"Carga Lote já possui motoristas vinculados, favor desabilita-lá",
+							"error"
+						);
+					} else {
+						await swal("Error", retorno.data.response.message, "error");
+					}
+				} else {
+					await ServiceCargas.delete({
+						id: formik.values.id,
+						observacao_exclusao: observacaoExclusao,
+					});
+					handleCloseWindow(null, false);
+				}
+			} else {
+				swal("Nenhuma alteração realizada");
+			}
+		} catch (error) {
+			console.log(error);
+		}
+		setLoading(false);
+	}
+
+	async function handleDesabilitarCargaLote() {
+		setLoading(true);
+		try {
+			const observacaoExclusao = await swal(
+				`Digite o motivo de desabilitação`,
+				{
+					content: "input",
+					dangerMode: true,
+					buttons: ["Cancelar", true],
+					icon: "warning",
+				}
+			);
+			if (observacaoExclusao) {
 				await ServiceCargas.delete({
 					id: formik.values.id,
 					observacao_exclusao: observacaoExclusao,
 				});
 				if (formik.values.carga_app === 1) {
-					await cancelarCargaApp(
-						formik.values.id,
-						getClaims().oid,
-						observacaoExclusao
-					);
+					await desabilitarCargaLote(formik.values.id);
 				}
-				await swal("Sucesso!", "Carga removida", "success");
+				await swal(
+					"Sucesso!",
+					"Carga lote desabilitada com sucesso",
+					"success"
+				);
 				handleCloseWindow(null, false);
 			} else {
 				swal("Nenhuma alteração realizada");
@@ -394,6 +448,17 @@ function Manual() {
 								Emitir documento
 							</Button>
 						)}
+
+						{formik.values.carga_filha === 0 &&
+							formik.values.estilo_carga === 2 && (
+								<Button
+									variant="danger"
+									className="p-2"
+									onClick={handleDesabilitarCargaLote}
+								>
+									Desabilitar Carga Lote
+								</Button>
+							)}
 					</div>
 				</Form>
 			</Container>

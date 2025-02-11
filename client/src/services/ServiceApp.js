@@ -242,6 +242,43 @@ class ServiceApp {
 			};
 		}
 	}
+
+	async desabilitarCargaLoteApp(body) {
+		try {
+			const response = await apiApp.post("/freight/disabledfreight", body);
+
+			const bodyLog = {
+				metodo: "POST - DESABILITAR CARGA LOTE",
+				status: response.status.toString(),
+				json_envio: JSON.stringify(body),
+				json_retorno: JSON.stringify(response.data),
+				erro: response.status == 200 ? 0 : 1,
+			};
+
+			await api.post("/logs/app/integracao", bodyLog);
+
+			return response;
+		} catch (error) {
+			const bodyLog = {
+				metodo: "POST - DESABILITAR CARGA LOTE",
+				status: error.response ? error.response.status.toString() : "500",
+				json_envio: JSON.stringify(body),
+				json_retorno: error.response
+					? JSON.stringify(error.response.data)
+					: "Erro de rede",
+				erro: 1,
+			};
+
+			await api.post("/logs/app/integracao", bodyLog);
+
+			return {
+				status: error.response ? error.response.status : 500,
+				data: error.response
+					? error.response.data
+					: "Erro de rede ao cancelar a carga",
+			};
+		}
+	}
 }
 
 export default new ServiceApp();
