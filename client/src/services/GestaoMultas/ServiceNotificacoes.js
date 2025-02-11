@@ -65,9 +65,9 @@ class ServiceGMNotificacoes {
 		});
 	}
 
-	async inserirInfrator(cpf, ait) {
+	async inserirInfrator(cpf, ait, placa_cavalo, placa_carreta) {
 		return await api.get(
-			`/gestao-multas/notificacoes/infratores/${cpf}/ait/${ait}`
+			`/gestao-multas/notificacoes/infratores/${cpf}/ait/${ait}?placa_cavalo=${placa_cavalo}&placa_carreta=${placa_carreta}`
 		);
 	}
 }

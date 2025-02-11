@@ -6,6 +6,7 @@ interface IGMImpedimentosController {
   list(req: Request, res: Response): Promise<any>;
   update(req: Request, res: Response): Promise<any>;
   create(req: Request, res: Response): Promise<any>;
+  historico(req: Request, res: Response): Promise<any>;
 }
 
 class GMImpedimentosController implements IGMImpedimentosController {
@@ -14,6 +15,7 @@ class GMImpedimentosController implements IGMImpedimentosController {
     this.list = this.list.bind(this);
     this.update = this.update.bind(this);
     this.create = this.create.bind(this);
+    this.historico = this.historico.bind(this);
   }
 
   private handleError(error: any, res: Response) {
@@ -65,6 +67,21 @@ class GMImpedimentosController implements IGMImpedimentosController {
       const response = await axios.put(
         `${String(process.env.URL_GESTAO_MULTAS)}/impedimentos/${id}`,
         req.body
+      );
+      const { data, status } = response;
+      return res.status(status).json(data);
+    } catch (error) {
+      return this.handleError(error, res);
+    }
+  }
+
+  async historico(req: Request, res: Response): Promise<any> {
+    try {
+      const response = await axios.get(
+        `${String(process.env.URL_GESTAO_MULTAS)}/impedimentos/historico`,
+        {
+          params: req.query,
+        }
       );
       const { data, status } = response;
       return res.status(status).json(data);

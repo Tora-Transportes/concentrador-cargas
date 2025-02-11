@@ -397,38 +397,76 @@ function NotificacoesEditar() {
 
 	function inserirInfrator() {
 		Swal.fire({
-			title: "Digite o CPF do infrator",
-			input: "text",
-			inputAttributes: {
-				maxlength: 11,
-				autocapitalize: "off",
-				autocorrect: "off",
-			},
+			title: "Digite os dados do infrator",
+			html: `
+				<input id="cpf" class="swal2-input" placeholder="CPF" maxlength="11">
+				<input id="placa_cavalo" class="swal2-input" placeholder="Placa Cavalo" maxlength="7">
+				<input id="placa_carreta" class="swal2-input" placeholder="Placa Carreta" maxlength="7">
+			`,
+			focusConfirm: false,
 			showCancelButton: true,
 			confirmButtonText: "Confirmar",
 			showLoaderOnConfirm: true,
-			preConfirm: (cpf) => {
+			preConfirm: () => {
+				const cpf = document.getElementById("cpf").value.trim();
+				const placaCavalo = document
+					.getElementById("placa_cavalo")
+					.value.trim()
+					.toUpperCase();
+				const placaCarreta = document
+					.getElementById("placa_carreta")
+					.value.trim()
+					.toUpperCase();
+
 				if (!validarCPF(cpf)) {
 					Swal.showValidationMessage("CPF inválido");
+					return false;
 				}
-				return cpf;
+
+				if (!validarPlaca(placaCavalo)) {
+					Swal.showValidationMessage(
+						"Placa cavalo inválida (use o formato AAA0A00 ou AAA-0000)"
+					);
+					return false;
+				}
+
+				if (!validarPlaca(placaCarreta)) {
+					Swal.showValidationMessage(
+						"Placa carreta inválida (use o formato AAA0A00 ou AAA-0000)"
+					);
+					return false;
+				}
+
+				return { cpf, placaCavalo, placaCarreta };
 			},
 			allowOutsideClick: () => !Swal.isLoading(),
 		}).then(async (result) => {
 			if (result.isConfirmed && result.value) {
-				const cpf = result.value;
+				const { cpf, placaCavalo, placaCarreta } = result.value;
 				try {
 					setLoading(true);
-					const retorno = await ServiceGMNotificacoes.inserirInfrator(cpf, id);
+					const retorno = await ServiceGMNotificacoes.inserirInfrator(
+						cpf,
+						id,
+						placaCavalo,
+						placaCarreta
+					);
 					await refreshPage();
-					await swal("Sucesso!", retorno.data.message, "success");
+					await Swal.fire("Sucesso!", retorno.data.message, "success");
 				} catch (error) {
 					console.error("Erro ao inserir infrator:", error);
+					Swal.fire("Erro!", "Não foi possível inserir o infrator.", "error");
 				} finally {
 					setLoading(false);
 				}
 			}
 		});
+	}
+
+	// Função para validar placas no formato antigo (AAA-0000) e Mercosul (AAA0A00)
+	function validarPlaca(placa) {
+		const regex = /^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/;
+		return regex.test(placa);
 	}
 
 	async function regerarInfratores(notificacao) {
@@ -615,9 +653,15 @@ function NotificacoesEditar() {
 						<textarea
 							id="observacao"
 							maxlength="200"
-							placeholder="Adicione uma observação (máximo de 200 caracteres)"
-							style="width: 100%; height: 60px; margin-top: 5px; padding: 5px; font-size: 16px; resize: none;"
-						></textarea>
+							placeholder="Adicione uma observação (máximo de 1000 caracteres)"
+							style="width: 100%; height: 100px; margin-top: 5px; padding: 5px; font-size: 16px; resize: none;"
+						>AIT:${formik.values.ait} \nPLACA VEICULO:${
+							formik.values.placa
+						} \nDATA:${formatDateAtual(formik.values.data_infracao)} \nLOCAL:${
+							formik.values.local
+						} \nDESC. MULTA:${formik.values.descricao} \nVALOR:R$ : ${
+							formik.values.valor_a_pagar
+						} </textarea>
 					`,
 					},
 				},
@@ -709,9 +753,10 @@ function NotificacoesEditar() {
 			  <textarea
 				id="observacao"
 				maxlength="200"
-				placeholder="Adicione uma observação (máximo de 200 caracteres)"
-				style="width: 100%; height: 60px; margin-top: 5px; padding: 5px; font-size: 16px; resize: none;"
-			  ></textarea>
+				placeholder="Adicione uma observação (máximo de 1000 caracteres)"
+				style="width: 100%; height: 100px; margin-top: 5px; padding: 5px; font-size: 16px; resize: none;"
+			  >ASSINAR O TERMO DE MULTA - PRAZO / - GENTILEZA SOLICITAR AO GESTAO.VEICULOS@TORA.COM.BR ATENCAO - SOLICITACAO DE DESBLOQUEIO APÓS AS 17:18H,ENVIAR PARA O CCE@TORA.COM.BR ATRAVES DE E-MAIL. SETOR COM FUNCIONAMENTO 24HRS 
+			  </textarea>
 			`,
 				showCancelButton: true,
 				cancelButtonText: "Cancelar",
