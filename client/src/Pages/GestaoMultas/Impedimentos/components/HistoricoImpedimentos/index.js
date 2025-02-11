@@ -1,36 +1,39 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "react-bootstrap";
 import { BsInfoCircle } from "react-icons/bs";
 import Swal from "sweetalert2";
 import ServiceGMImpendimentos from "../../../../../services/GestaoMultas/ServiceImpedimentos";
 
 const HistoricoImpedimentos = ({ cpf }) => {
-	const [data, setData] = useState([]);
-	const itemsPerPage = 5; // Define o número de itens por página
+	const itemsPerPage = 5; // Número de itens por página
 
 	const fetchData = async () => {
 		try {
 			const response = await ServiceGMImpendimentos.historico({ cpf });
-			setData(response.data);
+			return response.data; // Retorna os dados carregados
 		} catch (error) {
 			Swal.fire("Erro ao carregar os dados", error.message, "error");
+			return [];
 		}
 	};
 
 	const showModal = async () => {
-		await fetchData(); // Carregar os dados antes de abrir o modal
-		if (data.length === 0) {
+		const loadedData = await fetchData(); // Aguarda os dados carregarem
+		if (loadedData.length === 0) {
 			Swal.fire("Nenhum dado disponível", "", "info");
 			return;
 		}
 
-		renderTable(1); // Começa na primeira página
+		renderTable(1, loadedData); // Agora já temos os dados disponíveis
 	};
 
-	const renderTable = (page) => {
-		const totalPages = Math.ceil(data.length / itemsPerPage);
+	const renderTable = (page, tableData) => {
+		const totalPages = Math.ceil(tableData.length / itemsPerPage);
 		const startIndex = (page - 1) * itemsPerPage;
-		const paginatedData = data.slice(startIndex, startIndex + itemsPerPage);
+		const paginatedData = tableData.slice(
+			startIndex,
+			startIndex + itemsPerPage
+		);
 
 		const tableHtml = `
 			<table class="w-full border-collapse border border-gray-300 text-left">
@@ -71,17 +74,17 @@ const HistoricoImpedimentos = ({ cpf }) => {
 		`;
 
 		Swal.fire({
-			title: "Histórico Impedimentos",
+			title: "Lista de Dados",
 			html: tableHtml,
 			width: "80%",
 			showCloseButton: true,
 			showConfirmButton: false,
 			didOpen: () => {
 				document.getElementById("prevPage")?.addEventListener("click", () => {
-					renderTable(page - 1); // Atualiza a tabela com a página anterior
+					renderTable(page - 1, tableData);
 				});
 				document.getElementById("nextPage")?.addEventListener("click", () => {
-					renderTable(page + 1); // Atualiza a tabela com a próxima página
+					renderTable(page + 1, tableData);
 				});
 			},
 		});
