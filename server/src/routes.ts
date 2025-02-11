@@ -460,6 +460,10 @@ routes.post(
 routes.get("/gestao-multas/impedimentos", GMImpedimentosController.list);
 routes.post("/gestao-multas/impedimentos", GMImpedimentosController.create);
 routes.put("/gestao-multas/impedimentos/:id", GMImpedimentosController.update);
+routes.get(
+  "/gestao-multas/impedimentos/historico",
+  GMImpedimentosController.historico
+);
 
 routes.get("/gestao-multas/multas/excel", GMMultasController.gerarExcel);
 routes.get("/gestao-multas/multas", GMMultasController.list);
