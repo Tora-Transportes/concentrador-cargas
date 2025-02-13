@@ -103,7 +103,7 @@ class ServiceDemonstrativo {
 
       dados_valores.push([
         {
-          text: "DESCRIMINÇÃO",
+          text: "DISCRIMINAÇÃO",
           style: "titleValores",
         },
         {
