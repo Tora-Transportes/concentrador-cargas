@@ -844,7 +844,7 @@ function FormularioCadastroManual({
 			<div className="class-linha-title3">
 				<hr className="w-100"></hr>
 			</div>
-			{!formik.values.e_lote && (
+			{!formik.values.e_lote && !formik.values.lote_carga && (
 				<>
 					<Row className="mb-5">
 						<Col sm={12}>
