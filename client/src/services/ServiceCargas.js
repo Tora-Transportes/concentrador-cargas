@@ -307,6 +307,12 @@ class ServiceCargas {
 		return api.delete(`/cargas/${id}`, { data: { observacao_exclusao } });
 	}
 
+	async disable({ id, observacao_exclusao }) {
+		return api.delete(`/cargas/${id}/disable`, {
+			data: { observacao_exclusao },
+		});
+	}
+
 	async index({ id }) {
 		return api.get(`/cargas/${id}`);
 	}

@@ -169,7 +169,7 @@ function Manual() {
 				}
 			);
 			if (observacaoExclusao) {
-				await ServiceCargas.delete({
+				await ServiceCargas.disable({
 					id: formik.values.id,
 					observacao_exclusao: observacaoExclusao,
 				});
