@@ -630,3 +630,78 @@ export class UseCaseImportCarga {
     return cargas;
   }
 }
+
+export class UseCaseDisableCarga {
+  constructor(
+    private cargaRepository: IRepositoryUpdateCarga,
+    private notifyAll: (event: IEventSocket) => void
+  ) {}
+  async run(
+    id: number,
+    usuario: string,
+    observacaoExclusao: string | null | undefined = ""
+  ) {
+    if (!id) {
+      throw new AppError("Id inválido", 400);
+    }
+    if (!observacaoExclusao) {
+      throw new AppError(
+        "Ao excluir uma carga a observação da exclusão deve ser preenchida",
+        400
+      );
+    }
+    const carga = await this.cargaRepository.index(id);
+    if (!carga) {
+      throw new AppError("Carga não encontrada", 404);
+    }
+    if (carga.carga_filha == 1) {
+      throw new AppError(
+        `Essa carga é derivada de um lote, para efetuar e exclusão dela favor excluir a carga mãe de número: ${carga.carga_mae_id}`,
+        409
+      );
+    }
+
+    // verifica se é carga lote
+    const carga_lote = await this.cargaRepository.searchLoteCargas(carga.id);
+
+    if (carga_lote.length > 1) {
+      //carga lote
+
+      const cargasAtualizadas = [];
+
+      for (let index = 0; index < carga_lote.length; index++) {
+        const carga = carga_lote[index];
+
+        if (carga.fk_situacao !== 3) {
+          const validator = factoryCargaValidator();
+          const cargaAtualizada = {
+            ...validator.cast(carga, { stripUnknown: true }),
+            ativo: 0,
+            usuario,
+            data_atualizacao: DateUtils.getCurrentDate(),
+            observacao_exclusao: observacaoExclusao,
+            locais: undefined,
+          };
+          cargasAtualizadas.push(cargaAtualizada);
+          await this.cargaRepository.update(
+            carga.id,
+            cargaAtualizada as ICarga
+          );
+          if (cargaAtualizada.carga_csn !== 1) {
+            this.notifyAll({
+              name: "@carga-delete-csn",
+              details: { id },
+            });
+          } else {
+            this.notifyAll({
+              name: "@carga-delete-csn",
+              details: { id },
+            });
+          }
+        }
+      }
+
+      return cargasAtualizadas;
+    }
+  }
+}

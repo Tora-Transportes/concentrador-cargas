@@ -104,6 +104,12 @@ routes.delete(
   CargaController.delete
 );
 
+routes.delete(
+  "/cargas/:id/disable",
+  HasPermission("DELETAR_CARGAS"),
+  CargaController.disable
+);
+
 routes.get("/csn/cargas", CargasCsnController.search);
 routes.post("/csn/cargas", CargasCsnController.create);
 routes.put("/csn/cargas/:id", CargasCsnController.update);
