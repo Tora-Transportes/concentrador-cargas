@@ -51,13 +51,27 @@ export class CargaRepository {
       `CASE WHEN "con_cargas"."e_lote" = 0 THEN 'Não' WHEN "con_cargas"."e_lote" = 1 THEN 'Sim' END AS "E lote"`
     );
 
+    const lote_carga = await database.raw(`
+      SELECT 
+        CASE WHEN count(0) > 0 
+          THEN 1 
+          ELSE 0 
+          END as lote_carga 
+      FROM "con_cargas"
+        WHERE "carga_mae_id" = '${id}'
+      `);
+
     if (!carga) return;
     const locais = (
       await database("con_locais_carga")
         .where("fk_carga", id)
         .select(["descricao"])
     ).map((i) => i.descricao);
-    return { ...carga, locais };
+    return {
+      ...carga,
+      locais,
+      lote_carga: lote_carga[0].LOTE_CARGA == 1 ? true : false,
+    };
   }
 
   async indexPlate(plate: string): Promise<ICarga | undefined> {

@@ -401,15 +401,16 @@ function Manual() {
 						]}
 					/>
 					<div className="class-group-button">
-						<Button
-							variant="success"
-							type="submit"
-							className="p-2  botao-gravar"
-							disabled={[3, 5, 6].includes(formik.values.fk_situacao)}
-						>
-							Gravar
-						</Button>
-
+						{!formik.values.lote_carga && (
+							<Button
+								variant="success"
+								type="submit"
+								className="p-2  botao-gravar"
+								disabled={[3, 5, 6].includes(formik.values.fk_situacao)}
+							>
+								Gravar
+							</Button>
+						)}
 						<Button
 							variant="warning"
 							className="p-2"
@@ -439,7 +440,7 @@ function Manual() {
 							</Button>
 						)}
 
-						{formik.values.fk_situacao === 3 && (
+						{formik.values.fk_situacao === 3 && !formik.values.lote_carga && (
 							<Button
 								variant="info"
 								className="p-2"
