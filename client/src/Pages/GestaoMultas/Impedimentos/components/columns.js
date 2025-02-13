@@ -7,6 +7,7 @@ import swal from "sweetalert";
 import Swal from "sweetalert2";
 import ServiceGMImpendimentos from "src/services/GestaoMultas/ServiceImpedimentos";
 import { getClaims } from "../../../../MicrosoftAuthentication";
+import HistoricoImpedimentos from "./HistoricoImpedimentos";
 
 function formatDateAndHour(date) {
 	if (!date) return "";
@@ -149,6 +150,14 @@ export const getColumns = (load) => {
 					<BsInfoCircle className="icon-info" />
 					Info
 				</Button>
+			),
+			showFilter: false,
+		},
+		{
+			name: "historico",
+			description: "Histórico",
+			selector: (row) => (
+				<HistoricoImpedimentos cpf={row.cpf}></HistoricoImpedimentos>
 			),
 			showFilter: false,
 		},

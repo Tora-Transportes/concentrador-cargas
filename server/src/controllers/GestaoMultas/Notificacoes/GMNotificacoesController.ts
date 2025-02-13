@@ -275,7 +275,10 @@ class GMNotificacoesController implements IGMNotificacoesController {
       const response = await axios.get(
         `${String(
           process.env.URL_GESTAO_MULTAS
-        )}/viagem/infratores/${cpf}/ait/${ait}`
+        )}/viagem/infratores/${cpf}/ait/${ait}`,
+        {
+          params: req.query,
+        }
       );
       const { data, status } = response;
       return res.status(status).json(data);
