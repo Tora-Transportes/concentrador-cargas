@@ -112,6 +112,11 @@ export class UseCaseAddCarga {
     delete carga.quantidade_cargas;
     const cargaOficial = operation.validate(null, carga);
 
+    if (carga.estilo_carga == 2) {
+      // Carga Mãe Inutilizada
+      cargaOficial.fk_situacao = 23;
+    }
+
     await this.cargaRepository.create(cargaOficial);
     cargasFilhas.push(cargaOficial);
 
