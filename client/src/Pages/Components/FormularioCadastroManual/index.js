@@ -701,7 +701,10 @@ function FormularioCadastroManual({
 												? optionsForcaTrabalho[0]
 												: formik.values.forca_trabalho
 										}
-										isDisabled={fieldsDisable.includes("forca_trabalho")}
+										hideSelectedOptions={true}
+										isDisabled={
+											true /* fieldsDisable.includes("forca_trabalho") */
+										}
 									/>
 									{formik.errors.forca_trabalho &&
 										formik.touched.forca_trabalho && (
