@@ -53,10 +53,8 @@ export class CargaRepository {
 
     const lote_carga = await database.raw(`
       SELECT 
-        CASE WHEN count(0) > 0 
-          THEN 1 
-          ELSE 0 
-          END as lote_carga 
+        count(0) 
+        as lote_carga 
       FROM "con_cargas"
         WHERE "carga_mae_id" = '${id}'
       `);
@@ -70,7 +68,8 @@ export class CargaRepository {
     return {
       ...carga,
       locais,
-      lote_carga: lote_carga[0].LOTE_CARGA == 1 ? true : false,
+      quantidade_cargas: lote_carga[0].LOTE_CARGA,
+      lote_carga: lote_carga[0].LOTE_CARGA > 0 ? true : false,
     };
   }
 

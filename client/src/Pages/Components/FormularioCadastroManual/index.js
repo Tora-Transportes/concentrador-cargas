@@ -809,8 +809,10 @@ function FormularioCadastroManual({
 					<Col>
 						<Row>
 							<Col sm={6} md={7} lg={6}>
-								{formik.values.estilo_carga.value &&
-								formik.values.estilo_carga.value == 2 ? (
+								{(formik.values.estilo_carga.value ||
+									formik.values.quantidade_cargas) &&
+								(formik.values.estilo_carga.value == 2 ||
+									formik.values.estilo_carga == 2) ? (
 									<Form.Group
 										className="mb-3"
 										controlId="validationFormikForcaTrabalho"
