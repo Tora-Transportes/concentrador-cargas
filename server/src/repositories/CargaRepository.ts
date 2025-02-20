@@ -20,9 +20,10 @@ export class CargaRepository {
   }
 
   async nextId(): Promise<number> {
-    return Number(
-      (await database("DUAL").select("seq_con_cargas.NEXTVAL as id"))[0].id
+    const id = await database.raw(
+      `SELECT usu_tora.seq_con_cargas.NEXTVAL as id FROM DUAL`
     );
+    return Number(id[0].ID);
   }
 
   async index(id: number): Promise<ICarga | undefined> {

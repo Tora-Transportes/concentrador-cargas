@@ -384,7 +384,12 @@ function FormularioCadastroManual({
 		formik.values.janela_coleta,
 		formik.values.janela_entrega,
 	]);
-
+	const validaQuantidadeCarga = () => {
+		if (formik.values.quantidade_cargas > 450) {
+			swal("A quantidade de cargas não pode ser maior que 450");
+			formik.setFieldValue("quantidade_cargas", "0");
+		}
+	};
 	const foucusOut = (e) => {
 		const offset = -3; // Offset em horas para GMT-3
 		const offsetInMs = offset * 60 * 60 * 1000; // Converter offset para milissegundos
@@ -841,7 +846,9 @@ function FormularioCadastroManual({
 													isNaN(value) ? "" : value
 												);
 											}}
-											onBlur={formik.handleBlur}
+											onBlur={(e) => {
+												validaQuantidadeCarga(e);
+											}}
 											disabled={fieldsDisable.includes("quantidade_cargas")}
 										/>
 									</Form.Group>
