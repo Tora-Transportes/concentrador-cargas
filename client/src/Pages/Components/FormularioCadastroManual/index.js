@@ -519,7 +519,7 @@ function FormularioCadastroManual({
 				<div className="class-linha-title2">
 					<hr className="w-100"></hr>
 				</div>
-				<Col>
+				{/* 				<Col>
 					<Form.Group className="mb-3">
 						*É Lote?{" "}
 						<Form.Check
@@ -565,7 +565,7 @@ function FormularioCadastroManual({
 							Deve ser cadastrada a quantidade <strong>total</strong> da carga.
 						</sub>
 					</Form.Group>
-				</Col>
+				</Col> */}
 				{isViwsCargaApp && (
 					<Col className="text-end">
 						<Form.Group className="mb-3">
@@ -611,19 +611,22 @@ function FormularioCadastroManual({
 							Detalhes
 						</h3>
 					</Col>
-					<Col xs="auto" className="text-center text-md-start">
-						<Form.Group controlId="tipo_carga">
-							<Chip
-								label={
-									formik.values.carga_filha == null ||
-									formik.values.carga_filha == 0
-										? "Tipo : CARGA MÃE"
-										: "Tipo : CARGA FILHA"
-								}
-								color="default"
-							/>
-						</Form.Group>
-					</Col>
+					{(formik.values.estilo_carga.value == 2 ||
+						formik.values.estilo_carga == 2) && (
+						<Col xs="auto" className="text-center text-md-start">
+							<Form.Group controlId="tipo_carga">
+								<Chip
+									label={
+										formik.values.carga_filha == null ||
+										formik.values.carga_filha == 0
+											? "Tipo : CARGA BASE"
+											: "Tipo : CARGA VINCULADA"
+									}
+									color="default"
+								/>
+							</Form.Group>
+						</Col>
+					)}
 					<Col xs="auto" className="text-center text-md-start">
 						{formik.values.carga_mae_id && (
 							<Button
@@ -638,7 +641,7 @@ function FormularioCadastroManual({
 								}
 							>
 								<Chip
-									label="CARGA MÃE"
+									label="CARGA BASE"
 									icon={<GiCargoCrate size={20} />}
 									color="primary"
 								/>
@@ -821,7 +824,7 @@ function FormularioCadastroManual({
 										className="mb-3"
 										controlId="validationFormikForcaTrabalho"
 									>
-										<Form.Label>Quantidade de Cargas Filhas</Form.Label>
+										<Form.Label>Quantidade de Cargas</Form.Label>
 										<Form.Control
 											type="number"
 											min={1}

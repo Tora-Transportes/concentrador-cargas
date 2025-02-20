@@ -75,8 +75,10 @@ export const columns = [
 				<Chip
 					label={
 						row.carga_filha === 1
-							? `Carga Filha de ${row.carga_mae_id}`
-							: "Carga Mãe"
+							? `Carga Vinculada á ${row.carga_mae_id}`
+							: row.estilo_carga === 2
+							? "Base"
+							: "Normal"
 					}
 					color="primary"
 				></Chip>
@@ -107,7 +109,7 @@ export const columns = [
 		selector: (row) => (
 			<>
 				<Chip
-					label={row.estilo_carga === 2 ? "Escoamento" : "Normal"}
+					label={row.estilo_carga === 2 ? "Base" : "Normal"}
 					color="primary"
 				></Chip>
 			</>
@@ -115,7 +117,7 @@ export const columns = [
 		Filter: (props) => (
 			<Form.Select {...props}>
 				<option></option>
-				<option value="2"> Escoamento </option>
+				<option value="2"> Base </option>
 				<option value="1"> Normal </option>
 			</Form.Select>
 		),
