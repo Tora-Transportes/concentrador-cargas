@@ -484,6 +484,7 @@ export class UseCaseDeleteCarga {
           locais: undefined,
         };
         cargasAtualizadas.push(cargaAtualizada);
+
         await this.cargaRepository.update(carga.id, cargaAtualizada as ICarga);
         if (cargaAtualizada.carga_csn !== 1) {
           this.notifyAll({
@@ -510,6 +511,10 @@ export class UseCaseDeleteCarga {
         locais: undefined,
       };
 
+      // eslint-disable-next-line no-prototype-builtins
+      if (cargaAtualizada.hasOwnProperty("quantidade_cargas")) {
+        delete cargaAtualizada["quantidade_cargas"];
+      }
       await this.cargaRepository.update(carga.id, cargaAtualizada as ICarga);
       if (cargaAtualizada.carga_csn !== 1) {
         this.notifyAll({
