@@ -354,7 +354,11 @@ function FormularioCadastroManual({
 			formik.values.data_coleta &&
 			inputDateColeta.getFullYear() >= today.getFullYear()
 		) {
-			if (formik.values.data_coleta && formik.values.data_coleta < todayS) {
+			if (
+				formik.values.data_coleta &&
+				formik.values.data_coleta < todayS &&
+				status != "Edicao"
+			) {
 				swal("A data de coleta não pode ser menor que a data atual");
 				formik.setFieldValue("data_coleta", "");
 			}
@@ -389,12 +393,12 @@ function FormularioCadastroManual({
 		const todayS = now.toISOString().split("T")[0];
 		const split_hour = now.toISOString().split("T")[1].split(":");
 
-		if (e.target.name == "data_coleta") {
+		if (e.target.name == "data_coleta" && status != "Edicao") {
 			if (formik.values.data_coleta && formik.values.data_coleta < todayS) {
 				swal("A data de coleta não pode ser menor que a data atual");
 				formik.setFieldValue("data_coleta", "");
 			}
-		} else if (e.target.name == "data_entrega") {
+		} else if (e.target.name == "data_entrega" && status != "Edicao") {
 			if (
 				formik.values.data_coleta &&
 				formik.values.data_entrega &&
@@ -849,10 +853,138 @@ function FormularioCadastroManual({
 			<div className="class-linha-title3">
 				<hr className="w-100"></hr>
 			</div>
+			{status == "Edicao" && (
+				<>
+					<Row className="mb-5">
+						<Col sm={12}>
+							<h3 id="title-check-não">Dados do veículo</h3>
+						</Col>
+					</Row>
+					<Row>
+						<Form.Text muted className="fw-bold">
+							Caso os dados vinculados à placa não estejam corretos realize a
+							alteração no SIT, depois volte a essa página clique dentro do
+							campo {`"Placa Cavalo"`} e clique fora para a pesquisa ser
+							realizada novamente. Lembrando que a atualização dos dados ficará
+							indisponível uma vez que o veículo for {`"Aprovado pelo GR"`}.
+						</Form.Text>
+						<Col sm={12}>
+							<InputPlaca
+								className="input-placaCav"
+								id="Plca-cavalo"
+								maxLength={7}
+								readOnly={
+									formik.values.fk_situacao &&
+									![1, 2, 4].includes(Number(formik.values.fk_situacao))
+								}
+								placeholder="Placa veículo"
+								disabled={isDisabledPlaca}
+								type="text"
+								name="placa_veiculo"
+								value={formik.values.placa_veiculo || ""}
+								onChange={formik.handleChange}
+								onBlur={() => {
+									if (
+										!formik.values.fk_situacao ||
+										[1, 2, 4].includes(Number(formik.values.fk_situacao))
+									) {
+										handleSearchVehicle(formik.values.placa_veiculo);
+									}
+								}}
+							/>
+						</Col>
+					</Row>
+					<Row>
+						<Col sm={12} md={6}>
+							<InputGroup className="input-carreta mb-2">
+								<InputGroup.Text>Carreta</InputGroup.Text>
+								<Form.Control
+									readOnly
+									placeholder="Placa carreta"
+									type="text"
+									value={formik.values.placa_carreta || ""}
+								/>
+							</InputGroup>
+						</Col>
+						<Col>
+							<InputGroup className="input-bitrem mb-2">
+								<InputGroup.Text>Bitrem</InputGroup.Text>
+								<Form.Control
+									readOnly
+									placeholder="Placa bitrem"
+									type="text"
+									value={formik.values.placa_bitrem || ""}
+								/>
+							</InputGroup>
+						</Col>
+					</Row>
+
+					<Row className="row-input-motorista">
+						<Col sm={12} md={6} lg={6}>
+							<InputGroup
+								// id="style-ipunt-motorista"
+								className="class-input-moto"
+							>
+								<InputGroup.Text>Motorista</InputGroup.Text>
+								<Form.Control
+									readOnly
+									placeholder="Motorista"
+									type="text"
+									value={
+										formik.values.codigo_motorista &&
+										formik.values.nome_motorista
+											? `${formik.values.codigo_motorista} - ${formik.values.nome_motorista}`
+											: ""
+									}
+								/>
+							</InputGroup>
+						</Col>
+
+						<Col className="col-info-veic-manual" id="detalhes-veiculo-manual">
+							<Button
+								className="button-info-veic-manual buttons-detail-veiculos"
+								onClick={() =>
+									handleShowDetailsAboutVehicle(formik.values.placa_veiculo)
+								}
+							>
+								Detalhes veículo
+							</Button>
+							<Button
+								className="button-info-veic-manual buttons-inf-veiculos"
+								// id="botao-deb-veiculo"
+								onClick={() =>
+									handleShowDebitAboutVehicle(formik.values.placa_veiculo)
+								}
+							>
+								Débitos veículo
+							</Button>
+						</Col>
+					</Row>
+
+					<Row>
+						<Col>
+							{formik.values.observacao_gr && (
+								<FloatingLabel label="Observação GR" className="mb-3">
+									<Form.Control
+										as="textarea"
+										type="text"
+										value={formik.values.observacao_gr}
+										readOnly
+									/>
+								</FloatingLabel>
+							)}
+						</Col>
+						<div className="class-linha-title4">
+							<hr className="w-100"></hr>
+						</div>
+					</Row>
+				</>
+			)}
 			{!formik.values.e_lote &&
 				!formik.values.lote_carga &&
 				(formik.values.estilo_carga.value == 1 ||
-					formik.values.estilo_carga == 1) && (
+					formik.values.estilo_carga == 1) &&
+				status == "Cadastro" && (
 					<>
 						<Row className="mb-5">
 							<Col sm={12}>
