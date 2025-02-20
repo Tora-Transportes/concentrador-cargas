@@ -456,12 +456,12 @@ export class UseCaseDeleteCarga {
     if (!carga) {
       throw new AppError("Carga não encontrada", 404);
     }
-    if (carga.carga_filha == 1) {
-      throw new AppError(
-        `Essa carga é derivada de um lote, para efetuar e exclusão dela favor excluir a carga mãe de número: ${carga.carga_mae_id}`,
-        409
-      );
-    }
+    /*     if (carga.carga_filha == 1) { :TODO CARGA_FILHA TRAVA
+          throw new AppError(
+            `Essa carga é derivada de um lote, para efetuar e exclusão dela favor excluir a carga mãe de número: ${carga.carga_mae_id}`,
+            409
+          );
+        } */
 
     // verifica se é carga lote
     const carga_lote = await this.cargaRepository.searchLoteCargas(carga.id);
