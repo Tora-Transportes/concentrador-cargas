@@ -321,7 +321,6 @@ function FormularioCadastroManual({
 	};
 
 	const DetalhesCargaApp = (e) => {
-		console.log("RRR");
 		const decisaoEnvioCarga = e.target.checked;
 		setDisableColetaEntrega(decisaoEnvioCarga);
 		/* 		if (decisaoEnvioCarga) {
