@@ -113,13 +113,20 @@ export const envioCargaApp = async (cargas, oid, cpf_motorista) => {
 			};
 		});
 
-		// Enviar todas as cargas em uma única requisição
+		const ids = cargas.map((bodyEnvioAppList) => {
+			let { id, carga_filha } = bodyEnvioAppList;
+			if (carga_filha == 1) {
+				return { id: id };
+			}
+		});
+		ids.shift();
 		console.log(bodyEnvioAppList);
 		if (bodyEnvioAppList[0].estilo_carga == 1) {
 			await ServiceApp.envioCargaApp(bodyEnvioAppList[0]);
 		} else {
 			await ServiceApp.envioCargaLoteApp({
-				freights: bodyEnvioAppList,
+				carga_referencia: bodyEnvioAppList[0],
+				ids: ids,
 			});
 		}
 	} catch (error) {
