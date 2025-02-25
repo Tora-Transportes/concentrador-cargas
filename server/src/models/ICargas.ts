@@ -48,6 +48,14 @@ export interface ICarga {
   categoria_veiculo?: string | null;
   carga_app?: number | null;
   valor_frete?: number | null;
+
+  forca_trabalho?: number | null;
+  estilo_carga?: number | null;
+  quantidade_cargas?: number | null;
+  data_limite_oferta?: Date | null;
+  carga_mae_id?: number | null;
+  carga_filha?: number | null;
+  cargas_filhas?: any;
 }
 
 export interface ICargaCTE {

@@ -31,6 +31,7 @@ export interface IRepositoryAddCarga {
   ): Promise<IPaginationResult<ICarga>>;
   bulkCreate(cargas: ICarga[]): Promise<any>;
   nextId(): Promise<number>;
+  searchLoteCargas(id: number): Promise<ICarga[]>;
 }
 
 export interface IRepositoryCargaCsnInfoRepository {
@@ -104,10 +105,39 @@ export class UseCaseAddCarga {
         );
       }
     }
-
+    const cargasFilhas = [];
+    carga.carga_mae_id = null;
+    carga.carga_filha = 0;
+    const qtd_cargas_filhas = carga.quantidade_cargas ?? 0;
+    delete carga.quantidade_cargas;
     const cargaOficial = operation.validate(null, carga);
 
+    if (carga.estilo_carga == 2) {
+      // Carga Mãe Inutilizada
+      cargaOficial.fk_situacao = 23;
+    }
+
     await this.cargaRepository.create(cargaOficial);
+    cargasFilhas.push(cargaOficial);
+
+    if (carga.estilo_carga == 2) {
+      // 1 Normal | 2 Escoamento
+      for (let idx = 0; idx < qtd_cargas_filhas; idx++) {
+        const cargaFilha = carga;
+        delete cargaFilha.quantidade_cargas;
+        const novo_id = await this.cargaRepository.nextId();
+        cargaFilha.id = novo_id;
+        cargaFilha.carga_mae_id = cargaOficial.id;
+        cargaFilha.carga_filha = 1;
+        const cargaOficialFilha = operation.validate(null, cargaFilha);
+        await this.cargaRepository.create(cargaFilha);
+        if (cargaFilha.locais == undefined) {
+          await this.locaisRepository.clear(cargaFilha.id);
+        }
+        cargasFilhas.push(cargaOficialFilha);
+      }
+    }
+
     if (cargaOficial.carga_csn !== 1) {
       this.notifyAll({
         name: "@carga-create",
@@ -119,7 +149,7 @@ export class UseCaseAddCarga {
         details: await this.cargaCsnInfoRepository.index(cargaOficial.id),
       });
     }
-    return carga;
+    return cargasFilhas;
   }
 }
 export interface IRepositoryUpdateCarga extends IRepositoryAddCarga {
@@ -426,29 +456,79 @@ export class UseCaseDeleteCarga {
     if (!carga) {
       throw new AppError("Carga não encontrada", 404);
     }
-    const validator = factoryCargaValidator();
-    const cargaAtualizada = {
-      ...validator.cast(carga, { stripUnknown: true }),
-      ativo: 0,
-      usuario,
-      data_atualizacao: DateUtils.getCurrentDate(),
-      observacao_exclusao: observacaoExclusao,
-      locais: undefined,
-    };
+    /*     if (carga.carga_filha == 1) { :TODO CARGA_FILHA TRAVA
+          throw new AppError(
+            `Essa carga é derivada de um lote, para efetuar e exclusão dela favor excluir a carga mãe de número: ${carga.carga_mae_id}`,
+            409
+          );
+        } */
 
-    await this.cargaRepository.update(carga.id, cargaAtualizada as ICarga);
-    if (cargaAtualizada.carga_csn !== 1) {
-      this.notifyAll({
-        name: "@carga-delete-csn",
-        details: { id },
-      });
+    // verifica se é carga lote
+    const carga_lote = await this.cargaRepository.searchLoteCargas(carga.id);
+
+    if (carga_lote.length > 1) {
+      //carga lote
+
+      const cargasAtualizadas = [];
+
+      for (let index = 0; index < carga_lote.length; index++) {
+        const carga = carga_lote[index];
+
+        const validator = factoryCargaValidator();
+        const cargaAtualizada = {
+          ...validator.cast(carga, { stripUnknown: true }),
+          ativo: 0,
+          usuario,
+          data_atualizacao: DateUtils.getCurrentDate(),
+          observacao_exclusao: observacaoExclusao,
+          locais: undefined,
+        };
+        cargasAtualizadas.push(cargaAtualizada);
+
+        await this.cargaRepository.update(carga.id, cargaAtualizada as ICarga);
+        if (cargaAtualizada.carga_csn !== 1) {
+          this.notifyAll({
+            name: "@carga-delete-csn",
+            details: { id },
+          });
+        } else {
+          this.notifyAll({
+            name: "@carga-delete-csn",
+            details: { id },
+          });
+        }
+      }
+
+      return cargasAtualizadas;
     } else {
-      this.notifyAll({
-        name: "@carga-delete-csn",
-        details: { id },
-      });
+      const validator = factoryCargaValidator();
+      const cargaAtualizada = {
+        ...validator.cast(carga, { stripUnknown: true }),
+        ativo: 0,
+        usuario,
+        data_atualizacao: DateUtils.getCurrentDate(),
+        observacao_exclusao: observacaoExclusao,
+        locais: undefined,
+      };
+
+      // eslint-disable-next-line no-prototype-builtins
+      if (cargaAtualizada.hasOwnProperty("quantidade_cargas")) {
+        delete cargaAtualizada["quantidade_cargas"];
+      }
+      await this.cargaRepository.update(carga.id, cargaAtualizada as ICarga);
+      if (cargaAtualizada.carga_csn !== 1) {
+        this.notifyAll({
+          name: "@carga-delete-csn",
+          details: { id },
+        });
+      } else {
+        this.notifyAll({
+          name: "@carga-delete-csn",
+          details: { id },
+        });
+      }
+      return cargaAtualizada;
     }
-    return cargaAtualizada;
   }
 }
 
@@ -558,5 +638,80 @@ export class UseCaseImportCarga {
       }
     }
     return cargas;
+  }
+}
+
+export class UseCaseDisableCarga {
+  constructor(
+    private cargaRepository: IRepositoryUpdateCarga,
+    private notifyAll: (event: IEventSocket) => void
+  ) {}
+  async run(
+    id: number,
+    usuario: string,
+    observacaoExclusao: string | null | undefined = ""
+  ) {
+    if (!id) {
+      throw new AppError("Id inválido", 400);
+    }
+    if (!observacaoExclusao) {
+      throw new AppError(
+        "Ao excluir uma carga a observação da exclusão deve ser preenchida",
+        400
+      );
+    }
+    const carga = await this.cargaRepository.index(id);
+    if (!carga) {
+      throw new AppError("Carga não encontrada", 404);
+    }
+    if (carga.carga_filha == 1) {
+      throw new AppError(
+        `Essa carga é derivada de um lote, para efetuar e exclusão dela favor excluir a carga mãe de número: ${carga.carga_mae_id}`,
+        409
+      );
+    }
+
+    // verifica se é carga lote
+    const carga_lote = await this.cargaRepository.searchLoteCargas(carga.id);
+
+    if (carga_lote.length > 1) {
+      //carga lote
+
+      const cargasAtualizadas = [];
+
+      for (let index = 0; index < carga_lote.length; index++) {
+        const carga = carga_lote[index];
+
+        if (carga.fk_situacao !== 3) {
+          const validator = factoryCargaValidator();
+          const cargaAtualizada = {
+            ...validator.cast(carga, { stripUnknown: true }),
+            ativo: 0,
+            usuario,
+            data_atualizacao: DateUtils.getCurrentDate(),
+            observacao_exclusao: observacaoExclusao,
+            locais: undefined,
+          };
+          cargasAtualizadas.push(cargaAtualizada);
+          await this.cargaRepository.update(
+            carga.id,
+            cargaAtualizada as ICarga
+          );
+          if (cargaAtualizada.carga_csn !== 1) {
+            this.notifyAll({
+              name: "@carga-delete-csn",
+              details: { id },
+            });
+          } else {
+            this.notifyAll({
+              name: "@carga-delete-csn",
+              details: { id },
+            });
+          }
+        }
+      }
+
+      return cargasAtualizadas;
+    }
   }
 }

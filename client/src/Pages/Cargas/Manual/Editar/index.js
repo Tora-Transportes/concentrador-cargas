@@ -11,7 +11,10 @@ import FormularioCadastroManual from "src/Pages/Components/FormularioCadastroMan
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import "../Editar/style.css";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
-import { cancelarCargaApp } from "src/Pages/Components/DataAppConcentrador";
+import {
+	cancelarCargaApp,
+	desabilitarCargaLote,
+} from "src/Pages/Components/DataAppConcentrador";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -53,6 +56,13 @@ function Manual() {
 			fk_situacao: null,
 			carga_app: 0,
 			valor_frete: 0,
+			tipo_viagem: 1,
+			estilo_carga: 1,
+			quantidade_cargas: 0,
+			data_limite_oferta: "",
+			idCargaMae: null,
+			prerequisitos: [],
+			cpf_motorista: "",
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -108,18 +118,69 @@ function Manual() {
 				icon: "warning",
 			});
 			if (observacaoExclusao) {
-				await ServiceCargas.delete({
-					id: formik.values.id,
-					observacao_exclusao: observacaoExclusao,
-				});
 				if (formik.values.carga_app === 1) {
-					await cancelarCargaApp(
+					const retorno = await cancelarCargaApp(
 						formik.values.id,
 						getClaims().oid,
 						observacaoExclusao
 					);
+					if (retorno.status == 200) {
+						await ServiceCargas.delete({
+							id: formik.values.id,
+							observacao_exclusao: observacaoExclusao,
+						});
+						await swal("Sucesso!", "Carga removida", "success");
+						handleCloseWindow(null, false);
+					} else if (retorno.status == 409) {
+						await swal(
+							"Error",
+							"Carga Lote já possui motoristas vinculados, favor desabilita-lá",
+							"error"
+						);
+					} else {
+						await swal("Error", retorno.data.response.message, "error");
+					}
+				} else {
+					await ServiceCargas.delete({
+						id: formik.values.id,
+						observacao_exclusao: observacaoExclusao,
+					});
+					handleCloseWindow(null, false);
 				}
-				await swal("Sucesso!", "Carga removida", "success");
+			} else {
+				swal("Nenhuma alteração realizada");
+			}
+		} catch (error) {
+			console.log(error);
+		}
+		setLoading(false);
+	}
+
+	async function handleDesabilitarCargaLote() {
+		setLoading(true);
+		try {
+			const observacaoExclusao = await swal(
+				`Digite o motivo de desabilitação`,
+				{
+					content: "input",
+					dangerMode: true,
+					buttons: ["Cancelar", true],
+					icon: "warning",
+				}
+			);
+			if (observacaoExclusao) {
+				await ServiceCargas.disable({
+					id: formik.values.id,
+					observacao_exclusao: observacaoExclusao,
+				});
+				if (formik.values.carga_app === 1) {
+					await desabilitarCargaLote(formik.values.id);
+				}
+				await swal(
+					"Sucesso!",
+					"Carga lote desabilitada com sucesso",
+					"success"
+				);
 				handleCloseWindow(null, false);
 			} else {
 				swal("Nenhuma alteração realizada");
@@ -330,17 +391,26 @@ function Manual() {
 						isDisabledPlaca={isDisabledPlaca}
 						setDisabledPlaca={setDisabledPlaca}
 						setLoading={setLoading}
+						isPermissionUser={isPermissionUser}
+						fieldsDisable={[
+							"data_limite_oferta",
+							"quantidade_cargas",
+							"estilo_carga",
+							"forca_trabalho",
+							"valor_frete",
+						]}
 					/>
 					<div className="class-group-button">
-						<Button
-							variant="success"
-							type="submit"
-							className="p-2  botao-gravar"
-							disabled={[3, 5, 6].includes(formik.values.fk_situacao)}
-						>
-							Gravar
-						</Button>
-
+						{!formik.values.lote_carga && (
+							<Button
+								variant="success"
+								type="submit"
+								className="p-2  botao-gravar"
+								disabled={[3, 5, 6].includes(formik.values.fk_situacao)}
+							>
+								Gravar
+							</Button>
+						)}
 						<Button
 							variant="warning"
 							className="p-2"
@@ -370,7 +440,7 @@ function Manual() {
 							</Button>
 						)}
 
-						{formik.values.fk_situacao === 3 && (
+						{formik.values.fk_situacao === 3 && !formik.values.lote_carga && (
 							<Button
 								variant="info"
 								className="p-2"
@@ -379,6 +449,17 @@ function Manual() {
 								Emitir documento
 							</Button>
 						)}
+
+						{formik.values.carga_filha === 0 &&
+							formik.values.estilo_carga === 2 && (
+								<Button
+									variant="danger"
+									className="p-2"
+									onClick={handleDesabilitarCargaLote}
+								>
+									Desabilitar Carga Lote
+								</Button>
+							)}
 					</div>
 				</Form>
 			</Container>

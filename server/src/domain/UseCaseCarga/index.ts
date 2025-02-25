@@ -17,6 +17,7 @@ import {
   UseCaseDeleteCarga,
   UseCaseImportCarga,
   UseCaseViewCargasCTE,
+  UseCaseDisableCarga,
 } from "./entities";
 
 const userRepository = new UsuarioRepository();
@@ -54,6 +55,7 @@ const modules = {
   ),
   UseCaseViewCargas: new UseCaseViewCargas(cargaRepository),
   UseCaseDeleteCarga: new UseCaseDeleteCarga(cargaRepository, notifyAll),
+  UseCaseDisableCarga: new UseCaseDisableCarga(cargaRepository, notifyAll),
   UseCaseImportCarga: new UseCaseImportCarga(
     cargaRepository,
     notifyAll,

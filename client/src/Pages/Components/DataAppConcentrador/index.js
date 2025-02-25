@@ -1,93 +1,140 @@
 import ServiceApp from "src/services/ServiceApp";
 import ServiceLogs from "src/services/ServiceLogs";
 
-export const envioCargaApp = async (body) => {
-	const {
-		idCarga, // cogigo carga
-		oid,
-		cliente,
-		origem_carga,
-		destino_carga,
-		data_entrega,
-		data_coleta,
-		tipo_carga,
-		quantidade,
-		acessorios_requisitos,
-		informacoes_restritivas,
-		observacao,
-		valor_frete,
-		///forca_trabalho,
-		//tipo_viagem,
-		//estilo_carga,
-		//data_limite_oferta,
-		//idCargaMae,
-		placa_veiculo,
-		cpf_motorista,
-		janela_coleta,
-		janela_entrega,
-		fk_filial,
-	} = body;
-
-	const cidadeEstadoOrigem = origem_carga.split("/");
-	const cidadeEstadoDestino = destino_carga.split("/");
-	const data_inicio = new Date(data_coleta + " " + janela_coleta);
-	const data_fim = new Date(data_entrega + " " + janela_entrega);
-	const nameClient = cliente.split("-")[0];
-
-	// Ajustar o fuso horário
-	const offset = -3; // Offset em horas para GMT-3
-	const offsetInMs = offset * 60 * 60 * 1000; // Converter offset para milissegundos
-
-	// Ajustar a data para o fuso horário específico
-	const localDateIncio = new Date(data_inicio.getTime() + offsetInMs);
-	const localDateFim = new Date(data_fim.getTime() + offsetInMs);
-
-	// Formatar a data ajustada para o formato ISO
-	const isoDateStringInicio = localDateIncio.toISOString().split(".")[0] + "Z";
-	const isoDateStringFim = localDateFim.toISOString().split(".")[0] + "Z";
-
-	const bodyEnvioApp = {
-		requestCode: idCarga, //codigo da carga
-		operatorNumber: oid, // number user
-		creationDate: new Date(), //data cadastro
-		product: tipo_carga, // produto da carga
-		originUF: cidadeEstadoOrigem[1], // uf origem
-		originCity: cidadeEstadoOrigem[2], // cidade origem
-		originCollection: nameClient?.trim(), // Origem coleta obs: cliente
-		deliveryUF: cidadeEstadoDestino[1], // uf destino
-		deliveryCity: cidadeEstadoDestino[2], // cidade destino
-		estimatedStartDate: isoDateStringInicio, // data coleta
-		estimatedEndDate: isoDateStringFim, // data entrega
-		observacao: observacao || "", // observação 3
-		acessorios_requisitos: acessorios_requisitos || "", // observação 1
-		informacoes_restritivas: informacoes_restritivas || "", // observação 2
-		weight: String(quantidade) + " KG", // peso
-		valueFreight: valor_frete,
-		//workforce: forca_trabalho,
-		//typeTravel: tipo_viagem,
-		//cargoStyle: estilo_carga,
-		//offerDeadline: data_limite_oferta,
-		//parentRequesCode: idCargaMae,
-		placa_veiculo: placa_veiculo,
-		cpf_motorista: cpf_motorista,
-	};
-
+export const envioCargaApp = async (cargas, oid, cpf_motorista) => {
 	const saveError = (error) => {
 		ServiceLogs.run({
 			message: String(error),
-			descricao: "Erro ao enviar carga App",
+			descricao: "Erro ao enviar cargas para o App",
 			level: "error",
-			nameFile: "error-envio-carga-app",
-			id: idCarga,
+			nameFile: "error-envio-cargas-app",
 		});
 	};
 
 	try {
-		await ServiceApp.envioCargaApp(bodyEnvioApp, fk_filial);
+		// Construir o array com todas as cargas
+		const bodyEnvioAppList = cargas.map((body) => {
+			let {
+				id,
+				cliente,
+				origem_carga,
+				destino_carga,
+				data_entrega,
+				data_coleta,
+				tipo_carga,
+				quantidade,
+				acessorios_requisitos,
+				informacoes_restritivas,
+				observacao,
+				valor_frete,
+				placa_veiculo,
+				janela_coleta,
+				janela_entrega,
+				data_limite_oferta,
+				estilo_carga,
+				forca_trabalho,
+				carga_mae_id,
+				carga_filha,
+			} = body;
+
+			if (!janela_coleta) {
+				janela_coleta = "00:00";
+			}
+
+			if (!janela_entrega) {
+				janela_entrega = "00:00";
+			}
+
+			// Validar e verificar valores de data
+			if (!data_coleta || !data_entrega || !janela_coleta || !janela_entrega) {
+				throw new Error(
+					`Valores inválidos de data ou janela: data_coleta=${data_coleta}, data_entrega=${data_entrega}, janela_coleta=${janela_coleta}, janela_entrega=${janela_entrega}`
+				);
+			}
+
+			const cidadeEstadoOrigem = origem_carga.split("/");
+			const cidadeEstadoDestino = destino_carga.split("/");
+
+			const data_inicio = new Date(
+				`${data_coleta.substring(0, 10)}T${janela_coleta}:00`
+			);
+			const data_fim = new Date(
+				`${data_entrega.substring(0, 10)}T${janela_entrega}:00`
+			);
+
+			console.log(data_inicio, data_fim);
+
+			// Verificar se as datas são válidas
+			if (isNaN(data_inicio.getTime()) || isNaN(data_fim.getTime())) {
+				throw new Error(
+					`Datas inválidas: data_inicio=${data_inicio}, data_fim=${data_fim}`
+				);
+			}
+
+			const nameClient = cliente.split("-")[0];
+
+			// Ajustar o fuso horário
+			const offset = -3; // Offset em horas para GMT-3
+			const offsetInMs = offset * 60 * 60 * 1000;
+
+			// Ajustar as datas
+			const localDateInicio = new Date(data_inicio.getTime() + offsetInMs);
+			const localDateFim = new Date(data_fim.getTime() + offsetInMs);
+
+			// Formatar datas em ISO
+			const isoDateStringInicio =
+				localDateInicio.toISOString().split(".")[0] + "Z";
+			const isoDateStringFim = localDateFim.toISOString().split(".")[0] + "Z";
+
+			return {
+				requestCode: id,
+				operatorNumber: oid,
+				creationDate: new Date(),
+				product: tipo_carga,
+				originUF: cidadeEstadoOrigem[1],
+				originCity: cidadeEstadoOrigem[2],
+				originCollection: nameClient?.trim(),
+				deliveryUF: cidadeEstadoDestino[1],
+				deliveryCity: cidadeEstadoDestino[2],
+				estimatedStartDate: isoDateStringInicio,
+				estimatedEndDate: isoDateStringFim,
+				observacao: observacao || "",
+				acessorios_requisitos: acessorios_requisitos || "",
+				informacoes_restritivas: informacoes_restritivas || "",
+				weight: String(quantidade) + " KG",
+				valueFreight: valor_frete,
+				placa_veiculo: placa_veiculo,
+				cpf_motorista: cpf_motorista,
+				data_limite_oferta: data_limite_oferta,
+				estilo_carga: estilo_carga,
+				forca_trabalho: forca_trabalho,
+				carga_mae_id: carga_mae_id,
+				carga_filha: carga_filha,
+			};
+		});
+
+		const ids = cargas.map((bodyEnvioAppList) => {
+			let { id, carga_filha } = bodyEnvioAppList;
+			if (carga_filha == 1) {
+				return { id: id };
+			}
+		});
+		ids.shift();
+		console.log(bodyEnvioAppList);
+		if (bodyEnvioAppList[0].estilo_carga == 1) {
+			await ServiceApp.envioCargaApp(bodyEnvioAppList[0]);
+		} else {
+			await ServiceApp.envioCargaLoteApp({
+				carga_referencia: bodyEnvioAppList[0],
+				ids: ids,
+			});
+		}
 	} catch (error) {
+		console.log(error);
 		saveError(error);
 	}
 };
+
 export const cancelarCargaApp = async (
 	idCarga,
 	oid,
@@ -100,13 +147,33 @@ export const cancelarCargaApp = async (
 	};
 
 	try {
-		ServiceApp.cancelarCargaApp(bodyEnvioApp);
+		const retorno = await ServiceApp.cancelarCargaApp(bodyEnvioApp);
+		return retorno;
 	} catch (error) {
 		ServiceLogs.run({
 			message: String(error),
 			descricao: "Erro ao cancelar carga App",
 			level: "error",
 			nameFile: "error-cancel-carga-app",
+			id: idCarga,
+		});
+		return { status: 500, data: { message: "erro ao cancelar carga" } };
+	}
+};
+
+export const desabilitarCargaLote = async (idCarga) => {
+	const bodyEnvioApp = {
+		freightId: idCarga,
+	};
+
+	try {
+		ServiceApp.desabilitarCargaLoteApp(bodyEnvioApp);
+	} catch (error) {
+		ServiceLogs.run({
+			message: String(error),
+			descricao: "Erro ao desabilitarCargaLoteApp carga App",
+			level: "error",
+			nameFile: "error-desabilitar-carga-lote",
 			id: idCarga,
 		});
 	}

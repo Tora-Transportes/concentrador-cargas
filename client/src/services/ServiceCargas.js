@@ -31,6 +31,10 @@ class ServiceCargas {
 		rastreador,
 		carga_app,
 		valor_frete,
+		forca_trabalho,
+		estilo_carga,
+		quantidade_cargas,
+		data_limite_oferta,
 	}) {
 		const carga = {
 			e_lote,
@@ -63,6 +67,10 @@ class ServiceCargas {
 			rastreador,
 			carga_app,
 			valor_frete,
+			forca_trabalho,
+			estilo_carga,
+			quantidade_cargas,
+			data_limite_oferta,
 		};
 		return await api.post("/cargas", carga);
 	}
@@ -299,6 +307,12 @@ class ServiceCargas {
 		return api.delete(`/cargas/${id}`, { data: { observacao_exclusao } });
 	}
 
+	async disable({ id, observacao_exclusao }) {
+		return api.delete(`/cargas/${id}/disable`, {
+			data: { observacao_exclusao },
+		});
+	}
+
 	async index({ id }) {
 		return api.get(`/cargas/${id}`);
 	}
@@ -326,6 +340,7 @@ class ServiceCargas {
 		carga_csn,
 		carga_app,
 		exclude_cargas_app,
+		estilo_carga,
 	}) {
 		const url = carga_csn === 1 ? "csn/cargas/info" : "/cargas/";
 		return api.get(url, {
@@ -352,6 +367,7 @@ class ServiceCargas {
 				carga_csn,
 				carga_app,
 				exclude_cargas_app,
+				estilo_carga,
 			},
 		});
 	}

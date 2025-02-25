@@ -11,10 +11,19 @@ export interface IResultExcel<T> {
   results: T[];
 }
 export class CargaRepository {
+  async searchLoteCargas(id: number): Promise<ICarga[]> {
+    return database.raw(`
+      SELECT * FROM "con_cargas"
+          WHERE "carga_filha" IS NOT NULL
+          AND "id" = ${id} 
+          OR "carga_mae_id" = ${id}`);
+  }
+
   async nextId(): Promise<number> {
-    return Number(
-      (await database("DUAL").select("seq_con_cargas.NEXTVAL as id"))[0].id
+    const id = await database.raw(
+      `SELECT usu_tora.seq_con_cargas.NEXTVAL as id FROM DUAL`
     );
+    return Number(id[0].ID);
   }
 
   async index(id: number): Promise<ICarga | undefined> {
@@ -43,13 +52,26 @@ export class CargaRepository {
       `CASE WHEN "con_cargas"."e_lote" = 0 THEN 'Não' WHEN "con_cargas"."e_lote" = 1 THEN 'Sim' END AS "E lote"`
     );
 
+    const lote_carga = await database.raw(`
+      SELECT 
+        count(0) 
+        as lote_carga 
+      FROM "con_cargas"
+        WHERE "carga_mae_id" = '${id}'
+      `);
+
     if (!carga) return;
     const locais = (
       await database("con_locais_carga")
         .where("fk_carga", id)
         .select(["descricao"])
     ).map((i) => i.descricao);
-    return { ...carga, locais };
+    return {
+      ...carga,
+      locais,
+      quantidade_cargas: lote_carga[0].LOTE_CARGA,
+      lote_carga: lote_carga[0].LOTE_CARGA > 0 ? true : false,
+    };
   }
 
   async indexPlate(plate: string): Promise<ICarga | undefined> {
@@ -220,6 +242,7 @@ export class CargaRepository {
       }
       if (isValid(query?.id)) {
         qb.andWhere("con_cargas.id", "like", `%${query.id}%`);
+        qb.orWhere("con_cargas.carga_mae_id", "like", `%${query.id}%`);
       }
       if (isValid(String(query?.e_lote))) {
         qb.andWhere("e_lote", "=", `${query.e_lote}`);
@@ -265,6 +288,13 @@ export class CargaRepository {
       }
       if (isValid(String(query?.exclude_cargas_app))) {
         qb.andWhere("carga_app", "!=", 1);
+      }
+      if (isValid(String(query?.estilo_carga))) {
+        if (Number(query.estilo_carga) !== 2) {
+          qb.andWhere("estilo_carga", "!=", 2);
+        } else {
+          qb.andWhere("estilo_carga", "=", 2);
+        }
       }
     };
 

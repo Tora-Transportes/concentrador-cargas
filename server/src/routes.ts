@@ -5,7 +5,7 @@ import CargaController from "./controllers/CargaController";
 import UsuarioController from "./controllers/UsuarioController";
 import TokenMiddleware from "./middlewares/Token";
 import HasPermission from "./middlewares/HasPermissions";
-import LogMiddleware from "./middlewares/Log";
+//import LogMiddleware from "./middlewares/Log";
 import ConvertFieldsToDate from "./middlewares/ConvertFieldsToDate";
 import ExportController from "./controllers/ExportController";
 import ProdutoController from "./controllers/ProdutoController";
@@ -85,7 +85,7 @@ routes.post("/portal/cargas", CargaController.createByImport);
 
 routes.use("/static/", express.static(path.resolve(__dirname, "..", "static")));
 routes.use(TokenMiddleware);
-routes.use(LogMiddleware);
+//routes.use(LogMiddleware);
 routes.use(ConvertFieldsToDate);
 routes.get("/cargas", CargaController.search);
 routes.post("/cargas", CargaController.create);
@@ -104,6 +104,12 @@ routes.delete(
   "/cargas/:id",
   HasPermission("DELETAR_CARGAS"),
   CargaController.delete
+);
+
+routes.delete(
+  "/cargas/:id/disable",
+  HasPermission("DELETAR_CARGAS"),
+  CargaController.disable
 );
 
 routes.get("/csn/cargas", CargasCsnController.search);

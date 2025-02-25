@@ -7,6 +7,7 @@ import SelectStatusCarga from "../../Components/SelectStatusCargas";
 import InputCliente from "src/Pages/Components/InputCliente";
 import { Form } from "react-bootstrap";
 import ResponsavelCadastroSelect from "src/Pages/Components/ResponsavelCadastroSelect";
+import { Chip } from "@material-ui/core";
 
 function formatDate(date) {
 	return date?.split("T")[0].split("-").reverse().join("/");
@@ -67,6 +68,25 @@ export const columns = [
 		showFilter: true,
 	},
 	{
+		name: "carga_filha",
+		description: "Tipo",
+		selector: (row) => (
+			<>
+				<Chip
+					label={
+						row.carga_filha === 1
+							? `Carga Vinculada á ${row.carga_mae_id}`
+							: row.estilo_carga === 2
+							? "Base"
+							: "Normal"
+					}
+					color="primary"
+				></Chip>
+			</>
+		),
+		showFilter: false,
+	},
+	{
 		name: "editar",
 		description: "Editar/Vincular",
 		static_column: true,
@@ -82,6 +102,26 @@ export const columns = [
 			</Link>
 		),
 		sortable: "sortable",
+	},
+	{
+		name: "estilo_carga",
+		description: "Estilo da Carga",
+		selector: (row) => (
+			<>
+				<Chip
+					label={row.estilo_carga === 2 ? "Base" : "Normal"}
+					color="primary"
+				></Chip>
+			</>
+		),
+		Filter: (props) => (
+			<Form.Select {...props}>
+				<option></option>
+				<option value="2"> Base </option>
+				<option value="1"> Normal </option>
+			</Form.Select>
+		),
+		showFilter: true,
 	},
 	{
 		name: "cliente",

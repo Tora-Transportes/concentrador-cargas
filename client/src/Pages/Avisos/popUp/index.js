@@ -22,14 +22,17 @@ function MainPopUp() {
 			const lastIdPosition = data?.ID;
 			setLastIdPosition(lastIdPosition);
 			setIdAvisos(lastIdPosition);
-
-			const avisoEditado = infoAvisoLocalStorage.split(";")[1];
-			if (idAvisoLocalStorage < lastIdPosition) {
-				idAvisoLocalStorage === null ? setCountAviso("?") : "";
-				setShow(true);
-			} else if (avisoEditado) {
-				setCountAviso("?");
-				setShow(true);
+			try {
+				const avisoEditado = infoAvisoLocalStorage.split(";")[1];
+				if (idAvisoLocalStorage < lastIdPosition) {
+					idAvisoLocalStorage === null ? setCountAviso("?") : "";
+					setShow(true);
+				} else if (avisoEditado) {
+					setCountAviso("?");
+					setShow(true);
+				}
+			} catch (err) {
+				console.log(err);
 			}
 		})();
 
