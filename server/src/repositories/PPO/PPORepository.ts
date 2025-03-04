@@ -327,38 +327,50 @@ export class PPORepository implements IPPORepository {
       AND ano_avaliacao = '${ano}'
       `);
     const valores = await mssqlPPO.raw(` 
-    SELECT 
-    DISTINCT
-      x.nome,
-      CASE WHEN  x.dado_verificado is NULL THEN 'Sem informação' ELSE x.dado_verificado END AS dado_verificado,
-      CASE WHEN x.ADICIONAL=1 and x.apto=0 THEN 'R$ 0.00' ELSE x.valor END as valor
-      FROM
-      (
-      SELECT 
-         p.nome,
-         ADICIONAL = case when p.nome = 'INFRAÇÃO VELOCIDADE' AND TRY_CAST(r.dado_verificado AS INT) > 0 THEN  1
-                   when p.nome = 'INFRAÇÃO DE INTERJORNADA' AND TRY_CAST(r.dado_verificado AS INT) > 0 THEN  1
-                ELSE 0
-                END ,
-      ADICIONAL_AVAL = case when p.nome = 'AVALIAÇÃO' AND r.dado_verificado IS NULL THEN  1
-                   when p.nome = 'AVALIAÇÃO' AND r.dado_verificado IS NULL THEN  1
-                ELSE 0
-                END ,
-	  ADICIONAL_KM = case when p.nome = 'KM' AND r.dado_verificado IS NULL THEN  1
-                   when p.nome = 'KM' AND r.dado_verificado IS NULL THEN  1
-                ELSE 0
-                END ,
-         r.dado_verificado,
-       CASE WHEN r.dado_verificado is null THEN 'R$ 0.00' ELSE 'R$ '+CONVERT(VARCHAR, CAST(r.premio AS MONEY), 1) END AS valor,
-         apto
-         FROM dbo.ppo_resultado r
-            inner join dbo.ppo_parametros_grupo pg on pg.id = r.parametro_grupo_id
-            join dbo.ppo_parametros p on p.id =  pg.parametro_id
+        WITH RankedData AS (
+            SELECT 
+                p.nome,
+                CASE 
+                    WHEN p.nome = 'INFRAÇÃO VELOCIDADE' AND TRY_CAST(r.dado_verificado AS INT) > 0 THEN 1
+                    WHEN p.nome = 'INFRAÇÃO DE INTERJORNADA' AND TRY_CAST(r.dado_verificado AS INT) > 0 THEN 1
+                    ELSE 0
+                END AS ADICIONAL,
+                CASE 
+                    WHEN p.nome = 'AVALIAÇÃO' AND r.dado_verificado IS NULL THEN 1
+                    ELSE 0
+                END AS ADICIONAL_AVAL,
+                CASE 
+                    WHEN p.nome = 'KM' AND r.dado_verificado IS NULL THEN 1
+                    ELSE 0
+                END AS ADICIONAL_KM,
+                r.dado_verificado,
+                CASE 
+                    WHEN r.dado_verificado IS NULL THEN 'R$ 0.00' 
+                    ELSE 'R$ ' + CONVERT(VARCHAR, CAST(r.premio AS MONEY), 1) 
+                END AS valor,
+                r.apto,
+                ROW_NUMBER() OVER (
+                    PARTITION BY p.nome 
+                    ORDER BY r.apto DESC 
+                ) AS row_num
+            FROM dbo.ppo_resultado r
+            INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
+            INNER JOIN dbo.ppo_parametros p ON p.id = pg.parametro_id
             WHERE r.cpf = '${cpf}'
             AND r.mes_avaliacao = '${mes}'
             AND r.ano_avaliacao = '${ano}'
-          ) X
-          WHERE ( x.ADICIONAL = 1 or X.apto = 1 or x.ADICIONAL_AVAL = 1 or x.ADICIONAL_KM=1)
+        )
+        SELECT DISTINCT
+            nome,
+            COALESCE(dado_verificado, 'Sem informação') AS dado_verificado,
+            CASE 
+                WHEN ADICIONAL = 1 AND apto = 0 THEN 'R$ 0.00' 
+                ELSE valor 
+            END AS valor,
+            apto
+        FROM RankedData
+        WHERE row_num = 1 
+        AND (ADICIONAL = 1 OR apto = 1 OR ADICIONAL_AVAL = 1 OR ADICIONAL_KM = 1);
     `);
 
     const dados_motorista = await mssqlPPO.raw(` 
