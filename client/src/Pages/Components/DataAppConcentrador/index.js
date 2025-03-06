@@ -138,12 +138,14 @@ export const envioCargaApp = async (cargas, oid, cpf_motorista) => {
 export const cancelarCargaApp = async (
 	idCarga,
 	oid,
-	observacaoCancelamento
+	observacaoCancelamento,
+	btn_cancelar
 ) => {
 	const bodyEnvioApp = {
 		availableFreight: idCarga, //codigo da carga
 		concentradorUser: oid, // number user
 		cancellationReason: observacaoCancelamento,
+		btn_cancelar: btn_cancelar,
 	};
 
 	try {
