@@ -122,7 +122,8 @@ function Manual() {
 					const retorno = await cancelarCargaApp(
 						formik.values.id,
 						getClaims().oid,
-						observacaoExclusao
+						observacaoExclusao,
+						false
 					);
 					if (retorno.status == 200) {
 						await ServiceCargas.delete({
@@ -216,7 +217,8 @@ function Manual() {
 					cancelarCargaApp(
 						formik.values.id,
 						getClaims().oid,
-						observacaoCancelamento
+						observacaoCancelamento,
+						true
 					);
 				}
 				await swal("Sucesso!", "Carga cancelada.", "success");
