@@ -241,8 +241,10 @@ export class CargaRepository {
         qb.andWhere("cliente", "like", `%${query.cliente}%`);
       }
       if (isValid(query?.id)) {
-        qb.andWhere("con_cargas.id", "like", `%${query.id}%`);
-        qb.orWhere("con_cargas.carga_mae_id", "like", `%${query.id}%`);
+        qb.where((qB) => {
+          qB.andWhere("con_cargas.id", "like", `%${query.id}%`);
+          qB.orWhere("con_cargas.carga_mae_id", "like", `%${query.id}%`);
+        });
       }
       if (isValid(String(query?.e_lote))) {
         qb.andWhere("e_lote", "=", `${query.e_lote}`);
@@ -309,8 +311,6 @@ export class CargaRepository {
       );
     }
     results.orderBy("con_cargas.id", "asc");
-    // console.log(results.toSQL().toNative());
-
     const rows: ICarga[] = await results;
 
     // função para retirar espaço no inicio dos nomes dos clientes{
