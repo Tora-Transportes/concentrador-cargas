@@ -97,6 +97,10 @@ const Grupos = () => {
 		history.push(`/ppo/grupos/${id}/parametros?nome=${nome}`);
 	}
 
+	async function handleRedirectDrivers(id, nome) {
+		history.push(`/ppo/grupos/${id}/motoristas?nome_grupo=${nome}`);
+	}
+
 	async function handleDelete(nome, id) {
 		const observacao = await swal(
 			"Ops!",
@@ -140,7 +144,7 @@ const Grupos = () => {
 		}
 	}
 
-	async function handleEditProduto(objeto, id) {
+	async function handleEditGrupo(objeto, id) {
 		setIdEdit(id);
 		formik.values.nome = objeto.nome;
 		formik.values.empresa = objeto.empresa;
@@ -153,9 +157,10 @@ const Grupos = () => {
 		return opcoesTemplate(
 			rowData,
 			swal,
-			handleEditProduto,
+			handleEditGrupo,
 			handleDelete,
-			handleRedirect
+			handleRedirect,
+			handleRedirectDrivers
 		);
 	};
 
