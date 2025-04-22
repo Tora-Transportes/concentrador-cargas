@@ -159,6 +159,13 @@ function Menusuperior() {
                 {permissoes?.permissoes?.includes("PPO_CAD_GRUPO") && (
                   <a href="/ppo/grupos">PPO Cadastro Grupo</a>
                 )}
+                {permissoes?.permissoes?.includes(
+                  "PPO_LOG_MOVIMENTACAO_MOTORISTA"
+                ) && (
+                  <a href="/ppo/grupos/motoristas/historico">
+                    Movimentações Motorista Grupo
+                  </a>
+                )}
                 {permissoes?.permissoes?.includes("PPO_CAD_PARAMETROS") && (
                   <a href="/ppo/parametros">PPO Cadastro Parâmetros</a>
                 )}

@@ -47,6 +47,7 @@ import GMNotificacoesController from "./controllers/GestaoMultas/Notificacoes/GM
 import GMMultasController from "./controllers/GestaoMultas/Multas/GMMultasController";
 import GMImpedimentosController from "./controllers/GestaoMultas/Impedimentos/GMImpedimentosController";
 import GMDocumentosController from "./controllers/GestaoMultas/Documentos/GMDocumentosController";
+import PPOMotoristasGruposController from "./controllers/PPO/PPOMotoristasGruposController";
 
 const routes = Router();
 
@@ -309,6 +310,27 @@ routes.patch("/ppo/grupos/parametros/:id", PPOParametrosGrupoController.update);
 routes.delete(
   "/ppo/grupos/parametros/:id",
   PPOParametrosGrupoController.delete
+);
+
+routes.get("/ppo/grupos/motoristas", PPOMotoristasGruposController.index);
+routes.post("/ppo/grupos/motoristas", PPOMotoristasGruposController.create);
+routes.delete(
+  "/ppo/grupos/motoristas/:id",
+  PPOMotoristasGruposController.delete
+);
+routes.get(
+  "/ppo/grupos/motoristas-ativos",
+  PPOMotoristasGruposController.motoristasAtivos
+);
+
+routes.get(
+  "/ppo/grupos/motoristas/:cpf/liked",
+  PPOMotoristasGruposController.driverLiked
+);
+
+routes.get(
+  "/ppo/grupos/motoristas/historico",
+  PPOMotoristasGruposController.relatorioHistoricoMovimentacoes
 );
 
 routes.get(
