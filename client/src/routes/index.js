@@ -64,6 +64,8 @@ import EmpresasEditar from "src/Pages/GestaoMultas/Empresas/Editar";
 import NotificacoesEditar from "src/Pages/GestaoMultas/Notificacoes/Editar";
 import MultasEditar from "src/Pages/GestaoMultas/Multas/Editar";
 import Impedimentos from "src/Pages/GestaoMultas/Impedimentos";
+import GruposMotoristas from "src/Pages/PPO/GruposMotoristas";
+import MovimentacoesMotoristaGrupo from "src/Pages/PPO/GruposMotoristas/Historico";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -117,6 +119,16 @@ export default function AllRoutes() {
 					path="/ppo/grupos/:id/parametros"
 					exact
 					component={GruposParametros}
+				/>
+				<Routes
+					path="/ppo/grupos/:id/motoristas"
+					exact
+					component={GruposMotoristas}
+				/>
+				<Routes
+					path="/ppo/grupos/motoristas/historico"
+					exact
+					component={MovimentacoesMotoristaGrupo}
 				/>
 				<Routes path="/ppo/parametros" exact component={Parametros} />
 				<Routes

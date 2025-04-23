@@ -41,4 +41,6 @@ export const allTipoPermissoes = [
 	{ name: "GM_IMPEDIMENTOS" },
 	{ name: "CARGAS_ESTILO_CARGA" },
 	{ name: "CARGAS_DATA_OFERTA_LIMITE" },
+	{ name: "PPO_ADD_MOTORISTA_GRUPO" },
+	{ name: "PPO_LOG_MOVIMENTACAO_MOTORISTA" },
 ];

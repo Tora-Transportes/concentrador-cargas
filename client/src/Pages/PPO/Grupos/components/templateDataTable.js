@@ -1,5 +1,5 @@
 import React from "react";
-import { BsPencilSquare } from "react-icons/bs";
+import { BsPencilSquare, BsPersonVcardFill } from "react-icons/bs";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { Button, Form, InputGroup, FormControl, Modal } from "react-bootstrap";
 import { MdAddCircleOutline } from "react-icons/md";
@@ -136,9 +136,10 @@ export const renderHeader = (
 export const opcoesTemplate = (
 	rowData,
 	swal,
-	handleEditProduto,
+	handleEditGrupo,
 	handleDelete,
-	handleRedirect
+	handleRedirect,
+	handleRedirectDrivers
 ) => {
 	return (
 		<div className="opcoes-table">
@@ -156,7 +157,7 @@ export const opcoesTemplate = (
 				variant="outline-warning"
 				onClick={(e) => {
 					e.preventDefault();
-					handleEditProduto(rowData, rowData.id);
+					handleEditGrupo(rowData, rowData.id);
 				}}
 			>
 				<BsPencilSquare className="icon-editar" />
@@ -171,6 +172,16 @@ export const opcoesTemplate = (
 			>
 				<IoIosCloseCircleOutline className="icon-des" />
 				Deletar
+			</Button>
+			<Button
+				variant="outline-primary"
+				onClick={(e) => {
+					e.preventDefault();
+					handleRedirectDrivers(rowData.id, rowData.nome);
+				}}
+			>
+				<BsPersonVcardFill className="icon-des" />
+				Motoristas
 			</Button>
 		</div>
 	);
