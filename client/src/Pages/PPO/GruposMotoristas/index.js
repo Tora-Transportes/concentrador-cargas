@@ -129,7 +129,6 @@ const GruposMotoristas = () => {
 						};
 						await ServicePPOGruposMotoristas.create(body);
 						await forceLoading();
-						console.log(motoristaFiltrado);
 						formik.resetForm();
 						handleOpenCreate();
 					}
@@ -146,7 +145,6 @@ const GruposMotoristas = () => {
 					};
 					await ServicePPOGruposMotoristas.create(body);
 					await forceLoading();
-					console.log(motoristaFiltrado);
 					formik.resetForm();
 					handleOpenCreate();
 				}
@@ -228,7 +226,6 @@ const GruposMotoristas = () => {
 				<Row>
 					<h1 className="class-title-produto">
 						Motoristas do Grupo : {searchParams.get("nome_grupo")}{" "}
-						{motoristasAtivos.length}
 					</h1>
 					<div className="datatable-responsive-demoPermissoes">
 						<DataTable
