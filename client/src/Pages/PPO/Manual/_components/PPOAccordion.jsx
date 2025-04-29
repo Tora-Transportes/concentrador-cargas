@@ -9,7 +9,6 @@ import {
 import { MdExpandMore } from "react-icons/md";
 import { Form } from "react-bootstrap";
 
-// Função para formatar valor como R$ XX,XX
 const formatarValorBR = (valor) => {
   if (!valor) return "";
   const num = valor.toString().replace(/[^\d]/g, "");
@@ -17,7 +16,6 @@ const formatarValorBR = (valor) => {
   return "R$ " + float.replace(".", ",");
 };
 
-// Função para parsear valor string R$ XX,XX para número
 const parseValorBR = (valorStr) => {
   if (!valorStr) return 0;
   const limpo = valorStr

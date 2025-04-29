@@ -143,7 +143,7 @@ export const getColumns = (grupos, load) => {
 									cpf: row.cpf,
 									mes: row.mes_avaliacao,
 									ano: row.ano_avaliacao,
-									observacao: result.value, // você pode salvar essa observação no backend se desejar
+									observacao: result.value,
 								});
 								await load();
 							}
