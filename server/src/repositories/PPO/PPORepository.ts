@@ -52,7 +52,8 @@ interface IPPORepository {
     mes: string,
     ano: string,
     cpf: string,
-    user: string
+    user: string,
+    observacao: string
   ): Promise<any | undefined>;
 }
 const isValid = (value: string | null | undefined) =>
@@ -63,7 +64,8 @@ export class PPORepository implements IPPORepository {
     mes: string,
     ano: string,
     cpf: string,
-    user: string
+    user: string,
+    observacao: string
   ): Promise<any | undefined> {
     const userName = TokenAd.getClaims(user).name;
 
@@ -81,6 +83,14 @@ export class PPORepository implements IPPORepository {
         AND ano_avaliacao = '${ano}'
         AND cpf = '${cpf}';
     `;
+
+    const sqlDelete = `
+    DELETE FROM dbo.ppo_resultado
+    WHERE mes_avaliacao = '${mes}'
+      AND ano_avaliacao = '${ano}'
+      AND cpf = '${cpf}';
+  `;
+
     const sqlDeleteAutentique = `
       delete from dbo.controle
       WHERE mes = '${mes}'
@@ -101,7 +111,11 @@ export class PPORepository implements IPPORepository {
       const tipo_ppo = registro.tipo;
       const now = new Date();
 
-      await transaction.raw(sqlUpdate);
+      if (tipo_ppo == 2) {
+        await transaction.raw(sqlDelete);
+      } else {
+        await transaction.raw(sqlUpdate);
+      }
 
       await transaction("ppo_rastreamento").insert({
         mes: mes,
@@ -111,7 +125,7 @@ export class PPORepository implements IPPORepository {
         tipo_ppo: tipo_ppo,
         created_user: userName,
         created_at: now,
-        observacao: "Desativação do PPO",
+        observacao: observacao,
       });
       await transaction.commit();
       await mssqlAutentique.raw(sqlDeleteAutentique);
