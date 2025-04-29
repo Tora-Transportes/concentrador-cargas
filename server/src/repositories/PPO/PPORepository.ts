@@ -347,6 +347,7 @@ export class PPORepository implements IPPORepository {
         SUBSTRING(c.cpf, 10, 2)
     ) = r.cpf and  c.mes = r.mes_avaliacao and  c.ano = r.ano_avaliacao 
     WHERE 1=1
+    AND r.ativo = 1
     ${clausula}
   `;
 
@@ -379,6 +380,7 @@ export class PPORepository implements IPPORepository {
     WHERE  r.cpf = '${cpf}'
     AND r.mes_avaliacao = '${mes}'
     AND r.ano_avaliacao = '${ano}'
+    AND r.ativo = 1
     GROUP BY 
     r.cpf,r.matricula,g.nome, g.empresa, r.mes_avaliacao,
     r.ano_avaliacao;
@@ -387,7 +389,8 @@ export class PPORepository implements IPPORepository {
     const total = await mssqlPPO.raw(`
       SELECT 'R$ '+CONVERT(VARCHAR, CAST(SUM(CAST(premio as float)) AS MONEY), 1) as valor FROM dbo.ppo_resultado
       WHERE cpf = '${cpf}'
-      and apto = 1
+      AND apto = 1
+      AND ativo = 1
       AND mes_avaliacao = '${mes}'
       AND ano_avaliacao = '${ano}'
       `);
@@ -424,6 +427,7 @@ export class PPORepository implements IPPORepository {
             WHERE r.cpf = '${cpf}'
             AND r.mes_avaliacao = '${mes}'
             AND r.ano_avaliacao = '${ano}'
+            AND r.ativo = 1
         )
         SELECT DISTINCT
             nome,
@@ -469,6 +473,7 @@ JOIN
     WHERE r.cpf = '${cpf}'
     AND r.mes_avaliacao = '${mes}'
     AND r.ano_avaliacao = '${ano}'
+    AND r.ativo = 1
   `);
     if (dados_motorista.length == 0) {
       throw new AppError("Sem dados para gerar demonstrativo", 400);
@@ -1033,7 +1038,9 @@ Total,
 CASE WHEN ppo_cancelado=1 THEN 'Sim' ELSE 'Não'END as 'PPO Cancelado',
 CASE WHEN observacao is null THEN 'Sem Observação' ELSE observacao END 'Observação',
 mes_avaliacao as Mês,
-ano_avaliacao as Ano
+ano_avaliacao as Ano,
+CASE WHEN tipo = 1 THEN 'Automático' ELSE 'Manual' END 'Tipo PPO',
+CASE WHEN ativo = 1 THEN 'Ativo' ELSE 'Removido' END 'Situação PPO'
 from @tabelaRelatorio
 WHERE 1=1
 ${filtro}
