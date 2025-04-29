@@ -133,6 +133,9 @@ const PpoManualStepper = () => {
 
 	useEffect(() => {
 		setLoading(true);
+		setMotoristaSelecionado(null);
+		setMotoristasAtivosSelect([]);
+		setMotoristasAtivos([]);
 		Promise.all([listaMotoristasAtivos()]).then(function (values) {
 			const motoristasAtivos = [];
 			values[0].data.data.map((mot) => {
@@ -165,9 +168,9 @@ const PpoManualStepper = () => {
 	};
 
 	const handleReset = () => {
-		setActiveStep(0);
-		setMotoristaSelecionado(null);
+		formik.resetForm();
 		forceLoading();
+		setActiveStep(0);
 	};
 
 	const handleSubmit = async () => {

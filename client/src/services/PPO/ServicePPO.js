@@ -107,7 +107,7 @@ class ServicePPO {
 		grupo,
 		permissoes,
 		ativo = 1,
-		tipo = 1,
+		tipo,
 	}) {
 		return api.get("/ppo/relatorios/motoristas", {
 			params: {

@@ -77,12 +77,12 @@ export const getColumns = () => {
 		{
 			name: "tipo",
 			description: "Tipo Movimentação",
-			selector: (row) => (row.tipo === "exclusao" ? "Exclusão" : "Inclusão"),
+			selector: (row) => (row.tipo === "exclusao" ? "Exclusão" : "Inserção"),
 			Filter: (props) => (
 				<Form.Select {...props}>
 					<option></option>
 					<option value="exclusao"> Exclusão </option>
-					<option value="inclusao"> Inclusão </option>
+					<option value="insercao"> Inserção </option>
 				</Form.Select>
 			),
 			showFilter: true,

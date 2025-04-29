@@ -1,4 +1,8 @@
-import database, { mssqlPPO, mssqlPPOView } from "../../database";
+import database, {
+  mssqlPPO,
+  mssqlPPOView,
+  mssqlAutentique,
+} from "../../database";
 import IAvaliacao from "../../models/IAvaliacao";
 import IAtributo from "../../models/IAtributo";
 import AppError from "../../models/AppError";
@@ -77,6 +81,12 @@ export class PPORepository implements IPPORepository {
         AND ano_avaliacao = '${ano}'
         AND cpf = '${cpf}';
     `;
+    const sqlDeleteAutentique = `
+      delete from dbo.controle
+      WHERE mes = '${mes}'
+        AND ano = '${ano}'
+        AND cpf = '${cpf.replace(".", "").replace(".", "-")}';
+    `;
 
     const transaction = await mssqlPPO.transaction();
     try {
@@ -99,6 +109,7 @@ export class PPORepository implements IPPORepository {
       await transaction.raw(sqlUpdate);
       await transaction.raw(sqlInsertRastreamento);
       await transaction.commit();
+      await mssqlAutentique.raw(sqlDeleteAutentique);
 
       return { success: true };
     } catch (error) {
