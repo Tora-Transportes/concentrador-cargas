@@ -1,12 +1,13 @@
+import React from "react";
 import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  TextField,
   Typography,
   Grid,
-} from "@mui/material";
+} from "@material-ui/core";
 import { MdExpandMore } from "react-icons/md";
+import { Form } from "react-bootstrap";
 
 const PPOAccordion = ({ formik }) => {
   const total = formik.values.valores.reduce((acc, linha) => {
@@ -15,7 +16,7 @@ const PPOAccordion = ({ formik }) => {
   }, 0);
 
   return (
-    <Accordion expanded>
+    <Accordion defaultExpanded>
       <AccordionSummary expandIcon={<MdExpandMore />}>
         <Typography variant="h5">Seção de Parâmetros</Typography>
       </AccordionSummary>
@@ -24,63 +25,70 @@ const PPOAccordion = ({ formik }) => {
           {formik.values.valores.map((linha, index) => (
             <Grid container spacing={1} key={index} alignItems="center">
               <Grid item xs={4}>
-                <Typography pl={2}>{linha.item}</Typography>
+                <Typography style={{ paddingLeft: 16 }}>
+                  {linha.item}
+                </Typography>
               </Grid>
               <Grid item xs={4}>
-                <TextField
-                  style={{ paddingBottom: "5px" }}
-                  label="Referência"
-                  name={`valores[${index}].referencia`}
-                  value={linha.referencia}
-                  onChange={formik.handleChange}
-                  error={Boolean(
-                    formik.touched.valores?.[index]?.referencia &&
-                      formik.errors.valores?.[index]?.referencia
-                  )}
-                  helperText={
-                    formik.touched.valores?.[index]?.referencia &&
-                    formik.errors.valores?.[index]?.referencia
-                  }
-                  size="small"
-                  fullWidth
-                />
+                <Form.Group controlId={`referencia-${index}`} className="mb-2">
+                  <Form.Label>Referência</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name={`valores[${index}].referencia`}
+                    value={linha.referencia}
+                    onChange={formik.handleChange}
+                    isInvalid={
+                      !!(
+                        formik.touched.valores?.[index]?.referencia &&
+                        formik.errors.valores?.[index]?.referencia
+                      )
+                    }
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {formik.errors.valores?.[index]?.referencia}
+                  </Form.Control.Feedback>
+                </Form.Group>
               </Grid>
               <Grid item xs={4}>
-                <TextField
-                  style={{ paddingBottom: "5px" }}
-                  label="Valor"
-                  name={`valores[${index}].valor`}
-                  value={linha.valor}
-                  onChange={formik.handleChange}
-                  error={Boolean(
-                    formik.touched.valores?.[index]?.valor &&
-                      formik.errors.valores?.[index]?.valor
-                  )}
-                  helperText={
-                    formik.touched.valores?.[index]?.valor &&
-                    formik.errors.valores?.[index]?.valor
-                  }
-                  size="small"
-                  fullWidth
-                />
+                <Form.Group controlId={`valor-${index}`} className="mb-2">
+                  <Form.Label>Valor</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name={`valores[${index}].valor`}
+                    value={linha.valor}
+                    onChange={formik.handleChange}
+                    isInvalid={
+                      !!(
+                        formik.touched.valores?.[index]?.valor &&
+                        formik.errors.valores?.[index]?.valor
+                      )
+                    }
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {formik.errors.valores?.[index]?.valor}
+                  </Form.Control.Feedback>
+                </Form.Group>
               </Grid>
             </Grid>
           ))}
 
           {/* Linha do Total */}
-          <Grid container spacing={1} alignItems="center" sx={{ mt: 2 }}>
+          <Grid
+            container
+            spacing={1}
+            alignItems="center"
+            style={{ marginTop: 5 }}
+          >
             <Grid item xs={8}>
-              <Typography pl={2} fontWeight="bold">
+              <Typography style={{ paddingLeft: 16, fontWeight: "bold" }}>
                 TOTAL
               </Typography>
             </Grid>
             <Grid item xs={4}>
-              <TextField
-                value={total.toFixed(2)}
-                InputProps={{ readOnly: true }}
-                size="small"
-                fullWidth
-              />
+              <Form.Group className="mb-2">
+                <Form.Label>Total</Form.Label>
+                <Form.Control value={total.toFixed(2)} readOnly />
+              </Form.Group>
             </Grid>
           </Grid>
         </Grid>
