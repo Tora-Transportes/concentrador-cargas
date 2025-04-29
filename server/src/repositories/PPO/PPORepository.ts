@@ -85,13 +85,12 @@ export class PPORepository implements IPPORepository {
       delete from dbo.controle
       WHERE mes = '${mes}'
         AND ano = '${ano}'
-        AND cpf = '${cpf.replace(".", "").replace(".", "-")}';
+        AND cpf = '${cpf.replace(".", "").replace(".", "").replace("-", "")}';
     `;
 
     const transaction = await mssqlPPO.transaction();
     try {
       const result = await transaction.raw(sqlSelect);
-      console.log(result);
       const registro = result[0];
 
       if (!registro) {
