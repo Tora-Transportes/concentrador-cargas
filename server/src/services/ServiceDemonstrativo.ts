@@ -69,7 +69,10 @@ class ServiceDemonstrativo {
         ],
         [
           {
-            text: "Motivo Cancelamento",
+            text:
+              result["dados_motorista"]["cancelado"] == "Sim"
+                ? "Motivo Cancelamento"
+                : "Observação",
             style: "dadosMotorista",
           },
           {

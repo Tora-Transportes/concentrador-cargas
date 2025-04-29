@@ -80,6 +80,7 @@ class ServicePPO {
 		ano_avaliacao,
 		assinado,
 		permissoes,
+		app_erro = undefined,
 	}) {
 		return api.get(`/ppo/motoristas/demonstrativos`, {
 			params: {
@@ -88,6 +89,7 @@ class ServicePPO {
 				ano_avaliacao,
 				assinado,
 				permissoes,
+				app_erro,
 			},
 		});
 	}
@@ -104,6 +106,8 @@ class ServicePPO {
 		ppo_cancelado,
 		grupo,
 		permissoes,
+		ativo = 1,
+		tipo,
 	}) {
 		return api.get("/ppo/relatorios/motoristas", {
 			params: {
@@ -118,6 +122,8 @@ class ServicePPO {
 				ppo_cancelado,
 				grupo,
 				permissoes,
+				ativo,
+				tipo,
 			},
 		});
 	}
@@ -219,6 +225,16 @@ class ServicePPO {
 		} else {
 			return false;
 		}
+	}
+
+	async removerPpo({ cpf, mes, ano }) {
+		return api.delete(`/ppo/desativar`, {
+			params: {
+				cpf,
+				mes: mes,
+				ano: ano,
+			},
+		});
 	}
 }
 

@@ -43,4 +43,7 @@ export const allTipoPermissoes = [
 	{ name: "CARGAS_DATA_OFERTA_LIMITE" },
 	{ name: "PPO_ADD_MOTORISTA_GRUPO" },
 	{ name: "PPO_LOG_MOVIMENTACAO_MOTORISTA" },
+	{ name: "PPO_CAD_MANUAL" },
+	{ name: "PPO_PERMISSAO_EXCLUSAO" },
+	{ name: "PPO_RASTREABILIDADE" },
 ];

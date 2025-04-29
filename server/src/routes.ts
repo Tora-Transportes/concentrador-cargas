@@ -48,6 +48,7 @@ import TokenSqedMiddleware from "./middlewares/TokenSqed";
 import GMImpedimentosController from "./controllers/GestaoMultas/Impedimentos/GMImpedimentosController";
 import GMDocumentosController from "./controllers/GestaoMultas/Documentos/GMDocumentosController";
 import PPOMotoristasGruposController from "./controllers/PPO/PPOMotoristasGruposController";
+import PPORastreamentoController from "./controllers/PPO/PPORastreamentoController";
 
 const routes = Router();
 
@@ -281,6 +282,7 @@ routes.get(
 routes.get("/ppo/motoristas/demonstrativos", PPOController.demonstrativos);
 routes.get("/ppo/protheus", PPOController.protheus);
 routes.get("/ppo/protheus/txt", PPOController.protheusTxt);
+routes.delete("/ppo/desativar", PPOController.desativar_ppo);
 
 routes.get("/ppo/parametros", PPOParametrosController.index);
 routes.post("/ppo/parametros", PPOParametrosController.create);
@@ -534,4 +536,8 @@ routes.get(
 );
 
 routes.get("/motoristas/:cpf/categoria", MotoristaController.findByCpf);
+
+routes.get("/ppo/rastreamento", PPORastreamentoController.relatorio);
+routes.get("/ppo/rastreamento/excel", PPORastreamentoController.relatorioExcel);
+routes.post("/ppo/manual", PPORastreamentoController.createPpoManual);
 export default routes;

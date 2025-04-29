@@ -36,7 +36,7 @@ const RelatorioMotoristas = () => {
 	const [lastOptions, setLastOptions] = useState({});
 	const [grupos, setGrupos] = useState([]);
 
-	const columnsResult = getColumns(grupos);
+	const columnsResult = getColumns(grupos, load);
 	const columnsPadrao = columnsResult.columnsRelatorio;
 
 	function resetView() {
@@ -80,6 +80,31 @@ const RelatorioMotoristas = () => {
 			);
 			link.click();
 			setModalShowExcel(false);
+			setLoading(false);
+		}
+	}
+
+	async function load() {
+		setLoading(true);
+		try {
+			const permissoes = await getPermissoesVisualizacaoPPO();
+			const { column, direction } = lastOptions.orderBy ?? {};
+			const { filters, orderBy, page } = lastOptions;
+			setFiltroAtual({ filters, orderBy, page });
+			const { data } = await ServicePPO.search({
+				...lastOptions.filters,
+				page: lastOptions.page,
+				order_column: column,
+				order_direction: direction,
+				permissoes: permissoes,
+			});
+			setTotalRegisters(data.data.total_registers);
+			dispatchCargas({
+				type: "SET",
+				payload: { ...data.data, current_page: data.data.page },
+			});
+			setLoading(false);
+		} catch (error) {
 			setLoading(false);
 		}
 	}
@@ -141,6 +166,7 @@ const RelatorioMotoristas = () => {
 				modalShowExcel={modalShowExcel}
 				setModalShowExcel={setModalShowExcel}
 				resetView={resetView}
+				load={load}
 			/>
 		</>
 	);

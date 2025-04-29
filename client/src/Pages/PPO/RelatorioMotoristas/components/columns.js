@@ -1,6 +1,13 @@
+import { useContext } from "react";
 import { Form } from "react-bootstrap";
+import { MdDeleteForever } from "react-icons/md";
+import { Button } from "reactstrap";
+import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
+import ServicePPO from "src/services/PPO/ServicePPO";
+import Swal from "sweetalert2";
 
-export const getColumns = (grupos) => {
+export const getColumns = (grupos, load) => {
+	const { isPermissionUser } = useContext(ContextUseDefault);
 	const columnsRelatorio = [
 		{
 			name: "mes_avaliacao",
@@ -53,6 +60,83 @@ export const getColumns = (grupos) => {
 			description: "Motorista",
 			selector: (row) => row.nome_motorista,
 			showFilter: true,
+		},
+		{
+			name: "tipo",
+			description: "Tipo",
+			selector: (row) => (row.tipo === 1 ? "Automático" : "Manual"),
+			Filter: (props) => (
+				<Form.Select {...props}>
+					<option></option>
+					<option value="1"> Automático </option>
+					<option value="2"> Manual </option>
+				</Form.Select>
+			),
+			showFilter: true,
+		},
+		{
+			name: "ativo",
+			description: "Ativo",
+			selector: (row) => (row.ativo === true ? "Sim" : "Não"),
+			Filter: (props) => (
+				<Form.Select {...props}>
+					<option></option>
+					<option value="1"> Sim </option>
+					<option value="0"> Não </option>
+				</Form.Select>
+			),
+			showFilter: true,
+		},
+		{
+			name: "excluir",
+			description: "Excluir",
+			static_column: true,
+			selector: (row) => (
+				<Button
+					color={row.ativo === false ? undefined : "danger"}
+					size="sm"
+					disabled={row.ativo === false}
+					className={`btn-icon btn-2 ${
+						row.ativo === 0 ? "bg-gray-400 text-white cursor-not-allowed" : ""
+					}`}
+					onClick={() => {
+						if (!isPermissionUser?.includes("PPO_PERMISSAO_EXCLUSAO")) {
+							Swal.fire(
+								"Ops!",
+								"Sem permissão para executar essa ação",
+								"warning"
+							);
+							return;
+						}
+						Swal.fire({
+							title: "Confirmar remoção?",
+							html: `
+        <strong>Nome:</strong> ${row.nome_motorista} <br/>
+        <strong>CPF:</strong> ${row.cpf} <br/>
+        <strong>Mês:</strong> ${row.mes_avaliacao} <br/>
+        <strong>Ano:</strong> ${row.ano_avaliacao}
+      `,
+							icon: "warning",
+							showCancelButton: true,
+							confirmButtonColor: "#d33",
+							cancelButtonColor: "#3085d6",
+							confirmButtonText: "Sim, remover!",
+							cancelButtonText: "Cancelar",
+						}).then(async (result) => {
+							if (result.isConfirmed) {
+								ServicePPO.removerPpo({
+									cpf: row.cpf,
+									mes: row.mes_avaliacao,
+									ano: row.ano_avaliacao,
+								});
+								await load();
+							}
+						});
+					}}
+				>
+					<MdDeleteForever />
+				</Button>
+			),
 		},
 		{
 			name: "cpf",

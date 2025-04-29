@@ -1,8 +1,13 @@
-import database, { mssqlPPO, mssqlPPOView } from "../../database";
+import database, {
+  mssqlPPO,
+  mssqlPPOView,
+  mssqlAutentique,
+} from "../../database";
 import IAvaliacao from "../../models/IAvaliacao";
 import IAtributo from "../../models/IAtributo";
 import AppError from "../../models/AppError";
 import { encrypt } from "../../Utils/utlis";
+import TokenAd from "../../models/TokenAd";
 
 interface IPPORepository {
   avaliacoes(
@@ -43,11 +48,76 @@ interface IPPORepository {
     pageSize?: number
   ): Promise<any | undefined>;
   motorista_by_grupo(cpf: string, permissoes: string): Promise<any | undefined>;
+  desativar_ppo(
+    mes: string,
+    ano: string,
+    cpf: string,
+    user: string
+  ): Promise<any | undefined>;
 }
 const isValid = (value: string | null | undefined) =>
   !["", null, undefined, "null", "undefined"].includes(value);
 
 export class PPORepository implements IPPORepository {
+  async desativar_ppo(
+    mes: string,
+    ano: string,
+    cpf: string,
+    user: string
+  ): Promise<any | undefined> {
+    const userName = TokenAd.getClaims(user).name;
+
+    const sqlSelect = `
+      SELECT TOP 1 * FROM dbo.ppo_resultado
+      WHERE mes_avaliacao = '${mes}'
+        AND ano_avaliacao = '${ano}'
+        AND cpf = '${cpf}';
+    `;
+
+    const sqlUpdate = `
+      UPDATE dbo.ppo_resultado
+      SET ativo = 0
+      WHERE mes_avaliacao = '${mes}'
+        AND ano_avaliacao = '${ano}'
+        AND cpf = '${cpf}';
+    `;
+    const sqlDeleteAutentique = `
+      delete from dbo.controle
+      WHERE mes = '${mes}'
+        AND ano = '${ano}'
+        AND cpf = '${cpf.replace(".", "").replace(".", "").replace("-", "")}';
+    `;
+
+    const transaction = await mssqlPPO.transaction();
+    try {
+      const result = await transaction.raw(sqlSelect);
+      const registro = result[0];
+
+      if (!registro) {
+        await transaction.rollback();
+        throw new Error("Registro não encontrado para o CPF informado.");
+      }
+
+      const tipo_ppo = registro.tipo;
+      const now = new Date();
+      const sqlInsertRastreamento = `
+        INSERT INTO dbo.ppo_rastreamento (mes, ano, cpf, tipo, tipo_ppo, created_user,created_at,observacao)
+        VALUES ('${mes}', '${ano}', '${cpf}', 'exclusao', ${tipo_ppo}, '${userName}',${now},'Desativação do PPO');
+      `;
+
+      await transaction.raw(sqlUpdate);
+      await transaction.raw(sqlInsertRastreamento);
+      await transaction.commit();
+      await mssqlAutentique.raw(sqlDeleteAutentique);
+
+      return { success: true };
+    } catch (error) {
+      await transaction.rollback();
+      console.error("Erro ao desativar PPO e registrar rastreamento:", error);
+      throw error;
+    }
+  }
+
   async exporta_protheus(
     mes: string,
     ano: string,
@@ -239,8 +309,13 @@ export class PPORepository implements IPPORepository {
 
   async demonstrativos(filter: Record<string, any>): Promise<any | undefined> {
     let clausula = "";
+    let app_erro = true;
 
     for (const i in filter) {
+      if (i == "app_erro") {
+        app_erro = false;
+        break;
+      }
       if (filter[i] !== undefined && filter[i] !== null) {
         if (i != "assinado" && i != "permissoes") {
           clausula = clausula + ` AND r.${i} LIKE '%${filter[i]}%'`;
@@ -282,12 +357,13 @@ export class PPORepository implements IPPORepository {
         SUBSTRING(c.cpf, 10, 2)
     ) = r.cpf and  c.mes = r.mes_avaliacao and  c.ano = r.ano_avaliacao 
     WHERE 1=1
+    AND r.ativo = 1
     ${clausula}
   `;
 
     const data = await mssqlPPO.raw(query);
 
-    if (data.length == 0) {
+    if (data.length == 0 && app_erro) {
       throw new AppError("Sem dados de demonstrativo", 400);
     }
 
@@ -314,6 +390,7 @@ export class PPORepository implements IPPORepository {
     WHERE  r.cpf = '${cpf}'
     AND r.mes_avaliacao = '${mes}'
     AND r.ano_avaliacao = '${ano}'
+    AND r.ativo = 1
     GROUP BY 
     r.cpf,r.matricula,g.nome, g.empresa, r.mes_avaliacao,
     r.ano_avaliacao;
@@ -322,7 +399,8 @@ export class PPORepository implements IPPORepository {
     const total = await mssqlPPO.raw(`
       SELECT 'R$ '+CONVERT(VARCHAR, CAST(SUM(CAST(premio as float)) AS MONEY), 1) as valor FROM dbo.ppo_resultado
       WHERE cpf = '${cpf}'
-      and apto = 1
+      AND apto = 1
+      AND ativo = 1
       AND mes_avaliacao = '${mes}'
       AND ano_avaliacao = '${ano}'
       `);
@@ -359,6 +437,7 @@ export class PPORepository implements IPPORepository {
             WHERE r.cpf = '${cpf}'
             AND r.mes_avaliacao = '${mes}'
             AND r.ano_avaliacao = '${ano}'
+            AND r.ativo = 1
         )
         SELECT DISTINCT
             nome,
@@ -404,6 +483,7 @@ JOIN
     WHERE r.cpf = '${cpf}'
     AND r.mes_avaliacao = '${mes}'
     AND r.ano_avaliacao = '${ano}'
+    AND r.ativo = 1
   `);
     if (dados_motorista.length == 0) {
       throw new AppError("Sem dados para gerar demonstrativo", 400);
@@ -437,6 +517,14 @@ JOIN
     if (isValid(query?.cpf)) {
       filtro = filtro + ` AND cpf LIKE '%${query.cpf}%'`;
       filtroTot = filtroTot + ` AND r.cpf LIKE '%${query.cpf}%'`;
+    }
+    if (isValid(query?.ativo)) {
+      filtro = filtro + ` AND ativo = '${query.ativo}'`;
+      filtroTot = filtroTot + ` AND r.ativo = '${query.ativo}'`;
+    }
+    if (isValid(query?.tipo)) {
+      filtro = filtro + ` AND tipo = '${query.tipo}'`;
+      filtroTot = filtroTot + ` AND r.tipo = '${query.tipo}'`;
     }
     if (isValid(query?.matricula)) {
       filtro = filtro + ` AND matricula LIKE '%${query.matricula}%'`;
@@ -504,7 +592,9 @@ JOIN
     ppo_cancelado BIT NULL,
     observacao NVARCHAR(MAX) NULL,
           mes_avaliacao NVARCHAR(10) NULL,
-          ano_avaliacao NVARCHAR(10) NULL
+          ano_avaliacao NVARCHAR(10) NULL,
+          ativo BIT NULL,
+          tipo int NULL
    );
 
 DECLARE @CPF_MOT VARCHAR(20),
@@ -562,7 +652,7 @@ BEGIN
 
         -- insert ppo cancelado
                  INSERT INTO @tabelaRelatorio
-                 SELECT  @Contador,g.empresa,g.nome,r.matricula,r.cpf,r.nome_motorista,0,0,0,CASE WHEN @ColumnKM IS NULL THEN 0 ELSE @ColumnKM END,0,0,0,0,0,r.ppo_cancelado,r.observacao,r.mes_avaliacao,r.ano_avaliacao FROM [dbo].[ppo_resultado] r
+                 SELECT  @Contador,g.empresa,g.nome,r.matricula,r.cpf,r.nome_motorista,0,0,0,CASE WHEN @ColumnKM IS NULL THEN 0 ELSE @ColumnKM END,0,0,0,0,0,r.ppo_cancelado,r.observacao,r.mes_avaliacao,r.ano_avaliacao,r.ativo,r.tipo  FROM [dbo].[ppo_resultado] r
          INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
          INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
          WHERE cpf = @CPF_MOT
@@ -573,8 +663,8 @@ BEGIN
     ELSE
       BEGIN
             -- insere dados motorista
-                INSERT INTO @tabelaRelatorio (id,Empresa,Grupo,matricula,cpf,nome_motorista,PPO_Cancelado,Observacao,mes_avaliacao,ano_avaliacao)
-        SELECT DISTINCT  @Contador,g.empresa,g.nome,r.matricula,r.cpf,r.nome_motorista,r.ppo_cancelado,NULL,r.mes_avaliacao,r.ano_avaliacao from [dbo].[ppo_resultado] r
+                INSERT INTO @tabelaRelatorio (id,Empresa,Grupo,matricula,cpf,nome_motorista,PPO_Cancelado,Observacao,mes_avaliacao,ano_avaliacao,ativo,tipo)
+        SELECT DISTINCT  @Contador,g.empresa,g.nome,r.matricula,r.cpf,r.nome_motorista,r.ppo_cancelado,NULL,r.mes_avaliacao,r.ano_avaliacao,r.ativo,r.tipo from [dbo].[ppo_resultado] r
         INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
         INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
         WHERE cpf = @CPF_MOT
@@ -727,6 +817,12 @@ ${filtro}
     if (isValid(query?.ppo_cancelado)) {
       filtro = filtro + ` AND ppo_cancelado LIKE '%${query.ppo_cancelado}%'`;
     }
+    if (isValid(query?.ativo)) {
+      filtro = filtro + ` AND ativo = '${query.ativo}'`;
+    }
+    if (isValid(query?.tipo)) {
+      filtro = filtro + ` AND tipo = '${query.tipo}'`;
+    }
     if (isValid(query?.permissoes)) {
       const position = query.permissoes.search("TODAS"); // se tiver essa permissão anula Filtro
       if (position == -1) {
@@ -756,7 +852,9 @@ ${filtro}
     ppo_cancelado BIT NULL,
     observacao NVARCHAR(MAX) NULL,
           mes_avaliacao NVARCHAR(10) NULL,
-          ano_avaliacao NVARCHAR(10) NULL
+          ano_avaliacao NVARCHAR(10) NULL,
+          ativo BIT NULL,
+          tipo int NULL
    );
 
 DECLARE @CPF_MOT VARCHAR(20),
@@ -807,7 +905,7 @@ BEGIN
 
         -- insert ppo cancelado
                  INSERT INTO @tabelaRelatorio
-                 SELECT  @Contador,g.empresa,g.filial,g.nome,r.matricula,r.cpf,r.nome_motorista,0,0,0,CASE WHEN @ColumnKM IS NULL THEN 0 ELSE @ColumnKM END,0,0,0,0,0,r.ppo_cancelado,r.observacao,r.mes_avaliacao,r.ano_avaliacao FROM [dbo].[ppo_resultado] r
+                 SELECT  @Contador,g.empresa,g.filial,g.nome,r.matricula,r.cpf,r.nome_motorista,0,0,0,CASE WHEN @ColumnKM IS NULL THEN 0 ELSE @ColumnKM END,0,0,0,0,0,r.ppo_cancelado,r.observacao,r.mes_avaliacao,r.ano_avaliacao,r.ativo,r.tipo FROM [dbo].[ppo_resultado] r
          INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
          INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
          WHERE cpf = @CPF_MOT
@@ -818,8 +916,8 @@ BEGIN
     ELSE
       BEGIN
             -- insere dados motorista
-                INSERT INTO @tabelaRelatorio (id,Empresa,filial,Grupo,matricula,cpf,nome_motorista,PPO_Cancelado,Observacao,mes_avaliacao,ano_avaliacao)
-        SELECT DISTINCT  @Contador,g.empresa,g.filial,g.nome,r.matricula,r.cpf,r.nome_motorista,r.ppo_cancelado,NULL,r.mes_avaliacao,r.ano_avaliacao from [dbo].[ppo_resultado] r
+                INSERT INTO @tabelaRelatorio (id,Empresa,filial,Grupo,matricula,cpf,nome_motorista,PPO_Cancelado,Observacao,mes_avaliacao,ano_avaliacao,ativo,tipo)
+        SELECT DISTINCT  @Contador,g.empresa,g.filial,g.nome,r.matricula,r.cpf,r.nome_motorista,r.ppo_cancelado,NULL,r.mes_avaliacao,r.ano_avaliacao,r.ativo,r.tipo from [dbo].[ppo_resultado] r
         INNER JOIN dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
         INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
         WHERE cpf = @CPF_MOT
@@ -950,7 +1048,9 @@ Total,
 CASE WHEN ppo_cancelado=1 THEN 'Sim' ELSE 'Não'END as 'PPO Cancelado',
 CASE WHEN observacao is null THEN 'Sem Observação' ELSE observacao END 'Observação',
 mes_avaliacao as Mês,
-ano_avaliacao as Ano
+ano_avaliacao as Ano,
+CASE WHEN tipo = 1 THEN 'Automático' ELSE 'Manual' END 'Tipo PPO',
+CASE WHEN ativo = 1 THEN 'Ativo' ELSE 'Removido' END 'Situação PPO'
 from @tabelaRelatorio
 WHERE 1=1
 ${filtro}

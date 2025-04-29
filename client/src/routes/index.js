@@ -66,6 +66,8 @@ import MultasEditar from "src/Pages/GestaoMultas/Multas/Editar";
 import Impedimentos from "src/Pages/GestaoMultas/Impedimentos";
 import GruposMotoristas from "src/Pages/PPO/GruposMotoristas";
 import MovimentacoesMotoristaGrupo from "src/Pages/PPO/GruposMotoristas/Historico";
+import PpoManual from "src/Pages/PPO/Manual";
+import PPORelatorioRastreabilidade from "src/Pages/PPO/Rastreabilidade";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -113,6 +115,12 @@ export default function AllRoutes() {
 					exact
 					component={PermissoesVisualizacao}
 				/>
+				<Routes
+					path="/ppo/rastreabilidade"
+					exact
+					component={PPORelatorioRastreabilidade}
+				/>
+				<Routes path="/ppo/manual" exact component={PpoManual} />
 				<Routes path="/ppo/estatisticas" exact component={Estatisticas} />
 				<Routes path="/ppo/grupos" exact component={Grupos} />
 				<Routes

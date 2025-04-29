@@ -42,6 +42,7 @@ interface IPPOController {
   relatorioDocumentosExcel(req: Request, res: Response): Promise<Response>;
   demonstrativos(req: Request, res: Response): Promise<Response>;
   motorista_by_grupo(req: Request, res: Response): Promise<any>;
+  desativar_ppo(req: Request, res: Response): Promise<any>;
 }
 
 class PPOController implements IPPOController {
@@ -338,6 +339,20 @@ class PPOController implements IPPOController {
       String(cpf),
       String(permissoes)
     );
+    return res.json(result);
+  }
+
+  async desativar_ppo(req: Request, res: Response): Promise<any> {
+    const { cpf, mes, ano } = req.query;
+    const ppoRepository = new PPORepository();
+
+    const result = await ppoRepository.desativar_ppo(
+      String(mes),
+      String(ano),
+      formataCPF(String(cpf)),
+      String(req.headers.authorization)
+    );
+
     return res.json(result);
   }
 }
