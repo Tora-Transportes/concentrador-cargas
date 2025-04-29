@@ -45,4 +45,5 @@ export const allTipoPermissoes = [
 	{ name: "PPO_LOG_MOVIMENTACAO_MOTORISTA" },
 	{ name: "PPO_CAD_MANUAL" },
 	{ name: "PPO_PERMISSAO_EXCLUSAO" },
+	{ name: "PPO_RASTREABILIDADE" },
 ];

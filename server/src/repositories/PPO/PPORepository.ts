@@ -3,6 +3,7 @@ import IAvaliacao from "../../models/IAvaliacao";
 import IAtributo from "../../models/IAtributo";
 import AppError from "../../models/AppError";
 import { encrypt } from "../../Utils/utlis";
+import TokenAd from "../../models/TokenAd";
 
 interface IPPORepository {
   avaliacoes(
@@ -46,7 +47,8 @@ interface IPPORepository {
   desativar_ppo(
     mes: string,
     ano: string,
-    cpf: string
+    cpf: string,
+    user: string
   ): Promise<any | undefined>;
 }
 const isValid = (value: string | null | undefined) =>
@@ -56,17 +58,54 @@ export class PPORepository implements IPPORepository {
   async desativar_ppo(
     mes: string,
     ano: string,
-    cpf: string
+    cpf: string,
+    user: string
   ): Promise<any | undefined> {
-    const sql = `
-    UPDATE dbo.ppo_resultado
-    SET ativo = 0
-    WHERE mes_avaliacao = '${mes}'
-    AND ano_avaliacao = '${ano}'
-    AND cpf = '${cpf}'
+    const userName = TokenAd.getClaims(user).name;
+
+    const sqlSelect = `
+      SELECT TOP 1 * FROM dbo.ppo_resultado
+      WHERE mes_avaliacao = '${mes}'
+        AND ano_avaliacao = '${ano}'
+        AND cpf = '${cpf}';
     `;
-    const desativar = await mssqlPPO.raw(sql);
-    return desativar;
+
+    const sqlUpdate = `
+      UPDATE dbo.ppo_resultado
+      SET ativo = 0
+      WHERE mes_avaliacao = '${mes}'
+        AND ano_avaliacao = '${ano}'
+        AND cpf = '${cpf}';
+    `;
+
+    const transaction = await mssqlPPO.transaction();
+    try {
+      const result = await transaction.raw(sqlSelect);
+      console.log(result);
+      const registro = result[0];
+
+      if (!registro) {
+        await transaction.rollback();
+        throw new Error("Registro não encontrado para o CPF informado.");
+      }
+
+      const tipo_ppo = registro.tipo;
+
+      const sqlInsertRastreamento = `
+        INSERT INTO dbo.ppo_rastreamento (mes, ano, cpf, tipo, tipo_ppo, created_user)
+        VALUES ('${mes}', '${ano}', '${cpf}', 'exclusao', ${tipo_ppo}, '${userName}');
+      `;
+
+      await transaction.raw(sqlUpdate);
+      await transaction.raw(sqlInsertRastreamento);
+      await transaction.commit();
+
+      return { success: true };
+    } catch (error) {
+      await transaction.rollback();
+      console.error("Erro ao desativar PPO e registrar rastreamento:", error);
+      throw error;
+    }
   }
 
   async exporta_protheus(

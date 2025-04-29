@@ -48,6 +48,7 @@ import GMMultasController from "./controllers/GestaoMultas/Multas/GMMultasContro
 import GMImpedimentosController from "./controllers/GestaoMultas/Impedimentos/GMImpedimentosController";
 import GMDocumentosController from "./controllers/GestaoMultas/Documentos/GMDocumentosController";
 import PPOMotoristasGruposController from "./controllers/PPO/PPOMotoristasGruposController";
+import PPORastreamentoController from "./controllers/PPO/PPORastreamentoController";
 
 const routes = Router();
 
@@ -535,4 +536,7 @@ routes.get(
 );
 
 routes.get("/motoristas/:cpf/categoria", MotoristaController.findByCpf);
+
+routes.get("/ppo/rastreamento", PPORastreamentoController.relatorio);
+routes.get("/ppo/rastreamento/excel", PPORastreamentoController.relatorioExcel);
 export default routes;

@@ -349,7 +349,8 @@ class PPOController implements IPPOController {
     const result = await ppoRepository.desativar_ppo(
       String(mes),
       String(ano),
-      formataCPF(String(cpf))
+      formataCPF(String(cpf)),
+      String(req.headers.authorization)
     );
 
     return res.json(result);

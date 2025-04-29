@@ -156,6 +156,9 @@ function Menusuperior() {
                 {permissoes?.permissoes?.includes("PPO_CAD_MANUAL") && (
                   <a href="/ppo/manual">PPO Manual</a>
                 )}
+                {permissoes?.permissoes?.includes("PPO_RASTREABILIDADE") && (
+                  <a href="/ppo/rastreabilidade">PPO Rastreabilidade</a>
+                )}
                 {permissoes?.permissoes?.includes("PPO_ESTATISTICA") && (
                   <a href="/ppo/estatisticas">PPO Estátisticas</a>
                 )}
