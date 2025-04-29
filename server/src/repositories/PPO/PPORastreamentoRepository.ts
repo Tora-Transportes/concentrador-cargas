@@ -74,6 +74,9 @@ export class PPORastreamentoRepository implements IPPORastreamentoRepository {
     if (isValid(query?.tipo_ppo)) {
       filtro = filtro + ` AND tipo_ppo LIKE '%${query.tipo_ppo}%'`;
     }
+    if (query?.date_excel_inicio && query?.date_excel_fim) {
+      filtro += ` AND created_at BETWEEN '${query.date_excel_inicio} 00:00:00' AND '${query.date_excel_fim} 23:59:59'`;
+    }
 
     const total = await mssqlPPO.raw(
       `SELECT COUNT(0) as total FROM ppo_rastreamento 

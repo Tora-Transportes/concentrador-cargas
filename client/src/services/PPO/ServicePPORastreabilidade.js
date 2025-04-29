@@ -31,6 +31,8 @@ class ServicePPORastreabilidade {
 		tipo,
 		tipo_ppo,
 		relatorio = true,
+		date_excel_inicio,
+		date_excel_fim,
 	}) {
 		return await api.get("/ppo/rastreamento/excel", {
 			responseType: "arraybuffer",
@@ -41,6 +43,8 @@ class ServicePPORastreabilidade {
 				tipo,
 				tipo_ppo,
 				relatorio,
+				date_excel_inicio,
+				date_excel_fim,
 			},
 		});
 	}

@@ -33,7 +33,10 @@ export default function ModalExportExcel({ onHide, show, exportExcelDate }) {
 			const message = "As datas deverão estar no mesmo mês e ano";
 			showToastMessage(toast, "warn", message, 7000);
 		} else {
-			exportExcelDate(dataI[1], dataI[0]);
+			exportExcelDate(
+				`${dataI[0]}-${dataI[1]}-${dataI[2]}`,
+				`${dataF[0]}-${dataF[1]}-${dataF[2]}`
+			);
 		}
 	};
 	const footer = (
