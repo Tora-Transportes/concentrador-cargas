@@ -227,12 +227,13 @@ class ServicePPO {
 		}
 	}
 
-	async removerPpo({ cpf, mes, ano }) {
+	async removerPpo({ cpf, mes, ano, observacao }) {
 		return api.delete(`/ppo/desativar`, {
 			params: {
 				cpf,
 				mes: mes,
 				ano: ano,
+				observacao,
 			},
 		});
 	}

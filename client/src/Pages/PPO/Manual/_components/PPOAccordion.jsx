@@ -9,10 +9,32 @@ import {
 import { MdExpandMore } from "react-icons/md";
 import { Form } from "react-bootstrap";
 
+const formatarValorBR = (valor) => {
+  if (!valor) return "";
+  const num = valor.toString().replace(/[^\d]/g, "");
+  const float = (parseFloat(num) / 100).toFixed(2);
+  return "R$ " + float.replace(".", ",");
+};
+
+const parseValorBR = (valorStr) => {
+  if (!valorStr) return 0;
+  const limpo = valorStr
+    .replace(/[R$\s]/g, "")
+    .replace(/\./g, "")
+    .replace(",", ".");
+  return parseFloat(limpo) || 0;
+};
+
 const PPOAccordion = ({ formik }) => {
+  const handleValorChange = (e, index) => {
+    const raw = e.target.value;
+    const somenteNumeros = raw.replace(/\D/g, "");
+    const valorFormatado = formatarValorBR(somenteNumeros);
+    formik.setFieldValue(`valores[${index}].valor`, valorFormatado);
+  };
+
   const total = formik.values.valores.reduce((acc, linha) => {
-    const valor = parseFloat(linha.valor?.replace(",", ".")) || 0;
-    return acc + valor;
+    return acc + parseValorBR(linha.valor);
   }, 0);
 
   return (
@@ -56,7 +78,7 @@ const PPOAccordion = ({ formik }) => {
                     type="text"
                     name={`valores[${index}].valor`}
                     value={linha.valor}
-                    onChange={formik.handleChange}
+                    onChange={(e) => handleValorChange(e, index)}
                     isInvalid={
                       !!(
                         formik.touched.valores?.[index]?.valor &&
@@ -87,7 +109,10 @@ const PPOAccordion = ({ formik }) => {
             <Grid item xs={4}>
               <Form.Group className="mb-2">
                 <Form.Label>Total</Form.Label>
-                <Form.Control value={total.toFixed(2)} readOnly />
+                <Form.Control
+                  value={formatarValorBR((total * 100).toFixed(0))} // força precisão
+                  readOnly
+                />
               </Form.Group>
             </Grid>
           </Grid>

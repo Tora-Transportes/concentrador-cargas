@@ -108,26 +108,42 @@ export const getColumns = (grupos, load) => {
 							);
 							return;
 						}
+
 						Swal.fire({
 							title: "Confirmar remoção?",
 							html: `
-        <strong>Nome:</strong> ${row.nome_motorista} <br/>
-        <strong>CPF:</strong> ${row.cpf} <br/>
-        <strong>Mês:</strong> ${row.mes_avaliacao} <br/>
-        <strong>Ano:</strong> ${row.ano_avaliacao}
-      `,
+				<strong>Nome:</strong> ${row.nome_motorista} <br/>
+				<strong>CPF:</strong> ${row.cpf} <br/>
+				<strong>Mês:</strong> ${row.mes_avaliacao} <br/>
+				<strong>Ano:</strong> ${row.ano_avaliacao}
+			`,
+							input: "textarea",
+							inputLabel: "Observação",
+							inputPlaceholder: "Digite a justificativa para remoção",
+							inputAttributes: {
+								"aria-label": "Digite a justificativa para remoção",
+							},
+							inputValidator: (value) => {
+								if (!value) {
+									return "A observação é obrigatória!";
+								}
+							},
 							icon: "warning",
 							showCancelButton: true,
 							confirmButtonColor: "#d33",
 							cancelButtonColor: "#3085d6",
 							confirmButtonText: "Sim, remover!",
 							cancelButtonText: "Cancelar",
+							preConfirm: (observacao) => {
+								return observacao;
+							},
 						}).then(async (result) => {
-							if (result.isConfirmed) {
-								ServicePPO.removerPpo({
+							if (result.isConfirmed && result.value) {
+								await ServicePPO.removerPpo({
 									cpf: row.cpf,
 									mes: row.mes_avaliacao,
 									ano: row.ano_avaliacao,
+									observacao: result.value,
 								});
 								await load();
 							}

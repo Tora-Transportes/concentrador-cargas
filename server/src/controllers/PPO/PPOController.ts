@@ -343,14 +343,15 @@ class PPOController implements IPPOController {
   }
 
   async desativar_ppo(req: Request, res: Response): Promise<any> {
-    const { cpf, mes, ano } = req.query;
+    const { cpf, mes, ano, observacao } = req.query;
     const ppoRepository = new PPORepository();
 
     const result = await ppoRepository.desativar_ppo(
       String(mes),
       String(ano),
       formataCPF(String(cpf)),
-      String(req.headers.authorization)
+      String(req.headers.authorization),
+      String(observacao)
     );
 
     return res.json(result);

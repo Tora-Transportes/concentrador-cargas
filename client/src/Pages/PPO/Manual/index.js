@@ -82,6 +82,17 @@ const PpoManualStepper = () => {
 		),
 	});
 
+	function normalizarValores(valores) {
+		return valores.map((item) => ({
+			...item,
+			valor: item.valor
+				.replace("R$", "") // remove prefixo
+				.replace(/\./g, "") // remove pontos de milhar
+				.replace(",", ".") // troca vírgula por ponto decimal
+				.trim(),
+		}));
+	}
+
 	const formik = useFormik({
 		initialValues: {
 			motorista: {},
@@ -100,6 +111,9 @@ const PpoManualStepper = () => {
 			const { mes, ano } = getMonthAndYearFromSelectedOption(periodSelected);
 			values.mes = mes;
 			values.ano = ano;
+			const payload = values;
+			payload.valores = normalizarValores(payload.valores);
+
 			setLoading(true);
 			const ppoCalculed = await existPpoCalculed();
 
@@ -109,7 +123,7 @@ const PpoManualStepper = () => {
 			}
 
 			try {
-				await ServicePPORastreabilidade.create(values);
+				await ServicePPORastreabilidade.create(payload);
 				Swal2.fire({
 					icon: "success",
 					title: "Sucesso!",
@@ -279,12 +293,12 @@ const PpoManualStepper = () => {
 				motoristaSelecionado.status
 			)
 		) {
+			setLoading(false);
 			await Swal2.fire({
 				icon: "warning",
 				title: "Oops...",
 				text: "Motorista não se enquadra em uma situação válida",
 			});
-			setLoading(false);
 			return;
 		}
 
@@ -296,12 +310,12 @@ const PpoManualStepper = () => {
 			await formik.setFieldTouched("motivo");
 
 			if (!formik.values.motivo || motivoErro) {
+				setLoading(false);
 				await Swal2.fire({
 					icon: "warning",
 					title: "Atenção",
 					text: "É obrigatório preencher o motivo!",
 				});
-				setLoading(false);
 				return;
 			}
 

@@ -153,7 +153,7 @@ export class PPORastreamentoRepository implements IPPORastreamentoRepository {
         from ppo_rastreamento 
     WHERE 1=1
     ${filtro}
-    ORDER BY id ASC
+    ORDER BY id DESC
     OFFSET ${(realPage - 1) * pageSize} ROWS
     FETCH NEXT  ${pageSize} ROWS ONLY
     `;
@@ -162,7 +162,7 @@ export class PPORastreamentoRepository implements IPPORastreamentoRepository {
         select * from ppo_rastreamento 
     WHERE 1=1
     ${filtro}
-    ORDER BY id ASC
+    ORDER BY id DESC
     OFFSET ${(realPage - 1) * pageSize} ROWS
     FETCH NEXT  ${pageSize} ROWS ONLY
     `;
