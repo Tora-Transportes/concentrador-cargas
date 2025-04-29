@@ -43,11 +43,32 @@ interface IPPORepository {
     pageSize?: number
   ): Promise<any | undefined>;
   motorista_by_grupo(cpf: string, permissoes: string): Promise<any | undefined>;
+  desativar_ppo(
+    mes: string,
+    ano: string,
+    cpf: string
+  ): Promise<any | undefined>;
 }
 const isValid = (value: string | null | undefined) =>
   !["", null, undefined, "null", "undefined"].includes(value);
 
 export class PPORepository implements IPPORepository {
+  async desativar_ppo(
+    mes: string,
+    ano: string,
+    cpf: string
+  ): Promise<any | undefined> {
+    const sql = `
+    UPDATE dbo.ppo_resultado
+    SET ativo = 0
+    WHERE mes_avaliacao = '${mes}'
+    AND ano_avaliacao = '${ano}'
+    AND cpf = '${cpf}'
+    `;
+    const desativar = await mssqlPPO.raw(sql);
+    return desativar;
+  }
+
   async exporta_protheus(
     mes: string,
     ano: string,

@@ -226,6 +226,16 @@ class ServicePPO {
 			return false;
 		}
 	}
+
+	async removerPpo({ cpf, mes, ano }) {
+		return api.delete(`/ppo/desativar`, {
+			params: {
+				cpf,
+				mes: mes,
+				ano: ano,
+			},
+		});
+	}
 }
 
 export default new ServicePPO();

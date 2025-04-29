@@ -281,6 +281,7 @@ routes.get(
 routes.get("/ppo/motoristas/demonstrativos", PPOController.demonstrativos);
 routes.get("/ppo/protheus", PPOController.protheus);
 routes.get("/ppo/protheus/txt", PPOController.protheusTxt);
+routes.delete("/ppo/desativar", PPOController.desativar_ppo);
 
 routes.get("/ppo/parametros", PPOParametrosController.index);
 routes.post("/ppo/parametros", PPOParametrosController.create);
