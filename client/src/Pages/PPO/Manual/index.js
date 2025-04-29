@@ -22,6 +22,7 @@ import { endOfMonth, format, parse, startOfMonth, subMonths } from "date-fns";
 import Swal2 from "sweetalert2";
 import PPOAccordion from "./_components/PPOAccordion";
 import ServicePPO from "src/services/PPO/ServicePPO";
+import ServicePPORastreabilidade from "src/services/PPO/ServicePPORastreabilidade";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -61,11 +62,6 @@ const PpoManualStepper = () => {
 	];
 	const [periodSelected, setPeriodSelected] = React.useState(options[1]);
 
-	/* 	const motoristas = [
-		{ cpf: "123.456.789-00", nome: "João da Silva", grupo: "A" },
-		{ cpf: "987.654.321-00", nome: "Maria Souza", grupo: "B" },
-	]; */
-
 	async function forceLoading() {
 		setForceLoad(!forceLoad);
 	}
@@ -90,6 +86,8 @@ const PpoManualStepper = () => {
 		initialValues: {
 			motorista: {},
 			motivo: "",
+			mes: "",
+			ano: "",
 			valores: [
 				{ item: "AVALIAÇÃO", referencia: "", valor: "" },
 				{ item: "INFRAÇÃO DE INTERJORNADA", referencia: "", valor: "" },
@@ -98,12 +96,33 @@ const PpoManualStepper = () => {
 			],
 		},
 		validationSchema: MotoristaSchema,
-		/* 		onChange: async (values) => {
-                console.log(values);
-            }, */
-
 		onSubmit: async (values) => {
-			console.log(values);
+			const { mes, ano } = getMonthAndYearFromSelectedOption(periodSelected);
+			values.mes = mes;
+			values.ano = ano;
+			setLoading(true);
+			const ppoCalculed = await existPpoCalculed();
+
+			if (ppoCalculed) {
+				setLoading(false);
+				return;
+			}
+
+			try {
+				await ServicePPORastreabilidade.create(values);
+				Swal2.fire({
+					icon: "success",
+					title: "Sucesso!",
+					text: `PPO Manual criado com sucesso!`,
+				});
+			} catch (error) {
+				Swal2.fire({
+					icon: "error",
+					title: "Oops...",
+					text: `Erro ao criar PPO Manual!`,
+				});
+			}
+			setLoading(false);
 		},
 	});
 
@@ -170,7 +189,7 @@ const PpoManualStepper = () => {
 	function getMonthAndYearFromSelectedOption(periodSelected) {
 		const parsedDate = parse(periodSelected.value, "MM/yyyy", new Date());
 		return {
-			mes: parsedDate.getMonth() + 1, // getMonth() é zero-based, por isso +1
+			mes: String(parsedDate.getMonth() + 1).padStart(2, "0"),
 			ano: parsedDate.getFullYear(),
 		};
 	}
@@ -249,6 +268,7 @@ const PpoManualStepper = () => {
 	}
 
 	const handleValidationDriver = async () => {
+		setLoading(true);
 		let ppoCalculed = false;
 		if (
 			!["SEM MOVIMENTO", "FUNCIONARIO EM SITUACAO NORMAL"].includes(
@@ -260,6 +280,7 @@ const PpoManualStepper = () => {
 				title: "Oops...",
 				text: "Motorista não se enquadra em uma situação válida",
 			});
+			setLoading(false);
 			return;
 		}
 
@@ -276,6 +297,7 @@ const PpoManualStepper = () => {
 					title: "Atenção",
 					text: "É obrigatório preencher o motivo!",
 				});
+				setLoading(false);
 				return;
 			}
 
@@ -284,10 +306,11 @@ const PpoManualStepper = () => {
 			if (!ppoCalculed) {
 				await findStatisticsForDriver();
 			} else {
+				setLoading(false);
 				return;
 			}
 		}
-
+		setLoading(false);
 		handleNext();
 	};
 

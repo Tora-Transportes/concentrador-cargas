@@ -48,6 +48,10 @@ class ServicePPORastreabilidade {
 			},
 		});
 	}
+
+	async create(values) {
+		return api.post("/ppo/manual", values);
+	}
 }
 
 export default new ServicePPORastreabilidade();

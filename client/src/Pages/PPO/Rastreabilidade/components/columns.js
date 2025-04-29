@@ -1,12 +1,7 @@
-import { Form } from "react-bootstrap";
-
-function formatDateAndHour(date) {
-	if (!date) return "";
-	const [day, time] = date?.split("T");
-	const daysFormatted = day.split("-").reverse().join("/");
-	const timeFormatted = time.split(".")[0];
-	return `${daysFormatted} ${timeFormatted}`;
-}
+import { Button, Form } from "react-bootstrap";
+import DateUtils from "../../../Utils/date";
+import { BsInfoCircle } from "react-icons/bs";
+import swal from "sweetalert";
 
 export const getColumns = () => {
 	const columnsRelatorio = [
@@ -63,6 +58,23 @@ export const getColumns = () => {
 			showFilter: true,
 		},
 		{
+			name: "observacao",
+			description: "Observação",
+			selector: (row) => (
+				<Button
+					variant="outline-primary"
+					onClick={(e) => {
+						e.preventDefault();
+						swal(row.observacao ?? "N/A");
+					}}
+				>
+					<BsInfoCircle className="icon-info" />
+					Info
+				</Button>
+			),
+			showFilter: false,
+		},
+		{
 			name: "tipo",
 			description: "Tipo Movimentação",
 			selector: (row) => (row.tipo === "exclusao" ? "Exclusão" : "Inclusão"),
@@ -97,7 +109,7 @@ export const getColumns = () => {
 		{
 			name: "created_at",
 			description: "Data Criação",
-			selector: (row) => formatDateAndHour(row.created_at),
+			selector: (row) => DateUtils.formatDateTresHorasMenos(row.created_at),
 			showFilter: false,
 		},
 	];

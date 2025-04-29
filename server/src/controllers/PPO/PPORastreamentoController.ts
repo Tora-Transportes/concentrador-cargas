@@ -6,10 +6,20 @@ import AppError from "../../models/AppError";
 
 interface IPPORastreamentoController {
   relatorio(req: Request, res: Response): Promise<Response>;
+  createPpoManual(req: Request, res: Response): Promise<Response>;
   relatorioExcel(req: Request, res: Response): Promise<Response>;
 }
 
 class PPORastreamentoController implements IPPORastreamentoController {
+  async createPpoManual(req: Request, res: Response): Promise<Response> {
+    const ppo = new PPORastreamentoRepository();
+    const result = await ppo.create(
+      req.body,
+      String(req.headers.authorization)
+    );
+    return res.json({ data: result });
+  }
+
   async relatorio(req: Request, res: Response): Promise<Response> {
     const ppo = new PPORastreamentoRepository();
     const result = await ppo.search(

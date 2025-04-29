@@ -539,4 +539,5 @@ routes.get("/motoristas/:cpf/categoria", MotoristaController.findByCpf);
 
 routes.get("/ppo/rastreamento", PPORastreamentoController.relatorio);
 routes.get("/ppo/rastreamento/excel", PPORastreamentoController.relatorioExcel);
+routes.post("/ppo/manual", PPORastreamentoController.createPpoManual);
 export default routes;
