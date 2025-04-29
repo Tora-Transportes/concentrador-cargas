@@ -64,7 +64,7 @@ export const getColumns = (grupos, load) => {
 		{
 			name: "tipo",
 			description: "Tipo",
-			selector: (row) => (row.tipo === 1 ? "Automático" : ""),
+			selector: (row) => (row.tipo === 1 ? "Automático" : "Manual"),
 			Filter: (props) => (
 				<Form.Select {...props}>
 					<option></option>

@@ -123,6 +123,7 @@ const PpoManualStepper = () => {
 				});
 			}
 			setLoading(false);
+			handleReset();
 		},
 	});
 
