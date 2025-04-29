@@ -1,4 +1,6 @@
 import { Form } from "react-bootstrap";
+import { MdDeleteForever } from "react-icons/md";
+import { Button } from "reactstrap";
 
 export const getColumns = (grupos) => {
 	const columnsRelatorio = [
@@ -53,6 +55,49 @@ export const getColumns = (grupos) => {
 			description: "Motorista",
 			selector: (row) => row.nome_motorista,
 			showFilter: true,
+		},
+		{
+			name: "tipo",
+			description: "Tipo",
+			selector: (row) => (row.tipo === 1 ? "Automático" : ""),
+			Filter: (props) => (
+				<Form.Select {...props}>
+					<option></option>
+					<option value="1"> Automático </option>
+					<option value="2"> Manual </option>
+				</Form.Select>
+			),
+			showFilter: true,
+		},
+		{
+			name: "ativo",
+			description: "Ativo",
+			selector: (row) => (row.ativo === true ? "Sim" : "Não"),
+			Filter: (props) => (
+				<Form.Select {...props}>
+					<option></option>
+					<option value="1"> Sim </option>
+					<option value="0"> Não </option>
+				</Form.Select>
+			),
+			showFilter: true,
+		},
+		{
+			name: "excluir",
+			description: "Excluir",
+			static_column: true,
+			selector: (row) => (
+				<Button
+					color="danger"
+					size="sm"
+					className="btn-icon btn-2"
+					onClick={() => {
+						alert(`Excluir motorista ${row.nome_motorista}`);
+					}}
+				>
+					<MdDeleteForever />
+				</Button>
+			),
 		},
 		{
 			name: "cpf",
