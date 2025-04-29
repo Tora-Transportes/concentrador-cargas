@@ -100,13 +100,23 @@ export class PPORepository implements IPPORepository {
 
       const tipo_ppo = registro.tipo;
       const now = new Date();
-      const sqlInsertRastreamento = `
-        INSERT INTO dbo.ppo_rastreamento (mes, ano, cpf, tipo, tipo_ppo, created_user,created_at,observacao)
-        VALUES ('${mes}', '${ano}', '${cpf}', 'exclusao', ${tipo_ppo}, '${userName}',${now},'Desativação do PPO');
-      `;
+      /*       const sqlInsertRastreamento = `
+              INSERT INTO dbo.ppo_rastreamento (mes, ano, cpf, tipo, tipo_ppo, created_user,created_at,observacao)
+              VALUES ('${mes}', '${ano}', '${cpf}', 'exclusao', ${tipo_ppo}, '${userName}',${now},'Desativação do PPO');
+            `; */
 
       await transaction.raw(sqlUpdate);
-      await transaction.raw(sqlInsertRastreamento);
+      //await transaction.raw(sqlInsertRastreamento);
+      await transaction("ppo_rastreamento").insert({
+        mes: mes,
+        ano: ano,
+        cpf: cpf,
+        tipo: "exclusao",
+        tipo_ppo: tipo_ppo,
+        created_user: userName,
+        created_at: now,
+        observacao: "Desativação do PPO",
+      });
       await transaction.commit();
       await mssqlAutentique.raw(sqlDeleteAutentique);
 
