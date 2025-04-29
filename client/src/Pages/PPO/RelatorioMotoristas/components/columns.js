@@ -93,9 +93,12 @@ export const getColumns = (grupos, load) => {
 			static_column: true,
 			selector: (row) => (
 				<Button
-					color="danger"
+					color={row.ativo === false ? undefined : "danger"}
 					size="sm"
-					className="btn-icon btn-2"
+					disabled={row.ativo === false}
+					className={`btn-icon btn-2 ${
+						row.ativo === 0 ? "bg-gray-400 text-white cursor-not-allowed" : ""
+					}`}
 					onClick={() => {
 						if (!isPermissionUser?.includes("PPO_PERMISSAO_EXCLUSAO")) {
 							Swal.fire(
