@@ -58,7 +58,27 @@ const PPOAccordion = ({ formik }) => {
                     type="text"
                     name={`valores[${index}].referencia`}
                     value={linha.referencia}
-                    onChange={formik.handleChange}
+                    onChange={(e) => {
+                      const val = e.target.value;
+
+                      if (index === 0) {
+                        // Só letras e até 1 caractere
+                        if (/^[a-zA-Z]?$/.test(val)) {
+                          formik.setFieldValue(
+                            `valores[${index}].referencia`,
+                            val.toUpperCase()
+                          );
+                        }
+                      } else {
+                        // Só números
+                        if (/^\d*$/.test(val)) {
+                          formik.setFieldValue(
+                            `valores[${index}].referencia`,
+                            val
+                          );
+                        }
+                      }
+                    }}
                     isInvalid={
                       !!(
                         formik.touched.valores?.[index]?.referencia &&

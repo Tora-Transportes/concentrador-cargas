@@ -258,25 +258,23 @@ const PpoManualStepper = () => {
 					case "AVALIAÇÃO":
 						return {
 							...valor,
-							referencia: avaliacoes?.data?.data?.[0]?.pontuacao || "N/A",
+							referencia: avaliacoes?.data?.data?.[0]?.pontuacao || "A",
 						};
 					case "INFRAÇÃO DE INTERJORNADA":
 						return {
 							...valor,
-							referencia:
-								interjornadas?.data?.data?.length?.toString() || "N/A",
+							referencia: interjornadas?.data?.data?.length?.toString() || "0",
 						};
 					case "INFRAÇÃO VELOCIDADE":
 						return {
 							...valor,
-							referencia: infracoes?.data?.data?.length?.toString() || "N/A",
+							referencia: infracoes?.data?.data?.length?.toString() || "0",
 						};
 					case "KM":
 						return {
 							...valor,
 							referencia:
-								distancia?.data?.data?.[0]?.distancia.replace("KM", "") ||
-								"N/A",
+								distancia?.data?.data?.[0]?.distancia.replace("KM", "") || "0",
 						};
 					default:
 						return valor;
