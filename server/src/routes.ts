@@ -336,6 +336,11 @@ routes.get(
 );
 
 routes.get(
+  "/ppo/grupos/motoristas/historico/excel",
+  PPOMotoristasGruposController.relatorioExcel
+);
+
+routes.get(
   "/ppo/permissoes-visualizacao/users",
   PPOPermissoesVisualizacaoController.getAllUsers
 );

@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
 import { PPOMotoristasGruposRepository } from "../../repositories/PPO/PPOMotoristasGruposRepository";
+import AppError from "../../models/AppError";
+import xlsx from "xlsx";
+import fs from "fs";
 
 interface IPPOMotoristasGruposController {
   index(req: Request, res: Response): Promise<Response>;
@@ -62,6 +65,48 @@ class PPOMotoristasGruposController implements IPPOMotoristasGruposController {
       Number(req.query.limit) || 5
     );
     return res.json({ data: result });
+  }
+  async relatorioExcel(req: Request, res: Response): Promise<Response> {
+    const pmg = new PPOMotoristasGruposRepository();
+    const filename = `static/RELATORIO-MOVIMENTACOES-MOTORISTAS-${new Date().getTime()}.xlsx`;
+    const searchResult = await pmg.relatorioHistoricoMovimentacoes(
+      { ...req.query },
+      0,
+      1200000
+    );
+
+    if (searchResult.results.length == 0) {
+      throw new AppError(
+        "Não foram encontrados dados com essas informações no filtro de data.",
+        202
+      );
+    }
+
+    const workbook = xlsx.utils.book_new();
+    const sheet = xlsx.utils.json_to_sheet(searchResult.results);
+
+    xlsx.utils.book_append_sheet(workbook, sheet);
+
+    await xlsx.writeFile(workbook, filename, {
+      bookType: "xlsx",
+      type: "binary",
+    });
+
+    const stream = fs.createReadStream(filename);
+
+    stream.once("end", () => {
+      if (fs.existsSync(filename)) {
+        fs.unlink(filename, (err) => {
+          if (err) {
+            console.error(err);
+          }
+        });
+      }
+    });
+
+    stream.pipe(res);
+
+    return res;
   }
 }
 

@@ -95,6 +95,17 @@ export class PPOMotoristasGruposRepository
   }
 
   async delete(id: number, user: string, status?: string): Promise<void> {
+    const hoje = new Date();
+    const dia = hoje.getDate();
+
+    // Bloqueio entre os dias 1 e 5
+    if (dia >= 1 && dia <= 5) {
+      throw new AppError(
+        "Alterações de grupo estão bloqueadas entre os dias 1 e 5 devido ao cálculo do PPO.",
+        400
+      );
+    }
+
     const userNameChanged = TokenAd.getClaims(user).name;
 
     await mssqlPPO("dbo.ppo_grupo_motorista")
@@ -191,7 +202,47 @@ export class PPOMotoristasGruposRepository
           `
     );
 
-    const sql = `    
+    let sql = "";
+    if (isValid(query?.relatorio)) {
+      sql = `    
+SELECT 
+    pgm.nome,
+    pgm.cpf,
+    pgm.filial,
+    pgm.empresa,
+    pgm.codigo_empresa,
+    pgm.status AS status_mot,
+    pgm.created_at AS pgm_created_at,
+    pgm.cod_usu_create AS pgm_cod_usu,
+    pgmh.id AS pgmh_id,
+    CASE 
+        WHEN pgmh.tipo_movimentacao = 'create' THEN 'Criação'
+        WHEN pgmh.tipo_movimentacao = 'moved' THEN 'Trocou de Grupo'
+        WHEN pgmh.tipo_movimentacao = 'delete' THEN 'Remoção'
+        ELSE pgmh.tipo_movimentacao
+    END AS tipo_movimentacao_label,
+	    CASE 
+        WHEN pgmh.tipo_movimentacao = 'create' THEN 'Entrou em'
+        WHEN pgmh.tipo_movimentacao = 'moved' THEN 'Saiu de'
+        WHEN pgmh.tipo_movimentacao = 'delete' THEN 'Removido de'
+        ELSE pgmh.tipo_movimentacao
+    END AS tipo_movimentacao,
+	    pg.nome AS nome_grupo,
+    pgmh.ultima_movimentacao_id,
+    pgmh.user_created AS pgmh_cod_usu,
+    pgmh.created_at AS pgmh_created_at
+FROM ppo_grupo_motorista pgm
+INNER JOIN ppo_grupo_motorista_historico pgmh ON pgmh.motoristas_grupos_id = pgm.id
+INNER JOIN ppo_grupos pg ON pg.id = pgm.grupo_id
+WHERE 1=1
+
+      ${filtro}
+      ORDER BY pgmh.created_at ASC
+      OFFSET ${(realPage - 1) * pageSize} ROWS
+      FETCH NEXT  ${pageSize} ROWS ONLY
+      `;
+    } else {
+      sql = `    
       SELECT 
           pg.nome as nome_grupo,
           pgm.nome,
@@ -216,6 +267,7 @@ export class PPOMotoristasGruposRepository
       OFFSET ${(realPage - 1) * pageSize} ROWS
       FETCH NEXT  ${pageSize} ROWS ONLY
       `;
+    }
     const results = await mssqlPPO.raw(sql);
     const totalRegisters = Number(total[0]["total"]) || 0;
 

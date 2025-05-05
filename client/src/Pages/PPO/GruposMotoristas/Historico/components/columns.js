@@ -1,3 +1,5 @@
+import { FaExchangeAlt, FaPlus, FaTrash } from "react-icons/fa";
+
 export const getColumns = () => {
 	const columnsRelatorio = [
 		{
@@ -11,12 +13,6 @@ export const getColumns = () => {
 			description: "Nome",
 			selector: (row) => row.nome,
 			showFilter: true,
-		},
-		{
-			name: "nome_grupo",
-			description: "Grupo",
-			selector: (row) => row.nome_grupo,
-			showFilter: false,
 		},
 		{
 			name: "filial",
@@ -53,6 +49,46 @@ export const getColumns = () => {
 				};
 				return map[row.tipo_movimentacao] || row.tipo_movimentacao;
 			},
+			showFilter: false,
+		},
+		{
+			name: "show_movimentacao",
+			description: "Movimentação",
+			selector: (row) => {
+				const map = {
+					create: {
+						label: "Entrou em",
+						icon: <FaPlus className="text-green-500 mr-2" />,
+					},
+					delete: {
+						label: "Removido de ",
+						icon: <FaTrash className="text-red-500 mr-2" />,
+					},
+					moved: {
+						label: "Saiu de ",
+						icon: <FaExchangeAlt className="text-blue-500 mr-2" />,
+					},
+				};
+
+				const item = map[row.tipo_movimentacao];
+
+				return item ? (
+					<div className="flex items-center">
+						<span className="mr-5">
+							{item.icon} {"  "}
+						</span>
+						<span>{item.label}</span>
+					</div>
+				) : (
+					row.tipo_movimentacao
+				);
+			},
+			showFilter: false,
+		},
+		{
+			name: "nome_grupo",
+			description: "Grupo",
+			selector: (row) => row.nome_grupo,
 			showFilter: false,
 		},
 		{
