@@ -38,6 +38,25 @@ class ServicePPOGruposMotoristas {
 			},
 		});
 	}
+
+	async exportRelatorioToXlsx({
+		nome,
+		cpf,
+		relatorio = true,
+		date_excel_inicio,
+		date_excel_fim,
+	}) {
+		return await api.get("/ppo/grupos/motoristas/historico/excel", {
+			responseType: "arraybuffer",
+			params: {
+				nome,
+				cpf,
+				relatorio,
+				date_excel_inicio,
+				date_excel_fim,
+			},
+		});
+	}
 }
 
 export default new ServicePPOGruposMotoristas();

@@ -6,6 +6,7 @@ import { getColumns } from "./components/columns";
 import factoryReducerCargas from "../../../../hooks/storageCargas/factoryReducerCargas";
 import ServicePPOGruposMotoristas from "src/services/PPO/ServicePPOGruposMotoristas";
 import { Toast } from "primereact/toast";
+import { showToastMessage } from "src/Pages/Utils/toastMessage";
 
 const MovimentacoesMotoristaGrupo = () => {
 	const defaultCargas = {
@@ -21,6 +22,7 @@ const MovimentacoesMotoristaGrupo = () => {
 	const [itensPerPage, setItensPerPage] = useState(10);
 	const [totalRegisters, setTotalRegisters] = useState(0);
 	const [lastOptions, setLastOptions] = useState({});
+	const [filtroAtual, setFiltroAtual] = useState(null);
 
 	const columnsResult = getColumns();
 	const columnsPadrao = columnsResult.columnsRelatorio;
@@ -28,6 +30,46 @@ const MovimentacoesMotoristaGrupo = () => {
 	function resetView() {
 		localStorage.removeItem("table-columns");
 		location.reload();
+	}
+
+	async function handleExportExcel(date_excel_inicio, date_excel_fim) {
+		setLoading(true);
+		const { filters, orderBy } = filtroAtual;
+		const options = {
+			...filters,
+			order_column: orderBy?.column,
+			order_direction: orderBy?.direction,
+			date_excel_inicio,
+			date_excel_fim,
+		};
+		const response = await ServicePPOGruposMotoristas.exportRelatorioToXlsx(
+			options
+		);
+
+		if (response.status === 202) {
+			const message =
+				"Não foram encontrados dados com essas informações no filtro de data.";
+			await showToastMessage(toast, "warn", message, 7000);
+			setLoading(false);
+			setModalShowExcel(true);
+		} else if (response.data.byteLength < 14493) {
+			const message =
+				"Não foram encontrados dados com essas informações no filtro de data.";
+			await showToastMessage(toast, "warn", message, 7000);
+			setLoading(false);
+			setModalShowExcel(true);
+		} else {
+			const url = window.URL.createObjectURL(new Blob([response.data]));
+			const link = document.createElement("a");
+			link.href = url;
+			link.setAttribute(
+				"download",
+				`RELATORIO-RASTREABILIDADE-PPO-${new Date().getTime()}.xlsx`
+			);
+			link.click();
+			setModalShowExcel(false);
+			setLoading(false);
+		}
 	}
 
 	const tableFetchData = useCallback(
@@ -38,6 +80,9 @@ const MovimentacoesMotoristaGrupo = () => {
 					setLastOptions(options);
 				}
 				const { column, direction } = options.orderBy ?? {};
+				const { filters, orderBy, page } = options;
+				setFiltroAtual({ filters, orderBy, page });
+
 				const { data } =
 					await ServicePPOGruposMotoristas.relatorioHistoricoMovimentacoes({
 						...options.filters,
@@ -64,7 +109,7 @@ const MovimentacoesMotoristaGrupo = () => {
 			<Menusuperior />
 			<Toast ref={toast} className="w-25" position="top-center"></Toast>
 			<ViewRelatorioAprovacoes
-				handleExportExcel={() => {}}
+				handleExportExcel={handleExportExcel}
 				get_data={tableFetchData}
 				columns={columnsPadrao}
 				data={cargas}

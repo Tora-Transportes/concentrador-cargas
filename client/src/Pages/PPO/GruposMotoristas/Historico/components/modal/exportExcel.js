@@ -29,11 +29,8 @@ export default function ModalExportExcel({ onHide, show, exportExcelDate }) {
 			const message =
 				"O período entre a data de início e fim não pode ser maior que 31 dias!";
 			showToastMessage(toast, "warn", message, 7000);
-		} else if (dataI[0] != dataF[0] || dataI[1] != dataF[1]) {
-			const message = "As datas deverão estar no mesmo mês e ano";
-			showToastMessage(toast, "warn", message, 7000);
 		} else {
-			exportExcelDate(dataI[1], dataI[0]);
+			exportExcelDate(dataI[1], dataF[0]);
 		}
 	};
 	const footer = (
