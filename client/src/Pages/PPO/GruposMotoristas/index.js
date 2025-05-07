@@ -81,6 +81,7 @@ const GruposMotoristas = () => {
 							`Motorista não está em situação normal! SITUAÇÃO : ${motoristaFiltrado[0].status}`,
 							"error"
 						);
+						setLoading(false);
 						return;
 					}
 				}
