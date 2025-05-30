@@ -172,6 +172,7 @@ export class PPORepository implements IPPORepository {
       WHERE apto = 1
       AND r.mes_avaliacao = '${mes}'
       AND r.ano_avaliacao = '${ano}'
+      AND r.ativo = 1
       ${filtro}
       GROUP BY r.matricula,g.cod_filial,p.cod_verba
     UNION
@@ -187,6 +188,7 @@ export class PPORepository implements IPPORepository {
     WHERE ppo_cancelado = 1
     AND mes_avaliacao = '${mes}'
     AND ano_avaliacao = '${ano}'
+    AND r.ativo = 1
     ${filtro}
     GROUP BY r.matricula,g.cod_filial,p.cod_verba
     ) X
@@ -533,6 +535,8 @@ JOIN
 
     let filtro = "";
     let filtroTot = "";
+    let ativoQuery = "";
+    let ativoQueryAs = "";
 
     if (isValid(query?.cpf)) {
       filtro = filtro + ` AND cpf LIKE '%${query.cpf}%'`;
@@ -541,6 +545,8 @@ JOIN
     if (isValid(query?.ativo)) {
       filtro = filtro + ` AND ativo = '${query.ativo}'`;
       filtroTot = filtroTot + ` AND r.ativo = '${query.ativo}'`;
+      ativoQuery = ` AND ativo = '${query.ativo}'`;
+      ativoQueryAs = ` AND r.ativo = '${query.ativo}'`;
     }
     if (isValid(query?.tipo)) {
       filtro = filtro + ` AND tipo = '${query.tipo}'`;
@@ -652,6 +658,7 @@ BEGIN
         AND ppo_cancelado = 1
         AND mes_avaliacao = @mes
         AND ano_avaliacao =  @ano
+        ${ativoQuery}
 
     IF @PPO_Cancelado > 0
       BEGIN
@@ -679,6 +686,7 @@ BEGIN
          AND ppo_cancelado = 1
                  AND mes_avaliacao = @mes
              AND ano_avaliacao =  @ano
+             ${ativoQueryAs}
       END
     ELSE
       BEGIN
@@ -689,7 +697,8 @@ BEGIN
         INNER JOIN dbo.ppo_grupos g ON g.id = pg.grupo_id
         WHERE cpf = @CPF_MOT
                 AND mes_avaliacao = @mes
-            AND ano_avaliacao =  @ano
+                AND ano_avaliacao =  @ano
+                ${ativoQueryAs}
 
                 --insere avalicao
                 SELECT
@@ -704,6 +713,7 @@ BEGIN
           AND p.nome = 'AVALIAÇÃO'
               AND mes_avaliacao = @mes
               AND ano_avaliacao =  @ano
+              ${ativoQueryAs}
        ORDER BY apto DESC
 
            UPDATE @tabelaRelatorio
@@ -725,6 +735,7 @@ BEGIN
           AND p.nome = 'INFRAÇÃO VELOCIDADE'
               AND mes_avaliacao = @mes
               AND ano_avaliacao =  @ano
+              ${ativoQueryAs}
        ORDER BY apto DESC
 
            UPDATE @tabelaRelatorio
@@ -746,6 +757,7 @@ BEGIN
           AND p.nome = 'INFRAÇÃO DE INTERJORNADA'
               AND mes_avaliacao = @mes
               AND ano_avaliacao = @ano
+              ${ativoQueryAs}
        ORDER BY apto DESC
 
            UPDATE @tabelaRelatorio
@@ -767,6 +779,7 @@ BEGIN
           AND p.nome = 'KM'
               AND mes_avaliacao = @mes
               AND ano_avaliacao = @ano
+              ${ativoQueryAs}
        ORDER BY apto DESC
 
            UPDATE @tabelaRelatorio
@@ -782,6 +795,7 @@ BEGIN
        WHERE cpf = @CPF_MOT
            AND mes_avaliacao = @mes
            AND ano_avaliacao = @ano
+           ${ativoQuery}
        AND apto = 1
 
            UPDATE @tabelaRelatorio
@@ -818,6 +832,8 @@ ${filtro}
     pageSize = 5
   ): Promise<any | undefined> {
     let filtro = "";
+    let ativoQuery = "";
+    let ativoQueryAs = "";
 
     if (isValid(query?.cpf)) {
       filtro = filtro + ` AND cpf LIKE '%${query.cpf}%'`;
@@ -839,6 +855,8 @@ ${filtro}
     }
     if (isValid(query?.ativo)) {
       filtro = filtro + ` AND ativo = '${query.ativo}'`;
+      ativoQuery = ` AND ativo = '${query.ativo}'`;
+      ativoQueryAs = ` AND r.ativo = '${query.ativo}'`;
     }
     if (isValid(query?.tipo)) {
       filtro = filtro + ` AND tipo = '${query.tipo}'`;
@@ -906,6 +924,7 @@ BEGIN
         AND ppo_cancelado = 1
         AND mes_avaliacao = @mes
         AND ano_avaliacao =  @ano
+        ${ativoQuery}
 
     IF @PPO_Cancelado > 0
       BEGIN
@@ -932,6 +951,7 @@ BEGIN
          AND ppo_cancelado = 1
                  AND mes_avaliacao = @mes
              AND ano_avaliacao =  @ano
+             ${ativoQueryAs}
       END
     ELSE
       BEGIN
@@ -943,6 +963,7 @@ BEGIN
         WHERE cpf = @CPF_MOT
                 AND mes_avaliacao = @mes
             AND ano_avaliacao =  @ano
+            ${ativoQueryAs}
 
                 --insere avalicao
                 SELECT
@@ -957,6 +978,7 @@ BEGIN
           AND p.nome = 'AVALIAÇÃO'
               AND mes_avaliacao = @mes
               AND ano_avaliacao =  @ano
+              ${ativoQueryAs}
        ORDER BY apto DESC
 
            UPDATE @tabelaRelatorio
@@ -978,6 +1000,7 @@ BEGIN
           AND p.nome = 'INFRAÇÃO VELOCIDADE'
               AND mes_avaliacao = @mes
               AND ano_avaliacao =  @ano
+              ${ativoQueryAs}
        ORDER BY apto DESC
 
            UPDATE @tabelaRelatorio
@@ -999,6 +1022,7 @@ BEGIN
           AND p.nome = 'INFRAÇÃO DE INTERJORNADA'
               AND mes_avaliacao = @mes
               AND ano_avaliacao = @ano
+              ${ativoQueryAs}
        ORDER BY apto DESC
 
            UPDATE @tabelaRelatorio
@@ -1020,6 +1044,7 @@ BEGIN
           AND p.nome = 'KM'
               AND mes_avaliacao = @mes
               AND ano_avaliacao = @ano
+              ${ativoQueryAs}
        ORDER BY apto DESC
 
            UPDATE @tabelaRelatorio
@@ -1035,6 +1060,7 @@ BEGIN
        WHERE cpf = @CPF_MOT
            AND mes_avaliacao = @mes
            AND ano_avaliacao = @ano
+           ${ativoQuery}
        AND apto = 1
 
            UPDATE @tabelaRelatorio
