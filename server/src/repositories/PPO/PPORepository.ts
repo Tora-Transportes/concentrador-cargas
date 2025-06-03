@@ -674,7 +674,7 @@ BEGIN
             AND MONTH(created_at) = CONVERT(INT,@mes)+1
             AND YEAR(created_at) = CONVERT(INT,@ano)
             AND veiculo = 'Todos'
-        ORDER BY created_at DESC
+
 
 
         -- insert ppo cancelado
@@ -940,7 +940,7 @@ BEGIN
             AND MONTH(created_at) = CONVERT(INT,@mes)+1
             AND YEAR(created_at) = CONVERT(INT,@ano)
             AND veiculo = 'Todos'
-        ORDER BY created_at DESC
+
 
         -- insert ppo cancelado
                  INSERT INTO @tabelaRelatorio
