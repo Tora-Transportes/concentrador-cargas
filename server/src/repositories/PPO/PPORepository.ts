@@ -668,7 +668,7 @@ BEGIN
       -- busca KM
         SELECT 
             TOP 1
-              @ColumnKM =  distancia
+              @ColumnKM = COALESCE(SUM(distancia), 0)
         FROM ppo_distancia_percorrida_fleet
         WHERE motorista  like   ''+'%'+ @CPF_MOT+'%'+''
             AND MONTH(created_at) = CONVERT(INT,@mes)+1
@@ -934,7 +934,7 @@ BEGIN
       -- busca KM
         SELECT 
           TOP 1
-              @ColumnKM =  distancia
+              @ColumnKM = COALESCE(SUM(distancia), 0)
         FROM ppo_distancia_percorrida_fleet
         WHERE motorista  like   ''+'%'+ @CPF_MOT+'%'+''
             AND MONTH(created_at) = CONVERT(INT,@mes)+1
