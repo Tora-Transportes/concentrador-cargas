@@ -102,11 +102,11 @@ class ServiceDemonstrativo {
         ],
         [
           {
-            text: "Grupo",
+            text: "Grupo/Filial",
             style: "dadosMotorista",
           },
           {
-            text: result["dados_motorista"]["nome_grupo"],
+            text: `${result["dados_motorista"]["nome_grupo"]} | ${result["dados_motorista"]["filial"]}`,
             style: "dadosMotorista",
           },
         ],

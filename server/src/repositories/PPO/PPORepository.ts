@@ -496,7 +496,8 @@ export class PPORepository implements IPPORepository {
             END 
     END AS observacao,
     CONCAT(r.mes_avaliacao, '/', r.ano_avaliacao) AS mes_ano,
-    pgr.nome as nome_grupo
+    pgr.nome as nome_grupo,
+    pgr.filial as filial
 FROM 
     dbo.ppo_resultado r
 INNER JOIN 
