@@ -294,19 +294,19 @@ class PPOController implements IPPOController {
     let x_position = "";
     if (dados["dados_motorista"]["cancelado"] == "Sim") {
       // cancelado
-      x_position = "73.0";
+      x_position = "75.0";
     }
     if (dados["valores"].length == 1) {
       // cancelado com complementar
-      x_position = "76.0";
+      x_position = "78.0";
     }
     if (dados["valores"].length == 4) {
       //normal
-      x_position = "86.0";
+      x_position = "88.0";
     }
     if (dados["valores"].length == 5) {
       //com complementar
-      x_position = "90.0";
+      x_position = "92.0";
     }
 
     const body: DocumentData = {

@@ -495,13 +495,16 @@ export class PPORepository implements IPPORepository {
                 ELSE 'Sem Observação' 
             END 
     END AS observacao,
-    CONCAT(r.mes_avaliacao, '/', r.ano_avaliacao) AS mes_ano
+    CONCAT(r.mes_avaliacao, '/', r.ano_avaliacao) AS mes_ano,
+    pgr.nome as nome_grupo
 FROM 
     dbo.ppo_resultado r
 INNER JOIN 
     dbo.ppo_parametros_grupo pg ON pg.id = r.parametro_grupo_id
 JOIN 
     dbo.ppo_parametros p ON p.id = pg.parametro_id
+INNER JOIN
+    dbo.ppo_grupos pgr ON pgr.id = pg.grupo_id
     WHERE r.cpf = '${cpf}'
     AND r.mes_avaliacao = '${mes}'
     AND r.ano_avaliacao = '${ano}'
