@@ -171,6 +171,7 @@ class ServicePPO {
 		date_execel_inicio,
 		date_execel_fim,
 		permissoes,
+		ativo = 1,
 	}) {
 		return await api.get("/ppo/relatorios/excel", {
 			responseType: "arraybuffer",
@@ -185,6 +186,7 @@ class ServicePPO {
 				date_execel_inicio,
 				date_execel_fim,
 				permissoes,
+				ativo,
 			},
 		});
 	}

@@ -100,6 +100,16 @@ class ServiceDemonstrativo {
             style: "dataDemonstrativo",
           },
         ],
+        [
+          {
+            text: "Grupo",
+            style: "dadosMotorista",
+          },
+          {
+            text: result["dados_motorista"]["nome_grupo"],
+            style: "dadosMotorista",
+          },
+        ],
       ];
 
       const dados_valores: any = [];
