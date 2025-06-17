@@ -35,6 +35,7 @@ export const envioCargaApp = async (cargas, oid, cpf_motorista) => {
 				forca_trabalho,
 				carga_mae_id,
 				carga_filha,
+				impulsionar_frete,
 			} = body;
 
 			if (!janela_coleta) {
@@ -110,6 +111,7 @@ export const envioCargaApp = async (cargas, oid, cpf_motorista) => {
 				forca_trabalho: forca_trabalho,
 				carga_mae_id: carga_mae_id,
 				carga_filha: carga_filha,
+				impulsionar_frete: impulsionar_frete,
 			};
 		});
 
@@ -120,7 +122,6 @@ export const envioCargaApp = async (cargas, oid, cpf_motorista) => {
 			}
 		});
 		ids.shift();
-		console.log(bodyEnvioAppList);
 		if (bodyEnvioAppList[0].estilo_carga == 1) {
 			await ServiceApp.envioCargaApp(bodyEnvioAppList[0]);
 		} else {

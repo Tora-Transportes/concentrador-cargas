@@ -56,6 +56,7 @@ export interface ICarga {
   carga_mae_id?: number | null;
   carga_filha?: number | null;
   cargas_filhas?: any;
+  impulsionar_frete?: number | null;
 }
 
 export interface ICargaCTE {
