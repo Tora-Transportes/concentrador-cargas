@@ -400,6 +400,7 @@ function Manual() {
 							"estilo_carga",
 							"forca_trabalho",
 							"valor_frete",
+							"impulsionar_frete",
 						]}
 					/>
 					<div className="class-group-button">

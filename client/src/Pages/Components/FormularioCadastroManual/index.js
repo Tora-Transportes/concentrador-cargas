@@ -137,6 +137,11 @@ function FormularioCadastroManual({
 		{ value: 2, label: "Escoamento" },
 	];
 
+	const optionsImpulsionarCarga = [
+		{ value: 0, label: "Não" },
+		{ value: 1, label: "Sim" },
+	];
+
 	async function handleShowDetailsAboutVehicle(plate) {
 		setLoading(true);
 		if (!plate) {
@@ -856,6 +861,37 @@ function FormularioCadastroManual({
 								)}
 							</Col>
 						</Row>
+					</Col>
+					<Col sm={12} md={6}>
+						<Form.Group
+							className="mb-3"
+							controlId="validationFormikImpulsionarFrete"
+						>
+							<Form.Label>Impulsionar Frete</Form.Label>
+							<Select
+								id="impulsionar_frete"
+								name="impulsionar_frete"
+								placeholder="Selecione"
+								options={optionsImpulsionarCarga}
+								onChange={(option) =>
+									formik.setFieldValue("impulsionar_frete", option)
+								}
+								value={
+									formik.values.impulsionar_frete == 0
+										? optionsImpulsionarCarga[0]
+										: optionsImpulsionarCarga[
+												formik.values.impulsionar_frete - 1
+										  ]
+								}
+								isDisabled={fieldsDisable.includes("impulsionar_frete")}
+							/>
+							{formik.errors.impulsionar_frete &&
+								formik.touched.impulsionar_frete && (
+									<div style={{ color: "red" }}>
+										{formik.errors.impulsionar_frete}
+									</div>
+								)}
+						</Form.Group>
 					</Col>
 				</Row>
 			</>

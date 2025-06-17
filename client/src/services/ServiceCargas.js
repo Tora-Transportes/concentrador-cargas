@@ -35,6 +35,7 @@ class ServiceCargas {
 		estilo_carga,
 		quantidade_cargas,
 		data_limite_oferta,
+		impulsionar_frete,
 	}) {
 		const carga = {
 			e_lote,
@@ -71,6 +72,7 @@ class ServiceCargas {
 			estilo_carga,
 			quantidade_cargas,
 			data_limite_oferta,
+			impulsionar_frete,
 		};
 		return await api.post("/cargas", carga);
 	}

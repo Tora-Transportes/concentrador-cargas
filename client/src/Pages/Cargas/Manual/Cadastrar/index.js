@@ -56,6 +56,7 @@ function Manual() {
 			idCargaMae: null,
 			prerequisitos: [],
 			cpf_motorista: "",
+			impulsionar_frete: 0,
 		},
 		onSubmit: async (values) => {
 			setLoading(true);
@@ -68,6 +69,9 @@ function Manual() {
 			}
 			if (typeof values.estilo_carga == "object") {
 				values.estilo_carga = values.estilo_carga.value;
+			}
+			if (typeof values.impulsionar_frete == "object") {
+				values.impulsionar_frete = values.impulsionar_frete.value;
 			}
 
 			if (values.estilo_carga == 2) {

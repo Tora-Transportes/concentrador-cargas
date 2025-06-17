@@ -58,6 +58,7 @@ export function factoryCargaValidator() {
     data_limite_oferta: yup.date().nullable().notRequired(),
     carga_mae_id: yup.number().nullable().notRequired(),
     carga_filha: yup.number().nullable().notRequired(),
+    impulsionar_frete: yup.number().nullable().notRequired(),
   });
 
   return cargaValidator;
