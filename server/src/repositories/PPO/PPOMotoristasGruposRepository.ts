@@ -1,4 +1,4 @@
-import { mssqlPPO, mssqlPPOView } from "../../database";
+import { mssqlPPO } from "../../database";
 import AppError from "../../models/AppError";
 import TokenAd from "../../models/TokenAd";
 
@@ -48,15 +48,15 @@ export class PPOMotoristasGruposRepository
   }
 
   async motoristasAtivos() {
-    return await mssqlPPOView.raw(`
+    return await mssqlPPO.raw(`
       SELECT RA_NOME as nome
         ,RA_CIC as cpf
         ,RA_MAT as matricula
         ,M0_FILIAL as filial
         ,EMPRESA as empresa
-        ,CODIGO_EMPRESA as cod_empresa
+        ,COD_FILIAL as cod_empresa
         ,TIPO_STATUS as status 
-      FROM dbo.VW_DADO_MOTORISTA_PPO
+      FROM dbo.VW_VALIDACAO_GRUPO_PPO
 `);
   }
 
