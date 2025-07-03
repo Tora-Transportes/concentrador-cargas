@@ -819,7 +819,7 @@ BEGIN
              SET Total = @Column1
            WHERE id =  @Contador
            -- INSERE TOTAL 
-           --03/07/2025
+           --03/07/2025 16:07
 
       END
 
