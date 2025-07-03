@@ -668,6 +668,8 @@ BEGIN
       BEGIN
 
       SET @ColumnKM = NULL;
+      SET @Column1 = NULL;
+      SET @Column2 = NULL;
 
       -- busca KM
         SELECT 
@@ -694,6 +696,11 @@ BEGIN
       END
     ELSE
       BEGIN
+
+        SET @ColumnKM = NULL;
+        SET @Column1 = NULL;
+        SET @Column2 = NULL;
+
             -- insere dados motorista
                 INSERT INTO @tabelaRelatorio (id,Empresa,Grupo,matricula,cpf,nome_motorista,PPO_Cancelado,Observacao,mes_avaliacao,ano_avaliacao,ativo,tipo)
         SELECT DISTINCT  @Contador,g.empresa,g.nome,r.matricula,r.cpf,r.nome_motorista,r.ppo_cancelado,NULL,r.mes_avaliacao,r.ano_avaliacao,r.ativo,r.tipo from [dbo].[ppo_resultado] r
@@ -721,11 +728,13 @@ BEGIN
        ORDER BY apto DESC
 
            UPDATE @tabelaRelatorio
-           SET NotaAvaliacaoMotorista = @Column1,
-           ValorAvaliacao  = @Column2
+           SET NotaAvaliacaoMotorista = ISNULL(@Column1,0),
+           ValorAvaliacao  = ISNULL(@Column2,0)
            WHERE id =  @Contador
            --fim insere avalicao
 
+        SET @Column1 = NULL;
+        SET @Column2 = NULL;
            --insere INFRAÇÃO VELOCIDADE
                 SELECT
           top 1
@@ -743,11 +752,13 @@ BEGIN
        ORDER BY apto DESC
 
            UPDATE @tabelaRelatorio
-           SET QtdeEventosVelocidade = @Column1,
-           ValorVelocidade  = @Column2
+           SET QtdeEventosVelocidade = ISNULL(@Column1,0),
+           ValorVelocidade  = ISNULL(@Column2,0)
            WHERE id =  @Contador
            --fim insere INFRAÇÃO VELOCIDADE
 
+        SET @Column1 = NULL;
+        SET @Column2 = NULL;
            --insere INFRAÇÃO DE INTERJORNADA
                 SELECT
           top 1
@@ -765,11 +776,13 @@ BEGIN
        ORDER BY apto DESC
 
            UPDATE @tabelaRelatorio
-           SET QtdeEventosInterjornada = @Column1,
-           ValorInterjornada  = @Column2
+           SET QtdeEventosInterjornada = ISNULL(@Column1,0),
+           ValorInterjornada  = ISNULL(@Column2,0)
            WHERE id =  @Contador
            --fim insere INFRAÇÃO DE INTERJORNADA
 
+        SET @Column1 = NULL;
+        SET @Column2 = NULL;
            --insere KM
                 SELECT
           top 1
@@ -787,8 +800,8 @@ BEGIN
        ORDER BY apto DESC
 
            UPDATE @tabelaRelatorio
-           SET KmRodado = @Column1,
-           ValorKMRodado  = @Column2
+           SET KmRodado = ISNULL(@Column1,0),
+           ValorKMRodado  = ISNULL(@Column2,0)
            WHERE id =  @Contador
            --fim insere KM
 
@@ -934,6 +947,8 @@ BEGIN
       BEGIN
        
       SET @ColumnKM = NULL;
+      SET @Column1 = NULL;
+      SET @Column2 = NULL;
       
       -- busca KM
         SELECT 
@@ -959,6 +974,10 @@ BEGIN
       END
     ELSE
       BEGIN
+
+        SET @ColumnKM = NULL;
+        SET @Column1 = NULL;
+        SET @Column2 = NULL;
             -- insere dados motorista
                 INSERT INTO @tabelaRelatorio (id,Empresa,filial,Grupo,matricula,cpf,nome_motorista,PPO_Cancelado,Observacao,mes_avaliacao,ano_avaliacao,ativo,tipo)
         SELECT DISTINCT  @Contador,g.empresa,g.filial,g.nome,r.matricula,r.cpf,r.nome_motorista,r.ppo_cancelado,NULL,r.mes_avaliacao,r.ano_avaliacao,r.ativo,r.tipo from [dbo].[ppo_resultado] r
@@ -986,10 +1005,13 @@ BEGIN
        ORDER BY apto DESC
 
            UPDATE @tabelaRelatorio
-           SET NotaAvaliacaoMotorista = @Column1,
-           ValorAvaliacao  = @Column2
+           SET NotaAvaliacaoMotorista = ISNULL(@Column1,0),
+           ValorAvaliacao  = ISNULL(@Column2,0)
            WHERE id =  @Contador
            --fim insere avalicao
+        
+         SET @Column1 = NULL;
+         SET @Column2 = NULL;
 
            --insere INFRAÇÃO VELOCIDADE
                 SELECT
@@ -1008,11 +1030,13 @@ BEGIN
        ORDER BY apto DESC
 
            UPDATE @tabelaRelatorio
-           SET QtdeEventosVelocidade = @Column1,
-           ValorVelocidade  = @Column2
+           SET QtdeEventosVelocidade = ISNULL(@Column1,0),
+           ValorVelocidade  = ISNULL(@Column2,0)
            WHERE id =  @Contador
            --fim insere INFRAÇÃO VELOCIDADE
 
+          SET @Column1 = NULL;
+          SET @Column2 = NULL;
            --insere INFRAÇÃO DE INTERJORNADA
                 SELECT
           top 1
@@ -1030,11 +1054,13 @@ BEGIN
        ORDER BY apto DESC
 
            UPDATE @tabelaRelatorio
-           SET QtdeEventosInterjornada = @Column1,
-           ValorInterjornada  = @Column2
+           SET QtdeEventosInterjornada = ISNULL(@Column1,0),
+           ValorInterjornada  = ISNULL(@Column2,0)
            WHERE id =  @Contador
            --fim insere INFRAÇÃO DE INTERJORNADA
 
+        SET @Column1 = NULL;
+        SET @Column2 = NULL;
            --insere KM
                 SELECT
           top 1
@@ -1051,9 +1077,10 @@ BEGIN
               ${ativoQueryAs}
        ORDER BY apto DESC
 
+       
            UPDATE @tabelaRelatorio
-           SET KmRodado = @Column1,
-           ValorKMRodado  = @Column2
+           SET KmRodado = ISNULL(@Column1,0),
+           ValorKMRodado  = ISNULL(@Column2,0)
            WHERE id =  @Contador
            --fim insere KM
 
