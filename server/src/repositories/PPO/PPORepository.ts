@@ -828,7 +828,7 @@ END
 CLOSE PPO_Cursor; -- Feche o cursor
 DEALLOCATE PPO_Cursor; -- Libere recursos do cursor
 
-select * from @tabelaRelatorio
+select * from @tabelaRelatorio 
 WHERE 1=1
 ${filtro}
     `;
