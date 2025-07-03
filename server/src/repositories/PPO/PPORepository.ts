@@ -818,7 +818,8 @@ BEGIN
            UPDATE @tabelaRelatorio
              SET Total = @Column1
            WHERE id =  @Contador
-           -- INSERE TOTAL
+           -- INSERE TOTAL 
+           --03/07/2025
 
       END
 
