@@ -47,11 +47,11 @@ export class PPORastreamentoRepository implements IPPORastreamentoRepository {
         FROM ppo_grupos g
         INNER JOIN ppo_parametros_grupo pg ON pg.grupo_id = g.id
         INNER JOIN ppo_parametros p ON p.id = pg.parametro_id
-        WHERE g.filial = ?
+        WHERE ( g.filial = ? or g.nome=?)
           AND pg.ativo = 1
           AND p.nome = ?
         `,
-        [filial, item]
+        [filial, filial, item]
       );
 
       const row = result.recordset?.[0] ?? result[0];
