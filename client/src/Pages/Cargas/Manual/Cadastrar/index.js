@@ -97,8 +97,6 @@ function Manual() {
 				});
 				// values.valor_frete = String(values.valor_frete);
 
-				console.log(data.data);
-
 				if (values.carga_app === 1 && data) {
 					const oid = getClaims().oid;
 
