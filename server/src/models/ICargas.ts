@@ -1,3 +1,4 @@
+import { IPreRequisitosCarga } from "../domain/UseCaseCarga/entities";
 import { IPonto_parada } from "./../services/InterfaceService";
 export interface ICarga {
   id: number;
@@ -42,6 +43,8 @@ export interface ICarga {
   observacao_exclusao?: string | null;
 
   locais?: undefined | string[];
+  prerequisitos?: undefined | any[];
+  prerequisitosApp?: undefined | any[];
   carga_csn?: number | null;
   ponto_parada?: IPonto_parada[] | null;
   rastreador?: string | null;

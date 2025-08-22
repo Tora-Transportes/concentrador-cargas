@@ -19,11 +19,13 @@ import {
   UseCaseViewCargasCTE,
   UseCaseDisableCarga,
 } from "./entities";
+import { PreRequisitosCargaRepository } from "../../repositories/PreRequisitosCargaRepository";
 
 const userRepository = new UsuarioRepository();
 const cargaRepository = new CargaRepository();
 const clientRepository = new ClientRepository();
 const paradaRepository = new ParadasRepository();
+const preRequisitoCargaRepository = new PreRequisitosCargaRepository();
 const cargaCsnInfoRepository = new CargaCsnInfoRepository();
 
 const modules = {
@@ -32,6 +34,7 @@ const modules = {
     notifyAll,
     userRepository,
     paradaRepository,
+    preRequisitoCargaRepository,
     cargaCsnInfoRepository
   ),
   UseCaseAddCargaDerivada: new UseCaseAddCargaDerivada(
@@ -46,6 +49,7 @@ const modules = {
     ServiceMigrarSIT,
     ServiceLogTime,
     paradaRepository,
+    preRequisitoCargaRepository,
     cargaCsnInfoRepository
   ),
   UseCaseUpdateCargaPatch: new UseCaseUpdateCargaPath(

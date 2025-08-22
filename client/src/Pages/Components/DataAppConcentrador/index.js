@@ -36,6 +36,7 @@ export const envioCargaApp = async (cargas, oid, cpf_motorista) => {
 				carga_mae_id,
 				carga_filha,
 				impulsionar_frete,
+				prerequisitosApp,
 			} = body;
 
 			if (!janela_coleta) {
@@ -63,7 +64,7 @@ export const envioCargaApp = async (cargas, oid, cpf_motorista) => {
 				`${data_entrega.substring(0, 10)}T${janela_entrega}:00`
 			);
 
-			console.log(data_inicio, data_fim);
+			//console.log(data_inicio, data_fim);
 
 			// Verificar se as datas são válidas
 			if (isNaN(data_inicio.getTime()) || isNaN(data_fim.getTime())) {
@@ -112,6 +113,7 @@ export const envioCargaApp = async (cargas, oid, cpf_motorista) => {
 				carga_mae_id: carga_mae_id,
 				carga_filha: carga_filha,
 				impulsionar_frete: impulsionar_frete,
+				prerequisitosApp,
 			};
 		});
 

@@ -66,9 +66,33 @@ export class CargaRepository {
         .where("fk_carga", id)
         .select(["descricao"])
     ).map((i) => i.descricao);
+
+    //Checa os pré-requisitos se existir!
+    const prerequisitos = await database("con_cargas")
+      .select([
+        "con_pre_requisito.id",
+        "con_pre_requisito.exige_quantidade",
+        "con_pre_requisito.ativo",
+        "con_pre_requisito_carga.quantidade",
+        "con_pre_requisito.nome",
+      ])
+      .join(
+        "con_pre_requisito_carga",
+        "con_cargas.id",
+        "con_pre_requisito_carga.carga_id"
+      )
+      .join(
+        "con_pre_requisito",
+        "con_pre_requisito.id",
+        "con_pre_requisito_carga.pre_requisito_id"
+      )
+      .where("con_cargas.id", id)
+      .orderBy("con_pre_requisito.nome", "asc");
+
     return {
       ...carga,
       locais,
+      prerequisitos,
       quantidade_cargas: lote_carga[0].LOTE_CARGA,
       lote_carga: lote_carga[0].LOTE_CARGA > 0 ? true : false,
     };

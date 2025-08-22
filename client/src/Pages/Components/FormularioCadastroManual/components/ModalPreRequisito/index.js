@@ -19,12 +19,17 @@ function ModalPreRequisito({
 	quantidade,
 	setQuantidade,
 	acoesRequisito,
+	desabilitar,
 }) {
 	return (
 		<>
 			<div>
 				<div className="notification-container">
-					<button onClick={handleOpen} className="notification-button">
+					<button
+						onClick={handleOpen}
+						type="button"
+						className="notification-button"
+					>
 						Adicionar pré-requisitos
 					</button>
 					{formik.values.prerequisitos.length != 0 ? (
@@ -57,50 +62,57 @@ function ModalPreRequisito({
 					<Modal.Title>Adicionar pré-requisitos</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<Modal.Body>
-						<Form>
-							<Form.Group className="mb-3" controlId="validationFormikGrupos">
-								<Form.Label>Pré-requisito</Form.Label>
-								<Select
-									id="prerequisito"
-									name="prerequisito"
-									placeholder="Selecionar"
-									isLoading={prerequisitos.length == 0 ? true : false}
-									options={prerequisitos}
-									components={animatedComponents}
-									onChange={(option) => setPreRequisito(option)}
-									value={prerequisito}
-								/>
-							</Form.Group>
-							{prerequisito && prerequisito.exige_quantidade == "1" ? (
-								<Form.Group>
-									<Form.Label>Quantidade</Form.Label>
-									<Form.Control
-										type="number"
-										min={1}
-										step={0.01}
-										placeholder=" "
-										name="quantidade"
-										value={quantidade}
-										onChange={(event) => {
-											setQuantidade(event.target.value);
-										}}
-										required
+					{!desabilitar && (
+						<Modal.Body>
+							<Form>
+								<Form.Group className="mb-3" controlId="validationFormikGrupos">
+									<Form.Label>Pré-requisito</Form.Label>
+									<Select
+										id="prerequisito"
+										name="prerequisito"
+										placeholder="Selecionar"
+										isLoading={prerequisitos.length == 0 ? true : false}
+										options={prerequisitos}
+										components={animatedComponents}
+										onChange={(option) => setPreRequisito(option)}
+										value={prerequisito}
 									/>
 								</Form.Group>
-							) : (
-								<></>
-							)}
-						</Form>
-					</Modal.Body>
-					<Modal.Footer>
+								{prerequisito && prerequisito.exige_quantidade == "1" ? (
+									<Form.Group>
+										<Form.Label>Quantidade</Form.Label>
+										<Form.Control
+											type="number"
+											min={1}
+											step={0.01}
+											placeholder=" "
+											name="quantidade"
+											value={quantidade}
+											onChange={(event) => {
+												setQuantidade(event.target.value);
+											}}
+											required
+										/>
+									</Form.Group>
+								) : (
+									<></>
+								)}
+							</Form>
+						</Modal.Body>
+					)}
+					<Modal.Footer
+						style={{ borderTop: desabilitar ? "none" : "1px solid #dee2e6" }}
+					>
 						<Button variant="secondary" onClick={handleOpen}>
 							Fechar
 						</Button>
-						<Button variant="primary" onClick={handleAddPreRequisito}>
-							Salvar
-						</Button>
+						{!desabilitar && (
+							<Button variant="primary" onClick={handleAddPreRequisito}>
+								Salvar
+							</Button>
+						)}
 					</Modal.Footer>
+
 					<Modal.Body>
 						<DataTable
 							className="p-datatable-responsive-demoPermissoes"

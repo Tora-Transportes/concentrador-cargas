@@ -60,18 +60,23 @@ function FormularioCadastroManual({
 	const [prerequisito, setPreRequisito] = useState(null);
 	const [prerequisitos, setPreRequisitos] = useState([]);
 	const [quantidade, setQuantidade] = useState(0);
-	const showPreRequisites = false;
-
-	useEffect(() => {
-		async function carregaLista() {
-			const lista = await ServicePreRequisitos.listSelect();
-			setPreRequisitos(lista);
-		}
-		carregaLista();
-	}, []);
+	//const showPreRequisites = true;
 
 	async function handleAddPreRequisito() {
-		console.log(quantidade, prerequisito);
+		//console.log("TESTE", quantidade, prerequisito);
+		if (!prerequisito?.value) {
+			swal(`Favor selecionar um item`);
+			return;
+		}
+
+		const exists = formik.values.prerequisitos.some(
+			(pre) => pre.nome === prerequisito.label?.trim()
+		);
+		if (exists) {
+			swal(`Item: ${prerequisito.label?.trim()} já existe!`);
+			return;
+		}
+
 		if (
 			prerequisito &&
 			prerequisito.exige_quantidade == "1" &&
@@ -79,32 +84,27 @@ function FormularioCadastroManual({
 		) {
 			swal("Quantidade precisa ser maior que 0!");
 		} else {
-			if (prerequisito && prerequisito.exige_quantidade != "1") {
-				formik.values.prerequisitos.push({
-					id: prerequisito.value,
-					nome: prerequisito.label,
-					quantidade: 1,
-				});
-			} else {
-				formik.values.prerequisitos.push({
-					id: prerequisito.value,
-					nome: prerequisito.label,
-					quantidade: quantidade,
-				});
-			}
+			formik.values.prerequisitos.push({
+				id: prerequisito.value,
+				nome: prerequisito.label,
+				quantidade:
+					prerequisito && prerequisito.exige_quantidade != "1" ? 1 : quantidade,
+			});
+
 			setPreRequisito(null);
 			setQuantidade(0);
 		}
 	}
 
-	async function handleOpen() {
+	const handleOpen = () => {
 		setOpen(!open);
-	}
+	};
 
 	const acoesRequisito = (rowData) => {
 		return (
 			<div className="opcoes-table">
 				<Button
+					disabled={fieldsDisable.includes("preRequisitos")}
 					variant="outline-danger"
 					onClick={async (e) => {
 						e.preventDefault();
@@ -178,6 +178,14 @@ function FormularioCadastroManual({
 		setVeiculo(vehicleData);
 		setLoading(false);
 	}
+
+	useEffect(() => {
+		async function carregaLista() {
+			const lista = await ServicePreRequisitos.listSelect();
+			setPreRequisitos(lista);
+		}
+		carregaLista();
+	}, []);
 
 	useEffect(() => {
 		if (formik.values.e_lote) {
@@ -1352,10 +1360,10 @@ function FormularioCadastroManual({
 					</Row>
 				</Col>
 			</Row>
-			<div className="class-linha-title6">
+			{/* <div className="class-linha-title6">
 				<hr className="w-100"></hr>
-			</div>
-			<Row>
+			</div> */}
+			{/* <Row>
 				<Col>
 					<Form.Group className="mb-3">
 						<Form.Label id="info-add">
@@ -1375,46 +1383,43 @@ function FormularioCadastroManual({
 						/>
 					</Form.Group>
 				</Col>
-			</Row>
-			{showPreRequisites ? (
-				<Col>
-					<div className="class-linha-title6">
-						<hr className="w-100"></hr>
-					</div>
-					<Row className="mb-5">
-						<Col sm={12}>
-							<h3 id="title-check-não">Pré-requisitos</h3>
-						</Col>
-					</Row>
+			</Row> */}
+			<Col>
+				<div className="class-linha-title6">
+					<hr className="w-100"></hr>
+				</div>
+				<Row className="mb-5">
+					<Col sm={12}>
+						<h3 id="title-check-não">Pré-requisitos</h3>
+					</Col>
+				</Row>
 
-					<Form.Text muted className="fw-bold">
-						Adicione restrições e/ou acessórios do veículo caso necessário,
-						exemplo(s): motorista necessita de treinamento atualizado no
-						cliente, cinta, luvas, etc.
-					</Form.Text>
+				<Form.Text muted className="fw-bold">
+					Adicione restrições e/ou acessórios do veículo caso necessário,
+					exemplo(s): motorista necessita de treinamento atualizado no cliente,
+					cinta, luvas, etc.
+				</Form.Text>
 
-					<Row>
-						<ModalPreRequisito
-							prerequisitos={prerequisitos}
-							prerequisito={prerequisito}
-							setPreRequisito={setPreRequisito}
-							formik={formik}
-							open={open}
-							handleOpen={handleOpen}
-							handleAddPreRequisito={handleAddPreRequisito}
-							quantidade={quantidade}
-							setQuantidade={setQuantidade}
-							acoesRequisito={acoesRequisito}
-						/>
-					</Row>
+				<Row>
+					<ModalPreRequisito
+						prerequisitos={prerequisitos}
+						prerequisito={prerequisito}
+						setPreRequisito={setPreRequisito}
+						formik={formik}
+						open={open}
+						handleOpen={handleOpen}
+						handleAddPreRequisito={handleAddPreRequisito}
+						quantidade={quantidade}
+						setQuantidade={setQuantidade}
+						acoesRequisito={acoesRequisito}
+						desabilitar={fieldsDisable.includes("preRequisitos")}
+					/>
+				</Row>
 
-					<div className="class-linha-title6">
-						<hr className="w-100"></hr>
-					</div>
-				</Col>
-			) : (
-				<></>
-			)}
+				<div className="class-linha-title6">
+					<hr className="w-100"></hr>
+				</div>
+			</Col>
 			<Row>
 				<Col>
 					<Form.Group className="mb-3">
