@@ -11,8 +11,8 @@ import { useHistory } from "react-router-dom";
 import Menusuperior from "src/Pages/Components/MenuSuperior/menusuperior";
 import "./cadastroManual.css";
 import { ContextUseDefault } from "src/hooks/context/contextPagCargaCTE";
-import { envioCargaApp } from "src/Pages/Components/DataAppConcentrador";
 import { funcScrollTop } from "src/Pages/Utils/scrollTop";
+import { envioCargaApp } from "src/Pages/Components/DataAppConcentrador";
 
 function Manual() {
 	const [LoadingScreen, setLoading] = useLoadingScreen();
@@ -84,12 +84,21 @@ function Manual() {
 			values.valor_frete = Number(values.valor_frete.replace(",", "."));
 			try {
 				values.fk_filial = values.fk_filial.split("-")[0];
+				// console.log({
+				// 	...values,
+				// 	canal_comunicacao: "manual",
+				// 	carga_csn: 0,
+				// });
+
 				const { data } = await ServiceCargas.create({
 					...values,
 					canal_comunicacao: "manual",
 					carga_csn: 0,
 				});
-				values.valor_frete = String(values.valor_frete);
+				// values.valor_frete = String(values.valor_frete);
+
+				console.log(data.data);
+
 				if (values.carga_app === 1 && data) {
 					const oid = getClaims().oid;
 
@@ -99,6 +108,7 @@ function Manual() {
 						data.data.length == 1 ? values.cpf_motorista : ""
 					);
 				}
+
 				const cargaPrincipal = data.data[0];
 				const cargasFilhas = data.data.slice(1);
 

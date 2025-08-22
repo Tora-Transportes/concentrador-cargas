@@ -17,6 +17,7 @@ class ServiceCargas {
 		observacao,
 		responsavel_cadastro,
 		acessorios_requisitos,
+		prerequisitos,
 		informacoes_restritivas,
 		janela_entrega,
 		janela_coleta,
@@ -52,6 +53,7 @@ class ServiceCargas {
 			observacao,
 			responsavel_cadastro,
 			acessorios_requisitos,
+			prerequisitos,
 			informacoes_restritivas,
 			janela_entrega,
 			janela_coleta,
@@ -74,6 +76,7 @@ class ServiceCargas {
 			data_limite_oferta,
 			impulsionar_frete,
 		};
+		console.log("CARGA POS", carga);
 		return await api.post("/cargas", carga);
 	}
 
@@ -166,6 +169,7 @@ class ServiceCargas {
 		observacao,
 		responsavel_cadastro,
 		acessorios_requisitos,
+		prerequisitos,
 		informacoes_restritivas,
 		janela_entrega,
 		janela_coleta,
@@ -218,6 +222,7 @@ class ServiceCargas {
 			placa_carreta: placa_carreta === "" ? null : placa_carreta,
 			placa_bitrem: placa_bitrem === "" ? null : placa_bitrem,
 			locais,
+			prerequisitos,
 			carga_csn,
 			rastreador,
 			info_passagem,

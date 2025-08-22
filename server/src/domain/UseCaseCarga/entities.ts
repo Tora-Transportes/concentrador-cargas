@@ -13,10 +13,36 @@ import xlsx from "xlsx";
 //import EPermissions from "../../models/EPermissions";
 import { CargaValidationOperation } from "../../validations/CargaValidationOperation";
 
+export interface IPreRequisitosCarga {
+  pre_carga_id: number;
+  carga_id: number;
+  pre_requisito_id: number;
+  quantidade: number;
+}
+
+export interface IPreRequisitosApp {
+  freight_id: number;
+  nome: string;
+  quantidade: number;
+}
+
+export interface IPreRequisitosCargaApp {
+  carga_id: number;
+  pre_requisito_id: number;
+  quantidade: number;
+}
+
 export interface IParadasRepository {
   clear(codigoCarga: number): Promise<void>;
   insert(codigoCarga: number, locais: string[]): Promise<void>;
 }
+
+export interface IPreRequisitosCargaRepository {
+  nextId(): Promise<number>;
+  clear(codigoCarga: number): Promise<void>;
+  insert(data: IPreRequisitosCarga[]): Promise<void>;
+}
+
 export interface IUserRepository {
   index(oid: string): Promise<any>;
 }
@@ -43,6 +69,7 @@ export class UseCaseAddCarga {
     private notifyAll: (event: IEventSocket) => void,
     private userRepository: IUserRepository,
     private locaisRepository: IParadasRepository,
+    private preRequisitosCargaRepository: IPreRequisitosCargaRepository,
     private cargaCsnInfoRepository: IRepositoryCargaCsnInfoRepository
   ) {}
   async run(
@@ -64,6 +91,29 @@ export class UseCaseAddCarga {
       await this.locaisRepository.insert(carga.id, locais);
     }
     carga.locais = undefined;
+    const reqs: IPreRequisitosCarga[] = [];
+    const reqsApp: IPreRequisitosApp[] = [];
+
+    if (Array.isArray(carga.prerequisitos)) {
+      for (let idx = 0; idx < carga.prerequisitos.length; idx++) {
+        const req: IPreRequisitosCarga = {
+          pre_carga_id: await this.preRequisitosCargaRepository.nextId(),
+          carga_id: carga.id,
+          pre_requisito_id: carga.prerequisitos[idx].id,
+          quantidade: carga.prerequisitos[idx].quantidade,
+        };
+        reqs.push(req);
+
+        if (carga.carga_app && carga.carga_app === 1) {
+          const reqApp: IPreRequisitosApp = {
+            freight_id: carga.id,
+            nome: carga.prerequisitos[idx].nome,
+            quantidade: Number(carga.prerequisitos[idx].quantidade),
+          };
+          reqsApp.push(reqApp);
+        }
+      }
+    }
 
     const currentDate = DateUtils.getCurrentDate();
     carga.data_atualizacao = currentDate;
@@ -110,6 +160,7 @@ export class UseCaseAddCarga {
     carga.carga_filha = 0;
     const qtd_cargas_filhas = carga.quantidade_cargas ?? 0;
     delete carga.quantidade_cargas;
+    delete carga.prerequisitos;
     const cargaOficial = operation.validate(null, carga);
 
     if (carga.estilo_carga == 2) {
@@ -118,6 +169,18 @@ export class UseCaseAddCarga {
     }
 
     await this.cargaRepository.create(cargaOficial);
+
+    // Caso a carga vai ser enviada para o App, anexa os requerimentos (se eles existirem)
+    if (carga.carga_app && carga.carga_app === 1 && reqsApp.length > 0) {
+      cargaOficial.prerequisitosApp = reqsApp;
+    }
+
+    // Deleta qualquer requisição que existir!
+    await this.preRequisitosCargaRepository.clear(carga.id);
+    if (reqs.length > 0) {
+      await this.preRequisitosCargaRepository.insert(reqs);
+    }
+
     cargasFilhas.push(cargaOficial);
 
     if (carga.estilo_carga == 2) {
@@ -149,6 +212,7 @@ export class UseCaseAddCarga {
         details: await this.cargaCsnInfoRepository.index(cargaOficial.id),
       });
     }
+
     return cargasFilhas;
   }
 }
@@ -243,6 +307,7 @@ export class UseCaseUpdateCarga {
     private serviceSit: IServiceSit,
     private serviceLogTime: IServiceLogTime,
     private locaisRepository: IParadasRepository,
+    private preRequisitosCargaRepository: IPreRequisitosCargaRepository,
     private cargaCsnInfoRepository: IRepositoryCargaCsnInfoRepository
   ) {}
   async run(cargaDTO: Record<string, any>, oid: string, user: string) {
@@ -259,6 +324,19 @@ export class UseCaseUpdateCarga {
       await this.locaisRepository.insert(carga.id, locais);
     }
     carga.locais = undefined;
+    const reqs: IPreRequisitosCarga[] = [];
+
+    if (Array.isArray(carga.prerequisitos)) {
+      for (let idx = 0; idx < carga.prerequisitos.length; idx++) {
+        const req: IPreRequisitosCarga = {
+          pre_carga_id: await this.preRequisitosCargaRepository.nextId(),
+          carga_id: carga.id,
+          pre_requisito_id: carga.prerequisitos[idx].id,
+          quantidade: carga.prerequisitos[idx].quantidade,
+        };
+        reqs.push(req);
+      }
+    }
 
     const currentDate = DateUtils.getCurrentDate();
     carga.data_atualizacao = currentDate;
@@ -334,10 +412,17 @@ export class UseCaseUpdateCarga {
       await this.serviceSit.cancelar([cargaOficial]);
     }
 
+    delete cargaOficial.prerequisitos;
     await this.cargaRepository.update(cargaOficial.id, {
       ...cargaOficial,
       data_atualizacao: currentDate,
     });
+
+    // Deleta qualquer requisição que existir!
+    await this.preRequisitosCargaRepository.clear(carga.id);
+    if (reqs.length > 0) {
+      await this.preRequisitosCargaRepository.insert(reqs);
+    }
 
     if (cargaOficial.carga_csn !== 1) {
       this.notifyAll({

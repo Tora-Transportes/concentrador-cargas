@@ -401,6 +401,7 @@ function Manual() {
 							"forca_trabalho",
 							"valor_frete",
 							"impulsionar_frete",
+							"preRequisitos",
 						]}
 					/>
 					<div className="class-group-button">

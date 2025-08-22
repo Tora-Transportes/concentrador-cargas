@@ -59,6 +59,7 @@ export function factoryCargaValidator() {
     carga_mae_id: yup.number().nullable().notRequired(),
     carga_filha: yup.number().nullable().notRequired(),
     impulsionar_frete: yup.number().nullable().notRequired(),
+    prerequisitos: yup.array().notRequired(),
   });
 
   return cargaValidator;
