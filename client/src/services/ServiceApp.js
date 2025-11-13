@@ -114,7 +114,7 @@ class ServiceApp {
 				status: error.response ? error.response.status : 500,
 				data: error.response
 					? error.response.data
-					: "Erro de rede ao cancelar a carga",
+					: "Erro de rede ao cancelar a carga no App",
 			};
 		}
 	}

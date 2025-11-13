@@ -71,7 +71,7 @@ export class UseCaseAddCarga {
     private locaisRepository: IParadasRepository,
     private preRequisitosCargaRepository: IPreRequisitosCargaRepository,
     private cargaCsnInfoRepository: IRepositoryCargaCsnInfoRepository
-  ) {}
+  ) { }
   async run(
     cargaDTO: Record<string, any>,
     oid: string | null | undefined = null
@@ -225,7 +225,7 @@ export class UseCaseAddCargaDerivada {
     private cargaRepository: IRepositoryUpdateCarga,
     private notifyAll: (event: IEventSocket) => void,
     private locaisRepository: IParadasRepository
-  ) {}
+  ) { }
   async run(cargaDTO: Record<string, any>) {
     cargaDTO.id = await this.cargaRepository.nextId();
     const validator = factoryCargaValidator();
@@ -309,7 +309,7 @@ export class UseCaseUpdateCarga {
     private locaisRepository: IParadasRepository,
     private preRequisitosCargaRepository: IPreRequisitosCargaRepository,
     private cargaCsnInfoRepository: IRepositoryCargaCsnInfoRepository
-  ) {}
+  ) { }
   async run(cargaDTO: Record<string, any>, oid: string, user: string) {
     const validator = factoryCargaValidator();
     const carga: ICarga = await validator.validate(cargaDTO, {
@@ -397,7 +397,7 @@ export class UseCaseUpdateCarga {
         time = Math.ceil(
           (currentDateLog.getTime() -
             cargaCadastrada.data_atualizacao.getTime()) /
-            1000
+          1000
         );
       }
       await this.serviceSit.migrar([cargaOficial], user);
@@ -446,7 +446,7 @@ export class UseCaseUpdateCargaPath {
     private readonly cargaRepository: IRepositoryUpdateCarga,
     private readonly cargaCsnInfoRepository: IRepositoryCargaCsnInfoRepository,
     private notifyAll: (event: IEventSocket) => void
-  ) {}
+  ) { }
 
   async run(
     id: number,
@@ -465,7 +465,7 @@ export class UseCaseUpdateCargaPath {
 }
 
 export class UseCaseViewCargas {
-  constructor(private cargaRepository: IRepositoryAddCarga) {}
+  constructor(private cargaRepository: IRepositoryAddCarga) { }
 
   async run(filter: Record<string, any>) {
     return this.cargaRepository.search(
@@ -512,7 +512,7 @@ export interface IVeiwsDataCTE {
   searchCET(id: string): Promise<ICargaCTE>;
 }
 export class UseCaseViewCargasCTE {
-  constructor(private cargaRepoitory: IVeiwsDataCTE) {}
+  constructor(private cargaRepoitory: IVeiwsDataCTE) { }
   async run(id: string) {
     const resultCET = await this.cargaRepoitory.searchCET(id);
     return resultCET;
@@ -522,7 +522,7 @@ export class UseCaseDeleteCarga {
   constructor(
     private cargaRepository: IRepositoryUpdateCarga,
     private notifyAll: (event: IEventSocket) => void
-  ) {}
+  ) { }
   async run(
     id: number,
     usuario: string,
@@ -625,7 +625,7 @@ export class UseCaseImportCarga {
     private cargaRepository: IRepositoryAddCarga,
     private notifyAll: (event: IEventSocket) => void,
     private clientRepository: IClientRepository
-  ) {}
+  ) { }
   async run(file: Buffer | undefined, usuario: string | undefined) {
     if (!file || !file?.buffer) {
       throw new AppError("O arquivo não foi enviado", 400);
@@ -730,7 +730,7 @@ export class UseCaseDisableCarga {
   constructor(
     private cargaRepository: IRepositoryUpdateCarga,
     private notifyAll: (event: IEventSocket) => void
-  ) {}
+  ) { }
   async run(
     id: number,
     usuario: string,
