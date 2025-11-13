@@ -600,6 +600,13 @@ export class UseCaseDeleteCarga {
       if (cargaAtualizada.hasOwnProperty("quantidade_cargas")) {
         delete cargaAtualizada["quantidade_cargas"];
       }
+
+      // deleta a propriedade de requisitos
+      // eslint-disable-next-line no-prototype-builtins
+      if (cargaAtualizada.hasOwnProperty("prerequisitos")) {
+        delete cargaAtualizada["prerequisitos"];
+      }
+
       await this.cargaRepository.update(carga.id, cargaAtualizada as ICarga);
       if (cargaAtualizada.carga_csn !== 1) {
         this.notifyAll({
