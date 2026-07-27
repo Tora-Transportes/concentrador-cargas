@@ -50,6 +50,7 @@ export class UsuarioRepository {
             await mssqlPPO.raw(`SELECT oid,nome,email,permissao 
         FROM [dbo].[ppo_sascar_eventos_usuarios_permissoes]
         WHERE oid = '${oid}'`);
+
           outputUsers.push({
             oid,
             nome,

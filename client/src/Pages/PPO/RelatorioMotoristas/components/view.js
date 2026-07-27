@@ -7,6 +7,7 @@ import { BiCog } from "react-icons/bi";
 import ModalDataExcel from "../components/modal/exportExcel";
 import { SideBarFuncition } from "../components/tabela/sideBar";
 import { Sidebar } from "primereact/sidebar";
+import { STORAGE_COLUMNS_RELATORIO_MOTORISTAS } from "../constants";
 // import HandleClick from "./tooltipsMonitoramento";
 
 function ViewRelatorioMotorista({
@@ -80,6 +81,7 @@ function ViewRelatorioMotorista({
 						get_data={get_data}
 						values={data}
 						hideHeader={true}
+						ipoDeBuscaPorPagina={STORAGE_COLUMNS_RELATORIO_MOTORISTAS}
 					/>
 				</Row>
 			</Container>

@@ -117,14 +117,16 @@ function Menusuperior() {
                   <a href="/ppo_eventos/permissoes">Permissões Aprovação</a>
                 )}
                 {permissoes?.permissoes?.includes(
-                  "PPO_EVENTOS_APROVACAO_SUPERVISOR"
+                  // eslint-disable-next-line prettier/prettier
+                  "PPO_EVENTOS_APROVACAO_SUPERVISOR",
                 ) && (
                   <a href="/ppo_eventos/aprovacao/supervisor">
                     Aprovação de Eventos Supervisor
                   </a>
                 )}
                 {permissoes?.permissoes?.includes(
-                  "PPO_EVENTOS_APROVACAO_GERENTE"
+                  // eslint-disable-next-line prettier/prettier
+                  "PPO_EVENTOS_APROVACAO_GERENTE",
                 ) && (
                   <a href="/ppo_eventos/aprovacao/gerente">
                     Aprovação de Eventos Gerente
@@ -136,7 +138,8 @@ function Menusuperior() {
                   </a>
                 )}
                 {permissoes?.permissoes?.includes(
-                  "PPO_EVENTOS_RELATORIO_APROVACOES"
+                  // eslint-disable-next-line prettier/prettier
+                  "PPO_EVENTOS_RELATORIO_APROVACOES",
                 ) && (
                   <a href="/ppo_eventos/relatorios/aprovacoes">
                     Relatório Aprovações
@@ -166,7 +169,8 @@ function Menusuperior() {
                   <a href="/ppo/grupos">PPO Cadastro Grupo</a>
                 )}
                 {permissoes?.permissoes?.includes(
-                  "PPO_LOG_MOVIMENTACAO_MOTORISTA"
+                  // eslint-disable-next-line prettier/prettier
+                  "PPO_LOG_MOVIMENTACAO_MOTORISTA",
                 ) && (
                   <a href="/ppo/grupos/motoristas/historico">
                     Movimentações Motorista Grupo
@@ -181,7 +185,8 @@ function Menusuperior() {
                   </a>
                 )}
                 {permissoes?.permissoes?.includes(
-                  "PPO_RELATORIO_DOCUMENTOS"
+                  // eslint-disable-next-line prettier/prettier
+                  "PPO_RELATORIO_DOCUMENTOS",
                 ) && (
                   <a href="/ppo/relatorio/documentos">
                     Relatório de Documentos Assinados
@@ -197,12 +202,32 @@ function Menusuperior() {
                   <a href="/ppo/calculador">Calculador PPO</a>
                 )}
                 {permissoes?.permissoes?.includes(
-                  "PPO_PERMISSOES_VISUALIZACAO"
+                  // eslint-disable-next-line prettier/prettier
+                  "PPO_PERMISSOES_VISUALIZACAO",
                 ) && (
                   <a href="/ppo/permissoes-visualizacao">
                     Permissões para Visualização
                   </a>
                 )}
+              </div>
+            </div>
+          </div>
+
+          <div className="class-li">
+            <div className="dropdown">
+              {permissoes?.permissoes?.includes("PPA_MENU") && (
+                <button id="style-button-drop" className="dropbtn">
+                  PPA
+                </button>
+              )}
+              <div id="myDropdown" className="dropdown-content">
+                {permissoes?.permissoes?.includes("PPA_RELATORIO") && (
+                  <a href="/ppa/reports">Relatório de motoristas</a>
+                )}
+                {permissoes?.permissoes?.includes(
+                  // eslint-disable-next-line prettier/prettier
+                  "PPA_MOTORISTAS_BLOQUEIO",
+                ) && <a href="/ppa/blockedDrivers">Motoristas para bloqueio</a>}
               </div>
             </div>
           </div>

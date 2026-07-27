@@ -24,3 +24,15 @@ export default {
 		return moment(value).format("DD/MM/YYYY - HH:mm:ss");
 	},
 };
+
+export function formatDateForColumns(date) {
+	return date?.split("T")[0].split("-").reverse().join("/");
+}
+
+export function formatDateAndHourForColumns(date) {
+	if (!date) return "";
+	const [day, time] = date?.split("T");
+	const daysFormatted = day.split("-").reverse().join("/");
+	const timeFormatted = time.split(".")[0];
+	return `${daysFormatted} ${timeFormatted}`;
+}

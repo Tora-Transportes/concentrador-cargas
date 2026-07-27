@@ -49,6 +49,7 @@ import GMImpedimentosController from "./controllers/GestaoMultas/Impedimentos/GM
 import GMDocumentosController from "./controllers/GestaoMultas/Documentos/GMDocumentosController";
 import PPOMotoristasGruposController from "./controllers/PPO/PPOMotoristasGruposController";
 import PPORastreamentoController from "./controllers/PPO/PPORastreamentoController";
+import PPAController from "./controllers/PPA/PPAController";
 
 const routes = Router();
 
@@ -260,6 +261,12 @@ routes.post("/logs", LogsErrorControllers.error);
 
 routes.put("/app/aprovar/carga", CargaAppController.aprovarCarga);
 routes.patch("/app/carga:cancelar", CargaAppController.cancelarCarga);
+
+//PPA
+routes.get("/ppa/reports", PPAController.list_reports);
+routes.get("/ppa/blockade", PPAController.list_blocked_drivers);
+routes.get("/ppa/reports/export", PPAController.export_reports);
+routes.get("/ppa/blockade/export", PPAController.export_blocked_drivers);
 
 //PPO
 routes.get("/ppo/avaliacoes", PPOController.avaliacoes);

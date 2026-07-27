@@ -11,6 +11,7 @@ const mssqlPPOView = knex(knexfile.configMssqlPPOView);
 const mssqlAutentique = knex(knexfile.configMssqlAutentique);
 const mssqlLogs = knex(knexfile.configMssqlLogs);
 const mssqlProtheus = knex(knexfile.configMssqlProtheus);
+const mssqlPpa = knex(knexfile.configMssqlPpa);
 
 export default oracle;
 export {
@@ -21,4 +22,5 @@ export {
   mssqlAutentique,
   mssqlLogs,
   mssqlProtheus,
+  mssqlPpa,
 };

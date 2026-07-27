@@ -1,0 +1,237 @@
+.class-body-monitoramento {
+  font-family: "Poppins", sans-serif;
+}
+
+div .class-title-monit {
+  font-family: "Poppins", sans-serif;
+  color: #00652e;
+  font-size: 40px;
+  margin-top: 2rem;
+  margin-bottom: 2px;
+}
+
+#total-reg {
+  margin-bottom: -1px;
+}
+
+@media only screen and (max-width: 645px) {
+  div .class-title-monit {
+    margin-top: 4rem;
+  }
+}
+
+
+.class-body-gridcarga {
+  font-family: "Poppins", sans-serif;
+}
+
+#title-cargas-lote {
+  font-size: 2.5rem;
+  font-family: "Poppins", sans-serif;
+  color: #00652e;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.img-cargas-lote {
+  width: 80px;
+  position: absolute;
+  top: 80px;
+  right: -5px;
+}
+
+#button-opcoes-tabela {
+  background: #00652e;
+  border: none;
+  font-size: 16px;
+  margin-bottom: 0.4rem;
+  width: 13rem;
+  height: 5.5vh;
+}
+
+div .opcao-tabela-padrao {
+  text-align: start;
+  margin-top: 1.5rem;
+  margin-bottom: 5px;
+}
+
+@media only screen and (min-width: 385px) and (max-width: 585px) {
+  .row-listagem-padrao button {
+    width: 100%;
+  }
+
+  /* .col-registros {
+      margin-bottom: 5px;
+    } */
+}
+
+@media only screen and (max-width: 585px) {
+  .img-cargas-lote {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 130px) and (max-width: 765px) {
+  .opcao-tabela-padrao {
+    display: flex;
+    justify-content: center;
+  }
+
+  #title-cargas-lote {
+    margin-top: 3rem;
+    font-size: 2rem;
+  }
+}
+
+/* SweetAlert de detalhes do veículo */
+.ppa-vehicle-alert {
+  width: min(92vw, 480px);
+  border-radius: 18px;
+  border-top: 6px solid #00652e;
+  font-family: "Poppins", sans-serif;
+  padding: 1.5rem;
+}
+
+.ppa-vehicle-alert__icon.swal2-icon {
+  width: 76px;
+  height: 76px;
+  margin: 0.5rem auto 1rem;
+  border: none;
+  background: #eefdec;
+}
+
+.ppa-vehicle-alert__truck {
+  font-size: 42px;
+  line-height: 1;
+}
+
+.ppa-vehicle-alert .swal2-title {
+  color: #00652e;
+  font-size: 1.55rem;
+  font-weight: 600;
+  padding-top: 0;
+}
+
+.ppa-vehicle-alert__content {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 0.75rem;
+  text-align: left;
+}
+
+.ppa-vehicle-alert__item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 78px;
+  padding: 13px 15px;
+  border: 1px solid #dce9df;
+  border-radius: 10px;
+  background: #f8fbf9;
+  color: #25332a;
+}
+
+.ppa-vehicle-alert__label {
+  color: #64746a;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ppa-vehicle-alert__plate {
+  color: #00652e;
+  letter-spacing: 0.08em;
+}
+
+.ppa-vehicle-alert__button {
+  min-width: 130px;
+  margin-top: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background: #00652e;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.ppa-vehicle-alert__button:hover,
+.ppa-vehicle-alert__button:focus {
+  background: #03410b;
+}
+
+@media only screen and (max-width: 480px) {
+  .ppa-vehicle-alert__content {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.class-body-gridcarga {
+  font-family: "Poppins", sans-serif;
+}
+
+#title-cargas-lote {
+  font-size: 2.5rem;
+  font-family: "Poppins", sans-serif;
+  color: #00652e;
+  font-weight: 500;
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.img-cargas-lote {
+  width: 80px;
+  position: absolute;
+  top: 80px;
+  right: -5px;
+}
+
+#button-opcoes-tabela {
+  background: #00652e;
+  border: none;
+  font-size: 16px;
+  margin-bottom: 0.4rem;
+  width: 13rem;
+  height: 5.5vh;
+}
+
+div .opcao-tabela-padrao {
+  text-align: start;
+  margin-top: 1.5rem;
+  margin-bottom: 5px;
+}
+
+@media only screen and (min-width: 385px) and (max-width: 585px) {
+  .row-listagem-padrao button {
+    width: 100%;
+  }
+
+  /* .col-registros {
+      margin-bottom: 5px;
+    } */
+}
+
+@media only screen and (max-width: 585px) {
+  .img-cargas-lote {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 130px) and (max-width: 765px) {
+  .opcao-tabela-padrao {
+    display: flex;
+    justify-content: center;
+  }
+
+  #title-cargas-lote {
+    margin-top: 3rem;
+    font-size: 2rem;
+  }
+}

@@ -76,6 +76,8 @@ class GMEmpresaController implements IGMEmpresaController {
   }
 
   async list(req: Request, res: Response): Promise<any> {
+    console.log("URL", process.env.URL_GESTAO_MULTAS);
+
     try {
       const response = await axios.get(
         `${String(process.env.URL_GESTAO_MULTAS)}/empresas`,

@@ -1,8 +1,8 @@
 import database from "../database";
 export default class ServiceDetailsVehicle {
-  async index(placa: string) {
-    const details = await database.raw(
-      `SELECT
+    async index(placa: string) {
+        const details = await database.raw(
+            `SELECT
         v.vei_cod AS CODIGO_VEICULO,
         v.loc_cod,
         nvl(v.vei_referencia, ' ') AS rastreador,
@@ -185,18 +185,18 @@ export default class ServiceDetailsVehicle {
             39,
             36
         )`,
-      [placa]
-    );
-    if (details.length === 0) {
-      return null;
+            [placa]
+        );
+        if (details.length === 0) {
+            return null;
+        }
+
+        return details[0];
     }
 
-    return details[0];
-  }
-
-  async debits(placa: string) {
-    return database.raw(
-      `
+    async debits(placa: string) {
+        return database.raw(
+            `
     select veiculo.vei_placa, desp_carreteiro.* from desp_carreteiro
     join veiculo on veiculo.vei_cod = desp_carreteiro.vei_cod
     where rpa_num is null
@@ -204,9 +204,9 @@ export default class ServiceDetailsVehicle {
     and veiculo.vei_placa = ?
     order by DEC_DIA desc
     `,
-      [placa]
-    );
-  }
+            [placa]
+        );
+    }
 }
 
 // const service = new ServiceDetailsVehicle();
