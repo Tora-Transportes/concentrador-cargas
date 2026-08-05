@@ -82,29 +82,29 @@ export const footerTableFunction = (
 	totalPages
 ) => {
 	return (
-		<Row>
-			<Col className="footer-table mt-2 mb-2">
+		<Row className="ppa-table-footer">
+			<Col className="ppa-table-footer__actions">
 				<Button
-					style={{ background: "#00652E", border: "none", color: "#FFFFFF" }}
-					variant="outline-info"
+					className="ppa-table__page-button"
 					id="Botao-voltar-pag"
 					onClick={previousPage}
+					disabled={page <= 1}
 				>
-					<HiChevronDoubleLeft /> Página Anterior
+					<HiChevronDoubleLeft /> Página anterior
 				</Button>
 				<Button
-					variant="outline-info"
+					className="ppa-table__page-button"
 					id="Botao-proxima-pag"
-					style={{ background: "#00652E", border: "none", color: "#FFFFFF" }}
 					onClick={nextPage}
+					disabled={page >= totalPages}
 				>
-					Página Seguinte <HiChevronDoubleRight />
+					Página seguinte <HiChevronDoubleRight />
 				</Button>
 			</Col>
-			<Col sm={2} className="footer-table-totalPages">
-				<h6>
-					Página {page} de {totalPages}
-				</h6>
+			<Col sm="auto" className="ppa-table-footer__pages">
+				<span>
+					Página {page || 1} de {totalPages || 1}
+				</span>
 			</Col>
 		</Row>
 	);

@@ -196,6 +196,7 @@ export class PPARepository implements IPPARepository {
 			"placa_carreta",
 			"cidade_origem",
 			"cidade_destino",
+			"referencia_posicao",
 		];
 	}
 	private blockedDriversFilter(queryRecord: Record<string, any>) {

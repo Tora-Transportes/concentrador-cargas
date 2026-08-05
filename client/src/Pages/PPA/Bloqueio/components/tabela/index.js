@@ -26,7 +26,6 @@ function TabelaCargas({
 	const [page, setPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
 	const [sortOrder, setSortOrder] = useState(-1);
-	const [isCountGetRota, setCountGetRota] = useState(0);
 	const initialSelectColumns = columns.filter((i) =>
 		storage.find((c) => {
 			if (c.name === i.name) return c;
@@ -68,9 +67,9 @@ function TabelaCargas({
 
 	useEffect(() => {
 		const { total_pages, results, current_page } = values;
-		setData(results);
-		setPage(current_page);
-		setTotalPages(total_pages);
+		setData(results || []);
+		setPage(current_page || 1);
+		setTotalPages(total_pages || 1);
 	}, [values]);
 
 	const formik = useFormik({
@@ -103,7 +102,6 @@ function TabelaCargas({
 	};
 
 	async function notify() {
-		setCountGetRota(isCountGetRota + 1);
 		const options = {
 			filters: {},
 			orderBy: {
@@ -130,7 +128,6 @@ function TabelaCargas({
 
 		//page
 		options.page = page;
-		options.countGetRota = isCountGetRota;
 		await get_data(options);
 	}
 
@@ -171,6 +168,7 @@ function TabelaCargas({
 							value={formik.values[col.name]}
 							onChange={formik.handleChange}
 							className="w-100"
+							aria-label={`Filtrar por ${col.description}`}
 						/>
 					) : (
 						col.static_column !== true && (
@@ -179,6 +177,9 @@ function TabelaCargas({
 								value={formik.values[col.name]}
 								onChange={formik.handleChange}
 								className="w-100"
+								placeholder={`Filtrar por ${col.description}`}
+								aria-label={`Filtrar por ${col.description}`}
+								autoComplete="off"
 							/>
 						)
 					)
@@ -186,13 +187,8 @@ function TabelaCargas({
 			/>
 		);
 	});
-	const firstRun = useRef(true);
 	useEffect(() => {
-		if (firstRun.current) {
-			firstRun.current = false;
-		} else {
-			notify();
-		}
+		notify();
 	}, [page, orderby.values, get_data]);
 	const firstDebounceRun = useRef(true);
 	useDebouncedFunction(
@@ -230,7 +226,7 @@ function TabelaCargas({
 	);
 
 	return (
-		<Row>
+		<Row className="ppa-table-row">
 			<Toast ref={toast} className="w-25"></Toast>
 			<div className="datatable-responsive-gridCargas">
 				<DataTable
@@ -240,7 +236,7 @@ function TabelaCargas({
 					responsiveLayout="scroll"
 					scrollHeight="70vh"
 					onSort={onSort}
-					className="p-datatable-responsive-grid"
+					className="p-datatable-responsive-grid ppa-data-table"
 					emptyMessage="Não foram encontrados resultados nesta busca"
 					ref={dadosTabela}
 					value={data}
@@ -248,6 +244,7 @@ function TabelaCargas({
 					footer={footerTable}
 					filterDisplay="row"
 					dataKey="name"
+					rowHover
 				>
 					{setDynamicColums}
 				</DataTable>

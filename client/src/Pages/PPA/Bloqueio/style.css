@@ -1,149 +1,440 @@
-.class-body-monitoramento {
-    font-family: "Poppins", sans-serif;
-  }
-  div .class-title-monit {
-    font-family: "Poppins", sans-serif;
-    color: #00652e;
-    font-size: 40px;
-    margin-top: 2rem;
-    margin-bottom: 2px;
-  }
-  
-  #total-reg {
-    margin-bottom: -1px;
-  }
-  
-  @media only screen and (max-width: 645px) {
-    div .class-title-monit {
-      margin-top: 4rem;
-    }
-  }
-  
+.ppa-page {
+  min-height: calc(100vh - 70px);
+  padding: 1.75rem 0 2.75rem;
+  background:
+    radial-gradient(circle at top right, rgba(0, 101, 46, 0.08), transparent 28rem),
+    #f4f7f5;
+  color: #243129;
+  font-family: "Poppins", sans-serif;
+}
 
-  .class-body-gridcarga {
-    font-family: "Poppins", sans-serif;
-  }
-  
-  #title-cargas-lote {
-    font-size: 2.5rem;
-    font-family: "Poppins", sans-serif;
-    color: #00652e;
-    font-weight: 500;
-    text-align: center;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-  }
-  
-  .img-cargas-lote {
-    width: 80px;
-    position: absolute;
-    top: 80px;
-    right: -5px;
-  }
-  
-  #button-opcoes-tabela {
-    background: #00652e;
-    border: none;
-    font-size: 16px;
-    margin-bottom: 0.4rem;
-    width: 13rem;
-    height: 5.5vh;
-  }
-  
-  div .opcao-tabela-padrao {
-    text-align: start;
-    margin-top: 1.5rem;
-    margin-bottom: 5px;
-  }
-  
-  @media only screen and (min-width: 385px) and (max-width: 585px) {
-    .row-listagem-padrao button {
-      width: 100%;
-    }
-    /* .col-registros {
-      margin-bottom: 5px;
-    } */
-  }
-  
-  @media only screen and (max-width: 585px) {
-    .img-cargas-lote {
-      display: none;
-    }
-  }
-  
-  @media only screen and (min-width: 130px) and (max-width: 765px) {
-    .opcao-tabela-padrao {
-      display: flex;
-      justify-content: center;
-    }
-  
-    #title-cargas-lote {
-      margin-top: 3rem;
-      font-size: 2rem;
-    }
+.ppa-page__container {
+  width: 100%;
+  padding-right: clamp(1rem, 2.25vw, 2.75rem);
+  padding-left: clamp(1rem, 2.25vw, 2.75rem);
+}
+
+.ppa-page__hero,
+.ppa-page__toolbar,
+.ppa-page__table-card {
+  width: 100%;
+  max-width: 1780px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.ppa-page__hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.55rem 1.75rem;
+  border: 1px solid #dbe8df;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #ffffff 0%, #f4fbf6 100%);
+  box-shadow: 0 12px 34px rgba(24, 73, 43, 0.08);
+}
+
+.ppa-page__hero-main {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+  min-width: 0;
+}
+
+.ppa-page__hero-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border: 1px solid rgba(0, 101, 46, 0.16);
+  border-radius: 16px;
+  background: #e9f5ed;
+  color: #00652e;
+  font-size: 2rem;
+  box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.45);
+}
+
+.ppa-page__hero-copy {
+  min-width: 0;
+}
+
+.ppa-page__eyebrow,
+.ppa-page__table-card-eyebrow {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: #297044;
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.ppa-page__hero h1 {
+  margin: 0;
+  color: #064923;
+  font-size: clamp(1.65rem, 2.25vw, 2.35rem);
+  font-weight: 650;
+  line-height: 1.18;
+}
+
+.ppa-page__hero p {
+  max-width: 760px;
+  margin: 0.5rem 0 0;
+  color: #5d6e63;
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+.ppa-page__summary {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.8rem;
+  min-width: 210px;
+  padding: 1rem 1.1rem;
+  border: 1px solid #d7e7dc;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.88);
+  text-align: left;
+}
+
+.ppa-page__summary>svg {
+  flex: 0 0 auto;
+  color: #168347;
+  font-size: 1.65rem;
+}
+
+.ppa-page__summary div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+}
+
+.ppa-page__summary span {
+  color: #6a776f;
+  font-size: 0.74rem;
+  font-weight: 500;
+}
+
+.ppa-page__summary strong {
+  color: #063d1e;
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.ppa-page__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid #e0e8e3;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 5px 18px rgba(36, 70, 49, 0.04);
+}
+
+.ppa-page__toolbar-copy {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+  text-align: left;
+}
+
+.ppa-page__toolbar-copy>svg {
+  flex: 0 0 auto;
+  color: #1a7a43;
+  font-size: 1.45rem;
+}
+
+.ppa-page__toolbar-copy div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+}
+
+.ppa-page__toolbar-copy strong {
+  color: #284333;
+  font-size: 0.88rem;
+  font-weight: 650;
+}
+
+.ppa-page__toolbar-copy span {
+  color: #78847d;
+  font-size: 0.77rem;
+  line-height: 1.45;
+}
+
+.ppa-page .ppa-page__options-button.p-button {
+  flex: 0 0 auto;
+  min-width: 12.2rem;
+  padding: 0.72rem 1rem;
+  border: 1px solid #00652e;
+  border-radius: 10px;
+  background: #00652e;
+  box-shadow: 0 7px 15px rgba(0, 101, 46, 0.18);
+  font-family: "Poppins", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: transform 0.18s ease, background-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.ppa-page .ppa-page__options-button.p-button:hover,
+.ppa-page .ppa-page__options-button.p-button:focus {
+  border-color: #034b23;
+  background: #034b23;
+  box-shadow: 0 9px 18px rgba(0, 101, 46, 0.24);
+  transform: translateY(-1px);
+}
+
+.ppa-page .ppa-page__options-button .p-button-icon {
+  font-size: 1.1rem;
+}
+
+.ppa-page__table-card {
+  overflow: hidden;
+  border: 1px solid #dfe8e2;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(30, 66, 43, 0.07);
+}
+
+.ppa-page__table-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #e4ece7;
+  background: #fbfdfc;
+  text-align: left;
+}
+
+.ppa-page__table-card-header h2 {
+  margin: 0;
+  color: #21452f;
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.ppa-page__table-hint {
+  color: #78847d;
+  font-size: 0.76rem;
+}
+
+.ppa-page__table-card>.row,
+.ppa-page__table-card .ppa-table-row {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.ppa-table-sidebar.p-sidebar {
+  border-top: 5px solid #00652e;
+  font-family: "Poppins", sans-serif;
+}
+
+.ppa-table-sidebar .p-sidebar-header {
+  padding: 1.15rem 1.25rem 0.8rem;
+  color: #17472c;
+  font-weight: 650;
+}
+
+.ppa-table-sidebar .p-sidebar-content {
+  padding: 0.75rem 1.25rem 1.4rem;
+}
+
+.ppa-table-sidebar .font-sidebar.p-button {
+  justify-content: flex-start;
+  min-height: 2.85rem;
+  margin-left: 0 !important;
+  border-radius: 9px;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.84rem !important;
+  font-weight: 550;
+}
+
+.ppa-table-sidebar .p-button-success {
+  border-color: #00652e;
+  background: #00652e;
+}
+
+.ppa-table-sidebar .p-button-success:hover,
+.ppa-table-sidebar .p-button-success:focus {
+  border-color: #034b23;
+  background: #034b23;
+}
+
+.ppa-table-sidebar .p-button-info {
+  border-color: #dfe8e2;
+  background: #f1f5f2;
+  color: #31503d;
+}
+
+.ppa-table-sidebar .p-button-info:hover,
+.ppa-table-sidebar .p-button-info:focus {
+  border-color: #cbdad0;
+  background: #e7eee9;
+  color: #17472c;
+}
+
+/* Janela de detalhes da viagem */
+.ppa-vehicle-alert {
+  width: min(92vw, 480px);
+  padding: 1.5rem;
+  border-top: 6px solid #00652e;
+  border-radius: 18px;
+  font-family: "Poppins", sans-serif;
+}
+
+.ppa-vehicle-alert__icon.swal2-icon {
+  width: 76px;
+  height: 76px;
+  margin: 0.5rem auto 1rem;
+  border: none;
+  background: #eefdec;
+}
+
+.ppa-vehicle-alert__truck {
+  font-size: 42px;
+  line-height: 1;
+}
+
+.ppa-vehicle-alert .swal2-title {
+  padding-top: 0;
+  color: #00652e;
+  font-size: 1.55rem;
+  font-weight: 600;
+}
+
+.ppa-vehicle-alert__content {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 0.75rem;
+  text-align: left;
+}
+
+.ppa-vehicle-alert__item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 78px;
+  padding: 13px 15px;
+  border: 1px solid #dce9df;
+  border-radius: 10px;
+  background: #f8fbf9;
+  color: #25332a;
+}
+
+.ppa-vehicle-alert__label {
+  color: #64746a;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ppa-vehicle-alert__plate {
+  color: #00652e;
+  letter-spacing: 0.08em;
+}
+
+.ppa-vehicle-alert__button {
+  min-width: 130px;
+  margin-top: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background: #00652e;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.ppa-vehicle-alert__button:hover,
+.ppa-vehicle-alert__button:focus {
+  background: #03410b;
+}
+
+@media only screen and (max-width: 900px) {
+  .ppa-page {
+    padding-top: 1.1rem;
   }
 
-  
-  .class-body-gridcarga {
-    font-family: "Poppins", sans-serif;
+  .ppa-page__hero {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 1.15rem;
   }
-  
-  #title-cargas-lote {
-    font-size: 2.5rem;
-    font-family: "Poppins", sans-serif;
-    color: #00652e;
-    font-weight: 500;
-    text-align: center;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+
+  .ppa-page__summary {
+    min-width: 0;
   }
-  
-  .img-cargas-lote {
-    width: 80px;
-    position: absolute;
-    top: 80px;
-    right: -5px;
+}
+
+@media only screen and (max-width: 680px) {
+  .ppa-page__hero {
+    padding: 1.2rem;
   }
-  
-  #button-opcoes-tabela {
-    background: #00652e;
-    border: none;
-    font-size: 16px;
-    margin-bottom: 0.4rem;
-    width: 13rem;
-    height: 5.5vh;
+
+  .ppa-page__hero-main {
+    align-items: flex-start;
   }
-  
-  div .opcao-tabela-padrao {
-    text-align: start;
-    margin-top: 1.5rem;
-    margin-bottom: 5px;
+
+  .ppa-page__hero-icon {
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 13px;
+    font-size: 1.55rem;
   }
-  
-  @media only screen and (min-width: 385px) and (max-width: 585px) {
-    .row-listagem-padrao button {
-      width: 100%;
-    }
-    /* .col-registros {
-      margin-bottom: 5px;
-    } */
+
+  .ppa-page__hero h1 {
+    font-size: 1.55rem;
   }
-  
-  @media only screen and (max-width: 585px) {
-    .img-cargas-lote {
-      display: none;
-    }
+
+  .ppa-page__hero p {
+    font-size: 0.85rem;
   }
-  
-  @media only screen and (min-width: 130px) and (max-width: 765px) {
-    .opcao-tabela-padrao {
-      display: flex;
-      justify-content: center;
-    }
-  
-    #title-cargas-lote {
-      margin-top: 3rem;
-      font-size: 2rem;
-    }
+
+  .ppa-page__toolbar,
+  .ppa-page__table-card-header {
+    align-items: stretch;
+    flex-direction: column;
   }
-  
+
+  .ppa-page .ppa-page__options-button.p-button {
+    width: 100%;
+  }
+
+  .ppa-page__table-hint {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .ppa-page__container {
+    padding-right: 0.65rem;
+    padding-left: 0.65rem;
+  }
+
+  .ppa-page__hero-main {
+    gap: 0.8rem;
+  }
+
+  .ppa-page__hero-icon {
+    display: none;
+  }
+
+  .ppa-vehicle-alert__content {
+    grid-template-columns: 1fr;
+  }
+}

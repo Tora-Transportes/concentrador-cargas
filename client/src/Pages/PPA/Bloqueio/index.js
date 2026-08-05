@@ -41,26 +41,40 @@ const RelatorioBlockedDrivers = () => {
 
 	const tableFetchData = useCallback(
 		async function (options) {
-			if (options.countGetRota == 0 || options.countGetRota > 1) {
-				setLoading(true);
-				if (options !== lastOptions) {
-					setLastOptions(options);
-				}
-				const { column, direction } = options.orderBy ?? {};
-				const { filters, orderBy, page } = options;
-				setFiltroAtual({ filters, orderBy, page });
+			setLoading(true);
+			setLastOptions(options);
+
+			const { column, direction } = options.orderBy ?? {};
+			const { filters = {}, orderBy, page = 1 } = options;
+			setFiltroAtual({ filters, orderBy, page });
+
+			try {
 				const { data } = await ServicePPA.searchBlockedDrivers({
-					...options.filters,
-					page: options.page,
+					...filters,
+					page,
 					order_column: column,
 					order_direction: direction,
 				});
-				setLoading(false);
-				setTotalRegisters(data.data.total_registers);
+
+				const result = data?.data ?? {};
+				setTotalRegisters(result.total_registers ?? 0);
 				dispatchCargas({
 					type: "SET",
-					payload: { ...data.data, current_page: data.data.page },
+					payload: {
+						...result,
+						current_page: result.page ?? page,
+					},
 				});
+			} catch (error) {
+				console.error("Erro ao consultar dados do PPA:", error);
+				toast.current?.show({
+					severity: "error",
+					summary: "Erro ao carregar dados",
+					detail: "Não foi possível carregar os motoristas para bloqueio.",
+					life: 4000,
+				});
+			} finally {
+				setLoading(false);
 			}
 		},
 		[dispatchCargas]
@@ -97,7 +111,7 @@ const RelatorioBlockedDrivers = () => {
 			<Menusuperior />
 			<Toast ref={toast} className="w-25" position="top-center"></Toast>
 			<ViewReport
-				handleExportExcel={() => {}}
+				handleExportExcel={handleExportExcel}
 				get_data={tableFetchData}
 				columns={columnsPadrao}
 				data={cargas}
