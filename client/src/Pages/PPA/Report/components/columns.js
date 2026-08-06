@@ -65,7 +65,7 @@ export const getColumns = () => {
 			selector: (row) => formatDateAndHourForColumns(row.data_inclusao),
 			showFilter: true,
 			Filter: (props) => <Form.Control type="date" {...props} />,
-			style: { minWidth: "165px" },
+			style: { width: "155px", minWidth: "155px" },
 		},
 		{
 			name: "tipo_veiculo",
@@ -92,7 +92,7 @@ export const getColumns = () => {
 			description: "Motorista",
 			selector: (row) => row.motorista,
 			showFilter: true,
-			style: { minWidth: "240px" },
+			style: { width: "215px", minWidth: "215px" },
 		},
 		{
 			name: "cpf",
@@ -101,28 +101,30 @@ export const getColumns = () => {
 				<span className="ppa-document">{row.cpf_motorista}</span>
 			),
 			showFilter: true,
-			style: { minWidth: "145px" },
+			style: { width: "135px", minWidth: "135px" },
 		},
 		{
 			name: "placa_veiculo",
 			description: "Placa do veículo",
 			selector: (row) => <span className="ppa-plate">{row.placa_veiculo}</span>,
 			showFilter: true,
-			style: { minWidth: "135px" },
+			style: { width: "130px", minWidth: "130px" },
 		},
 		{
 			name: "area_producao",
 			description: "Área de produção",
 			selector: (row) => row.area_producao,
 			showFilter: true,
-			style: { minWidth: "165px" },
+			style: { width: "150px", minWidth: "150px" },
 		},
 		{
 			name: "referencia_posicao",
 			description: "Referência da posição",
-			selector: (row) => row.referencia_posicao,
+			selector: (row) => (
+				<span className="ppa-position-reference">{row.referencia_posicao}</span>
+			),
 			showFilter: false,
-			style: { minWidth: "280px" },
+			style: { width: "220px", minWidth: "220px", maxWidth: "220px" },
 		},
 		{
 			name: "vel_aferida",
@@ -130,7 +132,7 @@ export const getColumns = () => {
 			selector: (row) => <span className="ppa-metric">{row.vel_aferida}</span>,
 			showFilter: false,
 			sortable: "sortable",
-			style: { minWidth: "110px" },
+			style: { width: "105px", minWidth: "105px" },
 		},
 		{
 			name: "vel_permitida",
@@ -140,7 +142,7 @@ export const getColumns = () => {
 			),
 			showFilter: false,
 			sortable: "sortable",
-			style: { minWidth: "120px" },
+			style: { width: "115px", minWidth: "115px" },
 		},
 		{
 			name: "pontuacao",
@@ -148,7 +150,7 @@ export const getColumns = () => {
 			selector: (row) => <span className="ppa-score">{row.pontuacao}</span>,
 			showFilter: false,
 			sortable: "sortable",
-			style: { minWidth: "105px" },
+			style: { width: "100px", minWidth: "100px" },
 		},
 	];
 

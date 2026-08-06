@@ -220,7 +220,7 @@ export class PPARepository implements IPPARepository {
 			}
 
 			if (isValidField(queryRecord?.motorista)) {
-				qb.andWhere("motorista", "like", `%${queryRecord.motorista}%0`);
+				qb.andWhere("motorista", "like", `%${queryRecord.motorista}%`);
 			}
 
 			if (isValidField(queryRecord?.cpf)) {
