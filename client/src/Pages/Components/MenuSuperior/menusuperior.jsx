@@ -449,6 +449,17 @@ function Menusuperior() {
                     Motoristas para bloqueio
                   </a>
                 )}
+                {permissoes?.permissoes?.includes("PPA_BLOQUEIO_RELATORIO") && (
+                  <a
+                    href="/ppa/blockedDriversSummary"
+                    className={getSubmenuItemClass(
+                      "/ppa/blockedDriversSummary",
+                      false,
+                    )}
+                  >
+                    Relatório de bloqueios
+                  </a>
+                )}
               </div>
             </div>
           </div>

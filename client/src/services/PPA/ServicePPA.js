@@ -49,6 +49,26 @@ class ServicePPA {
 		});
 	}
 
+	async searchBlockedDriversSumary({
+		page,
+		limit,
+		order_column,
+		order_direction,
+		motorista,
+		cpf,
+	}) {
+		return api.get("/ppa/blockade/summary", {
+			params: {
+				page,
+				limit,
+				order_column,
+				order_direction,
+				motorista,
+				cpf,
+			},
+		});
+	}
+
 	async exportToXlsx({
 		order_column,
 		order_direction,

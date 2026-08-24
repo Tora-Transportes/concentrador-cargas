@@ -18,6 +18,7 @@ export const allTipoPermissoes = [
 	{ name: "PPA_MENU" },
 	{ name: "PPA_RELATORIO" },
 	{ name: "PPA_MOTORISTAS_BLOQUEIO" },
+	{ name: "PPA_BLOQUEIO_RELATORIO" },
 	{ name: "PPO_MENU" },
 	{ name: "PPO_ESTATISTICA" },
 	{ name: "PPO_CAD_GRUPO" },

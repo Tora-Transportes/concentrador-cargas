@@ -70,6 +70,7 @@ import PpoManual from "src/Pages/PPO/Manual";
 import PPORelatorioRastreabilidade from "src/Pages/PPO/Rastreabilidade";
 import RelatorioReports from "src/Pages/PPA/Report";
 import RelatorioBlockedDrivers from "src/Pages/PPA/Bloqueio";
+import RelatorioBlockedDriversSummary from "src/Pages/PPA/ReportBloqueio";
 
 export default function AllRoutes() {
 	//Limpar cache quando subir uma nova versão , isto se tiver necessidade...
@@ -94,6 +95,12 @@ export default function AllRoutes() {
 					path="/ppa/blockedDrivers"
 					exact
 					component={RelatorioBlockedDrivers}
+				/>
+
+				<Routes
+					path="/ppa/blockedDriversSummary"
+					exact
+					component={RelatorioBlockedDriversSummary}
 				/>
 
 				<Routes

@@ -18,6 +18,8 @@ interface IPPAController {
   export_blocked_drivers(req: Request, res: Response): Promise<Response>;
 
   list_blocked_drivers(req: Request, res: Response): Promise<Response>;
+
+  list_blocked_drivers_summary(req: Request, res: Response): Promise<Response>;
 }
 
 class PPAController implements IPPAController {
@@ -175,6 +177,23 @@ class PPAController implements IPPAController {
     const ppaRepository = new PPARepository();
 
     const result = await ppaRepository.list_blocked_drivers(
+      { ...req.query },
+      Number(req.query.page),
+      Number(req.query.limit) || 10
+    );
+
+    return res.json({
+      data: result,
+    });
+  }
+
+  async list_blocked_drivers_summary(
+    req: Request,
+    res: Response
+  ): Promise<Response> {
+    const ppaRepository = new PPARepository();
+
+    const result = await ppaRepository.list_blocked_drivers_summary(
       { ...req.query },
       Number(req.query.page),
       Number(req.query.limit) || 10

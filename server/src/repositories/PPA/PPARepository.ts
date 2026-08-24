@@ -27,6 +27,13 @@ export interface IppaBlockedDrivers {
 	total_pontos: number;
 }
 
+export interface IppaBlockedDriversSummary {
+	cpf: string;
+	motorista: string;
+	total: number;
+	total_bloqueio: number;
+}
+
 interface IPPARepository {
 	list_reports(
 		query: Record<string, any>,
@@ -45,6 +52,12 @@ interface IPPARepository {
 	export_blocked_drivers(
 		query: Record<string, any>
 	): Promise<IppaBlockedDrivers[]>;
+
+	list_blocked_drivers_summary(
+		query: Record<string, any>,
+		page: number,
+		pageSize: number
+	): Promise<any | undefined>;
 }
 
 export class PPARepository implements IPPARepository {
@@ -242,5 +255,96 @@ export class PPARepository implements IPPARepository {
 			"periodo_final",
 			"total_pontos",
 		];
+	}
+
+	async list_blocked_drivers_summary(
+		queryRecord: Record<string, any>,
+		page = 1,
+		pageSize = 10
+	): Promise<IPagination<IppaBlockedDriversSummary>> {
+		const realPage = isNaN(Number(page)) || Number(page) < 1 ? 1 : Number(page);
+
+		const realPageSize =
+			isNaN(Number(pageSize)) || Number(pageSize) < 1 ? 10 : Number(pageSize);
+
+		const allowedOrderFields = ["cpf", "motorista", "total", "total_bloqueio"];
+
+		const requestedOrderField = queryRecord?.order_column ?? "total";
+
+		const orderField = allowedOrderFields.includes(requestedOrderField)
+			? requestedOrderField
+			: "total";
+
+		const order = queryRecord?.order_direction === "asc" ? "asc" : "desc";
+
+		const filter = this.blockedDriversSummaryFilter(queryRecord);
+
+		/*
+		 * Essa consulta existe somente para descobrir
+		 * quantos motoristas agrupados existem.
+		 *
+		 * Não podemos fazer COUNT(id) diretamente porque
+		 * a consulta principal possui GROUP BY cpf, motorista.
+		 */
+		const groupedDrivers = mssqlPpa("motoristas_pra_bloqueio")
+			.select(["cpf", "motorista"])
+			.modify(filter)
+			.groupBy(["cpf", "motorista"]);
+
+		const totalQuery = mssqlPpa
+			.from(groupedDrivers.as("blocked_drivers_grouped"))
+			.count<{ total: string | number }[]>("* as total")
+			.first();
+
+		/*
+		 * Consulta principal.
+		 *
+		 * Equivalente a:
+		 *
+		 * SELECT
+		 *   cpf,
+		 *   motorista,
+		 *   SUM(total_pontos) AS total,
+		 *   COUNT(*) AS total_bloqueio
+		 * FROM motoristas_pra_bloqueio
+		 * GROUP BY cpf, motorista
+		 * ORDER BY total DESC
+		 */
+		const resultsQuery = mssqlPpa("motoristas_pra_bloqueio")
+			.select(["cpf", "motorista"])
+			.sum("total_pontos as total")
+			.count("* as total_bloqueio")
+			.modify(filter)
+			.groupBy(["cpf", "motorista"])
+			.orderBy(orderField, order)
+			.limit(realPageSize)
+			.offset((realPage - 1) * realPageSize);
+
+		const totalResult = (await totalQuery) as
+			| { total?: string | number }
+			| undefined;
+
+		const totalRegisters = Number(totalResult?.total) || 0;
+
+		const results = (await resultsQuery) as IppaBlockedDriversSummary[];
+
+		return {
+			page: realPage,
+			total_pages: Math.ceil(totalRegisters / realPageSize),
+			total_registers: totalRegisters,
+			results,
+		};
+	}
+
+	private blockedDriversSummaryFilter(queryRecord: Record<string, any>) {
+		return (qb: Knex.QueryBuilder) => {
+			if (isValidField(queryRecord?.motorista)) {
+				qb.andWhere("motorista", "like", `%${queryRecord.motorista}%`);
+			}
+
+			if (isValidField(queryRecord?.cpf)) {
+				qb.andWhere("cpf", "like", `%${queryRecord.cpf}%`);
+			}
+		};
 	}
 }
