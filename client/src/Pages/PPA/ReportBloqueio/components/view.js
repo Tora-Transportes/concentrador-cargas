@@ -4,11 +4,8 @@ import { Container } from "react-bootstrap";
 import TabelaCargas from "./tabela";
 import { Button as ButtonReact } from "primereact/button";
 import { BiCog } from "react-icons/bi";
-import {
-	HiOutlineAdjustments,
-	HiOutlineClipboardList,
-	HiOutlineUserGroup,
-} from "react-icons/hi";
+import { HiOutlineAdjustments, HiOutlineUserGroup } from "react-icons/hi";
+import { MdHistory } from "react-icons/md";
 import { SideBarFuncition } from "./tabela/sideBar";
 import { Sidebar } from "primereact/sidebar";
 import { STORAGE_COLUMNS_REPORTS_BLOQUEIO } from "../constants";
@@ -36,15 +33,15 @@ function ViewReport({
 							className="ppa-page__hero-icon ppa-page__hero-icon--blocked-report"
 							aria-hidden="true"
 						>
-							<HiOutlineClipboardList />
+							<MdHistory />
 						</div>
 						<div className="ppa-page__hero-copy">
 							<span className="ppa-page__eyebrow">Módulo PPA</span>
-							<h1>Relatório de motoristas para bloqueio</h1>
+							<h1>Histórico de bloqueios de motoristas</h1>
 							<p>
-								Consulte o consolidado dos motoristas registrados para bloqueio,
-								acompanhando a pontuação acumulada e a quantidade de ocorrências
-								associadas a cada motorista.
+								Consulte o histórico consolidado dos bloqueios removidos no PPA,
+								acompanhando o total de pontos e a quantidade de bloqueios já
+								tratados para cada motorista.
 							</p>
 						</div>
 					</div>
@@ -52,11 +49,11 @@ function ViewReport({
 					<div
 						id="total-reg"
 						className="ppa-page__summary ppa-page__summary--blocked-report"
-						aria-label="Total de motoristas encontrados"
+						aria-label="Total de motoristas no histórico"
 					>
 						<HiOutlineUserGroup aria-hidden="true" />
 						<div>
-							<span>Motoristas encontrados</span>
+							<span>Motoristas no histórico</span>
 							<strong>{totalFormatted}</strong>
 						</div>
 					</div>
@@ -64,16 +61,16 @@ function ViewReport({
 
 				<section
 					className="ppa-page__toolbar"
-					aria-label="Filtros e opções do relatório"
+					aria-label="Filtros e opções do histórico"
 				>
 					<div className="ppa-page__toolbar-copy">
 						<HiOutlineAdjustments aria-hidden="true" />
 						<div>
-							<strong>Filtros do relatório</strong>
+							<strong>Filtros do histórico</strong>
 							<span>
-								Filtre por CPF ou motorista para localizar rapidamente os
-								registros. Nas opções da tabela você também pode exportar e
-								redefinir a visualização.
+								Filtre por CPF ou motorista para consultar os bloqueios já
+								removidos. Nas opções da tabela você também pode exportar o
+								histórico e redefinir a visualização.
 							</span>
 						</div>
 					</div>
@@ -107,15 +104,15 @@ function ViewReport({
 				<section
 					id="tabela-mon"
 					className="ppa-page__table-card ppa-blocked-report__table-card"
-					aria-label="Resumo de bloqueios por motorista"
+					aria-label="Histórico consolidado de bloqueios removidos"
 				>
 					<div className="ppa-page__table-card-header">
 						<div>
-							<span className="ppa-page__table-card-eyebrow">Consolidado</span>
-							<h2>Resumo de bloqueios por motorista</h2>
+							<span className="ppa-page__table-card-eyebrow">Histórico</span>
+							<h2>Bloqueios removidos por motorista</h2>
 						</div>
 						<span className="ppa-page__table-hint">
-							Ordene pela pontuação total ou pelo número de bloqueios
+							Ordene pelos pontos removidos ou pela quantidade de bloqueios
 						</span>
 					</div>
 

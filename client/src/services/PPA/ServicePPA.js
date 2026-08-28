@@ -5,7 +5,6 @@ class ServicePPA {
 		page,
 		order_column,
 		order_direction,
-		data_inclusao,
 		motorista,
 		cpf,
 		placa_veiculo,
@@ -16,7 +15,6 @@ class ServicePPA {
 				page,
 				order_column,
 				order_direction,
-				data_inclusao,
 				motorista,
 				cpf,
 				placa_veiculo,
@@ -49,7 +47,7 @@ class ServicePPA {
 		});
 	}
 
-	async searchBlockedDriversSumary({
+	async searchBlockedDriversHistory({
 		page,
 		limit,
 		order_column,
@@ -69,10 +67,28 @@ class ServicePPA {
 		});
 	}
 
+	async exportBlockedDriversHistoryXlsx({
+		order_column,
+		order_direction,
+		motorista,
+		cpf,
+	}) {
+		return api.get("/ppa/blockade/summary/export", {
+			responseType: "arraybuffer",
+			params: {
+				order_column,
+				order_direction,
+				motorista,
+				cpf,
+			},
+		});
+	}
+
 	async exportToXlsx({
 		order_column,
 		order_direction,
-		data_inclusao,
+		date_execel_inicio,
+		date_execel_fim,
 		motorista,
 		cpf,
 		placa_veiculo,
@@ -83,7 +99,8 @@ class ServicePPA {
 			params: {
 				order_column,
 				order_direction,
-				data_inclusao,
+				date_execel_inicio,
+				date_execel_fim,
 				motorista,
 				cpf,
 				placa_veiculo,
@@ -111,6 +128,21 @@ class ServicePPA {
 				motorista,
 				cpf,
 				placa_veiculo,
+			},
+		});
+	}
+
+	async removeBlockedDriverPoints({
+		cpf,
+		periodo_inicial,
+		periodo_final,
+		concentrador_user_id,
+	}) {
+		return api.delete(`/ppa/blockade/summary/${encodeURIComponent(cpf)}`, {
+			data: {
+				periodo_inicial,
+				periodo_final,
+				concentrador_user_id,
 			},
 		});
 	}

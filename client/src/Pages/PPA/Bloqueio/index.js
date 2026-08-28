@@ -12,6 +12,9 @@ import useLoadingScreen from "../../Components/LoadingScreen";
 import factoryReducerCargas from "../../../hooks/storageCargas/factoryReducerCargas";
 import ServicePPA from "src/services/PPA/ServicePPA";
 import { Toast } from "primereact/toast";
+import swal from "sweetalert";
+import { getClaims } from "../../../MicrosoftAuthentication";
+import { formatDateAndHourForColumns } from "../../Utils/date";
 import { STORAGE_COLUMNS_BLOCKADE } from "./constants";
 
 const RelatorioBlockedDrivers = () => {
@@ -29,9 +32,6 @@ const RelatorioBlockedDrivers = () => {
 	const [itensPerPage, setItensPerPage] = useState(10);
 	const [totalRegisters, setTotalRegisters] = useState(0);
 	const [lastOptions, setLastOptions] = useState({});
-
-	const columnsResult = getColumns();
-	const columnsPadrao = columnsResult.columnsRelatorio;
 
 	function resetView() {
 		localStorage.removeItem(STORAGE_COLUMNS_BLOCKADE);
@@ -79,6 +79,93 @@ const RelatorioBlockedDrivers = () => {
 		},
 		[dispatchCargas]
 	);
+
+	async function handleRemovePontuacao(row) {
+		const motorista = String(row?.motorista ?? "").toUpperCase();
+		const cpf = String(row?.cpf ?? "").trim();
+		const periodoInicial = row?.periodo_inicial;
+		const periodoFinal = row?.periodo_final;
+		const totalPontos = Number(row?.total_pontos || 0).toLocaleString("pt-BR");
+
+		const periodoInicialFormatado = formatDateAndHourForColumns(periodoInicial);
+		const periodoFinalFormatado = formatDateAndHourForColumns(periodoFinal);
+
+		const confirmacao = await swal(
+			"Remover pontuação?",
+			`Essa opção irá remover ${totalPontos} ponto(s) computado(s) para ${motorista}, somente no período de ${periodoInicialFormatado} até ${periodoFinalFormatado}, além de remover este registro de bloqueio. Deseja continuar?`,
+			"warning",
+			{
+				buttons: [
+					"Cancelar",
+					{
+						text: "Remover pontuação",
+						value: true,
+					},
+				],
+				dangerMode: true,
+			}
+		);
+
+		if (!confirmacao) return;
+
+		setLoading(true);
+
+		try {
+			const concentradorUserId = getClaims()?.oid;
+
+			if (!concentradorUserId) {
+				throw new Error(
+					"Não foi possível identificar o usuário logado no Concentrador."
+				);
+			}
+
+			await ServicePPA.removeBlockedDriverPoints({
+				cpf,
+				periodo_inicial: periodoInicial,
+				periodo_final: periodoFinal,
+				concentrador_user_id: String(concentradorUserId),
+			});
+
+			/*
+			 * Atualiza a tabela mantendo filtros, ordenação e página atuais.
+			 * Se a linha removida era a única da página e não estamos na primeira,
+			 * volta uma página para não deixar o usuário em uma página vazia.
+			 */
+			const currentPage = Number(lastOptions?.page) || 1;
+			const nextPage =
+				(cargas.results?.length || 0) === 1 && currentPage > 1
+					? currentPage - 1
+					: currentPage;
+
+			await tableFetchData({
+				...lastOptions,
+				page: nextPage,
+			});
+
+			await swal(
+				"Sucesso!",
+				"A pontuação e o registro de bloqueio deste período foram removidos com sucesso.",
+				"success"
+			);
+		} catch (error) {
+			console.error("Erro ao remover pontuação do motorista:", error);
+
+			await swal(
+				"Erro!",
+				error?.response?.data?.message ||
+					error?.response?.data?.error ||
+					error?.message ||
+					"Não foi possível remover a pontuação do motorista.",
+				"error"
+			);
+		} finally {
+			setLoading(false);
+		}
+	}
+
+	// IMPORTANTE: o callback deve ser passado para getColumns.
+	const columnsResult = getColumns(handleRemovePontuacao);
+	const columnsPadrao = columnsResult.columnsRelatorio;
 
 	async function handleExportExcel() {
 		setLoading(true);

@@ -457,7 +457,7 @@ function Menusuperior() {
                       false,
                     )}
                   >
-                    Relatório de bloqueios
+                    Histórico de bloqueios
                   </a>
                 )}
               </div>

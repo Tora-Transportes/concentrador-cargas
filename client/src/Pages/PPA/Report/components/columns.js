@@ -1,4 +1,4 @@
-import { Button, Form } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { FaTruckArrowRight } from "react-icons/fa6";
 import { formatDateAndHourForColumns } from "src/Pages/Utils/date";
 import Swal from "sweetalert2";
@@ -63,8 +63,7 @@ export const getColumns = () => {
 			name: "data_inclusao",
 			description: "Data de inclusão",
 			selector: (row) => formatDateAndHourForColumns(row.data_inclusao),
-			showFilter: true,
-			Filter: (props) => <Form.Control type="date" {...props} />,
+			showFilter: false,
 			style: { width: "155px", minWidth: "155px" },
 		},
 		{

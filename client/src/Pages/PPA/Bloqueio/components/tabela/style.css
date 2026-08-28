@@ -75,6 +75,15 @@
   border: 0;
 }
 
+/*
+ * Largura mínima para acomodar CPF, motorista, placa, períodos, pontuação
+ * e a nova coluna de ações sem comprimir os conteúdos.
+ */
+.ppa-blocked-drivers-page .p-datatable-wrapper>table {
+  width: 100%;
+  min-width: 1175px;
+}
+
 .ppa-page .p-datatable-wrapper {
   scrollbar-color: #a8c5b2 #eef4f0;
   scrollbar-width: thin;
@@ -266,6 +275,40 @@
   transform: translateY(-1px);
 }
 
+
+/* Ação destrutiva: remover a pontuação do período selecionado */
+.ppa-blocked-drivers-page .ppa-remove-points-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  padding: 0;
+  border: 1px solid #efc6c2;
+  border-radius: 8px;
+  background: #fff4f3;
+  color: #b42318;
+  font-size: 1.15rem;
+  cursor: pointer;
+  transition:
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    color 0.16s ease,
+    transform 0.16s ease;
+}
+
+.ppa-blocked-drivers-page .ppa-remove-points-button:hover,
+.ppa-blocked-drivers-page .ppa-remove-points-button:focus {
+  border-color: #dc8178;
+  background: #fde5e2;
+  color: #8f1710;
+  transform: translateY(-1px);
+}
+
+.ppa-blocked-drivers-page .ppa-remove-points-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.12);
+}
 
 /* Destaques de conteúdo */
 .ppa-page .ppa-document {

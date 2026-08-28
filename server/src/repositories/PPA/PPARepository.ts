@@ -2,6 +2,7 @@ import { Knex } from "knex";
 import { mssqlPpa } from "../../database";
 import { IPagination } from "../../Utils/IPaginattion";
 import { isValidField } from "../../Utils/utlis";
+import AppError from "../../models/AppError";
 
 export interface IppaReport {
 	data_inclusao: string | Date;
@@ -27,11 +28,38 @@ export interface IppaBlockedDrivers {
 	total_pontos: number;
 }
 
-export interface IppaBlockedDriversSummary {
+export interface IppaBlockedDriversHistory {
 	cpf: string;
 	motorista: string;
-	total: number;
+	total_pontos: number;
 	total_bloqueio: number;
+}
+
+interface IppaBlockedDriverRemovalSource {
+	id: number;
+	cpf: string;
+	motorista: string;
+	periodo_inicial: string | Date;
+	periodo_final: string | Date;
+	total_pontos: number | string;
+}
+
+interface IppaBlockedDriverHistory {
+	id: number;
+	total_pontos: number | string;
+	total_bloqueio: number | string;
+}
+
+export interface IppaBlockedDriverRemovalResult {
+	cpf: string;
+	motorista: string;
+	periodo_inicial: string | Date;
+	periodo_final: string | Date;
+	total_pontos_removidos: number;
+	historico_total_pontos: number;
+	historico_total_bloqueio: number;
+	registros_report_removidos: number;
+	registros_bloqueio_removidos: number;
 }
 
 interface IPPARepository {
@@ -58,6 +86,17 @@ interface IPPARepository {
 		page: number,
 		pageSize: number
 	): Promise<any | undefined>;
+
+	export_blocked_drivers_history(
+		query: Record<string, any>
+	): Promise<IppaBlockedDriversHistory[]>;
+
+	remove_blocked_driver_points(
+		cpf: string,
+		periodoInicial: string,
+		periodoFinal: string,
+		concentradorUserId: string
+	): Promise<IppaBlockedDriverRemovalResult>;
 }
 
 export class PPARepository implements IPPARepository {
@@ -171,7 +210,25 @@ export class PPARepository implements IPPARepository {
 
 	private reportFilter(queryRecord: Record<string, any>) {
 		return (qb: Knex.QueryBuilder) => {
-			if (queryRecord?.data_inclusao) {
+			const hasExportStartDate = isValidField(queryRecord?.date_execel_inicio);
+			const hasExportEndDate = isValidField(queryRecord?.date_execel_fim);
+
+			/*
+			 * Na exportação do relatório PPA o usuário escolhe um intervalo de
+			 * datas. O limite final é exclusivo no próximo dia para garantir que
+			 * todas as horas/minutos/segundos da data final sejam consideradas.
+			 *
+			 * Ex.: 08/07 a 10/07 equivale a:
+			 * data_inclusao >= 08/07 00:00:00
+			 * data_inclusao <  11/07 00:00:00
+			 */
+			if (hasExportStartDate && hasExportEndDate) {
+				qb.andWhereRaw(
+					"data_inclusao >= CAST(? AS date) AND data_inclusao < DATEADD(day, 1, CAST(? AS date))",
+					[queryRecord.date_execel_inicio, queryRecord.date_execel_fim]
+				);
+			} else if (queryRecord?.data_inclusao) {
+				/* Mantém compatibilidade com chamadas antigas do endpoint de consulta. */
 				qb.andWhereRaw("CAST(data_inclusao AS DATE) = ?", [
 					queryRecord.data_inclusao,
 				]);
@@ -261,61 +318,42 @@ export class PPARepository implements IPPARepository {
 		queryRecord: Record<string, any>,
 		page = 1,
 		pageSize = 10
-	): Promise<IPagination<IppaBlockedDriversSummary>> {
+	): Promise<IPagination<IppaBlockedDriversHistory>> {
 		const realPage = isNaN(Number(page)) || Number(page) < 1 ? 1 : Number(page);
 
 		const realPageSize =
 			isNaN(Number(pageSize)) || Number(pageSize) < 1 ? 10 : Number(pageSize);
 
-		const allowedOrderFields = ["cpf", "motorista", "total", "total_bloqueio"];
+		const allowedOrderFields = [
+			"cpf",
+			"motorista",
+			"total_pontos",
+			"total_bloqueio",
+		];
 
-		const requestedOrderField = queryRecord?.order_column ?? "total";
+		const requestedOrderField = queryRecord?.order_column ?? "total_pontos";
 
 		const orderField = allowedOrderFields.includes(requestedOrderField)
 			? requestedOrderField
-			: "total";
+			: "total_pontos";
 
 		const order = queryRecord?.order_direction === "asc" ? "asc" : "desc";
 
-		const filter = this.blockedDriversSummaryFilter(queryRecord);
+		const filter = this.blockedDriversHistoryFilter(queryRecord);
 
 		/*
-		 * Essa consulta existe somente para descobrir
-		 * quantos motoristas agrupados existem.
-		 *
-		 * Não podemos fazer COUNT(id) diretamente porque
-		 * a consulta principal possui GROUP BY cpf, motorista.
+		 * O histórico já possui um único registro consolidado por CPF.
+		 * Portanto, não há mais necessidade de GROUP BY, SUM ou COUNT
+		 * sobre motoristas_pra_bloqueio.
 		 */
-		const groupedDrivers = mssqlPpa("motoristas_pra_bloqueio")
-			.select(["cpf", "motorista"])
+		const totalQuery = mssqlPpa("motoristas_bloqueio_historico")
+			.count<{ total: string | number }[]>("id as total")
 			.modify(filter)
-			.groupBy(["cpf", "motorista"]);
-
-		const totalQuery = mssqlPpa
-			.from(groupedDrivers.as("blocked_drivers_grouped"))
-			.count<{ total: string | number }[]>("* as total")
 			.first();
 
-		/*
-		 * Consulta principal.
-		 *
-		 * Equivalente a:
-		 *
-		 * SELECT
-		 *   cpf,
-		 *   motorista,
-		 *   SUM(total_pontos) AS total,
-		 *   COUNT(*) AS total_bloqueio
-		 * FROM motoristas_pra_bloqueio
-		 * GROUP BY cpf, motorista
-		 * ORDER BY total DESC
-		 */
-		const resultsQuery = mssqlPpa("motoristas_pra_bloqueio")
-			.select(["cpf", "motorista"])
-			.sum("total_pontos as total")
-			.count("* as total_bloqueio")
+		const resultsQuery = mssqlPpa("motoristas_bloqueio_historico")
+			.select(["cpf", "motorista", "total_pontos", "total_bloqueio"])
 			.modify(filter)
-			.groupBy(["cpf", "motorista"])
 			.orderBy(orderField, order)
 			.limit(realPageSize)
 			.offset((realPage - 1) * realPageSize);
@@ -325,8 +363,7 @@ export class PPARepository implements IPPARepository {
 			| undefined;
 
 		const totalRegisters = Number(totalResult?.total) || 0;
-
-		const results = (await resultsQuery) as IppaBlockedDriversSummary[];
+		const results = (await resultsQuery) as IppaBlockedDriversHistory[];
 
 		return {
 			page: realPage,
@@ -336,7 +373,32 @@ export class PPARepository implements IPPARepository {
 		};
 	}
 
-	private blockedDriversSummaryFilter(queryRecord: Record<string, any>) {
+	async export_blocked_drivers_history(
+		queryRecord: Record<string, any>
+	): Promise<IppaBlockedDriversHistory[]> {
+		const allowedOrderFields = [
+			"cpf",
+			"motorista",
+			"total_pontos",
+			"total_bloqueio",
+		];
+
+		const requestedOrderField = queryRecord?.order_column ?? "total_pontos";
+		const orderField = allowedOrderFields.includes(requestedOrderField)
+			? requestedOrderField
+			: "total_pontos";
+
+		const order = queryRecord?.order_direction === "asc" ? "asc" : "desc";
+
+		const results = await mssqlPpa("motoristas_bloqueio_historico")
+			.select(["cpf", "motorista", "total_pontos", "total_bloqueio"])
+			.modify(this.blockedDriversHistoryFilter(queryRecord))
+			.orderBy(orderField, order);
+
+		return results as IppaBlockedDriversHistory[];
+	}
+
+	private blockedDriversHistoryFilter(queryRecord: Record<string, any>) {
 		return (qb: Knex.QueryBuilder) => {
 			if (isValidField(queryRecord?.motorista)) {
 				qb.andWhere("motorista", "like", `%${queryRecord.motorista}%`);
@@ -346,5 +408,154 @@ export class PPARepository implements IPPARepository {
 				qb.andWhere("cpf", "like", `%${queryRecord.cpf}%`);
 			}
 		};
+	}
+
+	private normalizeDateTimeForSql(value: string, fieldName: string): string {
+		const normalized = String(value || "")
+			.trim()
+			.replace(" ", "T")
+			.replace(/Z$/i, "")
+			.replace(/([+-]\d{2}:\d{2})$/, "");
+
+		if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,7})?$/.test(normalized)) {
+			throw new AppError(`${fieldName} inválido.`, 400);
+		}
+
+		return normalized;
+	}
+
+	async remove_blocked_driver_points(
+		cpf: string,
+		periodoInicial: string,
+		periodoFinal: string,
+		concentradorUserId: string
+	): Promise<IppaBlockedDriverRemovalResult> {
+		const periodoInicialSql = this.normalizeDateTimeForSql(
+			periodoInicial,
+			"Período inicial"
+		);
+		const periodoFinalSql = this.normalizeDateTimeForSql(
+			periodoFinal,
+			"Período final"
+		);
+
+		if (periodoInicialSql > periodoFinalSql) {
+			throw new AppError(
+				"O período inicial não pode ser maior que o período final.",
+				400
+			);
+		}
+
+		return mssqlPpa.transaction(async (trx) => {
+			/*
+			 * Localiza EXATAMENTE a linha selecionada em Motoristas para bloqueio.
+			 * O CPF sozinho não é suficiente porque o mesmo motorista pode possuir
+			 * vários bloqueios em períodos diferentes.
+			 */
+			const blockedDriver = (await trx("motoristas_pra_bloqueio")
+				.select([
+					"id",
+					"cpf",
+					"motorista",
+					"periodo_inicial",
+					"periodo_final",
+					"total_pontos",
+				])
+				.where("cpf", cpf)
+				.andWhereRaw("periodo_inicial = CAST(? AS datetime2)", [
+					periodoInicialSql,
+				])
+				.andWhereRaw("periodo_final = CAST(? AS datetime2)", [periodoFinalSql])
+				.first()) as IppaBlockedDriverRemovalSource | undefined;
+
+			if (!blockedDriver) {
+				throw new AppError(
+					"Registro de bloqueio não encontrado para o CPF e período informados.",
+					404
+				);
+			}
+
+			const totalPontosRemovidos = Number(blockedDriver.total_pontos || 0);
+
+			/*
+			 * O histórico possui apenas um registro consolidado por CPF.
+			 * Se já existir, somamos os pontos desta linha e incrementamos em 1
+			 * a quantidade de bloqueios removidos.
+			 */
+			const history = (await trx("motoristas_bloqueio_historico")
+				.select(["id", "total_pontos", "total_bloqueio"])
+				.where("cpf", cpf)
+				.first()) as IppaBlockedDriverHistory | undefined;
+
+			let historicoTotalPontos: number;
+			let historicoTotalBloqueio: number;
+
+			if (history) {
+				historicoTotalPontos =
+					Number(history.total_pontos || 0) + totalPontosRemovidos;
+				historicoTotalBloqueio = Number(history.total_bloqueio || 0) + 1;
+
+				await trx("motoristas_bloqueio_historico")
+					.where("id", history.id)
+					.update({
+						motorista: blockedDriver.motorista,
+						total_pontos: historicoTotalPontos,
+						total_bloqueio: historicoTotalBloqueio,
+						concentrador_user_id: concentradorUserId,
+					});
+			} else {
+				historicoTotalPontos = totalPontosRemovidos;
+				historicoTotalBloqueio = 1;
+
+				await trx("motoristas_bloqueio_historico").insert({
+					cpf: blockedDriver.cpf,
+					motorista: blockedDriver.motorista,
+					total_pontos: historicoTotalPontos,
+					total_bloqueio: historicoTotalBloqueio,
+					concentrador_user_id: concentradorUserId,
+				});
+			}
+
+			/*
+			 * Remove somente as pontuações deste CPF que pertencem ao intervalo
+			 * EXATO do bloqueio selecionado, incluindo hora/minuto/segundo.
+			 * O BETWEEN do SQL Server é inclusivo nas duas extremidades.
+			 */
+			const registrosReportRemovidos = await trx("report")
+				.where("cpf_motorista", cpf)
+				.andWhereRaw(
+					"data_inclusao BETWEEN CAST(? AS datetime2) AND CAST(? AS datetime2)",
+					[periodoInicialSql, periodoFinalSql]
+				)
+				.del();
+
+			if (Number(registrosReportRemovidos) === 0) {
+				throw new AppError(
+					"Nenhuma pontuação foi encontrada na tabela report para o CPF e período informados.",
+					404
+				);
+			}
+
+			/*
+			 * Remove somente a linha de motoristas_pra_bloqueio que originou
+			 * esta ação. Usamos o ID recuperado pela combinação CPF + períodos
+			 * para não atingir outro bloqueio do mesmo motorista.
+			 */
+			const registrosBloqueioRemovidos = await trx("motoristas_pra_bloqueio")
+				.where("id", blockedDriver.id)
+				.del();
+
+			return {
+				cpf: blockedDriver.cpf,
+				motorista: blockedDriver.motorista,
+				periodo_inicial: blockedDriver.periodo_inicial,
+				periodo_final: blockedDriver.periodo_final,
+				total_pontos_removidos: totalPontosRemovidos,
+				historico_total_pontos: historicoTotalPontos,
+				historico_total_bloqueio: historicoTotalBloqueio,
+				registros_report_removidos: Number(registrosReportRemovidos) || 0,
+				registros_bloqueio_removidos: Number(registrosBloqueioRemovidos) || 0,
+			};
+		});
 	}
 }

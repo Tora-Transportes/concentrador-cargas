@@ -14,7 +14,7 @@ import ServicePPA from "src/services/PPA/ServicePPA";
 import { Toast } from "primereact/toast";
 import { STORAGE_COLUMNS_REPORTS_BLOQUEIO } from "./constants";
 
-const RelatorioBlockedDriversSummary = () => {
+const HistoricoBloqueiosMotoristas = () => {
 	const defaultCargas = {
 		page: 1,
 		total_pages: 1,
@@ -29,9 +29,6 @@ const RelatorioBlockedDriversSummary = () => {
 	const [itensPerPage, setItensPerPage] = useState(10);
 	const [totalRegisters, setTotalRegisters] = useState(0);
 	const [lastOptions, setLastOptions] = useState({});
-
-	const columnsResult = getColumns();
-	const columnsPadrao = columnsResult.columnsRelatorio;
 
 	function resetView() {
 		localStorage.removeItem(STORAGE_COLUMNS_REPORTS_BLOQUEIO);
@@ -49,7 +46,7 @@ const RelatorioBlockedDriversSummary = () => {
 			setFiltroAtual({ filters, orderBy, page });
 
 			try {
-				const { data } = await ServicePPA.searchBlockedDriversSumary({
+				const { data } = await ServicePPA.searchBlockedDriversHistory({
 					...filters,
 					page,
 					limit: itensPerPage,
@@ -72,7 +69,7 @@ const RelatorioBlockedDriversSummary = () => {
 					severity: "error",
 					summary: "Erro ao carregar dados",
 					detail:
-						"Não foi possível carregar o relatório de bloqueios por motorista.",
+						"Não foi possível carregar o histórico de bloqueios por motorista.",
 					life: 4000,
 				});
 			} finally {
@@ -82,6 +79,9 @@ const RelatorioBlockedDriversSummary = () => {
 		[dispatchCargas, itensPerPage]
 	);
 
+	const columnsResult = getColumns();
+	const columnsPadrao = columnsResult.columnsRelatorio;
+
 	async function handleExportExcel() {
 		setLoading(true);
 		const { filters, orderBy } = lastOptions;
@@ -90,13 +90,13 @@ const RelatorioBlockedDriversSummary = () => {
 			order_column: orderBy?.column,
 			order_direction: orderBy?.direction,
 		};
-		const response = await ServicePPA.exportToXlsx(options);
+		const response = await ServicePPA.exportBlockedDriversHistoryXlsx(options);
 		const url = window.URL.createObjectURL(new Blob([response.data]));
 		const link = document.createElement("a");
 		link.href = url;
 		link.setAttribute(
 			"download",
-			`RELATORIO-PPA-MOTORISTAS-REPORT-BLOQUEADOS_${new Date().getTime()}.xlsx`
+			`HISTORICO-PPA-BLOQUEIOS-MOTORISTAS_${new Date().getTime()}.xlsx`
 		);
 		link.click();
 		setModalShowExcel(false);
@@ -127,4 +127,4 @@ const RelatorioBlockedDriversSummary = () => {
 	);
 };
 
-export default RelatorioBlockedDriversSummary;
+export default HistoricoBloqueiosMotoristas;

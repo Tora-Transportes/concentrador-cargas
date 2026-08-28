@@ -267,7 +267,15 @@ routes.get("/ppa/reports", PPAController.list_reports);
 routes.get("/ppa/blockade", PPAController.list_blocked_drivers);
 routes.get("/ppa/reports/export", PPAController.export_reports);
 routes.get("/ppa/blockade/export", PPAController.export_blocked_drivers);
+routes.get(
+  "/ppa/blockade/summary/export",
+  PPAController.export_blocked_drivers_history
+);
 routes.get("/ppa/blockade/summary", PPAController.list_blocked_drivers_summary);
+routes.delete(
+  "/ppa/blockade/summary/:cpf",
+  PPAController.remove_blocked_driver_points
+);
 
 //PPO
 routes.get("/ppo/avaliacoes", PPOController.avaliacoes);

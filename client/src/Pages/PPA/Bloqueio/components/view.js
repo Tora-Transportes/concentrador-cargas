@@ -28,7 +28,7 @@ function ViewReport({
 	const totalFormatted = Number(totalRegisters || 0).toLocaleString("pt-BR");
 
 	return (
-		<main className="ppa-page">
+		<main className="ppa-page ppa-blocked-drivers-page">
 			<Container fluid className="ppa-page__container">
 				<header className="ppa-page__hero">
 					<div className="ppa-page__hero-main">

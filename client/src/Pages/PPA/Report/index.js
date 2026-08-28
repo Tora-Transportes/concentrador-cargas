@@ -1,10 +1,4 @@
-import React, {
-	useCallback,
-	useEffect,
-	useReducer,
-	useRef,
-	useState,
-} from "react";
+import React, { useCallback, useReducer, useRef, useState } from "react";
 import Menusuperior from "../../Components/MenuSuperior/menusuperior";
 import ViewReport from "./components/view";
 import { getColumns } from "./components/columns";
@@ -23,7 +17,6 @@ const RelatorioReports = () => {
 	const cargasReducer = useCallback(factoryReducerCargas(defaultCargas), []);
 	const toast = useRef(null);
 	const [cargas, dispatchCargas] = useReducer(cargasReducer, defaultCargas);
-	const [, setFiltroAtual] = useState(null);
 	const [modalShowExcel, setModalShowExcel] = useState(false);
 	const [LoadingScreen, setLoading] = useLoadingScreen();
 	const [itensPerPage, setItensPerPage] = useState(10);
@@ -45,8 +38,7 @@ const RelatorioReports = () => {
 			setLastOptions(options);
 
 			const { column, direction } = options.orderBy ?? {};
-			const { filters = {}, orderBy, page = 1 } = options;
-			setFiltroAtual({ filters, orderBy, page });
+			const { filters = {}, page = 1 } = options;
 
 			try {
 				const { data } = await ServicePPA.search({
@@ -80,29 +72,46 @@ const RelatorioReports = () => {
 		[dispatchCargas]
 	);
 
-	async function handleExportExcel() {
+	async function handleExportExcel(date_execel_inicio, date_execel_fim) {
 		setLoading(true);
-		const { filters, orderBy } = lastOptions;
-		const options = {
-			...filters,
-			order_column: orderBy?.column,
-			order_direction: orderBy?.direction,
-		};
-		const response = await ServicePPA.exportToXlsx(options);
-		const url = window.URL.createObjectURL(new Blob([response.data]));
-		const link = document.createElement("a");
-		link.href = url;
-		link.setAttribute(
-			"download",
-			`RELATORIO-PPA-MOTORISTAS_${new Date().getTime()}.xlsx`
-		);
-		link.click();
-		setModalShowExcel(false);
-		setLoading(false);
+
+		try {
+			const { filters = {}, orderBy } = lastOptions ?? {};
+			const options = {
+				...filters,
+				order_column: orderBy?.column,
+				order_direction: orderBy?.direction,
+				date_execel_inicio,
+				date_execel_fim,
+			};
+
+			const response = await ServicePPA.exportToXlsx(options);
+			const url = window.URL.createObjectURL(new Blob([response.data]));
+			const link = document.createElement("a");
+			link.href = url;
+			link.setAttribute(
+				"download",
+				`RELATORIO-PPA-MOTORISTAS_${new Date().getTime()}.xlsx`
+			);
+			document.body.appendChild(link);
+			link.click();
+			link.remove();
+			window.URL.revokeObjectURL(url);
+			setModalShowExcel(false);
+		} catch (error) {
+			console.error("Erro ao exportar relatório PPA:", error);
+			toast.current?.show({
+				severity: "error",
+				summary: "Erro ao exportar relatório",
+				detail:
+					error?.response?.data?.message ||
+					"Não foi possível exportar o relatório.",
+				life: 5000,
+			});
+		} finally {
+			setLoading(false);
+		}
 	}
-	useEffect(() => {
-		if (modalShowExcel) handleExportExcel();
-	}, [modalShowExcel]);
 
 	return (
 		<>
@@ -117,7 +126,7 @@ const RelatorioReports = () => {
 				itensPerPage={itensPerPage}
 				setItensPerPage={setItensPerPage}
 				totalRegisters={totalRegisters}
-				//modalShowExcel={modalShowExcel}
+				modalShowExcel={modalShowExcel}
 				setModalShowExcel={setModalShowExcel}
 				resetView={resetView}
 			/>

@@ -12,6 +12,7 @@ import {
 import { SideBarFuncition } from "../components/tabela/sideBar";
 import { Sidebar } from "primereact/sidebar";
 import { STORAGE_COLUMNS_REPORTS } from "../constants";
+import ModalDataExcel from "../components/modal/exportExcel";
 
 function ViewReport({
 	columns = [],
@@ -21,14 +22,24 @@ function ViewReport({
 	itensPerPage = 10,
 	setItensPerPage,
 	resetView,
+	modalShowExcel,
 	setModalShowExcel,
 	handleExportExcel,
 }) {
 	const [visibleLeft, setVisibleLeft] = useState(false);
 	const totalFormatted = Number(totalRegisters || 0).toLocaleString("pt-BR");
 
+	const exportExcelDate = (date_execel_inicio, date_execel_fim) => {
+		handleExportExcel(date_execel_inicio, date_execel_fim);
+	};
+
 	return (
 		<main className="ppa-page">
+			<ModalDataExcel
+				show={modalShowExcel}
+				exportExcelDate={exportExcelDate}
+				onHide={() => setModalShowExcel(false)}
+			/>
 			<Container fluid className="ppa-page__container">
 				<header className="ppa-page__hero">
 					<div className="ppa-page__hero-main">
@@ -87,7 +98,6 @@ function ViewReport({
 						setItensPerPage={setItensPerPage}
 						setModalShowExcel={setModalShowExcel}
 						setVisibleLeft={setVisibleLeft}
-						handleExportExcel={handleExportExcel}
 						resetView={resetView}
 					/>
 				</Sidebar>

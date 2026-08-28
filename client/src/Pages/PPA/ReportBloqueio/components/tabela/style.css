@@ -429,7 +429,7 @@
 }
 
 /*
- * O relatório consolidado possui apenas quatro colunas.
+ * O relatório consolidado possui quatro colunas.
  * Limitamos a largura útil da tabela para evitar que o PrimeReact espalhe
  * as colunas por toda a largura do card em monitores grandes.
  */
@@ -460,7 +460,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-@media only screen and (max-width: 1050px) {
+@media only screen and (max-width: 930px) {
   .ppa-blocked-report-page .p-datatable-wrapper>table {
     margin-left: 0;
   }

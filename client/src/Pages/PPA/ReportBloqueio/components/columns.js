@@ -20,11 +20,11 @@ export const getColumns = () => {
 			style: { width: "380px", minWidth: "380px", maxWidth: "380px" },
 		},
 		{
-			name: "total",
-			description: "Pontuação total",
+			name: "total_pontos",
+			description: "Pontos removidos",
 			selector: (row) => (
 				<span className="ppa-score ppa-score--blocked-report">
-					{formatNumber(row.total)}
+					{formatNumber(row.total_pontos)}
 				</span>
 			),
 			showFilter: false,
@@ -33,7 +33,7 @@ export const getColumns = () => {
 		},
 		{
 			name: "total_bloqueio",
-			description: "Nº de bloqueios",
+			description: "Bloqueios removidos",
 			selector: (row) => (
 				<span className="ppa-block-count">
 					{Number(row.total_bloqueio || 0).toLocaleString("pt-BR")}

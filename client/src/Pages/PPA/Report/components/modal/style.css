@@ -2,6 +2,7 @@
   font-family: "Poppins", sans-serif;
   margin-top: 7rem;
 }
+
 #modal-header {
   margin-top: -0.5rem;
   margin-bottom: -1.5rem;
@@ -13,6 +14,7 @@
   color: #00652e;
   margin-left: 25%;
 }
+
 .card-body-sit-cargas {
   margin-bottom: -1.2rem;
 }
@@ -20,11 +22,13 @@
 .div-situação-cargas {
   display: flex;
 }
+
 #desc-legenda-cargas {
   font-size: 13.5px;
   margin-left: 1rem;
   margin-bottom: 0.1rem;
 }
+
 #modal-footer {
   margin-top: -1rem;
   border: #fff !important;
@@ -55,6 +59,7 @@ div .button-export-excel {
 .dialog-modal-import {
   width: 50%;
 }
+
 .calendar-data-inicio button,
 .calendar-data-fim button {
   background-color: #2675ebcc;
@@ -65,7 +70,7 @@ div .button-export-excel {
 .col-card-excel-fim {
   margin: 0;
   width: 50% !important;
-  text-align: end;
+  text-align: start;
   margin-bottom: 15px;
 }
 
@@ -77,9 +82,11 @@ div .button-export-excel {
   margin-right: 0.6rem;
   height: 4rem;
 }
+
 label {
   margin-top: 0.2rem;
 }
+
 .modal-input-filial {
   border: none;
   display: grid;
@@ -87,6 +94,7 @@ label {
   height: 1.8rem;
   width: 100%;
 }
+
 .card-body-excel {
   display: flexbox;
 }
@@ -102,6 +110,7 @@ label {
     width: 85% !important;
     margin-left: 10%;
   }
+
   #modal-header {
     width: 100%;
     margin-bottom: -1rem;
@@ -115,6 +124,7 @@ label {
     width: 80% !important;
     margin-left: 10%;
   }
+
   #modal-header {
     width: 100%;
     margin-bottom: -1rem;
@@ -138,6 +148,7 @@ label {
     width: 60% !important;
     margin-left: 15%;
   }
+
   #modal-header {
     width: 85%;
     margin-bottom: -1rem;
@@ -151,6 +162,7 @@ label {
     width: 80% !important;
     margin-left: 10%;
   }
+
   .modal-title-situ-carg {
     color: #00652e;
     margin-left: 20%;
@@ -190,6 +202,7 @@ label {
     width: 60% !important;
     margin-left: 15%;
   }
+
   #modal-header {
     width: 80%;
     margin-bottom: -1rem;
@@ -214,6 +227,7 @@ label {
     margin-bottom: 3rem;
     font-family: "Poppins", sans-serif;
   }
+
   #modal-header {
     width: 80%;
     margin-bottom: -1rem;
@@ -224,6 +238,7 @@ label {
     width: 70%;
   }
 }
+
 @media screen and (min-width: 846px) and (max-width: 1120px) {
   .modal-situation-cargas {
     font-family: "Poppins", sans-serif;
@@ -232,12 +247,14 @@ label {
     margin-bottom: 3rem;
     width: 40% !important;
   }
+
   #modal-header {
     width: 80%;
     margin-bottom: -1rem;
     border: #fff;
   }
 }
+
 @media screen and (min-width: 486px) and (max-width: 1120px) {
   .modal-title-situ-carg {
     font-size: 21px;
@@ -246,5 +263,123 @@ label {
 
   #desc-legenda-cargas {
     font-size: 15px;
+  }
+}
+
+.ppa-export-period-hint {
+  display: block;
+  margin-top: 0.15rem;
+  color: #5f6f67;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  text-align: left;
+}
+
+/* Exportação PPA: filtro de período opcional */
+.ppa-export-period-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  width: 100%;
+  padding: 1rem 1.1rem;
+  border: 1px solid #d9e7df;
+  border-radius: 10px;
+  background: #f7fbf8;
+  text-align: left;
+}
+
+.ppa-export-period-option__copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.ppa-export-period-option__copy strong {
+  color: #075e32;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.ppa-export-period-option__copy span {
+  color: #66756d;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.ppa-export-period-switch {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: 46px;
+  height: 25px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.ppa-export-period-switch input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.ppa-export-period-switch__slider {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: #b8c5bd;
+  transition: background-color 0.18s ease;
+}
+
+.ppa-export-period-switch__slider::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.22);
+  transition: transform 0.18s ease;
+}
+
+.ppa-export-period-switch input:checked+.ppa-export-period-switch__slider {
+  background: #08783f;
+}
+
+.ppa-export-period-switch input:checked+.ppa-export-period-switch__slider::before {
+  transform: translateX(21px);
+}
+
+.ppa-export-period-switch input:focus-visible+.ppa-export-period-switch__slider {
+  box-shadow: 0 0 0 3px rgba(8, 120, 63, 0.16);
+}
+
+.ppa-export-period-fields {
+  width: 100%;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5ece8;
+}
+
+.ppa-export-date-label {
+  display: block;
+  margin: 0 0 0.35rem;
+  color: #42564b;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+@media screen and (max-width: 575px) {
+  .ppa-export-period-option {
+    align-items: flex-start;
+  }
+
+  .ppa-export-period-switch {
+    margin-top: 0.15rem;
   }
 }
