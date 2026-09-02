@@ -132,6 +132,7 @@ class PPAController implements IPPAController {
       "Placa da carreta": report.placa_carreta,
       "Cidade de origem": report.cidade_origem,
       "Cidade de destino": report.cidade_destino,
+      "Referencia da posição": report.referencia_posicao,
     }));
 
     const fileName = `RELATORIO_PPA-${Date.now()}.xlsx`;

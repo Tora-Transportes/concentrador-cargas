@@ -17,6 +17,7 @@ export interface IppaReport {
 	placa_carreta: string;
 	cidade_origem: string;
 	cidade_destino: string;
+	referencia_posicao: string;
 }
 
 export interface IppaBlockedDrivers {
