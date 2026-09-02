@@ -125,6 +125,7 @@ function Manual() {
 						observacaoExclusao,
 						false
 					);
+
 					if (retorno.status == 200) {
 						await ServiceCargas.delete({
 							id: formik.values.id,
@@ -139,7 +140,13 @@ function Manual() {
 							"error"
 						);
 					} else {
-						await swal("Error", retorno.data.response.message, "error");
+						await swal(
+							"Error",
+							retorno.data?.response?.message
+								? retorno.data.response.message
+								: retorno.data,
+							"error"
+						);
 					}
 				} else {
 					await ServiceCargas.delete({

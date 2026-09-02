@@ -1,6 +1,7 @@
 import React, {
 	useCallback,
 	useEffect,
+	useMemo,
 	useReducer,
 	useRef,
 	useState,
@@ -18,6 +19,7 @@ import {
 	permissoesVisualizacaoPPO,
 	getPermissoesVisualizacaoPPO,
 } from "src/Pages/Utils/validationPermissionUser";
+import { STORAGE_COLUMNS_RELATORIO_MOTORISTAS } from "./constants";
 
 const RelatorioMotoristas = () => {
 	const defaultCargas = {
@@ -36,11 +38,14 @@ const RelatorioMotoristas = () => {
 	const [lastOptions, setLastOptions] = useState({});
 	const [grupos, setGrupos] = useState([]);
 
-	const columnsResult = getColumns(grupos, load);
-	const columnsPadrao = columnsResult.columnsRelatorio;
+	const columnsPadrao = useMemo(() => {
+		const columnsResult = getColumns(grupos, load);
+		return columnsResult.columnsRelatorio;
+	}, [grupos, load]);
 
 	function resetView() {
-		localStorage.removeItem("table-columns");
+		localStorage.removeItem(STORAGE_COLUMNS_RELATORIO_MOTORISTAS);
+		localStorage.removeItem("undefined"); // limpa bug antigo
 		location.reload();
 	}
 

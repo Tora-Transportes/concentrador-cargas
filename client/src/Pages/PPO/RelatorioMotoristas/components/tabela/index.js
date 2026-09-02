@@ -19,8 +19,9 @@ function TabelaCargas({
 	itensPerPage,
 	tipoDeBuscaPorPagina,
 }) {
+	const storageKey = tipoDeBuscaPorPagina || "default-table-columns";
 	const [data, setData] = useState([]);
-	const [storage, setStorage] = useLocalStorage(tipoDeBuscaPorPagina, columns);
+	const [storage, setStorage] = useLocalStorage(storageKey, columns);
 	const [page, setPage] = useState(1);
 	const [totalPages, setTotalPages] = useState(1);
 	const [sortOrder, setSortOrder] = useState(-1);

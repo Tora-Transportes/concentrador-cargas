@@ -5,7 +5,7 @@ body {
 }
 
 body::-webkit-scrollbar {
-  display: none; 
+  display: none;
 }
 
 .class-ul {
@@ -38,11 +38,13 @@ body::-webkit-scrollbar {
   padding: 14px;
   margin-top: -7px;
 }
+
 #link-rel {
   margin-top: 0.1px;
   color: white;
   text-decoration: none;
 }
+
 .body-relatorios {
   font-family: "Poppins", sans-serif;
 }
@@ -53,12 +55,14 @@ div .h1-relatorios {
   text-align: center;
   margin-top: 2vh;
 }
+
 .subtitle-relatorios {
   text-align: center;
   margin-top: 3vh;
   margin-bottom: 5vh;
   color: #3f4245;
 }
+
 #button-relatorios {
   border-radius: 30px;
   position: relative;
@@ -79,6 +83,7 @@ div .h1-relatorios {
   margin-left: auto;
   margin-right: auto;
 }
+
 .dropdown-content-veic2 a {
   margin-top: 1.5rem;
   color: white;
@@ -173,6 +178,7 @@ div .h1-relatorios {
   justify-content: space-between;
   background: #00652e;
 }
+
 #headerDev {
   box-sizing: border-box;
   display: flex;
@@ -182,6 +188,7 @@ div .h1-relatorios {
   justify-content: space-between;
   background: #b22222;
 }
+
 #menu {
   display: flex;
   list-style: none;
@@ -192,6 +199,7 @@ div .h1-relatorios {
   display: block;
   padding: 0.5rem;
 }
+
 #btn-mobile {
   display: none;
 }
@@ -253,6 +261,7 @@ div .class-app-icons {
     font-size: 2.3rem;
     margin-top: 3rem;
   }
+
   #button-relatorios {
     font-size: 0.8rem;
   }
@@ -268,6 +277,7 @@ div .class-app-icons {
   h1.title-indicadorOperacional-app {
     font-size: 1.8rem;
   }
+
   .link-RelatorioApp-Title-padrao,
   .link-RelatorioApp-Title-CSN {
     font-size: 1rem;
@@ -283,6 +293,7 @@ div .class-app-icons {
   .title-indicadorOperacional-app {
     font-size: 2.1rem;
   }
+
   .link-RelatorioApp-Title-padrao,
   .link-RelatorioApp-Title-CSN {
     font-size: 1rem;
@@ -293,6 +304,7 @@ div .class-app-icons {
   .title-indicadorOperacional-app {
     font-size: 2.1rem;
   }
+
   .link-RelatorioApp-Title-padrao,
   .link-RelatorioApp-Title-CSN {
     font-size: 1rem;
@@ -303,6 +315,7 @@ div .class-app-icons {
   #btn-mobile {
     display: block;
   }
+
   #nav.active #menu {
     height: calc(100vh - 50px);
     visibility: visible;
@@ -323,6 +336,7 @@ div .class-app-icons {
     width: 30px;
     color: #ffff;
   }
+
   #hamburguer::after,
   #hamburguer::before {
     content: "";
@@ -335,6 +349,7 @@ div .class-app-icons {
     position: relative;
     background-color: transparent;
   }
+
   #nav.active #hamburguer {
     border-top-color: transparent;
   }
@@ -359,6 +374,7 @@ div .class-app-icons {
   .icon-app-padrao {
     margin-left: -0.5rem;
   }
+
   .link-RelatorioApp-Title-padrao,
   .link-RelatorioApp-Title-CSN {
     margin-left: -1rem;
@@ -369,6 +385,7 @@ div .class-app-icons {
   #btn-mobile {
     display: block;
   }
+
   #nav.active #menu {
     height: calc(95vh - 50px);
     visibility: visible;
@@ -389,6 +406,7 @@ div .class-app-icons {
     width: 30px;
     color: #ffff;
   }
+
   #hamburguer::after,
   #hamburguer::before {
     content: "";
@@ -399,6 +417,7 @@ div .class-app-icons {
     margin-top: 5px;
     position: relative;
   }
+
   #nav.active #hamburguer {
     border-top-color: transparent;
   }
@@ -430,6 +449,7 @@ div .class-app-icons {
     background: none;
     cursor: pointer;
   }
+
   #menu {
     display: block;
     position: absolute;
@@ -469,6 +489,7 @@ div .class-app-icons {
     width: 30px;
     color: #ffff;
   }
+
   #hamburguer::after,
   #hamburguer::before {
     content: "";
@@ -479,6 +500,7 @@ div .class-app-icons {
     margin-top: 5px;
     position: relative;
   }
+
   #nav.active #hamburguer {
     border-top-color: transparent;
   }
@@ -502,5 +524,62 @@ div .class-app-icons {
   font-size: 15px;
   display: flex;
   align-items: center;
-  justify-content: space-between; 
+  justify-content: space-between;
+}
+
+/* Estado ativo do menu conforme a rota atual */
+#header .menu-item-active,
+#header .menu-item-active:hover,
+#header .menu-item-active:focus {
+  background: #03410b;
+  border-radius: 30px;
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+#headerDev .menu-item-active,
+#headerDev .menu-item-active:hover,
+#headerDev .menu-item-active:focus {
+  background: #784c30;
+  border-radius: 30px;
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.dropdown-content a.submenu-item-active,
+.dropdown-content a.submenu-item-active:hover,
+.dropdown-content a.submenu-item-active:focus {
+  background: #00652e;
+  color: #fff;
+  font-weight: 500;
+}
+
+.dropdown-content a.submenu-item-active::after {
+  content: "•";
+  margin-left: 0.75rem;
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.dropdown-content {
+  border: 1px solid rgba(0, 101, 46, 0.12);
+}
+
+.dropdown-content a {
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+@media only screen and (max-width: 1014px) {
+  #headerDev #menu {
+    background: #b22222;
+  }
+
+  #header #menu {
+    background: #00652e;
+  }
+
+  #header .menu-item-active,
+  #headerDev .menu-item-active {
+    border-radius: 8px;
+  }
 }

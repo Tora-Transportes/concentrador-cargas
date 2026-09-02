@@ -1,0 +1,467 @@
+/* Configurações e ações da tabela */
+.font-sidebar {
+  margin-left: 0 !important;
+  font-size: 0.84rem !important;
+}
+
+.icon-leg,
+.icon-import,
+.icon-export-table,
+.icon-redef {
+  margin-right: 0.4rem;
+  margin-left: 0;
+}
+
+.header-table {
+  align-items: center;
+}
+
+.header-table-col-buttons {
+  text-align: left;
+}
+
+.input-config-tab {
+  display: flex;
+  justify-content: center;
+}
+
+.button-input-multiselect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.9rem;
+  height: 3rem;
+  margin-top: 5px;
+  border: 1px solid #d7e5dc;
+  border-radius: 8px 0 0 8px;
+  background: #edf6f0;
+  color: #00652e;
+  transition: background-color 0.18s ease;
+}
+
+.button-input-multiselect:hover {
+  background: #e1efe6;
+}
+
+.dropLines {
+  width: 100%;
+  min-height: 2.85rem;
+  border-radius: 8px;
+}
+
+.dropLines span {
+  margin: auto;
+  padding-block: 3px;
+}
+
+.paginator-table-col {
+  display: none;
+}
+
+/* Estrutura principal da DataTable */
+.ppa-page .ppa-table-row {
+  width: 100%;
+}
+
+.ppa-page .datatable-responsive-gridCargas {
+  width: 100%;
+  overflow-x: auto;
+  background: #fff;
+}
+
+.ppa-page #Tabela-coordenadas {
+  width: 100%;
+  margin: 0;
+  border: 0;
+}
+
+.ppa-page .p-datatable-wrapper {
+  scrollbar-color: #a8c5b2 #eef4f0;
+  scrollbar-width: thin;
+}
+
+.ppa-page .p-datatable-wrapper::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+.ppa-page .p-datatable-wrapper::-webkit-scrollbar-track {
+  background: #eef4f0;
+}
+
+.ppa-page .p-datatable-wrapper::-webkit-scrollbar-thumb {
+  border: 2px solid #eef4f0;
+  border-radius: 999px;
+  background: #a8c5b2;
+}
+
+.ppa-page .p-datatable .p-datatable-thead>tr>th {
+  border-width: 0 0 1px;
+  border-color: #dce7e0;
+  color: #07582b;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.ppa-page .p-datatable .p-datatable-thead>tr:first-child>th {
+  padding: 0.95rem 0.8rem;
+  background: #edf6f0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.015em;
+}
+
+.ppa-page .p-datatable .p-datatable-thead>tr:nth-child(2)>th {
+  padding: 0.7rem 0.65rem;
+  background: #f8fbf9;
+}
+
+.ppa-page .p-datatable .p-column-header-content {
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.ppa-page .p-datatable .p-sortable-column:not(.p-highlight):hover {
+  background: #e2f0e7;
+  color: #03451f;
+}
+
+.ppa-page .p-datatable .p-sortable-column.p-highlight {
+  background: #dceee3;
+  color: #003f1c;
+}
+
+.ppa-page .p-datatable .p-sortable-column .p-sortable-column-icon {
+  color: #247347;
+  font-size: 0.9rem;
+}
+
+.ppa-page .p-datatable .p-datatable-tbody>tr {
+  color: #243129;
+  font-size: 0.79rem;
+}
+
+/*
+ * Existem estilos globais antigos no projeto que aplicam "lavender"
+ * diretamente nas células (td). Por isso, a alternância e o hover
+ * precisam estilizar o td, e não somente o tr.
+ */
+.ppa-page .datatable-responsive-gridCargas .p-datatable-responsive-grid .p-datatable-tbody>tr>td {
+  padding: 0.78rem 0.75rem;
+  border-width: 0 0 1px;
+  border-color: #e7ede9;
+  color: #27352c;
+  text-align: center;
+  vertical-align: middle;
+  transition: background-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.ppa-page .datatable-responsive-gridCargas .p-datatable-responsive-grid .p-datatable-tbody>tr:nth-child(odd)>td {
+  background-color: #ffffff !important;
+}
+
+.ppa-page .datatable-responsive-gridCargas .p-datatable-responsive-grid .p-datatable-tbody>tr:nth-child(even)>td {
+  background-color: #f3f8f5 !important;
+}
+
+.ppa-page .datatable-responsive-gridCargas .p-datatable-responsive-grid .p-datatable-tbody>tr:not(.p-datatable-emptymessage):hover>td {
+  background-color: #e4f3e9 !important;
+}
+
+.ppa-page .datatable-responsive-gridCargas .p-datatable-responsive-grid .p-datatable-tbody>tr:not(.p-datatable-emptymessage):hover>td:first-child {
+  box-shadow: inset 4px 0 0 #168347;
+}
+
+.ppa-page .datatable-responsive-gridCargas .p-datatable-responsive-grid .p-datatable-tbody>tr.p-datatable-emptymessage>td {
+  background-color: #ffffff !important;
+  box-shadow: none;
+}
+
+.ppa-page .p-datatable .p-datatable-tbody>tr:last-child>td {
+  border-bottom: 0;
+}
+
+.ppa-page .p-datatable .p-datatable-emptymessage>td {
+  padding: 2.5rem 1rem;
+  background: #fff;
+  color: #69766e;
+  font-size: 0.88rem;
+}
+
+.ppa-page .p-datatable .p-datatable-tbody>tr>td .p-column-title {
+  display: none;
+}
+
+/* Campos de filtro */
+.ppa-page .p-column-filter-row {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.ppa-page .p-column-filter-row .p-column-filter-element {
+  width: 100%;
+}
+
+.ppa-page .p-column-filter-row .p-column-filter-menu-button,
+.ppa-page .p-column-filter-row .p-column-filter-clear-button {
+  display: none;
+}
+
+.ppa-page .p-column-filter,
+.ppa-page .p-column-filter-row .form-control,
+.ppa-page .p-column-filter-row .p-inputtext {
+  width: 100%;
+  min-width: 8rem;
+  height: 2.45rem;
+  border: 1px solid #ccd9d1;
+  border-radius: 8px;
+  background: #fff;
+  color: #28362d;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.78rem;
+  box-shadow: none;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.ppa-page .p-column-filter-row .form-control:hover,
+.ppa-page .p-column-filter-row .p-inputtext:hover {
+  border-color: #9db8a6;
+}
+
+.ppa-page .p-column-filter-row .form-control:focus,
+.ppa-page .p-column-filter-row .p-inputtext:focus {
+  border-color: #168347;
+  box-shadow: 0 0 0 3px rgba(22, 131, 71, 0.11);
+}
+
+.ppa-page .p-column-filter-row .mb-3,
+.ppa-page .mb-3 .form-floating {
+  margin-bottom: 0;
+}
+
+/* Ícone de detalhes da viagem */
+.ppa-page .icon-info {
+  font-size: 1.05rem;
+}
+
+.ppa-page .p-datatable-tbody .btn-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  padding: 0;
+  border: 1px solid #cfe2d5;
+  border-radius: 8px;
+  background: #edf7f0;
+  color: #00652e !important;
+  text-decoration: none;
+  transition: background-color 0.16s ease, transform 0.16s ease;
+}
+
+.ppa-page .p-datatable-tbody .btn-link:hover,
+.ppa-page .p-datatable-tbody .btn-link:focus {
+  background: #dceee2;
+  color: #034b23 !important;
+  transform: translateY(-1px);
+}
+
+
+/* Destaques de conteúdo */
+.ppa-page .ppa-document {
+  color: #34493c;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.025em;
+}
+
+.ppa-page .ppa-position-reference {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.ppa-page .ppa-plate {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 4.8rem;
+  padding: 0.28rem 0.52rem;
+  border: 1px solid #cfe0d5;
+  border-radius: 7px;
+  background: #f1f7f3;
+  color: #174b2c;
+  font-weight: 650;
+  letter-spacing: 0.055em;
+  white-space: nowrap;
+}
+
+.ppa-page .ppa-metric,
+.ppa-page .ppa-score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.45rem;
+  padding: 0.25rem 0.48rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.ppa-page .ppa-metric {
+  background: #eef3f0;
+  color: #365143;
+}
+
+.ppa-page .ppa-score {
+  background: #ddf1e4;
+  color: #07582b;
+}
+
+.ppa-page .ppa-score--blocked {
+  background: #fff1d8;
+  color: #8a5400;
+}
+
+/* Rodapé e paginação */
+.ppa-page .p-datatable .p-datatable-footer {
+  padding: 0;
+  border-width: 1px 0 0;
+  border-color: #e0e9e3;
+  background: #fbfdfc;
+}
+
+.ppa-page .ppa-table-footer {
+  align-items: center;
+  margin: 0;
+  padding: 0.85rem 1rem;
+}
+
+.ppa-page .ppa-table-footer__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  margin: 0;
+}
+
+.ppa-page .ppa-table__page-button.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: 9.8rem;
+  padding: 0.58rem 0.85rem;
+  border: 1px solid #00652e;
+  border-radius: 8px;
+  background: #00652e;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0, 101, 46, 0.14);
+  transition: background-color 0.16s ease, transform 0.16s ease;
+}
+
+.ppa-page .ppa-table__page-button.btn:hover,
+.ppa-page .ppa-table__page-button.btn:focus {
+  border-color: #034b23;
+  background: #034b23;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.ppa-page .ppa-table__page-button.btn:disabled {
+  border-color: #b9c8be;
+  background: #dce4df;
+  color: #7a887f;
+  box-shadow: none;
+  opacity: 1;
+  transform: none;
+}
+
+.ppa-page .ppa-table-footer__pages {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: #31553e;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+@media only screen and (max-width: 760px) {
+  .ppa-page .p-datatable .p-datatable-thead>tr:first-child>th {
+    padding: 0.82rem 0.65rem;
+  }
+
+  .ppa-page .p-datatable .p-datatable-tbody>tr>td {
+    padding: 0.68rem 0.65rem;
+  }
+
+  .ppa-page .ppa-table-footer {
+    gap: 0.7rem;
+  }
+
+  .ppa-page .ppa-table-footer__actions,
+  .ppa-page .ppa-table-footer__pages {
+    flex: 0 0 100%;
+    justify-content: center;
+    max-width: 100%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .ppa-page .ppa-table-footer__actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .ppa-page .ppa-table__page-button.btn {
+    width: 100%;
+  }
+
+  .paginator-table-col {
+    display: block;
+  }
+}
+
+/*
+ * O relatório consolidado possui quatro colunas.
+ * Limitamos a largura útil da tabela para evitar que o PrimeReact espalhe
+ * as colunas por toda a largura do card em monitores grandes.
+ */
+.ppa-blocked-report-page .p-datatable-wrapper>table {
+  width: 930px !important;
+  min-width: 930px !important;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.ppa-blocked-report-page .ppa-score--blocked-report {
+  min-width: 4.25rem;
+  background: #fff0cf;
+  color: #8a5605;
+}
+
+.ppa-blocked-report-page .ppa-block-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.7rem;
+  padding: 0.25rem 0.55rem;
+  border: 1px solid #efd9b0;
+  border-radius: 999px;
+  background: #fff8e9;
+  color: #7b5312;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+@media only screen and (max-width: 930px) {
+  .ppa-blocked-report-page .p-datatable-wrapper>table {
+    margin-left: 0;
+  }
+}

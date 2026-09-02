@@ -1,0 +1,385 @@
+.modal-situation-cargas {
+  font-family: "Poppins", sans-serif;
+  margin-top: 7rem;
+}
+
+#modal-header {
+  margin-top: -0.5rem;
+  margin-bottom: -1.5rem;
+  border: #fff;
+}
+
+.modal-title-situ-carg {
+  font-size: 25px;
+  color: #00652e;
+  margin-left: 25%;
+}
+
+.card-body-sit-cargas {
+  margin-bottom: -1.2rem;
+}
+
+.div-situação-cargas {
+  display: flex;
+}
+
+#desc-legenda-cargas {
+  font-size: 13.5px;
+  margin-left: 1rem;
+  margin-bottom: 0.1rem;
+}
+
+#modal-footer {
+  margin-top: -1rem;
+  border: #fff !important;
+}
+
+div .button-export-excel {
+  background-color: #00652e;
+  border: none;
+}
+
+#button-sair {
+  font-size: 14px;
+  margin-top: -2px;
+  width: 16%;
+  height: 25px;
+  padding: 1px;
+  background-color: #00652e;
+  border: none;
+}
+
+.col-card-excel-inicio {
+  margin-left: 0;
+  width: 50% !important;
+  text-align: initial;
+  margin-bottom: 15px;
+}
+
+.dialog-modal-import {
+  width: 50%;
+}
+
+.calendar-data-inicio button,
+.calendar-data-fim button {
+  background-color: #2675ebcc;
+  border: none;
+  width: 99%;
+}
+
+.col-card-excel-fim {
+  margin: 0;
+  width: 50% !important;
+  text-align: start;
+  margin-bottom: 15px;
+}
+
+.col-modal-filial {
+  text-align: start;
+  border: 1px solid #ced4da;
+  border-radius: 7px;
+  margin-left: 0.6rem;
+  margin-right: 0.6rem;
+  height: 4rem;
+}
+
+label {
+  margin-top: 0.2rem;
+}
+
+.modal-input-filial {
+  border: none;
+  display: grid;
+  outline-color: #fff;
+  height: 1.8rem;
+  width: 100%;
+}
+
+.card-body-excel {
+  display: flexbox;
+}
+
+.card-exel-label {
+  color: rgb(9, 77, 24);
+  font-weight: 600;
+}
+
+@media screen and (min-width: 176px) and (max-width: 329px) {
+  .modal-situation-cargas {
+    margin-top: 11rem;
+    width: 85% !important;
+    margin-left: 10%;
+  }
+
+  #modal-header {
+    width: 100%;
+    margin-bottom: -1rem;
+    border: #fff;
+  }
+}
+
+@media screen and (min-width: 106px) and (max-width: 485px) {
+  .modal-situation-cargas {
+    margin-top: 12rem;
+    width: 80% !important;
+    margin-left: 10%;
+  }
+
+  #modal-header {
+    width: 100%;
+    margin-bottom: -1rem;
+    border: #fff;
+  }
+
+  .modal-title-situ-carg {
+    font-size: 20px;
+    color: #00652e;
+    margin-left: 18%;
+  }
+
+  .dialog-modal-import {
+    width: 80% !important;
+  }
+}
+
+@media screen and (min-width: 486px) and (max-width: 715px) {
+  .modal-situation-cargas {
+    margin-top: 11rem;
+    width: 60% !important;
+    margin-left: 15%;
+  }
+
+  #modal-header {
+    width: 85%;
+    margin-bottom: -1rem;
+    border: #fff;
+  }
+}
+
+@media screen and (min-width: 330px) and (max-width: 580px) {
+  .modal-situation-cargas {
+    margin-top: 11rem;
+    width: 80% !important;
+    margin-left: 10%;
+  }
+
+  .modal-title-situ-carg {
+    color: #00652e;
+    margin-left: 20%;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .row-main-excel {
+    display: grid !important;
+  }
+
+  .row-inicio-carga button {
+    margin-left: 20%;
+    width: auto;
+  }
+
+  .col-card-excel-inicio,
+  .col-card-excel-fim {
+    margin-right: 0;
+    width: 100% !important;
+  }
+
+  .card-body-excel {
+    display: flex;
+    justify-content: center;
+  }
+
+  .dialog-modal-import {
+    text-align: center;
+    width: 90% !important;
+  }
+}
+
+@media screen and (min-width: 576px) and (max-width: 715px) {
+  .modal-situation-cargas {
+    margin-top: 11rem;
+    width: 60% !important;
+    margin-left: 15%;
+  }
+
+  #modal-header {
+    width: 80%;
+    margin-bottom: -1rem;
+    border: #fff;
+  }
+
+  .modal-title-situ-carg {
+    color: #00652e;
+    margin-left: 30%;
+  }
+
+  .dialog-modal-import {
+    width: 70%;
+  }
+}
+
+@media screen and (min-width: 716px) and (max-width: 845px) {
+  .modal-situation-cargas {
+    width: 50% !important;
+    margin-top: 11rem;
+    margin-left: 25%;
+    margin-bottom: 3rem;
+    font-family: "Poppins", sans-serif;
+  }
+
+  #modal-header {
+    width: 80%;
+    margin-bottom: -1rem;
+    border: #fff;
+  }
+
+  .dialog-modal-import {
+    width: 70%;
+  }
+}
+
+@media screen and (min-width: 846px) and (max-width: 1120px) {
+  .modal-situation-cargas {
+    font-family: "Poppins", sans-serif;
+    margin-top: 11rem;
+    margin-left: 25%;
+    margin-bottom: 3rem;
+    width: 40% !important;
+  }
+
+  #modal-header {
+    width: 80%;
+    margin-bottom: -1rem;
+    border: #fff;
+  }
+}
+
+@media screen and (min-width: 486px) and (max-width: 1120px) {
+  .modal-title-situ-carg {
+    font-size: 21px;
+    margin-left: 20%;
+  }
+
+  #desc-legenda-cargas {
+    font-size: 15px;
+  }
+}
+
+.ppa-export-period-hint {
+  display: block;
+  margin-top: 0.15rem;
+  color: #5f6f67;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  text-align: left;
+}
+
+/* Exportação PPA: filtro de período opcional */
+.ppa-export-period-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  width: 100%;
+  padding: 1rem 1.1rem;
+  border: 1px solid #d9e7df;
+  border-radius: 10px;
+  background: #f7fbf8;
+  text-align: left;
+}
+
+.ppa-export-period-option__copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.ppa-export-period-option__copy strong {
+  color: #075e32;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.ppa-export-period-option__copy span {
+  color: #66756d;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.ppa-export-period-switch {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: 46px;
+  height: 25px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.ppa-export-period-switch input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.ppa-export-period-switch__slider {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: #b8c5bd;
+  transition: background-color 0.18s ease;
+}
+
+.ppa-export-period-switch__slider::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.22);
+  transition: transform 0.18s ease;
+}
+
+.ppa-export-period-switch input:checked+.ppa-export-period-switch__slider {
+  background: #08783f;
+}
+
+.ppa-export-period-switch input:checked+.ppa-export-period-switch__slider::before {
+  transform: translateX(21px);
+}
+
+.ppa-export-period-switch input:focus-visible+.ppa-export-period-switch__slider {
+  box-shadow: 0 0 0 3px rgba(8, 120, 63, 0.16);
+}
+
+.ppa-export-period-fields {
+  width: 100%;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5ece8;
+}
+
+.ppa-export-date-label {
+  display: block;
+  margin: 0 0 0.35rem;
+  color: #42564b;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+@media screen and (max-width: 575px) {
+  .ppa-export-period-option {
+    align-items: flex-start;
+  }
+
+  .ppa-export-period-switch {
+    margin-top: 0.15rem;
+  }
+}
