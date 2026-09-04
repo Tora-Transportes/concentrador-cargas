@@ -806,18 +806,17 @@ BEGIN
            --fim insere KM
 
            -- INSERE TOTAL
-           SELECT
-          @Column1 = SUM(CAST(premio AS FLOAT))
-       FROM [dbo].[ppo_resultado]
-       WHERE cpf = @CPF_MOT
-           AND mes_avaliacao = @mes
-           AND ano_avaliacao = @ano
-           ${ativoQuery}
-       AND apto = 1
-
+           -- O total deve refletir exatamente a soma dos quatro valores
+           -- exibidos no relatorio. Antes, o codigo somava todos os registros
+           -- aptos de ppo_resultado, o que duplicava/triplicava o premio quando
+           -- existiam registros repetidos para um mesmo parametro.
            UPDATE @tabelaRelatorio
-             SET Total = @Column1
-           WHERE id =  @Contador
+           SET Total =
+               ISNULL(ValorInterjornada, 0)
+             + ISNULL(ValorVelocidade, 0)
+             + ISNULL(ValorAvaliacao, 0)
+             + ISNULL(ValorKMRodado, 0)
+           WHERE id = @Contador
 
       END
 
@@ -1084,18 +1083,17 @@ BEGIN
            --fim insere KM
 
            -- INSERE TOTAL
-           SELECT
-          @Column1 = SUM(CAST(premio AS FLOAT))
-       FROM [dbo].[ppo_resultado]
-       WHERE cpf = @CPF_MOT
-           AND mes_avaliacao = @mes
-           AND ano_avaliacao = @ano
-           ${ativoQuery}
-       AND apto = 1
-
+           -- O total deve refletir exatamente a soma dos quatro valores
+           -- exibidos no relatorio. Antes, o codigo somava todos os registros
+           -- aptos de ppo_resultado, o que duplicava/triplicava o premio quando
+           -- existiam registros repetidos para um mesmo parametro.
            UPDATE @tabelaRelatorio
-             SET Total = @Column1
-           WHERE id =  @Contador
+           SET Total =
+               ISNULL(ValorInterjornada, 0)
+             + ISNULL(ValorVelocidade, 0)
+             + ISNULL(ValorAvaliacao, 0)
+             + ISNULL(ValorKMRodado, 0)
+           WHERE id = @Contador
            -- INSERE TOTAL
 
       END
